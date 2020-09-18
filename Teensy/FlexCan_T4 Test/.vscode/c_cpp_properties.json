@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/teensy/avr/cores/teensy3/**",
+                "${workspaceFolder}/libraries/**"
+            ],
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/teensy/avr/cores/teensy3/",
+                    "${workspaceFolder}/libraries/"
+                ],
+                "limitSymbolsToIncludedHeaders": false
+            },
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "gcc-x64"
+        }
+    ],
+    "version": 4
+}

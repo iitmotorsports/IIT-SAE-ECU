@@ -1,0 +1,24 @@
+{
+    
+    "TEENSY_USB_PORTNAME":"COM7",
+    "TEENSY_BAUDRATE":"115200",
+    "files.associations": {
+        "*.tpp": "cpp",
+        "array": "cpp",
+        "deque": "cpp",
+        "forward_list": "cpp",
+        "list": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "vector": "cpp",
+        "rope": "cpp",
+        "slist": "cpp",
+        "initializer_list": "cpp",
+        "regex": "cpp",
+        "valarray": "cpp",
+        "*.tcc": "cpp",
+        "usb_common.h": "c"
+    },
+    "git.ignoreLimitWarning": true
+}

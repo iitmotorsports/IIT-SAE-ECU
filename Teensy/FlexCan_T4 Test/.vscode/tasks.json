@@ -1,0 +1,137 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    // These Tasks are meant to be run through WSL
+    "tasks": [
+        {
+            "label": "Clean",
+            "type": "shell",
+            "command": "make clean",
+            "problemMatcher": []
+        },
+        {
+            "label": "Build",
+            "type": "shell",
+            "presentation": {
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "command": "make build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Upload",
+            "type": "shell",
+            "presentation": {
+                "panel": "shared",
+                "showReuseMessage": false
+            },
+            "command": "make upload WSLMODE=1",
+            "problemMatcher": []
+        },
+        {
+            "label": "Stop Monitor",
+            "type": "shell",
+            "presentation": {
+                "panel": "shared",
+                "showReuseMessage": false
+            },
+            "command": "cmd.exe",
+            "args": [
+                "/c",
+                "taskkill",
+                "/IM",
+                "ComMonitor.exe",
+                "/F",
+                "\\&",
+                "exit",
+                "0"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Reboot",
+            "type": "shell",
+            "presentation": {
+                "panel": "shared",
+                "showReuseMessage": false
+            },
+            "command": "${workspaceFolder}/tools/ComMonitor.exe",
+            "args": [
+                "${input:TEENSY_USB_PORTNAME}",
+                "134",
+                "-c"
+            ],
+            "problemMatcher": [],
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Stop Monitor"
+            ]
+        },
+        {
+            "label": "Monitor",
+            "type": "shell",
+            "presentation": {
+                "panel": "shared",
+                "showReuseMessage": false
+            },
+            "command": "${workspaceFolder}/tools/ComMonitor.exe",
+            "args": [
+                "${input:TEENSY_USB_PORTNAME}",
+                "${config:TEENSY_BAUDRATE}",
+                "-r"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Shebang",
+            "type": "shell",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Build",
+                "Reboot",
+                "Upload",
+                "Monitor"
+            ],
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ],
+    "inputs": [
+        {
+            "id": "TEENSY_USB_PORTNAME",
+            "description": "What portname the moniter should use",
+            "type": "pickString",
+            "options": [
+                "COM6",
+                "COM7"
+            ],
+            "default": "COM6"
+        },
+        {
+            "id": "TEENSY_BAUDRATE",
+            "description": "What standard baudrate the moniter should use",
+            "type": "pickString",
+            "options": [
+                "1200",
+                "2400",
+                "4800",
+                "9600",
+                "19200",
+                "38400",
+                "57600",
+                "115200",
+                "230400",
+                "460800",
+                "921600"
+            ],
+            "default": "115200"
+        }
+    ]
+}
