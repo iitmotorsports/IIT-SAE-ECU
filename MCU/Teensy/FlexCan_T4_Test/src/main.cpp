@@ -1,8 +1,12 @@
 #include "main.h"
+#include "messages.def"
 
 void sendTestMessage() {
     setTestMessage();
+    digitalWriteFast(13,HIGH);
     Can0.write(test_msg);
+    digitalWriteFast(13,LOW);
+    Serial.println("Send");
     // Serial.print("Send Buffer: ");
     // for (uint8_t i = 0; i < test_msg.len; i++) {
     //     Serial.print(test_msg.buf[i], HEX);
@@ -33,20 +37,23 @@ void setup(void) {
     }
     Can0.setMBFilter(REJECT_ALL);
     Can0.enableMBInterrupts();
-    Can0.setMBFilter(MB0, 0, 3);
-    Can0.setMBFilter(MB1, 4, 7);
-    Can0.setMBFilter(MB2, 8, 11);
-    // Can0.onReceive(MB0, readCan<3>);
-    Can0.onReceive(MB0, readCan<3>);
-    Can0.onReceive(MB1, readCan<7>);
-    Can0.onReceive(MB2, readCan<11>);
+
+    // Set mailbox filters from def file
+    #define X(MB, add) Can0.setMBFilter((FLEXCAN_MAILBOX)MB, add);
+        CAN_MESSAGES
+    #undef X
+
+    // Set mailbox handlers from def file
+    #define X(MB, add) Can0.onReceive((FLEXCAN_MAILBOX)MB, readCan<add>);
+        CAN_MESSAGES
+    #undef X
     Can0.mailboxStatus();
 }
 
 void loop() {
     Can0.events();
     static uint32_t timeout = millis();
-    if (millis() - timeout > 2000) {
+    if (millis() - timeout > 500) {
         sendTestMessage();
         timeout = millis();
     }

@@ -1,0 +1,7 @@
+// X(MailboxNum, id)
+#define CAN_MESSAGES \
+    X(0, 0x0) \
+    X(1, 0x1) \
+    X(3, 0x2) \
+    X(3, 0x3) \
+    X(3, 0x4)

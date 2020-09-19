@@ -5,6 +5,7 @@
 #include "WProgram.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 #ifndef __MAIN_H__
 #define __MAIN_H__
@@ -16,7 +17,7 @@ FlexCAN_T4<CAN1, RX_SIZE_256, TX_SIZE_16> Can0;
 static CAN_message_t test_msg;
 
 void setTestMessage() {
-    test_msg.id = random(0, 11);
+    test_msg.id = random(0, 4);
     test_msg.buf[0] = 'o';
     test_msg.buf[1] = 'h';
     test_msg.buf[2] = ' ';
