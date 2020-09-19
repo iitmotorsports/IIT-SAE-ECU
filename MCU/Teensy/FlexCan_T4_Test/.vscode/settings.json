@@ -18,7 +18,9 @@
         "regex": "cpp",
         "valarray": "cpp",
         "*.tcc": "cpp",
-        "usb_common.h": "c"
+        "usb_common.h": "c",
+        "*.def": "c",
+        "typeinfo": "cpp"
     },
     "git.ignoreLimitWarning": true
 }

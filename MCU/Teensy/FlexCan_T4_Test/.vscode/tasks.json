@@ -35,26 +35,6 @@
             "command": "make upload",
             "problemMatcher": []
         },
-        // {
-        //     "label": "Stop Monitor",
-        //     "type": "shell",
-        //     "presentation": {
-        //         "panel": "shared",
-        //         "showReuseMessage": false
-        //     },
-        //     "command": "cmd.exe",
-        //     "args": [
-        //         "/c",
-        //         "taskkill",
-        //         "/IM",
-        //         "ComMonitor.exe",
-        //         "/F",
-        //         "\\&",
-        //         "exit",
-        //         "0"
-        //     ],
-        //     "problemMatcher": []
-        // },
         {
             "label": "Reboot",
             "type": "shell",
@@ -179,6 +159,16 @@
                 "COM7"
             ],
             "default": "COM6"
+        },
+        {
+            "id": "TEENSY_USB_PORTNAME_2",
+            "description": "What 2nd portname the dual moniter should use",
+            "type": "pickString",
+            "options": [
+                "COM6",
+                "COM7"
+            ],
+            "default": "COM7"
         },
         {
             "id": "TEENSY_BAUDRATE",
