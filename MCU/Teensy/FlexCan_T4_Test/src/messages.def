@@ -1,7 +1,7 @@
-// X(MailboxNum, id)
+// X(MailboxNum, id, function)
 #define CAN_MESSAGES \
-    X(0, 0x0) \
-    X(1, 0x1) \
-    X(3, 0x2) \
-    X(3, 0x3) \
-    X(3, 0x4)
+    X(0, 0x0, canSniff) \
+    X(1, 0x1, canSniff) \
+    X(3, 0x2, canSniff) \
+    X(4, 0x3, canSniff) \
+    X(5, 0x4, canSniff)

@@ -1,12 +1,11 @@
 #include "main.h"
-#include "messages.def"
 
 void sendTestMessage() {
     setTestMessage();
-    digitalWriteFast(13,HIGH);
+    digitalWriteFast(13, HIGH);
     Can0.write(test_msg);
-    digitalWriteFast(13,LOW);
-    Serial.println("Send");
+    digitalWriteFast(13, LOW);
+    // Serial.println("Send");
     // Serial.print("Send Buffer: ");
     // for (uint8_t i = 0; i < test_msg.len; i++) {
     //     Serial.print(test_msg.buf[i], HEX);
@@ -38,15 +37,13 @@ void setup(void) {
     Can0.setMBFilter(REJECT_ALL);
     Can0.enableMBInterrupts();
 
-    // Set mailbox filters from def file
-    #define X(MB, add) Can0.setMBFilter((FLEXCAN_MAILBOX)MB, add);
-        CAN_MESSAGES
-    #undef X
-
-    // Set mailbox handlers from def file
-    #define X(MB, add) Can0.onReceive((FLEXCAN_MAILBOX)MB, readCan<add>);
-        CAN_MESSAGES
-    #undef X
+// Set mailbox filters & handlers from def file
+#define X(MB, add, func)                        \
+    Can0.setMBFilter((FLEXCAN_MAILBOX)MB, add); \
+    Can0.enhanceFilter((FLEXCAN_MAILBOX)MB);    \
+    Can0.onReceive((FLEXCAN_MAILBOX)MB, func);
+    CAN_MESSAGES
+#undef X
     Can0.mailboxStatus();
 }
 
