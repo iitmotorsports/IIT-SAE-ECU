@@ -22,8 +22,8 @@ void setup(void) {
     Can0.begin();
     Can0.setBaudRate(1000000);
     Can0.setMaxMB(NUM_TX_MAILBOXES + NUM_RX_MAILBOXES);
-    Can0.enableFIFO();
-    Can0.enableFIFOInterrupt();
+    //Can0.enableFIFO();
+    //Can0.enableFIFOInterrupt();
     Can0.onReceive(FIFO, canSniff);
     for (uint8_t i = 0; i < NUM_RX_MAILBOXES; i++) {
         Can0.setMB((FLEXCAN_MAILBOX)i, RX, NONE);
