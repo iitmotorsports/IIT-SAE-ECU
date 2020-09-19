@@ -1,6 +1,6 @@
 {
     
-    "TEENSY_USB_PORTNAME":"COM7",
+    "TEENSY_USB_PORTNAME":"COM6",
     "TEENSY_BAUDRATE":"115200",
     "files.associations": {
         "*.tpp": "cpp",

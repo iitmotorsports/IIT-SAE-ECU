@@ -10,10 +10,10 @@ TEENSY = 36
 #BAUD = 192000
 
 #************************************************************************
-# If building under WSL and usb fowarding is still not supported
-# Uncomment to instead use the windows teensy loader
+# If building under WSL and usb fowarding is still not supported/WSL not
+# autodetected, set to 1 to instead use the windows teensy loader exe
 #************************************************************************
-# WSLMODE = 1
+WSLMODE = 0
 
 # Set to 24000000, 48000000, or 96000000 to set CPU core speed
 TEENSY_CORE_SPEED = 48000000
@@ -43,6 +43,11 @@ else
     ifeq ($(UNAME_S),Darwin)
         TOOLSPATH = /Applications/Arduino.app/Contents/Java/hardware/tools/
     endif
+
+    UNAME_R := $(shell uname -r)
+	ifneq (,$(findstring Microsoft,$(UNAME_R)))
+		WSLMODE = 1
+	endif
 endif
 
 # path location for Teensy 3 core
@@ -108,7 +113,7 @@ else
 endif
 
 # change loader and moniter if on WSL
-ifdef WSLMODE
+ifeq ($(WSLMODE),1)
 BEEP= rundll32.exe cmdext.dll,MessageBeepStub
 T_CLI_LOADER = teensy_loader_cli.exe
 #FIXME: Issues with running moniter through makefile, I wonder why

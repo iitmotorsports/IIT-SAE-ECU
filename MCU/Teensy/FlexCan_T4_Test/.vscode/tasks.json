@@ -7,54 +7,58 @@
         {
             "label": "Clean",
             "type": "shell",
+            "detail": "Clean up build files",
             "command": "make clean",
             "problemMatcher": []
         },
         {
             "label": "Build",
             "type": "shell",
+            "detail": "Compile files",
             "presentation": {
                 "focus": true,
                 "panel": "shared",
                 "showReuseMessage": false,
                 "clear": true
             },
-            "command": "make build",
+            "command": "make hex",
             "problemMatcher": []
         },
         {
             "label": "Upload",
             "type": "shell",
+            "detail": "Upload compiled files to the teensy",
             "presentation": {
                 "panel": "shared",
                 "showReuseMessage": false
             },
-            "command": "make upload WSLMODE=1",
+            "command": "make upload",
             "problemMatcher": []
         },
-        {
-            "label": "Stop Monitor",
-            "type": "shell",
-            "presentation": {
-                "panel": "shared",
-                "showReuseMessage": false
-            },
-            "command": "cmd.exe",
-            "args": [
-                "/c",
-                "taskkill",
-                "/IM",
-                "ComMonitor.exe",
-                "/F",
-                "\\&",
-                "exit",
-                "0"
-            ],
-            "problemMatcher": []
-        },
+        // {
+        //     "label": "Stop Monitor",
+        //     "type": "shell",
+        //     "presentation": {
+        //         "panel": "shared",
+        //         "showReuseMessage": false
+        //     },
+        //     "command": "cmd.exe",
+        //     "args": [
+        //         "/c",
+        //         "taskkill",
+        //         "/IM",
+        //         "ComMonitor.exe",
+        //         "/F",
+        //         "\\&",
+        //         "exit",
+        //         "0"
+        //     ],
+        //     "problemMatcher": []
+        // },
         {
             "label": "Reboot",
             "type": "shell",
+            "detail": "Ask for which com port",
             "presentation": {
                 "panel": "shared",
                 "showReuseMessage": false
@@ -63,19 +67,21 @@
             "args": [
                 "${input:TEENSY_USB_PORTNAME}",
                 "134",
-                "-c"
+                "-c",
+                "--priority"
             ],
             "problemMatcher": [],
-            "dependsOrder": "sequence",
-            "dependsOn": [
-                "Stop Monitor"
-            ]
+            "dependsOrder": "sequence"
         },
         {
             "label": "Monitor",
             "type": "shell",
+            "detail": "Ask for which com port",
+            "runOptions": {
+                "instanceLimit": 3
+            }, // Allows multiple multiple monitors
             "presentation": {
-                "panel": "shared",
+                "panel": "dedicated",
                 "showReuseMessage": false
             },
             "command": "${workspaceFolder}/tools/ComMonitor.exe",
@@ -87,8 +93,47 @@
             "problemMatcher": []
         },
         {
+            "label": "RebootConf",
+            "type": "shell",
+            "detail": "Use com port set in settings",
+            "presentation": {
+                "panel": "shared",
+                "showReuseMessage": false
+            },
+            "command": "${workspaceFolder}/tools/ComMonitor.exe",
+            "args": [
+                "${config:TEENSY_USB_PORTNAME}",
+                "134",
+                "-c",
+                "--priority"
+            ],
+            "problemMatcher": [],
+            "dependsOrder": "sequence"
+        },
+        {
+            "label": "MonitorConf",
+            "type": "shell",
+            "detail": "Use com port set in settings",
+            "presentation": {
+                "panel": "dedicated",
+                "showReuseMessage": false
+            },
+            "command": "${workspaceFolder}/tools/ComMonitor.exe",
+            "args": [
+                "${config:TEENSY_USB_PORTNAME}",
+                "${config:TEENSY_BAUDRATE}",
+                "-r"
+            ],
+            "problemMatcher": []
+        },
+        {
             "label": "Shebang",
             "type": "shell",
+            "detail": "Run all tasks but ask for which com port",
+            "presentation": {
+                "panel": "shared",
+                "showReuseMessage": false
+            },
             "dependsOrder": "sequence",
             "dependsOn": [
                 "Build",
@@ -101,6 +146,27 @@
                 "kind": "build",
                 "isDefault": true
             }
+        },
+        {
+            "label": "ShebangConf",
+            "type": "shell",
+            "detail": "Run all tasks using the com port set in settings",
+            "presentation": {
+                "panel": "shared",
+                "showReuseMessage": false
+            },
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Build",
+                "RebootConf",
+                "Upload",
+                "MonitorConf"
+            ],
+            "problemMatcher": [],
+            // "group": {
+            //     "kind": "build",
+            //     "isDefault": true
+            // }
         }
     ],
     "inputs": [
