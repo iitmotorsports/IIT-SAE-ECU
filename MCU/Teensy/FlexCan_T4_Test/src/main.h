@@ -3,15 +3,17 @@
 
 #include "FlexCAN_T4.h"
 #include "WProgram.h"
+#include "messages.def"
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
 
 #ifndef __MAIN_H__
 #define __MAIN_H__
 
-#define NUM_TX_MAILBOXES 3
-#define NUM_RX_MAILBOXES 3
+// IMPROVE: Use XMacro to get num of MBs
+#define NUM_RX_MAILBOXES 6
+#define NUM_TX_MAILBOXES 6
 
 FlexCAN_T4<CAN1, RX_SIZE_256, TX_SIZE_16> Can0;
 static CAN_message_t test_msg;
