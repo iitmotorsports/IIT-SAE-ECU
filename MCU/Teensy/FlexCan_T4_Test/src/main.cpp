@@ -1,3 +1,5 @@
+
+
 #include "main.h"
 
 void setup(void) {
@@ -20,7 +22,7 @@ void setup(void) {
 void loop() {
     F_Can.events();
     static uint32_t timeout = millis();
-    if (millis() - timeout > 1000) {
+    if (millis() - timeout > 500) {
         sendTestMessage();
         timeout = millis();
     }
