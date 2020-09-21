@@ -1,7 +1,8 @@
-// X(MailboxNum, id, function)
+#include "can_handlers.h"
+#include "pp_help.def"
+
+// X(id, function)
 #define CAN_MESSAGES \
-    X(0, 0x0, canSniff) \
-    X(1, 0x1, canSniff) \
-    X(3, 0x2, canSniff) \
-    X(4, 0x3, canSniff) \
-    X(5, 0x4, canSniff)
+    X(0, canSniff)   \
+    X(1, canSniff)   \
+    X(2, canSniff)
