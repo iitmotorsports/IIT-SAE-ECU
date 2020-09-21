@@ -61,7 +61,7 @@
                 "instanceLimit": 3
             }, // Allows multiple multiple monitors
             "presentation": {
-                "panel": "dedicated",
+                "panel": "shared",
                 "showReuseMessage": false
             },
             "command": "${workspaceFolder}/tools/ComMonitor.exe",
@@ -95,7 +95,7 @@
             "type": "shell",
             "detail": "Use com port set in settings",
             "presentation": {
-                "panel": "dedicated",
+                "panel": "shared",
                 "showReuseMessage": false
             },
             "command": "${workspaceFolder}/tools/ComMonitor.exe",
@@ -110,10 +110,6 @@
             "label": "Shebang",
             "type": "shell",
             "detail": "Run all tasks but ask for which com port",
-            "presentation": {
-                "panel": "shared",
-                "showReuseMessage": false
-            },
             "dependsOrder": "sequence",
             "dependsOn": [
                 "Build",
@@ -131,10 +127,6 @@
             "label": "ShebangConf",
             "type": "shell",
             "detail": "Run all tasks using the com port set in settings",
-            "presentation": {
-                "panel": "shared",
-                "showReuseMessage": false
-            },
             "dependsOrder": "sequence",
             "dependsOn": [
                 "Build",
