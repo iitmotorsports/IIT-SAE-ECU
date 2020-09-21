@@ -13,7 +13,17 @@
                 ],
                 "limitSymbolsToIncludedHeaders": false
             },
-            "defines": [],
+            "defines": [
+                // Project Specific
+                "__MK66FX1M0__",
+                "F_CPU=48000000",
+                // End
+                "USB_SERIAL",
+                "LAYOUT_US_ENGLISH",
+                "TEENSYDUINO=144",
+                "_GNU_SOURCE",
+                "USING_MAKEFILE"
+            ],
             "compilerPath": "/usr/bin/gcc",
             "cStandard": "gnu11",
             "cppStandard": "gnu++14",
