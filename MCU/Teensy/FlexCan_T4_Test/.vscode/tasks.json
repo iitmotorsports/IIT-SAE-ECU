@@ -57,9 +57,9 @@
             "label": "Monitor",
             "type": "shell",
             "detail": "Ask for which com port",
-            "runOptions": {
-                "instanceLimit": 3
-            }, // Allows multiple multiple monitors
+            // "runOptions": {
+            //     "instanceLimit": 3
+            // }, // Allows multiple multiple monitors
             "presentation": {
                 "panel": "shared",
                 "showReuseMessage": false
