@@ -12,10 +12,6 @@ void setup(void) {
     // FlexCan
     F_Can.begin();
     F_Can.setBaudRate(1000000);
-    //Can1.enableFIFO();
-    //Can1.enableFIFOInterrupt();
-    // Can1.onReceive(FIFO, canSniff);
-
     setMailboxes();
 }
 

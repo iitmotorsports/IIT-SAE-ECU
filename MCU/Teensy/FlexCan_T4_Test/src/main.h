@@ -17,7 +17,7 @@ static CAN_message_t test_msg;
 void setupMB(FLEXCAN_MAILBOX MB, uint32_t address, _MB_ptr handler) {
     F_Can.setMBFilter(MB, address, address);
     F_Can.enhanceFilter(MB);
-    F_Can.onReceive(MB, canSniff);
+    F_Can.onReceive(MB, handler);
 }
 
 void setTestMessage() {
@@ -54,8 +54,8 @@ void setMailboxes() { // Set mailbox filters & handles from def file
 
     int MB = 0;
 // Auto setup requested MBs
-#define X(address, func)                             \
-    setupMB((FLEXCAN_MAILBOX)MB, address, canSniff); \
+#define X(address, func)                         \
+    setupMB((FLEXCAN_MAILBOX)MB, address, func); \
     MB++;
 
     CAN_MESSAGES

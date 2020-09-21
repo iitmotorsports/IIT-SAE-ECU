@@ -29,8 +29,15 @@ void canSniff(const CAN_message_t &msg) {
 
 template <int T>
 void readTest(const CAN_message_t &msg) {
+    Serial.print(" ID: ");
+    Serial.print(msg.id, HEX);
     Serial.print("MB: ");
-    Serial.println(T);
+    Serial.print(T);
+    Serial.print(" ");
+    for (uint8_t i = 0; i < msg.len; i++) {
+        Serial.print((char)msg.buf[i]);
+    }
+    Serial.println();
 }
 
 #endif // __CAN_HANDLERS_H__
