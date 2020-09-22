@@ -1,6 +1,6 @@
 #include "FlexCAN_T4.h"
 #include "WProgram.h"
-#include "messages.def"
+#include "Messages.def"
 #include <stdint.h>
 #include <stdlib.h>
 

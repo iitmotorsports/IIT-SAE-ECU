@@ -1,11 +1,8 @@
-
-
-#include "main.h"
+#include "Main.h"
 
 void setup(void) {
     Serial.begin(115200);
     delay(1000);
-    pinMode(13, OUTPUT);
     pinMode(6, OUTPUT);
     digitalWrite(6, LOW); /* optional tranceiver enable pin */
 

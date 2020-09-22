@@ -1,7 +1,8 @@
-#ifndef __CAN_HANDLERS_H__
-#define __CAN_HANDLERS_H__
+#ifndef __FUNCTEST_H__
+#define __FUNCTEST_H__
 
 #include "FlexCAN_T4.h"
+//#include "TeensyThreads.h"
 #include "WProgram.h"
 #include <stdint.h>
 #include <stdlib.h>
@@ -40,4 +41,4 @@ void readTest(const CAN_message_t &msg) {
     Serial.println();
 }
 
-#endif // __CAN_HANDLERS_H__
+#endif // __FUNCTEST_H__

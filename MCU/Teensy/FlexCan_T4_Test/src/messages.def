@@ -1,4 +1,4 @@
-#include "can_handlers.h"
+#include "FuncTest.h"
 #include "pp_help.def"
 
 // X(id, function)
@@ -8,7 +8,7 @@
     X(2, canSniff)   \
     X(3, canSniff)   \
     X(4, canSniff)   \
-    X(5, canSniff)   \
+    X(5, canSniff)  \
     X(6, canSniff)   \
     X(7, canSniff)   \
     X(8, canSniff)   \

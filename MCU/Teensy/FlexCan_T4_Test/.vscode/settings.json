@@ -46,7 +46,8 @@
         "cstdio": "cpp",
         "exception": "cpp",
         "iterator": "cpp",
-        "new": "cpp"
+        "new": "cpp",
+        "cstdint": "cpp"
     },
     "git.ignoreLimitWarning": true
 }
