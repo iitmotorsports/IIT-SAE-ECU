@@ -75,7 +75,7 @@ CXXFLAGS = -std=gnu++14 -felide-constructors -fno-exceptions -fno-rtti -D_GNU_SO
 CFLAGS =
 
 # linker options
-LDFLAGS = -O3 -Wl,--gc-sections -mthumb
+LDFLAGS = -O3 -Wl,--gc-sections,-V -mthumb
 
 # additional libraries to link
 LIBS = -lm

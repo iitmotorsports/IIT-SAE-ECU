@@ -2,7 +2,7 @@
 #define __FUNCTEST_H__
 
 #include "FlexCAN_T4.h"
-//#include "TeensyThreads.h"
+#include "TeensyThreads.h"
 #include "WProgram.h"
 #include <stdint.h>
 #include <stdlib.h>
