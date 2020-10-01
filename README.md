@@ -1,2 +1,2 @@
-# SAE-IIT-ECU 2020
+# SAE IIT ECU 2020
 SAE at IIT ECU 2020 Repository
