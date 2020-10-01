@@ -1,2 +1,2 @@
-# SAE-IIT-Software
-SAE Software team at IIT Repository
+# SAE-IIT-ECU 2020
+SAE at IIT ECU 2020 Repository
