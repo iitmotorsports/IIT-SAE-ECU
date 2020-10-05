@@ -1,6 +1,6 @@
 # The name of your project (used to name the compiled .hex file)
 # TARGET = $(notdir $(CURDIR))
-TARGET = Teensy36
+TARGET = Teensy36_Bin
 
 # The teensy version to use, 30, 31, 35, 36, or LC
 TEENSY = 36
@@ -169,27 +169,27 @@ upload:
 	@ ( $(MAKE) cli_load && [ $$? -eq 0 ] ) || ( echo "\nFailed to upload, retrying once\n" && sleep 1 && $(MAKE) cli_load )
 	@echo Good to go
 
-#moniter: 
+#moniter:
 #@$(abspath $(TOOLSPATH))/$(T_CLI_MON)
 
 $(BUILDDIR)/%.o: %.c
 	@echo -e "[CC]\t$<"
-	@mkdir -p "$(dir $@)"
-	@$(CC) $(CPPFLAGS) $(CFLAGS) $(L_INC) -o "$@" -c "$<"
+	@mkdir -p "$(dir $(subst ../,,$@))"
+	@$(CC) $(CPPFLAGS) $(CFLAGS) $(L_INC) -o "$(subst ../,,$@)" -c "$<"
 
 $(BUILDDIR)/%.o: %.cpp
 	@echo -e "[CXX]\t$<"
-	@mkdir -p "$(dir $@)"
-	@$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(L_INC) -o "$@" -c "$<"
+	@mkdir -p "$(dir $(subst ../,,$@))"
+	@$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(L_INC) -o "$(subst ../,,$@)" -c "$<"
 
 $(BUILDDIR)/%.o: %.ino
 	@echo -e "[CXX]\t$<"
-	@mkdir -p "$(dir $@)"
-	@$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(L_INC) -o "$@" -x c++ -include Arduino.h -c "$<"
+	@mkdir -p "$(dir $(subst ../,,$@))"
+	@$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(L_INC) -o "$(subst ../,,$@)" -x c++ -include Arduino.h -c "$<"
 
 $(TARGET).elf: $(OBJS) $(LDSCRIPT)
 	@echo -e "[LD]\t$@"
-	@$(CC) $(LDFLAGS) -o "$@" $(OBJS) $(LIBS)
+	@$(CC) $(LDFLAGS) -o "$@" $(subst ../,,$(OBJS)) $(LIBS)
 
 %.hex: %.elf
 	@echo -e "[HEX]\t$@"
