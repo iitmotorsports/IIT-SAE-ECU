@@ -1,5 +1,5 @@
 {
-    
+    "TOOLCHAIN_OFFSET":"../../Toolchain",
     "TEENSY_USB_PORTNAME":"COM6",
     "TEENSY_BAUDRATE":"115200",
     "files.associations": {

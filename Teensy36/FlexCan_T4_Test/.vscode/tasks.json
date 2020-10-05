@@ -43,7 +43,7 @@
                 "panel": "shared",
                 "showReuseMessage": false
             },
-            "command": "${workspaceFolder}/tools/ComMonitor.exe",
+            "command": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/ComMonitor.exe",
             "args": [
                 "${input:TEENSY_USB_PORTNAME}",
                 "134",
@@ -64,7 +64,7 @@
                 "panel": "shared",
                 "showReuseMessage": false
             },
-            "command": "${workspaceFolder}/tools/ComMonitor.exe",
+            "command": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/ComMonitor.exe",
             "args": [
                 "${input:TEENSY_USB_PORTNAME}",
                 "${config:TEENSY_BAUDRATE}",
@@ -80,7 +80,7 @@
                 "panel": "shared",
                 "showReuseMessage": false
             },
-            "command": "${workspaceFolder}/tools/ComMonitor.exe",
+            "command": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/ComMonitor.exe",
             "args": [
                 "${config:TEENSY_USB_PORTNAME}",
                 "134",
@@ -98,7 +98,7 @@
                 "panel": "shared",
                 "showReuseMessage": false
             },
-            "command": "${workspaceFolder}/tools/ComMonitor.exe",
+            "command": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/ComMonitor.exe",
             "args": [
                 "${config:TEENSY_USB_PORTNAME}",
                 "${config:TEENSY_BAUDRATE}",

@@ -5,6 +5,9 @@ TARGET = Teensy36
 # The teensy version to use, 30, 31, 35, 36, or LC
 TEENSY = 36
 
+# Set relative location of toolchain folder | no duplication needed for multiple projects
+TOOLOFFSET = ../../Toolchain
+
 # CLI Monitor settings NOTE:Not working, use VSCode tasks instead
 #USBLOCATION = COM6
 #BAUD = 192000
@@ -35,7 +38,7 @@ BUILDDIR = $(abspath $(CURDIR)/build)
 #************************************************************************
 
 # path location for Teensy Loader, teensy_post_compile, teensy_loader_cli and teensy_reboot
-TOOLSPATH = $(CURDIR)/tools
+TOOLSPATH = $(CURDIR)/$(TOOLOFFSET)/tools
 ifeq ($(OS),Windows_NT)
     $(error Use WSL if on Windows!)
 else
@@ -52,7 +55,7 @@ endif
 
 # path location for Teensy 3 core
 # COREPATH = teensy3
-COREPATH = teensy/avr/cores/teensy3
+COREPATH = $(TOOLOFFSET)/teensy/avr/cores/teensy3
 
 # path location for Arduino libraries
 LIBRARYPATH = libraries
