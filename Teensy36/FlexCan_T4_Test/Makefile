@@ -38,7 +38,7 @@ BUILDDIR = $(abspath $(CURDIR)/build)
 #************************************************************************
 
 # path location for Teensy Loader, teensy_post_compile, teensy_loader_cli and teensy_reboot
-TOOLSPATH = $(CURDIR)/$(TOOLOFFSET)/tools
+TOOLSPATH = $(abspath $(CURDIR)/$(TOOLOFFSET)/tools)
 ifeq ($(OS),Windows_NT)
     $(error Use WSL if on Windows!)
 else
@@ -55,7 +55,7 @@ endif
 
 # path location for Teensy 3 core
 # COREPATH = teensy3
-COREPATH = $(TOOLOFFSET)/teensy/avr/cores/teensy3
+COREPATH = $(abspath $(TOOLOFFSET)/teensy/avr/cores/teensy3)
 
 # path location for Arduino libraries
 LIBRARYPATH = libraries
@@ -174,22 +174,22 @@ upload:
 
 $(BUILDDIR)/%.o: %.c
 	@echo -e "[CC]\t$<"
-	@mkdir -p "$(dir $(subst ../,,$@))"
-	@$(CC) $(CPPFLAGS) $(CFLAGS) $(L_INC) -o "$(subst ../,,$@)" -c "$<"
+	@mkdir -p "$(dir $@)"
+	@$(CC) $(CPPFLAGS) $(CFLAGS) $(L_INC) -o "$@" -c "$<"
 
 $(BUILDDIR)/%.o: %.cpp
 	@echo -e "[CXX]\t$<"
-	@mkdir -p "$(dir $(subst ../,,$@))"
-	@$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(L_INC) -o "$(subst ../,,$@)" -c "$<"
+	@mkdir -p "$(dir $@)"
+	@$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(L_INC) -o "$@" -c "$<"
 
 $(BUILDDIR)/%.o: %.ino
 	@echo -e "[CXX]\t$<"
-	@mkdir -p "$(dir $(subst ../,,$@))"
-	@$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(L_INC) -o "$(subst ../,,$@)" -x c++ -include Arduino.h -c "$<"
+	@mkdir -p "$(dir $@)"
+	@$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(L_INC) -o "$@" -x c++ -include Arduino.h -c "$<"
 
 $(TARGET).elf: $(OBJS) $(LDSCRIPT)
 	@echo -e "[LD]\t$@"
-	@$(CC) $(LDFLAGS) -o "$@" $(subst ../,,$(OBJS)) $(LIBS)
+	@$(CC) $(LDFLAGS) -o "$@" $(subst ../,../,$(OBJS)) $(LIBS)
 
 %.hex: %.elf
 	@echo -e "[HEX]\t$@"
