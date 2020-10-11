@@ -1,16 +1,13 @@
+#ifndef __MESSAGES_H__
+#define __MESSAGES_H__
+
 #include "FuncTest.h"
+#include "Messages.c"
 #include "pp_help.def"
 
-// X(id, function)
+// X(address, function)
 #define CAN_MESSAGES \
-    X(0, canSniff)   \
-    X(1, canSniff)   \
-    X(2, canSniff)   \
-    X(3, canSniff)   \
-    X(4, canSniff)   \
-    X(5, canSniff)   \
-    X(6, canSniff)   \
-    X(7, canSniff)   \
-    X(8, canSniff)   \
-    X(9, canSniff)   \
-    X(10, canSniff)
+    X(0, BMSFaultMsg)   \
+    X(10, RMSFaultMsg)
+
+#endif // __MESSAGES_H__

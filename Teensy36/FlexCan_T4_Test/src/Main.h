@@ -1,40 +1,24 @@
-#include "FlexCAN_T4.h"
-#include "WProgram.h"
-#include "Messages.def"
-#include <stdint.h>
-#include <stdlib.h>
-
-#define NUM_TX_MB 3
-#define NUM_RX_MB() PP_NARG_MO(CAN_MESSAGES)
-#define TEENSY_CAN CAN1
-
 #ifndef __MAIN_H__
 #define __MAIN_H__
 
-FlexCAN_T4<TEENSY_CAN, RX_SIZE_256, TX_SIZE_16> F_Can;
-static CAN_message_t test_msg;
+#include <stdint.h>
+#include <stdlib.h>
+
+#include "FlexCAN_T4.h"
+#include "WProgram.h"
+
+#include "Messages.def"
+#include "config.def"
+
+#define NUM_TX_MB 3
+#define NUM_RX_MB() PP_NARG_MO(CAN_MESSAGES)
+
+FlexCAN_T4<CONF_TEENSY_CAN, RX_SIZE_256, TX_SIZE_16> F_Can;
 
 void setupMB(FLEXCAN_MAILBOX MB, uint32_t address, _MB_ptr handler) {
     F_Can.setMBFilter(MB, address, address);
     F_Can.enhanceFilter(MB);
     F_Can.onReceive(MB, handler);
-}
-
-void setTestMessage() {
-    test_msg.id = random(0, 10);
-    test_msg.buf[0] = 'o';
-    test_msg.buf[1] = 'h';
-    test_msg.buf[2] = ' ';
-    test_msg.buf[3] = 'o';
-    test_msg.buf[4] = 'k';
-    test_msg.buf[5] = 'e';
-    test_msg.buf[6] = 'y';
-    // test_msg.buf[7] = '';
-}
-
-void sendTestMessage() {
-    setTestMessage();
-    F_Can.write(test_msg);
 }
 
 void setMailboxes() { // Set mailbox filters & handles from def file
