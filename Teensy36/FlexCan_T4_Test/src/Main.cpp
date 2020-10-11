@@ -17,7 +17,7 @@ void loop(void) {
     F_Can.events();
     static uint32_t timeout = millis();
     if (millis() - timeout > 500) {
-        sendTestMessage();
+        sendTestMessage(F_Can);
         timeout = millis();
     }
 }

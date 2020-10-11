@@ -1,8 +1,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#include "Fault.c"
-#include "FlexCAN_T4.h"
+#include "Fault.h"
 
 static void BMSFaultMsg(const CAN_message_t &msg) {
     if (BMS_HardFaultCheck(msg.buf)) {     // HardFault triggered

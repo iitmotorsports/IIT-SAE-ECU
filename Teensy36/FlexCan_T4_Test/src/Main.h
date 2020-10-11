@@ -7,8 +7,8 @@
 #include "FlexCAN_T4.h"
 #include "WProgram.h"
 
-#include "Messages.def"
 #include "config.def"
+#include "Messages.def"
 
 #define NUM_TX_MB 3
 #define NUM_RX_MB() PP_NARG_MO(CAN_MESSAGES)

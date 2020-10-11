@@ -1,12 +1,10 @@
 #ifndef __FUNCTEST_H__
 #define __FUNCTEST_H__
 
-#include "FlexCAN_T4.h"
-#include "WProgram.h"
 #include <stdint.h>
 #include <stdlib.h>
 
-#include "Main.h"
+#include "config.def"
 
 static CAN_message_t test_msg;
 
@@ -22,7 +20,7 @@ void setTestMessage(void) {
     // test_msg.buf[7] = '';
 }
 
-void sendTestMessage(void) {
+void sendTestMessage(FlexCAN_T4<CONF_TEENSY_CAN, RX_SIZE_256, TX_SIZE_16> F_Can) {
     setTestMessage();
     F_Can.write(test_msg);
 }
@@ -88,5 +86,4 @@ void readTest(const CAN_message_t &msg) {
     }
     Serial.println();
 }
-
 #endif // __FUNCTEST_H__

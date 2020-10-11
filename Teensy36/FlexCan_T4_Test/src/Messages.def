@@ -1,13 +1,8 @@
-#ifndef __MESSAGES_H__
-#define __MESSAGES_H__
-
 #include "FuncTest.h"
-#include "Messages.c"
+#include "Messages.h"
 #include "pp_help.def"
 
 // X(address, function)
 #define CAN_MESSAGES \
     X(0, BMSFaultMsg)   \
     X(10, RMSFaultMsg)
-
-#endif // __MESSAGES_H__
