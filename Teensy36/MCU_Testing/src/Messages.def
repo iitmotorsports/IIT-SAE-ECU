@@ -1,7 +1,7 @@
-#include "pp_help.def"
 #include "Messages.h"
+#include "pp_help.def"
 
 // X(address, function)
-#define CAN_MESSAGES \
-    X(0, BMSFaultMsg)   \
+#define CAN_MESSAGES  \
+    X(0, BMSFaultMsg) \
     X(10, RMSFaultMsg)
