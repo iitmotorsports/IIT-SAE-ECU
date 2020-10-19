@@ -7,10 +7,11 @@
 static elapsedMillis timeElapsed;
 static int pos = 0;
 
-#define X(pin, IO, Handle) {pin, Handle},
+#define X(pin, Type, IO) {pin, ##Type##IO},
 static Pins::pin_t pins[Pins::pinCount] = {TEENSY_PINS}; // Allocate pins
 #undef X
 
+// ALT: allocate all GPIO pins so index matches GPIO number
 inline static Pins::pin_t *getPin(const int GPIO_Pin) {
     int i = Pins::pinCount;
     switch (GPIO_Pin) {
@@ -46,7 +47,7 @@ extern void Pins::update(void) {
 }
 
 extern void Pins::initialize(void) {
-#define X(pin, IO, ...) pinMode(pin, IO);
+#define X(pin, Type, IO) pinMode(pin, IO);
     TEENSY_PINS
 #undef X
 }

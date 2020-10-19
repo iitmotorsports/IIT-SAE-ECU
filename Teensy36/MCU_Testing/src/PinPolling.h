@@ -7,7 +7,8 @@
 #include "Pinouts.def"
 #include "config.def"
 
-//IMPROVE: pin priority
+// IMPROVE: pin priority
+// IMPROVE: add analog resolution and frequency option
 
 namespace Pins {
 
@@ -29,7 +30,6 @@ static const int pinCount = PP_NARG_MO(TEENSY_PINS);          // Length of the p
 static const int delay = CONF_POLLING_DELAY;                  // Milliseconds between the time the teensy polls a chunk of pins
 #undef X
 
-// ALT: allocate all GPIO pins so index matches GPIO number
 extern int getPinValue(const int GPIO_Pin);
 
 extern void setPinValue(const int GPIO_Pin, const int value);

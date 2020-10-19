@@ -3,6 +3,11 @@
 
 #include "WProgram.h"
 
+#define ANALOGOUTPUT PinHandle::writeAnalog
+#define ANALOGINPUT PinHandle::readAnalog
+#define DIGITALOUTPUT PinHandle::writeDigital
+#define DIGITALINPUT PinHandle::readDigital
+
 namespace PinHandle {
 
 // Null handler for testing
