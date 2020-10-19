@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#include "WProgram.h"
 #include "Fault.h"
 
 static void BMSFaultMsg(const CAN_message_t &msg) {

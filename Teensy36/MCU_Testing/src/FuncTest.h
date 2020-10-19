@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#include "FlexCAN_T4.h"
 #include "config.def"
 
 static CAN_message_t test_msg;
@@ -20,9 +21,19 @@ void setTestMessage(void) {
     // test_msg.buf[7] = '';
 }
 
-void sendTestMessage(FlexCAN_T4<CONF_TEENSY_CAN, RX_SIZE_256, TX_SIZE_16> F_Can) {
-    setTestMessage();
+#define sendTestMessage(F_can) \
+    setTestMessage();          \
     F_Can.write(test_msg);
+
+void blinkStart() {
+    pinMode(13, OUTPUT);
+    digitalWriteFast(13, HIGH);
+    delay(250);
+    digitalWriteFast(13, LOW);
+    delay(250);
+    digitalWriteFast(13, HIGH);
+    delay(250);
+    digitalWriteFast(13, LOW);
 }
 
 void testSerialBytePrint(void) {
@@ -41,16 +52,26 @@ void testSerialBytePrint(void) {
         };
     } test_msg;
     Serial.begin(115200);
-    delay(5000);
+    delay(2000);
     static uint32_t timeout = millis();
     Serial.println("Start Test!");
     while (1) {
-        if (millis() - timeout > 3000) {
+        if (millis() - timeout > 100) {
+
+            uint16_t testSpd = random(300);
+            test_msg.buf[1] = testSpd & 0xFF;
+            test_msg.buf[0] = (testSpd >> 8) & 0xFF;
+
             Serial.write((const uint8_t *)&test_msg.id, 2);  // Java: DataStream.readInt
             Serial.write((const uint8_t *)&test_msg.buf, 8); // Java: DataStream.readByte x 8
             timeout = millis();
         }
     }
+}
+
+void SerialTest(void) {
+    blinkStart();
+    testSerialBytePrint();
 }
 
 void canSniff(const CAN_message_t &msg) {

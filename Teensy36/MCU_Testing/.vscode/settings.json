@@ -47,7 +47,13 @@
         "exception": "cpp",
         "iterator": "cpp",
         "new": "cpp",
-        "cstdint": "cpp"
+        "cstdint": "cpp",
+        "cctype": "cpp",
+        "clocale": "cpp",
+        "cstdarg": "cpp",
+        "cstddef": "cpp",
+        "cwctype": "cpp",
+        "cinttypes": "cpp"
     },
     "git.ignoreLimitWarning": true
 }

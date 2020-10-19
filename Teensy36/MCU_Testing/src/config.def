@@ -1,0 +1,16 @@
+#ifndef __CONFIG_DEF__
+#define __CONFIG_DEF__
+
+#define CONF_TEENSY_BAUD_RATE 115200
+#define CONF_TEENSY_INITAL_DELAY 1000
+
+#define CONF_FLEXCAN_CAN_SELECT CAN1 // CAN1 or CAN0 on T3.6 | CAN3 on T4.X
+#define CONF_FLEXCAN_BAUD_RATE 1000000
+#define CONF_FLEXCAN_TX_MAILBOXES 3 // Number of outgoing mailboxes
+
+#define CONF_BITMASK_BMS_HARDFAULT 0x4000020120100080 // Convert the 1s and 0s to hex first
+#define CONF_BITMASK_RMS_HARDFAULT 0x4000020120100080
+
+#define CONF_POLLING_DELAY 50 // Milliseconds between the time the teensy polls a chunk of pins
+
+#endif // __CONFIG_DEF__

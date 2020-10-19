@@ -1,3 +1,6 @@
+#ifndef __PP_HELP_DEF__
+#define __PP_HELP_DEF__
+
 #define CONCAT(A, B) A##B
 #define EXPAND_CONCAT(A, B) CONCAT(A, B)
 
@@ -51,3 +54,5 @@
 // #define DEC_8 7
 // #define DEC_9 8
 // #define DEC_10 9
+
+#endif // __PP_HELP_DEF__

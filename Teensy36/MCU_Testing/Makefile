@@ -19,7 +19,7 @@ TOOLOFFSET = ../../Toolchain
 WSLMODE = 0
 
 # Set to 24000000, 48000000, or 96000000 to set CPU core speed
-TEENSY_CORE_SPEED = 48000000
+TEENSY_CORE_SPEED = 180000000
 
 # Some libraries will require this to be defined
 # If you define this, you will break the default main.cpp

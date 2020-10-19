@@ -1,6 +1,5 @@
-#include "FuncTest.h"
-#include "Messages.h"
 #include "pp_help.def"
+#include "Messages.h"
 
 // X(address, function)
 #define CAN_MESSAGES \

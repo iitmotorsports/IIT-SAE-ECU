@@ -1,0 +1,14 @@
+#ifndef __PINOUTS_DEF__
+#define __PINOUTS_DEF__
+
+#include "PinHandlers.h"
+#include "WProgram.h"
+#include "pp_help.def"
+
+// X(GPIO, IN/OUT, Handle) // IMPROVE: add analog resolution and frequency
+#define TEENSY_PINS                       \
+    X(A7, INPUT, PinHandle::readAnalog)   \
+    X(A6, OUTPUT, PinHandle::writeAnalog) \
+    X(4, INPUT, PinHandle::null)
+
+#endif // __PINOUTS_H__
