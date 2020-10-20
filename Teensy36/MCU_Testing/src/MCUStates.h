@@ -1,5 +1,7 @@
-#include "FuncTest.h"
-#include "Main.h"
+#ifndef __MCUSTATES_H__
+#define __MCUSTATES_H__
+
+#include "MCU.h"
 #include "State.h"
 
 static struct Starting_t : State::State_t_proxy<Starting_t> {
@@ -52,3 +54,4 @@ public:
         return;
     }
 } Starting;
+#endif // __MCUSTATES_H__

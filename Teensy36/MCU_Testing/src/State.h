@@ -95,7 +95,7 @@ struct State_t_proxy : State_t {
     };
 };
 
-static int begin(State_t &entry) {
+extern int begin(State_t &entry) {
     entry.trigger();
     Serial.begin(CONF_TEENSY_BAUD_RATE);
     delay(CONF_TEENSY_INITAL_DELAY);

@@ -1,5 +1,5 @@
-#ifndef __MAIN_H__
-#define __MAIN_H__
+#ifndef __MCU_H__
+#define __MCU_H__
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -18,13 +18,13 @@ static const int RX_MAILBOXES = PP_NARG_MO(CAN_MESSAGES);
 
 FlexCAN_T4<CONF_FLEXCAN_CAN_SELECT, RX_SIZE_256, TX_SIZE_16> F_Can;
 
-void setupMB(FLEXCAN_MAILBOX MB, uint32_t address, _MB_ptr handler) {
+static void setupMB(FLEXCAN_MAILBOX MB, uint32_t address, _MB_ptr handler) {
     F_Can.setMBFilter(MB, address, address);
     F_Can.enhanceFilter(MB);
     F_Can.onReceive(MB, handler);
 }
 
-void setMailboxes() { // Set mailbox filters & handles from def file
+static void setMailboxes() { // Set mailbox filters & handles from def file
 
     F_Can.setMaxMB(TX_MAILBOXES + RX_MAILBOXES); // set number of TX & RX MBs
 
@@ -51,4 +51,4 @@ void setMailboxes() { // Set mailbox filters & handles from def file
     F_Can.mailboxStatus();
 }
 
-#endif // __MAIN_H__
+#endif // __MCU_H__
