@@ -1,3 +1,6 @@
+#ifndef __MESSAGES_DEF__
+#define __MESSAGES_DEF__
+
 #include "Messages.h"
 #include "pp_help.def"
 
@@ -5,3 +8,5 @@
 #define CAN_MESSAGES  \
     X(0, BMSFaultMsg) \
     X(10, RMSFaultMsg)
+
+#endif // __MESSAGES_DEF__

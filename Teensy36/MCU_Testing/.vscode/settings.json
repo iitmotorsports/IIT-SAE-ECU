@@ -53,7 +53,8 @@
         "cstdarg": "cpp",
         "cstddef": "cpp",
         "cwctype": "cpp",
-        "cinttypes": "cpp"
+        "cinttypes": "cpp",
+        "cerrno": "cpp"
     },
     "git.ignoreLimitWarning": true
 }

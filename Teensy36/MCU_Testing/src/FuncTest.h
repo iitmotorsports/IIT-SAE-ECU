@@ -51,8 +51,6 @@ void testSerialBytePrint(void) {
             0,
         };
     } test_msg;
-    Serial.begin(115200);
-    delay(2000);
     static uint32_t timeout = millis();
     Serial.println("Start Test!");
     while (1) {

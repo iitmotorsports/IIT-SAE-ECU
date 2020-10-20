@@ -1,3 +1,6 @@
+#ifndef __PINOUTS_DEF__
+#define __PINOUTS_DEF__
+
 #include "PinHandlers.h"
 #include "WProgram.h"
 #include "pp_help.def"
@@ -9,3 +12,5 @@
     X(PIN_A7, ANALOG, INPUT)  \
     X(PIN_A6, ANALOG, OUTPUT) \
     X(4, DIGITAL, OUTPUT)
+
+#endif // __PINOUTS_DEF__
