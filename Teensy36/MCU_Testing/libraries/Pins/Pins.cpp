@@ -1,13 +1,10 @@
-#include <stdint.h>
-#include <stdlib.h>
-
-#include "PinPolling.h"
-#include "config.def"
+#include "Pins.h"
+#include "Handlers.hpp"
 
 static elapsedMillis timeElapsed;
 static int pos = 0;
- 
-#define X(pin, Type, IO) { pin , Type##IO },
+
+#define X(pin, Type, IO) {pin, Type##IO},
 static Pins::pin_t pins[Pins::pinCount] = {TEENSY_PINS}; // Allocate pins
 #undef X
 

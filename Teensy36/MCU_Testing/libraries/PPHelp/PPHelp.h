@@ -1,5 +1,5 @@
-#ifndef __PP_HELP_DEF__
-#define __PP_HELP_DEF__
+#ifndef __PPHELP_H__
+#define __PPHELP_H__
 
 #define CONCAT(A, B) A##B
 #define EXPAND_CONCAT(A, B) CONCAT(A, B)
@@ -55,4 +55,4 @@
 // #define DEC_9 8
 // #define DEC_10 9
 
-#endif // __PP_HELP_DEF__
+#endif // __PPHELP_H__

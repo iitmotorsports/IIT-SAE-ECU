@@ -1,5 +1,5 @@
-#ifndef __FUNCTEST_H__
-#define __FUNCTEST_H__
+#ifndef __TESTING_H__
+#define __TESTING_H__
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -105,4 +105,5 @@ void readTest(const CAN_message_t &msg) {
     }
     Serial.println();
 }
-#endif // __FUNCTEST_H__
+
+#endif // __TESTING_H__

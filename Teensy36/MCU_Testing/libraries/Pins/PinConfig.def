@@ -1,0 +1,55 @@
+#ifndef __MCU_PINCONFIG_H__
+#define __MCU_PINCONFIG_H__
+
+#include "PPHelp.h"
+#include "WProgram.h"
+
+#define ANALOG
+#define DIGITAL
+
+/**
+ *  8888888b.  d8b                            888             
+ *  888   Y88b Y8P                            888             
+ *  888    888                                888             
+ *  888   d88P 888 88888b.   .d88b.  888  888 888888 .d8888b  
+ *  8888888P"  888 888 "88b d88""88b 888  888 888    88K      
+ *  888        888 888  888 888  888 888  888 888    "Y8888b. 
+ *  888        888 888  888 Y88..88P Y88b 888 Y88b.       X88 
+ *  888        888 888  888  "Y88P"   "Y88888  "Y888  88888P' 
+ *  ---------------------------------------------------------
+ *  The pinout setup for the MCU, set the specific pin,
+ *  whether it is analog or digital, and whether we are
+ *  taking input or giving an output on the pin
+ * 
+ *  Unless it is the last entry, this is how to add a new pin
+ * 
+ *  X(GPIO, ANALOG/DIGITAL, INPUT/OUTPUT) \
+ *  
+ *  Only the last entry should NOT have a '\'
+*/
+
+#define TEENSY_PINS           \
+    X(PIN_A7, ANALOG, INPUT)  \
+    X(PIN_A6, ANALOG, OUTPUT) \
+    X(4, DIGITAL, OUTPUT)
+
+/**
+ *   .d8888b.                     .d888 d8b          
+ *  d88P  Y88b                   d88P"  Y8P          
+ *  888    888                   888                 
+ *  888         .d88b.  88888b.  888888 888  .d88b.  
+ *  888        d88""88b 888 "88b 888    888 d88P"88b 
+ *  888    888 888  888 888  888 888    888 888  888 
+ *  Y88b  d88P Y88..88P 888  888 888    888 Y88b 888 
+ *   "Y8888P"   "Y88P"  888  888 888    888  "Y88888 
+ *                                               888 
+ *                                          Y8b d88P 
+ *                                           "Y88P"  
+ *  ------------------------------------------------
+ *  Modify the definitions below to change this
+ *  library's behavior
+*/
+
+#define CONF_POLLING_DELAY 50 // Milliseconds between the time the teensy polls a chunk of pins
+
+#endif // __MCU_PINCONFIG_H__
