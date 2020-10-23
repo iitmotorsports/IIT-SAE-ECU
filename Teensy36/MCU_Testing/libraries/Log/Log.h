@@ -20,6 +20,6 @@ struct Log_t {
     void f(const char *TAG, const char *format, ...);
 };
 
-static Log_t Log;
+extern Log_t Log;
 
 #endif // __MCU_LOGGING_H__

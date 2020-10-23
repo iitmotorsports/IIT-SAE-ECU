@@ -1,16 +1,24 @@
 #include "Pins.h"
 #include "Handlers.hpp"
 
+#include "PinConfig.def"
+
 static elapsedMillis timeElapsed;
 static int pos = 0;
 
+#define X(...) ,
+static const int pinBlocking = sqrt(PP_NARG_MO(TEENSY_PINS)); // Gets the number of pins to poll every update
+static const int pinCount = PP_NARG_MO(TEENSY_PINS);          // Length of the pin array
+static const int pinDelay = CONF_POLLING_DELAY;                  // Milliseconds between the time the teensy polls a chunk of pins
+#undef X
+
 #define X(pin, Type, IO) {pin, Type##IO},
-static Pins::pin_t pins[Pins::pinCount] = {TEENSY_PINS}; // Allocate pins
+static Pins::pin_t pins[pinCount] = {TEENSY_PINS}; // Allocate pins
 #undef X
 
 // ALT: allocate all GPIO pins so index matches GPIO number
 inline static Pins::pin_t *getPin(const int GPIO_Pin) {
-    int i = Pins::pinCount;
+    int i = pinCount;
     switch (GPIO_Pin) {
 #define X(pin, ...) \
     case pin:       \
@@ -24,17 +32,17 @@ inline static Pins::pin_t *getPin(const int GPIO_Pin) {
     return &pins[i];
 }
 
-extern int Pins::getPinValue(const int GPIO_Pin) {
+int Pins::getPinValue(const int GPIO_Pin) {
     return getPin(GPIO_Pin)->value;
 }
 
-extern void Pins::setPinValue(const int GPIO_Pin, const int value) {
+void Pins::setPinValue(const int GPIO_Pin, const int value) {
     getPin(GPIO_Pin)->value = value;
 }
 
-extern void Pins::update(void) {
-    if (timeElapsed >= delay) {
-        timeElapsed = timeElapsed - delay;
+void Pins::update(void) {
+    if (timeElapsed >= pinDelay) {
+        timeElapsed = timeElapsed - pinDelay;
         for (size_t i = 0; i < pinBlocking; i++) {
             ++pos;
             pos = pos % pinCount;
@@ -43,7 +51,7 @@ extern void Pins::update(void) {
     }
 }
 
-extern void Pins::initialize(void) {
+void Pins::initialize(void) {
 #define X(pin, Type, IO) pinMode(pin, IO);
     TEENSY_PINS
 #undef X

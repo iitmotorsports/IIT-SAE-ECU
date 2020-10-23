@@ -21,8 +21,9 @@ private:
 public:
     bool SetupOnce = false;
     bool enableSetup = true;
-    State_t *nextState = this;
-    const char *ID = "Starting";
+    const char * ID = "Starting";
+    // State_t *nextState = this;
+    // State_t *errorState = this;
 
     State::ExitCode setup(void) {
         if (firstSetup) {
@@ -36,6 +37,7 @@ public:
         count = 5;
         return State::NOERR;
     };
+
     State::ExitCode loop(void) {
 
         if (timeElapsed >= 1000) {

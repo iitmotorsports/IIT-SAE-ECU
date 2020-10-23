@@ -10,11 +10,11 @@
 
 namespace PinHandlers {
 
-extern void null(const int pin, int &value);
-extern void readDigital(const int pin, int &value);
-extern void readAnalog(const int pin, int &value);
-extern void writeDigital(const int pin, int &value);
-extern void writeAnalog(const int pin, int &value);
+void null(const int pin, int &value);
+void readDigital(const int pin, int &value);
+void readAnalog(const int pin, int &value);
+void writeDigital(const int pin, int &value);
+void writeAnalog(const int pin, int &value);
 
 } // namespace PinHandlers
 

@@ -27,32 +27,30 @@
 #include <typeinfo>
 
 #include "Log.h"
+#include "PPHelp.h"
 #include "StateConfig.def"
 
 namespace State {
 
-enum ExitCode {
+enum ExitCode : uint8_t {
     NOERR,
     DONE,
     ERROR,
-    FAULT
+    FAULT,
+    STOP // Spooky
 };
 
-struct State_t;
-static State_t *currentState;
 struct State_t {
 
     bool SetupOnce = false;
     bool enableSetup = true;
-    const char *ID = "NULL STATE";
-    State_t *nextState;  // Next State to goto if loop exits w/ code DONE
-    State_t *errorState; // State to goto if state exits not with NOERR
+    const char *ID = "ID NOT SET";
+    static State_t *nextState;  // Next State to goto if loop exits w/ code DONE
+    static State_t *errorState; // State to goto if state exits not with NOERR
 
-    void trigger() {
-        currentState = this;
-    }
+    // virtual void trigger(void);
 
-    virtual ExitCode runSetup();
+    virtual ExitCode runSetup(void);
     virtual void next(void);
     virtual void error(void);
 
@@ -60,32 +58,35 @@ struct State_t {
     virtual ExitCode loop(void);
 };
 
+void setNextState(State_t *state);
+
 template <typename Derived>
 struct State_extend : State_t {
 
-    virtual ExitCode runSetup() {
+    virtual ExitCode runSetup(void) {
         Derived *p = static_cast<Derived *>(this);
         if (p->enableSetup) {
-            Log.d(p->ID, "state setup");
+            Log.d(p->ID, "Begin setup");
             ExitCode exitCode = setup();
             if (exitCode != NOERR)
                 return exitCode;
             if (p->SetupOnce) {
-                Log.d(p->ID, "state setup only once");
+                Log.d(p->ID, "Setup only once");
                 p->enableSetup = false;
             }
+            Log.d(p->ID, "Finish setup");
         }
         return NOERR;
     }
 
     virtual void next(void) {
         Derived *p = static_cast<Derived *>(this);
-        p->nextState->trigger();
+        setNextState(p->nextState);
     };
 
     virtual void error(void) {
         Derived *p = static_cast<Derived *>(this);
-        p->errorState->trigger();
+        setNextState(p->errorState);
     };
 
     State::ExitCode setup(void) {
@@ -98,9 +99,8 @@ struct State_extend : State_t {
 };
 
 // Return last exitCode; for error handling states
-extern ExitCode getExitCode();
-
-extern int begin(State_t &entry);
+ExitCode getExitCode();
+int begin(State_t &entry);
 
 } // namespace State
 
