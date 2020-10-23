@@ -4,8 +4,8 @@
 #include "FlexCAN_T4.h"
 #include "WProgram.h"
 
-#include "State.h"
 #include "Pins.h"
+#include "State.h"
 
 static struct Starting_t : State::State_extend<Starting_t> {
 private:
@@ -16,9 +16,9 @@ private:
 public:
     bool SetupOnce = false;
     bool enableSetup = true;
-    const char *ID = "Starting";
-    // State_t *nextState = this;
-    // State_t *errorState = this;
+    const char *ID = "Teensy Start";
+    State_t *nextState = this;
+    State_t *errorState = this;
 
     State::ExitCode setup(void) {
         if (firstSetup) {
@@ -37,10 +37,9 @@ public:
 
         if (timeElapsed >= 1000) {
             timeElapsed = timeElapsed - 1000;
-            Log(ID, "%u", random(300));
             count--;
             // sendTestMessage(F_Can);
-            Serial.println(Pins::getPinValue(A7));
+            Log(ID, "%u", Pins::getPinValue(A7));
             Pins::setPinValue(A6, random(1024));
         }
         Pins::update();
