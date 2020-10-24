@@ -1,5 +1,5 @@
 #include "MCU.h"
-#include "config.def"
+#include "Config.def"
 
 int main(void) {
     Serial.begin(CONF_TEENSY_BAUD_RATE);
