@@ -21,7 +21,7 @@
                 "showReuseMessage": false,
                 "clear": true
             },
-            "command": "make  -j16  hex",
+            "command": "make -j16 hex",
             "problemMatcher": []
         },
         {

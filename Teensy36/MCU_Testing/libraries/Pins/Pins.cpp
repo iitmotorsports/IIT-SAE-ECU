@@ -3,15 +3,16 @@
 
 #include "PinConfig.def"
 
+// Any concern with a pin not getting data in time?
+// Ditch caching, no reason to wait for a new value, delay may take longer than just getting actual value
+
 static elapsedMillis timeElapsed;
 static int pos = 0;
-
-// TODO: ditch XMacros to allow pins to be set dynamiclly, in or out and only if a state requires it
 
 #define X(...) ,
 static const int pinBlocking = sqrt(PP_NARG_MO(TEENSY_PINS)); // Gets the number of pins to poll every update
 static const int pinCount = PP_NARG_MO(TEENSY_PINS);          // Length of the pin array
-static const int pinDelay = CONF_POLLING_DELAY;                  // Milliseconds between the time the teensy polls a chunk of pins
+static const int pinDelay = CONF_POLLING_DELAY;               // Milliseconds between the time the teensy polls a chunk of pins
 #undef X
 
 #define X(pin, Type, IO) {pin, Type##IO},

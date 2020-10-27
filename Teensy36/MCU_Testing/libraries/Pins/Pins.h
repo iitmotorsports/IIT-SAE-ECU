@@ -2,7 +2,7 @@
 #define __MCU_PINS_H__
 
 // IMPROVE: pin priority
-// IMPROVE: add analog resolution and frequency option
+// TODO: add analog resolution and frequency option
 
 #include <stdint.h>
 #include <stdlib.h>
