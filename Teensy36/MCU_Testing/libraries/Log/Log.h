@@ -4,6 +4,10 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+/** IMPROVE: create precompile script that converts any call to Log to instead send a two byte ID that matches a string corresponding to it's unique string
+ *  in a generated lookup table that is output next to the compiled hex file
+*/
+
 // Use for logging things
 struct Log_t {
     // Log something to usb serial
