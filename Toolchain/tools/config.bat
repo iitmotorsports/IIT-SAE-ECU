@@ -147,8 +147,11 @@ GOTO EXIT
 if errorlevel 1 (
     echo.
     echo Task Failed ❌
+    cd %call_path%
+    exit /b 1
 ) else (
     echo.
     echo Task Succeeded ✔️
+    cd %call_path%
+    exit /b 0
 )
-cd %call_path%
