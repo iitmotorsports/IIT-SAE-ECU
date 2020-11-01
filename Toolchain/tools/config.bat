@@ -1,5 +1,6 @@
 @echo off
 chcp 65001 >NUL
+
 set call_path=%CD%
 set tool_path=%~dp0%
 set only_config=0
@@ -7,6 +8,9 @@ set new_build_dir=0
 if not exist build (
     mkdir build
     set new_build_dir=1
+)
+if not exist build/build.ninja (
+    set no_ninja_script=1
 )
 
 IF "%1"=="build" GOTO BUILD
@@ -16,22 +20,24 @@ IF "%1"=="config" (
     GOTO END_CLEAN
 )
 IF "%1"=="clean" (
-    if "%new_build_dir%"=="1" (
-        echo Nothing to clean
+    if "%no_ninja_script%"=="1" (
+        echo Project is invalid ⛔
+        echo Consider running config or hard_clean
+        start /wait exit /b 1
         GOTO EXIT
     )
     cd build
     echo Cleaning 🧹
     %tool_path%ninja.exe clean
-    if not %errorlevel%==0 echo Error cleaning up build files ⛔
+    if errorlevel 1 echo Error cleaning up build files ⛔
     GOTO EXIT
 )
 IF "%1"=="hard_clean" (
     if "%new_build_dir%"=="1" (
-        echo Nothing to clean
-        GOTO EXIT
+        set only_config=1
+        GOTO END_CLEAN
     )
-    echo Cleaning 🧹
+    echo Hard Cleaning 🧼🧽
     set only_config=1
     GOTO CLEAN
 )
@@ -46,6 +52,9 @@ echo config             : Reconfigure cmake project
 GOTO EXIT
 
 :BUILD
+if "%no_ninja_script%"=="1" (
+    GOTO CLEAN
+)
 if "%new_build_dir%"=="1" (
     GOTO END_CLEAN
     :CLEAN
@@ -55,9 +64,9 @@ if "%new_build_dir%"=="1" (
     timeout /t 1 /nobreak >NUL
     :END_CLEAN
     cd build
-    echo Configuring CMake project ⌚
+    echo Configuring CMake project ⚙️
     cmake .. -G Ninja
-    if not %errorlevel%==0 (
+    if errorlevel 1 (
         echo Failed to configure cmake ⛔
         GOTO EXIT
     )
@@ -67,17 +76,29 @@ if "%new_build_dir%"=="1" (
 cd build
 echo Building ⏳
 %tool_path%ninja.exe -j16
-if not %errorlevel%==0 (
+if errorlevel 1 (
     echo Ninja failed to build ⛔
     GOTO EXIT
 )
 echo Build Finished ☕
+cd ".."
+for /f "tokens=2 delims==" %%a in ('type build\CMakeCache.txt^|find "FINAL_OUTPUT_FILE:INTERNAL="') do (
+    set FINAL_OUTPUT_FILE=%%a & goto :continueB
+)
+:continueB
+
+if not exist "%FINAL_OUTPUT_FILE%" (
+    GOTO BINARY_DOES_NOT_EXIST
+) else (
+    echo Ready to Upload ⏫
+)
 GOTO EXIT
 
 :UPLOAD
 
 if not exist build\CMakeCache.txt (
     echo CMake has not been configured ⛔
+    start /wait exit /b 1
     GOTO EXIT
 )
 
@@ -91,7 +112,9 @@ for /f "tokens=2 delims==" %%a in ('type build\CMakeCache.txt^|find "FINAL_OUTPU
 :continue1
 
 if not exist "%FINAL_OUTPUT_FILE%" (
-    echo Final binary file has not been built ⛔
+:BINARY_DOES_NOT_EXIST
+    echo Final binary file was not found ⛔
+    start /wait exit /b 1
     GOTO EXIT
 )
 
@@ -100,25 +123,32 @@ if "%2"=="" (
     set no_auto_reboot=1
 )
 
-if "%no_auto_reboot%"=="" %tool_path%ComMonitor.exe "%2" 134 -c --priority
-timeout /t 1 > NUL
+if "%no_auto_reboot%"=="" ( 
+    %tool_path%ComMonitor.exe "%2" 134 -c --priority
+    timeout /t 1 > NUL
+)
+
 %tool_path%teensy_loader_cli.exe -mmcu=%TEENSY_CORE_NAME% -v %FINAL_OUTPUT_FILE%
 
-if not %errorlevel%==0 (
+if errorlevel 1 (
     echo Failed to upload once ⛔
-    if "%no_auto_reboot%"=="" %tool_path%ComMonitor.exe "%2" 134 -c --priority
-    timeout /t 1 > NUL
     %tool_path%teensy_loader_cli.exe -mmcu=%TEENSY_CORE_NAME% -v %FINAL_OUTPUT_FILE%
-    @REM if not %errorlevel%==0 (
-    @REM     echo Failed to upload ⛔
-    @REM     echo Is the teensy connected?
-    @REM     GOTO EXIT
-    @REM )
+    if errorlevel 1 (
+        echo Failed to upload ⛔
+        echo Is the teensy connected?
+        GOTO EXIT
+    )
 )
 
 echo Good to go 🦼
 GOTO EXIT
 
 :EXIT
+if errorlevel 1 (
+    echo.
+    echo Task Failed ❌
+) else (
+    echo.
+    echo Task Succeeded ✔️
+)
 cd %call_path%
-echo Task finished ✅
