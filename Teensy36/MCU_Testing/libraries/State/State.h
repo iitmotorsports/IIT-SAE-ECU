@@ -50,12 +50,12 @@ struct State_t {
 
     // virtual void trigger(void);
 
-    virtual ExitCode runSetup(void);
-    virtual void next(void);
-    virtual void error(void);
+    virtual ExitCode runSetup(void) { return ExitCode::NOERR; };
+    virtual void next(void){};
+    virtual void error(void){};
 
-    virtual ExitCode setup(void);
-    virtual ExitCode loop(void);
+    virtual ExitCode setup(void){return ExitCode::NOERR;};
+    virtual ExitCode loop(void){return ExitCode::DONE;};
 };
 
 void setNextState(State_t *state);
@@ -88,15 +88,6 @@ struct State_extend : State_t {
         Derived *p = static_cast<Derived *>(this);
         setNextState(p->errorState);
     };
-
-    State::ExitCode setup(void) {
-        return State::NOERR;
-    };
-
-    State::ExitCode loop(void) {
-        return State::DONE;
-    };
-
 };
 
 // Return last exitCode; for error handling states

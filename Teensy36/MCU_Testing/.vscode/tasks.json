@@ -2,64 +2,89 @@
     // See https://go.microsoft.com/fwlink/?LinkId=733558
     // for the documentation about the tasks.json format
     "version": "2.0.0",
-    // These Tasks are meant to be run through WSL
     "tasks": [
-        {
-            "label": "Clean",
-            "type": "shell",
-            "detail": "Clean up build files",
-            "command": "make clean",
-            "problemMatcher": []
-        },
         {
             "label": "Build",
             "type": "shell",
-            "detail": "Compile files",
+            "detail": "Compile project",
             "presentation": {
                 "focus": true,
                 "panel": "shared",
                 "showReuseMessage": false,
                 "clear": true
             },
-            "command": "make -j16 hex",
+            "command": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
+            "args": [
+                "build"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "Configure",
+            "type": "shell",
+            "detail": "Configure the CMake project",
+            "presentation": {
+                "panel": "shared",
+                "showReuseMessage": false
+            },
+            "command": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
+            "args": [
+                "config"
+            ],
+            "runOptions": {
+                "runOn": "folderOpen"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Clean",
+            "type": "shell",
+            "detail": "Clean up build files",
+            "presentation": {
+                "panel": "shared",
+                "showReuseMessage": false
+            },
+            "command": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
+            "args": [
+                "clean"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Hard Clean",
+            "type": "shell",
+            "detail": "Clean up entire CMake project",
+            "presentation": {
+                "panel": "shared",
+                "showReuseMessage": false
+            },
+            "command": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
+            "args": [
+                "hard_clean"
+            ],
             "problemMatcher": []
         },
         {
             "label": "Upload",
             "type": "shell",
-            "detail": "Upload compiled files to the teensy",
+            "detail": "Upload compiled binary to teensy",
             "presentation": {
                 "panel": "shared",
                 "showReuseMessage": false
             },
-            "command": "make upload",
-            "problemMatcher": []
-        },
-        {
-            "label": "Reboot",
-            "type": "shell",
-            "detail": "Ask for which com port",
-            "presentation": {
-                "panel": "shared",
-                "showReuseMessage": false
-            },
-            "command": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/ComMonitor.exe",
+            "command": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
             "args": [
-                "${input:TEENSY_USB_PORTNAME}",
-                "134",
-                "-c",
-                "--priority"
+                "upload",
+                "${input:TEENSY_USB_PORTNAME}"
             ],
-            "problemMatcher": [],
-            "dependsOrder": "sequence"
+            "problemMatcher": []
         },
         {
             "label": "Monitor",
             "type": "shell",
-            "detail": "Ask for which com port",
-            // "runOptions": {
-            //     "instanceLimit": 3
-            // }, // Allows multiple multiple monitors
+            "detail": "Monitor teensy over a CLI",
             "presentation": {
                 "panel": "shared",
                 "showReuseMessage": false
@@ -67,42 +92,8 @@
             "command": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/ComMonitor.exe",
             "args": [
                 "${input:TEENSY_USB_PORTNAME}",
-                "${config:TEENSY_BAUDRATE}",
-                // "-h",
-                "-r"
-            ],
-            "problemMatcher": []
-        },
-        {
-            "label": "RebootConf",
-            "type": "shell",
-            "detail": "Use com port set in settings",
-            "presentation": {
-                "panel": "shared",
-                "showReuseMessage": false
-            },
-            "command": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/ComMonitor.exe",
-            "args": [
-                "${config:TEENSY_USB_PORTNAME}",
-                "134",
-                "-c",
-                "--priority"
-            ],
-            "problemMatcher": [],
-            "dependsOrder": "sequence"
-        },
-        {
-            "label": "MonitorConf",
-            "type": "shell",
-            "detail": "Use com port set in settings",
-            "presentation": {
-                "panel": "shared",
-                "showReuseMessage": false
-            },
-            "command": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/ComMonitor.exe",
-            "args": [
-                "${config:TEENSY_USB_PORTNAME}",
-                "${config:TEENSY_BAUDRATE}",
+                "${input:TEENSY_BAUDRATE}",
+                "-t${input:TEENSY_COM_TYPE}",
                 "-r"
             ],
             "problemMatcher": []
@@ -110,11 +101,10 @@
         {
             "label": "Shebang",
             "type": "shell",
-            "detail": "Run all tasks but ask for which com port",
+            "detail": "Run all tasks required to program teensy",
             "dependsOrder": "sequence",
             "dependsOn": [
                 "Build",
-                "Reboot",
                 "Upload",
                 "Monitor"
             ],
@@ -124,25 +114,20 @@
                 "isDefault": true
             }
         },
-        {
-            "label": "ShebangConf",
-            "type": "shell",
-            "detail": "Run all tasks using the com port set in settings",
-            "dependsOrder": "sequence",
-            "dependsOn": [
-                "Build",
-                "RebootConf",
-                "Upload",
-                "MonitorConf"
-            ],
-            "problemMatcher": [],
-            // "group": {
-            //     "kind": "build",
-            //     "isDefault": true
-            // }
-        }
     ],
     "inputs": [
+        {
+            "id": "TEENSY_COM_TYPE",
+            "description": "What type of data the monitor should expect",
+            "type": "pickString",
+            "options": [
+                "Ascii",
+                "Hex",
+                "Decimal",
+                "Binary",
+            ],
+            "default": "Ascii"
+        },
         {
             "id": "TEENSY_USB_PORTNAME",
             "description": "What portname the moniter should use",
@@ -152,16 +137,6 @@
                 "COM7"
             ],
             "default": "COM6"
-        },
-        {
-            "id": "TEENSY_USB_PORTNAME_2",
-            "description": "What 2nd portname the dual moniter should use",
-            "type": "pickString",
-            "options": [
-                "COM6",
-                "COM7"
-            ],
-            "default": "COM7"
         },
         {
             "id": "TEENSY_BAUDRATE",

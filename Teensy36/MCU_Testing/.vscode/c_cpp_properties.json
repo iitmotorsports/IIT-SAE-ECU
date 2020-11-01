@@ -1,7 +1,7 @@
 {
     "configurations": [
         {
-            "name": "Linux",
+            "name": "Windows",
             "includePath": [
                 "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/teensy/avr/cores/teensy3/**",
                 "${workspaceFolder}/libraries/**"
@@ -14,7 +14,7 @@
                 "limitSymbolsToIncludedHeaders": false
             },
             "defines": [
-                "__MK66FX1M0__",
+                "__${config:TEENSY_MCU}__",
                 "F_CPU=180000000",
                 "USB_SERIAL",
                 "LAYOUT_US_ENGLISH",
@@ -22,10 +22,10 @@
                 "_GNU_SOURCE",
                 "USING_MAKEFILE"
             ],
-            "compilerPath": "/usr/bin/gcc",
+            "compilerPath": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/bin/arm-none-eabi-gcc.exe",
             "cStandard": "gnu11",
             "cppStandard": "gnu++14",
-            "intelliSenseMode": "gcc-x64"
+            "intelliSenseMode": "gcc-arm"
         }
     ],
     "version": 4

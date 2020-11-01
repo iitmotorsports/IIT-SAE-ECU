@@ -1,87 +1,60 @@
-Teensy 3.X Project Template
+Teensy 3.6 Project Folder Template
 ===========================
-
+ 
 Purpose
 -------
 
-An easy starting point for a Teensy 3.X project which might not fit inside the
-arduino build environment.
+An easy starting point for Teensy 3.6 projects on windows, with the only prerequisite being CMake.
 
-Modified to be used under [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10) and [VSCode](https://code.visualstudio.com/)
+This template is meant to contain multiple projects as to make use of the included toolchain.
 
-Note that this will not work under [VSCodium](https://vscodium.com/) as Microsoft wont let us for [now](https://code.visualstudio.com/docs/remote/faq#_why-arent-the-remote-development-extensions-or-their-components-open-source) :/
+This setup is not meant for Unix systems.
 
-Reasons to Use
---------------
-
-- You need to modify the teensy core
-- You don't love Java IDE's
-- You love Make
-- Because
+This setup is also meant only for the Teensy 3.6 although some tweaking can be done to be used
+on other boards
 
 Setup
 -----
 
-Install the Teensy udev rule: `sudo cp tools/49-teensy.rules /etc/udev/rules.d/`
+Install the Latest Release version of [CMake](https://cmake.org/download/)
 
-Then unplug your Teensy and plug it back in.
+As of today, that would be version 3.18.4
 
-### VSCode Specific
+Inside `.vscode/tasks.json`, modify the options for `TEENSY_USB_PORTNAME` for the ports that the project should use to connect to your teensy. ( Set to COM6 by default )
 
-Install and enable ( or enable per workspace ) the [Remote Extension Pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
+You can also modify the defaults for other tasks.
 
-When using with WSL and VSCode cd into the folder and then run `code .`
-
-Also run `sudo chmod 777 -R folder-name` where `folder-name` is the name of the entire folder, I was running into permission issues with WSL
-
-Set the baudrate and port that should be used to upload/monitor in `.vscode/settings.json`
-
-This template *should* still work on pure linux, however, the current CLI tools will not
+Incase you wish to place the project folder elsewhere, you can modify `TOOLCHAIN_OFFSET` inside `.vscode/settings.json` in order to tell the project where the toolchain is. The path must be relative.
+This path must also be modified inside the first line of `CmakeLists.txt`.
 
 Using
 -----
 
-1. Put your code in `src/main.cpp`
-2. Put any libraries you need in `libraries`
-3. Set the TEENSY variable in `Makefile` according to your teensy version
-4. Build your code ```make```
-5. Upload your code ```make upload```
+Put your code in `src/main.cpp`
+Put any libraries you need in `libraries`
+
+You can also modify the set values and compile flags inside `CmakeLists.txt` if you know what you are doing.
+They are mostly under the function calls `add_compile_definitions` and `add_compile_options` towards the beginning.
 
 ### VSCode Tasks
 
-* `Clean`: Run `make clean`
-* `Build`: Run `make build`
-* `Stop Monitor`: Run a CMD command to stop the monitor ( VS does not close it automatically )
-* `Reboot`: Connect to teensy at 134 Baud to reboot it
-* `Upload`: Run `make upload` with WSL Mode enabled
-* `Monitor`: Run monitor program to read serial data
+* `Clean`: Clean up build files
+* `Hard Clean`: Clean up entire CMake project
+* `Build`: Compile project
+* `Upload`: Upload compiled binary to teensy
+* `Monitor`: Monitor teensy over a CLI, select the appropriate options when running
 
-By default, `Ctrl + Shift + B` (Run Build Task) should run all of the above in order except for `Clean`
-
-Make Targets
-------------
-
-- `make` alias for `make hex`
-- `make build` compiles everything and produces a .elf
-- `make upload` uploads the hex file to a teensy board
-- `make clean` clean up build files
+By default, `Ctrl + Shift + B` (Run Build Task) should run all of the above in order except for `Clean` and `Hard Clean`
 
 Where everything came from
 --------------------------
 
+### ARM Toolchain
+- The folders with the names `arm-none-eabi`, `bin`, and `lib` all come from the arduino install directory `hardware/tools/arm`
+### Teensy Core
 - The `teensy` sub-folder is taken from a [Teensyduino](http://www.pjrc.com/teensy/td_download.html) installation from the arduino install directory `hardware/teensy`
-- The `tools` sub-folder is also taken from the same [Teensyduino](http://www.pjrc.com/teensy/td_download.html) directory
-- The `src/main.cpp` file is moved, modified from `teensy/avr/cores/teensy3/main.cpp`
-- The `Makefile` file is moved, modified from `teensy/avr/cores/teensy3/Makefile`
-- The `49-teensy.rules` file is taken from [PJRC's udev rules](http://www.pjrc.com/teensy/49-teensy.rules)
-- The `ComMonitor.exe` file is from [ComMonitor-CLI](https://github.com/LeHuman/ComMonitor-CLI)
-- The `teensy_loader_cli.exe` file is the [Teensy Loader Command Line](https://www.pjrc.com/teensy/loader_cli.html) compiled for windows
-
-Modifications to `Makefile` include
-- Add support for arduino libraries
-- Change tools directory
-- Calculate target name from current directory
-- Prettify rule output
-- Do not upload by default, only build
-- Other modifications which might have broken that arduino part
-- Usage of the teensy cli loader
+### Tools
+- `ComMonitor.exe` is from [ComMonitor-CLI](https://github.com/LeHuman/ComMonitor-CLI)
+  - More info about usage on it's repository
+- `teensy_loader_cli.exe` is the [Teensy Loader Command Line](https://www.pjrc.com/teensy/loader_cli.html) compiled for Windows
+- `ninja.exe` is the [Ninja Build System](https://github.com/ninja-build/ninja) binary for Windows
