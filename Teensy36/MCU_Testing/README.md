@@ -46,6 +46,8 @@ They are mostly under the function calls `add_compile_definitions` and `add_comp
 
 By default, `Ctrl + Shift + B` (Run Build Task) should run all of the above in order except for `Clean` and `Hard Clean`
 
+Alternatively, install the [Tasks](https://marketplace.visualstudio.com/items?itemName=actboy168.tasks) extension so that tasks can instead be on the status bar. Already configured.
+
 Where everything came from
 --------------------------
 

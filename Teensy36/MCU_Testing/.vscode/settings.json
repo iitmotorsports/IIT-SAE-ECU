@@ -1,3 +1,6 @@
 {
-    "TOOLCHAIN_OFFSET":"../../Toolchain"
+    "TOOLCHAIN_OFFSET": "../../Toolchain",
+    "files.associations": {
+        "*.def": "cpp"
+    }
 }

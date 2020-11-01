@@ -17,6 +17,11 @@
             "args": [
                 "build"
             ],
+            "options": {
+                "statusbar": {
+                    "label": "$(database)"
+                }
+            },
             "problemMatcher": [
                 "$gcc"
             ]
@@ -36,20 +41,11 @@
             "runOptions": {
                 "runOn": "folderOpen"
             },
-            "problemMatcher": []
-        },
-        {
-            "label": "Clean",
-            "type": "shell",
-            "detail": "Clean up build files",
-            "presentation": {
-                "panel": "shared",
-                "showReuseMessage": false
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
             },
-            "command": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
-            "args": [
-                "clean"
-            ],
             "problemMatcher": []
         },
         {
@@ -64,6 +60,11 @@
             "args": [
                 "hard_clean"
             ],
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            },
             "problemMatcher": []
         },
         {
@@ -79,6 +80,11 @@
                 "upload",
                 "${input:TEENSY_USB_PORTNAME}"
             ],
+            "options": {
+                "statusbar": {
+                    "label": "$(zap)"
+                }
+            },
             "problemMatcher": []
         },
         {
@@ -96,6 +102,11 @@
                 "-t${input:TEENSY_COM_TYPE}",
                 "-r"
             ],
+            "options": {
+                "statusbar": {
+                    "label": "$(terminal)"
+                }
+            },
             "problemMatcher": []
         },
         {
@@ -108,12 +119,36 @@
                 "Upload",
                 "Monitor"
             ],
+            "options": {
+                "statusbar": {
+                    "label": "$(flame)"
+                }
+            },
             "problemMatcher": [],
             "group": {
                 "kind": "build",
                 "isDefault": true
             }
         },
+        {
+            "label": "Clean",
+            "type": "shell",
+            "detail": "Clean up build files",
+            "presentation": {
+                "panel": "shared",
+                "showReuseMessage": false
+            },
+            "command": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
+            "args": [
+                "clean"
+            ],
+            "options": {
+                "statusbar": {
+                    "label": "$(refresh)"
+                }
+            },
+            "problemMatcher": []
+        }
     ],
     "inputs": [
         {
