@@ -44,6 +44,23 @@
 #define __LOGGER_NONE_PRINT
 #endif
 
+#if CONF_LOGGING_MAPPED_MODE > 0
+
+// No Timestamping for this mode :/
+#define __logger_print(_, TAG, MESSAGE)       \
+    Serial.write((const uint8_t *)&TAG, 2);   \
+    uint64_t buffer = (MESSAGE & 0x0000FFFF); \
+    buffer = buffer << 32;                    \
+    Serial.write((const uint8_t *)&buffer, 8);
+
+#define __logger_print_num(_, TAG, MESSAGE, NUMBER) \
+    Serial.write((const uint8_t *)&TAG, 2);         \
+    uint64_t buffer = (MESSAGE & 0x0000FFFF);       \
+    buffer = buffer << 32 | NUMBER;                 \
+    Serial.write((const uint8_t *)&buffer, 8);
+
+#else
+
 #ifdef __LOGGER_NONE_PRINT
 static const char *NONE = "[ LOG ]";
 #ifdef __LOGGER_DEBUG_PRINT
@@ -63,71 +80,89 @@ static const char *FATAL = "[FATAL]";
 #endif
 
 #ifdef CONF_LOGGING_ENABLE_TIMESTAMP
-static const char *FORMAT = "%s @ %u [%s]: ";
-#define __logger_printf(FORMAT, TYPE, TAG) Serial.printf(FORMAT, TYPE, millis(), TAG);
+static const char *FORMAT = "%s @ %u [%s]: %s\n";
+static const char *FORMAT_NUM = "%s @ %u [%s]: %s %u\n";
+#define __logger_print(TYPE, TAG, MESSAGE) Serial.printf(FORMAT, TYPE, millis(), TAG, MESSAGE);
+#define __logger_print_num(TYPE, TAG, MESSAGE, NUMBER) Serial.printf(FORMAT_NUM, TYPE, millis(), TAG, MESSAGE, NUMBER);
 #else
-static const char *FORMAT = "%s [%s]: \t ";
-#define __logger_printf(FORMAT, TYPE, TAG) Serial.printf(FORMAT, TYPE, TAG);
+static const char *FORMAT = "%s [%s]: %s\n";
+static const char *FORMAT_NUM = "%s [%s]: %s %u\n";
+#define __logger_print(TYPE, TAG, MESSAGE) Serial.printf(FORMAT, TYPE, TAG, MESSAGE);
+#define __logger_print_num(TYPE, TAG, MESSAGE, NUMBER) Serial.printf(FORMAT_NUM, TYPE, TAG, MESSAGE, NUMBER);
+#endif
 #endif
 
-static void print(const char *format, va_list args) {
-    vdprintf((int)&Serial, format, args);
-    Serial.write('\n');
-}
-
 #endif
 
-void Log_t::operator()(LOG_TAG TAG, const char *format, ...) {
+void Log_t::operator()(LOG_TAG TAG, LOG_MSG message) {
 #ifdef __LOGGER_NONE_PRINT
-    __logger_printf(FORMAT, NONE, TAG);
-    va_list args;
-    va_start(args, format);
-    print(format, args);
+    __logger_print(NONE, TAG, message);
 #endif
 }
 
-void Log_t::d(LOG_TAG TAG, const char *format, ...) {
+void Log_t::d(LOG_TAG TAG, LOG_MSG message) {
 #ifdef __LOGGER_DEBUG_PRINT
-    __logger_printf(FORMAT, DEBUG, TAG);
-    va_list args;
-    va_start(args, format);
-    print(format, args);
+    __logger_print(DEBUG, TAG, message);
 #endif
 }
 
-void Log_t::i(LOG_TAG TAG, const char *format, ...) {
+void Log_t::i(LOG_TAG TAG, LOG_MSG message) {
 #ifdef __LOGGER_INFO_PRINT
-    __logger_printf(FORMAT, INFO, TAG);
-    va_list args;
-    va_start(args, format);
-    print(format, args);
+    __logger_print(INFO, TAG, message);
 #endif
 }
 
-void Log_t::w(LOG_TAG TAG, const char *format, ...) {
+void Log_t::w(LOG_TAG TAG, LOG_MSG message) {
 #ifdef __LOGGER_WARN_PRINT
-    __logger_printf(FORMAT, WARN, TAG);
-    va_list args;
-    va_start(args, format);
-    print(format, args);
+    __logger_print(WARN, TAG, message);
 #endif
 }
 
-void Log_t::e(LOG_TAG TAG, const char *format, ...) {
+void Log_t::e(LOG_TAG TAG, LOG_MSG message) {
 #ifdef __LOGGER_ERROR_PRINT
-    __logger_printf(FORMAT, ERROR, TAG);
-    va_list args;
-    va_start(args, format);
-    print(format, args);
+    __logger_print(ERROR, TAG, message);
 #endif
 }
 
-void Log_t::f(LOG_TAG TAG, const char *format, ...) {
+void Log_t::f(LOG_TAG TAG, LOG_MSG message) {
 #ifdef __LOGGER_FATAL_PRINT
-    __logger_printf(FORMAT, FATAL, TAG);
-    va_list args;
-    va_start(args, format);
-    print(format, args);
+    __logger_print(FATAL, TAG, message);
+#endif
+}
+
+void Log_t::operator()(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
+#ifdef __LOGGER_NONE_PRINT
+    __logger_print_num(NONE, TAG, message, number);
+#endif
+}
+
+void Log_t::d(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
+#ifdef __LOGGER_DEBUG_PRINT
+    __logger_print_num(DEBUG, TAG, message, number);
+#endif
+}
+
+void Log_t::i(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
+#ifdef __LOGGER_INFO_PRINT
+    __logger_print_num(INFO, TAG, message, number);
+#endif
+}
+
+void Log_t::w(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
+#ifdef __LOGGER_WARN_PRINT
+    __logger_print_num(WARN, TAG, message, number);
+#endif
+}
+
+void Log_t::e(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
+#ifdef __LOGGER_ERROR_PRINT
+    __logger_print_num(ERROR, TAG, message, number);
+#endif
+}
+
+void Log_t::f(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
+#ifdef __LOGGER_FATAL_PRINT
+    __logger_print_num(FATAL, TAG, message, number);
 #endif
 }
 
