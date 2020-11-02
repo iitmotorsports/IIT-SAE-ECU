@@ -19,8 +19,12 @@ from pathlib import Path
 SOURCE_NAME = "src"
 LIBRARIES_NAME = "libraries"
 LIB_PATH = "libraries\\Log"  # Path to the implementation of Log
+LIB_FILE = "LogConfig.def"
+LIB_DEFINE = ("#define CONF_LOGGING_MAPPED_MODE 0", "#define CONF_LOGGING_MAPPED_MODE 1")
 WORKING_DIRECTORY_OFFSET = "build\\Pre_Build\\"
 FILE_OUTPUT_PATH = "build\\bin"
+
+DISABLE_SCRIPT = False
 
 LIMIT_TAG = 254
 LIMIT_ID = 65535
@@ -245,36 +249,12 @@ class FileEntry:
         TAGs[fnlTag] = TAG
         return line.replace(reMatch, str(TAG))
 
-    async def scan(self):
+    async def walkLines(self, function):
         inplacePath = self.workingPath + ".__Lock"
-
         try:
             with open(self.workingPath, "r") as f1, open(inplacePath, "w") as f2:
                 for line in f1:
-                    newline = line
-                    VS = re.findall(FIND_CALL_REGEX_VS, line)
-                    if len(VS) != 0:  # ¯\_(ツ)_/¯
-                        newline = await self.VSX(line, VS[0])
-                    else:
-                        TAG_GOOD = re.findall(FIND_TAG_DEF_REGEX_GOOD, line)
-                        if TAG_GOOD:
-                            newline = await self.NEW_TAG(line, TAG_GOOD[0])
-                        else:
-                            TAG_BAD = re.findall(FIND_TAG_DEF_REGEX_BAD, line)
-                            if TAG_BAD:
-                                raise MalformedTAGDefinitionException(line)
-                            else:
-                                VSV = re.findall(FIND_CALL_REGEX_VSV, line)
-                                if len(VSV) != 0:
-                                    newline = await self.VSX(line, VSV[0])
-                                else:
-                                    SS = re.findall(FIND_CALL_REGEX_SS, line)
-                                    if len(SS) != 0:
-                                        newline = await self.SSX(line, SS[0])
-                                    else:
-                                        SSV = re.findall(FIND_CALL_REGEX_SSV, line)
-                                        if len(SSV) != 0:
-                                            newline = await self.SSX(line, SSV[0])
+                    newline = await function(line)
                     f2.write(newline)
 
                     if newline != line:
@@ -285,6 +265,36 @@ class FileEntry:
             print("File error: {}\n  {}:\n    {}\n".format(self.name, type(e).__name__, e))
         finally:
             os.remove(inplacePath)
+
+    async def findLogMatch(self, line):
+        newline = line
+        VS = re.findall(FIND_CALL_REGEX_VS, line)
+        if len(VS) != 0:  # ¯\_(ツ)_/¯
+            newline = await self.VSX(line, VS[0])
+        else:
+            TAG_GOOD = re.findall(FIND_TAG_DEF_REGEX_GOOD, line)
+            if TAG_GOOD:
+                newline = await self.NEW_TAG(line, TAG_GOOD[0])
+            else:
+                TAG_BAD = re.findall(FIND_TAG_DEF_REGEX_BAD, line)
+                if TAG_BAD:
+                    raise MalformedTAGDefinitionException(line)
+                else:
+                    VSV = re.findall(FIND_CALL_REGEX_VSV, line)
+                    if len(VSV) != 0:
+                        newline = await self.VSX(line, VSV[0])
+                    else:
+                        SS = re.findall(FIND_CALL_REGEX_SS, line)
+                        if len(SS) != 0:
+                            newline = await self.SSX(line, SS[0])
+                        else:
+                            SSV = re.findall(FIND_CALL_REGEX_SSV, line)
+                            if len(SSV) != 0:
+                                newline = await self.SSX(line, SSV[0])
+        return newline
+
+    async def scan(self):
+        await self.walkLines(self.findLogMatch)
 
 
 async def ingest_files(FilesEntries):
@@ -318,14 +328,21 @@ def allocate_files(Path):
 
     global FileCount, FileNames
 
+    async def lib_flag(line):
+        return line.replace(LIB_DEFINE[0], LIB_DEFINE[1])
+
     for subdir, _, files in os.walk(Path):
         for filename in files:
             filepath = subdir + os.sep + filename
             rawpath = subdir + os.sep
-            if rawpath.startswith(LIB_PATH):
-                workingPath = "{}{}".format(WORKING_DIRECTORY_OFFSET, filepath)
+            if DISABLE_SCRIPT:
                 touch("{}{}".format(WORKING_DIRECTORY_OFFSET, rawpath))
                 shutil.copyfile(filepath, "{}{}".format(WORKING_DIRECTORY_OFFSET, filepath))
+                continue
+            if rawpath.startswith(LIB_PATH):
+                libFile = FileEntry(rawpath, filepath, filename)
+                if libFile.name == LIB_FILE:
+                    asyncio.run(libFile.walkLines(lib_flag))
                 continue
             File_Ent = FileEntry(rawpath, filepath, filename)
             Files.add(File_Ent)
@@ -381,5 +398,6 @@ def save_lookup(path):
 touch_base()
 allocate_files(SOURCE_NAME)
 allocate_files(LIBRARIES_NAME)
-begin_scan()
-save_lookup(FILE_OUTPUT_PATH)
+if not DISABLE_SCRIPT:
+    begin_scan()
+    save_lookup(FILE_OUTPUT_PATH)
