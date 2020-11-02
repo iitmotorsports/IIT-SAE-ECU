@@ -44,7 +44,7 @@ struct State_t {
 
     bool SetupOnce = false;
     bool enableSetup = true;
-    const char *ID = "ID NOT SET";
+    LOG_TAG ID = "ID NOT SET";
     static State_t *nextState;  // Next State to goto if loop exits w/ code DONE //IMPROVE: Dynamic state changing
     static State_t *errorState; // State to goto if state exits not with NOERR
 

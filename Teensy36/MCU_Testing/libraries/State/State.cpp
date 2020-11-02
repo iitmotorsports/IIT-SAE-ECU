@@ -10,7 +10,7 @@ void State::setNextState(State_t *state) {
 
 static struct UnhandledState_t : State::State_extend<UnhandledState_t> {
     bool SetupOnce = true;
-    const char *ID = "UNHANDLED STATE"; // TODO: test that this prints
+    LOG_TAG ID = "UNHANDLED STATE"; // TODO: test that this prints
 
     State::ExitCode setup(void) {
         Log.f(ID, "UNHANDLED STATE!");
