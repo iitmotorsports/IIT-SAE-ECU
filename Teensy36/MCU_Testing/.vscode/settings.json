@@ -1,6 +1,8 @@
 {
     "TOOLCHAIN_OFFSET": "../../Toolchain",
+    "ADDITIONAL_CMAKE_VARS": "\"-DCUSTOM_BUILD_PATH_PREFIX:STRING=build/Pre_Build/\"" , // Unique to this proj
     "files.associations": {
         "*.def": "cpp"
-    }
+    },
+    "python.pythonPath": "C:\\Users\\Isaias\\AppData\\Local\\Programs\\Python\\Python38-32\\python.exe"
 }

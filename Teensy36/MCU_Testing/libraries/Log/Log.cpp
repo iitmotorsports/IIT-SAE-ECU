@@ -77,7 +77,7 @@ static void print(const char *format, va_list args) {
 
 #endif
 
-void Log_t::operator()(const char *TAG, const char *format, ...) {
+void Log_t::operator()(LOG_TAG TAG, const char *format, ...) {
 #ifdef __LOGGER_NONE_PRINT
     __logger_printf(FORMAT, NONE, TAG);
     va_list args;
@@ -86,7 +86,7 @@ void Log_t::operator()(const char *TAG, const char *format, ...) {
 #endif
 }
 
-void Log_t::d(const char *TAG, const char *format, ...) {
+void Log_t::d(LOG_TAG TAG, const char *format, ...) {
 #ifdef __LOGGER_DEBUG_PRINT
     __logger_printf(FORMAT, DEBUG, TAG);
     va_list args;
@@ -95,7 +95,7 @@ void Log_t::d(const char *TAG, const char *format, ...) {
 #endif
 }
 
-void Log_t::i(const char *TAG, const char *format, ...) {
+void Log_t::i(LOG_TAG TAG, const char *format, ...) {
 #ifdef __LOGGER_INFO_PRINT
     __logger_printf(FORMAT, INFO, TAG);
     va_list args;
@@ -104,7 +104,7 @@ void Log_t::i(const char *TAG, const char *format, ...) {
 #endif
 }
 
-void Log_t::w(const char *TAG, const char *format, ...) {
+void Log_t::w(LOG_TAG TAG, const char *format, ...) {
 #ifdef __LOGGER_WARN_PRINT
     __logger_printf(FORMAT, WARN, TAG);
     va_list args;
@@ -113,7 +113,7 @@ void Log_t::w(const char *TAG, const char *format, ...) {
 #endif
 }
 
-void Log_t::e(const char *TAG, const char *format, ...) {
+void Log_t::e(LOG_TAG TAG, const char *format, ...) {
 #ifdef __LOGGER_ERROR_PRINT
     __logger_printf(FORMAT, ERROR, TAG);
     va_list args;
@@ -122,7 +122,7 @@ void Log_t::e(const char *TAG, const char *format, ...) {
 #endif
 }
 
-void Log_t::f(const char *TAG, const char *format, ...) {
+void Log_t::f(LOG_TAG TAG, const char *format, ...) {
 #ifdef __LOGGER_FATAL_PRINT
     __logger_printf(FORMAT, FATAL, TAG);
     va_list args;

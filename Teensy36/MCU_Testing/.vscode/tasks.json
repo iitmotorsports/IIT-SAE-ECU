@@ -36,7 +36,8 @@
             },
             "command": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
             "args": [
-                "config"
+                "config",
+                "${config:ADDITIONAL_CMAKE_VARS}"
             ],
             "runOptions": {
                 "runOn": "folderOpen"
@@ -58,7 +59,8 @@
             },
             "command": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
             "args": [
-                "hard_clean"
+                "hard_clean",
+                "${config:ADDITIONAL_CMAKE_VARS}"
             ],
             "options": {
                 "statusbar": {

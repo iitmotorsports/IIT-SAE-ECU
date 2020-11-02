@@ -16,7 +16,7 @@ private:
 public:
     bool SetupOnce = false;
     bool enableSetup = true;
-    const char *ID = "Teensy Start";
+    LOG_TAG ID = "Teensy Start";
     State_t *nextState = this;
     State_t *errorState = this;
 

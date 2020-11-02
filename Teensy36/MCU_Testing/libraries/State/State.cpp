@@ -1,6 +1,6 @@
 #include "State.h"
 
-static const char *TAG = "State Manager";
+static LOG_TAG TAG = "State Manager";
 
 static State::State_t *currentState;
 

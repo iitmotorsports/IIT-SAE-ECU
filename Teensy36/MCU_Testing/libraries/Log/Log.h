@@ -8,20 +8,22 @@
  *  in a generated lookup table that is output next to the compiled hex file
 */
 
+typedef const char *LOG_TAG;
+
 // Use for logging things
 struct Log_t {
     // Log something to usb serial
-    void operator()(const char *TAG, const char *format, ...);
+    void operator()(LOG_TAG TAG, const char *format, ...);
     // Log using a debug tag
-    void d(const char *TAG, const char *format, ...);
+    void d(LOG_TAG TAG, const char *format, ...);
     // Log using an info tag
-    void i(const char *TAG, const char *format, ...);
+    void i(LOG_TAG TAG, const char *format, ...);
     // Log using a warning tag
-    void w(const char *TAG, const char *format, ...);
+    void w(LOG_TAG TAG, const char *format, ...);
     // Log using an error tag
-    void e(const char *TAG, const char *format, ...);
+    void e(LOG_TAG TAG, const char *format, ...);
     // Log using a fatal tag
-    void f(const char *TAG, const char *format, ...);
+    void f(LOG_TAG TAG, const char *format, ...);
 };
 
 extern Log_t Log;
