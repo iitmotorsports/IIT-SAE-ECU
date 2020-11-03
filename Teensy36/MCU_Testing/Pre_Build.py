@@ -388,7 +388,7 @@ def begin_scan():
 
 def save_lookup(path):
 
-    toSave = ({v: k for k, v in IDs.items()}, {v: k for k, v in TAGs.items()})
+    toSave = (IDs, TAGs)
     touch(path)
     savePath = "{}\\log_lookup.json".format(path)
     with open(savePath, "w") as f:
