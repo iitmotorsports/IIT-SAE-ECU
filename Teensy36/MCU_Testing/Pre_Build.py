@@ -441,7 +441,7 @@ allocate_files(SOURCE_NAME, WORKING_DIRECTORY_OFFSET)
 allocate_files(LIBRARIES_NAME, WORKING_DIRECTORY_OFFSET)
 
 if not DISABLE_SCRIPT:
-    print("\nAvailable Ram: {} GBs\n".format(AvailableRam()))
+    print("Available Ram: {} GBs\n".format(AvailableRam()))
 
     prehash = hashFile(getOutputFile(FILE_OUTPUT_PATH))
 
