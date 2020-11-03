@@ -22,7 +22,8 @@ LIB_PATH = "libraries\\Log"  # Path to the implementation of Log
 LIB_FILE = "LogConfig.def"
 LIB_DEFINE = ("#define CONF_LOGGING_MAPPED_MODE 0", "#define CONF_LOGGING_MAPPED_MODE 1")
 WORKING_DIRECTORY_OFFSET = "build\\Pre_Build\\"
-FILE_OUTPUT_PATH = "build\\bin"
+# FILE_OUTPUT_PATH = "build\\bin"
+FILE_OUTPUT_PATH = ""
 
 DISABLE_SCRIPT = False
 
@@ -387,10 +388,12 @@ def begin_scan():
 
 
 def save_lookup(path):
-
     toSave = (IDs, TAGs)
     touch(path)
-    savePath = "{}\\log_lookup.json".format(path)
+    output_name = "log_lookup.json"
+    savePath = "{}\\{}".format(path, output_name)
+    if savePath.startswith("\\"):
+        savePath = output_name
     with open(savePath, "w") as f:
         json.dump(toSave, f, indent=4, separators=(",", ": "))
 
