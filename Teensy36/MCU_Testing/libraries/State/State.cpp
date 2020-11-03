@@ -47,7 +47,7 @@ int State::begin(State_t &entry) {
             currentState->next();
         } else if (exitCode != NOERR) {
         ERRORED:
-            Log.e(TAG, "State returned error code %u", exitCode);
+            Log.e(TAG, "State returned error code", exitCode);
             currentState->error();
         }
     }
