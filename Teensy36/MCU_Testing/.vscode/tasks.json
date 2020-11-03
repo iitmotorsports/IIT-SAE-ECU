@@ -108,7 +108,6 @@
                 "${input:TEENSY_BAUDRATE}",
                 "-t${input:TEENSY_COM_TYPE}",
                 "-r",
-                "-sTwo"
             ],
             "options": {
                 "statusbar": {
