@@ -15,6 +15,7 @@ import sys
 import json
 import pickle
 from pathlib import Path
+import math
 
 SOURCE_NAME = "src"
 LIBRARIES_NAME = "libraries"
@@ -30,8 +31,6 @@ DISABLE_SCRIPT = False
 LIMIT_TAG = 254
 LIMIT_ID = 65535
 BLACKLIST_ADDRESSESS = (0, 5, 9)
-
-FILE_DOLE_COUNT = 4
 
 SOURCE_DEST_NAME = "{}{}".format(WORKING_DIRECTORY_OFFSET, SOURCE_NAME)
 LIBRARIES_DEST_NAME = "{}{}".format(WORKING_DIRECTORY_OFFSET, LIBRARIES_NAME)
@@ -214,6 +213,7 @@ class FileEntry:
     path = ""
     workingPath = ""
     modified = False
+    error = None
 
     def __init__(self, RawPath, FilePath, FileName):
         if not os.path.exists(FilePath):
@@ -223,8 +223,8 @@ class FileEntry:
         self.path = FilePath
         self.workingPath = "{}{}".format(WORKING_DIRECTORY_OFFSET, FilePath)
 
-        if O_Files.get(self.workingPath):
-            print("Records show {} exists".format(FileName))
+        # if O_Files.get(self.workingPath):
+        # print("Records show {} exists".format(FileName))
 
         touch("{}{}".format(WORKING_DIRECTORY_OFFSET, RawPath))
         shutil.copyfile(FilePath, self.workingPath)
@@ -263,7 +263,7 @@ class FileEntry:
 
             shutil.copyfile(inplacePath, self.workingPath)
         except Exception as e:
-            print("File error: {}\n  {}:\n    {}\n".format(self.name, type(e).__name__, e))
+            self.error = "  {}\n   {}:\n     {}\n".format(self.name, type(e).__name__, e)
         finally:
             os.remove(inplacePath)
 
@@ -307,28 +307,12 @@ def run_ingest_files(*FilesEntries):
     asyncio.run(ingest_files(set(FilesEntries)))
 
 
-FileCount = 0
-FileNames = ""
 Files = set()
 FileRefs = set()
 Threads = set()
 
 
-def touch_base():
-    try:  # TODO: Remove after implementing persistent data
-        shutil.rmtree(SOURCE_DEST_NAME)
-        shutil.rmtree(LIBRARIES_DEST_NAME)
-    except FileNotFoundError:
-        pass
-
-    touch(SOURCE_DEST_NAME)
-    touch(LIBRARIES_DEST_NAME)
-
-
-def allocate_files(Path):
-
-    global FileCount, FileNames
-
+def allocate_files(Path, Offset):
     async def lib_flag(line):
         return line.replace(LIB_DEFINE[0], LIB_DEFINE[1])
 
@@ -337,8 +321,8 @@ def allocate_files(Path):
             filepath = subdir + os.sep + filename
             rawpath = subdir + os.sep
             if DISABLE_SCRIPT:
-                touch("{}{}".format(WORKING_DIRECTORY_OFFSET, rawpath))
-                shutil.copyfile(filepath, "{}{}".format(WORKING_DIRECTORY_OFFSET, filepath))
+                touch("{}{}".format(Offset, rawpath))
+                shutil.copyfile(filepath, "{}{}".format(Offset, filepath))
                 continue
             if rawpath.startswith(LIB_PATH):
                 libFile = FileEntry(rawpath, filepath, filename)
@@ -349,14 +333,14 @@ def allocate_files(Path):
             Files.add(File_Ent)
             FileRefs.add(File_Ent)
 
-    FileCount += len(Files)
 
+def dole_files(count):
     while True:
         file_set = set()
 
         i = 0
 
-        while len(Files) != 0 and i != FILE_DOLE_COUNT:
+        while len(Files) != 0 and i != count:
             file_set.add(Files.pop())
             i += 1
 
@@ -367,40 +351,100 @@ def allocate_files(Path):
             break
 
 
+class Toolbar:
+    toolbat_iter = 1
+    toolbar_width = 25
+    stop = False
+
+    def __init__(self, num, prog_str):
+        self.toolbat_iter = int(25 / num)
+
+        # setup toolbar
+        sys.stdout.write("{} [{}]".format(prog_str, " " * self.toolbar_width))
+        sys.stdout.write("\b" * (self.toolbar_width + 1))
+        sys.stdout.flush()
+
+    def progress(self):
+        if not self.stop:
+            self.toolbar_width -= self.toolbat_iter
+            if self.toolbar_width < self.toolbat_iter:
+                self.toolbat_iter += self.toolbar_width
+            sys.stdout.write("■" * self.toolbat_iter)
+            sys.stdout.flush()
+            if self.toolbar_width < self.toolbat_iter:
+                self.stop = True
+                sys.stdout.write("]\n")
+                sys.stdout.flush()
+
+    def finish(self):
+        while not self.stop:
+            self.progress()
+
+
 def begin_scan():
-    print("Files to search: {}".format(FileCount))
-    print("Threads to run: {}\n".format(len(Threads)))
+
+    tb = Toolbar(len(Threads), "Completed Threads:")
 
     for t in Threads:
         t.start()
 
     for t in Threads:
         t.join()
+        tb.progress()
+
+    tb.finish() # do dead threads get gc?
 
     del IDs[""]
     del TAGs[""]
 
-    print("Modified Files:")
+    print("\nModified Files:")
     for f in FileRefs:
         if f.modified:
             print("  {}".format(f.name))
+        if f.error:
+            Files.add(f)
+
+    print("\nFile Errors:")
+    for f in Files:
+        print(f.error)
+
     print()
+
+
+def getOutputFile(path):
+    output_name = "log_lookup.json"
+    savePath = "{}\\{}".format(path, output_name)
+    if savePath.startswith("\\"):
+        savePath = output_name
+    return savePath
 
 
 def save_lookup(path):
     toSave = (IDs, TAGs)
     touch(path)
-    output_name = "log_lookup.json"
-    savePath = "{}\\{}".format(path, output_name)
-    if savePath.startswith("\\"):
-        savePath = output_name
-    with open(savePath, "w") as f:
+    with open(getOutputFile(path), "w") as f:
         json.dump(toSave, f, indent=4, separators=(",", ": "))
 
 
-touch_base()
-allocate_files(SOURCE_NAME)
-allocate_files(LIBRARIES_NAME)
+# Start Script
+
+prehash = hashFile(getOutputFile(FILE_OUTPUT_PATH))
+
+try:  # TODO: Remove after implementing persistent data
+    shutil.rmtree(SOURCE_DEST_NAME)
+    shutil.rmtree(LIBRARIES_DEST_NAME)
+except FileNotFoundError:
+    pass
+
+touch(SOURCE_DEST_NAME)
+touch(LIBRARIES_DEST_NAME)
+
+allocate_files(SOURCE_NAME, WORKING_DIRECTORY_OFFSET)
+allocate_files(LIBRARIES_NAME, WORKING_DIRECTORY_OFFSET)
+
 if not DISABLE_SCRIPT:
+    print("Files to search: {}".format(len(FileRefs)))
+    dole_files(int(math.log(len(FileRefs) + 1)) + 1)
+    print("Threads to run: {}\n".format(len(Threads)))
     begin_scan()
     save_lookup(FILE_OUTPUT_PATH)
