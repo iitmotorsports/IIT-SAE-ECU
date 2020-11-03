@@ -39,9 +39,6 @@
                 "config",
                 "${config:ADDITIONAL_CMAKE_VARS}"
             ],
-            "runOptions": {
-                "runOn": "folderOpen"
-            },
             "options": {
                 "statusbar": {
                     "hide": true
