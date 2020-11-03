@@ -15,14 +15,14 @@ State::ExitCode Starting_t::setup(void) {
 
 State::ExitCode Starting_t::loop(void) {
 
-    // if (timeElapsed >= 100) {
-        // timeElapsed = timeElapsed - 100;
+    if (timeElapsed >= 100) {
+        timeElapsed = timeElapsed - 100;
         count--;
         // sendTestMessage(F_Can);
         Log(ID, "Oh why hello there");
         Log(ID, "A7 Pin Value: ", Pins::getPinValue(A7));
         Pins::setPinValue(A6, random(1024));
-    // }
+    }
     Pins::update();
     if (count == 0)
         return State::DONE;
