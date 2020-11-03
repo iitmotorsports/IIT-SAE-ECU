@@ -62,24 +62,24 @@ def AvailableRam():
     return int((((1 - memoryStatus.dwMemoryLoad / 100) * memoryStatus.dwAvailPhys) * 10) / 1073741824)
 
 
-print("Available Ram: {} GBs\n".format(AvailableRam()))
 LOW_RAM = 4
 BUF_SIZE = 65536
 
 
 def hashFile(filePath):
-    if AvailableRam() <= LOW_RAM:
-        sha256 = hashlib.sha256()
-        with open(filePath, "rb") as f:
-            while True:
-                data = f.read(BUF_SIZE)
-                if not data:
-                    break
-                sha256.update(data)
-        return sha256.digest()
-    else:
-        with open(filePath, "rb") as f:
-            return hashlib.sha256(f.read()).digest()
+    if os.path.exists(filePath):
+        if AvailableRam() <= LOW_RAM:
+            sha256 = hashlib.sha256()
+            with open(filePath, "rb") as f:
+                while True:
+                    data = f.read(BUF_SIZE)
+                    if not data:
+                        break
+                    sha256.update(data)
+            return sha256.digest()
+        else:
+            with open(filePath, "rb") as f:
+                return hashlib.sha256(f.read()).digest()
 
 
 def save_data(Object):
@@ -263,7 +263,7 @@ class FileEntry:
 
             shutil.copyfile(inplacePath, self.workingPath)
         except Exception as e:
-            self.error = "  {}\n   {}:\n     {}\n".format(self.name, type(e).__name__, e)
+            self.error = "  {}\n   {}:\n     {}".format(self.name, type(e).__name__, e)
         finally:
             os.remove(inplacePath)
 
@@ -392,7 +392,7 @@ def begin_scan():
         t.join()
         tb.progress()
 
-    tb.finish() # do dead threads get gc?
+    tb.finish()  # do dead threads get gc?
 
     del IDs[""]
     del TAGs[""]
@@ -404,11 +404,11 @@ def begin_scan():
         if f.error:
             Files.add(f)
 
+    sys.stdout.flush()
+
     print("\nFile Errors:")
     for f in Files:
         print(f.error)
-
-    print()
 
 
 def getOutputFile(path):
@@ -428,8 +428,6 @@ def save_lookup(path):
 
 # Start Script
 
-prehash = hashFile(getOutputFile(FILE_OUTPUT_PATH))
-
 try:  # TODO: Remove after implementing persistent data
     shutil.rmtree(SOURCE_DEST_NAME)
     shutil.rmtree(LIBRARIES_DEST_NAME)
@@ -443,8 +441,16 @@ allocate_files(SOURCE_NAME, WORKING_DIRECTORY_OFFSET)
 allocate_files(LIBRARIES_NAME, WORKING_DIRECTORY_OFFSET)
 
 if not DISABLE_SCRIPT:
+    print("\nAvailable Ram: {} GBs\n".format(AvailableRam()))
+
+    prehash = hashFile(getOutputFile(FILE_OUTPUT_PATH))
+
     print("Files to search: {}".format(len(FileRefs)))
     dole_files(int(math.log(len(FileRefs) + 1)) + 1)
     print("Threads to run: {}\n".format(len(Threads)))
     begin_scan()
     save_lookup(FILE_OUTPUT_PATH)
+    newhash = hashFile(getOutputFile(FILE_OUTPUT_PATH))
+    if newhash != prehash:
+        print("\nNote: Output file values have changed")
+
