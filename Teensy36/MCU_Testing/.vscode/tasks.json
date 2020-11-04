@@ -107,6 +107,11 @@
                 "${input:TEENSY_USB_PORTNAME}",
                 "${input:TEENSY_BAUDRATE}",
                 "-t${input:TEENSY_COM_TYPE}",
+                "-m10",
+                "--jsonBlock",
+                "yes",
+                "--jsonPath",
+                "${workspaceFolder}\\log_lookup.json",
                 "-r",
             ],
             "options": {

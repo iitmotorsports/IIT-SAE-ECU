@@ -1,0 +1,4 @@
+remove c_cpp_properties.json defines
+remove settings.json ADDITIONAL_CMAKE_VARS
+remove tasks.json Build task problemMatcher
+remove tasks.json Monitor task extra args
