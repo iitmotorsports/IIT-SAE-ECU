@@ -104,16 +104,20 @@ def touch(rawpath):
 
 
 class OutOfIDsException(Exception):
-    pass
-
+    def __init__(self, message):
+        super().__init__(message.strip())
 
 class OutOfTAGsException(Exception):
-    pass
-
+    def __init__(self, message):
+        super().__init__(message.strip())
 
 class MalformedTAGDefinitionException(Exception):
-    pass
+    def __init__(self, message):
+        super().__init__(message.strip())
 
+class MalformedLogCallException(Exception):
+    def __init__(self, message):
+        super().__init__(message.strip())
 
 OLD_DATA = load_data()  # TBI
 
@@ -195,6 +199,9 @@ FIND_CALL_REGEX_SS = r"Log(\.[diwef])?\s*\(\s*(\".*?\")\s*,\s*(\".*?\")\s*\)\s*;
 FIND_CALL_REGEX_VS = r"Log(\.[diwef])?\s*\(\s*([^\"]+?)\s*,\s*(\".*?\")\s*\)\s*;"  # -> Log(Var, "Str");
 FIND_CALL_REGEX_SSV = r"Log(\.[diwef])?\s*\(\s*(\".*?\")\s*,\s*(\".*?\")\s*,\s*([^\"]+?)\s*\)\s*;"  # -> Log("Str", "Str", Var);
 FIND_CALL_REGEX_VSV = r"Log(\.[diwef])?\s*\(\s*([^\"]+?)\s*,\s*(\".*?\")\s*,\s*([^\"]+?)\s*\)\s*;"  # -> Log(Var, "Str", Var);
+FIND_CALL_REGEX_BAD = (
+    r"Chimi Changos"  # Implicit string or number where it should not be | IDE will warn about numbers but will still compile
+)
 FIND_TAG_DEF_REGEX_BAD = r"LOG_TAG\s*[^\"=]+?;|LOG_TAG\s*[^\"=]+?=[^\"=]+?;"  # Implicit or single char definition of a tag type
 FIND_TAG_DEF_REGEX_GOOD = r"LOG_TAG\s*[^\"=]+?=\s*(\".*?\")\s*;"  # Implicit or single char definition of a tag type
 
@@ -229,29 +236,38 @@ class FileEntry:
         touch("{}{}".format(WORKING_DIRECTORY_OFFSET, RawPath))
         shutil.copyfile(FilePath, self.workingPath)
 
+    async def addNewTag(self, raw_str):
+        string = "[{}]".format(raw_str.strip('"'))
+        numberID = await getUniqueTAG(string)
+        TAG_SEM.acquire()
+        TAGs[string] = numberID
+        TAG_SEM.release()
+        return numberID
+
+    async def addNewID(self, raw_log_level, raw_str):
+        string = Log_Levels[raw_log_level] + raw_str.strip('"')
+        numberID = await getUniqueID(string)
+        ID_SEM.acquire()
+        IDs[string] = numberID
+        ID_SEM.release()
+        return numberID
+
     async def VSX(self, line, reMatch):
-        fnlStr = Log_Levels[reMatch[0]] + reMatch[2].strip('"')
-        ID = await getUniqueID(fnlStr)
-        IDs[fnlStr] = ID
+        ID = await self.addNewID(reMatch[0], reMatch[2])
         return line.replace(reMatch[2], str(ID))
 
     async def SSX(self, line, reMatch):
-        TAG = await getUniqueTAG(reMatch[1])
-        ID = await getUniqueID(reMatch[2])
-        fnlStr = Log_Levels[reMatch[0]] + reMatch[2].strip('"')
-        fnlTag = reMatch[2].strip('"')
-        TAGs[fnlTag] = TAG
-        IDs[fnlStr] = ID
+        TAG = await self.addNewTag(reMatch[2])
+        ID = await self.addNewID(reMatch[0], reMatch[2])
         return line.replace(reMatch[1], str(TAG)).replace(reMatch[2], str(ID))
 
     async def NEW_TAG(self, line, reMatch):
-        TAG = await getUniqueTAG(reMatch)
-        fnlTag = reMatch.strip('"')
-        TAGs[fnlTag] = TAG
+        TAG = await self.addNewTag(reMatch)
         return line.replace(reMatch, str(TAG))
 
     async def walkLines(self, function):
         inplacePath = self.workingPath + ".__Lock"
+        lineNo = 1
         try:
             with open(self.workingPath, "r") as f1, open(inplacePath, "w") as f2:
                 for line in f1:
@@ -260,10 +276,11 @@ class FileEntry:
 
                     if newline != line:
                         self.modified = True
+                    lineNo += 1
 
             shutil.copyfile(inplacePath, self.workingPath)
         except Exception as e:
-            self.error = "  {}\n   {}:\n     {}".format(self.name, type(e).__name__, e)
+            self.error = "  {}:{}\n   {}:\n     {}".format(self.path, lineNo, type(e).__name__, e)
         finally:
             os.remove(inplacePath)
 
@@ -277,21 +294,25 @@ class FileEntry:
             if TAG_GOOD:
                 newline = await self.NEW_TAG(line, TAG_GOOD[0])
             else:
-                TAG_BAD = re.findall(FIND_TAG_DEF_REGEX_BAD, line)
-                if TAG_BAD:
-                    raise MalformedTAGDefinitionException(line)
+                VSV = re.findall(FIND_CALL_REGEX_VSV, line)
+                if len(VSV) != 0:
+                    newline = await self.VSX(line, VSV[0])
                 else:
-                    VSV = re.findall(FIND_CALL_REGEX_VSV, line)
-                    if len(VSV) != 0:
-                        newline = await self.VSX(line, VSV[0])
+                    TAG_BAD = re.findall(FIND_TAG_DEF_REGEX_BAD, line)
+                    if TAG_BAD:
+                        raise MalformedTAGDefinitionException(line)
                     else:
-                        SS = re.findall(FIND_CALL_REGEX_SS, line)
-                        if len(SS) != 0:
-                            newline = await self.SSX(line, SS[0])
+                        BAD = re.findall(FIND_CALL_REGEX_BAD, line)
+                        if BAD:
+                            raise MalformedLogCallException(line)
                         else:
-                            SSV = re.findall(FIND_CALL_REGEX_SSV, line)
-                            if len(SSV) != 0:
-                                newline = await self.SSX(line, SSV[0])
+                            SS = re.findall(FIND_CALL_REGEX_SS, line)
+                            if len(SS) != 0:
+                                newline = await self.SSX(line, SS[0])
+                            else:
+                                SSV = re.findall(FIND_CALL_REGEX_SSV, line)
+                                if len(SSV) != 0:
+                                    newline = await self.SSX(line, SSV[0])
         return newline
 
     async def scan(self):
@@ -420,7 +441,7 @@ def getOutputFile(path):
 
 
 def save_lookup(path):
-    toSave = (IDs, TAGs)
+    toSave = (TAGs, IDs)
     touch(path)
     with open(getOutputFile(path), "w") as f:
         json.dump(toSave, f, indent=4, separators=(",", ": "))
