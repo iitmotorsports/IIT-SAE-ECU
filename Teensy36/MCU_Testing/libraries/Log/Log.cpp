@@ -46,18 +46,25 @@
 
 #if CONF_LOGGING_MAPPED_MODE > 0
 
-// No Timestamping for this mode :/
-#define __logger_print(_, TAG, MESSAGE)       \
-    Serial.write((const uint8_t *)&TAG, 2);   \
-    uint64_t buffer = (MESSAGE & 0x0000FFFF); \
-    buffer = buffer << 32;                    \
-    Serial.write((const uint8_t *)&buffer, 8);
+#define LOG_END_MSG_FLAG CONF_LOGGING_END_MSG_FLAG
 
-#define __logger_print_num(_, TAG, MESSAGE, NUMBER) \
-    Serial.write((const uint8_t *)&TAG, 2);         \
-    uint64_t buffer = (MESSAGE & 0x0000FFFF);       \
-    buffer = buffer << 32 | NUMBER;                 \
+// No Timestamping for this mode
+
+static void __logger_print(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE) {
+    Serial.write((const uint8_t *)&TAG, 2);
+    uint64_t buffer = (MESSAGE & 0x0000FFFF);
+    buffer = buffer << 32;
     Serial.write((const uint8_t *)&buffer, 8);
+    Serial.write(LOG_END_MSG_FLAG);
+}
+
+static void __logger_print(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const uint32_t NUMBER) {
+    Serial.write((const uint8_t *)&TAG, 2);
+    uint64_t buffer = (MESSAGE & 0x0000FFFF);
+    buffer = buffer << 32 | NUMBER;
+    Serial.write((const uint8_t *)&buffer, 8);
+    Serial.write(LOG_END_MSG_FLAG);
+}
 
 #else
 
@@ -82,13 +89,13 @@ static const char *FATAL = "[FATAL]";
 #ifdef CONF_LOGGING_ENABLE_TIMESTAMP
 static const char *FORMAT = "%s @ %u [%s]: %s\n";
 static const char *FORMAT_NUM = "%s @ %u [%s]: %s %u\n";
-#define __logger_print(TYPE, TAG, MESSAGE) Serial.printf(FORMAT, TYPE, millis(), TAG, MESSAGE);
-#define __logger_print_num(TYPE, TAG, MESSAGE, NUMBER) Serial.printf(FORMAT_NUM, TYPE, millis(), TAG, MESSAGE, NUMBER);
+static void __logger_print(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE) { Serial.printf(FORMAT, TYPE, millis(), TAG, MESSAGE); }
+static void __logger_print_num(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const uint32_t NUMBER) { Serial.printf(FORMAT_NUM, TYPE, millis(), TAG, MESSAGE, NUMBER); }
 #else
 static const char *FORMAT = "%s [%s]: %s\n";
 static const char *FORMAT_NUM = "%s [%s]: %s %u\n";
-#define __logger_print(TYPE, TAG, MESSAGE) Serial.printf(FORMAT, TYPE, TAG, MESSAGE);
-#define __logger_print_num(TYPE, TAG, MESSAGE, NUMBER) Serial.printf(FORMAT_NUM, TYPE, TAG, MESSAGE, NUMBER);
+static void __logger_print(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE) { Serial.printf(FORMAT, TYPE, TAG, MESSAGE); }
+static void __logger_print_num(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const uint32_t NUMBER) { Serial.printf(FORMAT_NUM, TYPE, TAG, MESSAGE, NUMBER); }
 #endif
 #endif
 
