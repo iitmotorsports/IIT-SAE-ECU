@@ -6,6 +6,7 @@
 
 #include <stdarg.h>
 #include <stdio.h>
+#include <cstring>
 
 #include "Log.h"
 #include "LogConfig.def"
@@ -48,22 +49,30 @@
 
 #define LOG_END_MSG_FLAG CONF_LOGGING_END_MSG_FLAG
 
+static void *NONE;
+static void *DEBUG = NONE;
+static void *INFO = NONE;
+static void *WARN = NONE;
+static void *ERROR = NONE;
+static void *FATAL = NONE;
+
 // No Timestamping for this mode
 
-static void __logger_print(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE) {
-    Serial.write((const uint8_t *)&TAG, 2);
-    uint64_t buffer = (MESSAGE & 0x0000FFFF);
-    buffer = buffer << 32;
-    Serial.write((const uint8_t *)&buffer, 8);
-    Serial.write(LOG_END_MSG_FLAG);
+static void __logger_print(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE) {
+    uint8_t *buf = new uint8_t[10]();
+    memcpy(buf, &TAG, 2);
+    memcpy(buf+6, &MESSAGE, 4);
+    Serial.write(buf, 10);
+    delete[] buf;
 }
 
-static void __logger_print(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const uint32_t NUMBER) {
-    Serial.write((const uint8_t *)&TAG, 2);
-    uint64_t buffer = (MESSAGE & 0x0000FFFF);
-    buffer = buffer << 32 | NUMBER;
-    Serial.write((const uint8_t *)&buffer, 8);
-    Serial.write(LOG_END_MSG_FLAG);
+static void __logger_print_num(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const uint32_t NUMBER) {
+    uint8_t *buf = new uint8_t[10]();
+    memcpy(buf, &TAG, 2);
+    memcpy(buf+2, &NUMBER, 4);
+    memcpy(buf+6, &MESSAGE, 4);
+    Serial.write(buf, 10);
+    delete[] buf;
 }
 
 #else
