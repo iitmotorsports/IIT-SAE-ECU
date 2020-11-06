@@ -19,7 +19,6 @@ State::ExitCode Starting_t::loop(void) {
         timeElapsed = timeElapsed - 100;
         count--;
         // sendTestMessage(F_Can);
-        Log(ID, "Oh why hello there");
         Log(ID, "A7 Pin Value: ", Pins::getPinValue(A7));
         Pins::setPinValue(A6, random(1024));
     }
