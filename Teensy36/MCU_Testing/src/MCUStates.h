@@ -7,7 +7,9 @@
 #include "Pins.h"
 #include "State.h"
 
-static struct Starting_t : State::State_extend<Starting_t> {
+namespace MCUStates {
+
+static struct Initialize_t : State::State_extend<Initialize_t> {
 private:
     elapsedMillis timeElapsed;
     bool firstSetup = true;
@@ -23,4 +25,6 @@ public:
     State::ExitCode setup(void);
     State::ExitCode loop(void);
 
-} Starting;
+} Initialize;
+
+} // namespace MCUState

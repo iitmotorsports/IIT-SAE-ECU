@@ -1,6 +1,6 @@
 #include "MCUStates.h"
 
-State::ExitCode Starting_t::setup(void) {
+State::ExitCode MCUStates::Initialize_t::setup(void) {
     if (firstSetup) {
         pinMode(6, OUTPUT);
         digitalWrite(6, LOW); /* optional tranceiver enable pin */
@@ -13,7 +13,7 @@ State::ExitCode Starting_t::setup(void) {
     return State::NOERR;
 };
 
-State::ExitCode Starting_t::loop(void) {
+State::ExitCode MCUStates::Initialize_t::loop(void) {
 
     if (timeElapsed >= 100) {
         timeElapsed = timeElapsed - 100;
