@@ -1,6 +1,7 @@
 {
     "TOOLCHAIN_OFFSET": "../../Toolchain",
-    "ADDITIONAL_CMAKE_VARS": "\"-DCUSTOM_BUILD_PATH_PREFIX:STRING=build/Pre_Build/\"" , // Unique to this proj
+    "ADDITIONAL_CMAKE_VARS": "-DCUSTOM_BUILD_PATH_PREFIX:STRING=build/Pre_Build/" ,
+    // "ADDITIONAL_CMAKE_VARS": "" ,
     "files.associations": {
         "*.def": "cpp",
         "*.tcc": "cpp",

@@ -5,7 +5,7 @@
     "tasks": [
         {
             "label": "Build",
-            "type": "shell",
+            "type": "process",
             "detail": "Compile project",
             "presentation": {
                 "focus": true,
@@ -13,8 +13,11 @@
                 "showReuseMessage": false,
                 "clear": true
             },
-            "command": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
+            "command": "cmd.exe",
             "args": [
+                "/d",
+                "/c",
+                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
                 "build"
             ],
             "options": {
@@ -36,16 +39,19 @@
         },
         {
             "label": "Configure",
-            "type": "shell",
+            "type": "process",
             "detail": "Configure the CMake project",
             "presentation": {
                 "panel": "shared",
                 "showReuseMessage": false
             },
-            "command": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
+            "command": "cmd.exe",
             "args": [
+                "/d",
+                "/c",
+                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
                 "config",
-                "${config:ADDITIONAL_CMAKE_VARS}"
+                "\"${config:ADDITIONAL_CMAKE_VARS}\""
             ],
             "options": {
                 "statusbar": {
@@ -56,16 +62,19 @@
         },
         {
             "label": "Hard Clean",
-            "type": "shell",
+            "type": "process",
             "detail": "Clean up entire CMake project",
             "presentation": {
                 "panel": "shared",
                 "showReuseMessage": false
             },
-            "command": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
+            "command": "cmd.exe",
             "args": [
+                "/d",
+                "/c",
+                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
                 "hard_clean",
-                "${config:ADDITIONAL_CMAKE_VARS}"
+                "\"${config:ADDITIONAL_CMAKE_VARS}\""
             ],
             "options": {
                 "statusbar": {
@@ -76,14 +85,17 @@
         },
         {
             "label": "Upload",
-            "type": "shell",
+            "type": "process",
             "detail": "Upload compiled binary to teensy",
             "presentation": {
                 "panel": "shared",
                 "showReuseMessage": false
             },
-            "command": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
+            "command": "cmd.exe",
             "args": [
+                "/d",
+                "/c",
+                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
                 "upload",
                 "${input:TEENSY_USB_PORTNAME}"
             ],
@@ -144,14 +156,17 @@
         },
         {
             "label": "Clean",
-            "type": "shell",
+            "type": "process",
             "detail": "Clean up build files",
             "presentation": {
                 "panel": "shared",
                 "showReuseMessage": false
             },
-            "command": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
+            "command": "cmd.exe",
             "args": [
+                "/d",
+                "/c",
+                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
                 "clean"
             ],
             "options": {

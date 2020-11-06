@@ -44,6 +44,7 @@ if [%1]==[] goto CMAKE_AFTERLOOP
 set CMAKE_PARAMS=%CMAKE_PARAMS% %1
 goto CMAKE_LOOP
 :CMAKE_AFTERLOOP
+set CMAKE_PARAMS=%CMAKE_PARAMS:\"=%
 
 if "%option%"=="" GOTO HELP_STR
 
@@ -147,6 +148,7 @@ if errorlevel 1 (
 :__NO_PREBUILD
 
 cd build
+echo.
 echo %A_BOLD%Configuring CMake project%A_RESET% ⚙️
 cmake .. -G Ninja %CMAKE_PARAMS%
 if errorlevel 1 (
