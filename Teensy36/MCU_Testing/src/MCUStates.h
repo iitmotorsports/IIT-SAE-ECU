@@ -19,7 +19,8 @@ public:
     bool SetupOnce = false;
     bool enableSetup = true;
     LOG_TAG ID = "Teensy Start";
-    State_t *nextState = this;
+    static State_t *linkedStates[];
+    int nextState = 0;
     State_t *errorState = this;
 
     State::ExitCode setup(void);
@@ -27,4 +28,14 @@ public:
 
 } Initialize;
 
-} // namespace MCUState
+static struct Bounce_t : State::State_extend<Bounce_t> {
+public:
+    bool enableSetup = false;
+    LOG_TAG ID = "Bounce State";
+    static State_t *linkedStates[];
+    int nextState = 0;
+    State::ExitCode loop(void);
+
+} Bounce;
+
+} // namespace MCUStates
