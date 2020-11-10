@@ -82,6 +82,36 @@ def hashFile(filePath):
                 return hashlib.sha256(f.read()).digest()
 
 
+class Text:
+    @staticmethod
+    def error(text):
+        return "\033[91m\033[1m\033[4m" + text + "\033[0m"
+
+    @staticmethod
+    def header(text):
+        return "\033[1m\033[4m" + text + "\033[0m"
+
+    @staticmethod
+    def warning(text):
+        return "\033[93m\033[1m" + text + "\033[0m"
+
+    @staticmethod
+    def important(text):
+        return "\033[96m\033[1m" + text + "\033[0m"
+
+    @staticmethod
+    def reallyImportant(text):
+        return "\033[96m\033[1m\033[4m" + text + "\033[0m"
+
+    @staticmethod
+    def green(text):
+        return "\033[92m" + text + "\033[0m"
+
+    @staticmethod
+    def red(text):
+        return "\033[91m" + text + "\033[0m"
+
+
 def save_data(Object):
     with open(DATA_FILE, "wb") as f:
         pickle.dump(Object, f)
@@ -103,21 +133,36 @@ def touch(rawpath):
             raise
 
 
-class OutOfIDsException(Exception):
-    def __init__(self, message):
-        super().__init__(message.strip())
+class ScriptException(Exception):
+    pass
 
-class OutOfTAGsException(Exception):
-    def __init__(self, message):
-        super().__init__(message.strip())
 
-class MalformedTAGDefinitionException(Exception):
+class OutOfIDsException(ScriptException):
     def __init__(self, message):
-        super().__init__(message.strip())
+        super().__init__(message.strip(), "Script has ran out of allocatable IDs")
 
-class MalformedLogCallException(Exception):
+
+class OutOfTAGsException(ScriptException):
     def __init__(self, message):
-        super().__init__(message.strip())
+        super().__init__(message.strip(), "Script has ran out of allocatable TAG IDs")
+
+
+class MalformedTAGDefinitionException(ScriptException):
+    def __init__(self, message):
+        super().__init__(message.strip(), "Implicit, single char or number definition of a LOG_TAG type")
+
+
+class MalformedLogCallException(ScriptException):
+    def __init__(self, message):
+        super().__init__(message.strip(), "Implicit string or number inside a call to Log")
+
+
+def splitErrorString(error):
+    if issubclass(type(error), ScriptException):
+        return error.args[1] + "\n\t" + error.args[0]
+    else:
+        return error
+
 
 OLD_DATA = load_data()  # TBI
 
@@ -199,10 +244,10 @@ FIND_CALL_REGEX_SS = r"Log(\.[diwef])?\s*\(\s*(\".*?\")\s*,\s*(\".*?\")\s*\)\s*;
 FIND_CALL_REGEX_VS = r"Log(\.[diwef])?\s*\(\s*([^\"]+?)\s*,\s*(\".*?\")\s*\)\s*;"  # -> Log(Var, "Str");
 FIND_CALL_REGEX_SSV = r"Log(\.[diwef])?\s*\(\s*(\".*?\")\s*,\s*(\".*?\")\s*,\s*([^\"]+?)\s*\)\s*;"  # -> Log("Str", "Str", Var);
 FIND_CALL_REGEX_VSV = r"Log(\.[diwef])?\s*\(\s*([^\"]+?)\s*,\s*(\".*?\")\s*,\s*([^\"]+?)\s*\)\s*;"  # -> Log(Var, "Str", Var);
-FIND_CALL_REGEX_BAD = r"Log(\.[diwef])?\s*\(\s*([^\"]+?|\"([^\"]|\\\")*?\")\s*,\s*([^\";]+?)\s*(,\s*([^\"]+?))?\s*\)\s*;"  # Implicit string or number where it should not be | IDE will warn about numbers but will still compile
+FIND_CALL_REGEX_BAD = r"(Log(?:\.[diwef])?\s*\(\s*(?:[^\"]+?|\"(?:[^\"]|\\\")*?\")\s*,\s*)([^\";]+?)(\s*(?:,\s*(?:[^\"]+?))?\s*\)\s*;)"  # Implicit string or number where it should not be | IDE will warn about numbers but will still compile
 
-FIND_TAG_DEF_REGEX_BAD = r"LOG_TAG\s*[^\"=]+?;|LOG_TAG\s*[^\"=]+?=[^\"=]+?;"  # Implicit or single char definition of a tag type
-FIND_TAG_DEF_REGEX_GOOD = r"LOG_TAG\s*[^\"=]+?=\s*(\".*?\")\s*;"  # Implicit or single char definition of a tag type
+FIND_TAG_DEF_REGEX_BAD = r"(LOG_TAG\s*[^\"=]+?=\s*)([^\"=]+?)(\s*;)"  # Implicit or single char definition of a tag type
+FIND_TAG_DEF_REGEX_GOOD = r"LOG_TAG\s*[^\"=]+?=\s*(\".*?\")\s*;"
 
 Log_Levels = {
     "": "[ LOG ] ",
@@ -279,7 +324,10 @@ class FileEntry:
 
             shutil.copyfile(inplacePath, self.workingPath)
         except Exception as e:
-            self.error = "  {}:{}\n   {}:\n     {}".format(self.path, lineNo, type(e).__name__, e)
+            self.error = "{}{}".format(
+                Text.warning("  {}:{}\n".format(self.path, lineNo)),
+                "   {}\n    > {}".format(Text.red(type(e).__name__), splitErrorString(e)),
+            )
         finally:
             os.remove(inplacePath)
 
@@ -299,11 +347,13 @@ class FileEntry:
                 else:
                     TAG_BAD = re.findall(FIND_TAG_DEF_REGEX_BAD, line)
                     if TAG_BAD:
-                        raise MalformedTAGDefinitionException(line)
+                        TAG_BAD = TAG_BAD[0]
+                        raise MalformedTAGDefinitionException(TAG_BAD[0] + Text.error(TAG_BAD[1]) + TAG_BAD[2])
                     else:
                         BAD = re.findall(FIND_CALL_REGEX_BAD, line)
                         if BAD:
-                            raise MalformedLogCallException(line)
+                            BAD = BAD[0]
+                            raise MalformedLogCallException(BAD[0] + Text.error(BAD[1]) + BAD[2])
                         else:
                             SS = re.findall(FIND_CALL_REGEX_SS, line)
                             if len(SS) != 0:
@@ -403,7 +453,7 @@ class Toolbar:
 
 def begin_scan():
 
-    tb = Toolbar(len(Threads), "Completed Threads:")
+    tb = Toolbar(len(Threads), Text.important("Completed Threads:"))
 
     for t in Threads:
         t.start()
@@ -417,16 +467,16 @@ def begin_scan():
     del IDs[""]
     del TAGs[""]
 
-    print("\nModified Files:")
+    print(Text.header("\nModified Files:"))
     for f in FileRefs:
         if f.modified:
-            print("  {}".format(f.name))
+            print("  {}".format(Text.green(f.name)))
         if f.error:
             Files.add(f)
 
     sys.stdout.flush()
 
-    print("\nFile Errors:")
+    print(Text.header("\nFile Errors:"))
     for f in Files:
         print(f.error)
 
@@ -461,7 +511,7 @@ allocate_files(SOURCE_NAME, WORKING_DIRECTORY_OFFSET)
 allocate_files(LIBRARIES_NAME, WORKING_DIRECTORY_OFFSET)
 
 if not DISABLE_SCRIPT:
-    print("Available Ram: {} GBs\n".format(AvailableRam()))
+    print(Text.warning("Available Ram: {} GBs\n".format(AvailableRam())))
 
     prehash = hashFile(getOutputFile(FILE_OUTPUT_PATH))
 
@@ -472,5 +522,5 @@ if not DISABLE_SCRIPT:
     save_lookup(FILE_OUTPUT_PATH)
     newhash = hashFile(getOutputFile(FILE_OUTPUT_PATH))
     if newhash != prehash:
-        print("\nNote: Output file values have changed")
+        print(Text.reallyImportant("\nNote: Output file values have changed"))
 
