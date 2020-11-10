@@ -1,16 +1,19 @@
 #include "State.h"
+#include "WProgram.h"
 
 static LOG_TAG TAG = "State Manager";
 
+static State::State_t *lastState;
 static State::State_t *currentState;
 
 void State::setNextState(State_t *state) {
+    lastState = currentState;
     currentState = state;
 }
 
 static struct UnhandledState_t : State::State_extend<UnhandledState_t> {
     bool SetupOnce = true;
-    LOG_TAG ID = "UNHANDLED STATE"; // TODO: test that this prints
+    LOG_TAG ID = "UNHANDLED STATE";
 
     State::ExitCode setup(void) {
         Log.f(ID, "UNHANDLED STATE!");
@@ -19,17 +22,23 @@ static struct UnhandledState_t : State::State_extend<UnhandledState_t> {
 
 } UnhandledState;
 
-State::State_t *State::State_t::nextState = &UnhandledState;
+int State::State_t::nextState = 0;
+State::State_t *State::State_t::linkedStates[] = {&UnhandledState};
 State::State_t *State::State_t::errorState = &UnhandledState;
 
 static State::ExitCode exitCode = State::NOERR;
 
-State::ExitCode getExitCode() {
+State::ExitCode State::getExitCode() {
     return exitCode;
+}
+
+State::State_t *State::getLastState() {
+    return lastState;
 }
 
 int State::begin(State_t &entry) {
     setNextState(&entry);
+    lastState = currentState; // Ensure no one gets a null
 
     while (exitCode != STOP) {
         Log.d(TAG, "Start");

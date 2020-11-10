@@ -45,8 +45,9 @@ struct State_t {
     bool SetupOnce = false;
     bool enableSetup = true;
     LOG_TAG ID = "ID NOT SET";
-    static State_t *nextState;  // Next State to goto if loop exits w/ code DONE //IMPROVE: Dynamic state changing
-    static State_t *errorState; // State to goto if state exits not with NOERR
+    static int nextState;
+    static State_t *linkedStates[]; // Next State to goto if loop exits w/ code DONE //IMPROVE: Dynamic state changing
+    static State_t *errorState;     // State to goto if state exits not with NOERR
 
     // virtual void trigger(void);
 
@@ -54,8 +55,9 @@ struct State_t {
     virtual void next(void){};
     virtual void error(void){};
 
-    virtual ExitCode setup(void){return ExitCode::NOERR;};
-    virtual ExitCode loop(void){return ExitCode::DONE;};
+    virtual ExitCode setup(void) { return ExitCode::NOERR; };
+    virtual ExitCode loop(void) { return ExitCode::DONE; };
+    // virtual LOG_TAG getID(); // ONLY TO BE USED WHEN DEBUGGING
 };
 
 void setNextState(State_t *state);
@@ -81,17 +83,24 @@ struct State_extend : State_t {
 
     virtual void next(void) {
         Derived *p = static_cast<Derived *>(this);
-        setNextState(p->nextState);
+        setNextState(p->linkedStates[(int)p->nextState]);
     };
 
     virtual void error(void) {
         Derived *p = static_cast<Derived *>(this);
         setNextState(p->errorState);
     };
+
+    // ONLY TO BE USED WHEN DEBUGGING
+    // virtual LOG_TAG getID() {
+    //     Derived *p = static_cast<Derived *>(this);
+    //     return p->ID;
+    // }
 };
 
 // Return last exitCode; for error handling states
 ExitCode getExitCode();
+State_t *getLastState();
 int begin(State_t &entry);
 
 } // namespace State
