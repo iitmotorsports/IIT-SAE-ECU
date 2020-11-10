@@ -97,11 +97,11 @@ class Text:
 
     @staticmethod
     def important(text):
-        return "\033[96m\033[1m" + text + "\033[0m"
+        return "\033[94m\033[1m" + text + "\033[0m"
 
     @staticmethod
     def reallyImportant(text):
-        return "\033[96m\033[1m\033[4m" + text + "\033[0m"
+        return "\033[94m\033[1m\033[4m" + text + "\033[0m"
 
     @staticmethod
     def green(text):

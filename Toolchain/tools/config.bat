@@ -112,7 +112,6 @@ if "%no_ninja_script%"=="1" GOTO BUILD_CLEAN
 if "%new_build_dir%"=="1" GOTO END_CLEAN
 
 
-
 GOTO FINISH_CLEAN_SECTION
 :BUILD_CLEAN
 rmdir /Q /S build
@@ -122,19 +121,19 @@ timeout /t 1 /nobreak >NUL
 :END_CLEAN
 
 if exist Pre_Build.bat (
-    echo %A_CYAN%%A_BOLD%Running Pre-Build Batch Script%A_RESET% 🧰
+    echo %A_CYAN%%A_BOLD%Running Pre-Build Batch Script%A_RESET% 🧰⚙
     echo.
     Start Pre_Build.bat
     GOTO __END_PREBUILD
 )
 if exist Pre_Build.ps1 ( 
-    echo %A_CYAN%%A_BOLD%Running Pre-Build PowerShell Script%A_RESET% 🧰
+    echo %A_CYAN%%A_BOLD%Running Pre-Build PowerShell Script%A_RESET% 🧰⚙
     echo.
     powershell.exe .\Pre_Build.ps1
     GOTO __END_PREBUILD
 )
 if exist Pre_Build.py ( 
-    echo %A_CYAN%%A_BOLD%Running Pre-Build Python Script%A_RESET% 🧰
+    echo %A_CYAN%%A_BOLD%Running Pre-Build Python Script%A_RESET% 🧰⚙
     echo.
     Python.exe Pre_Build.py
     GOTO __END_PREBUILD
@@ -160,19 +159,19 @@ cd ".."
 :FINISH_CLEAN_SECTION
 
 if exist Pre_Build.bat (
-    echo %A_CYAN%%A_BOLD%Running Pre-Build Batch Script%A_RESET% 🧰
+    echo %A_CYAN%%A_BOLD%Running Pre-Build Batch Script%A_RESET% 🧰⚙
     echo.
     Start Pre_Build.bat
     GOTO END_PREBUILD
 )
 if exist Pre_Build.ps1 ( 
-    echo %A_CYAN%%A_BOLD%Running Pre-Build PowerShell Script%A_RESET% 🧰
+    echo %A_CYAN%%A_BOLD%Running Pre-Build PowerShell Script%A_RESET% 🧰⚙
     echo.
     powershell.exe .\Pre_Build.ps1
     GOTO END_PREBUILD
 )
 if exist Pre_Build.py ( 
-    echo %A_CYAN%%A_BOLD%Running Pre-Build Python Script%A_RESET% 🧰
+    echo %A_CYAN%%A_BOLD%Running Pre-Build Python Script%A_RESET% 🧰⚙
     echo.
     Python.exe Pre_Build.py
     GOTO END_PREBUILD
@@ -186,6 +185,7 @@ if errorlevel 1 (
 :NO_PREBUILD
 
 cd build
+echo.
 echo %A_CYAN%%A_BOLD%Building%A_RESET% ⏳
 %tool_path%ninja.exe -j16
 if errorlevel 1 (
