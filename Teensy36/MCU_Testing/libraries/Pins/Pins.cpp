@@ -43,7 +43,7 @@ void Pins::setPinValue(const int GPIO_Pin, const int value) {
     getPin(GPIO_Pin)->value = value;
 }
 
-void Pins::update(void) {
+void Pins::update(void) { // TODO: Ditch chunked polling, over-optimizing
     if (timeElapsed >= pinDelay) {
         timeElapsed = timeElapsed - pinDelay;
         for (size_t i = 0; i < pinBlocking; i++) {
