@@ -26,7 +26,7 @@ WORKING_DIRECTORY_OFFSET = "build\\Pre_Build\\"
 # FILE_OUTPUT_PATH = "build\\bin"
 FILE_OUTPUT_PATH = ""
 
-DISABLE_SCRIPT = True
+BYPASS_SCRIPT = os.path.exists("script.disable") # bypass script if this file is found
 
 LIMIT_TAG = 254
 LIMIT_ID = 65535
@@ -79,7 +79,7 @@ def hashFile(filePath):
             return sha256.digest()
         else:
             with open(filePath, "rb") as f:
-                return hashlib.sha256(f.read()).digest()
+                return hashlib.sha256(f.read()).hexdigest()
 
 
 class Text:
@@ -262,17 +262,21 @@ Log_Levels = {
 class FileEntry:
     name = ""
     path = ""
+    rawpath = ""
     workingPath = ""
+    offset = ""
     modified = False
     error = None
 
-    def __init__(self, RawPath, FilePath, FileName):
+    def __init__(self, RawPath, FilePath, FileName, Offset):
         if not os.path.exists(FilePath):
             raise FileNotFoundError(FilePath)
 
         self.name = FileName
         self.path = FilePath
+        self.rawpath = RawPath
         self.workingPath = "{}{}".format(WORKING_DIRECTORY_OFFSET, FilePath)
+        self.offset = Offset
 
         # if O_Files.get(self.workingPath):
         # print("Records show {} exists".format(FileName))
@@ -382,6 +386,18 @@ FileRefs = set()
 Threads = set()
 
 
+def syncFile(filePath, offset, rawpath):
+    workingFilePath = "{}{}".format(offset, filePath)
+    new = hashFile(filePath)
+    old = hashFile(workingFilePath)
+    if not os.path.exists(workingFilePath) or new != old:
+        touch("{}{}".format(offset, rawpath))
+        shutil.copyfile(filePath, workingFilePath)
+        print("Sync File: {} -> {}\n\tOld:{}\n\tNew:{}".format(filePath, offset, old, new))
+        return False
+    return True
+
+
 def allocate_files(Path, Offset):
     async def lib_flag(line):
         return line.replace(LIB_DEFINE[0], LIB_DEFINE[1])
@@ -390,16 +406,15 @@ def allocate_files(Path, Offset):
         for filename in files:
             filepath = subdir + os.sep + filename
             rawpath = subdir + os.sep
-            if DISABLE_SCRIPT:
-                touch("{}{}".format(Offset, rawpath))
-                shutil.copyfile(filepath, "{}{}".format(Offset, filepath))
+            if BYPASS_SCRIPT:
+                syncFile(filepath, Offset, rawpath)
                 continue
             if rawpath.startswith(LIB_PATH):
-                libFile = FileEntry(rawpath, filepath, filename)
+                libFile = FileEntry(rawpath, filepath, filename, Offset)
                 if libFile.name == LIB_FILE:
                     asyncio.run(libFile.walkLines(lib_flag))
                 continue
-            File_Ent = FileEntry(rawpath, filepath, filename)
+            File_Ent = FileEntry(rawpath, filepath, filename, Offset)
             Files.add(File_Ent)
             FileRefs.add(File_Ent)
 
@@ -498,11 +513,12 @@ def save_lookup(path):
 
 # Start Script
 
-try:  # TODO: Remove after implementing persistent data
-    shutil.rmtree(SOURCE_DEST_NAME)
-    shutil.rmtree(LIBRARIES_DEST_NAME)
-except FileNotFoundError:
-    pass
+if not BYPASS_SCRIPT:
+    try:  # TODO: Remove after implementing persistent data
+        shutil.rmtree(SOURCE_DEST_NAME)
+        shutil.rmtree(LIBRARIES_DEST_NAME)
+    except FileNotFoundError:
+        pass
 
 touch(SOURCE_DEST_NAME)
 touch(LIBRARIES_DEST_NAME)
@@ -510,7 +526,7 @@ touch(LIBRARIES_DEST_NAME)
 allocate_files(SOURCE_NAME, WORKING_DIRECTORY_OFFSET)
 allocate_files(LIBRARIES_NAME, WORKING_DIRECTORY_OFFSET)
 
-if not DISABLE_SCRIPT:
+if not BYPASS_SCRIPT:
     print(Text.warning("Available Ram: {} GBs\n".format(AvailableRam())))
 
     prehash = hashFile(getOutputFile(FILE_OUTPUT_PATH))
