@@ -36,9 +36,6 @@ set(CORE_PATH "${TOOLCHAIN_ROOT_PATH}/teensy/avr/cores/${TEENSY_CORE}")
 string(TOLOWER ${TEENSY_CORE_NAME} TEENSY_CORE_NAME_LOWER)
 set(TEENSY_CORE_LD_SCRIPT "${CORE_PATH}/${TEENSY_CORE_NAME_LOWER}.ld")
 
-# set(INTERNAL_INCLUDES ${LIBRARY_PATH} ${CMAKE_SOURCE_DIR}/${SOURCE_PATH} ${CORE_PATH})
-# include_directories(${INTERNAL_INCLUDES})
-
 MACRO(HEADER_DIRECTORIES return_list path_prefix)
     FILE(GLOB_RECURSE new_list ${path_prefix}/*.h | ${path_prefix}/*.hpp)
     SET(dir_list "")
@@ -51,7 +48,6 @@ MACRO(HEADER_DIRECTORIES return_list path_prefix)
 ENDMACRO()
 
 HEADER_DIRECTORIES(LIBRARY_INCLUDE ${LIBRARY_PATH})
-# HEADER_DIRECTORIES(SOURCE_INCLUDE ${SOURCE_PATH})
 HEADER_DIRECTORIES(CORE_INCLUDE ${CORE_PATH})
 
 file(GLOB_RECURSE L_C_BUILD_FILES ${LIBRARY_PATH}/*.c)
@@ -67,14 +63,7 @@ add_library(libraries ${L_C_BUILD_FILES} ${L_CXX_BUILD_FILES})
 target_include_directories(libraries PUBLIC ${CORE_PATH} ${LIBRARY_INCLUDE})
 target_link_libraries(libraries core)
 
-# add_library(source ${S_C_BUILD_FILES} ${S_CXX_BUILD_FILES})
-# target_include_directories(source PUBLIC ${CORE_PATH} ${LIBRARY_INCLUDE} ${SOURCE_PATH})
-
-# file(GLOB_RECURSE S_H_BUILD_FILES ${SOURCE_PATH}/*.h)
-# file(GLOB_RECURSE C_H_BUILD_FILES ${CORE_PATH}/*.h)
-# file(GLOB_RECURSE L_H_BUILD_FILES ${LIBRARY_PATH}/*.h)
-
-set(SOURCES ${S_C_BUILD_FILES} ${S_CXX_BUILD_FILES})
+set(SOURCES ${S_C_BUILD_FILES} ${S_CXX_BUILD_FILES} CACHE INTERNAL "")
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${CORE_PATH} ${LIBRARY_INCLUDE})
