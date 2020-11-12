@@ -56,3 +56,8 @@ Where everything came from
   - More info about usage on it's repository
 - `teensy_loader_cli.exe` is the [Teensy Loader Command Line](https://www.pjrc.com/teensy/loader_cli.html) compiled for Windows
 - `ninja.exe` is the [Ninja Build System](https://github.com/ninja-build/ninja) binary for Windows
+
+Documentation
+-------------
+
+[Doxygen HTML](doc/html/index.html)
