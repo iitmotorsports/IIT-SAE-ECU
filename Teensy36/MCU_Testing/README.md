@@ -1,17 +1,13 @@
-Teensy 3.6 Project Folder Template
+SAE ECU Programming
 ===========================
  
-Purpose
+Hardware
 -------
 
-An easy starting point for Teensy 3.6 projects on windows, with the only prerequisite being CMake.
-
-This template is meant to contain multiple projects as to make use of the included toolchain.
-
-This setup is not meant for Unix systems.
-
-This setup is also meant only for the Teensy 3.6 although some tweaking can be done to be used
-on other boards
+- [Teensy 3.6](https://www.pjrc.com/store/teensy36.html) x 2
+- [A Windoes machine](https://www.microsoft.com/en-us/windows) (Preferably Win 10)
+- [A Formula Hybrid Car](https://bicyclewarehouse.com/collections/hybrid-bikes) (Not necessary for testing)
+- [A Compatible CAN transceiver](https://www.amazon.com/SN65HVD230-CAN-Board-Communication-Development/dp/B00KM6XMXO) x 2
 
 Setup
 -----
