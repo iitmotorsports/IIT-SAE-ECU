@@ -1,7 +1,12 @@
 /**
- * Manage all that there is to Notifying the tablet about what is happening
- * Not for sending raw_data, low priority logging library
- * Potential for logging to sd card
+ * @file Log.cpp
+ * @author IR
+ * @brief Log source
+ * @version 0.1
+ * @date 2020-11-11
+ * 
+ * @copyright Copyright (c) 2020
+ * 
  */
 
 #include <cstring>
