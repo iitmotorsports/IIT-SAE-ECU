@@ -1,40 +1,52 @@
-#include "MCUStates.h"
+#include "MCUStates.hpp"
 
-State::State_t *MCUStates::Initialize_t::linkedStates[] = {&Bounce};
-State::ExitCode MCUStates::Initialize_t::setup(void) {
+State::State_t *MCUStates::Initialize_t::run(void) {
     if (firstSetup) {
         pinMode(6, OUTPUT);
-        digitalWrite(6, LOW); /* optional tranceiver enable pin */
+        digitalWrite(6, LOW); /* optional transceiver enable pin */
 
         Pins::initialize();
         firstSetup = false;
         Log.i(ID, "Finished inital Setup");
     }
-    count = 5;
-    return State::NOERR;
-};
 
-State::ExitCode MCUStates::Initialize_t::loop(void) {
+    elapsedMillis timeElapsed;
+    int count = 5;
 
-    if (timeElapsed >= 500) {
-        timeElapsed = timeElapsed - 500;
-        count--;
-        // sendTestMessage(F_Can);
-        Log(ID, "A7 Pin Value:", Pins::getPinValue(0));
-        Pins::setPinValue(A6, random(1024));
+    while (true) {
+        if (timeElapsed >= 500) {
+            timeElapsed = timeElapsed - 500;
+            count--;
+            // sendTestMessage(F_Can);
+            Log(ID, "A7 Pin Value:", Pins::getPinValue(0));
+            Pins::setPinValue(A6, random(1024));
+        }
+        Pins::update();
+        if (count == 0)
+            return &MCUStates::Logger;
     }
-    Pins::update();
-    if (count == 0)
-        return State::DONE;
-
-    return State::NOERR;
 };
 
-State::State_t *MCUStates::Bounce_t::linkedStates[] = {&Bounce};
-State::ExitCode MCUStates::Bounce_t::loop(void) {
-    delay(500);
+State::State_t *MCUStates::Logger_t::run(void) {
+
+    static elapsedMillis timeElapsed;
+
+    if (timeElapsed >= 2000) {
+        timeElapsed = timeElapsed - 2000;
+        Log(ID, "A7 Pin Value:", Pins::getPinValue(0));
+        Log("FAKE ID", "A7 Pin Value:");
+        Log(ID, "whaAAAT?");
+        Log(ID, "", 0xDEADBEEF);
+        Log(ID, "Notify code: ", getNotify());
+    }
+
+    return &MCUStates::Bounce;
+};
+
+State::State_t *MCUStates::Bounce_t::run(void) {
+    delay(250);
     Log.i(ID, "Bounce!");
-    linkedStates[0] = State::getLastState();
-    delay(500);
-    return State::DONE;
+    State::notify(random(100));
+    delay(250);
+    return State::getLastState();
 }

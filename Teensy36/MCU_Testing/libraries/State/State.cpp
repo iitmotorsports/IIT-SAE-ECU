@@ -5,62 +5,53 @@ static LOG_TAG TAG = "State Manager";
 
 static State::State_t *lastState;
 static State::State_t *currentState;
+static int notifyCode = 0;
 
-void State::setNextState(State_t *state) {
+static void setNextState(State::State_t *state) {
     lastState = currentState;
     currentState = state;
 }
 
-static struct UnhandledState_t : State::State_extend<UnhandledState_t> {
-    bool SetupOnce = true;
+/**
+ * @brief Internal state used for invalid states
+ */
+static struct UnhandledState_t : State::State_t {
     LOG_TAG ID = "UNHANDLED STATE";
 
-    State::ExitCode setup(void) {
+    State_t *run(void) {
         Log.f(ID, "UNHANDLED STATE!");
-        return State::STOP;
+        State::notify(State::E_FATAL);
+        return this;
     };
 
 } UnhandledState;
 
-int State::State_t::nextState = 0;
-State::State_t *State::State_t::linkedStates[] = {&UnhandledState};
-State::State_t *State::State_t::errorState = &UnhandledState;
+State::State_t *State::State_t::run() {
+    return &UnhandledState;
+}
 
-static State::ExitCode exitCode = State::NOERR;
+void State::notify(int notify) {
+    notifyCode = notify;
+}
 
-State::ExitCode State::getExitCode() {
-    return exitCode;
+int State::State_t::getNotify() {
+    return this->notify;
 }
 
 State::State_t *State::getLastState() {
     return lastState;
 }
 
-int State::begin(State_t &entry) {
+void State::begin(State_t &entry) {
     setNextState(&entry);
-    lastState = currentState; // Ensure no one gets a null
 
-    while (exitCode != STOP) {
+    while (notifyCode != State::E_FATAL) {
+        notifyCode = 0;
         Log.d(TAG, "Start");
-        exitCode = currentState->runSetup();
-
-        if (exitCode != NOERR)
-            goto ERRORED;
-
-        do { // TODO: what happens if runtime error?
-            exitCode = currentState->loop();
-        } while (exitCode == NOERR);
-
-        if (exitCode == DONE) {
-            Log.d(TAG, "Next");
-            currentState->next();
-        } else if (exitCode != NOERR) {
-        ERRORED:
-            Log.e(TAG, "State returned error code", exitCode);
-            currentState->error();
-        }
+        setNextState(currentState->run());
+        currentState->notify = notifyCode;
+        Log.d(TAG, "State returned code", notifyCode);
     }
 
-    Log.f(TAG, "UNABLE TO CONTINUE");
-    return 0;
+    Log.f(TAG, "STATE MACHINE STOPPED");
 }

@@ -1,21 +1,11 @@
 /**
- * State controls what can be done and when
+ * @file State.h
+ * @author IR
+ * @brief State library
+ * @version 0.1
+ * @date 2020-11-11
  * 
- * CAN BUS faults
- *  Are we in a state that ignores these faults?
- *  Maybe we need to check for specific faults regardless of what fault(hard/soft)?
- *      We must pass data(the fault bytes) to State incase we do
- *      In the case of a unrecoverable fault, disable interrupts and do what is needed
- *      Each state can have their own way of managing faults
- * 
- * Notifying tablet
- *  Are we on a teensy that can notify the tablet?
- *      If so, just push the address with the appropriate status code if somthing of interest happens
- *      If the tablet receives a status code of a diffrent state then that means we have changed states
- * 
- * Sequences
- *  Specific sequences that must be carried out in a state can be implemented here
- *  Interrupts can be disabled and any faults can be checked for manually
+ * @copyright Copyright (c) 2020
  * 
  */
 
@@ -28,80 +18,92 @@
 
 #include "Log.h"
 #include "PPHelp.h"
-#include "StateConfig.def"
 
+/**
+ * @brief A state machine implementation
+ * 
+ * This library implements a state machine for the Teensy Microcontoller.
+ * It was specifically made for the Teensy 3.6
+ */
 namespace State {
 
-enum ExitCode : uint8_t {
-    NOERR,
-    DONE,
-    ERROR,
-    FAULT,
-    STOP // Spooky | DOM DO NOT USE, PLZ 👻
+/**
+ * @brief Common codes that can be used by states.
+ */
+enum NotifyCode : int {
+    /**
+     * @brief No error has occurred.
+     */
+    E_NOERR,
+    /**
+     * @brief An error has occurred but we can continue normally.
+     */
+    E_CONTINUE,
+    /**
+     * @brief An error has occurred, attempt to skip the state.
+     */
+    E_ERROR,
+    /**
+     * @brief Special code that makes the state machine completely stop.
+     */
+    E_FATAL = 0xFA7A1,
+    /**
+     * @brief Special code that makes the state machine start from the first state again
+     */
+    E_RESTART = 2357427,
 };
 
+/**
+ * @brief The parent state structure to extend from to create more states
+ */
 struct State_t {
+protected:
+    /**
+    * @brief Get the code of the previous state
+    * 
+    * @return int notify code
+    */
+    int getNotify(void);
 
-    bool SetupOnce = false;
-    bool enableSetup = true;
+public:
+    /**
+     * @brief Used for receiving values from other states
+     */
+    int notify = 0;
+
+    /**
+     * @brief The unique ID of the state, used for logging
+     */
     LOG_TAG ID = "ID NOT SET";
-    static int nextState;
-    static State_t *linkedStates[]; // Next State to goto if loop exits w/ code DONE //IMPROVE: Dynamic state changing
-    static State_t *errorState;     // State to goto if state exits not with NOERR
 
-    // virtual void trigger(void);
-
-    virtual ExitCode runSetup(void) { return ExitCode::NOERR; };
-    virtual void next(void){};
-    virtual void error(void){};
-
-    virtual ExitCode setup(void) { return ExitCode::NOERR; };
-    virtual ExitCode loop(void) { return ExitCode::DONE; };
-    // virtual LOG_TAG getID(); // ONLY TO BE USED WHEN DEBUGGING
+    /**
+     * @brief Runs the state
+     * 
+     * @return State_t* A pointer to the next state to switch to
+     */
+    virtual State_t *run(void);
 };
 
-void setNextState(State_t *state);
+/**
+ * @brief Send a code to the next state
+ * 
+ * @param notify code to send
+ */
+void notify(int notify);
 
-template <typename Derived>
-struct State_extend : State_t {
-
-    virtual ExitCode runSetup(void) {
-        Derived *p = static_cast<Derived *>(this);
-        if (p->enableSetup) {
-            Log.d(p->ID, "Begin setup");
-            ExitCode exitCode = setup();
-            if (exitCode != NOERR)
-                return exitCode;
-            if (p->SetupOnce) {
-                Log.d(p->ID, "Setup only once");
-                p->enableSetup = false;
-            }
-            Log.d(p->ID, "Finish setup");
-        }
-        return NOERR;
-    }
-
-    virtual void next(void) {
-        Derived *p = static_cast<Derived *>(this);
-        setNextState(p->linkedStates[(int)p->nextState]);
-    };
-
-    virtual void error(void) {
-        Derived *p = static_cast<Derived *>(this);
-        setNextState(p->errorState);
-    };
-
-    // ONLY TO BE USED WHEN DEBUGGING
-    // virtual LOG_TAG getID() {
-    //     Derived *p = static_cast<Derived *>(this);
-    //     return p->ID;
-    // }
-};
-
-// Return last exitCode; for error handling states
-ExitCode getExitCode();
+/**
+ * @brief Get a pointer of the last state
+ * @note If the state machine just started this will return a nullptr
+ * @return State_t* pointer of last state
+ */
 State_t *getLastState();
-int begin(State_t &entry);
+
+/**
+ * @brief Begin the state machine with a pointer to a state
+ * 
+ * @param entry Pointer of the first state to start on
+ */
+void begin(State_t &entry);
 
 } // namespace State
 
