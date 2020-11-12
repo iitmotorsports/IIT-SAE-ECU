@@ -1,3 +1,14 @@
+/**
+ * @file Pins.h
+ * @author IR
+ * @brief Update, set, and get predefined pin values
+ * @version 0.1
+ * @date 2020-11-11
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
+
 #ifndef __MCU_PINS_H__
 #define __MCU_PINS_H__
 
@@ -7,23 +18,39 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+/**
+ * @brief Get and set values to predefined pins
+ */
 namespace Pins {
 
+/**
+ * @brief A typedef for pin handler functions
+ */
 typedef void (*PinHandler)(const int pin, int &value);
 
-typedef struct pin_t {
-    uint16_t GPIO;
-    PinHandler handle;
-    int value;
-
-    void update(void) {
-        handle(GPIO, value);
-    }
-} pin_t;
-
+/**
+ * @brief Get the pin value of a predefined pin
+ * 
+ * @param GPIO_Pin The GPIO pin to get a value from
+ * @return int Returns an int that represents either a digital or analog value
+ */
 int getPinValue(const int GPIO_Pin);
+/**
+ * @brief Set the pin value of a predefined pin
+ * 
+ * @param GPIO_Pin The GPIO pin to set
+ * @param value The value to set the analog/digital pin to
+ */
 void setPinValue(const int GPIO_Pin, const int value);
+
+/**
+ * @brief Poll all pin values
+ */
 void update(void);
+
+/**
+ * @brief Initialize all predefined pins
+ */
 void initialize(void);
 
 } // namespace Pins

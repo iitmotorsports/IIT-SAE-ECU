@@ -6,6 +6,16 @@
 // Any concern with a pin not getting data in time?
 // Ditch caching, no reason to wait for a new value, delay may take longer than just getting actual value
 
+typedef struct pin_t {
+    uint16_t GPIO;
+    Pins::PinHandler handle;
+    int value;
+
+    void update(void) {
+        handle(GPIO, value);
+    }
+} pin_t;
+
 static elapsedMillis timeElapsed;
 static int pos = 0;
 
@@ -16,11 +26,11 @@ static const int pinDelay = CONF_POLLING_DELAY;               // Milliseconds be
 #undef X
 
 #define X(pin, Type, IO) {pin, Type##IO},
-static Pins::pin_t pins[pinCount] = {TEENSY_PINS}; // Allocate pins
+static pin_t pins[pinCount] = {TEENSY_PINS}; // Allocate pins
 #undef X
 
 // ALT: allocate all GPIO pins so index matches GPIO number
-inline static Pins::pin_t *getPin(const int GPIO_Pin) {
+inline static pin_t *getPin(const int GPIO_Pin) {
     int i = pinCount;
     switch (GPIO_Pin) {
 #define X(pin, ...) \

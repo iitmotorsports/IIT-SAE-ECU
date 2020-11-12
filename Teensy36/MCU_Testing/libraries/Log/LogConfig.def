@@ -1,29 +1,31 @@
+/**
+ * @file LogConfig.def
+ * @author IR
+ * @brief Configuration file for the Log library
+ * @version 0.1
+ * @date 2020-11-11
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
 #ifndef __MCU_LOGCONFIG_H__
 #define __MCU_LOGCONFIG_H__
 
 /**
- *   .d8888b.                     .d888 d8b          
- *  d88P  Y88b                   d88P"  Y8P          
- *  888    888                   888                 
- *  888         .d88b.  88888b.  888888 888  .d88b.  
- *  888        d88""88b 888 "88b 888    888 d88P"88b 
- *  888    888 888  888 888  888 888    888 888  888 
- *  Y88b  d88P Y88..88P 888  888 888    888 Y88b 888 
- *   "Y8888P"   "Y88P"  888  888 888    888  "Y88888 
- *                                               888 
- *                                          Y8b d88P 
- *                                           "Y88P"  
- *  ------------------------------------------------
- *  Modify the definitions below to change this
- *  library's behavior
-*/
-
+ * @brief If this is defined, calls to log will include a millis timestamp
+ * @note Timestamp will be disabled if the Pre_Build.py script is run
+ */
 #define CONF_LOGGING_ENABLE_TIMESTAMP
 
-// 0 No Logging - 1 Errors - 2 Warnings - 3 Normal - 4 Info - 5 Debug
+/**
+ * @brief This define sets the global logging level, any level not included is not printed
+ * 0 No Logging - 1 Errors - 2 Warnings - 3 Normal - 4 Info - 5 Debug
+ */
 #define CONF_LOGGING_MAX_LEVEL 4
 
+/**
+ * @brief Used by the Pre_Build.py
+ */
 #define CONF_LOGGING_MAPPED_MODE 0
-#define CONF_LOGGING_END_MSG_FLAG 0x7D
 
 #endif // __MCU_LOGCONFIG_H__
