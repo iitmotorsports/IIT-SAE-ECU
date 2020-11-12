@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['notify_109',['notify',['../struct_state_1_1_state__t.html#aee07986f8fa2a473a012a242fe85cb9f',1,'State::State_t']]]
+  ['log_82',['Log',['../_log_8cpp.html#a2f2d8db9a1c1ead512f6c188cfd21928',1,'Log.cpp']]]
 ];

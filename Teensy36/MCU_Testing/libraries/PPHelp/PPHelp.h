@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2020
  * 
  */
+// @cond
 #ifndef __PPHELP_H__
 #define __PPHELP_H__
 
@@ -66,3 +67,4 @@
 // #define DEC_10 9
 
 #endif // __PPHELP_H__
+       // @endcond

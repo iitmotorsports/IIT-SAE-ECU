@@ -5,74 +5,6 @@
 Compilation of various helpful preprocessor macros.  
 
 
-\doxysubsection*{Macros}
-\begin{DoxyCompactItemize}
-\item 
-\mbox{\Hypertarget{_p_p_help_8h_a0feb7e0b940efad526132db03f9febf9}\label{_p_p_help_8h_a0feb7e0b940efad526132db03f9febf9}} 
-\#define {\bfseries C\+O\+N\+C\+AT}(A,  B)~A\#\#B
-\item 
-\mbox{\Hypertarget{_p_p_help_8h_a91013be2e9179a2d34628f700e54e773}\label{_p_p_help_8h_a91013be2e9179a2d34628f700e54e773}} 
-\#define {\bfseries E\+X\+P\+A\+N\+D\+\_\+\+C\+O\+N\+C\+AT}(A,  B)~C\+O\+N\+C\+AT(A, B)
-\item 
-\mbox{\Hypertarget{_p_p_help_8h_a659f2c1024a0695f7eae16df25d8b668}\label{_p_p_help_8h_a659f2c1024a0695f7eae16df25d8b668}} 
-\#define {\bfseries P\+P\+\_\+\+A\+R\+G\+\_\+N}( \+\_\+1,  \+\_\+2,  \+\_\+3,  \+\_\+4,  \+\_\+5,  \+\_\+6,  \+\_\+7,  \+\_\+8,  \+\_\+9,  \+\_\+10,  \+\_\+11,  \+\_\+12,  \+\_\+13,  \+\_\+14,  \+\_\+15,  \+\_\+16,  \+\_\+17,  \+\_\+18,  \+\_\+19,  \+\_\+20,  \+\_\+21,  \+\_\+22,  \+\_\+23,  \+\_\+24,  \+\_\+25,  \+\_\+26,  \+\_\+27,  \+\_\+28,  \+\_\+29,  \+\_\+30,  \+\_\+31,  \+\_\+32,  \+\_\+33,  \+\_\+34,  \+\_\+35,  \+\_\+36,  \+\_\+37,  \+\_\+38,  \+\_\+39,  \+\_\+40,  \+\_\+41,  \+\_\+42,  \+\_\+43,  \+\_\+44,  \+\_\+45,  \+\_\+46,  \+\_\+47,  \+\_\+48,  \+\_\+49,  \+\_\+50,  \+\_\+51,  \+\_\+52,  \+\_\+53,  \+\_\+54,  \+\_\+55,  \+\_\+56,  \+\_\+57,  \+\_\+58,  \+\_\+59,  \+\_\+60,  \+\_\+61,  \+\_\+62,  \+\_\+63,  N, ...)~N
-\item 
-\#define {\bfseries P\+P\+\_\+\+R\+S\+E\+Q\+\_\+N}()
-\item 
-\mbox{\Hypertarget{_p_p_help_8h_a1b4b6dfcca38ee665c4c88c07d58c4f0}\label{_p_p_help_8h_a1b4b6dfcca38ee665c4c88c07d58c4f0}} 
-\#define {\bfseries P\+P\+\_\+\+N\+A\+R\+G\+\_\+}(...)~P\+P\+\_\+\+A\+R\+G\+\_\+N(\+\_\+\+\_\+\+V\+A\+\_\+\+A\+R\+G\+S\+\_\+\+\_\+)
-\item 
-\mbox{\Hypertarget{_p_p_help_8h_a31b9bcd0e7f30adb8ed947d86d4ae11b}\label{_p_p_help_8h_a31b9bcd0e7f30adb8ed947d86d4ae11b}} 
-\#define {\bfseries P\+P\+\_\+\+N\+A\+RG}(...)~P\+P\+\_\+\+N\+A\+R\+G\+\_\+(\+\_\+\+\_\+\+V\+A\+\_\+\+A\+R\+G\+S\+\_\+\+\_\+, P\+P\+\_\+\+R\+S\+E\+Q\+\_\+N())
-\item 
-\mbox{\Hypertarget{_p_p_help_8h_a5fe22ed726604f5426cb07ac871c3584}\label{_p_p_help_8h_a5fe22ed726604f5426cb07ac871c3584}} 
-\#define {\bfseries P\+P\+\_\+\+N\+A\+R\+G\+\_\+\+MO}(...)~P\+P\+\_\+\+N\+A\+R\+G\+\_\+(\+\_\+\+\_\+\+V\+A\+\_\+\+A\+R\+G\+S\+\_\+\+\_\+ P\+P\+\_\+\+R\+S\+E\+Q\+\_\+N())
-\item 
-\mbox{\Hypertarget{_p_p_help_8h_aa0f8200acd4827bc9d2df09270b66c38}\label{_p_p_help_8h_aa0f8200acd4827bc9d2df09270b66c38}} 
-\#define {\bfseries E\+V\+AL}(...)~E\+V\+A\+L1024(\+\_\+\+\_\+\+V\+A\+\_\+\+A\+R\+G\+S\+\_\+\+\_\+)
-\item 
-\mbox{\Hypertarget{_p_p_help_8h_aaad3972dddbceed6c8ab1e28703ff6f8}\label{_p_p_help_8h_aaad3972dddbceed6c8ab1e28703ff6f8}} 
-\#define {\bfseries E\+V\+A\+L1024}(...)~E\+V\+A\+L512(E\+V\+A\+L512(\+\_\+\+\_\+\+V\+A\+\_\+\+A\+R\+G\+S\+\_\+\+\_\+))
-\item 
-\mbox{\Hypertarget{_p_p_help_8h_a3e6a61326961e8e999f8bb968eda3f67}\label{_p_p_help_8h_a3e6a61326961e8e999f8bb968eda3f67}} 
-\#define {\bfseries E\+V\+A\+L512}(...)~E\+V\+A\+L256(E\+V\+A\+L256(\+\_\+\+\_\+\+V\+A\+\_\+\+A\+R\+G\+S\+\_\+\+\_\+))
-\item 
-\mbox{\Hypertarget{_p_p_help_8h_af6d520b16c61d51ff3dec6a46da56a8b}\label{_p_p_help_8h_af6d520b16c61d51ff3dec6a46da56a8b}} 
-\#define {\bfseries E\+V\+A\+L256}(...)~E\+V\+A\+L128(E\+V\+A\+L128(\+\_\+\+\_\+\+V\+A\+\_\+\+A\+R\+G\+S\+\_\+\+\_\+))
-\item 
-\mbox{\Hypertarget{_p_p_help_8h_aac10e394d5740bd77dfaa194215ed047}\label{_p_p_help_8h_aac10e394d5740bd77dfaa194215ed047}} 
-\#define {\bfseries E\+V\+A\+L128}(...)~E\+V\+A\+L64(E\+V\+A\+L64(\+\_\+\+\_\+\+V\+A\+\_\+\+A\+R\+G\+S\+\_\+\+\_\+))
-\item 
-\mbox{\Hypertarget{_p_p_help_8h_ad6795aac7c4cc246ce4cc021d542eb18}\label{_p_p_help_8h_ad6795aac7c4cc246ce4cc021d542eb18}} 
-\#define {\bfseries E\+V\+A\+L64}(...)~E\+V\+A\+L32(E\+V\+A\+L32(\+\_\+\+\_\+\+V\+A\+\_\+\+A\+R\+G\+S\+\_\+\+\_\+))
-\item 
-\mbox{\Hypertarget{_p_p_help_8h_a8da9fa5825ab3afcfd6437b42063f702}\label{_p_p_help_8h_a8da9fa5825ab3afcfd6437b42063f702}} 
-\#define {\bfseries E\+V\+A\+L32}(...)~E\+V\+A\+L16(E\+V\+A\+L16(\+\_\+\+\_\+\+V\+A\+\_\+\+A\+R\+G\+S\+\_\+\+\_\+))
-\item 
-\mbox{\Hypertarget{_p_p_help_8h_a699fe8045b6b8bc6461248f4a5290974}\label{_p_p_help_8h_a699fe8045b6b8bc6461248f4a5290974}} 
-\#define {\bfseries E\+V\+A\+L16}(...)~E\+V\+A\+L8(E\+V\+A\+L8(\+\_\+\+\_\+\+V\+A\+\_\+\+A\+R\+G\+S\+\_\+\+\_\+))
-\item 
-\mbox{\Hypertarget{_p_p_help_8h_a696db09f5d24016710ed370ee42627c8}\label{_p_p_help_8h_a696db09f5d24016710ed370ee42627c8}} 
-\#define {\bfseries E\+V\+A\+L8}(...)~E\+V\+A\+L4(E\+V\+A\+L4(\+\_\+\+\_\+\+V\+A\+\_\+\+A\+R\+G\+S\+\_\+\+\_\+))
-\item 
-\mbox{\Hypertarget{_p_p_help_8h_a5d9eb883e12b6ce5401726db89588f81}\label{_p_p_help_8h_a5d9eb883e12b6ce5401726db89588f81}} 
-\#define {\bfseries E\+V\+A\+L4}(...)~E\+V\+A\+L2(E\+V\+A\+L2(\+\_\+\+\_\+\+V\+A\+\_\+\+A\+R\+G\+S\+\_\+\+\_\+))
-\item 
-\mbox{\Hypertarget{_p_p_help_8h_a1da5ee0b8ba77ab31d29e01e5dd4d9aa}\label{_p_p_help_8h_a1da5ee0b8ba77ab31d29e01e5dd4d9aa}} 
-\#define {\bfseries E\+V\+A\+L2}(...)~E\+V\+A\+L1(E\+V\+A\+L1(\+\_\+\+\_\+\+V\+A\+\_\+\+A\+R\+G\+S\+\_\+\+\_\+))
-\item 
-\mbox{\Hypertarget{_p_p_help_8h_aad4f105758560e2d030fb28e39acea6f}\label{_p_p_help_8h_aad4f105758560e2d030fb28e39acea6f}} 
-\#define {\bfseries E\+V\+A\+L1}(...)~\+\_\+\+\_\+\+V\+A\+\_\+\+A\+R\+G\+S\+\_\+\+\_\+
-\item 
-\mbox{\Hypertarget{_p_p_help_8h_a3428692efe6051ef30016ffde1a9f7bb}\label{_p_p_help_8h_a3428692efe6051ef30016ffde1a9f7bb}} 
-\#define {\bfseries S\+T\+R\+I\+N\+G\+I\+ZE}(x)~\#x
-\item 
-\mbox{\Hypertarget{_p_p_help_8h_a4ddebc5712d39b71767e3dceb9bfb74b}\label{_p_p_help_8h_a4ddebc5712d39b71767e3dceb9bfb74b}} 
-\#define {\bfseries E\+M\+P\+TY}()
-\item 
-\mbox{\Hypertarget{_p_p_help_8h_ae4b532a93c757194ec73b6790a3e6b1f}\label{_p_p_help_8h_ae4b532a93c757194ec73b6790a3e6b1f}} 
-\#define {\bfseries E\+X\+P\+A\+ND}(x)~x
-\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -90,27 +22,3 @@ IR
 \begin{DoxyCopyright}{Copyright}
 Copyright (c) 2020 
 \end{DoxyCopyright}
-
-
-\doxysubsection{Macro Definition Documentation}
-\mbox{\Hypertarget{_p_p_help_8h_a15967218850ac6ac5ffd777368fec7fd}\label{_p_p_help_8h_a15967218850ac6ac5ffd777368fec7fd}} 
-\index{PPHelp.h@{PPHelp.h}!PP\_RSEQ\_N@{PP\_RSEQ\_N}}
-\index{PP\_RSEQ\_N@{PP\_RSEQ\_N}!PPHelp.h@{PPHelp.h}}
-\doxysubsubsection{\texorpdfstring{PP\_RSEQ\_N}{PP\_RSEQ\_N}}
-{\footnotesize\ttfamily \#define P\+P\+\_\+\+R\+S\+E\+Q\+\_\+N(\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
-
-{\bfseries Value\+:}
-\begin{DoxyCode}{0}
-\DoxyCodeLine{    63, 62, 61, 60,                             \(\backslash\)}
-\DoxyCodeLine{        59, 58, 57, 56, 55, 54, 53, 52, 51, 50, \(\backslash\)}
-\DoxyCodeLine{        49, 48, 47, 46, 45, 44, 43, 42, 41, 40, \(\backslash\)}
-\DoxyCodeLine{        39, 38, 37, 36, 35, 34, 33, 32, 31, 30, \(\backslash\)}
-\DoxyCodeLine{        29, 28, 27, 26, 25, 24, 23, 22, 21, 20, \(\backslash\)}
-\DoxyCodeLine{        19, 18, 17, 16, 15, 14, 13, 12, 11, 10, \(\backslash\)}
-\DoxyCodeLine{        9, 8, 7, 6, 5, 4, 3, 2, 1, 0}
-
-\end{DoxyCode}
-
-
-Definition at line 26 of file P\+P\+Help.\+h.
-

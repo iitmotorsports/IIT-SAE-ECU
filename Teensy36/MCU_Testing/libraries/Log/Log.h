@@ -129,6 +129,6 @@ struct Log_t {
 /**
  * @brief Refer to Log_t
  */
-// extern Log_t Log;
+extern Log_t Log;
 
 #endif // __MCU_LOGGING_H__

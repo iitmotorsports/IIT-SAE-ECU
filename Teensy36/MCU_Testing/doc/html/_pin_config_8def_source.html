@@ -88,55 +88,36 @@ $(document).ready(function(){initNavTree('_pin_config_8def_source.html',''); ini
 <div class="title">PinConfig.def</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;/**</div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; * @file PinConfig.def</div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; * @author IR</div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; * @brief The pin configuration for the Teensy</div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; * @version 0.1</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; * @date 2020-11-11</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; * </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; * @copyright Copyright (c) 2020</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; * </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; */</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;#ifndef __MCU_PINCONFIG_H__</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;#define __MCU_PINCONFIG_H__</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;#include &quot;PPHelp.h&quot;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;#include &quot;WProgram.h&quot;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;#define ANALOG</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;#define DIGITAL</div>
+<a href="_pin_config_8def.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef __MCU_PINCONFIG_H__</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">// @cond</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define __MCU_PINCONFIG_H__</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_p_p_help_8h.html">PPHelp.h</a>&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;WProgram.h&quot;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#define ANALOG</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#define DIGITAL</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">// @endcond</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;/**</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; *  @brief The defintions of every pin</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; * </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; *  The pinout setup for the MCU, set the specific pin,</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; *  whether it is analog or digital, and whether we are</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; *  taking input or giving an output on the pin</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; * </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; *  Unless it is the last entry, this is how to add a new pin</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; * </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; *  X(GPIO, ANALOG/DIGITAL, INPUT/OUTPUT) \</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; *  </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; *  Only the last entry should NOT have a &#39;\&#39;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; */</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;#define TEENSY_PINS           \</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    X(PIN_A7, ANALOG, INPUT)  \</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    X(PIN_A6, ANALOG, OUTPUT) \</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    X(4, DIGITAL, OUTPUT)</div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="_pin_config_8def.html#a0bc8a3728ed2e5cb261b99ac9b39814d">   33</a></span>&#160;<span class="preprocessor">#define TEENSY_PINS           \</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">    X(PIN_A7, ANALOG, INPUT)  \</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">    X(PIN_A6, ANALOG, OUTPUT) \</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">    X(4, DIGITAL, OUTPUT)</span></div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;/**</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; * @brief Delay polling every chunk by this much</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; */</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;#define CONF_POLLING_DELAY 50 // Milliseconds between the time the teensy polls a chunk of pins</div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="_pin_config_8def.html#a4fdc4561f31a3658c915085fb0dbd251">   41</a></span>&#160;<span class="preprocessor">#define CONF_POLLING_DELAY 50 // Milliseconds between the time the teensy polls a chunk of pins</span></div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;#endif // __MCU_PINCONFIG_H__</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#endif // __MCU_PINCONFIG_H__</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
+<div class="ttc" id="a_p_p_help_8h_html"><div class="ttname"><a href="_p_p_help_8h.html">PPHelp.h</a></div><div class="ttdoc">Compilation of various helpful preprocessor macros.</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="dir_46f033cede6b037af28a867e6a31a727.html">Pins</a></li><li class="navelem"><b>PinConfig.def</b></li>
+    <li class="navelem"><a class="el" href="dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="dir_46f033cede6b037af28a867e6a31a727.html">Pins</a></li><li class="navelem"><a class="el" href="_pin_config_8def.html">PinConfig.def</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

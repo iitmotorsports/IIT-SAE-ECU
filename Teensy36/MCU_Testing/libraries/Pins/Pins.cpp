@@ -1,3 +1,16 @@
+/**
+ * @file Pins.cpp
+ * @author IR
+ * @brief Pins source file
+ * @version 0.1
+ * @date 2020-11-11
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
+
+// @cond
+
 #include "Pins.h"
 #include "Handlers.hpp"
 
@@ -69,3 +82,5 @@ void Pins::initialize(void) {
     TEENSY_PINS
 #undef X
 }
+
+// @endcond

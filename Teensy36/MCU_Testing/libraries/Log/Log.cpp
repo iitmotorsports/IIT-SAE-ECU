@@ -185,4 +185,7 @@ void Log_t::f(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
 #endif
 }
 
+/**
+ * @brief Internal definition of static Log class
+ */
 Log_t Log;

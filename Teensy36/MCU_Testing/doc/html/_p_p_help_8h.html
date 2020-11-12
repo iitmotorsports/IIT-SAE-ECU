@@ -84,8 +84,6 @@ $(document).ready(function(){initNavTree('_p_p_help_8h.html',''); initResizable(
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
 <div class="title">PPHelp.h File Reference</div>  </div>
 </div><!--header-->
@@ -95,75 +93,6 @@ $(document).ready(function(){initNavTree('_p_p_help_8h.html',''); initResizable(
 <a href="#details">More...</a></p>
 
 <p><a href="_p_p_help_8h_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a0feb7e0b940efad526132db03f9febf9"><td class="memItemLeft" align="right" valign="top"><a id="a0feb7e0b940efad526132db03f9febf9"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CONCAT</b>(A,  B)&#160;&#160;&#160;A##B</td></tr>
-<tr class="separator:a0feb7e0b940efad526132db03f9febf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91013be2e9179a2d34628f700e54e773"><td class="memItemLeft" align="right" valign="top"><a id="a91013be2e9179a2d34628f700e54e773"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>EXPAND_CONCAT</b>(A,  B)&#160;&#160;&#160;CONCAT(A, B)</td></tr>
-<tr class="separator:a91013be2e9179a2d34628f700e54e773"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a659f2c1024a0695f7eae16df25d8b668"><td class="memItemLeft" align="right" valign="top"><a id="a659f2c1024a0695f7eae16df25d8b668"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PP_ARG_N</b>( _1,  _2,  _3,  _4,  _5,  _6,  _7,  _8,  _9,  _10,  _11,  _12,  _13,  _14,  _15,  _16,  _17,  _18,  _19,  _20,  _21,  _22,  _23,  _24,  _25,  _26,  _27,  _28,  _29,  _30,  _31,  _32,  _33,  _34,  _35,  _36,  _37,  _38,  _39,  _40,  _41,  _42,  _43,  _44,  _45,  _46,  _47,  _48,  _49,  _50,  _51,  _52,  _53,  _54,  _55,  _56,  _57,  _58,  _59,  _60,  _61,  _62,  _63,  N, ...)&#160;&#160;&#160;N</td></tr>
-<tr class="separator:a659f2c1024a0695f7eae16df25d8b668"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15967218850ac6ac5ffd777368fec7fd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>PP_RSEQ_N</b>()</td></tr>
-<tr class="separator:a15967218850ac6ac5ffd777368fec7fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b4b6dfcca38ee665c4c88c07d58c4f0"><td class="memItemLeft" align="right" valign="top"><a id="a1b4b6dfcca38ee665c4c88c07d58c4f0"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PP_NARG_</b>(...)&#160;&#160;&#160;PP_ARG_N(__VA_ARGS__)</td></tr>
-<tr class="separator:a1b4b6dfcca38ee665c4c88c07d58c4f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31b9bcd0e7f30adb8ed947d86d4ae11b"><td class="memItemLeft" align="right" valign="top"><a id="a31b9bcd0e7f30adb8ed947d86d4ae11b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PP_NARG</b>(...)&#160;&#160;&#160;PP_NARG_(__VA_ARGS__, PP_RSEQ_N())</td></tr>
-<tr class="separator:a31b9bcd0e7f30adb8ed947d86d4ae11b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5fe22ed726604f5426cb07ac871c3584"><td class="memItemLeft" align="right" valign="top"><a id="a5fe22ed726604f5426cb07ac871c3584"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PP_NARG_MO</b>(...)&#160;&#160;&#160;PP_NARG_(__VA_ARGS__ PP_RSEQ_N())</td></tr>
-<tr class="separator:a5fe22ed726604f5426cb07ac871c3584"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0f8200acd4827bc9d2df09270b66c38"><td class="memItemLeft" align="right" valign="top"><a id="aa0f8200acd4827bc9d2df09270b66c38"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>EVAL</b>(...)&#160;&#160;&#160;EVAL1024(__VA_ARGS__)</td></tr>
-<tr class="separator:aa0f8200acd4827bc9d2df09270b66c38"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaad3972dddbceed6c8ab1e28703ff6f8"><td class="memItemLeft" align="right" valign="top"><a id="aaad3972dddbceed6c8ab1e28703ff6f8"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>EVAL1024</b>(...)&#160;&#160;&#160;EVAL512(EVAL512(__VA_ARGS__))</td></tr>
-<tr class="separator:aaad3972dddbceed6c8ab1e28703ff6f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e6a61326961e8e999f8bb968eda3f67"><td class="memItemLeft" align="right" valign="top"><a id="a3e6a61326961e8e999f8bb968eda3f67"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>EVAL512</b>(...)&#160;&#160;&#160;EVAL256(EVAL256(__VA_ARGS__))</td></tr>
-<tr class="separator:a3e6a61326961e8e999f8bb968eda3f67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af6d520b16c61d51ff3dec6a46da56a8b"><td class="memItemLeft" align="right" valign="top"><a id="af6d520b16c61d51ff3dec6a46da56a8b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>EVAL256</b>(...)&#160;&#160;&#160;EVAL128(EVAL128(__VA_ARGS__))</td></tr>
-<tr class="separator:af6d520b16c61d51ff3dec6a46da56a8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac10e394d5740bd77dfaa194215ed047"><td class="memItemLeft" align="right" valign="top"><a id="aac10e394d5740bd77dfaa194215ed047"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>EVAL128</b>(...)&#160;&#160;&#160;EVAL64(EVAL64(__VA_ARGS__))</td></tr>
-<tr class="separator:aac10e394d5740bd77dfaa194215ed047"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad6795aac7c4cc246ce4cc021d542eb18"><td class="memItemLeft" align="right" valign="top"><a id="ad6795aac7c4cc246ce4cc021d542eb18"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>EVAL64</b>(...)&#160;&#160;&#160;EVAL32(EVAL32(__VA_ARGS__))</td></tr>
-<tr class="separator:ad6795aac7c4cc246ce4cc021d542eb18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8da9fa5825ab3afcfd6437b42063f702"><td class="memItemLeft" align="right" valign="top"><a id="a8da9fa5825ab3afcfd6437b42063f702"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>EVAL32</b>(...)&#160;&#160;&#160;EVAL16(EVAL16(__VA_ARGS__))</td></tr>
-<tr class="separator:a8da9fa5825ab3afcfd6437b42063f702"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a699fe8045b6b8bc6461248f4a5290974"><td class="memItemLeft" align="right" valign="top"><a id="a699fe8045b6b8bc6461248f4a5290974"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>EVAL16</b>(...)&#160;&#160;&#160;EVAL8(EVAL8(__VA_ARGS__))</td></tr>
-<tr class="separator:a699fe8045b6b8bc6461248f4a5290974"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a696db09f5d24016710ed370ee42627c8"><td class="memItemLeft" align="right" valign="top"><a id="a696db09f5d24016710ed370ee42627c8"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>EVAL8</b>(...)&#160;&#160;&#160;EVAL4(EVAL4(__VA_ARGS__))</td></tr>
-<tr class="separator:a696db09f5d24016710ed370ee42627c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d9eb883e12b6ce5401726db89588f81"><td class="memItemLeft" align="right" valign="top"><a id="a5d9eb883e12b6ce5401726db89588f81"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>EVAL4</b>(...)&#160;&#160;&#160;EVAL2(EVAL2(__VA_ARGS__))</td></tr>
-<tr class="separator:a5d9eb883e12b6ce5401726db89588f81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1da5ee0b8ba77ab31d29e01e5dd4d9aa"><td class="memItemLeft" align="right" valign="top"><a id="a1da5ee0b8ba77ab31d29e01e5dd4d9aa"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>EVAL2</b>(...)&#160;&#160;&#160;EVAL1(EVAL1(__VA_ARGS__))</td></tr>
-<tr class="separator:a1da5ee0b8ba77ab31d29e01e5dd4d9aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad4f105758560e2d030fb28e39acea6f"><td class="memItemLeft" align="right" valign="top"><a id="aad4f105758560e2d030fb28e39acea6f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>EVAL1</b>(...)&#160;&#160;&#160;__VA_ARGS__</td></tr>
-<tr class="separator:aad4f105758560e2d030fb28e39acea6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3428692efe6051ef30016ffde1a9f7bb"><td class="memItemLeft" align="right" valign="top"><a id="a3428692efe6051ef30016ffde1a9f7bb"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>STRINGIZE</b>(x)&#160;&#160;&#160;#x</td></tr>
-<tr class="separator:a3428692efe6051ef30016ffde1a9f7bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ddebc5712d39b71767e3dceb9bfb74b"><td class="memItemLeft" align="right" valign="top"><a id="a4ddebc5712d39b71767e3dceb9bfb74b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>EMPTY</b>()</td></tr>
-<tr class="separator:a4ddebc5712d39b71767e3dceb9bfb74b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae4b532a93c757194ec73b6790a3e6b1f"><td class="memItemLeft" align="right" valign="top"><a id="ae4b532a93c757194ec73b6790a3e6b1f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>EXPAND</b>(x)&#160;&#160;&#160;x</td></tr>
-<tr class="separator:ae4b532a93c757194ec73b6790a3e6b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Compilation of various helpful preprocessor macros. </p>
 <dl class="section author"><dt>Author</dt><dd>IR </dd></dl>
@@ -172,34 +101,7 @@ Macros</h2></td></tr>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2020 </dd></dl>
 
 <p class="definition">Definition in file <a class="el" href="_p_p_help_8h_source.html">PPHelp.h</a>.</p>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a15967218850ac6ac5ffd777368fec7fd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a15967218850ac6ac5ffd777368fec7fd">&#9670;&nbsp;</a></span>PP_RSEQ_N</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PP_RSEQ_N</td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    63, 62, 61, 60,                             \</div>
-<div class="line">        59, 58, 57, 56, 55, 54, 53, 52, 51, 50, \</div>
-<div class="line">        49, 48, 47, 46, 45, 44, 43, 42, 41, 40, \</div>
-<div class="line">        39, 38, 37, 36, 35, 34, 33, 32, 31, 30, \</div>
-<div class="line">        29, 28, 27, 26, 25, 24, 23, 22, 21, 20, \</div>
-<div class="line">        19, 18, 17, 16, 15, 14, 13, 12, 11, 10, \</div>
-<div class="line">        9, 8, 7, 6, 5, 4, 3, 2, 1, 0</div>
-</div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="_p_p_help_8h_source.html#l00026">26</a> of file <a class="el" href="_p_p_help_8h_source.html">PPHelp.h</a>.</p>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

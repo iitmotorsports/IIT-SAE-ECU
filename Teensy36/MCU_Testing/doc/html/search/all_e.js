@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['teensy_203_2e6_20project_20folder_20template_54',['Teensy 3.6 Project Folder Template',['../index.html',1,'']]],
-  ['text_55',['Text',['../class_pre___build_1_1_text.html',1,'Pre_Build']]],
-  ['toolbar_56',['Toolbar',['../class_pre___build_1_1_toolbar.html',1,'Pre_Build']]]
+  ['teensy_203_2e6_20project_20folder_20template_44',['Teensy 3.6 Project Folder Template',['../index.html',1,'']]],
+  ['teensy_5fpins_45',['TEENSY_PINS',['../_pin_config_8def.html#a0bc8a3728ed2e5cb261b99ac9b39814d',1,'PinConfig.def']]]
 ];

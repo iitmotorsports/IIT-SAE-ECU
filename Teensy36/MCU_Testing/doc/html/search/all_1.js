@@ -1,14 +1,10 @@
 var searchData=
 [
-  ['can_5fmessage_5ft_1',['CAN_message_t',['../struct_c_a_n__message__t.html',1,'']]],
-  ['canbus_2',['Canbus',['../namespace_canbus.html',1,'']]],
-  ['canbus_2ecpp_3',['Canbus.cpp',['../_canbus_8cpp.html',1,'']]],
-  ['canbus_2eh_4',['Canbus.h',['../_canbus_8h.html',1,'']]],
-  ['canfd_5fmessage_5ft_5',['CANFD_message_t',['../struct_c_a_n_f_d__message__t.html',1,'']]],
-  ['canfd_5ftimings_5ft_6',['CANFD_timings_t',['../struct_c_a_n_f_d__timings__t.html',1,'']]],
-  ['circular_5fbuffer_7',['Circular_Buffer',['../class_circular___buffer.html',1,'']]],
-  ['circular_5fbuffer_3c_20uint8_5ft_2c_28uint32_5ft_29_20_5frxsize_2c_20sizeof_28can_5fmessage_5ft_29_3e_8',['Circular_Buffer&lt; uint8_t,(uint32_t) _rxSize, sizeof(CAN_message_t)&gt;',['../class_circular___buffer.html',1,'']]],
-  ['circular_5fbuffer_3c_20uint8_5ft_2c_28uint32_5ft_29_20_5frxsize_2c_20sizeof_28canfd_5fmessage_5ft_29_3e_9',['Circular_Buffer&lt; uint8_t,(uint32_t) _rxSize, sizeof(CANFD_message_t)&gt;',['../class_circular___buffer.html',1,'']]],
-  ['circular_5fbuffer_3c_20uint8_5ft_2c_28uint32_5ft_29_20_5ftxsize_2c_20sizeof_28can_5fmessage_5ft_29_3e_10',['Circular_Buffer&lt; uint8_t,(uint32_t) _txSize, sizeof(CAN_message_t)&gt;',['../class_circular___buffer.html',1,'']]],
-  ['circular_5fbuffer_3c_20uint8_5ft_2c_28uint32_5ft_29_20_5ftxsize_2c_20sizeof_28canfd_5fmessage_5ft_29_3e_11',['Circular_Buffer&lt; uint8_t,(uint32_t) _txSize, sizeof(CANFD_message_t)&gt;',['../class_circular___buffer.html',1,'']]]
+  ['canbus_1',['Canbus',['../namespace_canbus.html',1,'']]],
+  ['canbus_2ecpp_2',['Canbus.cpp',['../_canbus_8cpp.html',1,'']]],
+  ['canbus_2eh_3',['Canbus.h',['../_canbus_8h.html',1,'']]],
+  ['conf_5flogging_5fenable_5ftimestamp_4',['CONF_LOGGING_ENABLE_TIMESTAMP',['../_log_config_8def.html#a27a7696c431a0cbee44a09587416cc4b',1,'LogConfig.def']]],
+  ['conf_5flogging_5fmapped_5fmode_5',['CONF_LOGGING_MAPPED_MODE',['../_log_config_8def.html#a87790c77e6db5b826b023cd5e5887246',1,'LogConfig.def']]],
+  ['conf_5flogging_5fmax_5flevel_6',['CONF_LOGGING_MAX_LEVEL',['../_log_config_8def.html#a992fac40fec8bf5817acc0abe912dd83',1,'LogConfig.def']]],
+  ['conf_5fpolling_5fdelay_7',['CONF_POLLING_DELAY',['../_pin_config_8def.html#a4fdc4561f31a3658c915085fb0dbd251',1,'PinConfig.def']]]
 ];

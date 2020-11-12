@@ -1,14 +1,12 @@
 /**
  * @file PinConfig.def
- * @author IR
  * @brief The pin configuration for the Teensy
- * @version 0.1
- * @date 2020-11-11
- * 
- * @copyright Copyright (c) 2020
- * 
  */
+
 #ifndef __MCU_PINCONFIG_H__
+
+// @cond
+
 #define __MCU_PINCONFIG_H__
 
 #include "PPHelp.h"
@@ -16,6 +14,8 @@
 
 #define ANALOG
 #define DIGITAL
+
+// @endcond
 
 /**
  *  @brief The defintions of every pin

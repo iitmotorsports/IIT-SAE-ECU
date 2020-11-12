@@ -1,11 +1,6 @@
 """
 @file Pre_Build.py
-@author IR
 @brief This script preprocesses source files for use with Log_t
-@version 0.3
-@date 2020-11-11
-
-@copyright Copyright (c) 2020
 
 This script works by first duplicating source files to the build folder. \n
 Then it scans each file for calls to a Log function and modifies them as follows. \n
@@ -41,6 +36,8 @@ LOG_TAG TAG = "Logging Tag"; -> LOG_TAG TAG = 2;
 ```
 """
 
+#@cond
+
 import fileinput
 import shutil
 import hashlib
@@ -69,7 +66,7 @@ WORKING_DIRECTORY_OFFSET = "build\\Pre_Build\\"
 # FILE_OUTPUT_PATH = "build\\bin"
 FILE_OUTPUT_PATH = ""
 
-BYPASS_SCRIPT = os.path.exists("script.disable") # bypass script if this file is found
+BYPASS_SCRIPT = os.path.exists("script.disable")  # bypass script if this file is found
 
 LIMIT_TAG = 254
 LIMIT_ID = 65535
@@ -583,3 +580,4 @@ if not BYPASS_SCRIPT:
     if newhash != prehash:
         print(Text.reallyImportant("\nNote: Output file values have changed"))
 
+#@endcond

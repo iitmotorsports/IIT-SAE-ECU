@@ -8,6 +8,9 @@
  * @copyright Copyright (c) 2020
  * 
  */
+
+// @cond
+
 #include "Canbus.h"
 #include "CanbusConfig.def"
 #include "CanbusMessages.def"
@@ -65,3 +68,5 @@ void update(void) {
 }
 
 } // namespace Canbus
+
+// @endcond

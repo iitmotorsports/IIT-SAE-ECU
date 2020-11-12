@@ -872,53 +872,22 @@ INPUT_ENCODING         = UTF-8
 # *.vhdl, *.ucf, *.qsf and *.ice.
 
 FILE_PATTERNS          = *.c \
-                         *.cc \
                          *.cxx \
                          *.cpp \
                          *.c++ \
-                         *.java \
-                         *.ii \
-                         *.ixx \
-                         *.ipp \
-                         *.i++ \
-                         *.inl \
-                         *.idl \
-                         *.ddl \
-                         *.odl \
                          *.h \
                          *.hh \
                          *.hxx \
                          *.hpp \
                          *.h++ \
-                         *.cs \
-                         *.d \
                          *.def \
-                         *.php \
-                         *.php4 \
-                         *.php5 \
-                         *.phtml \
-                         *.inc \
-                         *.m \
                          *.markdown \
                          *.md \
-                         *.mm \
                          *.dox \
                          *.doc \
-                         *.txt \
                          *.py \
-                         *.pyw \
-                         *.f90 \
-                         *.f95 \
-                         *.f03 \
-                         *.f08 \
-                         *.f18 \
-                         *.f \
-                         *.for \
-                         *.vhd \
-                         *.vhdl \
-                         *.ucf \
-                         *.qsf \
-                         *.ice
+
+EXTENSION_MAPPING = def=C
 
 # The RECURSIVE tag can be used to specify whether or not subdirectories should
 # be searched for input files as well.
@@ -934,7 +903,8 @@ RECURSIVE              = YES
 # run.
 
 EXCLUDE                = ..\build \
-                         ..\doc
+                         ..\doc \
+                         ..\libraries\FlexCAN_T4
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
 # directories that are symbolic links (a Unix file system feature) are excluded

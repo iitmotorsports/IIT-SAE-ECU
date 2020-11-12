@@ -37,7 +37,6 @@ var NAVTREE =
         [ "Tools", "index.html#autotoc_md9", null ]
       ] ]
     ] ],
-    [ "FlexCAN_T4", "md__c___users__isaias__desktop__i_i_t__s_a_e__s_a_e_git__e_c_u2020__teensy36__m_c_u__testing_libb83f988013d621f4bcf7ba8bdac6cfab.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -59,15 +58,19 @@ var NAVTREE =
       ] ]
     ] ],
     [ "Files", "files.html", [
-      [ "File List", "files.html", "files_dup" ]
+      [ "File List", "files.html", "files_dup" ],
+      [ "File Members", "globals.html", [
+        [ "All", "globals.html", null ],
+        [ "Variables", "globals_vars.html", null ],
+        [ "Macros", "globals_defs.html", null ]
+      ] ]
     ] ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"_can_bus_messages_8def_source.html",
-"class_flex_c_a_n___t4.html#aff69071908df9a37ede4caa3efc1746f"
+"_can_bus_messages_8def_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

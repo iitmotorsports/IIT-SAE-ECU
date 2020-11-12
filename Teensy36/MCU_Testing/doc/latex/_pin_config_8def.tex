@@ -1,0 +1,50 @@
+\hypertarget{_pin_config_8def}{}\doxysection{Pin\+Config.\+def File Reference}
+\label{_pin_config_8def}\index{PinConfig.def@{PinConfig.def}}
+
+
+The pin configuration for the Teensy.  
+
+
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_pin_config_8def_a0bc8a3728ed2e5cb261b99ac9b39814d}{T\+E\+E\+N\+S\+Y\+\_\+\+P\+I\+NS}}
+\begin{DoxyCompactList}\small\item\em The defintions of every pin. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_pin_config_8def_a4fdc4561f31a3658c915085fb0dbd251}\label{_pin_config_8def_a4fdc4561f31a3658c915085fb0dbd251}} 
+\#define \mbox{\hyperlink{_pin_config_8def_a4fdc4561f31a3658c915085fb0dbd251}{C\+O\+N\+F\+\_\+\+P\+O\+L\+L\+I\+N\+G\+\_\+\+D\+E\+L\+AY}}~50
+\begin{DoxyCompactList}\small\item\em Delay polling every chunk by this much. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The pin configuration for the Teensy. 
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{_pin_config_8def_a0bc8a3728ed2e5cb261b99ac9b39814d}\label{_pin_config_8def_a0bc8a3728ed2e5cb261b99ac9b39814d}} 
+\index{PinConfig.def@{PinConfig.def}!TEENSY\_PINS@{TEENSY\_PINS}}
+\index{TEENSY\_PINS@{TEENSY\_PINS}!PinConfig.def@{PinConfig.def}}
+\doxysubsubsection{\texorpdfstring{TEENSY\_PINS}{TEENSY\_PINS}}
+{\footnotesize\ttfamily \#define T\+E\+E\+N\+S\+Y\+\_\+\+P\+I\+NS}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    X(PIN\_A7, ANALOG, INPUT)  \(\backslash\)}
+\DoxyCodeLine{    X(PIN\_A6, ANALOG, OUTPUT) \(\backslash\)}
+\DoxyCodeLine{    X(4, DIGITAL, OUTPUT)}
+
+\end{DoxyCode}
+
+
+The defintions of every pin. 
+
+The pinout setup for the M\+CU, set the specific pin, whether it is analog or digital, and whether we are taking input or giving an output on the pin
+
+Unless it is the last entry, this is how to add a new pin
+
+X(G\+P\+IO, A\+N\+A\+L\+O\+G/\+D\+I\+G\+I\+T\+AL, I\+N\+P\+U\+T/\+O\+U\+T\+P\+UT) \textbackslash{}
+
+Only the last entry should N\+OT have a \textquotesingle{}\textbackslash{}\textquotesingle{} 
+
+Definition at line 33 of file Pin\+Config.\+def.
+

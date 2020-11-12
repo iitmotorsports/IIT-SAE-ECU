@@ -1,3 +1,13 @@
+/**
+ * @file State.cpp
+ * @author IR
+ * @brief State source file
+ * @version 0.1
+ * @date 2020-11-11
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
 #include "State.h"
 #include "WProgram.h"
 

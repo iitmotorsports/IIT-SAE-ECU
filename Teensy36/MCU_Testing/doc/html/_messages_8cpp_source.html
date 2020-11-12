@@ -103,13 +103,13 @@ $(document).ready(function(){initNavTree('_messages_8cpp_source.html',''); initR
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keywordflow">return</span> ((*(uint64_t *)raw_data) &amp; RMS_HARDFAULTMASK) == 0;</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;}</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keywordtype">void</span> BMSFaultMsg(<span class="keyword">const</span> <a class="code" href="struct_c_a_n__message__t.html">CAN_message_t</a> &amp;msg) {</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keywordtype">void</span> BMSFaultMsg(<span class="keyword">const</span> CAN_message_t &amp;msg) {</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keywordflow">if</span> (BMS_HardFaultCheck(msg.buf)) {     <span class="comment">// HardFault triggered</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        Serial.println(<span class="stringliteral">&quot;BMS HARD FAULT!&quot;</span>); <span class="comment">// Not actual implementation | Call interrupt?</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    }</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;}</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keywordtype">void</span> RMSFaultMsg(<span class="keyword">const</span> <a class="code" href="struct_c_a_n__message__t.html">CAN_message_t</a> &amp;msg) {</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keywordtype">void</span> RMSFaultMsg(<span class="keyword">const</span> CAN_message_t &amp;msg) {</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keywordflow">if</span> (RMS_HardFaultCheck(msg.buf)) {     <span class="comment">// HardFault triggered</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        Serial.println(<span class="stringliteral">&quot;RMS HARD FAULT!&quot;</span>); <span class="comment">// Not actual implementation | Call interrupt?</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    }</div>
@@ -118,7 +118,6 @@ $(document).ready(function(){initNavTree('_messages_8cpp_source.html',''); initR
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="astruct_c_a_n__message__t_html"><div class="ttname"><a href="struct_c_a_n__message__t.html">CAN_message_t</a></div><div class="ttdef"><b>Definition:</b> <a href="_flex_c_a_n___t4_8h_source.html#l00037">FlexCAN_T4.h:37</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

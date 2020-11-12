@@ -94,7 +94,7 @@ $(document).ready(function(){initNavTree('_log_8cpp_source.html',''); initResiza
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;Log.h&quot;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;LogConfig.def&quot;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_log_config_8def.html">LogConfig.def</a>&quot;</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;WProgram.h&quot;</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#ifndef CONF_LOGGING_MAX_LEVEL</span></div>
@@ -265,15 +265,17 @@ $(document).ready(function(){initNavTree('_log_8cpp_source.html',''); initResiza
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;}</div>
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160; </div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<a class="code" href="struct_log__t.html">Log_t</a> Log;</div>
+<div class="line"><a name="l00191"></a><span class="lineno"><a class="line" href="_log_8cpp.html#a2f2d8db9a1c1ead512f6c188cfd21928">  191</a></span>&#160;<a class="code" href="struct_log__t.html">Log_t</a> <a class="code" href="_log_8cpp.html#a2f2d8db9a1c1ead512f6c188cfd21928">Log</a>;</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="astruct_log__t_html"><div class="ttname"><a href="struct_log__t.html">Log_t</a></div><div class="ttdoc">Base class used to log things to serial  This class has the capability to modify all of it's function...</div><div class="ttdef"><b>Definition:</b> <a href="_log_8h_source.html#l00036">Log.h:36</a></div></div>
 <div class="ttc" id="astruct_log__t_html_adccc6a96d4d5f2b1ad1dba4220d2ed45"><div class="ttname"><a href="struct_log__t.html#adccc6a96d4d5f2b1ad1dba4220d2ed45">Log_t::w</a></div><div class="ttdeci">void w(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a warning tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00134">Log.cpp:134</a></div></div>
 <div class="ttc" id="astruct_log__t_html_a1dad6499c36e8bcafd40970ca4bcf035"><div class="ttname"><a href="struct_log__t.html#a1dad6499c36e8bcafd40970ca4bcf035">Log_t::i</a></div><div class="ttdeci">void i(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using an info tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00128">Log.cpp:128</a></div></div>
 <div class="ttc" id="astruct_log__t_html_a357cfe5bc1522bbeb30adb84b2e53434"><div class="ttname"><a href="struct_log__t.html#a357cfe5bc1522bbeb30adb84b2e53434">Log_t::operator()</a></div><div class="ttdeci">void operator()(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string usb serial.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00116">Log.cpp:116</a></div></div>
+<div class="ttc" id="a_log_8cpp_html_a2f2d8db9a1c1ead512f6c188cfd21928"><div class="ttname"><a href="_log_8cpp.html#a2f2d8db9a1c1ead512f6c188cfd21928">Log</a></div><div class="ttdeci">Log_t Log</div><div class="ttdoc">Internal definition of static Log class.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00191">Log.cpp:191</a></div></div>
 <div class="ttc" id="astruct_log__t_html_a3ee55327320e6000aec081f5441aac3d"><div class="ttname"><a href="struct_log__t.html#a3ee55327320e6000aec081f5441aac3d">Log_t::e</a></div><div class="ttdeci">void e(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using an error tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00140">Log.cpp:140</a></div></div>
 <div class="ttc" id="astruct_log__t_html_a6b1710ff78e9434aaa77d528f7e13dac"><div class="ttname"><a href="struct_log__t.html#a6b1710ff78e9434aaa77d528f7e13dac">Log_t::f</a></div><div class="ttdeci">void f(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a fatal tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00146">Log.cpp:146</a></div></div>
+<div class="ttc" id="a_log_config_8def_html"><div class="ttname"><a href="_log_config_8def.html">LogConfig.def</a></div><div class="ttdoc">Configuration file for the Log library.</div></div>
 <div class="ttc" id="astruct_log__t_html_ad5d160483bf483bdc018c30d8d64650b"><div class="ttname"><a href="struct_log__t.html#ad5d160483bf483bdc018c30d8d64650b">Log_t::d</a></div><div class="ttdeci">void d(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a debug tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00122">Log.cpp:122</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

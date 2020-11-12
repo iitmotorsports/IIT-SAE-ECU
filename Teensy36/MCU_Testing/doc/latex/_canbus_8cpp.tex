@@ -5,37 +5,6 @@
 \mbox{\hyperlink{namespace_canbus}{Canbus}} source file.  
 
 
-{\ttfamily \#include \char`\"{}Canbus.\+h\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}Canbus\+Config.\+def\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}Canbus\+Messages.\+def\char`\"{}}\newline
-\doxysubsection*{Namespaces}
-\begin{DoxyCompactItemize}
-\item 
- \mbox{\hyperlink{namespace_canbus}{Canbus}}
-\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{namespace_canbus}{Canbus}} functionality. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsection*{Macros}
-\begin{DoxyCompactItemize}
-\item 
-\mbox{\Hypertarget{_canbus_8cpp_afdf69592e415211f43cebf6138b0322b}\label{_canbus_8cpp_afdf69592e415211f43cebf6138b0322b}} 
-\#define {\bfseries X}(...)~,
-\item 
-\#define {\bfseries X}(address,  func)
-\end{DoxyCompactItemize}
-\doxysubsection*{Functions}
-\begin{DoxyCompactItemize}
-\item 
-\mbox{\Hypertarget{namespace_canbus_ac87cf65470012914f1ae29c0eb987b87}\label{namespace_canbus_ac87cf65470012914f1ae29c0eb987b87}} 
-void \mbox{\hyperlink{namespace_canbus_ac87cf65470012914f1ae29c0eb987b87}{Canbus\+::setup}} (void)
-\begin{DoxyCompactList}\small\item\em Setup the teensy \mbox{\hyperlink{namespace_canbus}{Canbus}} line. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{namespace_canbus_a386cdddf9229348b8108640075b5c3e4}\label{namespace_canbus_a386cdddf9229348b8108640075b5c3e4}} 
-void \mbox{\hyperlink{namespace_canbus_a386cdddf9229348b8108640075b5c3e4}{Canbus\+::update}} (void)
-\begin{DoxyCompactList}\small\item\em Update the \mbox{\hyperlink{namespace_canbus}{Canbus}} line This update function will check the canbus for any messages and run the appropriate handler. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsection*{Variables}
-\begin{DoxyCompactItemize}
-\item 
-\mbox{\Hypertarget{namespace_canbus_a7aa39bbcee6ed2ab646a011ac0600dd2}\label{namespace_canbus_a7aa39bbcee6ed2ab646a011ac0600dd2}} 
-\mbox{\hyperlink{class_flex_c_a_n___t4}{Flex\+C\+A\+N\+\_\+\+T4}}$<$ C\+O\+N\+F\+\_\+\+F\+L\+E\+X\+C\+A\+N\+\_\+\+C\+A\+N\+\_\+\+S\+E\+L\+E\+CT, R\+X\+\_\+\+S\+I\+Z\+E\+\_\+256, T\+X\+\_\+\+S\+I\+Z\+E\+\_\+16 $>$ {\bfseries Canbus\+::\+F\+\_\+\+Can}
-\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -53,22 +22,3 @@ IR
 \begin{DoxyCopyright}{Copyright}
 Copyright (c) 2020 
 \end{DoxyCopyright}
-
-
-\doxysubsection{Macro Definition Documentation}
-\mbox{\Hypertarget{_canbus_8cpp_a29ba350936adc9fbdb43c1da0abe9dfb}\label{_canbus_8cpp_a29ba350936adc9fbdb43c1da0abe9dfb}} 
-\index{Canbus.cpp@{Canbus.cpp}!X@{X}}
-\index{X@{X}!Canbus.cpp@{Canbus.cpp}}
-\doxysubsubsection{\texorpdfstring{X}{X}}
-{\footnotesize\ttfamily \#define X(\begin{DoxyParamCaption}\item[{}]{address,  }\item[{}]{func }\end{DoxyParamCaption})}
-
-{\bfseries Value\+:}
-\begin{DoxyCode}{0}
-\DoxyCodeLine{    setupMB((FLEXCAN\_MAILBOX)MB, address, func); \(\backslash\)}
-\DoxyCodeLine{    MB++;}
-
-\end{DoxyCode}
-
-
-Definition at line 17 of file Canbus.\+cpp.
-

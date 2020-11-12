@@ -1,15 +1,14 @@
 /**
  * @file LogConfig.def
- * @author IR
  * @brief Configuration file for the Log library
- * @version 0.1
- * @date 2020-11-11
- * 
- * @copyright Copyright (c) 2020
- * 
  */
 #ifndef __MCU_LOGCONFIG_H__
+
+// @cond
+
 #define __MCU_LOGCONFIG_H__
+
+// @endcond
 
 /**
  * @brief If this is defined, calls to log will include a millis timestamp
