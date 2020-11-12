@@ -95,7 +95,7 @@ $(document).ready(function(){initNavTree('_m_c_u_states_8cpp_source.html',''); i
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;        pinMode(6, OUTPUT);</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;        digitalWrite(6, LOW); <span class="comment">/* optional transceiver enable pin */</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        Pins::initialize();</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        <a class="code" href="namespace_pins.html#a50fdd17267e54bd2a3d4ed2a6884c5c1">Pins::initialize</a>();</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        firstSetup = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        Log.<a class="code" href="struct_log__t.html#a1dad6499c36e8bcafd40970ca4bcf035">i</a>(ID, <span class="stringliteral">&quot;Finished inital Setup&quot;</span>);</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    }</div>
@@ -108,10 +108,10 @@ $(document).ready(function(){initNavTree('_m_c_u_states_8cpp_source.html',''); i
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;            timeElapsed = timeElapsed - 500;</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            count--;</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;            <span class="comment">// sendTestMessage(F_Can);</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;            Log(ID, <span class="stringliteral">&quot;A7 Pin Value:&quot;</span>, Pins::getPinValue(0));</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            Pins::setPinValue(A6, random(1024));</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;            Log(ID, <span class="stringliteral">&quot;A7 Pin Value:&quot;</span>, <a class="code" href="namespace_pins.html#abd3d7f2960017adeef25257114bad97c">Pins::getPinValue</a>(0));</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            <a class="code" href="namespace_pins.html#ac1ca1361523751bab529425bc766d10f">Pins::setPinValue</a>(A6, random(1024));</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        }</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        Pins::update();</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <a class="code" href="namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35">Pins::update</a>();</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keywordflow">if</span> (count == 0)</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            <span class="keywordflow">return</span> &amp;MCUStates::Logger;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    }</div>
@@ -123,7 +123,7 @@ $(document).ready(function(){initNavTree('_m_c_u_states_8cpp_source.html',''); i
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordflow">if</span> (timeElapsed &gt;= 2000) {</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        timeElapsed = timeElapsed - 2000;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        Log(ID, <span class="stringliteral">&quot;A7 Pin Value:&quot;</span>, Pins::getPinValue(0));</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        Log(ID, <span class="stringliteral">&quot;A7 Pin Value:&quot;</span>, <a class="code" href="namespace_pins.html#abd3d7f2960017adeef25257114bad97c">Pins::getPinValue</a>(0));</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        Log(<span class="stringliteral">&quot;FAKE ID&quot;</span>, <span class="stringliteral">&quot;A7 Pin Value:&quot;</span>);</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        Log(ID, <span class="stringliteral">&quot;whaAAAT?&quot;</span>);</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        Log(ID, <span class="stringliteral">&quot;&quot;</span>, 0xDEADBEEF);</div>
@@ -142,8 +142,12 @@ $(document).ready(function(){initNavTree('_m_c_u_states_8cpp_source.html',''); i
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="astruct_log__t_html_a1dad6499c36e8bcafd40970ca4bcf035"><div class="ttname"><a href="struct_log__t.html#a1dad6499c36e8bcafd40970ca4bcf035">Log_t::i</a></div><div class="ttdeci">void i(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using an info tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00123">Log.cpp:123</a></div></div>
+<div class="ttc" id="anamespace_pins_html_ac1ca1361523751bab529425bc766d10f"><div class="ttname"><a href="namespace_pins.html#ac1ca1361523751bab529425bc766d10f">Pins::setPinValue</a></div><div class="ttdeci">void setPinValue(const int GPIO_Pin, const int value)</div><div class="ttdoc">Set the pin value of a predefined pin.</div><div class="ttdef"><b>Definition:</b> <a href="_pins_8cpp_source.html#l00052">Pins.cpp:52</a></div></div>
+<div class="ttc" id="astruct_log__t_html_a1dad6499c36e8bcafd40970ca4bcf035"><div class="ttname"><a href="struct_log__t.html#a1dad6499c36e8bcafd40970ca4bcf035">Log_t::i</a></div><div class="ttdeci">void i(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using an info tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00128">Log.cpp:128</a></div></div>
 <div class="ttc" id="astruct_state_1_1_state__t_html"><div class="ttname"><a href="struct_state_1_1_state__t.html">State::State_t</a></div><div class="ttdoc">The parent state structure to extend from to create more states.</div><div class="ttdef"><b>Definition:</b> <a href="_state_8h_source.html#l00059">State.h:59</a></div></div>
+<div class="ttc" id="anamespace_pins_html_a66c4b641f395a60dedbe5271d4acfd35"><div class="ttname"><a href="namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35">Pins::update</a></div><div class="ttdeci">void update(void)</div><div class="ttdoc">Poll all pin values.</div><div class="ttdef"><b>Definition:</b> <a href="_pins_8cpp_source.html#l00056">Pins.cpp:56</a></div></div>
+<div class="ttc" id="anamespace_pins_html_abd3d7f2960017adeef25257114bad97c"><div class="ttname"><a href="namespace_pins.html#abd3d7f2960017adeef25257114bad97c">Pins::getPinValue</a></div><div class="ttdeci">int getPinValue(const int GPIO_Pin)</div><div class="ttdoc">Get the pin value of a predefined pin.</div><div class="ttdef"><b>Definition:</b> <a href="_pins_8cpp_source.html#l00048">Pins.cpp:48</a></div></div>
+<div class="ttc" id="anamespace_pins_html_a50fdd17267e54bd2a3d4ed2a6884c5c1"><div class="ttname"><a href="namespace_pins.html#a50fdd17267e54bd2a3d4ed2a6884c5c1">Pins::initialize</a></div><div class="ttdeci">void initialize(void)</div><div class="ttdoc">Initialize all predefined pins.</div><div class="ttdef"><b>Definition:</b> <a href="_pins_8cpp_source.html#l00067">Pins.cpp:67</a></div></div>
 <div class="ttc" id="anamespace_state_html_a734f0be1f3743a4cc9a3d90b03030aef"><div class="ttname"><a href="namespace_state.html#a734f0be1f3743a4cc9a3d90b03030aef">State::getLastState</a></div><div class="ttdeci">State_t * getLastState()</div><div class="ttdoc">Get a pointer of the last state.</div><div class="ttdef"><b>Definition:</b> <a href="_state_8cpp_source.html#l00041">State.cpp:41</a></div></div>
 <div class="ttc" id="anamespace_state_html_a9dfe9cc449047d893920a8ab4c527c29"><div class="ttname"><a href="namespace_state.html#a9dfe9cc449047d893920a8ab4c527c29">State::notify</a></div><div class="ttdeci">void notify(int notify)</div><div class="ttdoc">Send a code to the next state.</div><div class="ttdef"><b>Definition:</b> <a href="_state_8cpp_source.html#l00033">State.cpp:33</a></div></div>
 <!-- start footer part -->

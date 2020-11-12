@@ -25,25 +25,25 @@
 var NAVTREE =
 [
   [ "SAE Teensy ECU", "index.html", [
-    [ "FlexCAN_T4", "md__c___users__isaias__desktop__i_i_t__s_a_e__s_a_e_git__e_c_u2020__teensy36__m_c_u__testing_lib9651bef87e1c25c153fbc2115dd0af15.html", null ],
-    [ "Teensy 3.6 Project Folder Template", "md__c___users__isaias__desktop__i_i_t__s_a_e__s_a_e_git__e_c_u2020__teensy36__m_c_u__testing__r_e_a_d_m_e.html", [
-      [ "Purpose", "md__c___users__isaias__desktop__i_i_t__s_a_e__s_a_e_git__e_c_u2020__teensy36__m_c_u__testing__r_e_a_d_m_e.html#autotoc_md2", null ],
-      [ "Setup", "md__c___users__isaias__desktop__i_i_t__s_a_e__s_a_e_git__e_c_u2020__teensy36__m_c_u__testing__r_e_a_d_m_e.html#autotoc_md3", null ],
-      [ "Using", "md__c___users__isaias__desktop__i_i_t__s_a_e__s_a_e_git__e_c_u2020__teensy36__m_c_u__testing__r_e_a_d_m_e.html#autotoc_md4", [
-        [ "Enhanced filtering", "md__c___users__isaias__desktop__i_i_t__s_a_e__s_a_e_git__e_c_u2020__teensy36__m_c_u__testing_lib9651bef87e1c25c153fbc2115dd0af15.html#autotoc_md1", null ],
-        [ "VSCode Tasks", "md__c___users__isaias__desktop__i_i_t__s_a_e__s_a_e_git__e_c_u2020__teensy36__m_c_u__testing__r_e_a_d_m_e.html#autotoc_md5", null ]
+    [ "Teensy 3.6 Project Folder Template", "index.html", [
+      [ "Purpose", "index.html#autotoc_md2", null ],
+      [ "Setup", "index.html#autotoc_md3", null ],
+      [ "Using", "index.html#autotoc_md4", [
+        [ "VSCode Tasks", "index.html#autotoc_md5", null ]
       ] ],
-      [ "Where everything came from", "md__c___users__isaias__desktop__i_i_t__s_a_e__s_a_e_git__e_c_u2020__teensy36__m_c_u__testing__r_e_a_d_m_e.html#autotoc_md6", [
-        [ "ARM Toolchain", "md__c___users__isaias__desktop__i_i_t__s_a_e__s_a_e_git__e_c_u2020__teensy36__m_c_u__testing__r_e_a_d_m_e.html#autotoc_md7", null ],
-        [ "Teensy Core", "md__c___users__isaias__desktop__i_i_t__s_a_e__s_a_e_git__e_c_u2020__teensy36__m_c_u__testing__r_e_a_d_m_e.html#autotoc_md8", null ],
-        [ "Tools", "md__c___users__isaias__desktop__i_i_t__s_a_e__s_a_e_git__e_c_u2020__teensy36__m_c_u__testing__r_e_a_d_m_e.html#autotoc_md9", null ]
+      [ "Where everything came from", "index.html#autotoc_md6", [
+        [ "ARM Toolchain", "index.html#autotoc_md7", null ],
+        [ "Teensy Core", "index.html#autotoc_md8", null ],
+        [ "Tools", "index.html#autotoc_md9", null ]
       ] ]
     ] ],
+    [ "FlexCAN_T4", "md__c___users__isaias__desktop__i_i_t__s_a_e__s_a_e_git__e_c_u2020__teensy36__m_c_u__testing_libb83f988013d621f4bcf7ba8bdac6cfab.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
         [ "All", "namespacemembers.html", null ],
         [ "Functions", "namespacemembers_func.html", null ],
+        [ "Typedefs", "namespacemembers_type.html", null ],
         [ "Enumerations", "namespacemembers_enum.html", null ],
         [ "Enumerator", "namespacemembers_eval.html", null ]
       ] ]
@@ -66,8 +66,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_canbus_8cpp_source.html",
-"class_pre___build_1_1_toolbar.html#ab85e0864e5e0c14f44859a618a2268da"
+"_can_bus_messages_8def_source.html",
+"class_flex_c_a_n___t4.html#aff69071908df9a37ede4caa3efc1746f"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

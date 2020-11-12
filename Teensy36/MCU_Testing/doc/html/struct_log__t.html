@@ -94,7 +94,7 @@ $(document).ready(function(){initNavTree('struct_log__t.html',''); initResizable
 
 <p>Base class used to log things to serial <br  />
 This class has the capability to modify all of it's functions to instead use integer IDs <br  />
-Refer to the <a class="el" href="_pre___build_8py_source.html">Pre_Build.py</a> script for more information.  
+Refer to the <a class="el" href="_pre___build_8py.html" title="This script preprocesses source files for use with Log_t.">Pre_Build.py</a> script for more information.  
  <a href="struct_log__t.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_log_8h_source.html">Log.h</a>&gt;</code></p>
@@ -141,12 +141,12 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base class used to log things to serial <br  />
 This class has the capability to modify all of it's functions to instead use integer IDs <br  />
-Refer to the <a class="el" href="_pre___build_8py_source.html">Pre_Build.py</a> script for more information. </p>
-<dl class="section note"><dt>Note</dt><dd>If <a class="el" href="_pre___build_8py_source.html">Pre_Build.py</a> is run, <em>All</em> strings passed to parameter message must be an inline string <br  />
+Refer to the <a class="el" href="_pre___build_8py.html" title="This script preprocesses source files for use with Log_t.">Pre_Build.py</a> script for more information. </p>
+<dl class="section note"><dt>Note</dt><dd>If <a class="el" href="_pre___build_8py.html" title="This script preprocesses source files for use with Log_t.">Pre_Build.py</a> is run, <b>All</b> strings passed to parameter <code>message</code> must be an inline string <br  />
  Log("String goes here"); ✔️ <br  />
  Log(someStringReference); ❌ </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_log_8h_source.html#l00035">35</a> of file <a class="el" href="_log_8h_source.html">Log.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_log_8h_source.html#l00036">36</a> of file <a class="el" href="_log_8h_source.html">Log.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ad5d160483bf483bdc018c30d8d64650b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad5d160483bf483bdc018c30d8d64650b">&#9670;&nbsp;</a></span>d() <span class="overload">[1/2]</span></h2>
@@ -177,13 +177,13 @@ Refer to the <a class="el" href="_pre___build_8py_source.html">Pre_Build.py</a> 
 <p>Log a string using a debug tag. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">TAG</td><td>Variable of type LOG_TAG </td></tr>
+    <tr><td class="paramname">TAG</td><td>Variable of type <code>LOG_TAG</code> </td></tr>
     <tr><td class="paramname">message</td><td>Inline string that should be printed </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00117">117</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00122">122</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
 
 </div>
 </div>
@@ -222,14 +222,14 @@ Refer to the <a class="el" href="_pre___build_8py_source.html">Pre_Build.py</a> 
 <p>Log a string and a variable number using a debug tag. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">TAG</td><td>Variable of type LOG_TAG </td></tr>
+    <tr><td class="paramname">TAG</td><td>Variable of type <code>LOG_TAG</code> </td></tr>
     <tr><td class="paramname">message</td><td>Inline string that should be printed </td></tr>
     <tr><td class="paramname">number</td><td>Any number that should be printed next to the string </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00153">153</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00158">158</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
 
 </div>
 </div>
@@ -262,13 +262,13 @@ Refer to the <a class="el" href="_pre___build_8py_source.html">Pre_Build.py</a> 
 <p>Log a string using an error tag. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">TAG</td><td>Variable of type LOG_TAG </td></tr>
+    <tr><td class="paramname">TAG</td><td>Variable of type <code>LOG_TAG</code> </td></tr>
     <tr><td class="paramname">message</td><td>Inline string that should be printed </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00135">135</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00140">140</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
 
 </div>
 </div>
@@ -307,14 +307,14 @@ Refer to the <a class="el" href="_pre___build_8py_source.html">Pre_Build.py</a> 
 <p>Log a string and a variable number using an error tag. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">TAG</td><td>Variable of type LOG_TAG </td></tr>
+    <tr><td class="paramname">TAG</td><td>Variable of type <code>LOG_TAG</code> </td></tr>
     <tr><td class="paramname">message</td><td>Inline string that should be printed </td></tr>
     <tr><td class="paramname">number</td><td>Any number that should be printed next to the string </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00171">171</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00176">176</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
 
 </div>
 </div>
@@ -347,13 +347,13 @@ Refer to the <a class="el" href="_pre___build_8py_source.html">Pre_Build.py</a> 
 <p>Log a string using a fatal tag. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">TAG</td><td>Variable of type LOG_TAG </td></tr>
+    <tr><td class="paramname">TAG</td><td>Variable of type <code>LOG_TAG</code> </td></tr>
     <tr><td class="paramname">message</td><td>Inline string that should be printed </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00141">141</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00146">146</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
 
 </div>
 </div>
@@ -392,14 +392,14 @@ Refer to the <a class="el" href="_pre___build_8py_source.html">Pre_Build.py</a> 
 <p>Log a string and a variable number using a fatal tag. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">TAG</td><td>Variable of type LOG_TAG </td></tr>
+    <tr><td class="paramname">TAG</td><td>Variable of type <code>LOG_TAG</code> </td></tr>
     <tr><td class="paramname">message</td><td>Inline string that should be printed </td></tr>
     <tr><td class="paramname">number</td><td>Any number that should be printed next to the string </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00177">177</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00182">182</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
 
 </div>
 </div>
@@ -432,13 +432,13 @@ Refer to the <a class="el" href="_pre___build_8py_source.html">Pre_Build.py</a> 
 <p>Log a string using an info tag. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">TAG</td><td>Variable of type LOG_TAG </td></tr>
+    <tr><td class="paramname">TAG</td><td>Variable of type <code>LOG_TAG</code> </td></tr>
     <tr><td class="paramname">message</td><td>Inline string that should be printed </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00123">123</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00128">128</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
 
 </div>
 </div>
@@ -477,14 +477,14 @@ Refer to the <a class="el" href="_pre___build_8py_source.html">Pre_Build.py</a> 
 <p>Log a string and a variable number using an info tag. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">TAG</td><td>Variable of type LOG_TAG </td></tr>
+    <tr><td class="paramname">TAG</td><td>Variable of type <code>LOG_TAG</code> </td></tr>
     <tr><td class="paramname">message</td><td>Inline string that should be printed </td></tr>
     <tr><td class="paramname">number</td><td>Any number that should be printed next to the string </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00159">159</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00164">164</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
 
 </div>
 </div>
@@ -517,13 +517,13 @@ Refer to the <a class="el" href="_pre___build_8py_source.html">Pre_Build.py</a> 
 <p>Log a string usb serial. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">TAG</td><td>Variable of type LOG_TAG </td></tr>
+    <tr><td class="paramname">TAG</td><td>Variable of type <code>LOG_TAG</code> </td></tr>
     <tr><td class="paramname">message</td><td>Inline string that should be printed </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00111">111</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00116">116</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
 
 </div>
 </div>
@@ -562,14 +562,14 @@ Refer to the <a class="el" href="_pre___build_8py_source.html">Pre_Build.py</a> 
 <p>Log a string and a variable number to usb serial. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">TAG</td><td>Variable of type LOG_TAG </td></tr>
+    <tr><td class="paramname">TAG</td><td>Variable of type <code>LOG_TAG</code> </td></tr>
     <tr><td class="paramname">message</td><td>Inline string that should be printed </td></tr>
     <tr><td class="paramname">number</td><td>Any number that should be printed next to the string </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00147">147</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00152">152</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
 
 </div>
 </div>
@@ -602,13 +602,13 @@ Refer to the <a class="el" href="_pre___build_8py_source.html">Pre_Build.py</a> 
 <p>Log a string using a warning tag. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">TAG</td><td>Variable of type LOG_TAG </td></tr>
+    <tr><td class="paramname">TAG</td><td>Variable of type <code>LOG_TAG</code> </td></tr>
     <tr><td class="paramname">message</td><td>Inline string that should be printed </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00129">129</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00134">134</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
 
 </div>
 </div>
@@ -647,14 +647,14 @@ Refer to the <a class="el" href="_pre___build_8py_source.html">Pre_Build.py</a> 
 <p>Log a string and a variable number using a warning tag. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">TAG</td><td>Variable of type LOG_TAG </td></tr>
+    <tr><td class="paramname">TAG</td><td>Variable of type <code>LOG_TAG</code> </td></tr>
     <tr><td class="paramname">message</td><td>Inline string that should be printed </td></tr>
     <tr><td class="paramname">number</td><td>Any number that should be printed next to the string </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00165">165</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00170">170</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
 
 </div>
 </div>

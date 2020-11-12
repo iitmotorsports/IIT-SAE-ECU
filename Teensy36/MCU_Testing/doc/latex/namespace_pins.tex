@@ -1,0 +1,75 @@
+\hypertarget{namespace_pins}{}\doxysection{Pins Namespace Reference}
+\label{namespace_pins}\index{Pins@{Pins}}
+
+
+Get and set values to predefined pins.  
+
+
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{namespace_pins_a59429aa6a58f9b6e15cf2f968c12ce91}\label{namespace_pins_a59429aa6a58f9b6e15cf2f968c12ce91}} 
+typedef void($\ast$ \mbox{\hyperlink{namespace_pins_a59429aa6a58f9b6e15cf2f968c12ce91}{Pin\+Handler}}) (const int pin, int \&value)
+\begin{DoxyCompactList}\small\item\em A typedef for pin handler functions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{namespace_pins_abd3d7f2960017adeef25257114bad97c}{get\+Pin\+Value}} (const int G\+P\+I\+O\+\_\+\+Pin)
+\begin{DoxyCompactList}\small\item\em Get the pin value of a predefined pin. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_pins_ac1ca1361523751bab529425bc766d10f}{set\+Pin\+Value}} (const int G\+P\+I\+O\+\_\+\+Pin, const int value)
+\begin{DoxyCompactList}\small\item\em Set the pin value of a predefined pin. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespace_pins_a66c4b641f395a60dedbe5271d4acfd35}\label{namespace_pins_a66c4b641f395a60dedbe5271d4acfd35}} 
+void \mbox{\hyperlink{namespace_pins_a66c4b641f395a60dedbe5271d4acfd35}{update}} (void)
+\begin{DoxyCompactList}\small\item\em Poll all pin values. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespace_pins_a50fdd17267e54bd2a3d4ed2a6884c5c1}\label{namespace_pins_a50fdd17267e54bd2a3d4ed2a6884c5c1}} 
+void \mbox{\hyperlink{namespace_pins_a50fdd17267e54bd2a3d4ed2a6884c5c1}{initialize}} (void)
+\begin{DoxyCompactList}\small\item\em Initialize all predefined pins. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Get and set values to predefined pins. 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespace_pins_abd3d7f2960017adeef25257114bad97c}\label{namespace_pins_abd3d7f2960017adeef25257114bad97c}} 
+\index{Pins@{Pins}!getPinValue@{getPinValue}}
+\index{getPinValue@{getPinValue}!Pins@{Pins}}
+\doxysubsubsection{\texorpdfstring{getPinValue()}{getPinValue()}}
+{\footnotesize\ttfamily int Pins\+::get\+Pin\+Value (\begin{DoxyParamCaption}\item[{const int}]{G\+P\+I\+O\+\_\+\+Pin }\end{DoxyParamCaption})}
+
+
+
+Get the pin value of a predefined pin. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em G\+P\+I\+O\+\_\+\+Pin} & The G\+P\+IO pin to get a value from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int Returns an int that represents either a digital or analog value 
+\end{DoxyReturn}
+
+
+Definition at line 48 of file Pins.\+cpp.
+
+\mbox{\Hypertarget{namespace_pins_ac1ca1361523751bab529425bc766d10f}\label{namespace_pins_ac1ca1361523751bab529425bc766d10f}} 
+\index{Pins@{Pins}!setPinValue@{setPinValue}}
+\index{setPinValue@{setPinValue}!Pins@{Pins}}
+\doxysubsubsection{\texorpdfstring{setPinValue()}{setPinValue()}}
+{\footnotesize\ttfamily void Pins\+::set\+Pin\+Value (\begin{DoxyParamCaption}\item[{const int}]{G\+P\+I\+O\+\_\+\+Pin,  }\item[{const int}]{value }\end{DoxyParamCaption})}
+
+
+
+Set the pin value of a predefined pin. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em G\+P\+I\+O\+\_\+\+Pin} & The G\+P\+IO pin to set \\
+\hline
+{\em value} & The value to set the analog/digital pin to \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 52 of file Pins.\+cpp.
+

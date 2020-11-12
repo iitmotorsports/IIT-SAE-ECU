@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['w_45',['w',['../struct_log__t.html#adccc6a96d4d5f2b1ad1dba4220d2ed45',1,'Log_t::w(LOG_TAG TAG, LOG_MSG message)'],['../struct_log__t.html#a3c61edcac751f93551b68f59b237ab7e',1,'Log_t::w(LOG_TAG TAG, LOG_MSG message, const uint32_t number)']]]
+  ['update_57',['update',['../namespace_canbus.html#a386cdddf9229348b8108640075b5c3e4',1,'Canbus::update()'],['../namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35',1,'Pins::update()']]]
 ];

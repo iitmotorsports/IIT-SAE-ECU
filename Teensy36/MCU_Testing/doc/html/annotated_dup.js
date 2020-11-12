@@ -1,8 +1,5 @@
 var annotated_dup =
 [
-    [ "Pins", null, [
-      [ "pin_t", "struct_pins_1_1pin__t.html", "struct_pins_1_1pin__t" ]
-    ] ],
     [ "Pre_Build", null, [
       [ "FileEntry", "class_pre___build_1_1_file_entry.html", "class_pre___build_1_1_file_entry" ],
       [ "MalformedLogCallException", "class_pre___build_1_1_malformed_log_call_exception.html", "class_pre___build_1_1_malformed_log_call_exception" ],
@@ -21,5 +18,6 @@ var annotated_dup =
     [ "FlexCAN_T4", "class_flex_c_a_n___t4.html", "class_flex_c_a_n___t4" ],
     [ "FlexCAN_T4_Base", "class_flex_c_a_n___t4___base.html", "class_flex_c_a_n___t4___base" ],
     [ "FlexCAN_T4FD", "class_flex_c_a_n___t4_f_d.html", "class_flex_c_a_n___t4_f_d" ],
-    [ "Log_t", "struct_log__t.html", "struct_log__t" ]
+    [ "Log_t", "struct_log__t.html", "struct_log__t" ],
+    [ "pin_t", "structpin__t.html", "structpin__t" ]
 ];

@@ -88,44 +88,42 @@ $(document).ready(function(){initNavTree('_pins_8h_source.html',''); initResizab
 <div class="title">Pins.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef __MCU_PINS_H__</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define __MCU_PINS_H__</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">// IMPROVE: pin priority</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">// TODO: add analog resolution and frequency option</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">namespace </span>Pins {</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">typedef</span> void (*PinHandler)(<span class="keyword">const</span> <span class="keywordtype">int</span> pin, <span class="keywordtype">int</span> &amp;value);</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="struct_pins_1_1pin__t.html">   14</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="struct_pins_1_1pin__t.html">pin_t</a> {</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    uint16_t GPIO;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    PinHandler handle;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keywordtype">int</span> value;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keywordtype">void</span> update(<span class="keywordtype">void</span>) {</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        handle(GPIO, value);</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    }</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;} <a class="code" href="struct_pins_1_1pin__t.html">pin_t</a>;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keywordtype">int</span> getPinValue(<span class="keyword">const</span> <span class="keywordtype">int</span> GPIO_Pin);</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keywordtype">void</span> setPinValue(<span class="keyword">const</span> <span class="keywordtype">int</span> GPIO_Pin, <span class="keyword">const</span> <span class="keywordtype">int</span> value);</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keywordtype">void</span> update(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keywordtype">void</span> initialize(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;} <span class="comment">// namespace Pins</span></div>
+<a href="_pins_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#ifndef __MCU_PINS_H__</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#define __MCU_PINS_H__</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">// IMPROVE: pin priority</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">// TODO: add analog resolution and frequency option</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="namespace_pins.html">   24</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_pins.html">Pins</a> {</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="namespace_pins.html#a59429aa6a58f9b6e15cf2f968c12ce91">   29</a></span>&#160;<span class="keyword">typedef</span> void (*<a class="code" href="namespace_pins.html#a59429aa6a58f9b6e15cf2f968c12ce91">PinHandler</a>)(<span class="keyword">const</span> <span class="keywordtype">int</span> pin, <span class="keywordtype">int</span> &amp;value);</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#endif // __MCU_PINS_H__</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keywordtype">int</span> <a class="code" href="namespace_pins.html#abd3d7f2960017adeef25257114bad97c">getPinValue</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> GPIO_Pin);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#ac1ca1361523751bab529425bc766d10f">setPinValue</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> GPIO_Pin, <span class="keyword">const</span> <span class="keywordtype">int</span> value);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35">update</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a50fdd17267e54bd2a3d4ed2a6884c5c1">initialize</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;} <span class="comment">// namespace Pins</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#endif // __MCU_PINS_H__</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="astruct_pins_1_1pin__t_html"><div class="ttname"><a href="struct_pins_1_1pin__t.html">Pins::pin_t</a></div><div class="ttdef"><b>Definition:</b> <a href="_pins_8h_source.html#l00014">Pins.h:14</a></div></div>
+<div class="ttc" id="anamespace_pins_html_ac1ca1361523751bab529425bc766d10f"><div class="ttname"><a href="namespace_pins.html#ac1ca1361523751bab529425bc766d10f">Pins::setPinValue</a></div><div class="ttdeci">void setPinValue(const int GPIO_Pin, const int value)</div><div class="ttdoc">Set the pin value of a predefined pin.</div><div class="ttdef"><b>Definition:</b> <a href="_pins_8cpp_source.html#l00052">Pins.cpp:52</a></div></div>
+<div class="ttc" id="anamespace_pins_html_a66c4b641f395a60dedbe5271d4acfd35"><div class="ttname"><a href="namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35">Pins::update</a></div><div class="ttdeci">void update(void)</div><div class="ttdoc">Poll all pin values.</div><div class="ttdef"><b>Definition:</b> <a href="_pins_8cpp_source.html#l00056">Pins.cpp:56</a></div></div>
+<div class="ttc" id="anamespace_pins_html"><div class="ttname"><a href="namespace_pins.html">Pins</a></div><div class="ttdoc">Get and set values to predefined pins.</div><div class="ttdef"><b>Definition:</b> <a href="_pins_8h_source.html#l00024">Pins.h:24</a></div></div>
+<div class="ttc" id="anamespace_pins_html_abd3d7f2960017adeef25257114bad97c"><div class="ttname"><a href="namespace_pins.html#abd3d7f2960017adeef25257114bad97c">Pins::getPinValue</a></div><div class="ttdeci">int getPinValue(const int GPIO_Pin)</div><div class="ttdoc">Get the pin value of a predefined pin.</div><div class="ttdef"><b>Definition:</b> <a href="_pins_8cpp_source.html#l00048">Pins.cpp:48</a></div></div>
+<div class="ttc" id="anamespace_pins_html_a50fdd17267e54bd2a3d4ed2a6884c5c1"><div class="ttname"><a href="namespace_pins.html#a50fdd17267e54bd2a3d4ed2a6884c5c1">Pins::initialize</a></div><div class="ttdeci">void initialize(void)</div><div class="ttdoc">Initialize all predefined pins.</div><div class="ttdef"><b>Definition:</b> <a href="_pins_8cpp_source.html#l00067">Pins.cpp:67</a></div></div>
+<div class="ttc" id="anamespace_pins_html_a59429aa6a58f9b6e15cf2f968c12ce91"><div class="ttname"><a href="namespace_pins.html#a59429aa6a58f9b6e15cf2f968c12ce91">Pins::PinHandler</a></div><div class="ttdeci">void(* PinHandler)(const int pin, int &amp;value)</div><div class="ttdoc">A typedef for pin handler functions.</div><div class="ttdef"><b>Definition:</b> <a href="_pins_8h_source.html#l00029">Pins.h:29</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="dir_46f033cede6b037af28a867e6a31a727.html">Pins</a></li><li class="navelem"><b>Pins.h</b></li>
+    <li class="navelem"><a class="el" href="dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="dir_46f033cede6b037af28a867e6a31a727.html">Pins</a></li><li class="navelem"><a class="el" href="_pins_8h.html">Pins.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

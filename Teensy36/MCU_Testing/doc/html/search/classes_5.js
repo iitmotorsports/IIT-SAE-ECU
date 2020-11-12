@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['pin_5ft_63',['pin_t',['../struct_pins_1_1pin__t.html',1,'Pins']]]
+  ['pin_5ft_76',['pin_t',['../structpin__t.html',1,'']]]
 ];

@@ -22,7 +22,7 @@ var hierarchy =
       [ "FlexCAN_T4FD", "class_flex_c_a_n___t4_f_d.html", null ]
     ] ],
     [ "Log_t", "struct_log__t.html", null ],
-    [ "Pins::pin_t", "struct_pins_1_1pin__t.html", null ],
+    [ "pin_t", "structpin__t.html", null ],
     [ "State::State_t", "struct_state_1_1_state__t.html", null ],
     [ "Pre_Build.Text", "class_pre___build_1_1_text.html", null ],
     [ "Pre_Build.Toolbar", "class_pre___build_1_1_toolbar.html", null ]
