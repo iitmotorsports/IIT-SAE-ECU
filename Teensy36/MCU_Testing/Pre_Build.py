@@ -1,3 +1,46 @@
+"""
+@file Pre_Build.py
+@author IR
+@brief This script preprocesses source files for use with Log_t
+@version 0.3
+@date 2020-11-11
+
+@copyright Copyright (c) 2020
+
+This script works by first duplicating source files to the build folder. \n
+Then it scans each file for calls to a Log function and modifies them as follows. \n
+
+If the call has a string for `LOG_TAG` parameter, give that string a unique integer ID and replace it with that integer. \n
+If the ID is not a string, leave the variable alone. \n
+
+Replace the call's `LOG_MSG` string with a unique ID as well. \n
+NOTE: The `LOG_MSG` parameter must always be an inline string. \n
+
+`LOG_TAG`s and `LOG_MSG`s do not share IDs. \n
+
+Eg.
+```
+Log(ID, "My Message"); -> Log(ID, 1);
+Log("My Str ID", "My Message"); -> Log(1, 1);
+```
+    
+Calls to Log functions also have the option to send a number with a third parameter. \n
+
+Eg.
+```
+Log("My Str ID", "My Message", 56); -> Log(1, 1, 56);
+Log(ID, "My Message", A_Num_Var); -> Log(ID, 1, A_Num_Var);
+```
+    
+Declarations of `LOG_TAG` also have their strings replaced with a unique ID. \n
+NOTE: Definition of `LOG_TAG`s must always be an inline string. \n
+
+Eg.
+```
+LOG_TAG TAG = "Logging Tag"; -> LOG_TAG TAG = 2;
+```
+"""
+
 import fileinput
 import shutil
 import hashlib
