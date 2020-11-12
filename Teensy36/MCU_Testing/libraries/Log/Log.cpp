@@ -4,45 +4,43 @@
  * Potential for logging to sd card
  */
 
+#include <cstring>
 #include <stdarg.h>
 #include <stdio.h>
-#include <cstring>
 
 #include "Log.h"
 #include "LogConfig.def"
 #include "WProgram.h"
 
 #ifndef CONF_LOGGING_MAX_LEVEL
-#define CONF_LOGGING_MAX_LEVEL 5
+#define CONF_LOGGING_MAX_LEVEL 4
 #endif
 
-#if CONF_LOGGING_MAX_LEVEL >= 6
+#if CONF_LOGGING_MAX_LEVEL >= 5
 #define __LOGGER_NONE_PRINT
 #define __LOGGER_DEBUG_PRINT
 #define __LOGGER_INFO_PRINT
 #define __LOGGER_WARN_PRINT
 #define __LOGGER_ERROR_PRINT
 #define __LOGGER_FATAL_PRINT
-#elif CONF_LOGGING_MAX_LEVEL == 5
+#elif CONF_LOGGING_MAX_LEVEL == 4
 #define __LOGGER_NONE_PRINT
 #define __LOGGER_INFO_PRINT
 #define __LOGGER_WARN_PRINT
 #define __LOGGER_ERROR_PRINT
 #define __LOGGER_FATAL_PRINT
-#elif CONF_LOGGING_MAX_LEVEL == 4
+#elif CONF_LOGGING_MAX_LEVEL == 3
 #define __LOGGER_NONE_PRINT
 #define __LOGGER_WARN_PRINT
 #define __LOGGER_ERROR_PRINT
 #define __LOGGER_FATAL_PRINT
-#elif CONF_LOGGING_MAX_LEVEL == 3
-#define __LOGGER_NONE_PRINT
+#elif CONF_LOGGING_MAX_LEVEL == 2
+#define __LOGGER_WARN_PRINT
 #define __LOGGER_ERROR_PRINT
 #define __LOGGER_FATAL_PRINT
-#elif CONF_LOGGING_MAX_LEVEL == 2
-#define __LOGGER_NONE_PRINT
-#define __LOGGER_FATAL_PRINT
 #elif CONF_LOGGING_MAX_LEVEL == 1
-#define __LOGGER_NONE_PRINT
+#define __LOGGER_ERROR_PRINT
+#define __LOGGER_FATAL_PRINT
 #endif
 
 #if CONF_LOGGING_MAPPED_MODE > 0
@@ -59,9 +57,9 @@ static void *FATAL = NONE;
 // No Timestamping for this mode
 
 static void __logger_print(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE) {
-    uint8_t *buf = new uint8_t[10]();
+    uint8_t *buf = new uint8_t[10](); // TODO: Profile logging functions
     memcpy(buf, &TAG, 2);
-    memcpy(buf+6, &MESSAGE, 4);
+    memcpy(buf + 6, &MESSAGE, 4);
     Serial.write(buf, 10);
     delete[] buf;
 }
@@ -69,8 +67,8 @@ static void __logger_print(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE) {
 static void __logger_print_num(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const uint32_t NUMBER) {
     uint8_t *buf = new uint8_t[10]();
     memcpy(buf, &TAG, 2);
-    memcpy(buf+2, &NUMBER, 4);
-    memcpy(buf+6, &MESSAGE, 4);
+    memcpy(buf + 2, &NUMBER, 4);
+    memcpy(buf + 6, &MESSAGE, 4);
     Serial.write(buf, 10);
     delete[] buf;
 }
