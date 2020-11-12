@@ -1,3 +1,13 @@
+/**
+ * @file PPHelp.h
+ * @author IR 
+ * @brief Compilation of various helpful preprocessor macros
+ * @version 0.1
+ * @date 2020-11-11
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
 #ifndef __PPHELP_H__
 #define __PPHELP_H__
 
