@@ -1,0 +1,158 @@
+\hypertarget{class_circular___buffer}{}\doxysection{Circular\+\_\+\+Buffer$<$ T, \+\_\+size, multi $>$ Class Template Reference}
+\label{class_circular___buffer}\index{Circular\_Buffer$<$ T, \_size, multi $>$@{Circular\_Buffer$<$ T, \_size, multi $>$}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_circular___buffer_aaaf9d3fe5d10c71e9e065bcc2001227e}\label{class_circular___buffer_aaaf9d3fe5d10c71e9e065bcc2001227e}} 
+void {\bfseries push\+\_\+back} (T value)
+\item 
+\mbox{\Hypertarget{class_circular___buffer_aec6589de1b52cd11dac150e1b6d94dcd}\label{class_circular___buffer_aec6589de1b52cd11dac150e1b6d94dcd}} 
+void {\bfseries push\+\_\+front} (T value)
+\item 
+\mbox{\Hypertarget{class_circular___buffer_a5100b3c9a1098c5e513e0602edf9be0c}\label{class_circular___buffer_a5100b3c9a1098c5e513e0602edf9be0c}} 
+T {\bfseries pop\+\_\+front} ()
+\item 
+\mbox{\Hypertarget{class_circular___buffer_a2191444434c68629d9be9774713e5a4a}\label{class_circular___buffer_a2191444434c68629d9be9774713e5a4a}} 
+T {\bfseries pop\+\_\+back} ()
+\item 
+\mbox{\Hypertarget{class_circular___buffer_ab66581802a8a842b047fb10bcab66c6c}\label{class_circular___buffer_ab66581802a8a842b047fb10bcab66c6c}} 
+void {\bfseries write} (T value)
+\item 
+\mbox{\Hypertarget{class_circular___buffer_a097ef3a4d20162fce53838f0f4442b5b}\label{class_circular___buffer_a097ef3a4d20162fce53838f0f4442b5b}} 
+void {\bfseries push\+\_\+back} (const T $\ast$buffer, uint16\+\_\+t length)
+\item 
+\mbox{\Hypertarget{class_circular___buffer_a0bc26a6e2bd94972d00eacc46455633f}\label{class_circular___buffer_a0bc26a6e2bd94972d00eacc46455633f}} 
+void {\bfseries write} (const T $\ast$buffer, uint16\+\_\+t length)
+\item 
+\mbox{\Hypertarget{class_circular___buffer_a78e28d24100f93cfea25ae2cc840fa0a}\label{class_circular___buffer_a78e28d24100f93cfea25ae2cc840fa0a}} 
+void {\bfseries push\+\_\+front} (const T $\ast$buffer, uint16\+\_\+t length)
+\item 
+\mbox{\Hypertarget{class_circular___buffer_ac31f2612b3b2399ec25b16403886dd2c}\label{class_circular___buffer_ac31f2612b3b2399ec25b16403886dd2c}} 
+T {\bfseries peek} (uint16\+\_\+t pos=0)
+\item 
+\mbox{\Hypertarget{class_circular___buffer_a71d7b1597758121d8c3424f6af7e9396}\label{class_circular___buffer_a71d7b1597758121d8c3424f6af7e9396}} 
+T {\bfseries peek\+Bytes} (T $\ast$buffer, uint16\+\_\+t length)
+\item 
+\mbox{\Hypertarget{class_circular___buffer_a6a178352ea8e83b65723ed0723dc4bc5}\label{class_circular___buffer_a6a178352ea8e83b65723ed0723dc4bc5}} 
+T {\bfseries read} ()
+\item 
+\mbox{\Hypertarget{class_circular___buffer_a75ebe60fb817331136e0684faa2ee7c6}\label{class_circular___buffer_a75ebe60fb817331136e0684faa2ee7c6}} 
+T {\bfseries pop\+\_\+front} (T $\ast$buffer, uint16\+\_\+t length)
+\item 
+\mbox{\Hypertarget{class_circular___buffer_af13d14fd6664009f00a91870cfea159c}\label{class_circular___buffer_af13d14fd6664009f00a91870cfea159c}} 
+T {\bfseries peek\+\_\+front} (T $\ast$buffer, uint16\+\_\+t length, uint32\+\_\+t entry=0)
+\item 
+\mbox{\Hypertarget{class_circular___buffer_ab64048424075ff353179bf14b7fdfd7a}\label{class_circular___buffer_ab64048424075ff353179bf14b7fdfd7a}} 
+T {\bfseries read} (T $\ast$buffer, uint16\+\_\+t length)
+\item 
+\mbox{\Hypertarget{class_circular___buffer_aea42508ac5106d582e29eecac0ee1180}\label{class_circular___buffer_aea42508ac5106d582e29eecac0ee1180}} 
+T {\bfseries read\+Bytes} (T $\ast$buffer, uint16\+\_\+t length)
+\item 
+\mbox{\Hypertarget{class_circular___buffer_aeb89fe85d4e708af8db50ebba9b90bf2}\label{class_circular___buffer_aeb89fe85d4e708af8db50ebba9b90bf2}} 
+void {\bfseries flush} ()
+\item 
+\mbox{\Hypertarget{class_circular___buffer_a77fca415f782e46b53af7ae9c5673c0a}\label{class_circular___buffer_a77fca415f782e46b53af7ae9c5673c0a}} 
+void {\bfseries clear} ()
+\item 
+\mbox{\Hypertarget{class_circular___buffer_aea748b0673dc531c7391319b6adabccc}\label{class_circular___buffer_aea748b0673dc531c7391319b6adabccc}} 
+void {\bfseries print} (const char $\ast$p)
+\item 
+\mbox{\Hypertarget{class_circular___buffer_aa063b92c055edb4fe1bffd07fcc2a60c}\label{class_circular___buffer_aa063b92c055edb4fe1bffd07fcc2a60c}} 
+void {\bfseries println} (const char $\ast$p)
+\item 
+\mbox{\Hypertarget{class_circular___buffer_a402e6ae69dfd3cc9432b198858d11dfd}\label{class_circular___buffer_a402e6ae69dfd3cc9432b198858d11dfd}} 
+uint16\+\_\+t {\bfseries size} ()
+\item 
+\mbox{\Hypertarget{class_circular___buffer_ade400744dbceb3e5273e3ba7c31a2f60}\label{class_circular___buffer_ade400744dbceb3e5273e3ba7c31a2f60}} 
+uint16\+\_\+t {\bfseries available} ()
+\item 
+\mbox{\Hypertarget{class_circular___buffer_a0069f4ea940ed06b443c2210a5b026f7}\label{class_circular___buffer_a0069f4ea940ed06b443c2210a5b026f7}} 
+uint16\+\_\+t {\bfseries capacity} ()
+\item 
+\mbox{\Hypertarget{class_circular___buffer_a4297d0a6273e0390e8b67715035fa267}\label{class_circular___buffer_a4297d0a6273e0390e8b67715035fa267}} 
+uint16\+\_\+t {\bfseries length\+\_\+back} ()
+\item 
+\mbox{\Hypertarget{class_circular___buffer_aa5e7261f80df80ca09bc016d6230dd7c}\label{class_circular___buffer_aa5e7261f80df80ca09bc016d6230dd7c}} 
+uint16\+\_\+t {\bfseries length\+\_\+front} ()
+\item 
+\mbox{\Hypertarget{class_circular___buffer_ad50df689a421d93169e8ef79a9266ba4}\label{class_circular___buffer_ad50df689a421d93169e8ef79a9266ba4}} 
+T {\bfseries list} ()
+\item 
+\mbox{\Hypertarget{class_circular___buffer_a4e1eb269848cda479828de4012f6e8ee}\label{class_circular___buffer_a4e1eb269848cda479828de4012f6e8ee}} 
+T {\bfseries variance} ()
+\item 
+\mbox{\Hypertarget{class_circular___buffer_a62850702731ce3381790a440fa0e8750}\label{class_circular___buffer_a62850702731ce3381790a440fa0e8750}} 
+T {\bfseries deviation} ()
+\item 
+\mbox{\Hypertarget{class_circular___buffer_a4de031da7c711d2956dd7767ff531c16}\label{class_circular___buffer_a4de031da7c711d2956dd7767ff531c16}} 
+T {\bfseries average} ()
+\item 
+\mbox{\Hypertarget{class_circular___buffer_aad651d9a9ec0a8653c419d035be941ba}\label{class_circular___buffer_aad651d9a9ec0a8653c419d035be941ba}} 
+bool {\bfseries remove} (uint16\+\_\+t pos)
+\item 
+\mbox{\Hypertarget{class_circular___buffer_a29a3997d6a4cd719cc91065b7ef605c2}\label{class_circular___buffer_a29a3997d6a4cd719cc91065b7ef605c2}} 
+T {\bfseries median} (bool override=0)
+\item 
+\mbox{\Hypertarget{class_circular___buffer_a38773b3b1467a16bfcfda1b13b47d797}\label{class_circular___buffer_a38773b3b1467a16bfcfda1b13b47d797}} 
+void {\bfseries sort\+\_\+ascending} ()
+\item 
+\mbox{\Hypertarget{class_circular___buffer_a963ec042286bed7ec7bcb6cb46761b49}\label{class_circular___buffer_a963ec042286bed7ec7bcb6cb46761b49}} 
+void {\bfseries sort\+\_\+descending} ()
+\item 
+\mbox{\Hypertarget{class_circular___buffer_a28267c92b7fb6884d5c707df3cf7e738}\label{class_circular___buffer_a28267c92b7fb6884d5c707df3cf7e738}} 
+T {\bfseries sum} ()
+\item 
+\mbox{\Hypertarget{class_circular___buffer_a1c63e1182d14209db915e33ee348b61b}\label{class_circular___buffer_a1c63e1182d14209db915e33ee348b61b}} 
+T {\bfseries min} ()
+\item 
+\mbox{\Hypertarget{class_circular___buffer_a39d74c16a6451385313d2aa6dbb08738}\label{class_circular___buffer_a39d74c16a6451385313d2aa6dbb08738}} 
+T {\bfseries max} ()
+\item 
+\mbox{\Hypertarget{class_circular___buffer_aee0a17ffc70966eeded811f9b74fbf79}\label{class_circular___buffer_aee0a17ffc70966eeded811f9b74fbf79}} 
+T {\bfseries mean} ()
+\item 
+\mbox{\Hypertarget{class_circular___buffer_a5b3ecbc7aa06df8162c2224abd49fca4}\label{class_circular___buffer_a5b3ecbc7aa06df8162c2224abd49fca4}} 
+T {\bfseries max\+\_\+size} ()
+\item 
+\mbox{\Hypertarget{class_circular___buffer_ac9d7b982e5ab8589f3d48a72b144c146}\label{class_circular___buffer_ac9d7b982e5ab8589f3d48a72b144c146}} 
+T {\bfseries pop\+\_\+back} (T $\ast$buffer, uint16\+\_\+t length)
+\item 
+\mbox{\Hypertarget{class_circular___buffer_a13ca23e5fd99293c3cbba05f4225a2b7}\label{class_circular___buffer_a13ca23e5fd99293c3cbba05f4225a2b7}} 
+T $\ast$ {\bfseries peek\+\_\+front} ()
+\item 
+\mbox{\Hypertarget{class_circular___buffer_ae44c8473a0965d867ad8fe28018348a1}\label{class_circular___buffer_ae44c8473a0965d867ad8fe28018348a1}} 
+T $\ast$ {\bfseries peek\+\_\+back} ()
+\item 
+\mbox{\Hypertarget{class_circular___buffer_ae1f6a3ebab449807c88fdfca136cafe3}\label{class_circular___buffer_ae1f6a3ebab449807c88fdfca136cafe3}} 
+T $\ast$ {\bfseries front} ()
+\item 
+\mbox{\Hypertarget{class_circular___buffer_a20bbb7556fce76a2e3d7097ba3713d67}\label{class_circular___buffer_a20bbb7556fce76a2e3d7097ba3713d67}} 
+T $\ast$ {\bfseries back} ()
+\item 
+\mbox{\Hypertarget{class_circular___buffer_a154710f1e28544bc3a7bc5c8d55ad072}\label{class_circular___buffer_a154710f1e28544bc3a7bc5c8d55ad072}} 
+bool {\bfseries replace} (T $\ast$buffer, uint16\+\_\+t length, int pos1, int pos2, int pos3, int pos4=-\/1, int pos5=-\/1)
+\item 
+\mbox{\Hypertarget{class_circular___buffer_acbbe975e1da586bac91ff67b0a01a97b}\label{class_circular___buffer_acbbe975e1da586bac91ff67b0a01a97b}} 
+bool {\bfseries is\+Equal} (const T $\ast$buffer)
+\item 
+\mbox{\Hypertarget{class_circular___buffer_a12a4d84a352c70bb752d7a80abbfcb32}\label{class_circular___buffer_a12a4d84a352c70bb752d7a80abbfcb32}} 
+bool {\bfseries find} (T $\ast$buffer, uint16\+\_\+t length, int pos1, int pos2, int pos3, int pos4=-\/1, int pos5=-\/1)
+\item 
+\mbox{\Hypertarget{class_circular___buffer_a61ef37d0d1235df5a38b40bb4026e527}\label{class_circular___buffer_a61ef37d0d1235df5a38b40bb4026e527}} 
+bool {\bfseries find\+Remove} (T $\ast$buffer, uint16\+\_\+t length, int pos1, int pos2, int pos3, int pos4=-\/1, int pos5=-\/1)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T, uint16\+\_\+t \+\_\+size, uint16\+\_\+t multi = 0$>$\newline
+class Circular\+\_\+\+Buffer$<$ T, \+\_\+size, multi $>$}
+
+
+
+Definition at line 41 of file circular\+\_\+buffer.\+h.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+circular\+\_\+buffer.\+h\end{DoxyCompactItemize}

@@ -1,0 +1,329 @@
+\hypertarget{struct_log__t}{}\doxysection{Log\+\_\+t Struct Reference}
+\label{struct_log__t}\index{Log\_t@{Log\_t}}
+
+
+Base class used to log things to serial ~\newline
+This class has the capability to modify all of it\textquotesingle{}s functions to instead use integer I\+Ds ~\newline
+Refer to the \mbox{\hyperlink{_pre___build_8py_source}{Pre\+\_\+\+Build.\+py}} script for more information.  
+
+
+
+
+{\ttfamily \#include $<$Log.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{struct_log__t_a357cfe5bc1522bbeb30adb84b2e53434}{operator()}} (L\+O\+G\+\_\+\+T\+AG T\+AG, L\+O\+G\+\_\+\+M\+SG message)
+\begin{DoxyCompactList}\small\item\em Log a string usb serial. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{struct_log__t_ad5d160483bf483bdc018c30d8d64650b}{d}} (L\+O\+G\+\_\+\+T\+AG T\+AG, L\+O\+G\+\_\+\+M\+SG message)
+\begin{DoxyCompactList}\small\item\em Log a string using a debug tag. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{struct_log__t_a1dad6499c36e8bcafd40970ca4bcf035}{i}} (L\+O\+G\+\_\+\+T\+AG T\+AG, L\+O\+G\+\_\+\+M\+SG message)
+\begin{DoxyCompactList}\small\item\em Log a string using an info tag. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{struct_log__t_adccc6a96d4d5f2b1ad1dba4220d2ed45}{w}} (L\+O\+G\+\_\+\+T\+AG T\+AG, L\+O\+G\+\_\+\+M\+SG message)
+\begin{DoxyCompactList}\small\item\em Log a string using a warning tag. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{struct_log__t_a3ee55327320e6000aec081f5441aac3d}{e}} (L\+O\+G\+\_\+\+T\+AG T\+AG, L\+O\+G\+\_\+\+M\+SG message)
+\begin{DoxyCompactList}\small\item\em Log a string using an error tag. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{struct_log__t_a6b1710ff78e9434aaa77d528f7e13dac}{f}} (L\+O\+G\+\_\+\+T\+AG T\+AG, L\+O\+G\+\_\+\+M\+SG message)
+\begin{DoxyCompactList}\small\item\em Log a string using a fatal tag. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{struct_log__t_ad87e71a2610b75c106ba19751b2145af}{operator()}} (L\+O\+G\+\_\+\+T\+AG T\+AG, L\+O\+G\+\_\+\+M\+SG message, const uint32\+\_\+t number)
+\begin{DoxyCompactList}\small\item\em Log a string and a variable number to usb serial. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{struct_log__t_a67cb5d3583b446b8bd60f195a407580b}{d}} (L\+O\+G\+\_\+\+T\+AG T\+AG, L\+O\+G\+\_\+\+M\+SG message, const uint32\+\_\+t number)
+\begin{DoxyCompactList}\small\item\em Log a string and a variable number using a debug tag. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{struct_log__t_a9b205e334f5a4c6a66f3bfdf854c85e7}{i}} (L\+O\+G\+\_\+\+T\+AG T\+AG, L\+O\+G\+\_\+\+M\+SG message, const uint32\+\_\+t number)
+\begin{DoxyCompactList}\small\item\em Log a string and a variable number using an info tag. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{struct_log__t_a3c61edcac751f93551b68f59b237ab7e}{w}} (L\+O\+G\+\_\+\+T\+AG T\+AG, L\+O\+G\+\_\+\+M\+SG message, const uint32\+\_\+t number)
+\begin{DoxyCompactList}\small\item\em Log a string and a variable number using a warning tag. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{struct_log__t_af803c55c982c25b49a6db34cb8342e4d}{e}} (L\+O\+G\+\_\+\+T\+AG T\+AG, L\+O\+G\+\_\+\+M\+SG message, const uint32\+\_\+t number)
+\begin{DoxyCompactList}\small\item\em Log a string and a variable number using an error tag. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{struct_log__t_a0d7c81eb74ee22a7ef040785abbcc5df}{f}} (L\+O\+G\+\_\+\+T\+AG T\+AG, L\+O\+G\+\_\+\+M\+SG message, const uint32\+\_\+t number)
+\begin{DoxyCompactList}\small\item\em Log a string and a variable number using a fatal tag. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class used to log things to serial ~\newline
+This class has the capability to modify all of it\textquotesingle{}s functions to instead use integer I\+Ds ~\newline
+Refer to the \mbox{\hyperlink{_pre___build_8py_source}{Pre\+\_\+\+Build.\+py}} script for more information. 
+
+\begin{DoxyNote}{Note}
+If \mbox{\hyperlink{_pre___build_8py_source}{Pre\+\_\+\+Build.\+py}} is run, {\itshape All} strings passed to parameter message must be an inline string ~\newline
+ Log(\char`\"{}\+String goes here\char`\"{}); ✔️ ~\newline
+ Log(some\+String\+Reference); ❌ 
+\end{DoxyNote}
+
+
+Definition at line 35 of file Log.\+h.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{struct_log__t_ad5d160483bf483bdc018c30d8d64650b}\label{struct_log__t_ad5d160483bf483bdc018c30d8d64650b}} 
+\index{Log\_t@{Log\_t}!d@{d}}
+\index{d@{d}!Log\_t@{Log\_t}}
+\doxysubsubsection{\texorpdfstring{d()}{d()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Log\+\_\+t\+::d (\begin{DoxyParamCaption}\item[{L\+O\+G\+\_\+\+T\+AG}]{T\+AG,  }\item[{L\+O\+G\+\_\+\+M\+SG}]{message }\end{DoxyParamCaption})}
+
+
+
+Log a string using a debug tag. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em T\+AG} & Variable of type L\+O\+G\+\_\+\+T\+AG \\
+\hline
+{\em message} & Inline string that should be printed \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 117 of file Log.\+cpp.
+
+\mbox{\Hypertarget{struct_log__t_a67cb5d3583b446b8bd60f195a407580b}\label{struct_log__t_a67cb5d3583b446b8bd60f195a407580b}} 
+\index{Log\_t@{Log\_t}!d@{d}}
+\index{d@{d}!Log\_t@{Log\_t}}
+\doxysubsubsection{\texorpdfstring{d()}{d()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Log\+\_\+t\+::d (\begin{DoxyParamCaption}\item[{L\+O\+G\+\_\+\+T\+AG}]{T\+AG,  }\item[{L\+O\+G\+\_\+\+M\+SG}]{message,  }\item[{const uint32\+\_\+t}]{number }\end{DoxyParamCaption})}
+
+
+
+Log a string and a variable number using a debug tag. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em T\+AG} & Variable of type L\+O\+G\+\_\+\+T\+AG \\
+\hline
+{\em message} & Inline string that should be printed \\
+\hline
+{\em number} & Any number that should be printed next to the string \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 153 of file Log.\+cpp.
+
+\mbox{\Hypertarget{struct_log__t_a3ee55327320e6000aec081f5441aac3d}\label{struct_log__t_a3ee55327320e6000aec081f5441aac3d}} 
+\index{Log\_t@{Log\_t}!e@{e}}
+\index{e@{e}!Log\_t@{Log\_t}}
+\doxysubsubsection{\texorpdfstring{e()}{e()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Log\+\_\+t\+::e (\begin{DoxyParamCaption}\item[{L\+O\+G\+\_\+\+T\+AG}]{T\+AG,  }\item[{L\+O\+G\+\_\+\+M\+SG}]{message }\end{DoxyParamCaption})}
+
+
+
+Log a string using an error tag. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em T\+AG} & Variable of type L\+O\+G\+\_\+\+T\+AG \\
+\hline
+{\em message} & Inline string that should be printed \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 135 of file Log.\+cpp.
+
+\mbox{\Hypertarget{struct_log__t_af803c55c982c25b49a6db34cb8342e4d}\label{struct_log__t_af803c55c982c25b49a6db34cb8342e4d}} 
+\index{Log\_t@{Log\_t}!e@{e}}
+\index{e@{e}!Log\_t@{Log\_t}}
+\doxysubsubsection{\texorpdfstring{e()}{e()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Log\+\_\+t\+::e (\begin{DoxyParamCaption}\item[{L\+O\+G\+\_\+\+T\+AG}]{T\+AG,  }\item[{L\+O\+G\+\_\+\+M\+SG}]{message,  }\item[{const uint32\+\_\+t}]{number }\end{DoxyParamCaption})}
+
+
+
+Log a string and a variable number using an error tag. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em T\+AG} & Variable of type L\+O\+G\+\_\+\+T\+AG \\
+\hline
+{\em message} & Inline string that should be printed \\
+\hline
+{\em number} & Any number that should be printed next to the string \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 171 of file Log.\+cpp.
+
+\mbox{\Hypertarget{struct_log__t_a6b1710ff78e9434aaa77d528f7e13dac}\label{struct_log__t_a6b1710ff78e9434aaa77d528f7e13dac}} 
+\index{Log\_t@{Log\_t}!f@{f}}
+\index{f@{f}!Log\_t@{Log\_t}}
+\doxysubsubsection{\texorpdfstring{f()}{f()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Log\+\_\+t\+::f (\begin{DoxyParamCaption}\item[{L\+O\+G\+\_\+\+T\+AG}]{T\+AG,  }\item[{L\+O\+G\+\_\+\+M\+SG}]{message }\end{DoxyParamCaption})}
+
+
+
+Log a string using a fatal tag. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em T\+AG} & Variable of type L\+O\+G\+\_\+\+T\+AG \\
+\hline
+{\em message} & Inline string that should be printed \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 141 of file Log.\+cpp.
+
+\mbox{\Hypertarget{struct_log__t_a0d7c81eb74ee22a7ef040785abbcc5df}\label{struct_log__t_a0d7c81eb74ee22a7ef040785abbcc5df}} 
+\index{Log\_t@{Log\_t}!f@{f}}
+\index{f@{f}!Log\_t@{Log\_t}}
+\doxysubsubsection{\texorpdfstring{f()}{f()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Log\+\_\+t\+::f (\begin{DoxyParamCaption}\item[{L\+O\+G\+\_\+\+T\+AG}]{T\+AG,  }\item[{L\+O\+G\+\_\+\+M\+SG}]{message,  }\item[{const uint32\+\_\+t}]{number }\end{DoxyParamCaption})}
+
+
+
+Log a string and a variable number using a fatal tag. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em T\+AG} & Variable of type L\+O\+G\+\_\+\+T\+AG \\
+\hline
+{\em message} & Inline string that should be printed \\
+\hline
+{\em number} & Any number that should be printed next to the string \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 177 of file Log.\+cpp.
+
+\mbox{\Hypertarget{struct_log__t_a1dad6499c36e8bcafd40970ca4bcf035}\label{struct_log__t_a1dad6499c36e8bcafd40970ca4bcf035}} 
+\index{Log\_t@{Log\_t}!i@{i}}
+\index{i@{i}!Log\_t@{Log\_t}}
+\doxysubsubsection{\texorpdfstring{i()}{i()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Log\+\_\+t\+::i (\begin{DoxyParamCaption}\item[{L\+O\+G\+\_\+\+T\+AG}]{T\+AG,  }\item[{L\+O\+G\+\_\+\+M\+SG}]{message }\end{DoxyParamCaption})}
+
+
+
+Log a string using an info tag. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em T\+AG} & Variable of type L\+O\+G\+\_\+\+T\+AG \\
+\hline
+{\em message} & Inline string that should be printed \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 123 of file Log.\+cpp.
+
+\mbox{\Hypertarget{struct_log__t_a9b205e334f5a4c6a66f3bfdf854c85e7}\label{struct_log__t_a9b205e334f5a4c6a66f3bfdf854c85e7}} 
+\index{Log\_t@{Log\_t}!i@{i}}
+\index{i@{i}!Log\_t@{Log\_t}}
+\doxysubsubsection{\texorpdfstring{i()}{i()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Log\+\_\+t\+::i (\begin{DoxyParamCaption}\item[{L\+O\+G\+\_\+\+T\+AG}]{T\+AG,  }\item[{L\+O\+G\+\_\+\+M\+SG}]{message,  }\item[{const uint32\+\_\+t}]{number }\end{DoxyParamCaption})}
+
+
+
+Log a string and a variable number using an info tag. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em T\+AG} & Variable of type L\+O\+G\+\_\+\+T\+AG \\
+\hline
+{\em message} & Inline string that should be printed \\
+\hline
+{\em number} & Any number that should be printed next to the string \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 159 of file Log.\+cpp.
+
+\mbox{\Hypertarget{struct_log__t_a357cfe5bc1522bbeb30adb84b2e53434}\label{struct_log__t_a357cfe5bc1522bbeb30adb84b2e53434}} 
+\index{Log\_t@{Log\_t}!operator()@{operator()}}
+\index{operator()@{operator()}!Log\_t@{Log\_t}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Log\+\_\+t\+::operator() (\begin{DoxyParamCaption}\item[{L\+O\+G\+\_\+\+T\+AG}]{T\+AG,  }\item[{L\+O\+G\+\_\+\+M\+SG}]{message }\end{DoxyParamCaption})}
+
+
+
+Log a string usb serial. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em T\+AG} & Variable of type L\+O\+G\+\_\+\+T\+AG \\
+\hline
+{\em message} & Inline string that should be printed \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 111 of file Log.\+cpp.
+
+\mbox{\Hypertarget{struct_log__t_ad87e71a2610b75c106ba19751b2145af}\label{struct_log__t_ad87e71a2610b75c106ba19751b2145af}} 
+\index{Log\_t@{Log\_t}!operator()@{operator()}}
+\index{operator()@{operator()}!Log\_t@{Log\_t}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Log\+\_\+t\+::operator() (\begin{DoxyParamCaption}\item[{L\+O\+G\+\_\+\+T\+AG}]{T\+AG,  }\item[{L\+O\+G\+\_\+\+M\+SG}]{message,  }\item[{const uint32\+\_\+t}]{number }\end{DoxyParamCaption})}
+
+
+
+Log a string and a variable number to usb serial. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em T\+AG} & Variable of type L\+O\+G\+\_\+\+T\+AG \\
+\hline
+{\em message} & Inline string that should be printed \\
+\hline
+{\em number} & Any number that should be printed next to the string \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 147 of file Log.\+cpp.
+
+\mbox{\Hypertarget{struct_log__t_adccc6a96d4d5f2b1ad1dba4220d2ed45}\label{struct_log__t_adccc6a96d4d5f2b1ad1dba4220d2ed45}} 
+\index{Log\_t@{Log\_t}!w@{w}}
+\index{w@{w}!Log\_t@{Log\_t}}
+\doxysubsubsection{\texorpdfstring{w()}{w()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Log\+\_\+t\+::w (\begin{DoxyParamCaption}\item[{L\+O\+G\+\_\+\+T\+AG}]{T\+AG,  }\item[{L\+O\+G\+\_\+\+M\+SG}]{message }\end{DoxyParamCaption})}
+
+
+
+Log a string using a warning tag. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em T\+AG} & Variable of type L\+O\+G\+\_\+\+T\+AG \\
+\hline
+{\em message} & Inline string that should be printed \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 129 of file Log.\+cpp.
+
+\mbox{\Hypertarget{struct_log__t_a3c61edcac751f93551b68f59b237ab7e}\label{struct_log__t_a3c61edcac751f93551b68f59b237ab7e}} 
+\index{Log\_t@{Log\_t}!w@{w}}
+\index{w@{w}!Log\_t@{Log\_t}}
+\doxysubsubsection{\texorpdfstring{w()}{w()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Log\+\_\+t\+::w (\begin{DoxyParamCaption}\item[{L\+O\+G\+\_\+\+T\+AG}]{T\+AG,  }\item[{L\+O\+G\+\_\+\+M\+SG}]{message,  }\item[{const uint32\+\_\+t}]{number }\end{DoxyParamCaption})}
+
+
+
+Log a string and a variable number using a warning tag. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em T\+AG} & Variable of type L\+O\+G\+\_\+\+T\+AG \\
+\hline
+{\em message} & Inline string that should be printed \\
+\hline
+{\em number} & Any number that should be printed next to the string \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 165 of file Log.\+cpp.
+
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Log.\+h\item 
+Log.\+cpp\end{DoxyCompactItemize}

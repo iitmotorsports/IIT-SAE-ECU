@@ -1,0 +1,138 @@
+\hypertarget{namespace_state}{}\doxysection{State Namespace Reference}
+\label{namespace_state}\index{State@{State}}
+
+
+A state machine implementation.  
+
+
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_state_1_1_state__t}{State\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em The parent state structure to extend from to create more states. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{namespace_state_a422591d2b00d9f2217e041c41ba49bfc}{Notify\+Code}} \+: int \{ \newline
+\mbox{\hyperlink{namespace_state_a422591d2b00d9f2217e041c41ba49bfcaccfc1758e60c4f3797538c9195b8bb29}{E\+\_\+\+N\+O\+E\+RR}}, 
+\mbox{\hyperlink{namespace_state_a422591d2b00d9f2217e041c41ba49bfcaa7e59f744dfadff783b5b70960bc8db4}{E\+\_\+\+C\+O\+N\+T\+I\+N\+UE}}, 
+\mbox{\hyperlink{namespace_state_a422591d2b00d9f2217e041c41ba49bfcaa40927f939fb1f3a187007608cc2aa8c}{E\+\_\+\+E\+R\+R\+OR}}, 
+\mbox{\hyperlink{namespace_state_a422591d2b00d9f2217e041c41ba49bfcad89eff4ec7b3f723eb12f9b6b4323fba}{E\+\_\+\+F\+A\+T\+AL}} = 0x\+F\+A7\+A1, 
+\newline
+\mbox{\hyperlink{namespace_state_a422591d2b00d9f2217e041c41ba49bfca52e0b67d3d115c4a746620fade6175f8}{E\+\_\+\+R\+E\+S\+T\+A\+RT}} = 2357427
+ \}
+\begin{DoxyCompactList}\small\item\em Common codes that can be used by states. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{namespace_state_a9dfe9cc449047d893920a8ab4c527c29}{notify}} (int notify)
+\begin{DoxyCompactList}\small\item\em Send a code to the next state. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_state_1_1_state__t}{State\+\_\+t}} $\ast$ \mbox{\hyperlink{namespace_state_a734f0be1f3743a4cc9a3d90b03030aef}{get\+Last\+State}} ()
+\begin{DoxyCompactList}\small\item\em Get a pointer of the last state. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_state_a1c6e60c84c0fb7c572adaf678fb6a56a}{begin}} (\mbox{\hyperlink{struct_state_1_1_state__t}{State\+\_\+t}} \&entry)
+\begin{DoxyCompactList}\small\item\em Begin the state machine with a pointer to a state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A state machine implementation. 
+
+This library implements a state machine for the Teensy Microcontoller. It was specifically made for the Teensy 3.\+6 
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{namespace_state_a422591d2b00d9f2217e041c41ba49bfc}\label{namespace_state_a422591d2b00d9f2217e041c41ba49bfc}} 
+\index{State@{State}!NotifyCode@{NotifyCode}}
+\index{NotifyCode@{NotifyCode}!State@{State}}
+\doxysubsubsection{\texorpdfstring{NotifyCode}{NotifyCode}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{namespace_state_a422591d2b00d9f2217e041c41ba49bfc}{State\+::\+Notify\+Code}} \+: int}
+
+
+
+Common codes that can be used by states. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{E\_NOERR@{E\_NOERR}!State@{State}}\index{State@{State}!E\_NOERR@{E\_NOERR}}}\mbox{\Hypertarget{namespace_state_a422591d2b00d9f2217e041c41ba49bfcaccfc1758e60c4f3797538c9195b8bb29}\label{namespace_state_a422591d2b00d9f2217e041c41ba49bfcaccfc1758e60c4f3797538c9195b8bb29}} 
+E\+\_\+\+N\+O\+E\+RR&No error has occurred. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{E\_CONTINUE@{E\_CONTINUE}!State@{State}}\index{State@{State}!E\_CONTINUE@{E\_CONTINUE}}}\mbox{\Hypertarget{namespace_state_a422591d2b00d9f2217e041c41ba49bfcaa7e59f744dfadff783b5b70960bc8db4}\label{namespace_state_a422591d2b00d9f2217e041c41ba49bfcaa7e59f744dfadff783b5b70960bc8db4}} 
+E\+\_\+\+C\+O\+N\+T\+I\+N\+UE&An error has occurred but we can continue normally. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{E\_ERROR@{E\_ERROR}!State@{State}}\index{State@{State}!E\_ERROR@{E\_ERROR}}}\mbox{\Hypertarget{namespace_state_a422591d2b00d9f2217e041c41ba49bfcaa40927f939fb1f3a187007608cc2aa8c}\label{namespace_state_a422591d2b00d9f2217e041c41ba49bfcaa40927f939fb1f3a187007608cc2aa8c}} 
+E\+\_\+\+E\+R\+R\+OR&An error has occurred, attempt to skip the state. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{E\_FATAL@{E\_FATAL}!State@{State}}\index{State@{State}!E\_FATAL@{E\_FATAL}}}\mbox{\Hypertarget{namespace_state_a422591d2b00d9f2217e041c41ba49bfcad89eff4ec7b3f723eb12f9b6b4323fba}\label{namespace_state_a422591d2b00d9f2217e041c41ba49bfcad89eff4ec7b3f723eb12f9b6b4323fba}} 
+E\+\_\+\+F\+A\+T\+AL&Special code that makes the state machine completely stop. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{E\_RESTART@{E\_RESTART}!State@{State}}\index{State@{State}!E\_RESTART@{E\_RESTART}}}\mbox{\Hypertarget{namespace_state_a422591d2b00d9f2217e041c41ba49bfca52e0b67d3d115c4a746620fade6175f8}\label{namespace_state_a422591d2b00d9f2217e041c41ba49bfca52e0b67d3d115c4a746620fade6175f8}} 
+E\+\_\+\+R\+E\+S\+T\+A\+RT&Special code that makes the state machine start from the first state again. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 33 of file State.\+h.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespace_state_a1c6e60c84c0fb7c572adaf678fb6a56a}\label{namespace_state_a1c6e60c84c0fb7c572adaf678fb6a56a}} 
+\index{State@{State}!begin@{begin}}
+\index{begin@{begin}!State@{State}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}}
+{\footnotesize\ttfamily void State\+::begin (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_state_1_1_state__t}{State\+\_\+t}} \&}]{entry }\end{DoxyParamCaption})}
+
+
+
+Begin the state machine with a pointer to a state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em entry} & Pointer of the first state to start on \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 45 of file State.\+cpp.
+
+\mbox{\Hypertarget{namespace_state_a734f0be1f3743a4cc9a3d90b03030aef}\label{namespace_state_a734f0be1f3743a4cc9a3d90b03030aef}} 
+\index{State@{State}!getLastState@{getLastState}}
+\index{getLastState@{getLastState}!State@{State}}
+\doxysubsubsection{\texorpdfstring{getLastState()}{getLastState()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_state_1_1_state__t}{State\+::\+State\+\_\+t}} $\ast$ State\+::get\+Last\+State (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get a pointer of the last state. 
+
+\begin{DoxyNote}{Note}
+If the state machine just started this will return a nullptr 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+State\+\_\+t$\ast$ pointer of last state 
+\end{DoxyReturn}
+
+
+Definition at line 41 of file State.\+cpp.
+
+\mbox{\Hypertarget{namespace_state_a9dfe9cc449047d893920a8ab4c527c29}\label{namespace_state_a9dfe9cc449047d893920a8ab4c527c29}} 
+\index{State@{State}!notify@{notify}}
+\index{notify@{notify}!State@{State}}
+\doxysubsubsection{\texorpdfstring{notify()}{notify()}}
+{\footnotesize\ttfamily void State\+::notify (\begin{DoxyParamCaption}\item[{int}]{notify }\end{DoxyParamCaption})}
+
+
+
+Send a code to the next state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em notify} & code to send \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 33 of file State.\+cpp.
+
