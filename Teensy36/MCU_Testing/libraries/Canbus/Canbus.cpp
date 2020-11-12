@@ -1,3 +1,13 @@
+/**
+ * @file Canbus.cpp
+ * @author IR
+ * @brief Canbus source file
+ * @version 0.1
+ * @date 2020-11-11
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
 #include "Canbus.h"
 #include "CanbusConfig.def"
 #include "CanbusMessages.def"
