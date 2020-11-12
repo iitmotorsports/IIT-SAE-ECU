@@ -11,6 +11,6 @@
 #include "Log.h"
 #include "Pins.h"
 #include "State.h"
-#include "MCUStates.h"
+#include "MCUStates.hpp"
 
 #endif // __MCU_H__
