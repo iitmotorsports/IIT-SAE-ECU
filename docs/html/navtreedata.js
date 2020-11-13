@@ -26,12 +26,16 @@ var NAVTREE =
 [
   [ "SAE Teensy ECU", "index.html", [
     [ "SAE at IIT ECU 2020 Programming", "index.html", [
-      [ "Hardware", "index.html#autotoc_md2", null ],
-      [ "Setup", "index.html#autotoc_md3", null ],
-      [ "Using", "index.html#autotoc_md4", [
-        [ "VSCode Tasks", "index.html#autotoc_md5", null ]
+      [ "Hardware", "index.html#autotoc_md5", null ],
+      [ "Setup", "index.html#autotoc_md6", null ],
+      [ "Using", "index.html#autotoc_md7", [
+        [ "VSCode Tasks", "index.html#autotoc_md8", null ]
       ] ],
-      [ "Documentation", "index.html#autotoc_md6", null ]
+      [ "Documentation", "index.html#autotoc_md9", null ]
+    ] ],
+    [ "Doxygen dark theme", "md_dark_theme__d_r_k_t_h_m_r_e_a_d_m_e.html", [
+      [ "Demo", "md_dark_theme__d_r_k_t_h_m_r_e_a_d_m_e.html#autotoc_md1", null ],
+      [ "How to use it", "md_dark_theme__d_r_k_t_h_m_r_e_a_d_m_e.html#autotoc_md2", null ]
     ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],

@@ -10,5 +10,5 @@
         "algorithm": "cpp",
         "system_error": "cpp"
     },
-    "doxygen_runner.configuration_file_override": "${workspaceFolder}\\doc\\Doxyfile"
+    "doxygen_runner.configuration_file_override": "${workspaceFolder}\\docs\\Doxyfile"
 }

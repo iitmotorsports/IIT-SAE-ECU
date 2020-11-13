@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SAE Teensy ECU: SAE at IIT ECU 2020 Programming</title>
+<title>SAE Teensy ECU: Doxygen dark theme</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -65,7 +65,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-$(document).ready(function(){initNavTree('index.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('md_dark_theme__d_r_k_t_h_m_r_e_a_d_m_e.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -85,49 +85,28 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 
 <div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">SAE at IIT ECU 2020 Programming </div>  </div>
+<div class="title">Doxygen dark theme </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_C__Users_Isaias_Desktop_IIT_SAE_SAEGit_ECU2020_README"></a></p>
-<h1><a class="anchor" id="autotoc_md5"></a>
-Hardware</h1>
-<ul>
-<li><a href="https://www.pjrc.com/store/teensy36.html">Teensy 3.6</a> x 2</li>
-<li><a href="https://www.microsoft.com/en-us/windows">A Windoes machine</a> (Preferably Win 10)</li>
-<li><a href="https://bicyclewarehouse.com/collections/hybrid-bikes">A Formula Hybrid Car</a> (Not necessary for testing)</li>
-<li><a href="https://www.amazon.com/SN65HVD230-CAN-Board-Communication-Development/dp/B00KM6XMXO">A Compatible CAN transceiver</a> x 2</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md6"></a>
-Setup</h1>
-<p>Download <a href="https://github.com/LeHuman/TeensyToolchain">TeensyToolchain</a>, unzip, and put it next to this template folder</p>
-<p>Rename the downloaded folder from <code>TeensyToolchain-master</code> to <code>TeensyToolchain</code></p>
-<p>Alternatively, you can modify <code>TOOLCHAIN_OFFSET</code> inside <code>.vscode/settings.json</code> in order to tell the project where the toolchain is. The path must be relative.</p>
-<p>Install the Latest Release version of <a href="https://cmake.org/download/">CMake</a></p>
-<p>As of today, that would be version 3.18.4</p>
-<p>Inside <code>.vscode/tasks.json</code>, modify the options for <code>TEENSY_USB_PORTNAME</code> for the ports that the project should use to connect to your teensy. ( Set to COM6 by default )</p>
-<p>You can also modify the defaults for other tasks.</p>
-<h1><a class="anchor" id="autotoc_md7"></a>
-Using</h1>
-<p>Put your code in <code>src/main.cpp</code> Put any libraries you need in <code>libraries</code></p>
-<p>You can also modify the set values and compile flags inside <code>CmakeLists.txt</code> if you know what you are doing. They are mostly under the function calls <code>add_compile_definitions</code> and <code>add_compile_options</code> towards the beginning.</p>
-<h2><a class="anchor" id="autotoc_md8"></a>
-VSCode Tasks</h2>
-<ul>
-<li><code>Clean</code>: Clean up build files</li>
-<li><code>Hard Clean</code>: Clean up entire CMake project</li>
-<li><code>Build</code>: Compile project</li>
-<li><code>Upload</code>: Upload compiled binary to teensy</li>
-<li><code>Monitor</code>: Monitor teensy over a CLI, select the appropriate options when running</li>
-</ul>
-<p>By default, <code>Ctrl + Shift + B</code> (Run Build Task) should run all of the above in order except for <code>Clean</code> and <code>Hard Clean</code></p>
-<p>Alternatively, install the <a href="https://marketplace.visualstudio.com/items?itemName=actboy168.tasks">Tasks</a> extension so that tasks can instead be on the status bar. Already configured.</p>
-<h1><a class="anchor" id="autotoc_md9"></a>
-Documentation</h1>
-<p>This project uses <a href="https://www.doxygen.nl/index.html">Doxygen</a> to auto generate documentation.</p>
-<p><a href="https://marketplace.visualstudio.com/items?itemName=Isaias.doxygen-pack">Doxygen Extensions</a> exist for VSCode, to easily compile and view inside VSCode.</p>
-<p><code>index.html</code> can be found inside the docs folder or you can also view the Github Page for this repo </p>
-</div></div><!-- PageDoc -->
-</div><!-- contents -->
+<div class="textblock"><p>Theme implements dark colors implementation for doxygen documentation generator. Selected colors are inspiration from Sublime Text syntax highligher for C language.</p>
+<h1><a class="anchor" id="autotoc_md1"></a>
+Demo</h1>
+<p>Demo of the dark theme is available at <a href="https://majerle.eu/documentation/esp_at/html/index.html">https://majerle.eu/documentation/esp_at/html/index.html</a></p>
+<h1><a class="anchor" id="autotoc_md2"></a>
+How to use it</h1>
+<p>Usage is very simple. You just need to modify your doxygen input file</p>
+<div class="fragment"><div class="line"># Add files to extra stylesheet</div>
+<div class="line"> </div>
+<div class="line">HTML_EXTRA_STYLESHEET  = &quot;custom.css&quot; \</div>
+<div class="line">                         &quot;custom_dark_theme.css&quot;</div>
+</div><!-- fragment --><p>If you wish to use custom made HTML header and footer, enable this feature with</p>
+<div class="fragment"><div class="line"># Custom header</div>
+<div class="line">HTML_HEADER            = &quot;html_header.html&quot;</div>
+<div class="line"> </div>
+<div class="line"># Custom footer</div>
+<div class="line">HTML_FOOTER            = &quot;html_footer.html&quot;</div>
+</div><!-- fragment --> </div></div><!-- contents -->
+</div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
