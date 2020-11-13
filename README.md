@@ -52,4 +52,4 @@ Documentation
 
 This project uses [Doxygen](https://www.doxygen.nl/index.html) to auto generate documentation.
 
-[This](doc/html/index.html) is the index.html file.
+[This](docs/html/index.html) is the index.html file.
