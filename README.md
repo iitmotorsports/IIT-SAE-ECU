@@ -12,7 +12,11 @@ Hardware
 Setup
 -----
 
-Download the [TeensyToolchain](https://github.com/LeHuman/TeensyToolchain) and put it next to this folder
+Download [TeensyToolchain](https://github.com/LeHuman/TeensyToolchain), unzip, and put it next to this template folder
+
+Rename the downloaded folder from `TeensyToolchain-master` to `TeensyToolchain`
+
+Alternatively, you can modify `TOOLCHAIN_OFFSET` inside `.vscode/settings.json` in order to tell the project where the toolchain is. The path must be relative.
 
 Install the Latest Release version of [CMake](https://cmake.org/download/)
 
@@ -21,9 +25,6 @@ As of today, that would be version 3.18.4
 Inside `.vscode/tasks.json`, modify the options for `TEENSY_USB_PORTNAME` for the ports that the project should use to connect to your teensy. ( Set to COM6 by default )
 
 You can also modify the defaults for other tasks.
-
-Incase you wish to place the project folder elsewhere, you can modify `TOOLCHAIN_OFFSET` inside `.vscode/settings.json` in order to tell the project where the toolchain is. The path must be relative.
-This path must also be modified inside the first line of `CmakeLists.txt`.
 
 Using
 -----
