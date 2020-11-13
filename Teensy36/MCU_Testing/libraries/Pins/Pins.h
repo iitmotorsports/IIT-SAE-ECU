@@ -11,8 +11,8 @@
  * 
  */
 
-#ifndef __MCU_PINS_H__
-#define __MCU_PINS_H__
+#ifndef __ECU_PINS_H__
+#define __ECU_PINS_H__
 
 // IMPROVE: pin priority
 // TODO: add analog resolution and frequency option
@@ -58,4 +58,4 @@ void initialize(void);
 
 } // namespace Pins
 
-#endif // __MCU_PINS_H__
+#endif // __ECU_PINS_H__

@@ -1,5 +1,5 @@
-#ifndef __MCU_H__
-#define __MCU_H__
+#ifndef __ECU_H__
+#define __ECU_H__
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -11,6 +11,6 @@
 #include "Log.h"
 #include "Pins.h"
 #include "State.h"
-#include "MCUStates.hpp"
+#include "ECUStates.hpp"
 
-#endif // __MCU_H__
+#endif // __ECU_H__

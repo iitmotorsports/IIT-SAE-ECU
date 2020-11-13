@@ -1,5 +1,5 @@
-#ifndef __MCU_CANBUSCONFIG_DEF__
-#define __MCU_CANBUSCONFIG_DEF__
+#ifndef __ECU_CANBUSCONFIG_DEF__
+#define __ECU_CANBUSCONFIG_DEF__
 
 /**
  *   .d8888b.                     .d888 d8b          
@@ -25,4 +25,4 @@
 #define CONF_BITMASK_BMS_HARDFAULT 0x4000020120100080 // Convert the 1s and 0s to hex first
 #define CONF_BITMASK_RMS_HARDFAULT 0x0000000000000000
 
-#endif // __MCU_CANBUSCONFIG_DEF__
+#endif // __ECU_CANBUSCONFIG_DEF__

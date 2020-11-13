@@ -1,6 +1,6 @@
-#include "MCUStates.hpp"
+#include "ECUStates.hpp"
 
-State::State_t *MCUStates::Initialize_t::run(void) {
+State::State_t *ECUStates::Initialize_t::run(void) {
     if (firstSetup) {
         pinMode(6, OUTPUT);
         digitalWrite(6, LOW); /* optional transceiver enable pin */
@@ -23,11 +23,11 @@ State::State_t *MCUStates::Initialize_t::run(void) {
         }
         Pins::update();
         if (count == 0)
-            return &MCUStates::Logger;
+            return &ECUStates::Logger;
     }
 };
 
-State::State_t *MCUStates::Logger_t::run(void) {
+State::State_t *ECUStates::Logger_t::run(void) {
 
     static elapsedMillis timeElapsed;
 
@@ -40,10 +40,10 @@ State::State_t *MCUStates::Logger_t::run(void) {
         Log(ID, "Notify code: ", getNotify());
     }
 
-    return &MCUStates::Bounce;
+    return &ECUStates::Bounce;
 };
 
-State::State_t *MCUStates::Bounce_t::run(void) {
+State::State_t *ECUStates::Bounce_t::run(void) {
     delay(250);
     Log.i(ID, "Bounce!");
     State::notify(random(100));

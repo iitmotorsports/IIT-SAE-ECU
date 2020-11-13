@@ -10,7 +10,7 @@
 /**
  * @brief The Teensy specific state declarations
  */
-namespace MCUStates {
+namespace ECUStates {
 
 /**
  * @brief Teensy initial state
@@ -41,4 +41,4 @@ static struct Bounce_t : State::State_t {
     State::State_t *run(void);
 } Bounce;
 
-} // namespace MCUStates
+} // namespace ECUStates

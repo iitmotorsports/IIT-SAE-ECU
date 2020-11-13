@@ -10,8 +10,8 @@
  * To modify how this library behaves, refer to the LogConfig.def
  * 
  */
-#ifndef __MCU_LOGGING_H__
-#define __MCU_LOGGING_H__
+#ifndef __ECU_LOGGING_H__
+#define __ECU_LOGGING_H__
 
 #include "LogConfig.def"
 #include <stdint.h>
@@ -149,4 +149,4 @@ struct Log_t {
  */
 extern Log::Log_t Log;
 
-#endif // __MCU_LOGGING_H__
+#endif // __ECU_LOGGING_H__

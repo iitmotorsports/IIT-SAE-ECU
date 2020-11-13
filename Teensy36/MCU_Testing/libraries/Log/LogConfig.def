@@ -8,11 +8,11 @@
  * @copyright Copyright (c) 2020
  * 
  */
-#ifndef __MCU_LOGCONFIG_H__
+#ifndef __ECU_LOGCONFIG_H__
 
 // @cond
 
-#define __MCU_LOGCONFIG_H__
+#define __ECU_LOGCONFIG_H__
 
 // @endcond
 
@@ -33,4 +33,4 @@
  */
 #define CONF_LOGGING_MAPPED_MODE 0
 
-#endif // __MCU_LOGCONFIG_H__
+#endif // __ECU_LOGCONFIG_H__

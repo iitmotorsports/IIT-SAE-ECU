@@ -9,8 +9,8 @@
  * @copyright Copyright (c) 2020
  * 
  */
-#ifndef __MCU_CANBUS_H__
-#define __MCU_CANBUS_H__
+#ifndef __ECU_CANBUS_H__
+#define __ECU_CANBUS_H__
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -37,4 +37,4 @@ void update(void);
 
 } // namespace Canbus
 
-#endif // __MCU_CANBUS_H__
+#endif // __ECU_CANBUS_H__

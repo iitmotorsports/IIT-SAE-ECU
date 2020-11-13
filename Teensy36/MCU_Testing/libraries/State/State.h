@@ -9,8 +9,8 @@
  * 
  */
 
-#ifndef __MCU_STATE_H__
-#define __MCU_STATE_H__
+#ifndef __ECU_STATE_H__
+#define __ECU_STATE_H__
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -107,4 +107,4 @@ void begin(State_t &entry);
 
 } // namespace State
 
-#endif // __MCU_STATE_H__
+#endif // __ECU_STATE_H__

@@ -9,11 +9,11 @@
  * 
  */
 
-#ifndef __MCU_PINCONFIG_H__
+#ifndef __ECU_PINCONFIG_H__
 
 // @cond
 
-#define __MCU_PINCONFIG_H__
+#define __ECU_PINCONFIG_H__
 
 #include "PPHelp.h"
 #include "WProgram.h"
@@ -26,7 +26,7 @@
 /**
  *  @brief The defintions of every pin
  * 
- *  The pinout setup for the MCU, set the specific pin,
+ *  The pinout setup for the ECU, set the specific pin,
  *  whether it is analog or digital, and whether we are
  *  taking input or giving an output on the pin
  * 
@@ -46,4 +46,4 @@
  */
 #define CONF_POLLING_DELAY 50 // Milliseconds between the time the teensy polls a chunk of pins
 
-#endif // __MCU_PINCONFIG_H__
+#endif // __ECU_PINCONFIG_H__

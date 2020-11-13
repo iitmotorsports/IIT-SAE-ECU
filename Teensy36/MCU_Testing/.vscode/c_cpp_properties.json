@@ -14,7 +14,7 @@
                 "limitSymbolsToIncludedHeaders": false
             },
             "defines": [
-                "__${config:TEENSY_MCU}__",
+                "__${config:TEENSY_ECU}__",
                 "F_CPU=180000000",
                 "USB_SERIAL",
                 "LAYOUT_US_ENGLISH",

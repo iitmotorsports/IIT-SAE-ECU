@@ -1,5 +1,5 @@
-#ifndef __MCU_PINHANDLERS_H__
-#define __MCU_PINHANDLERS_H__
+#ifndef __ECU_PINHANDLERS_H__
+#define __ECU_PINHANDLERS_H__
 
 #include "PinConfig.def"
 
@@ -18,4 +18,4 @@ void writeAnalog(const int pin, int &value);
 
 } // namespace PinHandlers
 
-#endif // __MCU_PINHANDLERS_H__
+#endif // __ECU_PINHANDLERS_H__

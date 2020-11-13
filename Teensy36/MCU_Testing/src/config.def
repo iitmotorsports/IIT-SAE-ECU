@@ -1,7 +1,7 @@
-#ifndef __MCU_CONFIG_DEF__
-#define __MCU_CONFIG_DEF__
+#ifndef __ECU_CONFIG_DEF__
+#define __ECU_CONFIG_DEF__
 
 #define CONF_TEENSY_BAUD_RATE 115200
 #define CONF_TEENSY_INITAL_DELAY 1000
 
-#endif // __MCU_CONFIG_DEF__
+#endif // __ECU_CONFIG_DEF__

@@ -1,5 +1,5 @@
-#ifndef __MCU_CANBUSMESSAGES_H__
-#define __MCU_CANBUSMESSAGES_H__
+#ifndef __ECU_CANBUSMESSAGES_H__
+#define __ECU_CANBUSMESSAGES_H__
 
 #include "Messages.hpp"
 #include "PPhelp.h"
@@ -31,4 +31,4 @@
     X(0, CanbusMsg::BMSFaultMsg) \
     X(10, CanbusMsg::RMSFaultMsg)
 
-#endif // __MCU_CANBUSMESSAGES_H__
+#endif // __ECU_CANBUSMESSAGES_H__

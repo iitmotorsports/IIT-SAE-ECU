@@ -1,5 +1,5 @@
-#ifndef __MCU_MESSAGES_HPP__
-#define __MCU_MESSAGES_HPP__
+#ifndef __ECU_MESSAGES_HPP__
+#define __ECU_MESSAGES_HPP__
 
 #include "CanbusConfig.def"
 #include "FlexCAN_T4.h"
@@ -12,4 +12,4 @@ void RMSFaultMsg(const CAN_message_t &msg);
 
 }
 
-#endif // __MCU_MESSAGES_HPP__
+#endif // __ECU_MESSAGES_HPP__
