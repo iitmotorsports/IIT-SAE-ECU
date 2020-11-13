@@ -12,6 +12,8 @@ Hardware
 Setup
 -----
 
+Download the TeensyToolchain and put it next to this folder
+
 Install the Latest Release version of [CMake](https://cmake.org/download/)
 
 As of today, that would be version 3.18.4
@@ -43,19 +45,6 @@ They are mostly under the function calls `add_compile_definitions` and `add_comp
 By default, `Ctrl + Shift + B` (Run Build Task) should run all of the above in order except for `Clean` and `Hard Clean`
 
 Alternatively, install the [Tasks](https://marketplace.visualstudio.com/items?itemName=actboy168.tasks) extension so that tasks can instead be on the status bar. Already configured.
-
-Where everything came from
---------------------------
-
-### ARM Toolchain
-- The folders with the names `arm-none-eabi`, `bin`, and `lib` all come from the arduino install directory `hardware/tools/arm`
-### Teensy Core
-- The `teensy` sub-folder is taken from a [Teensyduino](http://www.pjrc.com/teensy/td_download.html) installation from the arduino install directory `hardware/teensy`
-### Tools
-- `ComMonitor.exe` is from [ComMonitor-CLI](https://github.com/LeHuman/ComMonitor-CLI)
-  - More info about usage on it's repository
-- `teensy_loader_cli.exe` is the [Teensy Loader Command Line](https://www.pjrc.com/teensy/loader_cli.html) compiled for Windows
-- `ninja.exe` is the [Ninja Build System](https://github.com/ninja-build/ninja) binary for Windows
 
 Documentation
 -------------
