@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['e_72',['e',['../struct_log_1_1_log__t.html#a72106d4b082668c7ddcaf2c628f4abf3',1,'Log::Log_t::e(LOG_TAG TAG, LOG_MSG message)'],['../struct_log_1_1_log__t.html#a3db9ca5c7bb8b18a8cfdfea4706819bc',1,'Log::Log_t::e(LOG_TAG TAG, LOG_MSG message, const uint32_t number)']]]
+  ['e_73',['e',['../struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39',1,'Logging::Log_t::e(LOG_TAG TAG, LOG_MSG message)'],['../struct_logging_1_1_log__t.html#a427dd69f8de7d072ef4ff631abbf1d89',1,'Logging::Log_t::e(LOG_TAG TAG, LOG_MSG message, const uint32_t number)']]]
 ];

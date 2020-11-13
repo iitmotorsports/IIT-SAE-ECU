@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['teensy_5fpins_48',['TEENSY_PINS',['../_pin_config_8def.html#a0bc8a3728ed2e5cb261b99ac9b39814d',1,'PinConfig.def']]]
+  ['update_50',['update',['../namespace_canbus.html#a386cdddf9229348b8108640075b5c3e4',1,'Canbus::update()'],['../namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35',1,'Pins::update()']]]
 ];

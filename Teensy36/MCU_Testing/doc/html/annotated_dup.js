@@ -1,5 +1,5 @@
 var annotated_dup =
 [
-    [ "Log", "namespace_log.html", "namespace_log" ],
+    [ "Logging", "namespace_logging.html", "namespace_logging" ],
     [ "State", "namespace_state.html", "namespace_state" ]
 ];

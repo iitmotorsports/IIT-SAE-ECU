@@ -41,7 +41,8 @@ typedef const char *LOG_MSG;
  * @brief Namespace to isolate Log_t struct.
  * Refer to Log.h for more info.
  */
-namespace Log {
+
+namespace Logging {
 
 /**
  * @brief Base class used to log things to serial \n
@@ -144,9 +145,10 @@ struct Log_t {
     void f(LOG_TAG TAG, LOG_MSG message, const uint32_t number);
 };
 } // namespace Log
+
 /**
  * @brief Refer to Log_t
  */
-extern Log::Log_t Log;
+extern Logging::Log_t Log;
 
 #endif // __ECU_LOGGING_H__

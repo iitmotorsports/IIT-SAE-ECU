@@ -89,12 +89,12 @@ $(document).ready(function(){initNavTree('_main_8cpp_source.html',''); initResiz
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &quot;Config.def&quot;</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &quot;MCU.h&quot;</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &quot;ECU.h&quot;</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="keywordtype">int</span> main(<span class="keywordtype">void</span>) {</div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;    Serial.begin(CONF_TEENSY_BAUD_RATE);</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;    delay(CONF_TEENSY_INITAL_DELAY);</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <a class="code" href="namespace_state.html#a1c6e60c84c0fb7c572adaf678fb6a56a">State::begin</a>(MCUStates::Initialize);</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <a class="code" href="namespace_state.html#a1c6e60c84c0fb7c572adaf678fb6a56a">State::begin</a>(ECUStates::Initialize);</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->

@@ -72,7 +72,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_can_bus_messages_8def_source.html"
+"_can_bus_messages_8cpp_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

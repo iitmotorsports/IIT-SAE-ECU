@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['pins_56',['Pins',['../namespace_pins.html',1,'']]]
+  ['pins_57',['Pins',['../namespace_pins.html',1,'']]]
 ];
