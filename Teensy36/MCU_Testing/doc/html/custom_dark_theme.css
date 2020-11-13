@@ -12,13 +12,13 @@
 }
 
 body {
-	background: #282923;
+	background: #16171d;
 	background-image: none;
-	color: #D8D8D8;
+	color: #cecece;
 }
 
 div.fragment, pre.fragment {
-	border: 1px solid #000000;
+	border: 1px solid#1b1b22;
 	background: #32363d;
 }
 
@@ -52,7 +52,7 @@ a.highlighted {
 }
 
 .sm-dox a:hover {
-	background: #282923 !important;
+	background: #16171d !important;
 }
 
 .sm-dox {
@@ -61,7 +61,7 @@ a.highlighted {
 }
 
 .sm-dox ul {
-	border: 1px solid #000000;
+	border: 1px solid#1b1b22;
 	background: #32363d;
 }
 
@@ -74,7 +74,7 @@ a.highlighted {
 /**               Top search                **/
 /*********************************************/
 #MSearchSelectWindow {
-	border: 1px solid #000000;
+	border: 1px solid#1b1b22;
 	background: #32363d;
 }
 
@@ -83,11 +83,11 @@ a.selectItem {
 }
 
 a.SelectItem:hover {
-	background: #282923 !important;
+	background: #16171d !important;
 }
 
 #MSearchResultsWindow {
-	border: 1px solid #000000;
+	border: 1px solid#1b1b22;
 	background: #32363d;
 	color: #67d8ef !important;;
 }
@@ -115,10 +115,10 @@ p code,
 li code,
 td code,
 dd code {
-	background-color: #000000;
+	background-color:#1b1b22;
 	border: 1px solid #A8B8D9;
 
-	color: #D8D8D8;
+	color: #cecece;
 }
 
 /*********************************************/
@@ -126,7 +126,7 @@ dd code {
 /*********************************************/
 div.toc {
 	background: #32363d;
-	border: 1px solid #000000;
+	border: 1px solid#1b1b22;
 }
 
 div.toc h3 {
@@ -150,7 +150,7 @@ div.header {
 /**               Field table               **/
 /*********************************************/
 .fieldtable th {
-	background: #282923;
+	background: #16171d;
 	color: inherit;
 }
 
@@ -165,7 +165,7 @@ div.header {
 /**             TOP navigation              **/
 /*********************************************/
 .tabs, .tabs2, .tabs3 {
-	background: #DDDDDD;
+	background: #cecece;
 }
 
 .tablist li {
@@ -182,7 +182,7 @@ div.header {
 .tablist a:hover,
 .tablist li.current a {
 	text-decoration: none;
-	color: #000000;
+	color:#1b1b22;
 	background: #CCCCCC;
 	background-image: none;
 }
@@ -221,7 +221,7 @@ dl.reflist {
 
 #docs_list ul li a:hover,
 #docs_list ul li a.docs_current {
-	background: #282923;
+	background: #232329;
 }
 
 /*********************************************/
@@ -283,7 +283,7 @@ span.vhdldigit {
 }
 
 span.vhdlchar { 
-	color: #000000;
+	color:#1b1b22;
 }
 
 span.vhdlkeyword { 
@@ -329,7 +329,7 @@ h2.groupheader {
 /*********************************************/
 .memtitle {
 	background: #32363d !important;
-	border-color: #000000;
+	border-color:#1b1b22;
 }
 
 .memitem {
@@ -340,7 +340,7 @@ h2.groupheader {
 
 .memproto {
 	background: inherit;
-	border-color: #000000;
+	border-color:#1b1b22;
 	color: inherit;
 	text-shadow: none;
 }
@@ -359,7 +359,7 @@ td.memItemLeft, td.memItemRight {
 
 .memdoc {
 	background: inherit;
-	border-color: #000000;
+	border-color: #1b1b22;
 }
 
 
