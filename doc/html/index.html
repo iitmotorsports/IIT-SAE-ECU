@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SAE Teensy ECU: SAE ECU Programming</title>
+<title>SAE Teensy ECU: SAE at IIT ECU 2020 Programming</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -85,10 +85,10 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 
 <div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">SAE ECU Programming </div>  </div>
+<div class="title">SAE at IIT ECU 2020 Programming </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_C__Users_Isaias_Desktop_IIT_SAE_SAEGit_ECU2020_Teensy36_MCU_Testing_README"></a></p>
+<div class="textblock"><p><a class="anchor" id="md_C__Users_Isaias_Desktop_IIT_SAE_SAEGit_ECU2020_README"></a></p>
 <h1><a class="anchor" id="autotoc_md2"></a>
 Hardware</h1>
 <ul>
@@ -99,11 +99,13 @@ Hardware</h1>
 </ul>
 <h1><a class="anchor" id="autotoc_md3"></a>
 Setup</h1>
+<p>Download <a href="https://github.com/LeHuman/TeensyToolchain">TeensyToolchain</a>, unzip, and put it next to this template folder</p>
+<p>Rename the downloaded folder from <code>TeensyToolchain-master</code> to <code>TeensyToolchain</code></p>
+<p>Alternatively, you can modify <code>TOOLCHAIN_OFFSET</code> inside <code>.vscode/settings.json</code> in order to tell the project where the toolchain is. The path must be relative.</p>
 <p>Install the Latest Release version of <a href="https://cmake.org/download/">CMake</a></p>
 <p>As of today, that would be version 3.18.4</p>
 <p>Inside <code>.vscode/tasks.json</code>, modify the options for <code>TEENSY_USB_PORTNAME</code> for the ports that the project should use to connect to your teensy. ( Set to COM6 by default )</p>
 <p>You can also modify the defaults for other tasks.</p>
-<p>Incase you wish to place the project folder elsewhere, you can modify <code>TOOLCHAIN_OFFSET</code> inside <code>.vscode/settings.json</code> in order to tell the project where the toolchain is. The path must be relative. This path must also be modified inside the first line of <code>CmakeLists.txt</code>.</p>
 <h1><a class="anchor" id="autotoc_md4"></a>
 Using</h1>
 <p>Put your code in <code>src/main.cpp</code> Put any libraries you need in <code>libraries</code></p>
@@ -120,28 +122,6 @@ VSCode Tasks</h2>
 <p>By default, <code>Ctrl + Shift + B</code> (Run Build Task) should run all of the above in order except for <code>Clean</code> and <code>Hard Clean</code></p>
 <p>Alternatively, install the <a href="https://marketplace.visualstudio.com/items?itemName=actboy168.tasks">Tasks</a> extension so that tasks can instead be on the status bar. Already configured.</p>
 <h1><a class="anchor" id="autotoc_md6"></a>
-Where everything came from</h1>
-<h2><a class="anchor" id="autotoc_md7"></a>
-ARM Toolchain</h2>
-<ul>
-<li>The folders with the names <code>arm-none-eabi</code>, <code>bin</code>, and <code>lib</code> all come from the arduino install directory <code>hardware/tools/arm</code> </li>
-</ul>
-<h2><a class="anchor" id="autotoc_md8"></a>
-Teensy Core</h2>
-<ul>
-<li>The <code>teensy</code> sub-folder is taken from a <a href="http://www.pjrc.com/teensy/td_download.html">Teensyduino</a> installation from the arduino install directory <code>hardware/teensy</code> </li>
-</ul>
-<h2><a class="anchor" id="autotoc_md9"></a>
-Tools</h2>
-<ul>
-<li><code>ComMonitor.exe</code> is from <a href="https://github.com/LeHuman/ComMonitor-CLI">ComMonitor-CLI</a><ul>
-<li>More info about usage on it's repository</li>
-</ul>
-</li>
-<li><code>teensy_loader_cli.exe</code> is the <a href="https://www.pjrc.com/teensy/loader_cli.html">Teensy Loader Command Line</a> compiled for Windows</li>
-<li><code>ninja.exe</code> is the <a href="https://github.com/ninja-build/ninja">Ninja Build System</a> binary for Windows</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md10"></a>
 Documentation</h1>
 <p>This project uses <a href="https://www.doxygen.nl/index.html">Doxygen</a> to auto generate documentation.</p>
 <p><a href="doc/html/index.html">This</a> is the index.html file. </p>
