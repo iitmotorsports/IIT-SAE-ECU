@@ -93,7 +93,7 @@ void notify(int notify);
 
 /**
  * @brief Get a pointer of the last state
- * @note If the state machine just started this will return a nullptr
+ * @note If the state machine has just started, this will return a nullptr
  * @return State_t* pointer of last state
  */
 State_t *getLastState();
