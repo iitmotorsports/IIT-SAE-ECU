@@ -60,4 +60,6 @@ Where everything came from
 Documentation
 -------------
 
-[Doxygen HTML](doc/html/index.html)
+This project uses [Doxygen](https://www.doxygen.nl/index.html) to auto generate documentation.
+
+[This](doc/html/index.html) is the index.html file.

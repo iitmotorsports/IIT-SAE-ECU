@@ -113,73 +113,73 @@ static void __logger_print_num(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, c
 
 #endif
 
-void Log_t::operator()(LOG_TAG TAG, LOG_MSG message) {
+void Log::Log_t::operator()(LOG_TAG TAG, LOG_MSG message) {
 #ifdef __LOGGER_NONE_PRINT
     __logger_print(NONE, TAG, message);
 #endif
 }
 
-void Log_t::d(LOG_TAG TAG, LOG_MSG message) {
+void Log::Log_t::d(LOG_TAG TAG, LOG_MSG message) {
 #ifdef __LOGGER_DEBUG_PRINT
     __logger_print(DEBUG, TAG, message);
 #endif
 }
 
-void Log_t::i(LOG_TAG TAG, LOG_MSG message) {
+void Log::Log_t::i(LOG_TAG TAG, LOG_MSG message) {
 #ifdef __LOGGER_INFO_PRINT
     __logger_print(INFO, TAG, message);
 #endif
 }
 
-void Log_t::w(LOG_TAG TAG, LOG_MSG message) {
+void Log::Log_t::w(LOG_TAG TAG, LOG_MSG message) {
 #ifdef __LOGGER_WARN_PRINT
     __logger_print(WARN, TAG, message);
 #endif
 }
 
-void Log_t::e(LOG_TAG TAG, LOG_MSG message) {
+void Log::Log_t::e(LOG_TAG TAG, LOG_MSG message) {
 #ifdef __LOGGER_ERROR_PRINT
     __logger_print(ERROR, TAG, message);
 #endif
 }
 
-void Log_t::f(LOG_TAG TAG, LOG_MSG message) {
+void Log::Log_t::f(LOG_TAG TAG, LOG_MSG message) {
 #ifdef __LOGGER_FATAL_PRINT
     __logger_print(FATAL, TAG, message);
 #endif
 }
 
-void Log_t::operator()(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
+void Log::Log_t::operator()(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
 #ifdef __LOGGER_NONE_PRINT
     __logger_print_num(NONE, TAG, message, number);
 #endif
 }
 
-void Log_t::d(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
+void Log::Log_t::d(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
 #ifdef __LOGGER_DEBUG_PRINT
     __logger_print_num(DEBUG, TAG, message, number);
 #endif
 }
 
-void Log_t::i(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
+void Log::Log_t::i(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
 #ifdef __LOGGER_INFO_PRINT
     __logger_print_num(INFO, TAG, message, number);
 #endif
 }
 
-void Log_t::w(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
+void Log::Log_t::w(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
 #ifdef __LOGGER_WARN_PRINT
     __logger_print_num(WARN, TAG, message, number);
 #endif
 }
 
-void Log_t::e(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
+void Log::Log_t::e(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
 #ifdef __LOGGER_ERROR_PRINT
     __logger_print_num(ERROR, TAG, message, number);
 #endif
 }
 
-void Log_t::f(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
+void Log::Log_t::f(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
 #ifdef __LOGGER_FATAL_PRINT
     __logger_print_num(FATAL, TAG, message, number);
 #endif
@@ -188,4 +188,4 @@ void Log_t::f(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
 /**
  * @brief Internal definition of static Log class
  */
-Log_t Log;
+Log::Log_t Log;

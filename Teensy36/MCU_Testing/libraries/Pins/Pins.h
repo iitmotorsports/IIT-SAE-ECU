@@ -7,6 +7,8 @@
  * 
  * @copyright Copyright (c) 2020
  * 
+ * To define pin values refer to PinConfig.def
+ * 
  */
 
 #ifndef __MCU_PINS_H__
@@ -19,7 +21,8 @@
 #include <stdlib.h>
 
 /**
- * @brief Get and set values to predefined pins
+ * @brief Get and set values to predefined pins.
+ * Refer to Pins.h for more info.
  */
 namespace Pins {
 

@@ -1,3 +1,15 @@
+/**
+ * @file Log.h
+ * @author IR
+ * @brief Special logging functionality
+ * @version 0.1
+ * @date 2020-11-12
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ * To modify how this library behaves, refer to the LogConfig.def
+ * 
+ */
 #ifndef __MCU_LOGGING_H__
 #define __MCU_LOGGING_H__
 
@@ -24,6 +36,12 @@ typedef const char *LOG_TAG;
  */
 typedef const char *LOG_MSG;
 #endif
+
+/**
+ * @brief Namespace to isolate Log_t struct.
+ * Refer to Log.h for more info.
+ */
+namespace Log {
 
 /**
  * @brief Base class used to log things to serial \n
@@ -125,10 +143,10 @@ struct Log_t {
      */
     void f(LOG_TAG TAG, LOG_MSG message, const uint32_t number);
 };
-
+} // namespace Log
 /**
  * @brief Refer to Log_t
  */
-extern Log_t Log;
+extern Log::Log_t Log;
 
 #endif // __MCU_LOGGING_H__

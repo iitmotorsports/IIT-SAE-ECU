@@ -1,6 +1,12 @@
 /**
  * @file LogConfig.def
+ * @author IR
  * @brief Configuration file for the Log library
+ * @version 0.1
+ * @date 2020-11-11
+ * 
+ * @copyright Copyright (c) 2020
+ * 
  */
 #ifndef __MCU_LOGCONFIG_H__
 

@@ -2,16 +2,28 @@
 \label{_pre___build_8py}\index{Pre\_Build.py@{Pre\_Build.py}}
 
 
-This script preprocesses source files for use with \mbox{\hyperlink{struct_log__t}{Log\+\_\+t}}.  
+This script preprocesses source files for use with Log\+\_\+t.  
 
 
 
 
 \doxysubsection{Detailed Description}
-This script preprocesses source files for use with \mbox{\hyperlink{struct_log__t}{Log\+\_\+t}}. 
+This script preprocesses source files for use with Log\+\_\+t. 
 
+\begin{DoxyAuthor}{Author}
+IR 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2020-\/11-\/11
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2020
+\end{DoxyCopyright}
 This script works by first duplicating source files to the build folder. ~\newline
-Then it scans each file for calls to a Log function and modifies them as follows. ~\newline
+Then it scans each file for calls to a \mbox{\hyperlink{namespace_log}{Log}} function and modifies them as follows. ~\newline
  If the call has a string for {\ttfamily L\+O\+G\+\_\+\+T\+AG} parameter, give that string a unique integer ID and replace it with that integer. ~\newline
 If the ID is not a string, leave the variable alone. ~\newline
  Replace the call\textquotesingle{}s {\ttfamily L\+O\+G\+\_\+\+M\+SG} string with a unique ID as well. ~\newline
@@ -19,16 +31,16 @@ N\+O\+TE\+: The {\ttfamily L\+O\+G\+\_\+\+M\+SG} parameter must always be an inl
  {\ttfamily L\+O\+G\+\_\+\+T\+AG}s and {\ttfamily L\+O\+G\+\_\+\+M\+SG}s do not share I\+Ds. ~\newline
  Eg. 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\mbox{\hyperlink{_log_8cpp_a2f2d8db9a1c1ead512f6c188cfd21928}{Log}}(ID, \textcolor{stringliteral}{"{}My Message"{}}); -\/> \mbox{\hyperlink{_log_8cpp_a2f2d8db9a1c1ead512f6c188cfd21928}{Log}}(ID, 1);}
-\DoxyCodeLine{\mbox{\hyperlink{_log_8cpp_a2f2d8db9a1c1ead512f6c188cfd21928}{Log}}(\textcolor{stringliteral}{"{}My Str ID"{}}, \textcolor{stringliteral}{"{}My Message"{}}); -\/> \mbox{\hyperlink{_log_8cpp_a2f2d8db9a1c1ead512f6c188cfd21928}{Log}}(1, 1);}
+\DoxyCodeLine{\mbox{\hyperlink{namespace_log}{Log}}(ID, \textcolor{stringliteral}{"{}My Message"{}}); -\/> \mbox{\hyperlink{namespace_log}{Log}}(ID, 1);}
+\DoxyCodeLine{\mbox{\hyperlink{namespace_log}{Log}}(\textcolor{stringliteral}{"{}My Str ID"{}}, \textcolor{stringliteral}{"{}My Message"{}}); -\/> \mbox{\hyperlink{namespace_log}{Log}}(1, 1);}
 \end{DoxyCode}
 
 
-Calls to Log functions also have the option to send a number with a third parameter. ~\newline
+Calls to \mbox{\hyperlink{namespace_log}{Log}} functions also have the option to send a number with a third parameter. ~\newline
  Eg. 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\mbox{\hyperlink{_log_8cpp_a2f2d8db9a1c1ead512f6c188cfd21928}{Log}}(\textcolor{stringliteral}{"{}My Str ID"{}}, \textcolor{stringliteral}{"{}My Message"{}}, 56); -\/> \mbox{\hyperlink{_log_8cpp_a2f2d8db9a1c1ead512f6c188cfd21928}{Log}}(1, 1, 56);}
-\DoxyCodeLine{\mbox{\hyperlink{_log_8cpp_a2f2d8db9a1c1ead512f6c188cfd21928}{Log}}(ID, \textcolor{stringliteral}{"{}My Message"{}}, A\_Num\_Var); -\/> \mbox{\hyperlink{_log_8cpp_a2f2d8db9a1c1ead512f6c188cfd21928}{Log}}(ID, 1, A\_Num\_Var);}
+\DoxyCodeLine{\mbox{\hyperlink{namespace_log}{Log}}(\textcolor{stringliteral}{"{}My Str ID"{}}, \textcolor{stringliteral}{"{}My Message"{}}, 56); -\/> \mbox{\hyperlink{namespace_log}{Log}}(1, 1, 56);}
+\DoxyCodeLine{\mbox{\hyperlink{namespace_log}{Log}}(ID, \textcolor{stringliteral}{"{}My Message"{}}, A\_Num\_Var); -\/> \mbox{\hyperlink{namespace_log}{Log}}(ID, 1, A\_Num\_Var);}
 \end{DoxyCode}
 
 

@@ -20,7 +20,8 @@
 #include "WProgram.h"
 
 /**
- * @brief Canbus functionality
+ * @brief Canbus functionality.
+ * Refer to Canbus.h for more info.
  */
 namespace Canbus {
 

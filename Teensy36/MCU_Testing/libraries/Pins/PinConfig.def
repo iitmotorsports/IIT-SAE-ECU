@@ -1,6 +1,12 @@
 /**
  * @file PinConfig.def
+ * @author your name (you@domain.com)
  * @brief The pin configuration for the Teensy
+ * @version 0.1
+ * @date 2020-11-11
+ * 
+ * @copyright Copyright (c) 2020
+ * 
  */
 
 #ifndef __MCU_PINCONFIG_H__

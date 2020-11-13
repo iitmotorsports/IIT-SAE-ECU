@@ -8,7 +8,7 @@ var files_dup =
     [ "Handlers.cpp", "_handlers_8cpp_source.html", null ],
     [ "Handlers.hpp", "_handlers_8hpp_source.html", null ],
     [ "Log.cpp", "_log_8cpp.html", "_log_8cpp" ],
-    [ "Log.h", "_log_8h_source.html", null ],
+    [ "Log.h", "_log_8h.html", "_log_8h" ],
     [ "LogConfig.def", "_log_config_8def.html", "_log_config_8def" ],
     [ "Main.cpp", "_main_8cpp_source.html", null ],
     [ "MCU.h", "_m_c_u_8h_source.html", null ],
