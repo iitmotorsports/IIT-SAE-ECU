@@ -1,3 +1,14 @@
 {
-    "git.ignoreLimitWarning": true
+    "TOOLCHAIN_OFFSET": "../TeensyToolchain",
+    "ADDITIONAL_CMAKE_VARS": "-DCUSTOM_BUILD_PATH_PREFIX:STRING=build/Pre_Build/" ,
+    // "ADDITIONAL_CMAKE_VARS": "" ,
+    "files.associations": {
+        "*.def": "cpp",
+        "*.tcc": "cpp",
+        "*.tpp": "cpp",
+        "cstdint": "cpp",
+        "algorithm": "cpp",
+        "system_error": "cpp"
+    },
+    "doxygen_runner.configuration_file_override": "${workspaceFolder}\\doc\\Doxyfile"
 }
