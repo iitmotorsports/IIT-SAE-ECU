@@ -51,7 +51,7 @@
                 "/c",
                 "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
                 "config",
-                "\"${config:ADDITIONAL_CMAKE_VARS}\""
+                "\"-DTOOLCHAIN_OFFSET:STRING=${config:TOOLCHAIN_OFFSET} ${config:ADDITIONAL_CMAKE_VARS}\""
             ],
             "options": {
                 "statusbar": {
@@ -74,7 +74,7 @@
                 "/c",
                 "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
                 "hard_clean",
-                "\"${config:ADDITIONAL_CMAKE_VARS}\""
+                "\"-DTOOLCHAIN_OFFSET:STRING=${config:TOOLCHAIN_OFFSET} ${config:ADDITIONAL_CMAKE_VARS}\""
             ],
             "options": {
                 "statusbar": {
