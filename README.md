@@ -52,4 +52,6 @@ Documentation
 
 This project uses [Doxygen](https://www.doxygen.nl/index.html) to auto generate documentation.
 
-[This](docs/html/index.html) is the index.html file.
+[Doxygen Extensions](https://marketplace.visualstudio.com/items?itemName=Isaias.doxygen-pack) exist for VSCode, to easily compile and view inside VSCode.
+
+`index.html` can be found inside the docs folder or you can also view the Github Page for this repo
