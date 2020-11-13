@@ -12,7 +12,7 @@ Hardware
 Setup
 -----
 
-Download the TeensyToolchain and put it next to this folder
+Download the [TeensyToolchain](https://github.com/LeHuman/TeensyToolchain) and put it next to this folder
 
 Install the Latest Release version of [CMake](https://cmake.org/download/)
 
