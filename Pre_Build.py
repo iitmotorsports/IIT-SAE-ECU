@@ -41,7 +41,7 @@ LOG_TAG TAG = "Logging Tag"; -> LOG_TAG TAG = 2;
 ```
 """
 
-#@cond
+# @cond
 
 import fileinput
 import shutil
@@ -61,6 +61,10 @@ import json
 import pickle
 from pathlib import Path
 import math
+import io
+from typing import List, BinaryIO, TextIO, Iterator, Union, Optional, Callable, Tuple, Type, Any, IO, Iterable
+import random
+import multiprocessing
 
 SOURCE_NAME = "src"
 LIBRARIES_NAME = "libraries"
@@ -125,12 +129,17 @@ def hashFile(filePath):
         else:
             with open(filePath, "rb") as f:
                 return hashlib.sha256(f.read()).hexdigest()
+    return ""
 
 
 class Text:
     @staticmethod
     def error(text):
         return "\033[91m\033[1m\033[4m" + text + "\033[0m"
+
+    @staticmethod
+    def underline(text):
+        return "\033[4m" + text + "\033[0m"
 
     @staticmethod
     def header(text):
@@ -263,28 +272,6 @@ async def getUniqueTAG(findDuplicate=None):
     raise OutOfIDsException
 
 
-# def updateMap(oMap, uMap):
-#     keys = set(oMap.keys())
-#     for e in uMap.items:
-#         if e[0] in keys:  # Does the key already exist
-#             if e[1] != oMap[e[0]]:  # If mismatched values, throw warning
-#                 print("Warning, existing mapping has changed {} = {} >> {}".format(e[0], oMap[e[0]], e[1]))
-#                 oMap[e[0]] = e[1]
-#         else:  # If not, just update dict
-#             oMap[e[0]] = e[1]
-
-
-# async def logFile(FilePath, File_TAGs, File_IDs):
-#     FILE_SEM.acquire()
-
-#     updateMap(TAGs, File_TAGs)
-#     updateMap(IDs, File_IDs)
-
-#     Files.update({FilePath: {}})
-#     Files[FilePath].update({"Hash": 1})
-#     FILE_SEM.release()
-
-
 FIND_CALL_REGEX_SS = r"Log(\.[diwef])?\s*\(\s*(\".*?\")\s*,\s*(\".*?\")\s*\)\s*;"  # -> Log("Str", "Str");
 FIND_CALL_REGEX_VS = r"Log(\.[diwef])?\s*\(\s*([^\"]+?)\s*,\s*(\".*?\")\s*\)\s*;"  # -> Log(Var, "Str");
 FIND_CALL_REGEX_SSV = r"Log(\.[diwef])?\s*\(\s*(\".*?\")\s*,\s*(\".*?\")\s*,\s*([^\"]+?)\s*\)\s*;"  # -> Log("Str", "Str", Var);
@@ -304,7 +291,7 @@ Log_Levels = {
 }
 
 
-class FileEntry:
+class FileEntry:  # IMPROVE: Make IDs persistent
     name = ""
     path = ""
     rawpath = ""
@@ -320,14 +307,13 @@ class FileEntry:
         self.name = FileName
         self.path = FilePath
         self.rawpath = RawPath
-        self.workingPath = "{}{}".format(WORKING_DIRECTORY_OFFSET, FilePath)
+        self.workingPath = "{}{}".format(Offset, FilePath)
         self.offset = Offset
 
         # if O_Files.get(self.workingPath):
         # print("Records show {} exists".format(FileName))
 
-        touch("{}{}".format(WORKING_DIRECTORY_OFFSET, RawPath))
-        shutil.copyfile(FilePath, self.workingPath)
+        touch("{}{}".format(Offset, RawPath))
 
     async def addNewTag(self, raw_str):
         string = "[{}]".format(raw_str.strip('"'))
@@ -362,16 +348,13 @@ class FileEntry:
         inplacePath = self.workingPath + ".__Lock"
         lineNo = 1
         try:
-            with open(self.workingPath, "r") as f1, open(inplacePath, "w") as f2:
+            with open(self.path, "r") as f1, open(inplacePath, "w") as f2:
                 for line in f1:
                     newline = await function(line)
                     f2.write(newline)
 
-                    if newline != line:
-                        self.modified = True
                     lineNo += 1
-
-            shutil.copyfile(inplacePath, self.workingPath)
+            self.modified = not syncFile(inplacePath, "", self.rawpath, self.workingPath)
         except Exception as e:
             self.error = "{}{}".format(
                 Text.warning("  {}:{}\n".format(self.path, lineNo)),
@@ -417,28 +400,38 @@ class FileEntry:
         await self.walkLines(self.findLogMatch)
 
 
-async def ingest_files(FilesEntries):
-    for File in FilesEntries:
+async def ingest_files(finishFunc, FilesEntries):
+    for File in FilesEntries[0]:
+        finishFunc()
         await File.scan()
 
 
-def run_ingest_files(*FilesEntries):
-    asyncio.run(ingest_files(set(FilesEntries)))
+def run_ingest_files(finishFunc, *FilesEntries):
+    asyncio.run(ingest_files(finishFunc, FilesEntries))
 
 
 Files = set()
 FileRefs = set()
 Threads = set()
 
+FILE_CHANGE = False
 
-def syncFile(filePath, offset, rawpath):
-    workingFilePath = "{}{}".format(offset, filePath)
+
+def syncFile(filePath, offset, rawpath, workingFilePath=None, suppress=False):
+    workingFilePath = workingFilePath or "{}{}".format(offset, filePath)
+    global FILE_CHANGE
+
     new = hashFile(filePath)
     old = hashFile(workingFilePath)
+    if old == "":
+        old = 0
+    FILE_CHANGE = FILE_CHANGE and (new == old)
+
     if not os.path.exists(workingFilePath) or new != old:
         touch("{}{}".format(offset, rawpath))
         shutil.copyfile(filePath, workingFilePath)
-        print("Sync File: {} -> {}\n\tOld:{}\n\tNew:{}".format(filePath, offset, old, new))
+        if not suppress:
+            print("Sync File: {} -> {}".format(filePath, offset))
         return False
     return True
 
@@ -452,7 +445,7 @@ def allocate_files(Path, Offset):
             filepath = subdir + os.sep + filename
             rawpath = subdir + os.sep
             if BYPASS_SCRIPT:
-                syncFile(filepath, Offset, rawpath)
+                syncFile(filepath, Offset, rawpath, suppress=True)
                 continue
             if rawpath.startswith(LIB_PATH):
                 libFile = FileEntry(rawpath, filepath, filename, Offset)
@@ -464,7 +457,7 @@ def allocate_files(Path, Offset):
             FileRefs.add(File_Ent)
 
 
-def dole_files(count):
+def dole_files(count, finishFunc):
     while True:
         file_set = set()
 
@@ -474,71 +467,150 @@ def dole_files(count):
             file_set.add(Files.pop())
             i += 1
 
-        if len(file_set) != 0:
-            Threads.add(threading.Thread(target=run_ingest_files, args=(file_set)))
+        if len(file_set) != 0:  # TODO: Use actual mutlithreading
+            # Threads.add(multiprocessing.Process(target=function, args=(file_set)))
+            Threads.add(threading.Thread(target=run_ingest_files, args=(finishFunc, file_set)))
 
         if len(Files) == 0:
             break
 
 
-class Toolbar:
-    toolbat_iter = 1
-    toolbar_width = 25
-    stop = False
+class ThreadedProgressBar:
+    bar_len = 30
+    maxcount = 0
+    counter = 0
+    Lines = set()
+    run = True
+    prefix = ""
 
-    def __init__(self, num, prog_str):
-        self.toolbat_iter = int(25 / num)
+    class TextIO(io.TextIOWrapper):
+        def __init__(
+            self,
+            func,
+            buffer: IO[bytes],
+            encoding: str = ...,
+            errors: Optional[str] = ...,
+            newline: Optional[str] = ...,
+            line_buffering: bool = ...,
+            write_through: bool = ...,
+        ):
+            super(ThreadedProgressBar.TextIO, self).__init__(buffer, encoding, errors, newline, line_buffering, write_through)
+            self.func = func
 
-        # setup toolbar
-        sys.stdout.write("{} [{}]".format(prog_str, " " * self.toolbar_width))
-        sys.stdout.write("\b" * (self.toolbar_width + 1))
-        sys.stdout.flush()
+        def write(self, s):
+            self.func(s.strip("\n "))
+
+        def getOriginal(self):
+            return super()
+
+    def __init__(self, maxcount, prefix):
+        self.maxcount = maxcount
+        self.stdout = sys.stdout
+        self.wrapper = ThreadedProgressBar.TextIO(
+            self._newLine,
+            sys.stdout.buffer,
+            sys.stdout.encoding,
+            sys.stdout.errors,
+            sys.stdout.newlines,
+            sys.stdout.line_buffering,
+            sys.stdout.write_through,
+        )
+        sys.stdout = self.wrapper
+        self.prefix = prefix
+
+    def rename(self, prefix):
+        self.prefix = prefix
+
+    def reset(self, maxcount, prefix):
+        self.maxcount = maxcount
+        self.prefix = prefix
+        self.counter = 0
+
+    def _newLine(self, String):
+        self.Lines.add(String)
+
+    def _progress(self, count, total, prefix="", printString=""):
+        if total > 0:
+            filled_len = int(round(self.bar_len * count / float(total)))
+
+            percents = round(100.0 * count / float(total), 1)
+            bar = "█" * filled_len + "░" * (self.bar_len - filled_len)
+
+            proStr = "{} │{}│ {}{}\r".format(prefix, bar, percents, "%")
+            if len(printString) > 0:
+                self.stdout.write(" " * (os.get_terminal_size().columns - 1))
+                self.stdout.write("\r")
+                self.stdout.write(printString)
+                self.stdout.write("\n")
+            self.stdout.write(proStr)
+            self.stdout.flush()
+
+    def _printThread(self):
+        while self.run or len(self.Lines) > 0:
+            if len(self.Lines) > 0:
+                self._progress(self.counter, self.maxcount, self.prefix, self.Lines.pop())
+            else:
+                self._progress(self.counter, self.maxcount, self.prefix)
+
+    def start(self):
+        self.printer = threading.Thread(target=self._printThread)
+        self.printer.start()
 
     def progress(self):
-        if not self.stop:
-            self.toolbar_width -= self.toolbat_iter
-            if self.toolbar_width < self.toolbat_iter:
-                self.toolbat_iter += self.toolbar_width
-            sys.stdout.write("■" * self.toolbat_iter)
-            sys.stdout.flush()
-            if self.toolbar_width < self.toolbat_iter:
-                self.stop = True
-                sys.stdout.write("]\n")
-                sys.stdout.flush()
+        self.counter += 1
 
     def finish(self):
-        while not self.stop:
-            self.progress()
+        print("\0")  # Eh
+        self.run = False
+        self.printer.join()
+        self._progress(self.counter, self.maxcount, self.prefix)
+        self.wrapper.flush()
+        sys.stdout = self.wrapper.getOriginal()
+        print()
 
 
 def begin_scan():
-
-    tb = Toolbar(len(Threads), Text.important("Completed Threads:"))
-
     for t in Threads:
         t.start()
 
     for t in Threads:
         t.join()
-        tb.progress()
 
-    tb.finish()  # do dead threads get gc?
-
-    del IDs[""]
+    del IDs[""]  # Breaks when multiprocessing?
     del TAGs[""]
 
+
+def printResults():
+    maxPrinted = 8
     print(Text.header("\nModified Files:"))
+    c = 0
+    m = 0
     for f in FileRefs:
         if f.modified:
-            print("  {}".format(Text.green(f.name)))
+            if c < maxPrinted:
+                print("  {}".format(Text.green(f.name)))
+                c += 1
+            else:
+                m += 1
         if f.error:
             Files.add(f)
+    if m > 1:
+        print("  {}".format(Text.underline(Text.green("{} more file{}".format(m, "s" if m > 1 else "")))))
 
     sys.stdout.flush()
 
+    c = 0
+    m = 0
     print(Text.header("\nFile Errors:"))
     for f in Files:
-        print(f.error)
+        if c < maxPrinted:
+            print(f.error)
+            c += 1
+        else:
+            m += 1
+
+    if m > 1:
+        print("  {}".format(Text.underline(Text.red("{} more error{}".format(m, "s" if m > 1 else "")))))
 
 
 def getOutputFile(path):
@@ -558,31 +630,47 @@ def save_lookup(path):
 
 # Start Script
 
-if not BYPASS_SCRIPT:
-    try:  # TODO: Remove after implementing persistent data
-        shutil.rmtree(SOURCE_DEST_NAME)
-        shutil.rmtree(LIBRARIES_DEST_NAME)
-    except FileNotFoundError:
-        pass
+if __name__ == "__main__":
+    touch(SOURCE_DEST_NAME)
+    touch(LIBRARIES_DEST_NAME)
 
-touch(SOURCE_DEST_NAME)
-touch(LIBRARIES_DEST_NAME)
+    allocate_files(SOURCE_NAME, WORKING_DIRECTORY_OFFSET)
+    allocate_files(LIBRARIES_NAME, WORKING_DIRECTORY_OFFSET)
 
-allocate_files(SOURCE_NAME, WORKING_DIRECTORY_OFFSET)
-allocate_files(LIBRARIES_NAME, WORKING_DIRECTORY_OFFSET)
+    if not BYPASS_SCRIPT:
+        print()
 
-if not BYPASS_SCRIPT:
-    print(Text.warning("Available Ram: {} GBs\n".format(AvailableRam())))
+        time.sleep(0.5)  # Let terminal settle
 
-    prehash = hashFile(getOutputFile(FILE_OUTPUT_PATH))
+        print(Text.warning("Available Ram: {} GBs\n".format(AvailableRam())))
 
-    print("Files to search: {}".format(len(FileRefs)))
-    dole_files(int(math.log(len(FileRefs) + 1)) + 1)
-    print("Threads to run: {}\n".format(len(Threads)))
-    begin_scan()
-    save_lookup(FILE_OUTPUT_PATH)
-    newhash = hashFile(getOutputFile(FILE_OUTPUT_PATH))
-    if newhash != prehash:
-        print(Text.reallyImportant("\nNote: Output file values have changed"))
+        prehash = hashFile(getOutputFile(FILE_OUTPUT_PATH))
 
-#@endcond
+        print("Files to search: {}".format(len(FileRefs)))
+
+        tb = ThreadedProgressBar(len(Files), Text.important("Completed Files:"))
+
+        dole_files(8, tb.progress)
+
+        print("Threads to run: {}\n".format(len(Threads)))
+
+        tb.start()
+        begin_scan()
+        tb.finish()
+
+        printResults()
+        save_lookup(FILE_OUTPUT_PATH)
+        newhash = hashFile(getOutputFile(FILE_OUTPUT_PATH))
+        if FILE_CHANGE:
+            print(Text.important("\nNote: Files have changed, rebuild inbound"))
+        if newhash != prehash:
+            print(Text.reallyImportant("\nNote: Output file values have changed"))
+
+    # try:
+    #     shutil.rmtree(SOURCE_DEST_NAME)
+    #     shutil.rmtree(LIBRARIES_DEST_NAME)
+    # except FileNotFoundError:
+    #     pass
+
+# @endcond
+
