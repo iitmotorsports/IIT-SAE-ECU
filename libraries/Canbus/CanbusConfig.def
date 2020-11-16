@@ -1,28 +1,48 @@
+/**
+ * @file CanbusConfig.def
+ * @author IR
+ * @brief Configure canbus functionality
+ * @version 0.1
+ * @date 2020-11-15
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
+
 #ifndef __ECU_CANBUSCONFIG_DEF__
 #define __ECU_CANBUSCONFIG_DEF__
 
 /**
- *   .d8888b.                     .d888 d8b          
- *  d88P  Y88b                   d88P"  Y8P          
- *  888    888                   888                 
- *  888         .d88b.  88888b.  888888 888  .d88b.  
- *  888        d88""88b 888 "88b 888    888 d88P"88b 
- *  888    888 888  888 888  888 888    888 888  888 
- *  Y88b  d88P Y88..88P 888  888 888    888 Y88b 888 
- *   "Y8888P"   "Y88P"  888  888 888    888  "Y88888 
- *                                               888 
- *                                          Y8b d88P 
- *                                           "Y88P"  
- *  ------------------------------------------------
- *  Modify the definitions below to change this
- *  library's behavior
-*/
+ * @brief Select the CAN to use on a teensy
+ * CAN1 or CAN0 on T3.6 | CAN3 on T4.X
+ */
+#define CONF_FLEXCAN_CAN_SELECT CAN1
 
-#define CONF_FLEXCAN_CAN_SELECT CAN1 // CAN1 or CAN0 on T3.6 | CAN3 on T4.X
+/**
+ * @brief Set the baud rate at which the CAN line should run
+ */
 #define CONF_FLEXCAN_BAUD_RATE 1000000
-#define CONF_FLEXCAN_TX_MAILBOXES 3 // Number of outgoing mailboxes
 
-#define CONF_BITMASK_BMS_HARDFAULT 0x4000020120100080 // Convert the 1s and 0s to hex first
+/**
+ * @brief Set the number of outgoing mailboxes
+ * @note incoming mailboxes are automaticaly set, refer to CanBusMessages.def
+ */
+#define CONF_FLEXCAN_TX_MAILBOXES 3
+
+/**
+ * @brief Set whether to run in debug mode
+ * basically just enables logging
+ */
+#define CONF_FLEXCAN_DEBUG 1
+
+/**
+ * @brief BMS Hardfault hex mask
+ */
+#define CONF_BITMASK_BMS_HARDFAULT 0x4000020120100080
+
+/**
+ * @brief RMS Hardfault hex mask
+ */
 #define CONF_BITMASK_RMS_HARDFAULT 0x0000000000000000
 
 #endif // __ECU_CANBUSCONFIG_DEF__

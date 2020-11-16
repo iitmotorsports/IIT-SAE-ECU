@@ -1,3 +1,13 @@
+/**
+ * @file CanBusMessages.def
+ * @author IR
+ * @brief Define incoming CAN line messages
+ * @version 0.1
+ * @date 2020-11-15
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
 #ifndef __ECU_CANBUSMESSAGES_H__
 #define __ECU_CANBUSMESSAGES_H__
 
@@ -5,28 +15,18 @@
 #include "PPhelp.h"
 
 /**
- *  888b     d888                                                                
- *  8888b   d8888                                                                
- *  88888b.d88888                                                                
- *  888Y88888P888  .d88b.  .d8888b  .d8888b   8888b.   .d88b.   .d88b.  .d8888b  
- *  888 Y888P 888 d8P  Y8b 88K      88K          "88b d88P"88b d8P  Y8b 88K      
- *  888  Y8P  888 88888888 "Y8888b. "Y8888b. .d888888 888  888 88888888 "Y8888b. 
- *  888   "   888 Y8b.          X88      X88 888  888 Y88b 888 Y8b.          X88 
- *  888       888  "Y8888   88888P'  88888P' "Y888888  "Y88888  "Y8888   88888P' 
- *                                                         888                   
- *                                                    Y8b d88P                   
- *                                                     "Y88P"                    
- *  ----------------------------------------------------------------------------
- *  The Can bus messages that will be received, is given a function that deals
- *  with said message
+ * @brief Defines the Can bus messages that will be received
  * 
- *  Unless it is the last entry, this is how to add a new message
+ * Every definition is given a function that deals with the received message.
  * 
- *  X(CAN address, function) \
- *  
- *  Only the last entry should NOT have a '\'
-*/
-
+ * Unless it is the last entry, this is how to add a new message
+ * 
+ * X(CAN address, function) \
+ * 
+ * Only the last entry should NOT have a '\'
+ * 
+ * For now, all messages that should be used are in the namespace CanbusMsg
+ */
 #define CAN_MESSAGES             \
     X(0, CanbusMsg::BMSFaultMsg) \
     X(10, CanbusMsg::RMSFaultMsg)
