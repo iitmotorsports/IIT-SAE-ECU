@@ -8,7 +8,8 @@
         "*.tpp": "cpp",
         "cstdint": "cpp",
         "algorithm": "cpp",
-        "system_error": "cpp"
+        "system_error": "cpp",
+        "random": "cpp"
     },
     "doxygen_runner.configuration_file_override": "${workspaceFolder}\\docs\\Doxyfile"
 }
