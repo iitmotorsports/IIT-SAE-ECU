@@ -16,7 +16,7 @@
 #include "WProgram.h"
 
 /**
- * @brief Message handlers to define incoming mailboxes with
+ * @brief Message handlers to define incoming mailboxes with.
  * Refer to CanBusMessages.def
  * 
  */
