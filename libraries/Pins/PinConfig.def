@@ -24,17 +24,17 @@
 // @endcond
 
 /**
- *  @brief The defintions of every pin
+ * @brief The defintions of every pin
+ *
+ * The pinout setup for the ECU, set the specific pin,
+ * whether it is analog or digital, and whether we are
+ * taking input or giving an output on the pin
+ *
+ * Unless it is the last entry, this is how to add a new pin
+ *
+ * X(GPIO, ANALOG/DIGITAL, INPUT/OUTPUT) \
  * 
- *  The pinout setup for the ECU, set the specific pin,
- *  whether it is analog or digital, and whether we are
- *  taking input or giving an output on the pin
- * 
- *  Unless it is the last entry, this is how to add a new pin
- * 
- *  X(GPIO, ANALOG/DIGITAL, INPUT/OUTPUT) \
- *  
- *  Only the last entry should NOT have a '\'
+ * Only the last entry should NOT have a '\'
  */
 #define TEENSY_PINS           \
     X(PIN_A7, ANALOG, INPUT)  \
