@@ -345,23 +345,27 @@ class FileEntry:  # IMPROVE: Make IDs persistent
         return line.replace(reMatch, str(TAG))
 
     async def walkLines(self, function):
-        inplacePath = self.workingPath + ".__Lock"
+        tempPath = self.workingPath + ".__Lock"
         lineNo = 1
+        synced = False
         try:
-            with open(self.path, "r") as f1, open(inplacePath, "w") as f2:
+            with open(self.path, "r") as f1, open(tempPath, "w") as f2:
                 for line in f1:
                     newline = await function(line)
                     f2.write(newline)
 
                     lineNo += 1
-            self.modified = not syncFile(inplacePath, "", self.rawpath, self.workingPath)
+            self.modified = not syncFile(tempPath, "", self.rawpath, self.workingPath)
+            synced = True
         except Exception as e:
             self.error = "{}{}".format(
                 Text.warning("  {}:{}\n".format(self.path, lineNo)),
                 "   {}\n    > {}".format(Text.red(type(e).__name__), splitErrorString(e)),
             )
         finally:
-            os.remove(inplacePath)
+            if not synced:
+                self.modified = not syncFile(self.path, "", self.rawpath, self.workingPath)  # If prev exception was about IO then oh well
+            os.remove(tempPath)
 
     async def findLogMatch(self, line):
         newline = line
@@ -451,7 +455,7 @@ def allocate_files(Path, Offset):
                 libFile = FileEntry(rawpath, filepath, filename, Offset)
                 if libFile.name == LIB_FILE:
                     asyncio.run(libFile.walkLines(lib_flag))
-                continue
+                    continue
             File_Ent = FileEntry(rawpath, filepath, filename, Offset)
             Files.add(File_Ent)
             FileRefs.add(File_Ent)
