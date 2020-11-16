@@ -348,12 +348,12 @@ class FileEntry:  # IMPROVE: Make IDs persistent
         tempPath = self.workingPath + ".__Lock"
         lineNo = 1
         synced = False
+        newline = ""
         try:
-            with open(self.path, "r") as f1, open(tempPath, "w") as f2:
+            with open(self.path, "r", encoding="utf-8") as f1, open(tempPath, "w", encoding="utf-8") as f2:
                 for line in f1:
                     newline = await function(line)
-                    f2.write(newline)
-
+                    f2.buffer.write(newline.encode("utf-8"))
                     lineNo += 1
             self.modified = not syncFile(tempPath, "", self.rawpath, self.workingPath)
             synced = True
@@ -580,8 +580,15 @@ def begin_scan():
     for t in Threads:
         t.join()
 
-    del IDs[""]  # Breaks when multiprocessing?
-    del TAGs[""]
+    try:
+        del IDs[""]
+    except KeyError:
+        pass
+
+    try:
+        del TAGs[""]
+    except KeyError:
+        pass
 
 
 def printResults():
