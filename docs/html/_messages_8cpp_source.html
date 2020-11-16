@@ -88,40 +88,60 @@ $(document).ready(function(){initNavTree('_messages_8cpp_source.html',''); initR
 <div class="title">Messages.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &quot;Messages.hpp&quot;</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="keyword">namespace </span>CanbusMsg {</div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> uint64_t BMS_HARDFAULTMASK = CONF_BITMASK_BMS_HARDFAULT;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> uint64_t RMS_HARDFAULTMASK = CONF_BITMASK_RMS_HARDFAULT;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> BMS_HardFaultCheck(<span class="keyword">const</span> uint8_t raw_data[8]) {</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keywordflow">return</span> ((*(uint64_t *)raw_data) &amp; BMS_HARDFAULTMASK) == 0;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;}</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> RMS_HardFaultCheck(<span class="keyword">const</span> uint8_t raw_data[8]) {</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keywordflow">return</span> ((*(uint64_t *)raw_data) &amp; RMS_HARDFAULTMASK) == 0;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;}</div>
+<a href="_messages_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_messages_8hpp.html">Messages.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_log_8h.html">Log.h</a>&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="namespace_canbus_msg.html">   14</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_canbus_msg.html">CanbusMsg</a> {</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keywordtype">void</span> BMSFaultMsg(<span class="keyword">const</span> CAN_message_t &amp;msg) {</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keywordflow">if</span> (BMS_HardFaultCheck(msg.buf)) {     <span class="comment">// HardFault triggered</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        Serial.println(<span class="stringliteral">&quot;BMS HARD FAULT!&quot;</span>); <span class="comment">// Not actual implementation | Call interrupt?</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    }</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;}</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keywordtype">void</span> RMSFaultMsg(<span class="keyword">const</span> CAN_message_t &amp;msg) {</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keywordflow">if</span> (RMS_HardFaultCheck(msg.buf)) {     <span class="comment">// HardFault triggered</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        Serial.println(<span class="stringliteral">&quot;RMS HARD FAULT!&quot;</span>); <span class="comment">// Not actual implementation | Call interrupt?</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    }</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;}</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> uint64_t BMS_HARDFAULTMASK = <a class="code" href="_canbus_config_8def.html#a2563ef2706c312a73b5bc3db6f762a60">CONF_BITMASK_BMS_HARDFAULT</a>;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> uint64_t RMS_HARDFAULTMASK = <a class="code" href="_canbus_config_8def.html#a5d3ec2a3f1c2e7d5bbe8830ac02a1109">CONF_BITMASK_RMS_HARDFAULT</a>;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> BMS_HardFaultCheck(<span class="keyword">const</span> uint8_t raw_data[8]) {</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keywordflow">return</span> ((*(uint64_t *)raw_data) &amp; BMS_HARDFAULTMASK) == 0;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;}</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> RMS_HardFaultCheck(<span class="keyword">const</span> uint8_t raw_data[8]) {</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordflow">return</span> ((*(uint64_t *)raw_data) &amp; RMS_HARDFAULTMASK) == 0;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;}</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="namespace_canbus_msg.html#a4840288b4e15fd8e00b651f2f00984f2">   27</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus_msg.html#a4840288b4e15fd8e00b651f2f00984f2">SerialPrintMessage</a>(<span class="keyword">const</span> <a class="code" href="struct_c_a_n__message__t.html">CAN_message_t</a> &amp;msg) {</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    uint8_t *buf = <span class="keyword">new</span> uint8_t[10](); <span class="comment">// IMPROVE: Check whether buffering is better then separate calls to Serial.write</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="comment">//TODO: Verify that id pointer does not have to be shifted</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    memcpy(buf, &amp;msg.id, 2); <span class="comment">// NOTE: will cut out can messages that are larger than 2 bytes</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    memcpy(buf + 2, &amp;msg.buf, 8);</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    Serial.write(buf, 10);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">delete</span>[] buf;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;}</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="namespace_canbus_msg.html#ad6a324da49ee0742dce8965b5d62d4cf">   36</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus_msg.html#ad6a324da49ee0742dce8965b5d62d4cf">BMSFaultMsg</a>(<span class="keyword">const</span> <a class="code" href="struct_c_a_n__message__t.html">CAN_message_t</a> &amp;msg) {</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordflow">if</span> (BMS_HardFaultCheck(msg.buf)) {     <span class="comment">// HardFault triggered</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        Serial.println(<span class="stringliteral">&quot;BMS HARD FAULT!&quot;</span>); <span class="comment">// Not actual implementation | Call interrupt?</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    }</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;}</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="namespace_canbus_msg.html#ae8a213b79a66a0aa0211c7bbaf20ab30">   42</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus_msg.html#ae8a213b79a66a0aa0211c7bbaf20ab30">RMSFaultMsg</a>(<span class="keyword">const</span> <a class="code" href="struct_c_a_n__message__t.html">CAN_message_t</a> &amp;msg) {</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordflow">if</span> (RMS_HardFaultCheck(msg.buf)) {     <span class="comment">// HardFault triggered</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        Serial.println(<span class="stringliteral">&quot;RMS HARD FAULT!&quot;</span>); <span class="comment">// Not actual implementation | Call interrupt?</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    }</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;} <span class="comment">// namespace CanbusMsg</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
+<div class="ttc" id="a_canbus_config_8def_html_a5d3ec2a3f1c2e7d5bbe8830ac02a1109"><div class="ttname"><a href="_canbus_config_8def.html#a5d3ec2a3f1c2e7d5bbe8830ac02a1109">CONF_BITMASK_RMS_HARDFAULT</a></div><div class="ttdeci">#define CONF_BITMASK_RMS_HARDFAULT</div><div class="ttdoc">RMS Hardfault hex mask.</div><div class="ttdef"><b>Definition:</b> <a href="_canbus_config_8def_source.html#l00048">CanbusConfig.def:48</a></div></div>
+<div class="ttc" id="anamespace_canbus_msg_html_a4840288b4e15fd8e00b651f2f00984f2"><div class="ttname"><a href="namespace_canbus_msg.html#a4840288b4e15fd8e00b651f2f00984f2">CanbusMsg::SerialPrintMessage</a></div><div class="ttdeci">void SerialPrintMessage(const CAN_message_t &amp;msg)</div><div class="ttdoc">Print a message to serial.</div><div class="ttdef"><b>Definition:</b> <a href="_messages_8cpp_source.html#l00027">Messages.cpp:27</a></div></div>
+<div class="ttc" id="anamespace_canbus_msg_html_ae8a213b79a66a0aa0211c7bbaf20ab30"><div class="ttname"><a href="namespace_canbus_msg.html#ae8a213b79a66a0aa0211c7bbaf20ab30">CanbusMsg::RMSFaultMsg</a></div><div class="ttdeci">void RMSFaultMsg(const CAN_message_t &amp;msg)</div><div class="ttdoc">Check message for a RMS Fault.</div><div class="ttdef"><b>Definition:</b> <a href="_messages_8cpp_source.html#l00042">Messages.cpp:42</a></div></div>
+<div class="ttc" id="anamespace_canbus_msg_html_ad6a324da49ee0742dce8965b5d62d4cf"><div class="ttname"><a href="namespace_canbus_msg.html#ad6a324da49ee0742dce8965b5d62d4cf">CanbusMsg::BMSFaultMsg</a></div><div class="ttdeci">void BMSFaultMsg(const CAN_message_t &amp;msg)</div><div class="ttdoc">Check message for a BMS Fault.</div><div class="ttdef"><b>Definition:</b> <a href="_messages_8cpp_source.html#l00036">Messages.cpp:36</a></div></div>
+<div class="ttc" id="a_messages_8hpp_html"><div class="ttname"><a href="_messages_8hpp.html">Messages.hpp</a></div><div class="ttdoc">Functions that are used for messages.</div></div>
+<div class="ttc" id="a_canbus_config_8def_html_a2563ef2706c312a73b5bc3db6f762a60"><div class="ttname"><a href="_canbus_config_8def.html#a2563ef2706c312a73b5bc3db6f762a60">CONF_BITMASK_BMS_HARDFAULT</a></div><div class="ttdeci">#define CONF_BITMASK_BMS_HARDFAULT</div><div class="ttdoc">BMS Hardfault hex mask.</div><div class="ttdef"><b>Definition:</b> <a href="_canbus_config_8def_source.html#l00043">CanbusConfig.def:43</a></div></div>
+<div class="ttc" id="astruct_c_a_n__message__t_html"><div class="ttname"><a href="struct_c_a_n__message__t.html">CAN_message_t</a></div><div class="ttdef"><b>Definition:</b> <a href="_flex_c_a_n___t4_8h_source.html#l00037">FlexCAN_T4.h:37</a></div></div>
+<div class="ttc" id="anamespace_canbus_msg_html"><div class="ttname"><a href="namespace_canbus_msg.html">CanbusMsg</a></div><div class="ttdoc">Message handlers to define incoming mailboxes with. Refer to CanBusMessages.def.</div><div class="ttdef"><b>Definition:</b> <a href="_messages_8cpp_source.html#l00014">Messages.cpp:14</a></div></div>
+<div class="ttc" id="a_log_8h_html"><div class="ttname"><a href="_log_8h.html">Log.h</a></div><div class="ttdoc">Special logging functionality.</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="dir_aa5811a373cc776f18ef9e232f0d1341.html">Canbus</a></li><li class="navelem"><b>Messages.cpp</b></li>
+    <li class="navelem"><a class="el" href="dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="dir_aa5811a373cc776f18ef9e232f0d1341.html">Canbus</a></li><li class="navelem"><a class="el" href="_messages_8cpp.html">Messages.cpp</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

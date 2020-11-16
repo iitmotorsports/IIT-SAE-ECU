@@ -95,22 +95,37 @@ $(document).ready(function(){initNavTree('_canbus_8h_source.html',''); initResiz
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;CanbusConfig.def&quot;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_canbus_config_8def.html">CanbusConfig.def</a>&quot;</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;FlexCAN_T4.h&quot;</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;WProgram.h&quot;</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
 <div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="namespace_canbus.html">   26</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_canbus.html">Canbus</a> {</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
 <div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="namespace_canbus.html#ac87cf65470012914f1ae29c0eb987b87">   31</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#ac87cf65470012914f1ae29c0eb987b87">setup</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="namespace_canbus.html#a386cdddf9229348b8108640075b5c3e4">   36</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#a386cdddf9229348b8108640075b5c3e4">update</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;} <span class="comment">// namespace Canbus</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#endif // __ECU_CANBUS_H__</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="namespace_canbus.html#a386cdddf9229348b8108640075b5c3e4">   37</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#a386cdddf9229348b8108640075b5c3e4">update</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="namespace_canbus.html#ae66521cf8ac5e63c2e89d6b2f009b38a">   44</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#ae66521cf8ac5e63c2e89d6b2f009b38a">enableInterrupts</a>(<span class="keywordtype">bool</span> enable);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="namespace_canbus.html#a859648b8552e6eb39dc72b8e6c90ca7b">   55</a></span>&#160;<a class="code" href="struct_c_a_n__message__t.html">CAN_message_t</a> <a class="code" href="namespace_canbus.html#a859648b8552e6eb39dc72b8e6c90ca7b">getMailbox</a>(FLEXCAN_MAILBOX MB);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="namespace_canbus.html#a48c2b66243d0701aa08f834ca0cc3308">   63</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#a48c2b66243d0701aa08f834ca0cc3308">setHandle</a>(_MB_ptr handler);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="namespace_canbus.html#a590446e8ab11ac7cd18abca98e65795e">   68</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#a590446e8ab11ac7cd18abca98e65795e">clearHandle</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;} <span class="comment">// namespace Canbus</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">#endif // __ECU_CANBUS_H__</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
+<div class="ttc" id="anamespace_canbus_html_ae66521cf8ac5e63c2e89d6b2f009b38a"><div class="ttname"><a href="namespace_canbus.html#ae66521cf8ac5e63c2e89d6b2f009b38a">Canbus::enableInterrupts</a></div><div class="ttdeci">void enableInterrupts(bool enable)</div><div class="ttdoc">Enable mailbox interrupts, allowing any message handlers to run.</div></div>
+<div class="ttc" id="anamespace_canbus_html_a859648b8552e6eb39dc72b8e6c90ca7b"><div class="ttname"><a href="namespace_canbus.html#a859648b8552e6eb39dc72b8e6c90ca7b">Canbus::getMailbox</a></div><div class="ttdeci">CAN_message_t getMailbox(FLEXCAN_MAILBOX MB)</div><div class="ttdoc">Get the message from a mailbox if there is any.</div></div>
+<div class="ttc" id="anamespace_canbus_html_a48c2b66243d0701aa08f834ca0cc3308"><div class="ttname"><a href="namespace_canbus.html#a48c2b66243d0701aa08f834ca0cc3308">Canbus::setHandle</a></div><div class="ttdeci">void setHandle(_MB_ptr handler)</div><div class="ttdoc">Set the handle function, will be called whenever any message is received Use Canbus::getMailbox if on...</div></div>
 <div class="ttc" id="anamespace_canbus_html"><div class="ttname"><a href="namespace_canbus.html">Canbus</a></div><div class="ttdoc">Canbus functionality. Refer to Canbus.h for more info.</div><div class="ttdef"><b>Definition:</b> <a href="_canbus_8h_source.html#l00026">Canbus.h:26</a></div></div>
 <div class="ttc" id="anamespace_canbus_html_ac87cf65470012914f1ae29c0eb987b87"><div class="ttname"><a href="namespace_canbus.html#ac87cf65470012914f1ae29c0eb987b87">Canbus::setup</a></div><div class="ttdeci">void setup(void)</div><div class="ttdoc">Setup the teensy Canbus line.</div></div>
+<div class="ttc" id="anamespace_canbus_html_a590446e8ab11ac7cd18abca98e65795e"><div class="ttname"><a href="namespace_canbus.html#a590446e8ab11ac7cd18abca98e65795e">Canbus::clearHandle</a></div><div class="ttdeci">void clearHandle(void)</div><div class="ttdoc">removes any handle function if there is one</div></div>
+<div class="ttc" id="astruct_c_a_n__message__t_html"><div class="ttname"><a href="struct_c_a_n__message__t.html">CAN_message_t</a></div><div class="ttdef"><b>Definition:</b> <a href="_flex_c_a_n___t4_8h_source.html#l00037">FlexCAN_T4.h:37</a></div></div>
+<div class="ttc" id="a_canbus_config_8def_html"><div class="ttname"><a href="_canbus_config_8def.html">CanbusConfig.def</a></div><div class="ttdoc">Configure canbus functionality.</div></div>
 <div class="ttc" id="anamespace_canbus_html_a386cdddf9229348b8108640075b5c3e4"><div class="ttname"><a href="namespace_canbus.html#a386cdddf9229348b8108640075b5c3e4">Canbus::update</a></div><div class="ttdeci">void update(void)</div><div class="ttdoc">Update the Canbus line This update function will check the canbus for any messages and run the approp...</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

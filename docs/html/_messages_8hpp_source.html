@@ -88,27 +88,37 @@ $(document).ready(function(){initNavTree('_messages_8hpp_source.html',''); initR
 <div class="title">Messages.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef __ECU_MESSAGES_HPP__</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define __ECU_MESSAGES_HPP__</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;CanbusConfig.def&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;FlexCAN_T4.h&quot;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;WProgram.h&quot;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">namespace </span>CanbusMsg {</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keywordtype">void</span> BMSFaultMsg(<span class="keyword">const</span> CAN_message_t &amp;msg);</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keywordtype">void</span> RMSFaultMsg(<span class="keyword">const</span> CAN_message_t &amp;msg);</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;}</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#endif // __ECU_MESSAGES_HPP__</span></div>
+<a href="_messages_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#ifndef __ECU_MESSAGES_HPP__</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#define __ECU_MESSAGES_HPP__</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_canbus_config_8def.html">CanbusConfig.def</a>&quot;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;FlexCAN_T4.h&quot;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;WProgram.h&quot;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_canbus_msg.html">CanbusMsg</a> {</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus_msg.html#a4840288b4e15fd8e00b651f2f00984f2">SerialPrintMessage</a>(<span class="keyword">const</span> <a class="code" href="struct_c_a_n__message__t.html">CAN_message_t</a> &amp;msg);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus_msg.html#ad6a324da49ee0742dce8965b5d62d4cf">BMSFaultMsg</a>(<span class="keyword">const</span> <a class="code" href="struct_c_a_n__message__t.html">CAN_message_t</a> &amp;msg);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus_msg.html#ae8a213b79a66a0aa0211c7bbaf20ab30">RMSFaultMsg</a>(<span class="keyword">const</span> <a class="code" href="struct_c_a_n__message__t.html">CAN_message_t</a> &amp;msg);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;} <span class="comment">// namespace CanbusMsg</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#endif // __ECU_MESSAGES_HPP__</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
+<div class="ttc" id="anamespace_canbus_msg_html_a4840288b4e15fd8e00b651f2f00984f2"><div class="ttname"><a href="namespace_canbus_msg.html#a4840288b4e15fd8e00b651f2f00984f2">CanbusMsg::SerialPrintMessage</a></div><div class="ttdeci">void SerialPrintMessage(const CAN_message_t &amp;msg)</div><div class="ttdoc">Print a message to serial.</div><div class="ttdef"><b>Definition:</b> <a href="_messages_8cpp_source.html#l00027">Messages.cpp:27</a></div></div>
+<div class="ttc" id="anamespace_canbus_msg_html_ae8a213b79a66a0aa0211c7bbaf20ab30"><div class="ttname"><a href="namespace_canbus_msg.html#ae8a213b79a66a0aa0211c7bbaf20ab30">CanbusMsg::RMSFaultMsg</a></div><div class="ttdeci">void RMSFaultMsg(const CAN_message_t &amp;msg)</div><div class="ttdoc">Check message for a RMS Fault.</div><div class="ttdef"><b>Definition:</b> <a href="_messages_8cpp_source.html#l00042">Messages.cpp:42</a></div></div>
+<div class="ttc" id="anamespace_canbus_msg_html_ad6a324da49ee0742dce8965b5d62d4cf"><div class="ttname"><a href="namespace_canbus_msg.html#ad6a324da49ee0742dce8965b5d62d4cf">CanbusMsg::BMSFaultMsg</a></div><div class="ttdeci">void BMSFaultMsg(const CAN_message_t &amp;msg)</div><div class="ttdoc">Check message for a BMS Fault.</div><div class="ttdef"><b>Definition:</b> <a href="_messages_8cpp_source.html#l00036">Messages.cpp:36</a></div></div>
+<div class="ttc" id="astruct_c_a_n__message__t_html"><div class="ttname"><a href="struct_c_a_n__message__t.html">CAN_message_t</a></div><div class="ttdef"><b>Definition:</b> <a href="_flex_c_a_n___t4_8h_source.html#l00037">FlexCAN_T4.h:37</a></div></div>
+<div class="ttc" id="a_canbus_config_8def_html"><div class="ttname"><a href="_canbus_config_8def.html">CanbusConfig.def</a></div><div class="ttdoc">Configure canbus functionality.</div></div>
+<div class="ttc" id="anamespace_canbus_msg_html"><div class="ttname"><a href="namespace_canbus_msg.html">CanbusMsg</a></div><div class="ttdoc">Message handlers to define incoming mailboxes with. Refer to CanBusMessages.def.</div><div class="ttdef"><b>Definition:</b> <a href="_messages_8cpp_source.html#l00014">Messages.cpp:14</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="dir_aa5811a373cc776f18ef9e232f0d1341.html">Canbus</a></li><li class="navelem"><b>Messages.hpp</b></li>
+    <li class="navelem"><a class="el" href="dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="dir_aa5811a373cc776f18ef9e232f0d1341.html">Canbus</a></li><li class="navelem"><a class="el" href="_messages_8hpp.html">Messages.hpp</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

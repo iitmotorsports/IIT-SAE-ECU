@@ -104,10 +104,106 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_canbus.html#a386cdddf9229348b8108640075b5c3e4">update</a> (void)</td></tr>
 <tr class="memdesc:a386cdddf9229348b8108640075b5c3e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the <a class="el" href="namespace_canbus.html" title="Canbus functionality. Refer to Canbus.h for more info.">Canbus</a> line This update function will check the canbus for any messages and run the appropriate handler. <br /></td></tr>
 <tr class="separator:a386cdddf9229348b8108640075b5c3e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae66521cf8ac5e63c2e89d6b2f009b38a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_canbus.html#ae66521cf8ac5e63c2e89d6b2f009b38a">enableInterrupts</a> (bool enable)</td></tr>
+<tr class="memdesc:ae66521cf8ac5e63c2e89d6b2f009b38a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable mailbox interrupts, allowing any message handlers to run.  <a href="namespace_canbus.html#ae66521cf8ac5e63c2e89d6b2f009b38a">More...</a><br /></td></tr>
+<tr class="separator:ae66521cf8ac5e63c2e89d6b2f009b38a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a859648b8552e6eb39dc72b8e6c90ca7b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_c_a_n__message__t.html">CAN_message_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_canbus.html#a859648b8552e6eb39dc72b8e6c90ca7b">getMailbox</a> (FLEXCAN_MAILBOX MB)</td></tr>
+<tr class="memdesc:a859648b8552e6eb39dc72b8e6c90ca7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the message from a mailbox if there is any.  <a href="namespace_canbus.html#a859648b8552e6eb39dc72b8e6c90ca7b">More...</a><br /></td></tr>
+<tr class="separator:a859648b8552e6eb39dc72b8e6c90ca7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48c2b66243d0701aa08f834ca0cc3308"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_canbus.html#a48c2b66243d0701aa08f834ca0cc3308">setHandle</a> (_MB_ptr handler)</td></tr>
+<tr class="memdesc:a48c2b66243d0701aa08f834ca0cc3308"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the handle function, will be called whenever any message is received Use <a class="el" href="namespace_canbus.html#a859648b8552e6eb39dc72b8e6c90ca7b" title="Get the message from a mailbox if there is any.">Canbus::getMailbox</a> if only a specifc message is needed.  <a href="namespace_canbus.html#a48c2b66243d0701aa08f834ca0cc3308">More...</a><br /></td></tr>
+<tr class="separator:a48c2b66243d0701aa08f834ca0cc3308"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a590446e8ab11ac7cd18abca98e65795e"><td class="memItemLeft" align="right" valign="top"><a id="a590446e8ab11ac7cd18abca98e65795e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_canbus.html#a590446e8ab11ac7cd18abca98e65795e">clearHandle</a> (void)</td></tr>
+<tr class="memdesc:a590446e8ab11ac7cd18abca98e65795e"><td class="mdescLeft">&#160;</td><td class="mdescRight">removes any handle function if there is one <br /></td></tr>
+<tr class="separator:a590446e8ab11ac7cd18abca98e65795e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="namespace_canbus.html" title="Canbus functionality. Refer to Canbus.h for more info.">Canbus</a> functionality. Refer to <a class="el" href="_canbus_8h.html" title="FlexCAN_T4 wrapper This library is made specifically for SAE.">Canbus.h</a> for more info. </p>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="ae66521cf8ac5e63c2e89d6b2f009b38a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae66521cf8ac5e63c2e89d6b2f009b38a">&#9670;&nbsp;</a></span>enableInterrupts()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Canbus::enableInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable mailbox interrupts, allowing any message handlers to run. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">enable</td><td>boolean </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a859648b8552e6eb39dc72b8e6c90ca7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a859648b8552e6eb39dc72b8e6c90ca7b">&#9670;&nbsp;</a></span>getMailbox()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_c_a_n__message__t.html">CAN_message_t</a> Canbus::getMailbox </td>
+          <td>(</td>
+          <td class="paramtype">FLEXCAN_MAILBOX&#160;</td>
+          <td class="paramname"><em>MB</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the message from a mailbox if there is any. </p>
+<dl class="section note"><dt>Note</dt><dd>Interrupts must be disabled or no message will be returned </dd>
+<dd>
+Do not modify the mailbox that is returned</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">MB</td><td>Mailbox number </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_c_a_n__message__t.html">CAN_message_t</a> returns a FlexCAN message, message will be completely empty if nothing was received </dd></dl>
+
+</div>
+</div>
+<a id="a48c2b66243d0701aa08f834ca0cc3308"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48c2b66243d0701aa08f834ca0cc3308">&#9670;&nbsp;</a></span>setHandle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Canbus::setHandle </td>
+          <td>(</td>
+          <td class="paramtype">_MB_ptr&#160;</td>
+          <td class="paramname"><em>handler</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the handle function, will be called whenever any message is received Use <a class="el" href="namespace_canbus.html#a859648b8552e6eb39dc72b8e6c90ca7b" title="Get the message from a mailbox if there is any.">Canbus::getMailbox</a> if only a specifc message is needed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handler</td><td>Message handle accepts a <code>const <a class="el" href="struct_c_a_n_f_d__message__t.html">CANFD_message_t</a> &amp;msg</code> and returns <code>void</code> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

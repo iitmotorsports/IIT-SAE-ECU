@@ -88,23 +88,31 @@ $(document).ready(function(){initNavTree('_canbus_config_8def_source.html',''); 
 <div class="title">CanbusConfig.def</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef __ECU_CANBUSCONFIG_DEF__</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define __ECU_CANBUSCONFIG_DEF__</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#define CONF_FLEXCAN_CAN_SELECT CAN1 // CAN1 or CAN0 on T3.6 | CAN3 on T4.X</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#define CONF_FLEXCAN_BAUD_RATE 1000000</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#define CONF_FLEXCAN_TX_MAILBOXES 3 // Number of outgoing mailboxes</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#define CONF_BITMASK_BMS_HARDFAULT 0x4000020120100080 // Convert the 1s and 0s to hex first</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#define CONF_BITMASK_RMS_HARDFAULT 0x0000000000000000</span></div>
+<a href="_canbus_config_8def.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#ifndef __ECU_CANBUSCONFIG_DEF__</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">// @cond</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#define __ECU_CANBUSCONFIG_DEF__</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">// @endcond</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="_canbus_config_8def.html#a0339e9d39c79ff4a99420a73f379c1c5">   21</a></span>&#160;<span class="preprocessor">#define CONF_FLEXCAN_CAN_SELECT CAN1</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="_canbus_config_8def.html#af0c679cd1f59bfbdceac0c8e18b17f5b">   26</a></span>&#160;<span class="preprocessor">#define CONF_FLEXCAN_BAUD_RATE 1000000</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#endif // __ECU_CANBUSCONFIG_DEF__</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="_canbus_config_8def.html#acfa9a5267724c47e76b7738da96e5367">   32</a></span>&#160;<span class="preprocessor">#define CONF_FLEXCAN_TX_MAILBOXES 3</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="_canbus_config_8def.html#a67288fb398325719c759489dbba53705">   38</a></span>&#160;<span class="preprocessor">#define CONF_FLEXCAN_DEBUG 1</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="_canbus_config_8def.html#a2563ef2706c312a73b5bc3db6f762a60">   43</a></span>&#160;<span class="preprocessor">#define CONF_BITMASK_BMS_HARDFAULT 0x4000020120100080</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="_canbus_config_8def.html#a5d3ec2a3f1c2e7d5bbe8830ac02a1109">   48</a></span>&#160;<span class="preprocessor">#define CONF_BITMASK_RMS_HARDFAULT 0x0000000000000000</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#endif // __ECU_CANBUSCONFIG_DEF__</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="dir_aa5811a373cc776f18ef9e232f0d1341.html">Canbus</a></li><li class="navelem"><b>CanbusConfig.def</b></li>
+    <li class="navelem"><a class="el" href="dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="dir_aa5811a373cc776f18ef9e232f0d1341.html">Canbus</a></li><li class="navelem"><a class="el" href="_canbus_config_8def.html">CanbusConfig.def</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>
