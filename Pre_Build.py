@@ -480,12 +480,13 @@ def dole_files(count, finishFunc):
 
 
 class ThreadedProgressBar:
-    bar_len = 30
+    bar_len = 10
     maxcount = 0
     counter = 0
     Lines = set()
     run = True
     prefix = ""
+    formatStr = "{} │{}│ {}{}\r"
 
     class TextIO(io.TextIOWrapper):
         def __init__(
@@ -520,14 +521,17 @@ class ThreadedProgressBar:
             sys.stdout.write_through,
         )
         sys.stdout = self.wrapper
-        self.prefix = prefix
+        self.rename(prefix)
 
     def rename(self, prefix):
+        mx_sz = len(self.formatStr.format(prefix, " " * self.bar_len, 100.0, "%"))
+        self.bar_len = min(int(os.get_terminal_size().columns - 1 - (mx_sz / 1.25)), mx_sz)
+        self.bar_len = self.bar_len if self.bar_len > 0 else 0
         self.prefix = prefix
 
     def reset(self, maxcount, prefix):
         self.maxcount = maxcount
-        self.prefix = prefix
+        self.rename(prefix)
         self.counter = 0
 
     def _newLine(self, String):
@@ -540,7 +544,7 @@ class ThreadedProgressBar:
             percents = round(100.0 * count / float(total), 1)
             bar = "█" * filled_len + "░" * (self.bar_len - filled_len)
 
-            proStr = "{} │{}│ {}{}\r".format(prefix, bar, percents, "%")
+            proStr = self.formatStr.format(prefix, bar, percents, "%")
             if len(printString) > 0:
                 self.stdout.write(" " * (os.get_terminal_size().columns - 1))
                 self.stdout.write("\r")
