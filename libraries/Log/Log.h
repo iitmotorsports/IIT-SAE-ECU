@@ -27,8 +27,10 @@ typedef const uint32_t LOG_MSG;
  * @brief Type definition of logging tags
  * This typedef is necessary to allow for easier manipulation of code by Pre_Build.py
  * @note If Pre_Build.py is run, **All** declerations of `LOG_TAG` must be an inline string \n
- *      LOG_TAG TAG = "Logging Tag"; ✔️ \n
- *      LOG_TAG TAG = someTagReference; ❌
+ * 
+ * Example usage ( Note that LOG_TAG_t should actually be LOG_TAG ) :
+ *      LOG_TAG_t TAG = "Logging Tag"; ✔️ \n
+ *      LOG_TAG_t TAG = someTagReference; ❌
  */
 typedef const char *LOG_TAG;
 /**
@@ -144,7 +146,7 @@ struct Log_t {
      */
     void f(LOG_TAG TAG, LOG_MSG message, const uint32_t number);
 };
-} // namespace Log
+} // namespace Logging
 
 /**
  * @brief Refer to Log_t

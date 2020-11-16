@@ -278,8 +278,8 @@ FIND_CALL_REGEX_SSV = r"Log(\.[diwef])?\s*\(\s*(\".*?\")\s*,\s*(\".*?\")\s*,\s*(
 FIND_CALL_REGEX_VSV = r"Log(\.[diwef])?\s*\(\s*([^\"]+?)\s*,\s*(\".*?\")\s*,\s*([^\"]+?)\s*\)\s*;"  # -> Log(Var, "Str", Var);
 FIND_CALL_REGEX_BAD = r"(Log(?:\.[diwef])?\s*\(\s*(?:[^\"]+?|\"(?:[^\"]|\\\")*?\")\s*,\s*)([^\";]+?)(\s*(?:,\s*(?:[^\"]+?))?\s*\)\s*;)"  # Implicit string or number where it should not be | IDE will warn about numbers but will still compile
 
-FIND_TAG_DEF_REGEX_BAD = r"(LOG_TAG\s*[^\"=]+?=\s*)([^\"=]+?)(\s*;)"  # Implicit or single char definition of a tag type
-FIND_TAG_DEF_REGEX_GOOD = r"LOG_TAG\s*[^\"=]+?=\s*(\".*?\")\s*;"
+FIND_TAG_DEF_REGEX_BAD = r"(LOG_TAG(?= )\s*[^\"=]+?=\s*)([^\"=]+?)(\s*;)"  # Implicit or single char definition of a tag type
+FIND_TAG_DEF_REGEX_GOOD = r"LOG_TAG(?= )\s*[^\"=]+?=\s*(\".*?\")\s*;"
 
 Log_Levels = {
     "": "[ LOG ] ",
