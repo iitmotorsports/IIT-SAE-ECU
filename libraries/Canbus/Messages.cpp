@@ -9,6 +9,7 @@
  * 
  */
 #include "Messages.hpp"
+#include "Log.h"
 
 namespace CanbusMsg {
 

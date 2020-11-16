@@ -16,7 +16,6 @@
 #include <stdlib.h>
 #include <typeinfo>
 
-#include "Log.h"
 #include "PPHelp.h"
 
 /**

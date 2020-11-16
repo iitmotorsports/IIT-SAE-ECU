@@ -10,6 +10,7 @@
  */
 #include "State.h"
 #include "WProgram.h"
+#include "Log.h"
 
 static LOG_TAG TAG = "State Manager";
 
