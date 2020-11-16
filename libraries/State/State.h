@@ -17,6 +17,7 @@
 #include <typeinfo>
 
 #include "PPHelp.h"
+#include "Log.h"
 
 /**
  * @brief A state machine implementation, refer to State.h for more info.

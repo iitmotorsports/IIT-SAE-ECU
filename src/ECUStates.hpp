@@ -6,6 +6,7 @@
 
 #include "Pins.h"
 #include "State.h"
+#include "Log.h"
 
 /**
  * @brief The Teensy specific state declarations

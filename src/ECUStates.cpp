@@ -1,4 +1,5 @@
 #include "ECUStates.hpp"
+#include "Log.h"
 
 State::State_t *ECUStates::Initialize_t::run(void) {
     if (firstSetup) {
