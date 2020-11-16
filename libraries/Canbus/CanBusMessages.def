@@ -8,8 +8,11 @@
  * @copyright Copyright (c) 2020
  * 
  */
+
 #ifndef __ECU_CANBUSMESSAGES_H__
+// @cond
 #define __ECU_CANBUSMESSAGES_H__
+// @endcond
 
 #include "Messages.hpp"
 #include "PPhelp.h"

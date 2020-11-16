@@ -10,7 +10,9 @@
  */
 
 #ifndef __ECU_CANBUSCONFIG_DEF__
+// @cond
 #define __ECU_CANBUSCONFIG_DEF__
+// @endcond
 
 /**
  * @brief Select the CAN to use on a teensy
