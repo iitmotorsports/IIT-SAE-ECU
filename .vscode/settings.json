@@ -1,4 +1,5 @@
 {
+    "TEENSY_ECU": "MK66FX1M0",
     "TOOLCHAIN_OFFSET": "../TeensyToolchain",
     "ADDITIONAL_CMAKE_VARS": "-DCUSTOM_BUILD_PATH_PREFIX:STRING=build/Pre_Build/" ,
     // "ADDITIONAL_CMAKE_VARS": "" ,
