@@ -47,8 +47,6 @@ static int A_GPIO[CORE_NUM_TOTAL_PINS]; // IMPROVE: Use CORE_NUM_ANALOG instead
 #define __INTERNAL_READ_ANALOG(PIN) A_GPIO[PIN] = analogRead(PIN);
 #define __INTERNAL_READ_DIGITAL(PIN)
 
-#define CompileError() _Pragma("GCC error \"Yes!\"");
-
 int Pins::getPinValue(uint8_t GPIO_Pin) {
     if (GPIO_Pin > CORE_NUM_TOTAL_PINS) {
         return 0;
