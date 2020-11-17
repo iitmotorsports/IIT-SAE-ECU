@@ -10,8 +10,6 @@ var files_dup =
     [ "ECUStates.cpp", "_e_c_u_states_8cpp_source.html", null ],
     [ "ECUStates.hpp", "_e_c_u_states_8hpp_source.html", null ],
     [ "FlexCAN_T4.h", "_flex_c_a_n___t4_8h_source.html", null ],
-    [ "Handlers.cpp", "_handlers_8cpp_source.html", null ],
-    [ "Handlers.hpp", "_handlers_8hpp_source.html", null ],
     [ "imxrt_flexcan.h", "imxrt__flexcan_8h_source.html", null ],
     [ "kinetis_flexcan.h", "kinetis__flexcan_8h_source.html", null ],
     [ "Log.cpp", "_log_8cpp.html", "_log_8cpp" ],

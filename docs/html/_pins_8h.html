@@ -103,27 +103,27 @@ $(document).ready(function(){initNavTree('_pins_8h.html',''); initResizable(); }
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespace_pins"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_pins.html">Pins</a></td></tr>
-<tr class="memdesc:namespace_pins"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get and set values to predefined pins. Refer to <a class="el" href="_pins_8h.html" title="Update, set, and get predefined pin values.">Pins.h</a> for more info. <br /></td></tr>
+<tr class="memdesc:namespace_pins"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get and set values to predefined pins. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a59429aa6a58f9b6e15cf2f968c12ce91"><td class="memItemLeft" align="right" valign="top"><a id="a59429aa6a58f9b6e15cf2f968c12ce91"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_pins.html#a59429aa6a58f9b6e15cf2f968c12ce91">Pins::PinHandler</a>) (const int pin, int &amp;value)</td></tr>
-<tr class="memdesc:a59429aa6a58f9b6e15cf2f968c12ce91"><td class="mdescLeft">&#160;</td><td class="mdescRight">A typedef for pin handler functions. <br /></td></tr>
-<tr class="separator:a59429aa6a58f9b6e15cf2f968c12ce91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5dde95396629a3cf9a8cfdb4115a0c5f"><td class="memItemLeft" align="right" valign="top"><a id="a5dde95396629a3cf9a8cfdb4115a0c5f"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_pins.html#a5dde95396629a3cf9a8cfdb4115a0c5f">Pins::PinHandler</a>) (uint8_t GPIO_Pin, int &amp;value)</td></tr>
+<tr class="memdesc:a5dde95396629a3cf9a8cfdb4115a0c5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A typedef for pin handler functions. <br /></td></tr>
+<tr class="separator:a5dde95396629a3cf9a8cfdb4115a0c5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:abd3d7f2960017adeef25257114bad97c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_pins.html#abd3d7f2960017adeef25257114bad97c">Pins::getPinValue</a> (const int GPIO_Pin)</td></tr>
-<tr class="memdesc:abd3d7f2960017adeef25257114bad97c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the pin value of a predefined pin.  <a href="namespace_pins.html#abd3d7f2960017adeef25257114bad97c">More...</a><br /></td></tr>
-<tr class="separator:abd3d7f2960017adeef25257114bad97c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac1ca1361523751bab529425bc766d10f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_pins.html#ac1ca1361523751bab529425bc766d10f">Pins::setPinValue</a> (const int GPIO_Pin, const int value)</td></tr>
-<tr class="memdesc:ac1ca1361523751bab529425bc766d10f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the pin value of a predefined pin.  <a href="namespace_pins.html#ac1ca1361523751bab529425bc766d10f">More...</a><br /></td></tr>
-<tr class="separator:ac1ca1361523751bab529425bc766d10f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5bb778c9151687c75d254d2fef4509fd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_pins.html#a5bb778c9151687c75d254d2fef4509fd">Pins::getPinValue</a> (uint8_t GPIO_Pin)</td></tr>
+<tr class="memdesc:a5bb778c9151687c75d254d2fef4509fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the pin value of a predefined pin.  <a href="namespace_pins.html#a5bb778c9151687c75d254d2fef4509fd">More...</a><br /></td></tr>
+<tr class="separator:a5bb778c9151687c75d254d2fef4509fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d60349cb2aec2c336856187093aea61"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a> (uint8_t GPIO_Pin, int value)</td></tr>
+<tr class="memdesc:a2d60349cb2aec2c336856187093aea61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the pin value of a predefined pin.  <a href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">More...</a><br /></td></tr>
+<tr class="separator:a2d60349cb2aec2c336856187093aea61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a66c4b641f395a60dedbe5271d4acfd35"><td class="memItemLeft" align="right" valign="top"><a id="a66c4b641f395a60dedbe5271d4acfd35"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35">Pins::update</a> (void)</td></tr>
-<tr class="memdesc:a66c4b641f395a60dedbe5271d4acfd35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Poll all pin values. <br /></td></tr>
+<tr class="memdesc:a66c4b641f395a60dedbe5271d4acfd35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Poll analog pin values. <br /></td></tr>
 <tr class="separator:a66c4b641f395a60dedbe5271d4acfd35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50fdd17267e54bd2a3d4ed2a6884c5c1"><td class="memItemLeft" align="right" valign="top"><a id="a50fdd17267e54bd2a3d4ed2a6884c5c1"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_pins.html#a50fdd17267e54bd2a3d4ed2a6884c5c1">Pins::initialize</a> (void)</td></tr>

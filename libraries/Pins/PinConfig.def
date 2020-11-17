@@ -32,7 +32,7 @@
  *
  * Unless it is the last entry, this is how to add a new pin
  *
- * X(GPIO, ANALOG/DIGITAL, INPUT/OUTPUT) \
+ * X(GPIO, ANALOG/DIGITAL, INPUT/OUTPUT, PRIORITY) \
  * 
  * Only the last entry should NOT have a '\'
  */
@@ -40,10 +40,5 @@
     X(PIN_A7, ANALOG, INPUT)  \
     X(PIN_A6, ANALOG, OUTPUT) \
     X(4, DIGITAL, OUTPUT)
-
-/**
- * @brief Delay polling every chunk by this much
- */
-#define CONF_POLLING_DELAY 50 // Milliseconds between the time the teensy polls a chunk of pins
 
 #endif // __ECU_PINCONFIG_H__

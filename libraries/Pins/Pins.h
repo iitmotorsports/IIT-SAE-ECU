@@ -22,6 +22,9 @@
 
 /**
  * @brief Get and set values to predefined pins.
+ * 
+ * Manage defined pins and ensure only defined pins are accessed
+ * 
  * Refer to Pins.h for more info.
  */
 namespace Pins {
@@ -29,7 +32,7 @@ namespace Pins {
 /**
  * @brief A typedef for pin handler functions
  */
-typedef void (*PinHandler)(const int pin, int &value);
+typedef void (*PinHandler)(uint8_t GPIO_Pin, int &value);
 
 /**
  * @brief Get the pin value of a predefined pin
@@ -37,17 +40,18 @@ typedef void (*PinHandler)(const int pin, int &value);
  * @param GPIO_Pin The GPIO pin to get a value from
  * @return int Returns an int that represents either a digital or analog value
  */
-int getPinValue(const int GPIO_Pin);
+int getPinValue(uint8_t GPIO_Pin);
+
 /**
  * @brief Set the pin value of a predefined pin
  * 
  * @param GPIO_Pin The GPIO pin to set
  * @param value The value to set the analog/digital pin to
  */
-void setPinValue(const int GPIO_Pin, const int value);
+void setPinValue(uint8_t GPIO_Pin, int value);
 
 /**
- * @brief Poll all pin values
+ * @brief Poll analog pin values
  */
 void update(void);
 

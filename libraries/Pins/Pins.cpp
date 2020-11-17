@@ -13,68 +13,57 @@
 
 #include "Pins.h"
 #include "Handlers.hpp"
+#include "IntervalTimer.h"
+#include "core_pins.h"
 
 #include "PinConfig.def"
 
-// Any concern with a pin not getting data in time?
-// Ditch caching, no reason to wait for a new value, delay may take longer than just getting actual value
+// TODO: make digital/analog read/write integrated in order to leverage the static definition of pins
+// TODO: define all pins to make accessing O(1)
+// TODO: make pins get the actual value, no need to buffer
 
-typedef struct pin_t {
-    uint16_t GPIO;
-    Pins::PinHandler handle;
-    int value;
+static int A_GPIO[CORE_NUM_TOTAL_PINS]; // IMPROVE: Use CORE_NUM_ANALOG instead
 
-    void update(void) {
-        handle(GPIO, value);
-    }
-} pin_t;
+#define __WRITEPIN_DIGITAL(PIN, VAL) digitalWriteFast(PIN, VAL);
+#define __WRITEPIN_ANALOG(PIN, VAL) analogWrite(PIN, VAL);
+#define __READPIN_DIGITAL(PIN) digitalReadFast(PIN);
+#define __READPIN_ANALOG(PIN) A_GPIO[PIN];
 
-static elapsedMillis timeElapsed;
-static int pos = 0;
+#define __INTERNAL_READ_ANALOG(PIN) A_GPIO[PIN] = analogRead(PIN);
+#define __INTERNAL_READ_DIGITAL(PIN)
 
-#define X(...) ,
-static const int pinBlocking = sqrt(PP_NARG_MO(TEENSY_PINS)); // Gets the number of pins to poll every update
-static const int pinCount = PP_NARG_MO(TEENSY_PINS);          // Length of the pin array
-static const int pinDelay = CONF_POLLING_DELAY;               // Milliseconds between the time the teensy polls a chunk of pins
-#undef X
-
-#define X(pin, Type, IO) {pin, Type##IO},
-static pin_t pins[pinCount] = {TEENSY_PINS}; // Allocate pins
-#undef X
-
-// ALT: allocate all GPIO pins so index matches GPIO number
-inline static pin_t *getPin(const int GPIO_Pin) {
-    int i = pinCount;
-    switch (GPIO_Pin) {
-#define X(pin, ...) \
-    case pin:       \
-        i--;
-
+int Pins::getPinValue(uint8_t GPIO_Pin) {
+    if (GPIO_Pin > CORE_NUM_TOTAL_PINS) {
+        return 0;
+#define X(pin, Type, IO)        \
+    }                           \
+    else if (GPIO_Pin == pin) { \
+        return __READPIN_##Type(GPIO_Pin);
         TEENSY_PINS
 #undef X
-    default:
-        break;
+    } else {
+        return 0;
     }
-    return &pins[i];
 }
 
-int Pins::getPinValue(const int GPIO_Pin) {
-    return getPin(GPIO_Pin)->value;
-}
-
-void Pins::setPinValue(const int GPIO_Pin, const int value) {
-    getPin(GPIO_Pin)->value = value;
-}
-
-void Pins::update(void) { // TODO: Ditch chunked polling, over-optimizing
-    if (timeElapsed >= pinDelay) {
-        timeElapsed = timeElapsed - pinDelay;
-        for (size_t i = 0; i < pinBlocking; i++) {
-            ++pos;
-            pos = pos % pinCount;
-            pins[pos].update();
-        }
+void Pins::setPinValue(uint8_t GPIO_Pin, int value) {
+    if (GPIO_Pin > CORE_NUM_TOTAL_PINS) {
+        return;
+#define X(pin, Type, IO)        \
+    }                           \
+    else if (GPIO_Pin == pin) { \
+        return __WRITEPIN_##Type(GPIO_Pin, value);
+        TEENSY_PINS
+#undef X
+    } else {
+        return;
     }
+}
+
+void Pins::update(void) {
+#define X(pin, Type, IO) __INTERNAL_READ_##Type(pin);
+    TEENSY_PINS
+#undef X
 }
 
 void Pins::initialize(void) {
