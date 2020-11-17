@@ -18,10 +18,6 @@
 
 #include "PinConfig.def"
 
-// TODO: make digital/analog read/write integrated in order to leverage the static definition of pins
-// TODO: define all pins to make accessing O(1)
-// TODO: make pins get the actual value, no need to buffer
-
 static int A_GPIO[CORE_NUM_TOTAL_PINS]; // IMPROVE: Use CORE_NUM_ANALOG instead
 
 #define __WRITEPIN_DIGITAL(PIN, VAL) digitalWriteFast(PIN, VAL);
