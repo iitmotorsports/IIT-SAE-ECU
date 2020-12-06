@@ -27,7 +27,7 @@ static inline int RMS_HardFaultCheck(const uint8_t raw_data[8]) {
 void SerialPrintMessage(const CAN_message_t &msg) {
     uint8_t *buf = new uint8_t[10](); // IMPROVE: Check whether buffering is better then separate calls to Serial.write
     //TODO: Verify that id pointer does not have to be shifted
-    memcpy(buf, &msg.id, 2); // NOTE: will cut out can messages that are larger than 2 bytes
+    memcpy(buf, &msg.id, 2); // NOTE: will cut out can message ids that are larger than 2 bytes
     memcpy(buf + 2, &msg.buf, 8);
     Serial.write(buf, 10);
     delete[] buf;

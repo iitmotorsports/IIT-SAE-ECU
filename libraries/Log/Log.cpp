@@ -62,7 +62,7 @@ static void *FATAL = NONE;
 // No Timestamping for this mode
 
 static void __logger_print(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE) {
-    uint8_t *buf = new uint8_t[10](); // TODO: Profile logging functions
+    uint8_t *buf = new uint8_t[10](); // IMPROVE: Profile logging functions
     memcpy(buf, &TAG, 2);
     memcpy(buf + 6, &MESSAGE, 4);
     Serial.write(buf, 10);
