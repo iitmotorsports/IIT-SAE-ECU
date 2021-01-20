@@ -41,7 +41,7 @@ void update(void);
  * 
  * @param enable boolean
  */
-void enableInterrupts(bool enable);
+void enableInterrupts(bool enable); // NOTE: Does it need an explicit T/F ?
 
 /**
  * @brief Get the message from a mailbox if there is any

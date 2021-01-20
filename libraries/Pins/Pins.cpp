@@ -15,6 +15,7 @@
 #include "IntervalTimer.h"
 #include "core_pins.h"
 
+#include "Log.h"
 #include "PinConfig.def"
 
 static int A_GPIO[CORE_NUM_TOTAL_PINS]; // IMPROVE: Use CORE_NUM_ANALOG instead
@@ -34,10 +35,12 @@ static int A_GPIO[CORE_NUM_TOTAL_PINS]; // IMPROVE: Use CORE_NUM_ANALOG instead
     else if (GPIO_Pin == PIN) {     \
         return digitalReadFast(PIN);
 
+// TODO: actually implement analog value caching
 #define __READPIN_ANALOGINPUT(PIN) \
     }                              \
     else if (GPIO_Pin == PIN) {    \
-        return A_GPIO[PIN];
+        return analogRead(PIN);    \
+        // return A_GPIO[PIN];
 
 #define __WRITEPIN_DIGITALINPUT(PIN, VAL)
 #define __WRITEPIN_ANALOGINPUT(PIN, VAL)
@@ -47,13 +50,17 @@ static int A_GPIO[CORE_NUM_TOTAL_PINS]; // IMPROVE: Use CORE_NUM_ANALOG instead
 #define __INTERNAL_READ_ANALOG(PIN) A_GPIO[PIN] = analogRead(PIN);
 #define __INTERNAL_READ_DIGITAL(PIN)
 
+static const LOG_TAG ID = "Pins";
+
 int Pins::getPinValue(uint8_t GPIO_Pin) {
     if (GPIO_Pin > CORE_NUM_TOTAL_PINS) {
+        Log.e(ID, "Acessing out of range pin", GPIO_Pin);
         return 0;
 #define X(pin, Type, IO) __READPIN_##Type##IO(pin);
         TEENSY_PINS
 #undef X
     } else {
+        Log.d(ID, "No pin defined", GPIO_Pin);
         return 0;
     }
 }
@@ -67,7 +74,7 @@ void Pins::setPinValue(uint8_t GPIO_Pin, int value) {
     }
 }
 
-void Pins::update(void) {
+void Pins::update(void) { 
 #define X(pin, Type, IO) __INTERNAL_READ_##Type(pin);
     TEENSY_PINS
 #undef X

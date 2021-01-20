@@ -37,8 +37,10 @@
  * Only the last entry should NOT have a '\'
  */
 #define TEENSY_PINS           \
+    X(13, DIGITAL, OUTPUT)    \
     X(PIN_A7, ANALOG, INPUT)  \
     X(PIN_A6, ANALOG, OUTPUT) \
-    X(4, DIGITAL, OUTPUT)
+    X(4, DIGITAL, OUTPUT)     \
+    X(37, DIGITAL, INPUT) // Testing
 
 #endif // __ECU_PINCONFIG_H__
