@@ -114,8 +114,11 @@
                 "panel": "shared",
                 "showReuseMessage": false
             },
-            "command": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/ComMonitor.exe",
+            "command": "cmd.exe",
             "args": [
+                "/d",
+                "/c",
+                "${workspaceFolder}\\${config:TOOLCHAIN_OFFSET}\\tools\\ComMonitor.exe",
                 "${input:TEENSY_USB_PORTNAME}",
                 "${input:TEENSY_BAUDRATE}",
                 "-t${input:TEENSY_COM_TYPE}",
@@ -195,10 +198,10 @@
             "description": "What portname the moniter should use",
             "type": "pickString",
             "options": [
-                "COM6",
-                "COM7"
+                "COM4",
+                "COM5"
             ],
-            "default": "COM6"
+            "default": "COM4"
         },
         {
             "id": "TEENSY_BAUDRATE",
