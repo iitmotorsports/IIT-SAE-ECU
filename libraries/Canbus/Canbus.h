@@ -28,7 +28,7 @@ namespace Canbus {
 /**
  * @brief Update the Canbus line
  * This update function will check the rx buffer for any messages and update values.
- * Must be run periodically when using canbus
+ * If this function is never run, canbus messages will automaticaly update as they are received
  */
 void update(void);
 
