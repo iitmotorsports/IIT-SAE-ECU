@@ -51,6 +51,7 @@ void getData(const uint32_t address, uint8_t buf[8]);
  * @brief Get the buffer of an outgoing address in order to set it's values to be pushed later.
  * Use pushData to push the data after modifying the buffer.
  * Invalid addresses will return a buffer that is ignored.
+ * @note buffers that are for incoming addresses should not be modified, but can be monitored
  * @param address The outgoing address
  * @return uint8_t[8] buffer array of the message, length 8
  */
