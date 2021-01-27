@@ -12,8 +12,8 @@
 // @cond
 
 #include "Canbus.h"
+#include "CanBusAddresses.def"
 #include "CanbusConfig.def"
-#include "CanbusMessages.def"
 #include "Log.h"
 
 namespace Canbus {

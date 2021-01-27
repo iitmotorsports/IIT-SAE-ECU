@@ -1,7 +1,7 @@
 /**
  * @file CanBusMessages.def
  * @author IR
- * @brief Define incoming CAN line messages
+ * @brief Define incoming CAN line addresses
  * @version 0.2
  * @date 2020-11-15
  * 
@@ -21,7 +21,7 @@
 #define INCOMING 0
 
 /**
- * @brief Defines the Can bus messages that will be received
+ * @brief Defines the Can bus addresses that will be used to receive and send data
  * 
  * Every definition is given a direction denoting whether it is incoming or outgoing
  * 
