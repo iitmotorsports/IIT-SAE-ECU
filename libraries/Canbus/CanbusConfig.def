@@ -27,24 +27,14 @@
 
 /**
  * @brief Set the number of outgoing mailboxes
- * @note incoming mailboxes are automaticaly set, refer to CanBusMessages.def
+ * @note incoming mailboxes are automaticaly set
  */
-#define CONF_FLEXCAN_TX_MAILBOXES 3
+#define CONF_FLEXCAN_TX_MAILBOXES 2
 
 /**
  * @brief Set whether to run in debug mode
  * basically just enables logging
  */
 #define CONF_FLEXCAN_DEBUG 1
-
-/**
- * @brief BMS Hardfault hex mask
- */
-#define CONF_BITMASK_BMS_HARDFAULT 0x4000020120100080
-
-/**
- * @brief RMS Hardfault hex mask
- */
-#define CONF_BITMASK_RMS_HARDFAULT 0x0000000000000000
 
 #endif // __ECU_CANBUSCONFIG_DEF__
