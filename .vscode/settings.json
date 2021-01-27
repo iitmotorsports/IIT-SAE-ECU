@@ -10,7 +10,8 @@
         "cstdint": "cpp",
         "algorithm": "cpp",
         "system_error": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "tuple": "cpp"
     },
     "doxygen_runner.configuration_file_override": "${workspaceFolder}\\docs\\Doxyfile"
 }
