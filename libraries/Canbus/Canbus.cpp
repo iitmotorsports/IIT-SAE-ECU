@@ -78,8 +78,9 @@ static void _setMailboxes() {
 void setup(void) {
     _setMailboxes();
     F_Can.setBaudRate(CONF_FLEXCAN_BAUD_RATE);
-    F_Can.begin();
     F_Can.onReceive(_receiveCan);
+    F_Can.enableMBInterrupts();
+    F_Can.begin();
     // updateTimer.begin(update, 1); // FIXME: choose an appropriate update time
 }
 
