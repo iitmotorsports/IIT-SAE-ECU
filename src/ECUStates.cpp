@@ -1,6 +1,10 @@
 #include "ECUStates.hpp"
 #include "Log.h"
 
+bool ECUStates::Initialize::checkFault(void) { // TODO: Check for what fault?
+    return false;
+}
+
 State::State_t *ECUStates::Initialize::run(void) {
     Log.i(ID, "Teensy 3.6 SAE ECU Initalizing");
     pinMode(6, OUTPUT);
@@ -9,12 +13,13 @@ State::State_t *ECUStates::Initialize::run(void) {
     Canbus::setup();      // Interrupts not enabled
     Pins::initialize();   // setup predefined pins
 
+    // TSV
+
     Log.d(ID, "Finshed");
     return &ECUStates::PreCharge_State;
 };
 
 State::State_t *ECUStates::PreCharge_State::PreCharFault(void) {
-    Log.e(ID, "Precharge Fault");
     // Close Air1_Pin and Precharge_Relay_Pin for any fault
     Pins::setPinValue(Air1_Pin, LOW);
     Pins::setPinValue(Precharge_Relay_Pin, LOW);
@@ -25,10 +30,11 @@ bool ECUStates::PreCharge_State::checkPreFault(void) { // TODO: Check for what f
     return false;
 }
 
-State::State_t *ECUStates::PreCharge_State::run(void) {
+State::State_t *ECUStates::PreCharge_State::run(void) { // FIXME: set pins to LOW or HIGH?
     Log.i(ID, "Precharge running");
 
     if (checkPreFault()) {
+        Log.e(ID, "Precharge Faulted before charge");
         return PreCharFault();
     }
 
@@ -37,13 +43,14 @@ State::State_t *ECUStates::PreCharge_State::run(void) {
     Pins::setPinValue(Precharge_Relay_Pin, HIGH);
 
     if (checkPreFault()) {
+        Log.e(ID, "Precharge Faulted after charge");
         return PreCharFault();
     }
 
     elapsedMillis timeElapsed;
 
     while (timeElapsed < 5000) {
-        if (0.9 * Pins::getPinValue(BMS_Voltage_Pin) <= Pins::getPinValue(MC_Voltage_Pin)) {
+        if (0.9 * Pins::getPinValue(BMS_Voltage_Pin) <= Pins::getPinValue(MC_Voltage_Pin)) { // FIXME: Canbus Values
             Pins::setPinValue(Precharge_Relay_Pin, LOW);
             Log.i(ID, "Precharge Finished");
             Pins::setPinValue(Air2_Pin, HIGH);
@@ -51,6 +58,7 @@ State::State_t *ECUStates::PreCharge_State::run(void) {
         }
     }
 
+    Log.e(ID, "Precharge timed out");
     return PreCharFault();
 };
 
@@ -65,6 +73,7 @@ State::State_t *ECUStates::Idle_State::run(void) {
             Log.i(ID, "Charging Pressed");
             return &ECUStates::Charging_State;
         }
+        // Check for Faults with lib
         Log.d(ID, "Waiting");
     }
 
@@ -80,12 +89,13 @@ State::State_t *ECUStates::Charging_State::run(void) {
     Log.i(ID, "Charging on");
 
     while (Pins::getPinValue(Charging_Signal_Pin)) {
-        if (checkChargingFault()) {
+        // IMPROVE: Don't use fault to stop charging
+        if (checkChargingFault()) { // Use fault lib
             Pins::setPinValue(Charging_Relay_Pin, LOW);
             Log.e(ID, "Charging faulted, turning off");
             return &ECUStates::Fault;
         }
-        Log.i(ID, "Voltage", Pins::getPinValue(Charging_Voltage_Pin));
+        Log.i(ID, "Voltage", Pins::getPinValue(Charging_Voltage_Pin)); // delay
     }
 
     Pins::setPinValue(Charging_Relay_Pin, LOW);
@@ -96,31 +106,120 @@ State::State_t *ECUStates::Charging_State::run(void) {
 
 State::State_t *ECUStates::Button_State::run(void) {
     Log.i(ID, "Playing sound");
-    // Turn Ready to drive signal on and initialize Sound_timer ?
+
+    // motor controller enable bit off
+    Pins::setPinValue(Sound_Driver_Pin, HIGH);
 
     elapsedMillis soundTimer;
 
     while (soundTimer <= 2000) {
         if (false) { // TODO: Check for fault
             Log.e(ID, "Failed to play sound");
+            Pins::setPinValue(Sound_Driver_Pin, LOW);
             return &ECUStates::Fault;
         }
     }
+
+    Pins::setPinValue(Sound_Driver_Pin, LOW);
     Log.i(ID, "Playing sound finished");
 
     return &ECUStates::Driving_Mode_State;
 }
 
+// static uint32_t MOTOR_OFFSET = 0xe0;         // offset for motor ids // is this actually just for the MCs?
+// static uint32_t MOTOR_STATIC_OFFSET = 0x0A0; // IMPROVE: auto set this global offset to addresses
+
+// // motor functions
+// // TODO: test what the accelerators are outputting
+// bool motorPushSpeed(TTMsg msg) {
+//     // "the value of the tquore needs to be a power of 10 of the actual tourqe;" by dominck
+//     // call ECEdata to accelerator value
+//     // TODO: torque vector function thing? probably goes here
+//     // also uses var: avgSpeed for the accelerator val
+//     int speed0 = analogRead(23); // speed of motor 0
+//     int speed1 = analogRead(23); // speed of motor 1
+//     // Serial.println(speed0);
+//     motorWriteSpeed(msg, 0, 0, speed0);
+//     motorWriteSpeed(msg, MOTOR_OFFSET, 1, speed1);
+
+//     return false; // Don't continue normal TTMsg proccessing
+// }
+
+void motorWriteSpeed(TTMsg msg, byte offset, bool direction, int speed) { // speed is value 0 - 860
+    int percent_speed = constrain(map(speed, 0, 1024, 0, 400), 0, 400);   // seprate func for negative vals (regen)
+    // Serial.println(percent_speed);
+    //Calculations value = (high_byte x 256) + low_byte
+    byte low_byte = percent_speed % 256;
+    byte high_byte = percent_speed / 256;
+    msg.id = SPEEDWRITE_ADD + offset - MOTOR_STATIC_OFFSET;
+    // Serial.println(msg.id);
+    msg.ext = 0;
+    msg.len = 8;
+    msg.buf[0] = low_byte; // NM
+    msg.buf[1] = high_byte;
+    msg.buf[2] = 0; // Speed
+    msg.buf[3] = 0;
+    msg.buf[4] = direction;           // Direction
+    msg.buf[5] = START_BUTTON_PUSHED; // Inverter enable byte
+    msg.buf[6] = 0;                   // Last two are the maximum torque values || if 0 then defualt values are set
+    msg.buf[7] = 0;
+    writeTTMsg(msg);
+}
+
+void mcSendMCCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit) {
+}
+
+void torqueVector(int torques[2]) {
+    int pedal = 0; // Read Can message PEDALVALUE // NOTE: Receive from front teensy
+    /* VVVVVVVVV TORQUE VECTORING ALGORITHMS BELOW VVVVVVVVV */
+    torques[0] = pedal;
+    torques[1] = pedal;
+}
+
 State::State_t *ECUStates::Driving_Mode_State::run(void) {
     Log.i(ID, "Driving mode on");
-    Canbus::enableInterrupts(true);
+    // Canbus::enableInterrupts(true);
 
     while (true) {
         Canbus::update();
+        // TODO: Send fault reset to MCs
+        Log.d(ID, "Sending Fault reset to MCs complete");
+
+        for (size_t i = 0; i < 4; i++) {   // IMPROVE: Send only once? Check MC heartbeat catches it
+            mcSendMCCommand(0x0, 0, 0, 0); // MC 1
+            mcSendMCCommand(0x0, 0, 1, 0); // MC 2
+            delay(10);
+        }
+
+        int MotorTorques[2];
+        torqueVector(MotorTorques);
+
+        mcSendMCCommand(0x0, MotorTorques[0], 0, 0); // MC 1
+        mcSendMCCommand(0x0, MotorTorques[1], 1, 0); // MC 2
+
+        /* Front Teensy Exclusive */
+        // GAUGE
+        // receive rpm of MCs, interpret, then send to from teensy for logging
+        int MC_Rpm_Val_1 = 0; // Canbus message from MCs
+        int MC_Rpm_Val_2 = 0; // Canbus message from MCs
+        int MC_Spd_Val_1 = MC_Rpm_Val_1;
+        int MC_Spd_Val_2 = MC_Rpm_Val_2;
+        int speed = (MC_Spd_Val_1 + MC_Spd_Val_2) / 2; // Send to front teensy
+        Log.i(ID, "Current Motor Speed:", speed);
+        Log.i(ID, "Current Power Value:", MC_Pwr_Val_1 + MC_Pwr_Val_2); // Canbus message from MCs
+        Log.i(ID, "BMSStateOfChargeValue: ", BMSStateOfChargeValue);    // Canbus message
+        /* End Front Teensy Exclusive */
+
+        Log.w(ID, "Going back to Idle state");
+        // push button is same as idlestate
+
         // Pins::update(); // TODO: uncomment once analog caching is done
+        if (false) // TODO: Check Fault
+        {
+        }
     }
 
-    Canbus::enableInterrupts(false);
+    // Canbus::enableInterrupts(false);
     Log.i(ID, "Driving mode off");
     return &ECUStates::Idle_State;
 }
