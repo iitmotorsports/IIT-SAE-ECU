@@ -17,6 +17,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+// TODO: send messages through can line to other teensy
 // IMPROVE: Add option to log to an sd card instead/aswell
 
 #if CONF_LOGGING_MAPPED_MODE > 0
