@@ -2,7 +2,7 @@
  * @file CanBusMessages.def
  * @author IR
  * @brief Define incoming CAN line messages
- * @version 0.1
+ * @version 0.2
  * @date 2020-11-15
  * 
  * @copyright Copyright (c) 2020
@@ -17,21 +17,24 @@
 #include "Messages.hpp"
 #include "PPhelp.h"
 
+#define OUTGOING 1
+#define INCOMING 0
+
 /**
  * @brief Defines the Can bus messages that will be received
  * 
- * Every definition is given a function that deals with the received message.
+ * Every definition is given a direction denoting whether it is incoming or outgoing
  * 
  * Unless it is the last entry, this is how to add a new message
  * 
- * X(CAN address, function) \
+ * X(CAN address, direction) \
  * 
  * Only the last entry should NOT have a '\'
  * 
- * For now, all messages that should be used are in the namespace CanbusMsg
+ * @note Currently, address 0x0000 cannot be used
  */
-#define CAN_MESSAGES             \
-    X(0, CanbusMsg::BMSFaultMsg) \
-    X(10, CanbusMsg::RMSFaultMsg)
+#define CAN_MESSAGES \
+    X(0, INCOMING)   \
+    X(10, INCOMING)
 
 #endif // __ECU_CANBUSMESSAGES_H__

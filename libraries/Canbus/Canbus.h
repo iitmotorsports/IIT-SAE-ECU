@@ -26,46 +26,69 @@
 namespace Canbus {
 
 /**
+ * @brief Update the Canbus line
+ * This update function will check the rx buffer for any messages and update values.
+ * Must be run periodically when using canbus
+ */
+void update(void);
+
+/**
  * @brief Setup the teensy Canbus line
  */
 void setup(void);
 
 /**
- * @brief Update the Canbus line
- * This update function will check the canbus for any messages and run the appropriate handler
+ * @brief Get raw data from a canbus address
+ * 
+ * @note Only valid incoming addresses will put data onto the given buffer
+ * 
+ * @param address The incoming address
+ * @param buf the buffer to copy data to
  */
-void update(void);
+void getData(const uint32_t address, uint8_t buf[8]);
 
 /**
- * @brief Enable mailbox interrupts, allowing any message handlers to run
- * 
- * @param enable boolean
+ * @brief Get the buffer of an outgoing address in order to set it's values to be pushed later.
+ * Use pushData to push the data after modifying the buffer.
+ * Invalid addresses will return a buffer that is ignored.
+ * @param address The outgoing address
+ * @return uint8_t[8] buffer array of the message, length 8
  */
-void enableInterrupts(bool enable); // NOTE: Does it need an explicit T/F ?
+uint8_t *getBuffer(const uint32_t address);
 
 /**
- * @brief Get the message from a mailbox if there is any
+ * @brief queue and address's buffer to be pushed.
+ * Invalid addresses will not do anything.
  * 
- * @note Interrupts must be disabled or no message will be returned
- * @note Do not modify the mailbox that is returned
- * 
- * @param MB Mailbox number
- * @return CAN_message_t returns a FlexCAN message, message will be completely empty if nothing was received
+ * @param address The outgoing address
  */
-CAN_message_t getMailbox(FLEXCAN_MAILBOX MB);
+void pushData(const uint32_t address);
 
 /**
- * @brief Set the handle function, will be called whenever any message is received
- * Use Canbus::getMailbox if only a specifc message is needed
+ * @brief Send raw data over a given canbus address using a given array
  * 
- * @param handler Message handle accepts a `const CANFD_message_t &msg` and returns `void`
+ * @note Function does not verify that address is outgoing, undefined behavior will occur if data is sent thorugh an incoming address
+ * 
+ * @param address The outgoing address
  */
-void setHandle(_MB_ptr handler);
+void sendData(const uint32_t address, uint8_t buf[8]);
 
 /**
- * @brief removes any handle function if there is one
+ * @brief Send raw data over a given canbus address using given values
+ * 
+ * @note Function does not verify that address is outgoing, undefined behavior will occur if data is sent thorugh an incoming address
+ * 
+ * @param address The outgoing address
+ * @param buf_0 byte 0 of the outgoing buffer
+ * @param buf_1 byte 1 of the outgoing buffer
+ * @param buf_2 byte 2 of the outgoing buffer
+ * @param buf_3 byte 3 of the outgoing buffer
+ * @param buf_4 byte 4 of the outgoing buffer
+ * @param buf_5 byte 5 of the outgoing buffer
+ * @param buf_6 byte 6 of the outgoing buffer
+ * @param buf_7 byte 7 of the outgoing buffer
  */
-void clearHandle(void);
+void sendData(const uint32_t address, const uint8_t buf_0 = 0, const uint8_t buf_1 = 0, const uint8_t buf_2 = 0, const uint8_t buf_3 = 0, const uint8_t buf_4 = 0, const uint8_t buf_5 = 0, const uint8_t buf_6 = 0, const uint8_t buf_7 = 0);
 
 } // namespace Canbus
 
