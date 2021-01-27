@@ -22,6 +22,7 @@ static LOG_TAG ID = "Canbus";
 
 #define X(...) ,
 static const int ADDRESS_COUNT = PP_NARG_MO(CAN_MESSAGES);
+static const int TX_MAILBOXES = CONF_FLEXCAN_TX_MAILBOXES;
 #undef X
 
 FlexCAN_T4<CONF_FLEXCAN_CAN_SELECT, RX_SIZE_256, TX_SIZE_16> F_Can;
@@ -36,27 +37,21 @@ static uint32_t addressSemaphore = 0; // Address buffer semaphore, // NOTE: addr
 static CAN_message_t receive;
 static CAN_message_t send;
 
-static void _setupMB(const FLEXCAN_MAILBOX MB, const bool outgoing) {
-    if (outgoing) {
-        Log.d(ID, "Setting up TX MB #", MB);
-        F_Can.setMB(MB, TX, NONE);
-    } else {
-        Log.d(ID, "Setting up RX MB #", MB);
-        F_Can.setMB(MB, RX, NONE);
-    }
-}
-
-// IMPROVE: better auto allocation of mailboxes
 static void _setMailboxes() {
-    F_Can.setMaxMB(ADDRESS_COUNT); // set number of possible TX & RX MBs
+    F_Can.setMaxMB(16); // set number of possible TX & RX MBs // NOTE: Teensy 3.6 only has max 16 MBs
+    for (int i = 0; i < CONF_FLEXCAN_TX_MAILBOXES; i++) {
+        F_Can.setMB((FLEXCAN_MAILBOX)i, TX, EXT);
+    }
+    for (int i = CONF_FLEXCAN_TX_MAILBOXES; i < 16; i++) {
+        F_Can.setMB((FLEXCAN_MAILBOX)i, RX, EXT);
+    }
 
-    int MB = 0;
+    int c = 0;
 // Auto setup TX & RX MBs
-#define X(address, direction)                 \
-    _setupMB((FLEXCAN_MAILBOX)MB, direction); \
-    addressList[MB] = address;                \
-    addressFlow[MB] = direction;              \
-    MB++;
+#define X(address, direction)   \
+    addressList[c] = address;   \
+    addressFlow[c] = direction; \
+    c++;
     CAN_MESSAGES
 #undef X
     for (size_t i = 0; i < ADDRESS_COUNT; i++) { // Selection sort values
