@@ -28,9 +28,9 @@
  * Only the last entry should NOT have a '\'
  * 
  */
-#define HARD_FAULT_ADD \
-    X(0x0, 0x4000020120100080, _LogPrebuildString("BMS")) \ 
-    X(0x0, 0x0000000000000000, _LogPrebuildString("RMS"))
+#define PIN_FAULTS \
+    X(0x0, 1, =, _LogPrebuildString("BMS")) \ 
+    X(0x0, 45, >, _LogPrebuildString("RMS"))
 
 /**
  * @brief Defines CAN addresses that should be checked for hard faults
