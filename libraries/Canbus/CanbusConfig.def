@@ -33,7 +33,7 @@
 
 /**
  * @brief Set whether to run in debug mode
- * basically just enables logging
+ * basically just enables debug logging
  */
 #define CONF_FLEXCAN_DEBUG 1
 

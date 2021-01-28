@@ -15,6 +15,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#include "CanBusAddresses.def"
 #include "CanbusConfig.def"
 #include "FlexCAN_T4.h"
 #include "WProgram.h"

@@ -21,7 +21,7 @@ namespace Canbus {
 static LOG_TAG ID = "Canbus";
 
 #define X(...) ,
-static const int ADDRESS_COUNT = PP_NARG_MO(CAN_MESSAGES);
+static const int ADDRESS_COUNT = PP_NARG_MO(CAN_ADDRESS);
 static const int TX_MAILBOXES = CONF_FLEXCAN_TX_MAILBOXES;
 #undef X
 
@@ -52,7 +52,7 @@ static void _setMailboxes() {
     addressList[c] = address;   \
     addressFlow[c] = direction; \
     c++;
-    CAN_MESSAGES
+    CAN_ADDRESS
 #undef X
     for (size_t i = 0; i < ADDRESS_COUNT; i++) { // Selection sort values
         uint32_t add = addressList[i];
