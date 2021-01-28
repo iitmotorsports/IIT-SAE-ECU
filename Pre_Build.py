@@ -271,7 +271,7 @@ async def getUniqueTAG(findDuplicate=None):
     # Attempt to clear up some IDs
     raise OutOfIDsException
 
-
+FIND_SPECIAL_REGEX = r"_LogPrebuildString\s*\(\s*(\".*?\")\s*\)" # -> _LogPrebuildString("Str") # Special case where we can indirectly allocate a string
 FIND_CALL_REGEX_SS = r"Log(\.[diwef])?\s*\(\s*(\".*?\")\s*,\s*(\".*?\")\s*\)\s*;"  # -> Log("Str", "Str");
 FIND_CALL_REGEX_VS = r"Log(\.[diwef])?\s*\(\s*([^\"]+?)\s*,\s*(\".*?\")\s*\)\s*;"  # -> Log(Var, "Str");
 FIND_CALL_REGEX_SSV = r"Log(\.[diwef])?\s*\(\s*(\".*?\")\s*,\s*(\".*?\")\s*,\s*([^\"]+?)\s*\)\s*;"  # -> Log("Str", "Str", Var);
@@ -298,7 +298,7 @@ class FileEntry:  # IMPROVE: Make IDs persistent
     workingPath = ""
     offset = ""
     modified = False
-    error = None
+    error = ""
 
     def __init__(self, RawPath, FilePath, FileName, Offset):
         if not os.path.exists(FilePath):
@@ -331,6 +331,10 @@ class FileEntry:  # IMPROVE: Make IDs persistent
         ID_SEM.release()
         return numberID
 
+    async def SPECIAL_STR(self, line, reMatch):
+        ID = await self.addNewID("", reMatch) # Special strings are always LOG for simplicity
+        return line.replace(reMatch, str(ID))
+
     async def VSX(self, line, reMatch):
         ID = await self.addNewID(reMatch[0], reMatch[2])
         return line.replace(reMatch[2], str(ID))
@@ -349,55 +353,58 @@ class FileEntry:  # IMPROVE: Make IDs persistent
         lineNo = 1
         synced = False
         newline = ""
-        try:
-            with open(self.path, "r", encoding="utf-8") as f1, open(tempPath, "w", encoding="utf-8") as f2:
-                for line in f1:
+        with open(self.path, "r", encoding="utf-8") as f1, open(tempPath, "w", encoding="utf-8") as f2:
+            for line in f1:
+                try:
                     newline = await function(line)
                     f2.buffer.write(newline.encode("utf-8"))
+                except Exception as e: # If prev exception was about IO then oh well
+                    self.error = "{}{}{}\n".format(
+                        self.error,
+                        Text.warning("  {}:{}\n".format(self.path, lineNo)),
+                        "   {}\n    > {}".format(Text.red(type(e).__name__), splitErrorString(e)),
+                    )
+                finally:
                     lineNo += 1
-            self.modified = not syncFile(tempPath, "", self.rawpath, self.workingPath)
-            synced = True
-        except Exception as e:
-            self.error = "{}{}".format(
-                Text.warning("  {}:{}\n".format(self.path, lineNo)),
-                "   {}\n    > {}".format(Text.red(type(e).__name__), splitErrorString(e)),
-            )
-        finally:
-            if not synced:
-                self.modified = not syncFile(self.path, "", self.rawpath, self.workingPath)  # If prev exception was about IO then oh well
-            os.remove(tempPath)
+        self.modified = not syncFile(tempPath, "", self.rawpath, self.workingPath)
+        os.remove(tempPath)
 
     async def findLogMatch(self, line):
         newline = line
-        VS = re.findall(FIND_CALL_REGEX_VS, line)
-        if len(VS) != 0:  # ¯\_(ツ)_/¯
-            newline = await self.VSX(line, VS[0])
+
+        SPECIAL = re.findall(FIND_SPECIAL_REGEX, line)
+        if SPECIAL:
+            newline = await self.SPECIAL_STR(line, SPECIAL[0])
         else:
-            TAG_GOOD = re.findall(FIND_TAG_DEF_REGEX_GOOD, line)
-            if TAG_GOOD:
-                newline = await self.NEW_TAG(line, TAG_GOOD[0])
+            VS = re.findall(FIND_CALL_REGEX_VS, line)
+            if len(VS) != 0:  # ¯\_(ツ)_/¯
+                newline = await self.VSX(line, VS[0])
             else:
-                VSV = re.findall(FIND_CALL_REGEX_VSV, line)
-                if len(VSV) != 0:
-                    newline = await self.VSX(line, VSV[0])
+                TAG_GOOD = re.findall(FIND_TAG_DEF_REGEX_GOOD, line)
+                if TAG_GOOD:
+                    newline = await self.NEW_TAG(line, TAG_GOOD[0])
                 else:
-                    TAG_BAD = re.findall(FIND_TAG_DEF_REGEX_BAD, line)
-                    if TAG_BAD:
-                        TAG_BAD = TAG_BAD[0]
-                        raise MalformedTAGDefinitionException(TAG_BAD[0] + Text.error(TAG_BAD[1]) + TAG_BAD[2])
+                    VSV = re.findall(FIND_CALL_REGEX_VSV, line)
+                    if len(VSV) != 0:
+                        newline = await self.VSX(line, VSV[0])
                     else:
-                        BAD = re.findall(FIND_CALL_REGEX_BAD, line)
-                        if BAD:
-                            BAD = BAD[0]
-                            raise MalformedLogCallException(BAD[0] + Text.error(BAD[1]) + BAD[2])
+                        TAG_BAD = re.findall(FIND_TAG_DEF_REGEX_BAD, line)
+                        if TAG_BAD:
+                            TAG_BAD = TAG_BAD[0]
+                            raise MalformedTAGDefinitionException(TAG_BAD[0] + Text.error(TAG_BAD[1]) + TAG_BAD[2])
                         else:
-                            SS = re.findall(FIND_CALL_REGEX_SS, line)
-                            if len(SS) != 0:
-                                newline = await self.SSX(line, SS[0])
+                            BAD = re.findall(FIND_CALL_REGEX_BAD, line)
+                            if BAD:
+                                BAD = BAD[0]
+                                raise MalformedLogCallException(BAD[0] + Text.error(BAD[1]) + BAD[2])
                             else:
-                                SSV = re.findall(FIND_CALL_REGEX_SSV, line)
-                                if len(SSV) != 0:
-                                    newline = await self.SSX(line, SSV[0])
+                                SS = re.findall(FIND_CALL_REGEX_SS, line)
+                                if len(SS) != 0:
+                                    newline = await self.SSX(line, SS[0])
+                                else:
+                                    SSV = re.findall(FIND_CALL_REGEX_SSV, line)
+                                    if len(SSV) != 0:
+                                        newline = await self.SSX(line, SSV[0])
         return newline
 
     async def scan(self):
@@ -607,7 +614,7 @@ def printResults():
                 c += 1
             else:
                 m += 1
-        if f.error:
+        if f.error != "":
             Files.add(f)
     if m > 1:
         print("  {}".format(Text.underline(Text.green("{} more file{}".format(m, "s" if m > 1 else "")))))
@@ -619,7 +626,7 @@ def printResults():
     print(Text.header("\nFile Errors:"))
     for f in Files:
         if c < maxPrinted:
-            print(f.error)
+            print(f.error.strip("\n"))
             c += 1
         else:
             m += 1
