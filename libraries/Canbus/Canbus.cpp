@@ -94,6 +94,18 @@ static void _receiveCan(const CAN_message_t &msg) {
     memcpy(addressBuffers[pos], msg.buf, 8);
 }
 
+void enableInterrupts(bool enable) {
+    F_Can.enableMBInterrupts(enable);
+
+#if CONF_FLEXCAN_DEBUG
+    if (enable) {
+        Log.d(ID, "Interrupts enabled");
+    } else {
+        Log.d(ID, "Interrupts disabled");
+    }
+#endif
+}
+
 void setup(void) {
     _setMailboxes();
     F_Can.setBaudRate(CONF_FLEXCAN_BAUD_RATE);

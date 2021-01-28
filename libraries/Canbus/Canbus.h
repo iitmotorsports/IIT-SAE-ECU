@@ -38,6 +38,14 @@ void update(void);
 void setup(void);
 
 /**
+ * @brief Enable mailbox interrupts, allowing values to automaticaly update.
+ * Enabled by default
+ * 
+ * @param enable boolean
+ */
+void enableInterrupts(bool enable);
+
+/**
  * @brief Get raw data from a canbus address
  * 
  * @note Only valid incoming addresses will put data onto the given buffer
