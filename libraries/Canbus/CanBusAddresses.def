@@ -14,7 +14,6 @@
 #define __ECU_CANBUSMESSAGES_H__
 // @endcond
 
-#include "Messages.hpp"
 #include "PPhelp.h"
 
 #define OUTGOING 1

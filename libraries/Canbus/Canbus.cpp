@@ -70,26 +70,6 @@ static void _setMailboxes() {
     }
 }
 
-void setup(void) {
-    _setMailboxes();
-    F_Can.setBaudRate(CONF_FLEXCAN_BAUD_RATE);
-    F_Can.onReceive(_receiveCan);
-    F_Can.enableMBInterrupts();
-    F_Can.begin();
-    // updateTimer.begin(update, 1); // FIXME: choose an appropriate update time
-}
-
-void update(void) { // TODO: Should we update using a timer or just through state loops?
-    F_Can.events();
-}
-
-static void _receiveCan(const CAN_message_t &msg) {
-    if (addressSemaphore == msg.id) // Throw data away, we are already processing previous msg
-        return;
-    uint pos = _getAddressPos(msg.id);
-    memcpy(addressBuffers[pos], msg.buf, 8);
-}
-
 // IMPROVE: We have to binary search all mailboxes each time we want to get data
 static uint _getAddressPos(const uint32_t address) {
     int s = 0;
@@ -105,6 +85,26 @@ static uint _getAddressPos(const uint32_t address) {
         }
     }
     return ADDRESS_COUNT; // Out of range index
+}
+
+static void _receiveCan(const CAN_message_t &msg) {
+    if (addressSemaphore == msg.id) // Throw data away, we are already processing previous msg
+        return;
+    uint pos = _getAddressPos(msg.id);
+    memcpy(addressBuffers[pos], msg.buf, 8);
+}
+
+void setup(void) {
+    _setMailboxes();
+    F_Can.setBaudRate(CONF_FLEXCAN_BAUD_RATE);
+    F_Can.onReceive(_receiveCan);
+    F_Can.enableMBInterrupts();
+    F_Can.begin();
+    // updateTimer.begin(update, 1); // FIXME: choose an appropriate update time
+}
+
+void update(void) { // TODO: Should we update using a timer or just through state loops?
+    F_Can.events();
 }
 
 void getData(const uint32_t address, uint8_t buf[8]) {
