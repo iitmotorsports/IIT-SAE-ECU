@@ -27,6 +27,12 @@
 namespace Canbus {
 
 /**
+ * @brief The function type to pass to addCallback
+ * 
+ */
+typedef void (*canCallback)(uint8_t *);
+
+/**
  * @brief Update the Canbus line
  * This update function will check the rx buffer for any messages and update values.
  * If this function is never run, canbus messages will automaticaly update as they are received
@@ -81,6 +87,17 @@ void setSemaphore(const uint32_t address);
  * 
  */
 void clearSemaphore();
+
+/**
+ * @brief Add a callback to an incoming address.
+ * If an incoming address buffer is updated it will call the given function.
+ * Keep callbacks quick and simple.
+ * @note Only one callback per address
+ * @note If the semaphore is set to the given address the callback will not be called
+ * @note Semaphores do not have to be used within the function to read from the given buffer
+ * @param address The incoming address
+ */
+void addCallback(const uint32_t address, canCallback callback);
 
 /**
  * @brief queue and address's buffer to be pushed.

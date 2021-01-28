@@ -30,6 +30,7 @@ FlexCAN_T4<CONF_FLEXCAN_CAN_SELECT, RX_SIZE_256, TX_SIZE_16> F_Can;
 static uint32_t addressList[ADDRESS_COUNT];          // Sorted list of all the addresses
 static uint8_t addressBuffers[ADDRESS_COUNT + 1][8]; // Store buffers for every address, last entry used as failsafe
 static bool addressFlow[ADDRESS_COUNT];              // Denote whether an address is incoming or outgoing, mapped to addressList
+static canCallback callbacks[ADDRESS_COUNT];         // Store any and all callbacks
 // NOTE: From what I can tell, a semaphore is needed whenever Can.events is not used, as canMsg handlers will automaticlly run without it.
 static uint32_t addressSemaphore = 0; // Address buffer semaphore, // NOTE: address 0x0 cannot be used
 
@@ -92,6 +93,12 @@ static void _receiveCan(const CAN_message_t &msg) {
         return;
     uint pos = _getAddressPos(msg.id);
     memcpy(addressBuffers[pos], msg.buf, 8);
+    if (callbacks[pos]) // TODO: test whether having or not having a callback corresponds to true or false
+        callbacks[pos](addressBuffers[pos]);
+}
+
+void addCallback(const uint32_t address, canCallback callback) {
+    callbacks[_getAddressPos(address)] = callback;
 }
 
 void enableInterrupts(bool enable) {
