@@ -17,6 +17,7 @@
 // IMPROVE: pin priority
 // TODO: add analog resolution and frequency option
 
+#include "PinConfig.def"
 #include <stdint.h>
 #include <stdlib.h>
 
