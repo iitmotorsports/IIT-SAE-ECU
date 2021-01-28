@@ -1,0 +1,85 @@
+/**
+ * @file FaultConfig.def
+ * @author IR
+ * @brief Configure fault checking
+ * @version 0.1
+ * @date 2021-01-27
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
+#ifndef __ECU_FAULTCONFIG_DEF__
+// @cond
+#define __ECU_FAULTCONFIG_DEF__
+// @endcond
+
+#include "PPhelp.h"
+
+/**
+ * @brief Defines Pins that should be checked for faults
+ * 
+ * @note The identity calls the function _LogPrebuildString, this is used to notify Pre_Build.py of the string
+ * 
+ * Unless it is the last entry, this is how to add a new address
+ * 
+ * X(pin, value, comparator, identity) \
+ * 
+ * Only the last entry should NOT have a '\'
+ * 
+ */
+#define HARD_FAULT_ADD \
+    X(0x0, 0x4000020120100080, _LogPrebuildString("BMS")) \ 
+    X(0x0, 0x0000000000000000, _LogPrebuildString("RMS"))
+
+/**
+ * @brief Defines CAN addresses that should be checked for hard faults
+ * 
+ * @note For documentation purposes, the last parameter is only used to identify what each message is for
+ * 
+ * Unless it is the last entry, this is how to add a new address
+ * 
+ * X(CAN address, mask, tag) \
+ * 
+ * Only the last entry should NOT have a '\'
+ * 
+ */
+#define HARD_FAULT_ADD \
+    X(0x0, 0x4000020120100080, "BMS") \ 
+    X(0x0, 0x0000000000000000, "RMS")
+
+/**
+ * @brief Defines CAN addresses that should be checked for soft faults
+ * 
+ * @note For documentation purposes, the last parameter is only used to identify what each message is for
+ * 
+ * Unless it is the last entry, this is how to add a new address
+ * 
+ * X(CAN address, mask, tag) \
+ * 
+ * Only the last entry should NOT have a '\'
+ * 
+ */
+#define SOFT_FAULT_ADD                \
+    X(0x0, 0x0000000000000000, "nil") \
+    X(0x0, 0x0000000000000000, "nil")
+
+/**
+ * @brief Defines address bit field identifiers
+ * 
+ * If a bit on an address has an identifier we will know exactly what fault occurred and can notify it through Log
+ * 
+ * @note The identity calls the function _LogPrebuildString, this is used to notify Pre_Build.py of the string
+ * 
+ * Unless it is the last entry, this is how to add a new address
+ * 
+ * X(CAN address, bitmask, _LogPrebuildString(identity)) \
+ * 
+ * Only the last entry should NOT have a '\'
+ * 
+ */
+#define ID_FAULT                                                                                          \
+    X(0x0, 0b0000000000000000000000000000000000000000000000000000000000000000, _LogPrebuildString("nil")) \
+    X(0x0, 0b0000000000000000000000000000000000000000000000000000000000000000, _LogPrebuildString("nil"))
+
+#endif // __ECU_FAULTCONFIG_DEF__
