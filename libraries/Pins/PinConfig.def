@@ -23,6 +23,18 @@
 
 // @endcond
 
+// Define pin values here
+#define PINS_LED 13
+#define PINS_AIR1 0
+#define PINS_AIR2 0
+#define PINS_PRECHARGE_RELAY 0
+#define PINS_CHARGING_SIGNAL 0
+#define PINS_CHARGING_RELAY 0
+#define PINS_CHARGING_VOLTAGE 0
+#define PINS_CHARGING_INPUT 0
+#define PINS_BUTTON_INPUT 0
+#define PINS_SOUND_DRIVER 0
+
 /**
  * @brief The defintions of every pin
  *
@@ -36,11 +48,16 @@
  * 
  * Only the last entry should NOT have a '\'
  */
-#define TEENSY_PINS           \
-    X(13, DIGITAL, OUTPUT)    \
-    X(PIN_A7, ANALOG, INPUT)  \
-    X(PIN_A6, ANALOG, OUTPUT) \
-    X(4, DIGITAL, OUTPUT)     \
-    X(37, DIGITAL, INPUT) // Testing
+#define TEENSY_PINS                         \
+    X(PINS_LED, DIGITAL, OUTPUT)            \
+    X(PINS_AIR1, DIGITAL, OUTPUT)           \
+    X(PINS_AIR2, DIGITAL, OUTPUT)           \
+    X(PINS_PRECHARGE_RELAY, DIGITAL, INPUT)  \
+    X(PINS_CHARGING_SIGNAL, DIGITAL, INPUT) \
+    X(PINS_CHARGING_RELAY, DIGITAL, OUTPUT) \
+    X(PINS_CHARGING_VOLTAGE, ANALOG, INPUT) \
+    X(PINS_CHARGING_INPUT, DIGITAL, INPUT)  \
+    X(PINS_BUTTON_INPUT, DIGITAL, INPUT)    \
+    X(PINS_SOUND_DRIVER, DIGITAL, OUTPUT)
 
 #endif // __ECU_PINCONFIG_H__
