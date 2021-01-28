@@ -23,6 +23,8 @@ static const int SOFT_CAN_COUNT = PP_NARG_MO(SOFT_FAULT_ADD);
 static const int CAN_COUNT = PP_NARG_MO(HARD_FAULT_ADD) + PP_NARG_MO(SOFT_FAULT_ADD); // Number of Can addresses we need to account for
 #undef X
 
+// TODO: add pin fault checks
+
 // NOTE: buffers are actually uint8_t buf[8] but to help mask them they are casted to a uint64_t*
 static uint64_t *hard_buffers[CAN_COUNT];  // store the incoming message buffers to quickly access
 static uint32_t hard_addresses[CAN_COUNT]; // mapped to buffers to later identify what fault occurred
