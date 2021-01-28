@@ -19,6 +19,16 @@
 #define OUTGOING 1
 #define INCOMING 0
 
+// Define addresses values here
+#define ADD_BMS_SOC 0x0000
+#define ADD_BMS_VOLT 0x0000
+#define ADD_MC0_VOLT 0x0000
+#define ADD_MC1_VOLT 0x0000
+#define ADD_MC0_RPM 0x0000
+#define ADD_MC1_RPM 0x0000
+#define ADD_MC0_PWR 0x0000
+#define ADD_MC1_PWR 0x0000
+
 /**
  * @brief Defines the Can bus addresses that will be used to receive and send data
  * 
@@ -32,8 +42,14 @@
  * 
  * @note Currently, address 0x0000 cannot be used
  */
-#define CAN_MESSAGES \
-    X(0, INCOMING)   \
-    X(10, INCOMING)
+#define CAN_ADDRESS           \
+    X(ADD_BMS_SOC, INCOMING)  \
+    X(ADD_BMS_VOLT, INCOMING) \
+    X(ADD_MC0_VOLT, INCOMING) \
+    X(ADD_MC1_VOLT, INCOMING) \
+    X(ADD_MC0_RPM, INCOMING)  \
+    X(ADD_MC1_RPM, INCOMING)  \
+    X(ADD_MC0_PWR, INCOMING)  \
+    X(ADD_MC1_PWR, INCOMING)
 
 #endif // __ECU_CANBUSMESSAGES_H__
