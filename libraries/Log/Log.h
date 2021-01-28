@@ -13,6 +13,8 @@
 #ifndef __ECU_LOGGING_H__
 #define __ECU_LOGGING_H__
 
+#define _LogPrebuildString(x) x
+
 #include "LogConfig.def"
 #include <stdint.h>
 #include <stdlib.h>
