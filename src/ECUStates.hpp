@@ -26,12 +26,9 @@ static struct Initialize : State::State_t {
  */
 static struct PreCharge_State : State::State_t {
 private:
-    static const uint8_t Air1_Pin = 13;                      // TODO: Air1_Pin out
-    static const uint8_t Air2_Pin = 13;                      // TODO: Air2_Pin out
-    static const uint8_t Precharge_Relay_Pin = 13;           // TODO: Precharge_Relay_Pin out
-    uint8_t *BMS_Voltage_Buffer = Canbus::getBuffer(0x0000); // TODO: BMS Volt address
-    uint8_t *MC0_Voltage_Buffer = Canbus::getBuffer(0x0000); // TODO: MC0 Volt address
-    uint8_t *MC1_Voltage_Buffer = Canbus::getBuffer(0x0000); // TODO: MC1 Volt address
+    uint8_t *BMS_Voltage_Buffer = Canbus::getBuffer(ADD_BMS_VOLT);
+    uint8_t *MC0_Voltage_Buffer = Canbus::getBuffer(ADD_MC0_VOLT);
+    uint8_t *MC1_Voltage_Buffer = Canbus::getBuffer(ADD_MC1_VOLT);
     State::State_t *PreCharFault();
     bool voltageCheck();
 
@@ -46,11 +43,6 @@ public:
  * 
  */
 static struct Idle_State : State::State_t {
-private:
-    static const uint8_t Button_Input_Pin = 37;   // TODO: Button input
-    static const uint8_t Charging_Input_Pin = 37; // TODO: Charging input
-
-public:
     LOG_TAG ID = "Idle State";
     State::State_t *run(void);
 } Idle_State;
@@ -59,12 +51,6 @@ public:
  * @brief charging state has booleans of relay charge, charging on, fault, and voltage data as a string
  */
 static struct Charging_State : State::State_t {
-private:
-    static const uint8_t Charging_Relay_Pin = 13;   // TODO: Charging Relay out
-    static const uint8_t Charging_Signal_Pin = 37;  // TODO: Charging Signal in
-    static const uint8_t Charging_Voltage_Pin = 37; // TODO: Charging Volt in
-
-public:
     LOG_TAG ID = "Charging State";
     bool ChargingOn;
     bool fault = false;
@@ -79,9 +65,6 @@ public:
  * for this state (input time acknowledged)
  */
 static struct Button_State : State::State_t { // NOTE: Is button state just play sound state?
-private:
-    static const uint8_t Sound_Driver_Pin = 45; // TODO: Sound Driver Pin out
-public:
     LOG_TAG ID = "Button State";
     State::State_t *run(void);
 
@@ -94,11 +77,11 @@ public:
  */
 static struct Driving_Mode_State : State::State_t {
 private:
-    uint8_t *MC0_RPM_Buffer = Canbus::getBuffer(0x0000); // TODO: MC0 RPM address
-    uint8_t *MC1_RPM_Buffer = Canbus::getBuffer(0x0000); // TODO: MC1 RPM address
-    uint8_t *MC0_PWR_Buffer = Canbus::getBuffer(0x0000); // TODO: MC0 PWR address
-    uint8_t *MC1_PWR_Buffer = Canbus::getBuffer(0x0000); // TODO: MC1 PWR address
-    uint8_t *BMS_SOC_Buffer = Canbus::getBuffer(0x0000); // TODO: BMS state of charge address
+    uint8_t *MC0_RPM_Buffer = Canbus::getBuffer(ADD_MC0_RPM);
+    uint8_t *MC1_RPM_Buffer = Canbus::getBuffer(ADD_MC1_RPM);
+    uint8_t *MC0_PWR_Buffer = Canbus::getBuffer(ADD_MC0_PWR);
+    uint8_t *MC1_PWR_Buffer = Canbus::getBuffer(ADD_MC1_PWR);
+    uint8_t *BMS_SOC_Buffer = Canbus::getBuffer(ADD_BMS_SOC);
     void sendMCCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit);
     void torqueVector(int torques[2]);
     uint32_t BMSSOC();
