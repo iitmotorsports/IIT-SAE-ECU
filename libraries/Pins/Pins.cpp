@@ -18,6 +18,11 @@
 #include "Log.h"
 #include "PinConfig.def"
 
+namespace Pins {
+
+static IntervalTimer canbusPinUpdate;
+static const LOG_TAG ID = "Pins";
+
 static int A_GPIO[CORE_NUM_TOTAL_PINS]; // IMPROVE: Use CORE_NUM_ANALOG instead
 #define X ,
 static int CAN_GPIO[PP_NARG_MO(CANBUS_PINS)]; // Number of pins to be read through canbus
@@ -53,9 +58,10 @@ static int CAN_GPIO[PP_NARG_MO(CANBUS_PINS)]; // Number of pins to be read throu
 #define __INTERNAL_READ_ANALOG(PIN) A_GPIO[PIN] = analogRead(PIN);
 #define __INTERNAL_READ_DIGITAL(PIN)
 
-static const LOG_TAG ID = "Pins";
+static void _pushCanbusPins(void) {
+}
 
-int Pins::getPinValue(uint8_t GPIO_Pin) {
+int getPinValue(uint8_t GPIO_Pin) {
     if (GPIO_Pin > CORE_NUM_TOTAL_PINS) {
         Log.e(ID, "Acessing out of range pin", GPIO_Pin);
         return 0;
@@ -68,7 +74,7 @@ int Pins::getPinValue(uint8_t GPIO_Pin) {
     }
 }
 
-void Pins::setPinValue(uint8_t GPIO_Pin, int value) {
+void setPinValue(uint8_t GPIO_Pin, int value) {
     if (GPIO_Pin > CORE_NUM_TOTAL_PINS) {
         return;
 #define X(pin, Type, IO) __WRITEPIN_##Type##IO(pin, value);
@@ -77,16 +83,19 @@ void Pins::setPinValue(uint8_t GPIO_Pin, int value) {
     }
 }
 
-void Pins::update(void) {
+void update(void) {
 #define X(pin, Type, IO) __INTERNAL_READ_##Type(pin);
     TEENSY_PINS
 #undef X
 }
 
-void Pins::initialize(void) {
+void initialize(void) {
 #define X(pin, Type, IO) pinMode(pin, IO);
     TEENSY_PINS
 #undef X
+    canbusPinUpdate.begin(_pushCanbusPins, CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO);
 }
+
+} // namespace Pins
 
 // @endcond

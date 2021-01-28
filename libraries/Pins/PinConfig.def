@@ -23,6 +23,8 @@
 
 // @endcond
 
+#define CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO 20
+
 // Define pin values here
 #define PINS_LED 13
 #define PINS_AIR1 0
@@ -34,6 +36,8 @@
 #define PINS_CHARGING_INPUT 0
 #define PINS_BUTTON_INPUT 0
 #define PINS_SOUND_DRIVER 0
+
+// Define canbus pin values here, must all be unique
 
 /**
  * @brief The defintions of every physical pin
