@@ -15,6 +15,8 @@
 #include "FaultConfig.def"
 #include "Log.h"
 
+namespace Fault {
+
 static LOG_TAG ID = "Canbus";
 
 #define X(...) ,
@@ -38,7 +40,7 @@ static uint64_t soft_masks[CAN_COUNT];     // mapped to addresses to later ident
 static uint32_t faulted_address = 0; // Store what address caused a fault if it caused it
 static uint64_t faulted_buffer = 0;  // Store the buffer of the message if it caused a fault, must be casted into a uint8_t buf[8]
 
-void Fault::setup(void) {
+void setup(void) {
     int i = 0;
 #define X(add, mask, tag)                                 \
     hard_addresses[i] = add;                              \
@@ -58,13 +60,14 @@ void Fault::setup(void) {
     Log.d(ID, "Finished setup of buffers");
 }
 
-void Fault::logFault(void) {
+void logFault(void) {
     if (faulted_address) {
         Log.w(ID, "Faulted address:", faulted_address);
 #define X(add, mask, id)                                   \
     if (add == faulted_address && mask & faulted_buffer) { \
         Log.e(ID, id);                                     \
     }
+        // Ignore Pre_Build error
 
         ID_FAULT
 #undef X
@@ -72,32 +75,40 @@ void Fault::logFault(void) {
 }
 
 // NOTE: If we want to ensure we check all faults, even after tripping one, we need 2 more arrays
-bool Fault::hardFault(void) { // FIXME: canbus semaphore
+
+bool hardFault(void) {
     for (size_t i = 0; i < HARD_CAN_COUNT; i++) {
+        Canbus::setSemaphore(hard_addresses[i]);
         if (*hard_buffers[i] & hard_masks[i]) {
             faulted_address = hard_addresses[i];
             memcpy(&faulted_buffer, hard_buffers, 8); // 8 byte buffer
+            Canbus::clearSemaphore();
             return true;
         }
     }
+    Canbus::clearSemaphore();
     Log.d(ID, "No hard fault tripped");
     return false;
 }
 
-bool Fault::softFault(void) {
-    for (size_t i = 0; i < HARD_CAN_COUNT; i++) {
-        if (*hard_buffers[i] & hard_masks[i]) {
-            faulted_address = hard_addresses[i];
-            memcpy(&faulted_buffer, hard_buffers, 8); // 8 byte buffer
+bool softFault(void) {
+    for (size_t i = 0; i < SOFT_CAN_COUNT; i++) {
+        Canbus::setSemaphore(soft_addresses[i]);
+        if (*soft_buffers[i] & soft_masks[i]) {
+            faulted_address = soft_addresses[i];
+            memcpy(&faulted_buffer, soft_buffers, 8); // 8 byte buffer
+            Canbus::clearSemaphore();
             return true;
         }
     }
+    Canbus::clearSemaphore();
     Log.d(ID, "No soft fault tripped");
     return false;
 }
 
-bool Fault::anyFault(void) {
+bool anyFault(void) {
     return hardFault() || softFault();
 }
 
-// @endcond
+} // namespace Fault
+  // @endcond
