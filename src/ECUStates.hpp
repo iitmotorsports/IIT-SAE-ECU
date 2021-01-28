@@ -26,13 +26,14 @@ static struct Initialize : State::State_t {
  */
 static struct PreCharge_State : State::State_t {
 private:
-    static const uint8_t Air1_Pin = 13;            // TODO: Air1_Pin out
-    static const uint8_t Air2_Pin = 13;            // TODO: Air2_Pin out
-    static const uint8_t Precharge_Relay_Pin = 13; // TODO: Precharge_Relay_Pin out
-    static const uint8_t BMS_Voltage_Pin = 37;     // TODO: BMS_Voltage_Pin in
-    static const uint8_t MC_Voltage_Pin = 37;      // TODO: MC_Voltage_Pin in
+    static const uint8_t Air1_Pin = 13;                      // TODO: Air1_Pin out
+    static const uint8_t Air2_Pin = 13;                      // TODO: Air2_Pin out
+    static const uint8_t Precharge_Relay_Pin = 13;           // TODO: Precharge_Relay_Pin out
+    uint8_t *BMS_Voltage_Buffer = Canbus::getBuffer(0x0000); // TODO: BMS Volt address
+    uint8_t *MC0_Voltage_Buffer = Canbus::getBuffer(0x0000); // TODO: MC0 Volt address
+    uint8_t *MC1_Voltage_Buffer = Canbus::getBuffer(0x0000); // TODO: MC1 Volt address
     State::State_t *PreCharFault();
-    bool checkPreFault();
+    bool voltageCheck();
 
 public:
     LOG_TAG ID = "PreCharge State";
@@ -62,7 +63,6 @@ private:
     static const uint8_t Charging_Relay_Pin = 13;   // TODO: Charging Relay out
     static const uint8_t Charging_Signal_Pin = 37;  // TODO: Charging Signal in
     static const uint8_t Charging_Voltage_Pin = 37; // TODO: Charging Volt in
-    bool checkChargingFault();
 
 public:
     LOG_TAG ID = "Charging State";
@@ -79,6 +79,9 @@ public:
  * for this state (input time acknowledged)
  */
 static struct Button_State : State::State_t { // NOTE: Is button state just play sound state?
+private:
+    static const uint8_t Sound_Driver_Pin = 45; // TODO: Sound Driver Pin out
+public:
     LOG_TAG ID = "Button State";
     State::State_t *run(void);
 
@@ -91,10 +94,14 @@ static struct Button_State : State::State_t { // NOTE: Is button state just play
  */
 static struct Driving_Mode_State : State::State_t {
 private:
-    elapsedMillis PollingTime;
-    bool Interrupts = false;
-    bool Driving_mode = false;
-    bool SafeToContinue = false;
+    uint8_t *MC0_RPM_Buffer = Canbus::getBuffer(0x0000); // TODO: MC0 RPM address
+    uint8_t *MC1_RPM_Buffer = Canbus::getBuffer(0x0000); // TODO: MC1 RPM address
+    uint8_t *MC0_PWR_Buffer = Canbus::getBuffer(0x0000); // TODO: MC0 PWR address
+    uint8_t *MC1_PWR_Buffer = Canbus::getBuffer(0x0000); // TODO: MC1 PWR address
+    uint8_t *BMS_SOC_Buffer = Canbus::getBuffer(0x0000); // TODO: BMS state of charge address
+    void sendMCCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit);
+    void torqueVector(int torques[2]);
+    uint32_t powerValue();
 
 public:
     LOG_TAG ID = "Driving Mode State";
@@ -111,10 +118,10 @@ public:
  * @brief Demonstrate Serial logging
  * This state demonstrates the diffrent ways we can log things to serial
  */
-static struct Fault : State::State_t {
+static struct FaultState : State::State_t {
     LOG_TAG ID = "Fault State";
     State::State_t *run(void);
-} Fault;
+} FaultState;
 
 /**
  * @brief Demonstrate Serial logging
