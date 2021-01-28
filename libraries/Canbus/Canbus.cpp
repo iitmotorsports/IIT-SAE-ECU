@@ -122,9 +122,9 @@ void update(void) { // TODO: Should we update using a timer or just through stat
 void getData(const uint32_t address, uint8_t buf[8]) {
     int pos = _getAddressPos(address);
     if (pos != ADDRESS_COUNT && !addressFlow[pos]) { // 0 == incoming
-        addressSemaphore = address;                  // Semaphore needed to ensure interrupt does not replace data mid transfer
+        setSemaphore(address);                       // Semaphore needed to ensure interrupt does not replace data mid transfer
         memcpy(buf, addressBuffers[pos], 8);         // 8 Bytes // IMPROVE: can we just give the array instead of copying?
-        addressSemaphore = 0;
+        clearSemaphore();
         return;
     }
     Log.e(ID, "Given address is not incoming or is invalid:", address);
@@ -132,6 +132,14 @@ void getData(const uint32_t address, uint8_t buf[8]) {
 
 uint8_t *getBuffer(const uint32_t address) {
     return addressBuffers[_getAddressPos(address)];
+}
+
+void setSemaphore(const uint32_t address) {
+    addressSemaphore = address;
+}
+
+void clearSemaphore() {
+    addressSemaphore = 0;
 }
 
 static void _pushSendMsg() {

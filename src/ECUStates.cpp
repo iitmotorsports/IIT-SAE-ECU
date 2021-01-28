@@ -23,9 +23,12 @@ State::State_t *ECUStates::PreCharge_State::PreCharFault(void) {
     return &ECUStates::FaultState;
 }
 
-bool ECUStates::PreCharge_State::voltageCheck() {     // TODO: canbus semaphore
+bool ECUStates::PreCharge_State::voltageCheck() {
+    Canbus::setSemaphore(0x0000);                     // TODO: BMS Volt address
     uint BMSVolt = *(uint *)(BMS_Voltage_Buffer + 1); // TODO: get BMS volt from buffer
+    Canbus::setSemaphore(0x0000);                     // TODO: MC0 Volt address
     uint MCVolt = *(uint *)(MC0_Voltage_Buffer + 1);  // TODO: get MC volt from buffer
+    Canbus::clearSemaphore();
     return 0.9 * BMSVolt <= MCVolt;
 }
 
@@ -157,13 +160,18 @@ void ECUStates::Driving_Mode_State::torqueVector(int torques[2]) {
     torques[1] = pedal;
 }
 
-uint32_t ECUStates::Driving_Mode_State::BMSSOC() { // TODO: canbus semaphore
+uint32_t ECUStates::Driving_Mode_State::BMSSOC() {
+    Canbus::setSemaphore(0x0000); // TODO: BMS state of charge address
     return *(uint *)(BMS_SOC_Buffer + 2);
+    Canbus::clearSemaphore();
 }
 
-uint32_t ECUStates::Driving_Mode_State::powerValue() { // TODO: canbus semaphore
+uint32_t ECUStates::Driving_Mode_State::powerValue() {
+    Canbus::setSemaphore(0x0000); // TODO: MC0 PWR address
     uint MC0_PWR = *(uint *)(MC0_PWR_Buffer + 4);
+    Canbus::setSemaphore(0x0000); // TODO: MC1 PWR address
     uint MC1_PWR = *(uint *)(MC1_PWR_Buffer + 4);
+    Canbus::clearSemaphore();
     return MC0_PWR + MC1_PWR;
 }
 
