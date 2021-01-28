@@ -101,6 +101,7 @@ private:
     uint8_t *BMS_SOC_Buffer = Canbus::getBuffer(0x0000); // TODO: BMS state of charge address
     void sendMCCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit);
     void torqueVector(int torques[2]);
+    uint32_t BMSSOC();
     uint32_t powerValue();
 
 public:

@@ -123,29 +123,29 @@ State::State_t *ECUStates::Button_State::run(void) {
     return &ECUStates::Driving_Mode_State;
 }
 
-static uint32_t MOTOR_OFFSET = 0xe0;         // offset for motor ids // is this actually just for the MCs?
-static uint32_t MOTOR_STATIC_OFFSET = 0x0A0; // IMPROVE: auto set this global offset to addresses
+// static uint32_t MOTOR_OFFSET = 0xe0;         // offset for motor ids // is this actually just for the MCs?
+// static uint32_t MOTOR_STATIC_OFFSET = 0x0A0; // IMPROVE: auto set this global offset to addresses
 
-void motorWriteSpeed(TTMsg msg, byte offset, bool direction, int speed) { // speed is value 0 - 860
-    int percent_speed = constrain(map(speed, 0, 1024, 0, 400), 0, 400);   // seprate func for negative vals (regen)
-    // Serial.println(percent_speed);
-    //Calculations value = (high_byte x 256) + low_byte
-    byte low_byte = percent_speed % 256;
-    byte high_byte = percent_speed / 256;
-    msg.id = SPEEDWRITE_ADD + offset - MOTOR_STATIC_OFFSET;
-    // Serial.println(msg.id);
-    msg.ext = 0;
-    msg.len = 8;
-    msg.buf[0] = low_byte; // NM
-    msg.buf[1] = high_byte;
-    msg.buf[2] = 0; // Speed
-    msg.buf[3] = 0;
-    msg.buf[4] = direction;           // Direction
-    msg.buf[5] = START_BUTTON_PUSHED; // Inverter enable byte
-    msg.buf[6] = 0;                   // Last two are the maximum torque values || if 0 then defualt values are set
-    msg.buf[7] = 0;
-    writeTTMsg(msg);
-}
+// void motorWriteSpeed(TTMsg msg, byte offset, bool direction, int speed) { // speed is value 0 - 860
+//     int percent_speed = constrain(map(speed, 0, 1024, 0, 400), 0, 400);   // seprate func for negative vals (regen)
+//     // Serial.println(percent_speed);
+//     //Calculations value = (high_byte x 256) + low_byte
+//     byte low_byte = percent_speed % 256;
+//     byte high_byte = percent_speed / 256;
+//     msg.id = SPEEDWRITE_ADD + offset - MOTOR_STATIC_OFFSET;
+//     // Serial.println(msg.id);
+//     msg.ext = 0;
+//     msg.len = 8;
+//     msg.buf[0] = low_byte; // NM
+//     msg.buf[1] = high_byte;
+//     msg.buf[2] = 0; // Speed
+//     msg.buf[3] = 0;
+//     msg.buf[4] = direction;           // Direction
+//     msg.buf[5] = START_BUTTON_PUSHED; // Inverter enable byte
+//     msg.buf[6] = 0;                   // Last two are the maximum torque values || if 0 then defualt values are set
+//     msg.buf[7] = 0;
+//     writeTTMsg(msg);
+// }
 
 void ECUStates::Driving_Mode_State::sendMCCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit) {
 }
@@ -155,6 +155,10 @@ void ECUStates::Driving_Mode_State::torqueVector(int torques[2]) {
                    // TODO: Add Torque vectoring algorithms
     torques[0] = pedal;
     torques[1] = pedal;
+}
+
+uint32_t ECUStates::Driving_Mode_State::BMSSOC() { // TODO: canbus semaphore
+    return *(uint *)(BMS_SOC_Buffer + 2);
 }
 
 uint32_t ECUStates::Driving_Mode_State::powerValue() { // TODO: canbus semaphore
@@ -192,8 +196,8 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
         int MC_Spd_Val_2 = MC_Rpm_Val_2;
         int speed = (MC_Spd_Val_1 + MC_Spd_Val_2) / 2; // Send to front teensy
         Log.i(ID, "Current Motor Speed:", speed);
-        Log.i(ID, "Current Power Value:", powerValue());                // Canbus message from MCs
-        Log.i(ID, "BMS State Of Charge Value:", BMSStateOfChargeValue); // Canbus message
+        Log.i(ID, "Current Power Value:", powerValue());   // Canbus message from MCs
+        Log.i(ID, "BMS State Of Charge Value:", BMSSOC()); // Canbus message
         /* End Front Teensy Exclusive */
 
         Log.w(ID, "Going back to Idle state");
