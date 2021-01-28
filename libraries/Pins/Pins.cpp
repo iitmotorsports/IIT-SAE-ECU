@@ -19,6 +19,9 @@
 #include "PinConfig.def"
 
 static int A_GPIO[CORE_NUM_TOTAL_PINS]; // IMPROVE: Use CORE_NUM_ANALOG instead
+#define X ,
+static int CAN_GPIO[PP_NARG_MO(CANBUS_PINS)]; // Number of pins to be read through canbus
+#undef X
 
 #define __WRITEPIN_DIGITALOUTPUT(PIN, VAL) \
     }                                      \
@@ -74,7 +77,7 @@ void Pins::setPinValue(uint8_t GPIO_Pin, int value) {
     }
 }
 
-void Pins::update(void) { 
+void Pins::update(void) {
 #define X(pin, Type, IO) __INTERNAL_READ_##Type(pin);
     TEENSY_PINS
 #undef X

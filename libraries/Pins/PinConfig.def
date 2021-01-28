@@ -36,7 +36,7 @@
 #define PINS_SOUND_DRIVER 0
 
 /**
- * @brief The defintions of every pin
+ * @brief The defintions of every physical pin
  *
  * The pinout setup for the ECU, set the specific pin,
  * whether it is analog or digital, and whether we are
@@ -52,12 +52,29 @@
     X(PINS_LED, DIGITAL, OUTPUT)            \
     X(PINS_AIR1, DIGITAL, OUTPUT)           \
     X(PINS_AIR2, DIGITAL, OUTPUT)           \
-    X(PINS_PRECHARGE_RELAY, DIGITAL, INPUT)  \
+    X(PINS_PRECHARGE_RELAY, DIGITAL, INPUT) \
     X(PINS_CHARGING_SIGNAL, DIGITAL, INPUT) \
     X(PINS_CHARGING_RELAY, DIGITAL, OUTPUT) \
     X(PINS_CHARGING_VOLTAGE, ANALOG, INPUT) \
     X(PINS_CHARGING_INPUT, DIGITAL, INPUT)  \
     X(PINS_BUTTON_INPUT, DIGITAL, INPUT)    \
     X(PINS_SOUND_DRIVER, DIGITAL, OUTPUT)
+
+/**
+ * @brief The defintions of every pin to be read over canbus
+ *
+ * The pinout setup for the ECU, set the specific pin,
+ * whether it is analog or digital, and whether we are
+ * taking input or giving an output on the pin
+ *
+ * Unless it is the last entry, this is how to add a new pin
+ *
+ * X(GPIO, ANALOG/DIGITAL, INPUT/OUTPUT, PRIORITY) \
+ * 
+ * Only the last entry should NOT have a '\'
+ */
+#define CANBUS_PINS              \
+    X(PINS_LED, DIGITAL, OUTPUT) \
+    X(PINS_AIR1, DIGITAL, OUTPUT)
 
 #endif // __ECU_PINCONFIG_H__
