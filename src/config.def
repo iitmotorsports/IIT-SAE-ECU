@@ -1,7 +1,0 @@
-#ifndef __ECU_CONFIG_DEF__
-#define __ECU_CONFIG_DEF__
-
-#define CONF_TEENSY_BAUD_RATE 115200
-#define CONF_TEENSY_INITAL_DELAY 2000
-
-#endif // __ECU_CONFIG_DEF__

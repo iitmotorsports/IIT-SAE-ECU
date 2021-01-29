@@ -104,7 +104,7 @@ void addCallback(const uint32_t address, canCallback callback) {
 void enableInterrupts(bool enable) {
     F_Can.enableMBInterrupts(enable);
 
-#if CONF_FLEXCAN_DEBUG
+#ifdef CONF_ECU_DEBUG
     if (enable) {
         Log.d(ID, "Interrupts enabled");
     } else {
@@ -150,7 +150,7 @@ void clearSemaphore() {
 }
 
 static void _pushSendMsg() {
-#if CONF_FLEXCAN_DEBUG
+#ifdef CONF_ECU_DEBUG
     if (F_Can.write(send) == 1) {
         Log.d(ID, "Message Sent", send.id);
     } else {

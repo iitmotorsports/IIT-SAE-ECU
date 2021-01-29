@@ -14,6 +14,8 @@
 #define __ECU_CANBUSCONFIG_DEF__
 // @endcond
 
+#include "ECUGlobalConfig.h"
+
 /**
  * @brief Select the CAN to use on a teensy
  * CAN1 or CAN0 on T3.6 | CAN3 on T4.X
@@ -30,11 +32,5 @@
  * @note incoming mailboxes are automaticaly set
  */
 #define CONF_FLEXCAN_TX_MAILBOXES 2
-
-/**
- * @brief Set whether to run in debug mode
- * basically just enables debug logging
- */
-#define CONF_FLEXCAN_DEBUG 1
 
 #endif // __ECU_CANBUSCONFIG_DEF__
