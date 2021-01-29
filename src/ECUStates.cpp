@@ -18,16 +18,16 @@ State::State_t *ECUStates::Initialize::run(void) {
 
 State::State_t *ECUStates::PreCharge_State::PreCharFault(void) {
     Log.w(ID, "Closing Air1 and Precharge Relay");
-    Pins::setPinValue(PINS_AIR1, LOW);
-    Pins::setPinValue(PINS_PRECHARGE_RELAY, LOW);
+    Pins::setPinValue(PINS_BACK_AIR1, LOW);
+    Pins::setPinValue(PINS_BACK_PRECHARGE_RELAY, LOW);
     return &ECUStates::FaultState;
 }
 
 bool ECUStates::PreCharge_State::voltageCheck() {
     Canbus::setSemaphore(ADD_BMS_VOLT);
-    uint BMSVolt = *(uint *)(BMS_Voltage_Buffer + 1); // TODO: get BMS volt from buffer
+    uint BMSVolt = *((uint *)(BMS_Voltage_Buffer + 1)); // TODO: get BMS volt from buffer
     Canbus::setSemaphore(0x0000);
-    uint MCVolt = *(uint *)(ADD_MC0_VOLT + 1); // TODO: get MC volt from buffer
+    uint MCVolt = *((uint *)(ADD_MC0_VOLT + 1)); // TODO: get MC volt from buffer
     Canbus::clearSemaphore();
     return 0.9 * BMSVolt <= MCVolt;
 }
@@ -41,8 +41,8 @@ State::State_t *ECUStates::PreCharge_State::run(void) { // FIXME: set pins to LO
     }
 
     Log.w(ID, "Opening Air1 and Precharge Relay");
-    Pins::setPinValue(PINS_AIR1, HIGH);
-    Pins::setPinValue(PINS_PRECHARGE_RELAY, HIGH);
+    Pins::setPinValue(PINS_BACK_AIR1, HIGH);
+    Pins::setPinValue(PINS_BACK_PRECHARGE_RELAY, HIGH);
 
     if (Fault::hardFault()) {
         Log.e(ID, "Precharge Faulted after charge");
@@ -53,9 +53,9 @@ State::State_t *ECUStates::PreCharge_State::run(void) { // FIXME: set pins to LO
 
     while (timeElapsed < 5000) {
         if (voltageCheck()) {
-            Pins::setPinValue(PINS_PRECHARGE_RELAY, LOW);
+            Pins::setPinValue(PINS_BACK_PRECHARGE_RELAY, LOW);
             Log.i(ID, "Precharge Finished");
-            Pins::setPinValue(PINS_AIR2, HIGH);
+            Pins::setPinValue(PINS_BACK_AIR2, HIGH);
             return &ECUStates::Idle_State;
         }
     }
@@ -68,10 +68,10 @@ State::State_t *ECUStates::Idle_State::run(void) {
     Log.i(ID, "Waiting for Button or Charging Press");
 
     while (true) {
-        if (Pins::getPinValue(PINS_BUTTON_INPUT)) {
+        if (Pins::getPinValue(PINS_FRONT_BUTTON_INPUT)) { // FIXME: Change to CanPin get
             Log.i(ID, "Button Pressed");
             return &ECUStates::Button_State;
-        } else if (Pins::getPinValue(PINS_CHARGING_INPUT)) {
+        } else if (Pins::getPinValue(PINS_BACK_CHARGING_INPUT)) {
             Log.i(ID, "Charging Pressed");
             return &ECUStates::Charging_State;
         } else if (Fault::hardFault()) {
@@ -85,20 +85,20 @@ State::State_t *ECUStates::Idle_State::run(void) {
 }
 
 State::State_t *ECUStates::Charging_State::run(void) {
-    Pins::setPinValue(PINS_CHARGING_RELAY, HIGH);
+    Pins::setPinValue(PINS_BACK_CHARGING_RELAY, HIGH);
     Log.i(ID, "Charging on");
 
-    while (Pins::getPinValue(PINS_CHARGING_SIGNAL)) {
+    while (Pins::getPinValue(PINS_BACK_CHARGING_SIGNAL)) {
         // IMPROVE: Don't use fault to stop charging
         if (Fault::hardFault()) {
-            Pins::setPinValue(PINS_CHARGING_RELAY, LOW);
+            Pins::setPinValue(PINS_BACK_CHARGING_RELAY, LOW);
             Log.e(ID, "Charging faulted, turning off");
             return &ECUStates::FaultState;
         }
-        Log.i(ID, "Voltage", Pins::getPinValue(PINS_CHARGING_VOLTAGE)); // TODO: add delay
+        Log.i(ID, "Voltage", Pins::getPinValue(PINS_BACK_CHARGING_VOLTAGE)); // TODO: add delay
     }
 
-    Pins::setPinValue(PINS_CHARGING_RELAY, LOW);
+    Pins::setPinValue(PINS_BACK_CHARGING_RELAY, LOW);
     Log.i(ID, "Charging turning off");
 
     return &ECUStates::Idle_State;
@@ -108,19 +108,19 @@ State::State_t *ECUStates::Button_State::run(void) {
     Log.i(ID, "Playing sound");
 
     // motor controller enable bit off
-    Pins::setPinValue(PINS_SOUND_DRIVER, HIGH);
+    Pins::setPinValue(PINS_BACK_SOUND_DRIVER, HIGH);
 
     elapsedMillis soundTimer;
 
     while (soundTimer <= 2000) {
         if (false) { // TODO: Check for fault
             Log.e(ID, "Failed to play sound");
-            Pins::setPinValue(PINS_SOUND_DRIVER, LOW);
+            Pins::setPinValue(PINS_BACK_SOUND_DRIVER, LOW);
             return &ECUStates::FaultState;
         }
     }
 
-    Pins::setPinValue(PINS_SOUND_DRIVER, LOW);
+    Pins::setPinValue(PINS_BACK_SOUND_DRIVER, LOW);
     Log.i(ID, "Playing sound finished");
 
     return &ECUStates::Driving_Mode_State;
