@@ -15,18 +15,52 @@
 #include "IntervalTimer.h"
 #include "core_pins.h"
 
+#include "Canbus.h"
 #include "Log.h"
 #include "PinConfig.def"
 
 namespace Pins {
 
+static int A_GPIO[CORE_NUM_TOTAL_PINS]; // IMPROVE: Use CORE_NUM_ANALOG instead
+#define X ,
+static uint8_t CAN_GPIO_MAP[PP_NARG_MO(PINS_CANBUS_ANALOG) + PP_NARG_MO(PINS_CANBUS_DIGITAL)]; // Map actual pins to an array position
+static int CAN_GPIO[PP_NARG_MO(PINS_CANBUS_ANALOG) + PP_NARG_MO(PINS_CANBUS_DIGITAL)];         // Store canpin values
+static const uint activeDigitalCanPins = min(PP_NARG_MO(PINS_CANBUS_DIGITAL), 8);              // NOTE: MAX 8 Digital pins per msg
+#undef X
+
 static IntervalTimer canbusPinUpdate;
 static const LOG_TAG ID = "Pins";
 
-static int A_GPIO[CORE_NUM_TOTAL_PINS]; // IMPROVE: Use CORE_NUM_ANALOG instead
-#define X ,
-static int CAN_GPIO[PP_NARG_MO(CANBUS_PINS)]; // Number of pins to be read through canbus
-#undef X
+struct CanPinMsg {
+    uint32_t address;
+    uint8_t buf[8] = {0};
+    uint64_t *bufmap = (uint64_t *)buf;
+    void receive();
+    void send();
+};
+
+struct digitalCanPinMsg : CanPinMsg {
+    uint8_t digitalPins[activeDigitalCanPins];
+    void send() {
+        for (size_t i = 0; i < activeDigitalCanPins; i++) {
+            *bufmap = *bufmap << 1;
+            *bufmap |= (bool)getPinValue(digitalPins[i]);
+        }
+        Log.d(ID, "Sending Digital Pins", address);
+        Canbus::sendData(address, buf);
+    };
+    void receive() {
+        for (size_t i = 0; i < activeDigitalCanPins; i++) {
+            *bufmap = *bufmap << 1;
+            *bufmap |= (bool)getPinValue(digitalPins[i]);
+        }
+        Log.d(ID, "Sending Analog Pins", address);
+    }
+};
+
+struct analogCanPinMsg : CanPinMsg {
+    uint8_t AnalogPins[2] = {0};
+};
 
 #define __WRITEPIN_DIGITALOUTPUT(PIN, VAL) \
     }                                      \
@@ -66,7 +100,7 @@ int getPinValue(uint8_t GPIO_Pin) {
         Log.e(ID, "Acessing out of range pin", GPIO_Pin);
         return 0;
 #define X(pin, Type, IO) __READPIN_##Type##IO(pin);
-        TEENSY_PINS
+        ECU_PINS
 #undef X
     } else {
         Log.d(ID, "No pin defined", GPIO_Pin);
@@ -78,22 +112,24 @@ void setPinValue(uint8_t GPIO_Pin, int value) {
     if (GPIO_Pin > CORE_NUM_TOTAL_PINS) {
         return;
 #define X(pin, Type, IO) __WRITEPIN_##Type##IO(pin, value);
-        TEENSY_PINS
+        ECU_PINS
 #undef X
     }
 }
 
 void update(void) {
 #define X(pin, Type, IO) __INTERNAL_READ_##Type(pin);
-    TEENSY_PINS
+    ECU_PINS
 #undef X
 }
 
 void initialize(void) {
 #define X(pin, Type, IO) pinMode(pin, IO);
-    TEENSY_PINS
+    ECU_PINS
 #undef X
+#if PINS_CANBUS_DIRECTION == OUTPUT // Only need to update when pins are outgoing
     canbusPinUpdate.begin(_pushCanbusPins, CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO);
+#endif
 }
 
 } // namespace Pins
