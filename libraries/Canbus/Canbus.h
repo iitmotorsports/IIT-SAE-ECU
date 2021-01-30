@@ -32,7 +32,7 @@ namespace Canbus {
  * uint32_t The address
  * uint8_t * The 8 byte message buffer
  */
-typedef void (*canCallback)(uint32_t e, uint8_t *);
+typedef void (*canCallback)(uint32_t, uint8_t *);
 
 /**
  * @brief Update the Canbus line
