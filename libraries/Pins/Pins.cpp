@@ -105,7 +105,7 @@ static analogCanPinMsg_t analogCanPinMessages[analogCanMsgCount];
     else if (GPIO_Pin == PIN) {     \
         return digitalReadFast(PIN);
 
-// TODO: actually implement analog value caching
+// IMPROVE: actually implement analog value caching
 #define __READPIN_ANALOGINPUT(PIN) \
     }                              \
     else if (GPIO_Pin == PIN) {    \
