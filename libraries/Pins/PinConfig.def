@@ -35,6 +35,7 @@
 // @cond
 // Both ECUs
 #define PINS_BOTH_LED 13
+#define PINS_BOTH_OPT_CAN_TRAN 6
 // Back ECU Only - ECU0
 #define PINS_BACK_AIR1 0
 #define PINS_BACK_AIR2 0
@@ -76,6 +77,7 @@
  */
 #define ECU_PINS                                 \
     X(PINS_BOTH_LED, DIGITAL, OUTPUT)            \
+    X(PINS_BOTH_OPT_CAN_TRAN, DIGITAL, OUTPUT)   \
     X(PINS_BACK_AIR1, DIGITAL, OUTPUT)           \
     X(PINS_BACK_AIR2, DIGITAL, OUTPUT)           \
     X(PINS_BACK_PRECHARGE_RELAY, DIGITAL, INPUT) \
@@ -87,6 +89,8 @@
 #else
 #define PINS_CANBUS_DIRECTION OUTPUT
 #define ECU_PINS                               \
+    X(PINS_BOTH_LED, DIGITAL, OUTPUT)          \
+    X(PINS_BOTH_OPT_CAN_TRAN, DIGITAL, OUTPUT) \
     X(PINS_FRONT_BUTTON_INPUT, DIGITAL, INPUT) \
     X(PINS_FRONT_PEDAL0, ANALOG, INPUT)        \
     X(PINS_FRONT_PEDAL1, ANALOG, INPUT)        \
