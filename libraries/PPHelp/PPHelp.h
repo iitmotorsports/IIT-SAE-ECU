@@ -37,6 +37,10 @@
 #define PP_NARG(...) PP_NARG_(__VA_ARGS__, PP_RSEQ_N())
 #define PP_NARG_MO(...) PP_NARG_(__VA_ARGS__ PP_RSEQ_N())
 
+#define CAT(a, ...) PRIMITIVE_CAT(a, __VA_ARGS__)
+#define PRIMITIVE_CAT(a, ...) a##__VA_ARGS__
+#define M(...) CAT(__VA_ARGS__)
+
 #define EVAL(...) EVAL1024(__VA_ARGS__)
 #define EVAL1024(...) EVAL512(EVAL512(__VA_ARGS__))
 #define EVAL512(...) EVAL256(EVAL256(__VA_ARGS__))
@@ -67,4 +71,5 @@
 // #define DEC_10 9
 
 #endif // __PPHELP_H__
-       // @endcond
+
+// @endcond
