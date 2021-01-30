@@ -29,8 +29,10 @@ namespace Canbus {
 /**
  * @brief The function type to pass to addCallback
  * 
+ * @param uint32_t The address
+ * @param uint8_t * The 8 byte message buffer
  */
-typedef void (*canCallback)(uint8_t *);
+typedef void (*canCallback)(uint32_t, uint8_t *);
 
 /**
  * @brief Update the Canbus line

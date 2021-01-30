@@ -94,7 +94,7 @@ static void _receiveCan(const CAN_message_t &msg) {
     uint pos = _getAddressPos(msg.id);
     memcpy(addressBuffers[pos], msg.buf, 8);
     if (callbacks[pos]) // TODO: test whether having or not having a callback corresponds to true or false
-        callbacks[pos](addressBuffers[pos]);
+        callbacks[pos](msg.id, addressBuffers[pos]);
 }
 
 void addCallback(const uint32_t address, canCallback callback) {
