@@ -28,8 +28,8 @@
  * Only the last entry should NOT have a '\'
  * 
  */
-#define PIN_FAULTS \
-    X(0x0, 1, =, _LogPrebuildString("BMS")) \ 
+#define PIN_FAULTS                          \
+    X(0x0, 1, =, _LogPrebuildString("BMS")) \
     X(0x0, 45, >, _LogPrebuildString("RMS"))
 
 /**
@@ -44,8 +44,8 @@
  * Only the last entry should NOT have a '\'
  * 
  */
-#define HARD_FAULT_ADD \
-    X(0x0, 0x4000020120100080, "BMS") \ 
+#define HARD_FAULT_ADD                \
+    X(0x0, 0x4000020120100080, "BMS") \
     X(0x0, 0x0000000000000000, "RMS")
 
 /**
