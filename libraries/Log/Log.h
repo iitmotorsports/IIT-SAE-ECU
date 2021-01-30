@@ -23,7 +23,6 @@
 #include <stdlib.h>
 
 // TODO: update android app to accept new message format
-// TODO: send messages through can line to other teensy
 // IMPROVE: Add option to log to an sd card instead/aswell
 
 #if CONF_LOGGING_MAPPED_MODE > 0
@@ -152,6 +151,13 @@ struct Log_t {
      */
     void f(LOG_TAG TAG, LOG_MSG message, const uint32_t number);
 };
+
+/**
+ * @brief If a set address is received through canbus, the data will be pushed through serial
+ * @note the address is set in CanBusAddresses.def
+ */
+void enableCanbusRelay();
+
 } // namespace Logging
 
 /**

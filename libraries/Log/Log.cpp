@@ -212,3 +212,11 @@ void Logging::Log_t::f(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
  * @brief Internal definition of static Log class
  */
 Logging::Log_t Log;
+
+static void _receiveLogBuffer(uint32_t address, uint8_t *buf) {
+    Serial.write(buf, 8);
+}
+
+void Logging::enableCanbusRelay() {
+    Canbus::addCallback(ADD_AUX_LOGGING, _receiveLogBuffer);
+}
