@@ -375,6 +375,7 @@ class FileEntry:  # IMPROVE: Make IDs persistent
                         Text.warning("  {}:{}\n".format(self.path, lineNo)),
                         "   {}\n    > {}".format(Text.red(type(e).__name__), splitErrorString(e)),
                     )
+                    f2.buffer.write(line.encode("utf-8"))
                 finally:
                     lineNo += 1
         self.modified = not syncFile(tempPath, "", self.rawpath, self.workingPath)
