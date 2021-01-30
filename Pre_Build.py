@@ -47,7 +47,8 @@ _LogPrebuildString(x)
 ```
 
 Where x is the string, it will be given a unique ID and replaced with said ID as if it were being called by a Logging function.
-This is useful where one wishes to generate log functions using the C preprocessor
+This is useful where one wishes to generate log functions using the C preprocessor.
+Note, however, if this script is not run the macro should still allow everything to compile normally, leaving the string untouched
 
 """
 

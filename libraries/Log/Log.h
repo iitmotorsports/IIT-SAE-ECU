@@ -48,7 +48,6 @@ typedef const char *LOG_MSG;
  * @brief Namespace to isolate Log_t struct.
  * Refer to Log.h for more info.
  */
-
 namespace Logging {
 
 /**

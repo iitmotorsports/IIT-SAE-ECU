@@ -1,7 +1,7 @@
 /**
  * @file PinConfig.def
- * @author your name (you@domain.com)
- * @brief The pin configuration for the Teensy
+ * @author IR
+ * @brief Pin Configuration for the ECU
  * @version 0.1
  * @date 2020-11-11
  * 
@@ -92,7 +92,7 @@
  * @brief The defintions of every analog pin to be sent/received over canbus
  *
  * @note Only two analog pins can be allocated per address
- * @note The number of pins per address must be addressed
+ * @note The number of pins per address must be maximized
  *
  * Unless it is the last entry, this is how to add a new pin
  *
