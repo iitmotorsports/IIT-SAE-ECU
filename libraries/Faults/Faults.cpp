@@ -15,6 +15,7 @@
 #include "Canbus.h"
 #include "FaultConfig.def"
 #include "Log.h"
+#include "Pins.h"
 
 namespace Fault {
 
@@ -25,8 +26,6 @@ static const int HARD_CAN_COUNT = PP_NARG_MO(HARD_FAULT_ADD);
 static const int SOFT_CAN_COUNT = PP_NARG_MO(SOFT_FAULT_ADD);
 static const int CAN_COUNT = PP_NARG_MO(HARD_FAULT_ADD) + PP_NARG_MO(SOFT_FAULT_ADD); // Number of Can addresses we need to account for
 #undef X
-
-// TODO: add pin fault checks
 
 // NOTE: buffers are actually uint8_t buf[8] but to help mask them they are casted to a uint64_t*
 static uint64_t *hard_buffers[CAN_COUNT];  // store the incoming message buffers to quickly access
@@ -40,6 +39,7 @@ static uint64_t soft_masks[CAN_COUNT];     // mapped to addresses to later ident
 // NOTE: these values are overwritten whenever a fault is tripped, whether a hard or soft fault
 static uint32_t faulted_address = 0; // Store what address caused a fault if it caused it
 static uint64_t faulted_buffer = 0;  // Store the buffer of the message if it caused a fault, must be casted into a uint8_t buf[8]
+static uint8_t faulted_pin = 255;
 
 void setup(void) {
     int i = 0;
@@ -69,15 +69,23 @@ void logFault(void) {
         Log.e(ID, id);                                     \
     }
         // Ignore Pre_Build error
-
         ID_FAULT
 #undef X
     }
+
+#define X(pin, comp, value, id) \
+    if (faulted_pin == pin) {   \
+        Log.e(ID, id);          \
+    }
+    HARD_PIN_FAULTS
+    SOFT_PIN_FAULTS
+#undef X
 }
 
 // NOTE: If we want to ensure we check all faults, even after tripping one, we need 2 more arrays
-
+// TODO: Do any canPins need to be checked for faults? Only physical pins can be checked
 bool hardFault(void) {
+    Log.d(ID, "Checking for Hard Fault");
     for (size_t i = 0; i < HARD_CAN_COUNT; i++) {
         Canbus::setSemaphore(hard_addresses[i]);
         if (*hard_buffers[i] & hard_masks[i]) {
@@ -88,11 +96,20 @@ bool hardFault(void) {
         }
     }
     Canbus::clearSemaphore();
+
+#define X(pin, comp, value, id) ((faulted_pin = Pins::getPinValue(pin)) comp value) ||
+    if (HARD_PIN_FAULTS 0) {
+        return true;
+    }
+#undef X
+    faulted_pin = 255;
+
     Log.d(ID, "No hard fault tripped");
     return false;
 }
 
 bool softFault(void) {
+    Log.d(ID, "Checking for Soft Fault");
     for (size_t i = 0; i < SOFT_CAN_COUNT; i++) {
         Canbus::setSemaphore(soft_addresses[i]);
         if (*soft_buffers[i] & soft_masks[i]) {
@@ -103,6 +120,14 @@ bool softFault(void) {
         }
     }
     Canbus::clearSemaphore();
+
+#define X(pin, comp, value, id) ((faulted_pin = Pins::getPinValue(pin)) comp value) ||
+    if (SOFT_PIN_FAULTS 0) {
+        return true;
+    }
+#undef X
+    faulted_pin = 255;
+
     Log.d(ID, "No soft fault tripped");
     return false;
 }

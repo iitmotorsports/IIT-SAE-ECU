@@ -19,6 +19,8 @@
 #include "LogConfig.def"
 #include "WProgram.h"
 
+namespace Logging {
+
 #ifndef CONF_LOGGING_MAX_LEVEL
 #define CONF_LOGGING_MAX_LEVEL 4
 #endif
@@ -136,87 +138,89 @@ static void __logger_print_num(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, c
 
 #endif
 
-void Logging::Log_t::operator()(LOG_TAG TAG, LOG_MSG message) {
+void Log_t::operator()(LOG_TAG TAG, LOG_MSG message) {
 #ifdef __LOGGER_NONE_PRINT
     __logger_print(NONE, TAG, message);
 #endif
 }
 
-void Logging::Log_t::d(LOG_TAG TAG, LOG_MSG message) {
+void Log_t::d(LOG_TAG TAG, LOG_MSG message) {
 #ifdef __LOGGER_DEBUG_PRINT
     __logger_print(DEBUG, TAG, message);
 #endif
 }
 
-void Logging::Log_t::i(LOG_TAG TAG, LOG_MSG message) {
+void Log_t::i(LOG_TAG TAG, LOG_MSG message) {
 #ifdef __LOGGER_INFO_PRINT
     __logger_print(INFO, TAG, message);
 #endif
 }
 
-void Logging::Log_t::w(LOG_TAG TAG, LOG_MSG message) {
+void Log_t::w(LOG_TAG TAG, LOG_MSG message) {
 #ifdef __LOGGER_WARN_PRINT
     __logger_print(WARN, TAG, message);
 #endif
 }
 
-void Logging::Log_t::e(LOG_TAG TAG, LOG_MSG message) {
+void Log_t::e(LOG_TAG TAG, LOG_MSG message) {
 #ifdef __LOGGER_ERROR_PRINT
     __logger_print(ERROR, TAG, message);
 #endif
 }
 
-void Logging::Log_t::f(LOG_TAG TAG, LOG_MSG message) {
+void Log_t::f(LOG_TAG TAG, LOG_MSG message) {
 #ifdef __LOGGER_FATAL_PRINT
     __logger_print(FATAL, TAG, message);
 #endif
 }
 
-void Logging::Log_t::operator()(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
+void Log_t::operator()(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
 #ifdef __LOGGER_NONE_PRINT
     __logger_print_num(NONE, TAG, message, number);
 #endif
 }
 
-void Logging::Log_t::d(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
+void Log_t::d(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
 #ifdef __LOGGER_DEBUG_PRINT
     __logger_print_num(DEBUG, TAG, message, number);
 #endif
 }
 
-void Logging::Log_t::i(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
+void Log_t::i(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
 #ifdef __LOGGER_INFO_PRINT
     __logger_print_num(INFO, TAG, message, number);
 #endif
 }
 
-void Logging::Log_t::w(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
+void Log_t::w(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
 #ifdef __LOGGER_WARN_PRINT
     __logger_print_num(WARN, TAG, message, number);
 #endif
 }
 
-void Logging::Log_t::e(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
+void Log_t::e(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
 #ifdef __LOGGER_ERROR_PRINT
     __logger_print_num(ERROR, TAG, message, number);
 #endif
 }
 
-void Logging::Log_t::f(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
+void Log_t::f(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
 #ifdef __LOGGER_FATAL_PRINT
     __logger_print_num(FATAL, TAG, message, number);
 #endif
 }
 
-/**
- * @brief Internal definition of static Log class
- */
-Logging::Log_t Log;
-
 static void _receiveLogBuffer(uint32_t address, uint8_t *buf) {
     Serial.write(buf, 8);
 }
 
-void Logging::enableCanbusRelay() {
+void enableCanbusRelay() {
     Canbus::addCallback(ADD_AUX_LOGGING, _receiveLogBuffer);
 }
+
+} // namespace Logging
+
+/**
+ * @brief Internal definition of static Log class
+ */
+Logging::Log_t Log;
