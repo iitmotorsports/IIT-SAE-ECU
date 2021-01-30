@@ -13,6 +13,8 @@
 #include <stdarg.h>
 #include <stdio.h>
 
+#include "Canbus.h"
+#include "ECUGlobalConfig.h"
 #include "Log.h"
 #include "LogConfig.def"
 #include "WProgram.h"
@@ -52,6 +54,8 @@
 
 #define LOG_END_MSG_FLAG CONF_LOGGING_END_MSG_FLAG
 
+// No Timestamping for this mode
+
 // Do this to use the same fuction header, we don't need these for mapped logging
 static void *NONE;
 static void *DEBUG = NONE;
@@ -60,17 +64,23 @@ static void *WARN = NONE;
 static void *ERROR = NONE;
 static void *FATAL = NONE;
 
-// No Timestamping for this mode
+static uint8_t log_buf[8] = {0};
 
 /**
  * |0    |1   |2   |3   |4   |5   |6   |7   |
  * |State Code|String ID|      Not Sent     |
  */
 static void __logger_print(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE) {
-    uint8_t buf[8] = {0};
-    memcpy(buf, &TAG, 2);
-    memcpy(buf + 2, &MESSAGE, 2);
-    Serial.write(buf, 8);
+    memcpy(log_buf, &TAG, 2);
+    memcpy(log_buf + 2, &MESSAGE, 2);
+#if CONF_ECU_POSITION == 0
+#ifdef CONF_ECU_DEBUG
+    Serial.write(log_buf, 8);
+#endif
+    Canbus::sendData(ADD_AUX_LOGGING, log_buf);
+#else
+    Serial.write(log_buf, 8);
+#endif
 }
 
 /**
@@ -78,11 +88,17 @@ static void __logger_print(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE) {
  * |State Code|String ID|      uint32_t     |
  */
 static void __logger_print_num(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const uint32_t NUMBER) {
-    uint8_t buf[8] = {0};
-    memcpy(buf, &TAG, 2);
-    memcpy(buf + 2, &MESSAGE, 2);
-    memcpy(buf + 4, &NUMBER, 4);
-    Serial.write(buf, 8);
+    memcpy(log_buf, &TAG, 2);
+    memcpy(log_buf + 2, &MESSAGE, 2);
+    memcpy(log_buf + 4, &NUMBER, 4);
+#if CONF_ECU_POSITION == 0
+#ifdef CONF_ECU_DEBUG
+    Serial.write(log_buf, 8);
+#endif
+    Canbus::sendData(ADD_AUX_LOGGING, log_buf);
+#else
+    Serial.write(log_buf, 8);
+#endif
 }
 
 #else
