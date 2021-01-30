@@ -33,7 +33,17 @@ namespace Pins {
 /**
  * @brief A typedef for pin handler functions
  */
-typedef void (*PinHandler)(uint8_t GPIO_Pin, int &value);
+typedef void (*PinHandler)(uint8_t CAN_GPIO_Pin, int &value);
+
+/**
+ * @brief Get the pin value of a predefined canbus pin
+ * 
+ * @note Pins must first be defined in PinConfig.def
+ * 
+ * @param CAN_GPIO_Pin The canbus GPIO pin to get a value from
+ * @return int Returns an int that represents either a digital or analog value
+ */
+int getCanPinValue(uint8_t GPIO_Pin);
 
 /**
  * @brief Get the pin value of a predefined pin
