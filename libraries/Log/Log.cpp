@@ -75,7 +75,7 @@ static uint8_t log_buf[8] = {0};
 static void __logger_print(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE) {
     memcpy(log_buf, &TAG, 2);
     memcpy(log_buf + 2, &MESSAGE, 2);
-#if CONF_ECU_POSITION == 0
+#if CONF_ECU_POSITION == BACK_ECU
 #ifdef CONF_ECU_DEBUG
     Serial.write(log_buf, 8);
 #endif
@@ -93,7 +93,7 @@ static void __logger_print_num(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const u
     memcpy(log_buf, &TAG, 2);
     memcpy(log_buf + 2, &MESSAGE, 2);
     memcpy(log_buf + 4, &NUMBER, 4);
-#if CONF_ECU_POSITION == 0
+#if CONF_ECU_POSITION == BACK_ECU
 #ifdef CONF_ECU_DEBUG
     Serial.write(log_buf, 8);
 #endif

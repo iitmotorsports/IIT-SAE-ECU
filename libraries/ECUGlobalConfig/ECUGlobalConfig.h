@@ -3,8 +3,11 @@
 
 #define CONF_ECU_DEBUG // Define to include extra logging and checks to be run throughout libaries
 
-#define CONF_ECU_POSITION 0 // Back Teensy, Use for documentation
-// #define CONF_ECU_POSITION 1 // Front Teensy
+#define FRONT_ECU 1
+#define BACK_ECU 0
+
+#define CONF_ECU_POSITION BACK_ECU // Back Teensy, Used for documentation
+// #define CONF_ECU_POSITION FRONT_ECU // Front Teensy
 
 #define CONF_TEENSY_BAUD_RATE 115200
 #define CONF_TEENSY_INITAL_DELAY 2000

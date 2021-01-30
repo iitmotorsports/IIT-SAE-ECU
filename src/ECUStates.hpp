@@ -75,7 +75,7 @@ static struct Button_State : State::State_t { // NOTE: Is button state just play
  * info of message, and message handler attributes for this state. 
  * 
  */
-static struct Driving_Mode_State : State::State_t {
+static struct Driving_Mode_State : State::State_t { // TODO: getBuffer at runtime
 private:
     uint8_t *MC0_RPM_Buffer = Canbus::getBuffer(ADD_MC0_RPM);
     uint8_t *MC1_RPM_Buffer = Canbus::getBuffer(ADD_MC1_RPM);

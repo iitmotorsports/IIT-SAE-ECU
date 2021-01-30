@@ -26,6 +26,8 @@
 #define ADD_MC1_RPM 0x0000
 #define ADD_MC0_PWR 0x0000
 #define ADD_MC1_PWR 0x0000
+#define ADD_MC0_CTRL 0x0000
+#define ADD_MC1_CTRL 0x0000
 // canPin addresses
 #define ADD_CANPIN_ANALOG0 0x0000
 #define ADD_CANPIN_ANALOG1 0x0001
@@ -48,14 +50,16 @@
  * 
  * @note Currently, address 0x0000 cannot be used
  */
-#define CAN_ADDRESS        \
-    X(ADD_BMS_SOC, INPUT)  \
-    X(ADD_BMS_VOLT, INPUT) \
-    X(ADD_MC0_VOLT, INPUT) \
-    X(ADD_MC1_VOLT, INPUT) \
-    X(ADD_MC0_RPM, INPUT)  \
-    X(ADD_MC1_RPM, INPUT)  \
-    X(ADD_MC0_PWR, INPUT)  \
-    X(ADD_MC1_PWR, INPUT)
+#define CAN_ADDRESS         \
+    X(ADD_BMS_SOC, INPUT)   \
+    X(ADD_BMS_VOLT, INPUT)  \
+    X(ADD_MC0_VOLT, INPUT)  \
+    X(ADD_MC1_VOLT, INPUT)  \
+    X(ADD_MC0_RPM, INPUT)   \
+    X(ADD_MC1_RPM, INPUT)   \
+    X(ADD_MC0_PWR, INPUT)   \
+    X(ADD_MC1_PWR, INPUT)   \
+    X(ADD_MC0_CTRL, OUTPUT) \
+    X(ADD_MC1_CTRL, OUTPUT)
 
 #endif // __ECU_CANBUS_ADDRESSES_H__
