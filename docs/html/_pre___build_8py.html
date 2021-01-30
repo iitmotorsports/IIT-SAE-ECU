@@ -116,7 +116,8 @@ NOTE: The <code>LOG_MSG</code> parameter must always be an inline string. <br  /
 NOTE: Definition of <code>LOG_TAG</code>s must always be an inline string. <br  />
  Eg. </p><div class="fragment"><div class="line">LOG_TAG TAG = <span class="stringliteral">&quot;Logging Tag&quot;</span>; -&gt; LOG_TAG TAG = 2;</div>
 </div><!-- fragment --><p>A special case has been made to also allocate and replace string that call the following macro</p>
-<div class="fragment"><div class="line">_LogPrebuildString(x)</div>
+<div class="fragment"><div class="line"><a class="code" href="_log_8h.html#a9bec0c08edcafb8184fd41d631e708e9">_LogPrebuildString</a>(x)</div>
+<div class="ttc" id="a_log_8h_html_a9bec0c08edcafb8184fd41d631e708e9"><div class="ttname"><a href="_log_8h.html#a9bec0c08edcafb8184fd41d631e708e9">_LogPrebuildString</a></div><div class="ttdeci">#define _LogPrebuildString(x)</div><div class="ttdoc">Refer to Pre_Build.py.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8h_source.html#l00019">Log.h:19</a></div></div>
 </div><!-- fragment --><p>Where x is the string, it will be given a unique ID and replaced with said ID as if it were being called by a <a class="el" href="namespace_logging.html" title="Namespace to isolate Log_t struct. Refer to Log.h for more info.">Logging</a> function. This is useful where one wishes to generate log functions using the C preprocessor. Note, however, if this script is not run the macro should still allow everything to compile normally, leaving the string untouched </p>
 
 <p class="definition">Definition in file <a class="el" href="_pre___build_8py_source.html">Pre_Build.py</a>.</p>

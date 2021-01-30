@@ -97,9 +97,9 @@ $(document).ready(function(){initNavTree('namespace_canbus.html',''); initResiza
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a96968bb5813d30685ce26670a362cc79"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_canbus.html#a96968bb5813d30685ce26670a362cc79">canCallback</a>) (uint32_t, uint8_t *)</td></tr>
-<tr class="memdesc:a96968bb5813d30685ce26670a362cc79"><td class="mdescLeft">&#160;</td><td class="mdescRight">The function type to pass to addCallback.  <a href="namespace_canbus.html#a96968bb5813d30685ce26670a362cc79">More...</a><br /></td></tr>
-<tr class="separator:a96968bb5813d30685ce26670a362cc79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7ab0058ac492f13136fdb0ba95401cf"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_canbus.html#aa7ab0058ac492f13136fdb0ba95401cf">canCallback</a>) (uint32_t e, uint8_t *)</td></tr>
+<tr class="memdesc:aa7ab0058ac492f13136fdb0ba95401cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">The function type to pass to addCallback.  <a href="namespace_canbus.html#aa7ab0058ac492f13136fdb0ba95401cf">More...</a><br /></td></tr>
+<tr class="separator:aa7ab0058ac492f13136fdb0ba95401cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -127,7 +127,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_canbus.html#a441c8b2dbc00d94dd9a6b8d252f09f20">clearSemaphore</a> ()</td></tr>
 <tr class="memdesc:a441c8b2dbc00d94dd9a6b8d252f09f20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears any previously set semaphore. <br /></td></tr>
 <tr class="separator:a441c8b2dbc00d94dd9a6b8d252f09f20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a884781debf9732f3e4676830d294e6bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_canbus.html#a884781debf9732f3e4676830d294e6bc">addCallback</a> (const uint32_t address, <a class="el" href="namespace_canbus.html#a96968bb5813d30685ce26670a362cc79">canCallback</a> callback)</td></tr>
+<tr class="memitem:a884781debf9732f3e4676830d294e6bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_canbus.html#a884781debf9732f3e4676830d294e6bc">addCallback</a> (const uint32_t address, <a class="el" href="namespace_canbus.html#aa7ab0058ac492f13136fdb0ba95401cf">canCallback</a> callback)</td></tr>
 <tr class="memdesc:a884781debf9732f3e4676830d294e6bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a callback to an incoming address. If an incoming address buffer is updated it will call the given function. Keep callbacks quick and simple.  <a href="namespace_canbus.html#a884781debf9732f3e4676830d294e6bc">More...</a><br /></td></tr>
 <tr class="separator:a884781debf9732f3e4676830d294e6bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c59e4ee5bcc1d66fee1c1d91af4731b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_canbus.html#a2c59e4ee5bcc1d66fee1c1d91af4731b">pushData</a> (const uint32_t address)</td></tr>
@@ -143,26 +143,20 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="namespace_canbus.html" title="Canbus functionality. Refer to Canbus.h for more info.">Canbus</a> functionality. Refer to <a class="el" href="_canbus_8h.html" title="FlexCAN_T4 wrapper This library is made specifically for SAE.">Canbus.h</a> for more info. </p>
 </div><h2 class="groupheader">Typedef Documentation</h2>
-<a id="a96968bb5813d30685ce26670a362cc79"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a96968bb5813d30685ce26670a362cc79">&#9670;&nbsp;</a></span>canCallback</h2>
+<a id="aa7ab0058ac492f13136fdb0ba95401cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7ab0058ac492f13136fdb0ba95401cf">&#9670;&nbsp;</a></span>canCallback</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* Canbus::canCallback) (uint32_t, uint8_t *)</td>
+          <td class="memname">typedef void(* Canbus::canCallback) (uint32_t e, uint8_t *)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>The function type to pass to addCallback. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">uint32_t</td><td>The address </td></tr>
-    <tr><td class="paramname">uint8_t</td><td>* The 8 byte message buffer </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>uint32_t The address uint8_t * The 8 byte message buffer </p>
 
 <p class="definition">Definition at line <a class="el" href="_canbus_8h_source.html#l00035">35</a> of file <a class="el" href="_canbus_8h_source.html">Canbus.h</a>.</p>
 
@@ -184,7 +178,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespace_canbus.html#a96968bb5813d30685ce26670a362cc79">canCallback</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespace_canbus.html#aa7ab0058ac492f13136fdb0ba95401cf">canCallback</a>&#160;</td>
           <td class="paramname"><em>callback</em>&#160;</td>
         </tr>
         <tr>
@@ -204,6 +198,7 @@ Semaphores do not have to be used within the function to read from the given buf
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">address</td><td>The incoming address </td></tr>
+    <tr><td class="paramname">callback</td><td>The callback function, refer to canCallback </td></tr>
   </table>
   </dd>
 </dl>
@@ -448,6 +443,7 @@ use setSemaphore before calling or using a given address while interrupts are ac
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">address</td><td>The outgoing address </td></tr>
+    <tr><td class="paramname">buf</td><td>The buffer array to be sent </td></tr>
   </table>
   </dd>
 </dl>

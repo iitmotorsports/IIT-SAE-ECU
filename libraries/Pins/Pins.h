@@ -43,7 +43,7 @@ typedef void (*PinHandler)(uint8_t CAN_GPIO_Pin, int &value);
  * @param CAN_GPIO_Pin The canbus GPIO pin to get a value from
  * @return int Returns an int that represents either a digital or analog value
  */
-int getCanPinValue(uint8_t GPIO_Pin);
+int getCanPinValue(uint8_t CAN_GPIO_Pin);
 
 /**
  * @brief Get the pin value of a predefined pin

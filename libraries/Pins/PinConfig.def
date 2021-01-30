@@ -25,10 +25,14 @@
 
 // @endcond
 
+/**
+ * @brief The interval in micros to update outgoing canPins
+ */
 #define CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO 20
 
 // IMPROVE: Make access to pins dependent on CONF_ECU_POSITION, differentiate between ECU pins with same pos
 
+// @cond
 // Both ECUs
 #define PINS_BOTH_LED 13
 // Back ECU Only - ECU0
@@ -48,9 +52,15 @@
 #define PINS_FRONT_STEER1 4
 #define PINS_FRONT_BRAKE 5
 #define PINS_FRONT_BMS_LIGHT 6
+// @endcond
 
 // TODO: PWM PINS
 
+#if CONF_ECU_POSITION == 0
+/**
+ * @brief Set whether CanPins are coming in or out
+ */
+#define PINS_CANBUS_DIRECTION INPUT
 /**
  * @brief The defintions of every physical pin
  *
@@ -64,8 +74,6 @@
  * 
  * Only the last entry should NOT have a '\'
  */
-#if CONF_ECU_POSITION == 0
-#define PINS_CANBUS_DIRECTION INPUT
 #define ECU_PINS                                 \
     X(PINS_BOTH_LED, DIGITAL, OUTPUT)            \
     X(PINS_BACK_AIR1, DIGITAL, OUTPUT)           \

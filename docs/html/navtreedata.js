@@ -67,8 +67,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_can_bus_addresses_8def_source.html",
-"class_flex_c_a_n___t4_f_d.html#a44f11285f4ecb23bcd194cad908e37e7"
+"_can_bus_addresses_8def.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -13,6 +13,9 @@
 #ifndef __ECU_LOGGING_H__
 #define __ECU_LOGGING_H__
 
+/**
+ * @brief Refer to Pre_Build.py
+ */
 #define _LogPrebuildString(x) x
 
 #include "LogConfig.def"

@@ -1,5 +1,5 @@
 /**
- * @file CanBusMessages.def
+ * @file CanBusAddresses.def
  * @author IR
  * @brief Define incoming CAN line addresses
  * @version 0.2
@@ -9,17 +9,15 @@
  * 
  */
 
-#ifndef __ECU_CANBUSMESSAGES_H__
+#ifndef __ECU_CANBUS_ADDRESSES_H__
 // @cond
-#define __ECU_CANBUSMESSAGES_H__
+#define __ECU_CANBUS_ADDRESSES_H__
 // @endcond
 
 #include "PPhelp.h"
 
-#define OUTGOING 1
-#define INCOMING 0
-
 // Define addresses values here
+// @cond
 #define ADD_BMS_SOC 0x0000
 #define ADD_BMS_VOLT 0x0000
 #define ADD_MC0_VOLT 0x0000
@@ -33,11 +31,12 @@
 #define ADD_CANPIN_ANALOG1 0x0001
 #define ADD_CANPIN_ANALOG2 0x0002
 #define ADD_CANPIN_DIGITAL0 0x1000
+// @endcond
 
 /**
  * @brief Defines the Can bus addresses that will be used to receive and send data
  * 
- * Every definition is given a direction denoting whether it is incoming or outgoing
+ * Every definition is given a direction denoting whether it is incoming(INPUT) or outgoing(OUTPUT)
  * 
  * Unless it is the last entry, this is how to add a new message
  * 
@@ -47,14 +46,14 @@
  * 
  * @note Currently, address 0x0000 cannot be used
  */
-#define CAN_ADDRESS           \
-    X(ADD_BMS_SOC, INCOMING)  \
-    X(ADD_BMS_VOLT, INCOMING) \
-    X(ADD_MC0_VOLT, INCOMING) \
-    X(ADD_MC1_VOLT, INCOMING) \
-    X(ADD_MC0_RPM, INCOMING)  \
-    X(ADD_MC1_RPM, INCOMING)  \
-    X(ADD_MC0_PWR, INCOMING)  \
-    X(ADD_MC1_PWR, INCOMING)
+#define CAN_ADDRESS        \
+    X(ADD_BMS_SOC, INPUT)  \
+    X(ADD_BMS_VOLT, INPUT) \
+    X(ADD_MC0_VOLT, INPUT) \
+    X(ADD_MC1_VOLT, INPUT) \
+    X(ADD_MC0_RPM, INPUT)  \
+    X(ADD_MC1_RPM, INPUT)  \
+    X(ADD_MC0_PWR, INPUT)  \
+    X(ADD_MC1_PWR, INPUT)
 
-#endif // __ECU_CANBUSMESSAGES_H__
+#endif // __ECU_CANBUS_ADDRESSES_H__

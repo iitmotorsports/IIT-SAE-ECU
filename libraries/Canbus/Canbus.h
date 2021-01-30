@@ -29,10 +29,10 @@ namespace Canbus {
 /**
  * @brief The function type to pass to addCallback
  * 
- * @param uint32_t The address
- * @param uint8_t * The 8 byte message buffer
+ * uint32_t The address
+ * uint8_t * The 8 byte message buffer
  */
-typedef void (*canCallback)(uint32_t, uint8_t *);
+typedef void (*canCallback)(uint32_t e, uint8_t *);
 
 /**
  * @brief Update the Canbus line
@@ -98,6 +98,7 @@ void clearSemaphore();
  * @note If the semaphore is set to the given address the callback will not be called
  * @note Semaphores do not have to be used within the function to read from the given buffer
  * @param address The incoming address
+ * @param callback The callback function, refer to canCallback
  */
 void addCallback(const uint32_t address, canCallback callback);
 
@@ -115,6 +116,7 @@ void pushData(const uint32_t address);
  * @note Function does not verify that address is outgoing, undefined behavior will occur if data is sent thorugh an incoming address
  * 
  * @param address The outgoing address
+ * @param buf The buffer array to be sent
  */
 void sendData(const uint32_t address, uint8_t buf[8]);
 

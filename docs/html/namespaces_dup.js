@@ -1,7 +1,7 @@
 var namespaces_dup =
 [
     [ "Canbus", "namespace_canbus.html", [
-      [ "canCallback", "namespace_canbus.html#a96968bb5813d30685ce26670a362cc79", null ],
+      [ "canCallback", "namespace_canbus.html#aa7ab0058ac492f13136fdb0ba95401cf", null ],
       [ "addCallback", "namespace_canbus.html#a884781debf9732f3e4676830d294e6bc", null ],
       [ "clearSemaphore", "namespace_canbus.html#a441c8b2dbc00d94dd9a6b8d252f09f20", null ],
       [ "enableInterrupts", "namespace_canbus.html#ae66521cf8ac5e63c2e89d6b2f009b38a", null ],
@@ -25,7 +25,7 @@ var namespaces_dup =
     [ "Logging", "namespace_logging.html", "namespace_logging" ],
     [ "Pins", "namespace_pins.html", [
       [ "PinHandler", "namespace_pins.html#a3e6834ba621655f97e8313f86a97c33b", null ],
-      [ "getCanPinValue", "namespace_pins.html#a22d40aafd9c48b98bd7c0eed5e46538c", null ],
+      [ "getCanPinValue", "namespace_pins.html#a499aec4c5df462d2e58fd797756a645f", null ],
       [ "getPinValue", "namespace_pins.html#a5bb778c9151687c75d254d2fef4509fd", null ],
       [ "initialize", "namespace_pins.html#a50fdd17267e54bd2a3d4ed2a6884c5c1", null ],
       [ "setPinValue", "namespace_pins.html#a2d60349cb2aec2c336856187093aea61", null ],
