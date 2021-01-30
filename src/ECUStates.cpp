@@ -1,19 +1,26 @@
 #include "ECUStates.hpp"
+#include "ECUGlobalConfig.h"
 #include "Faults.h"
 #include "Log.h"
 
 State::State_t *ECUStates::Initialize::run(void) {
-    Log.i(ID, "Teensy 3.6 SAE ECU Initalizing");
-    pinMode(6, OUTPUT);
-    pinMode(13, OUTPUT);
-    digitalWrite(6, LOW); /* optional CAN transceiver enable pin */
-    Canbus::setup();      // Interrupts not enabled
-    Pins::initialize();   // setup predefined pins
-    Fault::setup();       // load all buffers
+#if CONF_ECU_POSITION == 0
+    Log.i(ID, "Teensy 3.6 SAE BACK ECU Initalizing");
+#else
+    Log.i(ID, "Teensy 3.6 SAE FRONT ECU Initalizing");
+#endif
+    Canbus::setup();    // allocate and organize addresses
+    Pins::initialize(); // setup predefined pins
+    Fault::setup();     // load all buffers
+#if CONF_ECU_POSITION == 1
+    Logging::enableCanbusRelay(); // Allow logging though canbus
+#endif
+
+    Pins::setPinValue(PINS_BOTH_OPT_CAN_TRAN, LOW); // optional CAN transceiver enable pin
 
     // TODO: TSV
 
-    Log.d(ID, "Finshed");
+    Log.d(ID, "Finshed Setup");
     return &ECUStates::PreCharge_State;
 };
 
