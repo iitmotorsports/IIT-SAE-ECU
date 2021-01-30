@@ -52,6 +52,7 @@
 
 #define LOG_END_MSG_FLAG CONF_LOGGING_END_MSG_FLAG
 
+// Do this to use the same fuction header, we don't need these for mapped logging
 static void *NONE;
 static void *DEBUG = NONE;
 static void *INFO = NONE;
@@ -61,21 +62,27 @@ static void *FATAL = NONE;
 
 // No Timestamping for this mode
 
+/**
+ * |0    |1   |2   |3   |4   |5   |6   |7   |
+ * |State Code|String ID|      Not Sent     |
+ */
 static void __logger_print(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE) {
-    uint8_t *buf = new uint8_t[10](); // IMPROVE: Profile logging functions
+    uint8_t buf[8] = {0};
     memcpy(buf, &TAG, 2);
-    memcpy(buf + 6, &MESSAGE, 4);
-    Serial.write(buf, 10);
-    delete[] buf;
+    memcpy(buf + 2, &MESSAGE, 2);
+    Serial.write(buf, 8);
 }
 
+/**
+ * |0    |1   |2   |3   |4   |5   |6   |7   |
+ * |State Code|String ID|      uint32_t     |
+ */
 static void __logger_print_num(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const uint32_t NUMBER) {
-    uint8_t *buf = new uint8_t[10]();
+    uint8_t buf[8] = {0};
     memcpy(buf, &TAG, 2);
-    memcpy(buf + 2, &NUMBER, 4);
-    memcpy(buf + 6, &MESSAGE, 4);
-    Serial.write(buf, 10);
-    delete[] buf;
+    memcpy(buf + 2, &MESSAGE, 2);
+    memcpy(buf + 4, &NUMBER, 4);
+    Serial.write(buf, 8);
 }
 
 #else
