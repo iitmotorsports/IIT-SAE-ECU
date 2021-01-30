@@ -30,9 +30,9 @@
 #define ADD_MC1_PWR 0x0000
 // canPin addresses
 #define ADD_CANPIN_ANALOG0 0x0000
-#define ADD_CANPIN_ANALOG1 0x0000
-#define ADD_CANPIN_ANALOG2 0x0000
-#define ADD_CANPIN_DIGITAL0 0x0000
+#define ADD_CANPIN_ANALOG1 0x0001
+#define ADD_CANPIN_ANALOG2 0x0002
+#define ADD_CANPIN_DIGITAL0 0x1000
 
 /**
  * @brief Defines the Can bus addresses that will be used to receive and send data
