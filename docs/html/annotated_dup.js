@@ -1,7 +1,11 @@
 var annotated_dup =
 [
-    [ "Logging", "namespace_logging.html", "namespace_logging" ],
-    [ "State", "namespace_state.html", "namespace_state" ],
+    [ "Logging", "namespace_logging.html", [
+      [ "Log_t", "struct_logging_1_1_log__t.html", "struct_logging_1_1_log__t" ]
+    ] ],
+    [ "State", "namespace_state.html", [
+      [ "State_t", "struct_state_1_1_state__t.html", "struct_state_1_1_state__t" ]
+    ] ],
     [ "CAN_message_t", "struct_c_a_n__message__t.html", "struct_c_a_n__message__t" ],
     [ "CANFD_message_t", "struct_c_a_n_f_d__message__t.html", "struct_c_a_n_f_d__message__t" ],
     [ "CANFD_timings_t", "struct_c_a_n_f_d__timings__t.html", "struct_c_a_n_f_d__timings__t" ],

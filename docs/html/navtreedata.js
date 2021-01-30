@@ -26,16 +26,12 @@ var NAVTREE =
 [
   [ "SAE Teensy ECU", "index.html", [
     [ "SAE at IIT ECU 2020 Programming", "index.html", [
-      [ "Hardware", "index.html#autotoc_md3", null ],
-      [ "Setup", "index.html#autotoc_md4", null ],
-      [ "Using", "index.html#autotoc_md5", [
-        [ "VSCode Tasks", "index.html#autotoc_md6", null ]
+      [ "Hardware", "index.html#autotoc_md0", null ],
+      [ "Setup", "index.html#autotoc_md1", null ],
+      [ "Using", "index.html#autotoc_md2", [
+        [ "VSCode Tasks", "index.html#autotoc_md3", null ]
       ] ],
-      [ "Documentation", "index.html#autotoc_md7", null ]
-    ] ],
-    [ "Doxygen dark theme", "md_dark_theme__d_r_k_t_h_m_r_e_a_d_m_e.html", [
-      [ "Demo", "md_dark_theme__d_r_k_t_h_m_r_e_a_d_m_e.html#autotoc_md1", null ],
-      [ "How to use it", "md_dark_theme__d_r_k_t_h_m_r_e_a_d_m_e.html#autotoc_md2", null ]
+      [ "Documentation", "index.html#autotoc_md4", null ]
     ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
@@ -71,8 +67,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_can_bus_messages_8def.html",
-"class_flex_c_a_n___t4_f_d.html#afbc4f97ed98885b37a873ae320ae0c12"
+"_can_bus_addresses_8def_source.html",
+"class_flex_c_a_n___t4_f_d.html#a44f11285f4ecb23bcd194cad908e37e7"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
