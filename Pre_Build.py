@@ -39,6 +39,16 @@ Eg.
 ```
 LOG_TAG TAG = "Logging Tag"; -> LOG_TAG TAG = 2;
 ```
+
+A special case has been made to also allocate and replace string that call the following macro
+
+```
+_LogPrebuildString(x)
+```
+
+Where x is the string, it will be given a unique ID and replaced with said ID as if it were being called by a Logging function.
+This is useful where one wishes to generate log functions using the C preprocessor
+
 """
 
 # @cond
