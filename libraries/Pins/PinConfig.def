@@ -42,12 +42,12 @@
 #define PINS_BACK_SOUND_DRIVER 0
 // Front ECU Only - ECU1
 #define PINS_FRONT_BUTTON_INPUT 0
-#define PINS_FRONT_PEDAL0 0
-#define PINS_FRONT_PEDAL1 0
-#define PINS_FRONT_STEER0 0
-#define PINS_FRONT_STEER1 0
-#define PINS_FRONT_BRAKE 0
-#define PINS_FRONT_BMS_LIGHT 0
+#define PINS_FRONT_PEDAL0 1
+#define PINS_FRONT_PEDAL1 2
+#define PINS_FRONT_STEER0 3
+#define PINS_FRONT_STEER1 4
+#define PINS_FRONT_BRAKE 5
+#define PINS_FRONT_BMS_LIGHT 6
 
 // TODO: PWM PINS
 
@@ -78,18 +78,28 @@
     X(PINS_BACK_SOUND_DRIVER, DIGITAL, OUTPUT)
 #else
 #define PINS_CANBUS_DIRECTION OUTPUT
-#define ECU_PINS                                     \
-    X(PINS_FRONT_BUTTON_INPUT, DIGITAL, INPUT)       \
-    X(PINS_FRONT_PEDAL0, ANALOG, INPUT)              \
-    X(PINS_FRONT_PEDAL1, ANALOG, INPUT)              \
-    X(PINS_FRONT_STEER0, ANALOG, ADD_CANPIN_DIGITAL0 \
+#define ECU_PINS                               \
+    X(PINS_FRONT_BUTTON_INPUT, DIGITAL, INPUT) \
+    X(PINS_FRONT_PEDAL0, ANALOG, INPUT)        \
+    X(PINS_FRONT_PEDAL1, ANALOG, INPUT)        \
+    X(PINS_FRONT_STEER0, ANALOG, INPUT)        \
     X(PINS_FRONT_STEER1, ANALOG, INPUT)        \
     X(PINS_FRONT_BRAKE, ANALOG, INPUT)         \
     X(PINS_FRONT_BMS_LIGHT, DIGITAL, INPUT)
 #endif
 
-// X(Address, Pin)
-// Two analogs per address
+/**
+ * @brief The defintions of every analog pin to be sent/received over canbus
+ *
+ * @note Only two analog pins can be allocated per address
+ * @note The number of pins per address must be addressed
+ *
+ * Unless it is the last entry, this is how to add a new pin
+ *
+ * X(Address, Pin) \
+ * 
+ * Only the last entry should NOT have a '\'
+ */
 #define PINS_CANBUS_ANALOG                   \
     X(ADD_CANPIN_ANALOG0, PINS_FRONT_PEDAL0) \
     X(ADD_CANPIN_ANALOG0, PINS_FRONT_PEDAL1) \
@@ -97,7 +107,18 @@
     X(ADD_CANPIN_ANALOG1, PINS_FRONT_STEER1) \
     X(ADD_CANPIN_ANALOG2, PINS_FRONT_BRAKE)
 
-// 8 digitals per address // NOTE: Can be increased if need be
+/**
+ * @brief The defintions of every digital pin to be sent/received over canbus
+ *
+ * @note Only 8 digital pins can be allocated per address
+ * @note Currently, only one address is supported, support for up to 64 pins can be added later if needed
+ *
+ * Unless it is the last entry, this is how to add a new pin
+ *
+ * X(Address, Pin) \
+ * 
+ * Only the last entry should NOT have a '\'
+ */
 #define PINS_CANBUS_DIGITAL                      \
     X(ADD_CANPIN_DIGITAL0, PINS_FRONT_BMS_LIGHT) \
     X(ADD_CANPIN_DIGITAL0, PINS_FRONT_BUTTON_INPUT)
