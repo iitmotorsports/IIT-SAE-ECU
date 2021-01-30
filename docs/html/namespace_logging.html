@@ -85,7 +85,8 @@ $(document).ready(function(){initNavTree('namespace_logging.html',''); initResiz
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Logging Namespace Reference</div>  </div>
 </div><!--header-->
@@ -101,10 +102,39 @@ Classes</h2></td></tr>
 This class has the capability to modify all of it's functions to instead use integer IDs <br  />
 Refer to the <a class="el" href="_pre___build_8py.html" title="This script preprocesses source files for use with Log_t.">Pre_Build.py</a> script for more information.  <a href="struct_logging_1_1_log__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a3402a2c8efbb932ddbe58e66b9cc550c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_logging.html#a3402a2c8efbb932ddbe58e66b9cc550c">enableCanbusRelay</a> ()</td></tr>
+<tr class="memdesc:a3402a2c8efbb932ddbe58e66b9cc550c"><td class="mdescLeft">&#160;</td><td class="mdescRight">If a set address is received through canbus, the data will be pushed through serial.  <a href="namespace_logging.html#a3402a2c8efbb932ddbe58e66b9cc550c">More...</a><br /></td></tr>
+<tr class="separator:a3402a2c8efbb932ddbe58e66b9cc550c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Namespace to isolate <a class="el" href="struct_logging_1_1_log__t.html" title="Base class used to log things to serial  This class has the capability to modify all of it&#39;s function...">Log_t</a> struct. Refer to <a class="el" href="_log_8h.html" title="Special logging functionality.">Log.h</a> for more info. </p>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a3402a2c8efbb932ddbe58e66b9cc550c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3402a2c8efbb932ddbe58e66b9cc550c">&#9670;&nbsp;</a></span>enableCanbusRelay()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Logging::enableCanbusRelay </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>If a set address is received through canbus, the data will be pushed through serial. </p>
+<dl class="section note"><dt>Note</dt><dd>the address is set in <a class="el" href="_can_bus_addresses_8def.html" title="Define incoming CAN line addresses.">CanBusAddresses.def</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00220">220</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

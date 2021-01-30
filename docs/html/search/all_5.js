@@ -8,5 +8,6 @@ var searchData=
   ['e_5frestart_25',['E_RESTART',['../namespace_state.html#a422591d2b00d9f2217e041c41ba49bfca52e0b67d3d115c4a746620fade6175f8',1,'State']]],
   ['ecu_5fpins_26',['ECU_PINS',['../_pin_config_8def.html#a7603185bc328f16ab177087d225c6848',1,'PinConfig.def']]],
   ['ecustates_27',['ECUStates',['../namespace_e_c_u_states.html',1,'']]],
-  ['enableinterrupts_28',['enableInterrupts',['../namespace_canbus.html#ae66521cf8ac5e63c2e89d6b2f009b38a',1,'Canbus']]]
+  ['enablecanbusrelay_28',['enableCanbusRelay',['../namespace_logging.html#a3402a2c8efbb932ddbe58e66b9cc550c',1,'Logging']]],
+  ['enableinterrupts_29',['enableInterrupts',['../namespace_canbus.html#ae66521cf8ac5e63c2e89d6b2f009b38a',1,'Canbus']]]
 ];
