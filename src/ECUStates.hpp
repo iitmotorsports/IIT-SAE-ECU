@@ -26,9 +26,10 @@ static struct Initialize : State::State_t {
  */
 static struct PreCharge_State : State::State_t {
 private:
-    uint8_t *BMS_Voltage_Buffer = Canbus::getBuffer(ADD_BMS_VOLT);
-    uint8_t *MC0_Voltage_Buffer = Canbus::getBuffer(ADD_MC0_VOLT);
-    uint8_t *MC1_Voltage_Buffer = Canbus::getBuffer(ADD_MC1_VOLT);
+    uint8_t *BMS_Voltage_Buffer;
+    uint8_t *MC0_Voltage_Buffer;
+    uint8_t *MC1_Voltage_Buffer;
+    void getBuffers();
     State::State_t *PreCharFault();
     bool voltageCheck();
 
@@ -75,13 +76,14 @@ static struct Button_State : State::State_t { // NOTE: Is button state just play
  * info of message, and message handler attributes for this state. 
  * 
  */
-static struct Driving_Mode_State : State::State_t { // TODO: getBuffer at runtime
+static struct Driving_Mode_State : State::State_t {
 private:
-    uint8_t *MC0_RPM_Buffer = Canbus::getBuffer(ADD_MC0_RPM);
-    uint8_t *MC1_RPM_Buffer = Canbus::getBuffer(ADD_MC1_RPM);
-    uint8_t *MC0_PWR_Buffer = Canbus::getBuffer(ADD_MC0_PWR);
-    uint8_t *MC1_PWR_Buffer = Canbus::getBuffer(ADD_MC1_PWR);
-    uint8_t *BMS_SOC_Buffer = Canbus::getBuffer(ADD_BMS_SOC);
+    uint8_t *MC0_RPM_Buffer;
+    uint8_t *MC1_RPM_Buffer;
+    uint8_t *MC0_PWR_Buffer;
+    uint8_t *MC1_PWR_Buffer;
+    uint8_t *BMS_SOC_Buffer;
+    void getBuffers();
     void sendMCCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit);
     void torqueVector(int torques[2]);
     uint32_t BMSSOC();

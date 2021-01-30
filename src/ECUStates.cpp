@@ -47,7 +47,15 @@ bool ECUStates::PreCharge_State::voltageCheck() {
     return 0.9 * BMSVolt <= MCVolt;
 }
 
+void ECUStates::PreCharge_State::getBuffers() {
+    BMS_Voltage_Buffer = Canbus::getBuffer(ADD_BMS_VOLT);
+    MC0_Voltage_Buffer = Canbus::getBuffer(ADD_MC0_VOLT);
+    MC1_Voltage_Buffer = Canbus::getBuffer(ADD_MC1_VOLT);
+};
+
 State::State_t *ECUStates::PreCharge_State::run(void) { // FIXME: set pins to LOW or HIGH?
+    Log.i(ID, "Loading Buffers");
+    getBuffers();
     Log.i(ID, "Precharge running");
 
     if (Fault::hardFault()) {
@@ -177,7 +185,17 @@ uint32_t ECUStates::Driving_Mode_State::powerValue() {
     return MC0_PWR + MC1_PWR;
 }
 
+void ECUStates::Driving_Mode_State::getBuffers() {
+    MC0_RPM_Buffer = Canbus::getBuffer(ADD_MC0_RPM);
+    MC1_RPM_Buffer = Canbus::getBuffer(ADD_MC1_RPM);
+    MC0_PWR_Buffer = Canbus::getBuffer(ADD_MC0_PWR);
+    MC1_PWR_Buffer = Canbus::getBuffer(ADD_MC1_PWR);
+    BMS_SOC_Buffer = Canbus::getBuffer(ADD_BMS_SOC);
+}
+
 State::State_t *ECUStates::Driving_Mode_State::run(void) {
+    Log.i(ID, "Loading Buffers");
+    getBuffers();
     Log.i(ID, "Driving mode on");
 
 #if CONF_ECU_POSITION == FRONT_ECU
