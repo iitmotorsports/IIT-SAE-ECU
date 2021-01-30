@@ -19,6 +19,8 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+// BROKEN: Messages are not sent by 8 byte blocks, rather 10. Canbus does not like this, shorted string IDs to 2 bytes
+
 // TODO: send messages through can line to other teensy
 // IMPROVE: Add option to log to an sd card instead/aswell
 
