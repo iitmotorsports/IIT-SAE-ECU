@@ -9,6 +9,7 @@ State::State_t *ECUStates::Initialize::run(void) {
     digitalWrite(6, LOW); /* optional CAN transceiver enable pin */
     Canbus::setup();      // Interrupts not enabled
     Pins::initialize();   // setup predefined pins
+    Fault::setup();       // load all buffers
 
     // TODO: TSV
 
