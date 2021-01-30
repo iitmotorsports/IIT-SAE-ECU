@@ -9,8 +9,10 @@
  * 
  */
 
-#include "Canbus.h"
-
+/**
+ * @brief Fault checking functionality.
+ * Refer to Faults.h
+ */
 namespace Fault {
 
 /**

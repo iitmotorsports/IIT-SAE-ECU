@@ -12,6 +12,7 @@
 // @cond
 
 #include "Faults.h"
+#include "Canbus.h"
 #include "FaultConfig.def"
 #include "Log.h"
 
