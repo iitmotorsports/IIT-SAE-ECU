@@ -31,6 +31,8 @@
 #define ADD_CANPIN_ANALOG1 0x0001
 #define ADD_CANPIN_ANALOG2 0x0002
 #define ADD_CANPIN_DIGITAL0 0x1000
+// Logging address
+#define ADD_AUX_LOGGING 0x0000
 // @endcond
 
 /**

@@ -138,7 +138,11 @@ void getData(const uint32_t address, uint8_t buf[8]) {
 }
 
 uint8_t *getBuffer(const uint32_t address) {
-    return addressBuffers[_getAddressPos(address)];
+    uint pos = _getAddressPos(address);
+    if (pos == ADDRESS_COUNT) {
+        Log.e(ID, "Address has not been allocated: ", address);
+    }
+    return addressBuffers[pos];
 }
 
 void setSemaphore(const uint32_t address) {
