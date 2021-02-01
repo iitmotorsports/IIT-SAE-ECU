@@ -56,9 +56,9 @@ struct digitalCanPinMsg_t : CanPinMsg_t {
         Log.d(ID, "Sending Digital Pins", address);
         Canbus::sendData(address, buf);
     };
-    void receive(uint8_t buffer[8]) { // TODO: Double check receiving works
+    void receive(uint8_t buffer[8]) {
         bufmap = (uint64_t *)buffer;  // use bufmap, as if we are receiving we can't be sending
-        for (size_t i = activedigitalCanPins - 1; i >= 0; i--) {
+        for (int i = activedigitalCanPins - 1; i >= 0; i--) {
             CAN_GPIO[digitalPinPos[i]] = *bufmap & 1;
             *bufmap = *bufmap >> 1;
         }
