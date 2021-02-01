@@ -12,6 +12,8 @@ Hardware
 Setup
 -----
 
+NOTE: This repo used [TeensyTemplate](https://github.com/LeHuman/TeensyTemplate) as a starting point
+
 Download [TeensyToolchain](https://github.com/LeHuman/TeensyToolchain), unzip, and put it next to this template folder
 
 Rename the downloaded folder from `TeensyToolchain-master` to `TeensyToolchain`
