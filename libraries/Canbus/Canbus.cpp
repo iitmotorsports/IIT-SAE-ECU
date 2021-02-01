@@ -119,11 +119,11 @@ void setup(void) {
     F_Can.onReceive(_receiveCan);
     F_Can.enableMBInterrupts();
     F_Can.begin();
-    // updateTimer.begin(update, 1); // FIXME: choose an appropriate update time
+    // updateTimer.begin(update, 1); // Choose an appropriate update time if a timer is used
 }
 
-void update(void) { // TODO: Should we update using a timer or just through state loops?
-    F_Can.events();
+void update(void) { // TODO: Test if canbus interrupts actually work as intended
+    F_Can.events(); // Should we update using a timer or just through state loops?
 }
 
 void getData(const uint32_t address, uint8_t buf[8]) {

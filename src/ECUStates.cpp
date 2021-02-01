@@ -53,7 +53,7 @@ void ECUStates::PreCharge_State::getBuffers() {
     MC1_Voltage_Buffer = Canbus::getBuffer(ADD_MC1_VOLT);
 };
 
-State::State_t *ECUStates::PreCharge_State::run(void) { // FIXME: set pins to LOW or HIGH?
+State::State_t *ECUStates::PreCharge_State::run(void) { // TODO: set pins to LOW and HIGH to close and open?
     Log.i(ID, "Loading Buffers");
     getBuffers();
     Log.i(ID, "Precharge running");
@@ -91,7 +91,7 @@ State::State_t *ECUStates::Idle_State::run(void) {
     Log.i(ID, "Waiting for Button or Charging Press");
 
     while (true) {
-        if (Pins::getPinValue(PINS_FRONT_BUTTON_INPUT)) { // FIXME: Change to CanPin get
+        if (Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT)) {
             Log.i(ID, "Button Pressed");
             return &ECUStates::Button_State;
         } else if (Pins::getPinValue(PINS_BACK_CHARGING_INPUT)) {

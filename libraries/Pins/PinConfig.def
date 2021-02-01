@@ -56,7 +56,7 @@
 #define PINS_FRONT_BMS_LIGHT 6
 // @endcond
 
-// TODO: PWM PINS
+// TODO: PWM PINS, probably not needed for now
 
 #if CONF_ECU_POSITION == BACK_ECU
 /**
