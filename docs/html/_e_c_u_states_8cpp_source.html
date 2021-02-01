@@ -94,7 +94,7 @@ $(document).ready(function(){initNavTree('_e_c_u_states_8cpp_source.html',''); i
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_log_8h.html">Log.h</a>&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *ECUStates::Initialize::run(<span class="keywordtype">void</span>) {</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#if CONF_ECU_POSITION == 0</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#if CONF_ECU_POSITION == BACK_ECU</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Teensy 3.6 SAE BACK ECU Initalizing&quot;</span>);</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#else</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Teensy 3.6 SAE FRONT ECU Initalizing&quot;</span>);</div>
@@ -102,278 +102,303 @@ $(document).ready(function(){initNavTree('_e_c_u_states_8cpp_source.html',''); i
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <a class="code" href="namespace_canbus.html#ac87cf65470012914f1ae29c0eb987b87">Canbus::setup</a>();    <span class="comment">// allocate and organize addresses</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <a class="code" href="namespace_pins.html#a50fdd17267e54bd2a3d4ed2a6884c5c1">Pins::initialize</a>(); <span class="comment">// setup predefined pins</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <a class="code" href="namespace_fault.html#a5d866df0efc11ff65ac5c22bf8f6569a">Fault::setup</a>();     <span class="comment">// load all buffers</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#if CONF_ECU_POSITION == 1</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#if CONF_ECU_POSITION == FRONT_ECU</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <a class="code" href="namespace_logging.html#a3402a2c8efbb932ddbe58e66b9cc550c">Logging::enableCanbusRelay</a>(); <span class="comment">// Allow logging though canbus</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BOTH_OPT_CAN_TRAN, LOW); <span class="comment">// optional CAN transceiver enable pin</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="comment">// TODO: TSV</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Finshed Setup&quot;</span>);</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordflow">return</span> &amp;ECUStates::PreCharge_State;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;};</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *ECUStates::PreCharge_State::PreCharFault(<span class="keywordtype">void</span>) {</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Closing Air1 and Precharge Relay&quot;</span>);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BACK_AIR1, LOW);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BACK_PRECHARGE_RELAY, LOW);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordflow">return</span> &amp;ECUStates::FaultState;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;}</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="namespace_fault.html#a8d65de5d2b7a229e0d2c8d84ca9f64bd">Fault::anyFault</a>()) {</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keywordflow">return</span> &amp;ECUStates::FaultState;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    }</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Waiting for TSV Signal&quot;</span>);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordflow">while</span> (!<a class="code" href="namespace_pins.html#a5bb778c9151687c75d254d2fef4509fd">Pins::getPinValue</a>(PINS_BACK_TSV_SIGNAL)) {</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    }</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;TSV On&quot;</span>);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Finshed Setup&quot;</span>);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordflow">return</span> &amp;ECUStates::PreCharge_State;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;};</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keywordtype">bool</span> ECUStates::PreCharge_State::voltageCheck() {</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">Canbus::setSemaphore</a>(ADD_BMS_VOLT);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    uint BMSVolt = *((uint *)(BMS_Voltage_Buffer + 1)); <span class="comment">// TODO: get BMS volt from buffer</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">Canbus::setSemaphore</a>(0x0000);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    uint MCVolt = *((uint *)(ADD_MC0_VOLT + 1)); <span class="comment">// TODO: get MC volt from buffer</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <a class="code" href="namespace_canbus.html#a441c8b2dbc00d94dd9a6b8d252f09f20">Canbus::clearSemaphore</a>();</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordflow">return</span> 0.9 * BMSVolt &lt;= MCVolt;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *ECUStates::PreCharge_State::run(<span class="keywordtype">void</span>) { <span class="comment">// FIXME: set pins to LOW or HIGH?</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Precharge running&quot;</span>);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="namespace_fault.html#a575e9434178c423cac322ff491398e93">Fault::hardFault</a>()) {</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">e</a>(ID, <span class="stringliteral">&quot;Precharge Faulted before charge&quot;</span>);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keywordflow">return</span> PreCharFault();</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    }</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Opening Air1 and Precharge Relay&quot;</span>);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BACK_AIR1, HIGH);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BACK_PRECHARGE_RELAY, HIGH);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="namespace_fault.html#a575e9434178c423cac322ff491398e93">Fault::hardFault</a>()) {</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">e</a>(ID, <span class="stringliteral">&quot;Precharge Faulted after charge&quot;</span>);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keywordflow">return</span> PreCharFault();</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    }</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    elapsedMillis timeElapsed;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordflow">while</span> (timeElapsed &lt; 5000) {</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordflow">if</span> (voltageCheck()) {</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BACK_PRECHARGE_RELAY, LOW);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Precharge Finished&quot;</span>);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BACK_AIR2, HIGH);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="keywordflow">return</span> &amp;ECUStates::Idle_State;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        }</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    }</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">e</a>(ID, <span class="stringliteral">&quot;Precharge timed out&quot;</span>);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordflow">return</span> PreCharFault();</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;};</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *ECUStates::PreCharge_State::PreCharFault(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Closing Air1 and Precharge Relay&quot;</span>);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BACK_AIR1, LOW);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BACK_PRECHARGE_RELAY, LOW);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordflow">return</span> &amp;ECUStates::FaultState;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keywordtype">bool</span> ECUStates::PreCharge_State::voltageCheck() {</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">Canbus::setSemaphore</a>(ADD_BMS_VOLT);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    uint BMSVolt = *((uint *)(BMS_Voltage_Buffer + 1)); <span class="comment">// TODO: interpret buffer</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">Canbus::setSemaphore</a>(0x0000);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    uint MCVolt = *((uint *)(ADD_MC0_VOLT + 1)); <span class="comment">// TODO: interpret buffer</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <a class="code" href="namespace_canbus.html#a441c8b2dbc00d94dd9a6b8d252f09f20">Canbus::clearSemaphore</a>();</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordflow">return</span> 0.9 * BMSVolt &lt;= MCVolt;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;}</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keywordtype">void</span> ECUStates::PreCharge_State::getBuffers() {</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    BMS_Voltage_Buffer = <a class="code" href="namespace_canbus.html#a822044e240364d0df5ebaee32e7dbdd6">Canbus::getBuffer</a>(ADD_BMS_VOLT);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    MC0_Voltage_Buffer = <a class="code" href="namespace_canbus.html#a822044e240364d0df5ebaee32e7dbdd6">Canbus::getBuffer</a>(ADD_MC0_VOLT);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    MC1_Voltage_Buffer = <a class="code" href="namespace_canbus.html#a822044e240364d0df5ebaee32e7dbdd6">Canbus::getBuffer</a>(ADD_MC1_VOLT);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;};</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *ECUStates::PreCharge_State::run(<span class="keywordtype">void</span>) { <span class="comment">// TODO: set pins to LOW and HIGH to close and open?</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Loading Buffers&quot;</span>);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    getBuffers();</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Precharge running&quot;</span>);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="namespace_fault.html#a575e9434178c423cac322ff491398e93">Fault::hardFault</a>()) {</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">e</a>(ID, <span class="stringliteral">&quot;Precharge Faulted before charge&quot;</span>);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordflow">return</span> PreCharFault();</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    }</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Opening Air1 and Precharge Relay&quot;</span>);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BACK_AIR1, HIGH);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BACK_PRECHARGE_RELAY, HIGH);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="namespace_fault.html#a575e9434178c423cac322ff491398e93">Fault::hardFault</a>()) {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">e</a>(ID, <span class="stringliteral">&quot;Precharge Faulted after charge&quot;</span>);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keywordflow">return</span> PreCharFault();</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    }</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *ECUStates::Idle_State::run(<span class="keywordtype">void</span>) {</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Waiting for Button or Charging Press&quot;</span>);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordflow">while</span> (<span class="keyword">true</span>) {</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="namespace_pins.html#a5bb778c9151687c75d254d2fef4509fd">Pins::getPinValue</a>(PINS_FRONT_BUTTON_INPUT)) { <span class="comment">// FIXME: Change to CanPin get</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Button Pressed&quot;</span>);</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            <span class="keywordflow">return</span> &amp;ECUStates::Button_State;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="namespace_pins.html#a5bb778c9151687c75d254d2fef4509fd">Pins::getPinValue</a>(PINS_BACK_CHARGING_INPUT)) {</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Charging Pressed&quot;</span>);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            <span class="keywordflow">return</span> &amp;ECUStates::Charging_State;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="namespace_fault.html#a575e9434178c423cac322ff491398e93">Fault::hardFault</a>()) {</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        }</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Waiting&quot;</span>);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    }</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordflow">return</span> &amp;ECUStates::FaultState;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;}</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *ECUStates::Charging_State::run(<span class="keywordtype">void</span>) {</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BACK_CHARGING_RELAY, HIGH);</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Charging on&quot;</span>);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordflow">while</span> (<a class="code" href="namespace_pins.html#a5bb778c9151687c75d254d2fef4509fd">Pins::getPinValue</a>(PINS_BACK_CHARGING_SIGNAL)) {</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="comment">// IMPROVE: Don&#39;t use fault to stop charging</span></div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="namespace_fault.html#a575e9434178c423cac322ff491398e93">Fault::hardFault</a>()) {</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BACK_CHARGING_RELAY, LOW);</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;            <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">e</a>(ID, <span class="stringliteral">&quot;Charging faulted, turning off&quot;</span>);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            <span class="keywordflow">return</span> &amp;ECUStates::FaultState;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        }</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Voltage&quot;</span>, <a class="code" href="namespace_pins.html#a5bb778c9151687c75d254d2fef4509fd">Pins::getPinValue</a>(PINS_BACK_CHARGING_VOLTAGE)); <span class="comment">// TODO: add delay</span></div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    }</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BACK_CHARGING_RELAY, LOW);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Charging turning off&quot;</span>);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keywordflow">return</span> &amp;ECUStates::Idle_State;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;}</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *ECUStates::Button_State::run(<span class="keywordtype">void</span>) {</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Playing sound&quot;</span>);</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="comment">// motor controller enable bit off</span></div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BACK_SOUND_DRIVER, HIGH);</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    elapsedMillis soundTimer;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <span class="keywordflow">while</span> (soundTimer &lt;= 2000) {</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        <span class="keywordflow">if</span> (<span class="keyword">false</span>) { <span class="comment">// TODO: Check for fault</span></div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;            <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">e</a>(ID, <span class="stringliteral">&quot;Failed to play sound&quot;</span>);</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;            <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BACK_SOUND_DRIVER, LOW);</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;            <span class="keywordflow">return</span> &amp;ECUStates::FaultState;</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        }</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    }</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BACK_SOUND_DRIVER, LOW);</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Playing sound finished&quot;</span>);</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160; </div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keywordflow">return</span> &amp;ECUStates::Driving_Mode_State;</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;}</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="comment">// static uint32_t MOTOR_OFFSET = 0xe0;         // offset for motor ids // is this actually just for the MCs?</span></div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="comment">// static uint32_t MOTOR_STATIC_OFFSET = 0x0A0; // IMPROVE: auto set this global offset to addresses</span></div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160; </div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;<span class="comment">// void motorWriteSpeed(TTMsg msg, byte offset, bool direction, int speed) { // speed is value 0 - 860</span></div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;<span class="comment">//     int percent_speed = constrain(map(speed, 0, 1024, 0, 400), 0, 400);   // seprate func for negative vals (regen)</span></div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;<span class="comment">//     // Serial.println(percent_speed);</span></div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="comment">//     //Calculations value = (high_byte x 256) + low_byte</span></div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="comment">//     byte low_byte = percent_speed % 256;</span></div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;<span class="comment">//     byte high_byte = percent_speed / 256;</span></div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="comment">//     msg.id = SPEEDWRITE_ADD + offset - MOTOR_STATIC_OFFSET;</span></div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<span class="comment">//     // Serial.println(msg.id);</span></div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="comment">//     msg.ext = 0;</span></div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<span class="comment">//     msg.len = 8;</span></div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;<span class="comment">//     msg.buf[0] = low_byte; // NM</span></div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;<span class="comment">//     msg.buf[1] = high_byte;</span></div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;<span class="comment">//     msg.buf[2] = 0; // Speed</span></div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="comment">//     msg.buf[3] = 0;</span></div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;<span class="comment">//     msg.buf[4] = direction;           // Direction</span></div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;<span class="comment">//     msg.buf[5] = START_BUTTON_PUSHED; // Inverter enable byte</span></div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;<span class="comment">//     msg.buf[6] = 0;                   // Last two are the maximum torque values || if 0 then defualt values are set</span></div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="comment">//     msg.buf[7] = 0;</span></div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="comment">//     writeTTMsg(msg);</span></div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;<span class="comment">// }</span></div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160; </div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="keywordtype">void</span> ECUStates::Driving_Mode_State::sendMCCommand(uint32_t MC_ADD, <span class="keywordtype">int</span> torque, <span class="keywordtype">bool</span> direction, <span class="keywordtype">bool</span> enableBit) {</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;}</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160; </div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="keywordtype">void</span> ECUStates::Driving_Mode_State::torqueVector(<span class="keywordtype">int</span> torques[2]) {</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    <span class="keywordtype">int</span> pedal = 0; <span class="comment">// Read Can message PEDALVALUE // NOTE: Receive from front teensy</span></div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;                   <span class="comment">// TODO: Add Torque vectoring algorithms</span></div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    torques[0] = pedal;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    torques[1] = pedal;</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;}</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160; </div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;uint32_t ECUStates::Driving_Mode_State::BMSSOC() {</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">Canbus::setSemaphore</a>(ADD_BMS_SOC);</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    <span class="keywordflow">return</span> *(uint *)(BMS_SOC_Buffer + 2); <span class="comment">// TODO: BMS SOC from buffer</span></div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    <a class="code" href="namespace_canbus.html#a441c8b2dbc00d94dd9a6b8d252f09f20">Canbus::clearSemaphore</a>();</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;}</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160; </div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;uint32_t ECUStates::Driving_Mode_State::powerValue() {</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">Canbus::setSemaphore</a>(ADD_MC0_PWR);</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    uint MC0_PWR = *(uint *)(MC0_PWR_Buffer + 4); <span class="comment">// TODO: get MC PWR from buffer</span></div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">Canbus::setSemaphore</a>(ADD_MC1_PWR);</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    uint MC1_PWR = *(uint *)(MC1_PWR_Buffer + 4);</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <a class="code" href="namespace_canbus.html#a441c8b2dbc00d94dd9a6b8d252f09f20">Canbus::clearSemaphore</a>();</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    <span class="keywordflow">return</span> MC0_PWR + MC1_PWR;</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;}</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160; </div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *ECUStates::Driving_Mode_State::run(<span class="keywordtype">void</span>) {</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Driving mode on&quot;</span>);</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160; </div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    <span class="keywordflow">while</span> (<span class="keyword">true</span>) {</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;        <a class="code" href="namespace_canbus.html#a386cdddf9229348b8108640075b5c3e4">Canbus::update</a>();</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;        <span class="comment">// TODO: Send fault reset to MCs</span></div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Sending Fault reset to MCs complete&quot;</span>);</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160; </div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; 4; i++) { <span class="comment">// IMPROVE: Send only once? Check MC heartbeat catches it</span></div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;            sendMCCommand(0x0, 0, 0, 0); <span class="comment">// MC 1</span></div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;            sendMCCommand(0x0, 0, 1, 0); <span class="comment">// MC 2</span></div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;            delay(10);</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;        }</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160; </div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;        <span class="keywordtype">int</span> MotorTorques[2];</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;        torqueVector(MotorTorques);</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160; </div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;        sendMCCommand(0x0, MotorTorques[0], 0, 0); <span class="comment">// MC 1</span></div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;        sendMCCommand(0x0, MotorTorques[1], 1, 0); <span class="comment">// MC 2</span></div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160; </div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;        <span class="comment">/* Front Teensy Exclusive */</span></div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;        <span class="comment">// GAUGE</span></div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;        <span class="comment">// receive rpm of MCs, interpret, then send to from teensy for logging</span></div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;        <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">Canbus::setSemaphore</a>(ADD_MC0_RPM);</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;        <span class="keywordtype">int</span> MC_Rpm_Val_0 = *(<span class="keywordtype">int</span> *)(MC0_RPM_Buffer + 4); <span class="comment">// TODO: get MC RPM from buffer</span></div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;        <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">Canbus::setSemaphore</a>(ADD_MC1_RPM);</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;        <span class="keywordtype">int</span> MC_Rpm_Val_1 = *(<span class="keywordtype">int</span> *)(MC1_RPM_Buffer + 4);</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;        <span class="keywordtype">int</span> MC_Spd_Val_0 = MC_Rpm_Val_0; <span class="comment">// TODO: convert RPM -&gt; SPD</span></div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;        <span class="keywordtype">int</span> MC_Spd_Val_1 = MC_Rpm_Val_1;</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;        <span class="keywordtype">int</span> speed = (MC_Spd_Val_0 + MC_Spd_Val_1) / 2;</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Current Motor Speed:&quot;</span>, speed);</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Current Power Value:&quot;</span>, powerValue());   <span class="comment">// Canbus message from MCs</span></div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;BMS State Of Charge Value:&quot;</span>, BMSSOC()); <span class="comment">// Canbus message</span></div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;        <span class="comment">/* End Front Teensy Exclusive */</span></div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160; </div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Going back to Idle state&quot;</span>);</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;        <span class="comment">// push button is same as idlestate</span></div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;        <span class="comment">// TODO: Pushbutton</span></div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160; </div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;        <span class="comment">// Pins::update(); // TODO: uncomment once analog caching is done</span></div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="namespace_fault.html#a575e9434178c423cac322ff491398e93">Fault::hardFault</a>()) {</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;        }</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    }</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160; </div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Driving mode off&quot;</span>);</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    <span class="keywordflow">return</span> &amp;ECUStates::Idle_State;</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;}</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160; </div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *ECUStates::FaultState::run(<span class="keywordtype">void</span>) { <span class="comment">// IMPROVE: Should fault state do anything else?</span></div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    <a class="code" href="namespace_canbus.html#ae66521cf8ac5e63c2e89d6b2f009b38a">Canbus::enableInterrupts</a>(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#ad171024fa0f93e6117cd7b0aaf76cb87">f</a>(ID, <span class="stringliteral">&quot;FAULT STATE&quot;</span>);</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    <a class="code" href="namespace_fault.html#abf369f0092a0b44bb9546b3563417895">Fault::logFault</a>();</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    delay(250);</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    <span class="keywordflow">return</span> &amp;ECUStates::FaultState;</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;}</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160; </div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *ECUStates::Logger_t::run(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    elapsedMillis timeElapsed;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordflow">while</span> (timeElapsed &lt; 5000) {</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="keywordflow">if</span> (voltageCheck()) {</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BACK_PRECHARGE_RELAY, LOW);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Precharge Finished&quot;</span>);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BACK_AIR2, HIGH);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <span class="keywordflow">return</span> &amp;ECUStates::Idle_State;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        }</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    }</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">e</a>(ID, <span class="stringliteral">&quot;Precharge timed out&quot;</span>);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keywordflow">return</span> PreCharFault();</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;};</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *ECUStates::Idle_State::run(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Waiting for Button or Charging Press&quot;</span>);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordflow">while</span> (<span class="keyword">true</span>) {</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="namespace_pins.html#a499aec4c5df462d2e58fd797756a645f">Pins::getCanPinValue</a>(PINS_FRONT_BUTTON_INPUT)) {</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Button Pressed&quot;</span>);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;            <span class="keywordflow">return</span> &amp;ECUStates::Button_State;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="namespace_pins.html#a5bb778c9151687c75d254d2fef4509fd">Pins::getPinValue</a>(PINS_BACK_CHARGING_INPUT)) {</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Charging Pressed&quot;</span>);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            <span class="keywordflow">return</span> &amp;ECUStates::Charging_State;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="namespace_fault.html#a575e9434178c423cac322ff491398e93">Fault::hardFault</a>()) {</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        }</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Waiting&quot;</span>);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    }</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keywordflow">return</span> &amp;ECUStates::FaultState;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;}</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *ECUStates::Charging_State::run(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BACK_CHARGING_RELAY, HIGH);</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Charging on&quot;</span>);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    elapsedMillis voltLogNotify;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keywordflow">while</span> (<a class="code" href="namespace_pins.html#a5bb778c9151687c75d254d2fef4509fd">Pins::getPinValue</a>(PINS_BACK_CHARGING_SIGNAL)) {</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <span class="comment">// IMPROVE: Don&#39;t use fault to stop charging</span></div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="namespace_fault.html#a575e9434178c423cac322ff491398e93">Fault::hardFault</a>()) {</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;            <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BACK_CHARGING_RELAY, LOW);</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;            <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">e</a>(ID, <span class="stringliteral">&quot;Charging faulted, turning off&quot;</span>);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;            <span class="keywordflow">return</span> &amp;ECUStates::FaultState;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        }</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        <span class="keywordflow">if</span> (voltLogNotify &gt;= 1000) { <span class="comment">// Notify every secondish</span></div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;            voltLogNotify = 0;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;            <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Voltage&quot;</span>, <a class="code" href="namespace_pins.html#a5bb778c9151687c75d254d2fef4509fd">Pins::getPinValue</a>(PINS_BACK_CHARGING_VOLTAGE));</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        }</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    }</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160; </div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BACK_CHARGING_RELAY, LOW);</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Charging turning off&quot;</span>);</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160; </div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <span class="keywordflow">return</span> &amp;ECUStates::Idle_State;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;}</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *ECUStates::Button_State::run(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Playing sound&quot;</span>);</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    <span class="comment">// motor controller enable bit off</span></div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BACK_SOUND_DRIVER, HIGH);</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160; </div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    elapsedMillis soundTimer;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160; </div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    <span class="keywordflow">while</span> (soundTimer &lt;= 2000) {</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="namespace_fault.html#a8d65de5d2b7a229e0d2c8d84ca9f64bd">Fault::anyFault</a>()) {</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;            <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">e</a>(ID, <span class="stringliteral">&quot;Failed to play sound&quot;</span>);</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;            <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BACK_SOUND_DRIVER, LOW);</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;            <span class="keywordflow">return</span> &amp;ECUStates::FaultState;</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        }</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    }</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BACK_SOUND_DRIVER, LOW);</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Playing sound finished&quot;</span>);</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160; </div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <span class="keywordflow">return</span> &amp;ECUStates::Driving_Mode_State;</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;}</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160; </div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="keywordtype">void</span> ECUStates::Driving_Mode_State::sendMCCommand(uint32_t MC_ADD, <span class="keywordtype">int</span> torque, <span class="keywordtype">bool</span> direction, <span class="keywordtype">bool</span> enableBit) {</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    <span class="keywordtype">int</span> percentTorque = constrain(map(torque, 0, 1024, 0, 400), 0, 400); <span class="comment">// separate func for negative vals (regen)</span></div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Torque percent: &quot;</span>, percentTorque);</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    <span class="comment">// Calculations value = (high_byte x 256) + low_byte</span></div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    uint8_t low_byte = percentTorque % 256;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    uint8_t high_byte = percentTorque / 256;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <a class="code" href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">Canbus::sendData</a>(MC_ADD - 0x0A0, low_byte, high_byte, 0, 0, direction, enableBit); <span class="comment">// TODO: is the const offset 0x0A0 okay?</span></div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;}</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160; </div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="keywordtype">void</span> ECUStates::Driving_Mode_State::torqueVector(<span class="keywordtype">int</span> torques[2]) {</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <span class="keywordtype">int</span> pedal0 = <a class="code" href="namespace_pins.html#a499aec4c5df462d2e58fd797756a645f">Pins::getCanPinValue</a>(PINS_FRONT_PEDAL0);</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    <span class="keywordtype">int</span> pedal1 = <a class="code" href="namespace_pins.html#a499aec4c5df462d2e58fd797756a645f">Pins::getCanPinValue</a>(PINS_FRONT_PEDAL1);</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    torques[0] = pedal0; <span class="comment">// TODO: Add Torque vectoring algorithms</span></div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    torques[1] = pedal1;</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;}</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160; </div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;uint32_t ECUStates::Driving_Mode_State::BMSSOC() {</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">Canbus::setSemaphore</a>(ADD_BMS_SOC);</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    <span class="keywordflow">return</span> *(uint *)(BMS_SOC_Buffer + 2); <span class="comment">// TODO: interpret buffer</span></div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    <a class="code" href="namespace_canbus.html#a441c8b2dbc00d94dd9a6b8d252f09f20">Canbus::clearSemaphore</a>();</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;}</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160; </div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;uint32_t ECUStates::Driving_Mode_State::powerValue() {</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">Canbus::setSemaphore</a>(ADD_MC0_PWR);</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    uint MC0_PWR = *(uint *)(MC0_PWR_Buffer + 4); <span class="comment">// TODO: interpret buffer</span></div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">Canbus::setSemaphore</a>(ADD_MC1_PWR);</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    uint MC1_PWR = *(uint *)(MC1_PWR_Buffer + 4); <span class="comment">// TODO: interpret buffer</span></div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <a class="code" href="namespace_canbus.html#a441c8b2dbc00d94dd9a6b8d252f09f20">Canbus::clearSemaphore</a>();</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    <span class="keywordflow">return</span> MC0_PWR + MC1_PWR;</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;}</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160; </div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="keywordtype">void</span> ECUStates::Driving_Mode_State::getBuffers() {</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    MC0_RPM_Buffer = <a class="code" href="namespace_canbus.html#a822044e240364d0df5ebaee32e7dbdd6">Canbus::getBuffer</a>(ADD_MC0_RPM);</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    MC1_RPM_Buffer = <a class="code" href="namespace_canbus.html#a822044e240364d0df5ebaee32e7dbdd6">Canbus::getBuffer</a>(ADD_MC1_RPM);</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    MC0_PWR_Buffer = <a class="code" href="namespace_canbus.html#a822044e240364d0df5ebaee32e7dbdd6">Canbus::getBuffer</a>(ADD_MC0_PWR);</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    MC1_PWR_Buffer = <a class="code" href="namespace_canbus.html#a822044e240364d0df5ebaee32e7dbdd6">Canbus::getBuffer</a>(ADD_MC1_PWR);</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    BMS_SOC_Buffer = <a class="code" href="namespace_canbus.html#a822044e240364d0df5ebaee32e7dbdd6">Canbus::getBuffer</a>(ADD_BMS_SOC);</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;}</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160; </div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;<a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *ECUStates::Driving_Mode_State::run(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Loading Buffers&quot;</span>);</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    getBuffers();</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Driving mode on&quot;</span>);</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160; </div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;<span class="preprocessor">#if CONF_ECU_POSITION == FRONT_ECU</span></div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    elapsedMillis timeElapsed;</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160; </div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    <span class="keywordflow">while</span> (<span class="keyword">true</span>) {</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;        <a class="code" href="namespace_canbus.html#a386cdddf9229348b8108640075b5c3e4">Canbus::update</a>();</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="preprocessor">#if CONF_ECU_POSITION == FRONT_ECU</span></div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;        <span class="keywordflow">if</span> (timeElapsed &gt;= 5) { <span class="comment">// Update Tablet every 5ms</span></div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;            timeElapsed = 0;</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;            <span class="comment">// receive rpm of MCs, interpret, then send to from teensy for logging</span></div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;            <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">Canbus::setSemaphore</a>(ADD_MC0_RPM);</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;            <span class="keywordtype">int</span> MC_Rpm_Val_0 = *(<span class="keywordtype">int</span> *)(MC0_RPM_Buffer + 4); <span class="comment">// TODO: interpret buffer</span></div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;            <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">Canbus::setSemaphore</a>(ADD_MC1_RPM);</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;            <span class="keywordtype">int</span> MC_Rpm_Val_1 = *(<span class="keywordtype">int</span> *)(MC1_RPM_Buffer + 4); <span class="comment">// TODO: interpret buffer</span></div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;            <a class="code" href="namespace_canbus.html#a441c8b2dbc00d94dd9a6b8d252f09f20">Canbus::clearSemaphore</a>();</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;            <span class="keywordtype">int</span> MC_Spd_Val_0 = MC_Rpm_Val_0; <span class="comment">// TODO: convert RPM -&gt; SPD</span></div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;            <span class="keywordtype">int</span> MC_Spd_Val_1 = MC_Rpm_Val_1;</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;            <span class="keywordtype">int</span> speed = (MC_Spd_Val_0 + MC_Spd_Val_1) / 2;</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;            <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Current Motor Speed:&quot;</span>, speed);</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;            <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Current Power Value:&quot;</span>, powerValue());   <span class="comment">// Canbus message from MCs</span></div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;            <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;BMS State Of Charge Value:&quot;</span>, BMSSOC()); <span class="comment">// Canbus message</span></div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;        }</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;        <span class="comment">// TODO: Send fault reset to MCs</span></div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Sending Fault reset to MCs complete&quot;</span>);</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160; </div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; 4; i++) {          <span class="comment">// IMPROVE: Send only once? Check MC heartbeat catches it</span></div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;            sendMCCommand(ADD_MC0_CTRL, 0, 0, 0); <span class="comment">// MC 1</span></div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;            sendMCCommand(ADD_MC1_CTRL, 0, 1, 0); <span class="comment">// MC 2</span></div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;            delay(10);</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;        }</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160; </div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;        <span class="keywordtype">int</span> MotorTorques[2];</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;        torqueVector(MotorTorques);</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160; </div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;        sendMCCommand(ADD_MC0_CTRL, MotorTorques[0], 0, 0); <span class="comment">// MC 1</span></div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;        sendMCCommand(ADD_MC1_CTRL, MotorTorques[1], 1, 0); <span class="comment">// MC 2</span></div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160; </div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="namespace_pins.html#a499aec4c5df462d2e58fd797756a645f">Pins::getCanPinValue</a>(PINS_FRONT_BUTTON_INPUT)) {</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;            <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Going back to Idle state&quot;</span>);</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;        }</div>
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160; </div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    <span class="keyword">static</span> elapsedMillis timeElapsed;</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160; </div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    <span class="keywordflow">if</span> (timeElapsed &gt;= 2000) {</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;        timeElapsed = timeElapsed - 2000;</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>(ID, <span class="stringliteral">&quot;A7 Pin Value:&quot;</span>, <a class="code" href="namespace_pins.html#a5bb778c9151687c75d254d2fef4509fd">Pins::getPinValue</a>(0));</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>(<span class="stringliteral">&quot;FAKE ID&quot;</span>, <span class="stringliteral">&quot;A7 Pin Value:&quot;</span>);</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>(ID, <span class="stringliteral">&quot;whaAAAT?&quot;</span>);</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>(ID, <span class="stringliteral">&quot;&quot;</span>, 0xDEADBEEF);</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>(ID, <span class="stringliteral">&quot;Notify code: &quot;</span>, getNotify());</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    }</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="namespace_fault.html#a575e9434178c423cac322ff491398e93">Fault::hardFault</a>()) {</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;            <span class="comment">//TODO: anything extra when a fault happens while driving?</span></div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;            <span class="keywordflow">return</span> &amp;ECUStates::FaultState;</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;        }</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    }</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160; </div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Driving mode off&quot;</span>);</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    <span class="keywordflow">return</span> &amp;ECUStates::Idle_State;</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;}</div>
 <div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160; </div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    <span class="keywordflow">return</span> &amp;ECUStates::Bounce;</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;};</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160; </div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;<a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *ECUStates::Bounce_t::run(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;<a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *ECUStates::FaultState::run(<span class="keywordtype">void</span>) { <span class="comment">// IMPROVE: Should fault state do anything else?</span></div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    <a class="code" href="namespace_canbus.html#ae66521cf8ac5e63c2e89d6b2f009b38a">Canbus::enableInterrupts</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#ad171024fa0f93e6117cd7b0aaf76cb87">f</a>(ID, <span class="stringliteral">&quot;FAULT STATE&quot;</span>);</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    <a class="code" href="namespace_fault.html#abf369f0092a0b44bb9546b3563417895">Fault::logFault</a>();</div>
 <div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    delay(250);</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Bounce!&quot;</span>);</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    <a class="code" href="namespace_state.html#a9dfe9cc449047d893920a8ab4c527c29">State::notify</a>(random(100));</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    delay(250);</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="namespace_state.html#a734f0be1f3743a4cc9a3d90b03030aef">State::getLastState</a>();</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;}</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    <span class="keywordflow">return</span> &amp;ECUStates::FaultState;</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;}</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160; </div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;<a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *ECUStates::Logger_t::run(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160; </div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    <span class="keyword">static</span> elapsedMillis timeElapsed;</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160; </div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    <span class="keywordflow">if</span> (timeElapsed &gt;= 2000) {</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        timeElapsed = timeElapsed - 2000;</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>(ID, <span class="stringliteral">&quot;A7 Pin Value:&quot;</span>, <a class="code" href="namespace_pins.html#a5bb778c9151687c75d254d2fef4509fd">Pins::getPinValue</a>(0));</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>(<span class="stringliteral">&quot;FAKE ID&quot;</span>, <span class="stringliteral">&quot;A7 Pin Value:&quot;</span>);</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>(ID, <span class="stringliteral">&quot;whaAAAT?&quot;</span>);</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>(ID, <span class="stringliteral">&quot;&quot;</span>, 0xDEADBEEF);</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>(ID, <span class="stringliteral">&quot;Notify code: &quot;</span>, getNotify());</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    }</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160; </div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    <span class="keywordflow">return</span> &amp;ECUStates::Bounce;</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;};</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160; </div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;<a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *ECUStates::Bounce_t::run(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    delay(250);</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Bounce!&quot;</span>);</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    <a class="code" href="namespace_state.html#a9dfe9cc449047d893920a8ab4c527c29">State::notify</a>(random(100));</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    delay(250);</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="namespace_state.html#a734f0be1f3743a4cc9a3d90b03030aef">State::getLastState</a>();</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;}</div>
 <div class="ttc" id="a_faults_8h_html"><div class="ttname"><a href="_faults_8h.html">Faults.h</a></div><div class="ttdoc">Checks for defined faults from canbus addresses or pins.</div></div>
-<div class="ttc" id="a_log_8cpp_html_aa5fd43862d543e82b7775410573c9142"><div class="ttname"><a href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a></div><div class="ttdeci">Logging::Log_t Log</div><div class="ttdoc">Internal definition of static Log class.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00214">Log.cpp:214</a></div></div>
+<div class="ttc" id="a_log_8cpp_html_aa5fd43862d543e82b7775410573c9142"><div class="ttname"><a href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a></div><div class="ttdeci">Logging::Log_t Log</div><div class="ttdoc">Internal definition of static Log class.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00226">Log.cpp:226</a></div></div>
 <div class="ttc" id="a_log_8h_html"><div class="ttname"><a href="_log_8h.html">Log.h</a></div><div class="ttdoc">Special logging functionality.</div></div>
+<div class="ttc" id="anamespace_canbus_html_a003195b12c68a25e85c1249630901f87"><div class="ttname"><a href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">Canbus::sendData</a></div><div class="ttdeci">void sendData(const uint32_t address, uint8_t buf[8])</div><div class="ttdoc">Send raw data over a given canbus address using a given array.</div></div>
 <div class="ttc" id="anamespace_canbus_html_a1be67a2bae5a660f864b41ab2744259f"><div class="ttname"><a href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">Canbus::setSemaphore</a></div><div class="ttdeci">void setSemaphore(const uint32_t address)</div><div class="ttdoc">Sets whether an address buffer is being actively read from, must be set to the appropriate address if...</div></div>
 <div class="ttc" id="anamespace_canbus_html_a386cdddf9229348b8108640075b5c3e4"><div class="ttname"><a href="namespace_canbus.html#a386cdddf9229348b8108640075b5c3e4">Canbus::update</a></div><div class="ttdeci">void update(void)</div><div class="ttdoc">Update the Canbus line This update function will check the rx buffer for any messages and update valu...</div></div>
 <div class="ttc" id="anamespace_canbus_html_a441c8b2dbc00d94dd9a6b8d252f09f20"><div class="ttname"><a href="namespace_canbus.html#a441c8b2dbc00d94dd9a6b8d252f09f20">Canbus::clearSemaphore</a></div><div class="ttdeci">void clearSemaphore()</div><div class="ttdoc">Clears any previously set semaphore.</div></div>
+<div class="ttc" id="anamespace_canbus_html_a822044e240364d0df5ebaee32e7dbdd6"><div class="ttname"><a href="namespace_canbus.html#a822044e240364d0df5ebaee32e7dbdd6">Canbus::getBuffer</a></div><div class="ttdeci">uint8_t * getBuffer(const uint32_t address)</div><div class="ttdoc">Get the buffer of an outgoing address in order to set it's values to be pushed later....</div></div>
 <div class="ttc" id="anamespace_canbus_html_ac87cf65470012914f1ae29c0eb987b87"><div class="ttname"><a href="namespace_canbus.html#ac87cf65470012914f1ae29c0eb987b87">Canbus::setup</a></div><div class="ttdeci">void setup(void)</div><div class="ttdoc">Setup the teensy Canbus line.</div></div>
 <div class="ttc" id="anamespace_canbus_html_ae66521cf8ac5e63c2e89d6b2f009b38a"><div class="ttname"><a href="namespace_canbus.html#ae66521cf8ac5e63c2e89d6b2f009b38a">Canbus::enableInterrupts</a></div><div class="ttdeci">void enableInterrupts(bool enable)</div><div class="ttdoc">Enable mailbox interrupts, allowing values to automaticaly update. Enabled by default.</div></div>
 <div class="ttc" id="anamespace_fault_html_a575e9434178c423cac322ff491398e93"><div class="ttname"><a href="namespace_fault.html#a575e9434178c423cac322ff491398e93">Fault::hardFault</a></div><div class="ttdeci">bool hardFault(void)</div><div class="ttdoc">Checks if any serious fault has occurred.</div></div>
 <div class="ttc" id="anamespace_fault_html_a5d866df0efc11ff65ac5c22bf8f6569a"><div class="ttname"><a href="namespace_fault.html#a5d866df0efc11ff65ac5c22bf8f6569a">Fault::setup</a></div><div class="ttdeci">void setup(void)</div><div class="ttdoc">Setups canbus addresses to be used for fault checking.</div></div>
+<div class="ttc" id="anamespace_fault_html_a8d65de5d2b7a229e0d2c8d84ca9f64bd"><div class="ttname"><a href="namespace_fault.html#a8d65de5d2b7a229e0d2c8d84ca9f64bd">Fault::anyFault</a></div><div class="ttdeci">bool anyFault(void)</div><div class="ttdoc">Checks both hardFault and softFault.</div></div>
 <div class="ttc" id="anamespace_fault_html_abf369f0092a0b44bb9546b3563417895"><div class="ttname"><a href="namespace_fault.html#abf369f0092a0b44bb9546b3563417895">Fault::logFault</a></div><div class="ttdeci">void logFault(void)</div><div class="ttdoc">Interprets and logs the last fault that was checked using the Log library.</div></div>
-<div class="ttc" id="anamespace_logging_html_a3402a2c8efbb932ddbe58e66b9cc550c"><div class="ttname"><a href="namespace_logging.html#a3402a2c8efbb932ddbe58e66b9cc550c">Logging::enableCanbusRelay</a></div><div class="ttdeci">void enableCanbusRelay()</div><div class="ttdoc">If a set address is received through canbus, the data will be pushed through serial.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00220">Log.cpp:220</a></div></div>
+<div class="ttc" id="anamespace_logging_html_a3402a2c8efbb932ddbe58e66b9cc550c"><div class="ttname"><a href="namespace_logging.html#a3402a2c8efbb932ddbe58e66b9cc550c">Logging::enableCanbusRelay</a></div><div class="ttdeci">void enableCanbusRelay()</div><div class="ttdoc">If a set address is received through canbus, the data will be pushed through serial.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00217">Log.cpp:217</a></div></div>
 <div class="ttc" id="anamespace_pins_html_a2d60349cb2aec2c336856187093aea61"><div class="ttname"><a href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a></div><div class="ttdeci">void setPinValue(uint8_t GPIO_Pin, int value)</div><div class="ttdoc">Set the pin value of a predefined pin.</div></div>
+<div class="ttc" id="anamespace_pins_html_a499aec4c5df462d2e58fd797756a645f"><div class="ttname"><a href="namespace_pins.html#a499aec4c5df462d2e58fd797756a645f">Pins::getCanPinValue</a></div><div class="ttdeci">int getCanPinValue(uint8_t CAN_GPIO_Pin)</div><div class="ttdoc">Get the pin value of a predefined canbus pin.</div></div>
 <div class="ttc" id="anamespace_pins_html_a50fdd17267e54bd2a3d4ed2a6884c5c1"><div class="ttname"><a href="namespace_pins.html#a50fdd17267e54bd2a3d4ed2a6884c5c1">Pins::initialize</a></div><div class="ttdeci">void initialize(void)</div><div class="ttdoc">Initialize all predefined pins.</div></div>
 <div class="ttc" id="anamespace_pins_html_a5bb778c9151687c75d254d2fef4509fd"><div class="ttname"><a href="namespace_pins.html#a5bb778c9151687c75d254d2fef4509fd">Pins::getPinValue</a></div><div class="ttdeci">int getPinValue(uint8_t GPIO_Pin)</div><div class="ttdoc">Get the pin value of a predefined pin.</div></div>
 <div class="ttc" id="anamespace_state_html_a734f0be1f3743a4cc9a3d90b03030aef"><div class="ttname"><a href="namespace_state.html#a734f0be1f3743a4cc9a3d90b03030aef">State::getLastState</a></div><div class="ttdeci">State_t * getLastState()</div><div class="ttdoc">Get a pointer of the last state.</div><div class="ttdef"><b>Definition:</b> <a href="_state_8cpp_source.html#l00052">State.cpp:52</a></div></div>
 <div class="ttc" id="anamespace_state_html_a9dfe9cc449047d893920a8ab4c527c29"><div class="ttname"><a href="namespace_state.html#a9dfe9cc449047d893920a8ab4c527c29">State::notify</a></div><div class="ttdeci">void notify(int notify)</div><div class="ttdoc">Send a code to the next state.</div><div class="ttdef"><b>Definition:</b> <a href="_state_8cpp_source.html#l00044">State.cpp:44</a></div></div>
-<div class="ttc" id="astruct_logging_1_1_log__t_html_a4b75f2065645b98fef1d6b4edea2b5a2"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">Logging::Log_t::d</a></div><div class="ttdeci">void d(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a debug tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00145">Log.cpp:145</a></div></div>
-<div class="ttc" id="astruct_logging_1_1_log__t_html_a6a07c7449c92c06a608cb8f6463ebd46"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">Logging::Log_t::w</a></div><div class="ttdeci">void w(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a warning tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00157">Log.cpp:157</a></div></div>
-<div class="ttc" id="astruct_logging_1_1_log__t_html_a6a390467c80768f38c116e26c6c35a39"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">Logging::Log_t::e</a></div><div class="ttdeci">void e(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using an error tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00163">Log.cpp:163</a></div></div>
-<div class="ttc" id="astruct_logging_1_1_log__t_html_a8a944d095d2eae2c7be964d887ebe613"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">Logging::Log_t::i</a></div><div class="ttdeci">void i(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using an info tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00151">Log.cpp:151</a></div></div>
-<div class="ttc" id="astruct_logging_1_1_log__t_html_ad171024fa0f93e6117cd7b0aaf76cb87"><div class="ttname"><a href="struct_logging_1_1_log__t.html#ad171024fa0f93e6117cd7b0aaf76cb87">Logging::Log_t::f</a></div><div class="ttdeci">void f(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a fatal tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00169">Log.cpp:169</a></div></div>
+<div class="ttc" id="astruct_logging_1_1_log__t_html_a4b75f2065645b98fef1d6b4edea2b5a2"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">Logging::Log_t::d</a></div><div class="ttdeci">void d(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a debug tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00147">Log.cpp:147</a></div></div>
+<div class="ttc" id="astruct_logging_1_1_log__t_html_a6a07c7449c92c06a608cb8f6463ebd46"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">Logging::Log_t::w</a></div><div class="ttdeci">void w(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a warning tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00159">Log.cpp:159</a></div></div>
+<div class="ttc" id="astruct_logging_1_1_log__t_html_a6a390467c80768f38c116e26c6c35a39"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">Logging::Log_t::e</a></div><div class="ttdeci">void e(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using an error tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00165">Log.cpp:165</a></div></div>
+<div class="ttc" id="astruct_logging_1_1_log__t_html_a8a944d095d2eae2c7be964d887ebe613"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">Logging::Log_t::i</a></div><div class="ttdeci">void i(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using an info tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00153">Log.cpp:153</a></div></div>
+<div class="ttc" id="astruct_logging_1_1_log__t_html_ad171024fa0f93e6117cd7b0aaf76cb87"><div class="ttname"><a href="struct_logging_1_1_log__t.html#ad171024fa0f93e6117cd7b0aaf76cb87">Logging::Log_t::f</a></div><div class="ttdeci">void f(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a fatal tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00171">Log.cpp:171</a></div></div>
 <div class="ttc" id="astruct_state_1_1_state__t_html"><div class="ttname"><a href="struct_state_1_1_state__t.html">State::State_t</a></div><div class="ttdoc">The parent state structure to extend from to create more states.</div><div class="ttdef"><b>Definition:</b> <a href="_state_8h_source.html#l00059">State.h:59</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

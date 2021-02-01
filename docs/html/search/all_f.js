@@ -6,9 +6,10 @@ var searchData=
   ['setsemaphore_75',['setSemaphore',['../namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f',1,'Canbus']]],
   ['setup_76',['setup',['../namespace_canbus.html#ac87cf65470012914f1ae29c0eb987b87',1,'Canbus::setup()'],['../namespace_fault.html#a5d866df0efc11ff65ac5c22bf8f6569a',1,'Fault::setup()']]],
   ['soft_5ffault_5fadd_77',['SOFT_FAULT_ADD',['../_fault_config_8def.html#a64da401593bb14ccb3e214d872874078',1,'FaultConfig.def']]],
-  ['softfault_78',['softFault',['../namespace_fault.html#a4ffa144bc1e88734c7d7e95bb008aa67',1,'Fault']]],
-  ['state_79',['State',['../namespace_state.html',1,'']]],
-  ['state_2ecpp_80',['State.cpp',['../_state_8cpp.html',1,'']]],
-  ['state_2eh_81',['State.h',['../_state_8h.html',1,'']]],
-  ['state_5ft_82',['State_t',['../struct_state_1_1_state__t.html',1,'State']]]
+  ['soft_5fpin_5ffaults_78',['SOFT_PIN_FAULTS',['../_fault_config_8def.html#a390419930292eef5516ad68b3b5e2af6',1,'FaultConfig.def']]],
+  ['softfault_79',['softFault',['../namespace_fault.html#a4ffa144bc1e88734c7d7e95bb008aa67',1,'Fault']]],
+  ['state_80',['State',['../namespace_state.html',1,'']]],
+  ['state_2ecpp_81',['State.cpp',['../_state_8cpp.html',1,'']]],
+  ['state_2eh_82',['State.h',['../_state_8h.html',1,'']]],
+  ['state_5ft_83',['State_t',['../struct_state_1_1_state__t.html',1,'State']]]
 ];

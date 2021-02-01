@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['pin_5ffaults_59',['PIN_FAULTS',['../_fault_config_8def.html#a8ed9847b662252a726516a18107cc957',1,'FaultConfig.def']]],
   ['pinconfig_2edef_60',['PinConfig.def',['../_pin_config_8def.html',1,'']]],
   ['pinhandler_61',['PinHandler',['../namespace_pins.html#a3e6834ba621655f97e8313f86a97c33b',1,'Pins']]],
   ['pins_62',['Pins',['../namespace_pins.html',1,'']]],

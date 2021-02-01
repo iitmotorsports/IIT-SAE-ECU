@@ -99,9 +99,12 @@ $(document).ready(function(){initNavTree('_fault_config_8def.html',''); initResi
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a8ed9847b662252a726516a18107cc957"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_fault_config_8def.html#a8ed9847b662252a726516a18107cc957">PIN_FAULTS</a></td></tr>
-<tr class="memdesc:a8ed9847b662252a726516a18107cc957"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines <a class="el" href="namespace_pins.html" title="Get and set values to predefined pins.">Pins</a> that should be checked for faults.  <a href="_fault_config_8def.html#a8ed9847b662252a726516a18107cc957">More...</a><br /></td></tr>
-<tr class="separator:a8ed9847b662252a726516a18107cc957"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad16cea3900e240c28be81e1fae70174a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_fault_config_8def.html#ad16cea3900e240c28be81e1fae70174a">HARD_PIN_FAULTS</a></td></tr>
+<tr class="memdesc:ad16cea3900e240c28be81e1fae70174a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines <a class="el" href="namespace_pins.html" title="Get and set values to predefined pins.">Pins</a> that should be checked for hard faults.  <a href="_fault_config_8def.html#ad16cea3900e240c28be81e1fae70174a">More...</a><br /></td></tr>
+<tr class="separator:ad16cea3900e240c28be81e1fae70174a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a390419930292eef5516ad68b3b5e2af6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_fault_config_8def.html#a390419930292eef5516ad68b3b5e2af6">SOFT_PIN_FAULTS</a></td></tr>
+<tr class="memdesc:a390419930292eef5516ad68b3b5e2af6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines <a class="el" href="namespace_pins.html" title="Get and set values to predefined pins.">Pins</a> that should be checked for hard faults.  <a href="_fault_config_8def.html#a390419930292eef5516ad68b3b5e2af6">More...</a><br /></td></tr>
+<tr class="separator:a390419930292eef5516ad68b3b5e2af6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a725d76d669362031fe65a6c678180998"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_fault_config_8def.html#a725d76d669362031fe65a6c678180998">HARD_FAULT_ADD</a></td></tr>
 <tr class="memdesc:a725d76d669362031fe65a6c678180998"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines CAN addresses that should be checked for hard faults.  <a href="_fault_config_8def.html#a725d76d669362031fe65a6c678180998">More...</a><br /></td></tr>
 <tr class="separator:a725d76d669362031fe65a6c678180998"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -141,7 +144,32 @@ Macros</h2></td></tr>
 <p>X(CAN address, mask, tag) \</p>
 <p>Only the last entry should NOT have a '\' </p>
 
-<p class="definition">Definition at line <a class="el" href="_fault_config_8def_source.html#l00047">47</a> of file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_fault_config_8def_source.html#l00063">63</a> of file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
+
+</div>
+</div>
+<a id="ad16cea3900e240c28be81e1fae70174a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad16cea3900e240c28be81e1fae70174a">&#9670;&nbsp;</a></span>HARD_PIN_FAULTS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define HARD_PIN_FAULTS</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    X(0, ==, 1, <a class="code" href="_log_8h.html#a9bec0c08edcafb8184fd41d631e708e9">_LogPrebuildString</a>(<span class="stringliteral">&quot;BMS&quot;</span>)) \</div>
+<div class="line">    X(2, &gt;, 45, <a class="code" href="_log_8h.html#a9bec0c08edcafb8184fd41d631e708e9">_LogPrebuildString</a>(<span class="stringliteral">&quot;RMS&quot;</span>))</div>
+<div class="ttc" id="a_log_8h_html_a9bec0c08edcafb8184fd41d631e708e9"><div class="ttname"><a href="_log_8h.html#a9bec0c08edcafb8184fd41d631e708e9">_LogPrebuildString</a></div><div class="ttdeci">#define _LogPrebuildString(x)</div><div class="ttdoc">Refer to Pre_Build.py.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8h_source.html#l00019">Log.h:19</a></div></div>
+</div><!-- fragment -->
+<p>Defines <a class="el" href="namespace_pins.html" title="Get and set values to predefined pins.">Pins</a> that should be checked for hard faults. </p>
+<dl class="section note"><dt>Note</dt><dd>The identity calls the function _LogPrebuildString, this is used to notify <a class="el" href="_pre___build_8py.html" title="This script preprocesses source files for use with Log_t.">Pre_Build.py</a> of the string</dd></dl>
+<p>Unless it is the last entry, this is how to add a new address</p>
+<p>X(pin, comparator, value, identity) \</p>
+<p>Only the last entry should NOT have a '\' </p>
+
+<p class="definition">Definition at line <a class="el" href="_fault_config_8def_source.html#l00031">31</a> of file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
 
 </div>
 </div>
@@ -158,7 +186,6 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    X(0x0, 0b0000000000000000000000000000000000000000000000000000000000000000, <a class="code" href="_log_8h.html#a9bec0c08edcafb8184fd41d631e708e9">_LogPrebuildString</a>(<span class="stringliteral">&quot;nil&quot;</span>)) \</div>
 <div class="line">    X(0x0, 0b0000000000000000000000000000000000000000000000000000000000000000, <a class="code" href="_log_8h.html#a9bec0c08edcafb8184fd41d631e708e9">_LogPrebuildString</a>(<span class="stringliteral">&quot;nil&quot;</span>))</div>
-<div class="ttc" id="a_log_8h_html_a9bec0c08edcafb8184fd41d631e708e9"><div class="ttname"><a href="_log_8h.html#a9bec0c08edcafb8184fd41d631e708e9">_LogPrebuildString</a></div><div class="ttdeci">#define _LogPrebuildString(x)</div><div class="ttdoc">Refer to Pre_Build.py.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8h_source.html#l00019">Log.h:19</a></div></div>
 </div><!-- fragment -->
 <p>Defines address bit field identifiers. </p>
 <p>If a bit on an address has an identifier we will know exactly what fault occurred and can notify it through Log</p>
@@ -167,31 +194,7 @@ Macros</h2></td></tr>
 <p>X(CAN address, bitmask, _LogPrebuildString(identity)) \</p>
 <p>Only the last entry should NOT have a '\' </p>
 
-<p class="definition">Definition at line <a class="el" href="_fault_config_8def_source.html#l00081">81</a> of file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
-
-</div>
-</div>
-<a id="a8ed9847b662252a726516a18107cc957"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ed9847b662252a726516a18107cc957">&#9670;&nbsp;</a></span>PIN_FAULTS</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PIN_FAULTS</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    X(0x0, 1, =, <a class="code" href="_log_8h.html#a9bec0c08edcafb8184fd41d631e708e9">_LogPrebuildString</a>(<span class="stringliteral">&quot;BMS&quot;</span>)) \</div>
-<div class="line">    X(0x0, 45, &gt;, <a class="code" href="_log_8h.html#a9bec0c08edcafb8184fd41d631e708e9">_LogPrebuildString</a>(<span class="stringliteral">&quot;RMS&quot;</span>))</div>
-</div><!-- fragment -->
-<p>Defines <a class="el" href="namespace_pins.html" title="Get and set values to predefined pins.">Pins</a> that should be checked for faults. </p>
-<dl class="section note"><dt>Note</dt><dd>The identity calls the function _LogPrebuildString, this is used to notify <a class="el" href="_pre___build_8py.html" title="This script preprocesses source files for use with Log_t.">Pre_Build.py</a> of the string</dd></dl>
-<p>Unless it is the last entry, this is how to add a new address</p>
-<p>X(pin, value, comparator, identity) \</p>
-<p>Only the last entry should NOT have a '\' </p>
-
-<p class="definition">Definition at line <a class="el" href="_fault_config_8def_source.html#l00031">31</a> of file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_fault_config_8def_source.html#l00097">97</a> of file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
 
 </div>
 </div>
@@ -215,7 +218,31 @@ Macros</h2></td></tr>
 <p>X(CAN address, mask, tag) \</p>
 <p>Only the last entry should NOT have a '\' </p>
 
-<p class="definition">Definition at line <a class="el" href="_fault_config_8def_source.html#l00063">63</a> of file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_fault_config_8def_source.html#l00079">79</a> of file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
+
+</div>
+</div>
+<a id="a390419930292eef5516ad68b3b5e2af6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a390419930292eef5516ad68b3b5e2af6">&#9670;&nbsp;</a></span>SOFT_PIN_FAULTS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SOFT_PIN_FAULTS</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    X(0, ==, 1, <a class="code" href="_log_8h.html#a9bec0c08edcafb8184fd41d631e708e9">_LogPrebuildString</a>(<span class="stringliteral">&quot;bumnga&quot;</span>)) \</div>
+<div class="line">    X(2, &gt;, 45, <a class="code" href="_log_8h.html#a9bec0c08edcafb8184fd41d631e708e9">_LogPrebuildString</a>(<span class="stringliteral">&quot;whahg&quot;</span>))</div>
+</div><!-- fragment -->
+<p>Defines <a class="el" href="namespace_pins.html" title="Get and set values to predefined pins.">Pins</a> that should be checked for hard faults. </p>
+<dl class="section note"><dt>Note</dt><dd>The identity calls the function _LogPrebuildString, this is used to notify <a class="el" href="_pre___build_8py.html" title="This script preprocesses source files for use with Log_t.">Pre_Build.py</a> of the string</dd></dl>
+<p>Unless it is the last entry, this is how to add a new address</p>
+<p>X(pin, comparator, value, identity) \</p>
+<p>Only the last entry should NOT have a '\' </p>
+
+<p class="definition">Definition at line <a class="el" href="_fault_config_8def_source.html#l00047">47</a> of file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
 
 </div>
 </div>
