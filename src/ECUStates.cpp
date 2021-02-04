@@ -160,7 +160,7 @@ void ECUStates::Driving_Mode_State::sendMCCommand(uint32_t MC_ADD, int torque, b
     // Calculations value = (high_byte x 256) + low_byte
     uint8_t low_byte = percentTorque % 256;
     uint8_t high_byte = percentTorque / 256;
-    Canbus::sendData(MC_ADD - 0x0A0, low_byte, high_byte, 0, 0, direction, enableBit); // TODO: is the const offset 0x0A0 okay?
+    Canbus::sendData(MC_ADD, low_byte, high_byte, 0, 0, direction, enableBit);
 }
 
 void ECUStates::Driving_Mode_State::torqueVector(int torques[2]) {

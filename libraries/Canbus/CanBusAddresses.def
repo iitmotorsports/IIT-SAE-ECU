@@ -26,7 +26,7 @@
 #define ADD_MC1_RPM 0x0000
 #define ADD_MC0_PWR 0x0000
 #define ADD_MC1_PWR 0x0000
-#define ADD_MC0_CTRL 0x0000
+#define ADD_MC0_CTRL 0x0000 - 0x0A0 // TODO: is the const offset 0x0A0 okay?
 #define ADD_MC1_CTRL 0x0000
 // canPin addresses
 #define ADD_CANPIN_ANALOG0 0x0000
