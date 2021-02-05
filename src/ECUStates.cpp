@@ -3,7 +3,17 @@
 #include "Faults.h"
 #include "Log.h"
 
-State::State_t *ECUStates::Initialize::run(void) {
+static bool FaultCheck() // NOTE: Will only return true if hardfault occurs
+{
+    if (Fault::softFault())
+        Fault::logFault();
+    if (Fault::hardFault())
+        return true;
+    return false;
+}
+
+State::State_t *ECUStates::Initialize::run(void)
+{
 #if CONF_ECU_POSITION == BACK_ECU
     Log.i(ID, "Teensy 3.6 SAE BACK ECU Initalizing");
 #else
@@ -18,12 +28,14 @@ State::State_t *ECUStates::Initialize::run(void) {
 
     Pins::setPinValue(PINS_BOTH_OPT_CAN_TRAN, LOW); // optional CAN transceiver enable pin
 
-    if (Fault::anyFault()) {
+    if (FaultCheck())
+    {
         return &ECUStates::FaultState;
     }
 
     Log.i(ID, "Waiting for TSV Signal");
-    while (!Pins::getPinValue(PINS_BACK_TSV_SIGNAL)) {
+    while (!Pins::getPinValue(PINS_BACK_TSV_SIGNAL))
+    {
     }
     Log.i(ID, "TSV On");
 
@@ -31,34 +43,41 @@ State::State_t *ECUStates::Initialize::run(void) {
     return &ECUStates::PreCharge_State;
 };
 
-State::State_t *ECUStates::PreCharge_State::PreCharFault(void) {
+State::State_t *ECUStates::PreCharge_State::PreCharFault(void)
+{
     Log.w(ID, "Closing Air1 and Precharge Relay");
     Pins::setPinValue(PINS_BACK_AIR1, LOW);
     Pins::setPinValue(PINS_BACK_PRECHARGE_RELAY, LOW);
     return &ECUStates::FaultState;
 }
 
-bool ECUStates::PreCharge_State::voltageCheck() {
+bool ECUStates::PreCharge_State::voltageCheck()
+{
     Canbus::setSemaphore(ADD_BMS_VOLT);
-    uint BMSVolt = *((uint *)(BMS_Voltage_Buffer + 1)); // TODO: interpret buffer
-    Canbus::setSemaphore(0x0000);
-    uint MCVolt = *((uint *)(ADD_MC0_VOLT + 1)); // TODO: interpret buffer
+    uint8_t BMSVolt = *((uint8_t *)(BMS_Voltage_Buffer + 4)); // TODO: generalize buffer interpretation
+    Canbus::setSemaphore(ADD_MC0_VOLT);
+    int16_t MC0Volt = *((int16_t *)(MC0_Voltage_Buffer)) / 10; // Bytes 0-1: DC BUS MC Voltage
+    Canbus::setSemaphore(ADD_MC1_VOLT);
+    int16_t MC1Volt = *((int16_t *)(MC1_Voltage_Buffer)) / 10; // Bytes 0-1: DC BUS MC Voltage
     Canbus::clearSemaphore();
-    return 0.9 * BMSVolt <= MCVolt;
+    return 0.9 * BMSVolt <= (MC0Volt + MC1Volt) / 2;
 }
 
-void ECUStates::PreCharge_State::getBuffers() {
+void ECUStates::PreCharge_State::getBuffers()
+{
     BMS_Voltage_Buffer = Canbus::getBuffer(ADD_BMS_VOLT);
     MC0_Voltage_Buffer = Canbus::getBuffer(ADD_MC0_VOLT);
     MC1_Voltage_Buffer = Canbus::getBuffer(ADD_MC1_VOLT);
 };
 
-State::State_t *ECUStates::PreCharge_State::run(void) { // TODO: set pins to LOW and HIGH to close and open?
+State::State_t *ECUStates::PreCharge_State::run(void)
+{ // TODO: set pins to LOW and HIGH to close and open?
     Log.i(ID, "Loading Buffers");
     getBuffers();
     Log.i(ID, "Precharge running");
 
-    if (Fault::hardFault()) {
+    if (FaultCheck())
+    {
         Log.e(ID, "Precharge Faulted before charge");
         return PreCharFault();
     }
@@ -67,15 +86,19 @@ State::State_t *ECUStates::PreCharge_State::run(void) { // TODO: set pins to LOW
     Pins::setPinValue(PINS_BACK_AIR1, HIGH);
     Pins::setPinValue(PINS_BACK_PRECHARGE_RELAY, HIGH);
 
-    if (Fault::hardFault()) {
+    // TODO: add soft faults wherever we check hard faults
+    if (FaultCheck())
+    {
         Log.e(ID, "Precharge Faulted after charge");
         return PreCharFault();
     }
 
     elapsedMillis timeElapsed;
 
-    while (timeElapsed < 5000) {
-        if (voltageCheck()) {
+    while (timeElapsed < 5000)
+    {
+        if (voltageCheck())
+        {
             Pins::setPinValue(PINS_BACK_PRECHARGE_RELAY, LOW);
             Log.i(ID, "Precharge Finished");
             Pins::setPinValue(PINS_BACK_AIR2, HIGH);
@@ -87,17 +110,24 @@ State::State_t *ECUStates::PreCharge_State::run(void) { // TODO: set pins to LOW
     return PreCharFault();
 };
 
-State::State_t *ECUStates::Idle_State::run(void) {
+State::State_t *ECUStates::Idle_State::run(void)
+{
     Log.i(ID, "Waiting for Button or Charging Press");
 
-    while (true) {
-        if (Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT)) {
+    while (true)
+    {
+        if (Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT))
+        {
             Log.i(ID, "Button Pressed");
             return &ECUStates::Button_State;
-        } else if (Pins::getPinValue(PINS_BACK_CHARGING_INPUT)) {
+        }
+        else if (Pins::getPinValue(PINS_BACK_CHARGING_INPUT))
+        {
             Log.i(ID, "Charging Pressed");
             return &ECUStates::Charging_State;
-        } else if (Fault::hardFault()) {
+        }
+        else if (FaultCheck())
+        {
             break;
         }
 
@@ -107,20 +137,24 @@ State::State_t *ECUStates::Idle_State::run(void) {
     return &ECUStates::FaultState;
 }
 
-State::State_t *ECUStates::Charging_State::run(void) {
+State::State_t *ECUStates::Charging_State::run(void)
+{
     Pins::setPinValue(PINS_BACK_CHARGING_RELAY, HIGH);
     Log.i(ID, "Charging on");
 
     elapsedMillis voltLogNotify;
 
-    while (Pins::getPinValue(PINS_BACK_CHARGING_SIGNAL)) {
+    while (Pins::getPinValue(PINS_BACK_CHARGING_SIGNAL))
+    {
         // IMPROVE: Don't use fault to stop charging
-        if (Fault::hardFault()) {
+        if (FaultCheck())
+        {
             Pins::setPinValue(PINS_BACK_CHARGING_RELAY, LOW);
             Log.e(ID, "Charging faulted, turning off");
             return &ECUStates::FaultState;
         }
-        if (voltLogNotify >= 1000) { // Notify every secondish
+        if (voltLogNotify >= 1000)
+        { // Notify every secondish
             voltLogNotify = 0;
             Log.i(ID, "Voltage", Pins::getPinValue(PINS_BACK_CHARGING_VOLTAGE));
         }
@@ -132,7 +166,8 @@ State::State_t *ECUStates::Charging_State::run(void) {
     return &ECUStates::Idle_State;
 }
 
-State::State_t *ECUStates::Button_State::run(void) {
+State::State_t *ECUStates::Button_State::run(void)
+{
     Log.i(ID, "Playing sound");
 
     // motor controller enable bit off
@@ -140,8 +175,10 @@ State::State_t *ECUStates::Button_State::run(void) {
 
     elapsedMillis soundTimer;
 
-    while (soundTimer <= 2000) {
-        if (Fault::anyFault()) {
+    while (soundTimer <= 2000)
+    {
+        if (FaultCheck())
+        {
             Log.e(ID, "Failed to play sound");
             Pins::setPinValue(PINS_BACK_SOUND_DRIVER, LOW);
             return &ECUStates::FaultState;
@@ -154,38 +191,50 @@ State::State_t *ECUStates::Button_State::run(void) {
     return &ECUStates::Driving_Mode_State;
 }
 
-void ECUStates::Driving_Mode_State::sendMCCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit) {
+void ECUStates::Driving_Mode_State::sendMCCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit)
+{
     int percentTorque = constrain(map(torque, 0, 1024, 0, 400), 0, 400); // separate func for negative vals (regen)
     Log.d(ID, "Torque percent: ", percentTorque);
     // Calculations value = (high_byte x 256) + low_byte
     uint8_t low_byte = percentTorque % 256;
     uint8_t high_byte = percentTorque / 256;
-    Canbus::sendData(MC_ADD, low_byte, high_byte, 0, 0, direction, enableBit);
+    Canbus::sendData(MC_ADD, low_byte, high_byte, 0, 0, direction, enableBit); // TODO: check that low and high are in the right place
 }
 
-void ECUStates::Driving_Mode_State::torqueVector(int torques[2]) {
+void ECUStates::Driving_Mode_State::torqueVector(int torques[2])
+{
     int pedal0 = Pins::getCanPinValue(PINS_FRONT_PEDAL0);
     int pedal1 = Pins::getCanPinValue(PINS_FRONT_PEDAL1);
     torques[0] = pedal0; // TODO: Add Torque vectoring algorithms
     torques[1] = pedal1;
 }
 
-uint32_t ECUStates::Driving_Mode_State::BMSSOC() {
+uint32_t ECUStates::Driving_Mode_State::BMSSOC()
+{
     Canbus::setSemaphore(ADD_BMS_SOC);
     return *(uint *)(BMS_SOC_Buffer + 2); // TODO: interpret buffer
     Canbus::clearSemaphore();
 }
 
-uint32_t ECUStates::Driving_Mode_State::powerValue() {
-    Canbus::setSemaphore(ADD_MC0_PWR);
-    uint MC0_PWR = *(uint *)(MC0_PWR_Buffer + 4); // TODO: interpret buffer
-    Canbus::setSemaphore(ADD_MC1_PWR);
-    uint MC1_PWR = *(uint *)(MC1_PWR_Buffer + 4); // TODO: interpret buffer
+uint32_t ECUStates::Driving_Mode_State::powerValue()
+{
+    // TODO: get power value using three phase values, or find a power value address
+    Canbus::setSemaphore(ADD_MC0_VOLT);
+    int16_t MC0_VOLT *((int16_t *)(MC0_Voltage_Buffer)) / 10;
+    Canbus::setSemaphore(ADD_MC0_CURR);
+    int16_t MC0_CURR *((int16_t *)(MC0_Current_Buffer + 6)) / 10; // Bytes 6-7
+    int MC0_PWR = MC0_VOLT * MC0_CURR;
+    Canbus::setSemaphore(ADD_MC1_VOLT);
+    int16_t MC1_VOLT *((int16_t *)(MC1_Voltage_Buffer)) / 10;
+    Canbus::setSemaphore(ADD_MC1_CURR);
+    int16_t MC1_CURR *((int16_t *)(MC1_Current_Buffer + 6)) / 10; // Bytes 6-7
+    int MC1_PWR = MC1_VOLT * MC1_CURR;
     Canbus::clearSemaphore();
-    return MC0_PWR + MC1_PWR;
+    return (MC0_PWR + MC1_PWR) / 1000; // Sending kilowatts
 }
 
-void ECUStates::Driving_Mode_State::getBuffers() {
+void ECUStates::Driving_Mode_State::getBuffers()
+{
     MC0_RPM_Buffer = Canbus::getBuffer(ADD_MC0_RPM);
     MC1_RPM_Buffer = Canbus::getBuffer(ADD_MC1_RPM);
     MC0_PWR_Buffer = Canbus::getBuffer(ADD_MC0_PWR);
@@ -193,7 +242,8 @@ void ECUStates::Driving_Mode_State::getBuffers() {
     BMS_SOC_Buffer = Canbus::getBuffer(ADD_BMS_SOC);
 }
 
-State::State_t *ECUStates::Driving_Mode_State::run(void) {
+State::State_t *ECUStates::Driving_Mode_State::run(void)
+{
     Log.i(ID, "Loading Buffers");
     getBuffers();
     Log.i(ID, "Driving mode on");
@@ -202,46 +252,52 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
     elapsedMillis timeElapsed;
 #endif
 
-    while (true) {
+    while (true)
+    {
         Canbus::update();
 #if CONF_ECU_POSITION == FRONT_ECU
-        if (timeElapsed >= 5) { // Update Tablet every 5ms
+        if (timeElapsed >= 5)
+        { // Update Tablet every 5ms
             timeElapsed = 0;
             // receive rpm of MCs, interpret, then send to from teensy for logging
             Canbus::setSemaphore(ADD_MC0_RPM);
-            int MC_Rpm_Val_0 = *(int *)(MC0_RPM_Buffer + 4); // TODO: interpret buffer
+            int16_t MC_Rpm_Val_0 = *(int16_t *)(MC0_RPM_Buffer + 2); // Bytes 2-3 : Angular Velocity
             Canbus::setSemaphore(ADD_MC1_RPM);
-            int MC_Rpm_Val_1 = *(int *)(MC1_RPM_Buffer + 4); // TODO: interpret buffer
+            int16_t MC_Rpm_Val_1 = *(int16_t *)(MC1_RPM_Buffer + 2); // Bytes 2-3 : Angular Velocity
             Canbus::clearSemaphore();
-            int MC_Spd_Val_0 = MC_Rpm_Val_0; // TODO: convert RPM -> SPD
-            int MC_Spd_Val_1 = MC_Rpm_Val_1;
-            int speed = (MC_Spd_Val_0 + MC_Spd_Val_1) / 2;
+            // TODO: convert value RPM -> m/s
+            float MC_Spd_Val_0 = wheelRadius * 2 * 3.1415926536 / 60 * MC_Rpm_Val_0;
+            float MC_Spd_Val_1 = wheelRadius * 2 * 3.1415926536 / 60 * MC_Rpm_Val_1;
+            float speed = (MC_Spd_Val_0 + MC_Spd_Val_1) / 2;
             Log.i(ID, "Current Motor Speed:", speed);
             Log.i(ID, "Current Power Value:", powerValue());   // Canbus message from MCs
             Log.i(ID, "BMS State Of Charge Value:", BMSSOC()); // Canbus message
         }
 #else
-        // TODO: Send fault reset to MCs
         Log.d(ID, "Sending Fault reset to MCs complete");
 
-        for (size_t i = 0; i < 4; i++) {          // IMPROVE: Send only once? Check MC heartbeat catches it
-            sendMCCommand(ADD_MC0_CTRL, 0, 0, 0); // MC 1
-            sendMCCommand(ADD_MC1_CTRL, 0, 1, 0); // MC 2
+        for (size_t i = 0; i < 4; i++)
+        {                                              // IMPROVE: Send only once? Check MC heartbeat catches it
+            Canbus::sendData(ADD_MC0_CLEAR, 20, 0, 1); // TODO: test whether MCs are little or big endian
+            Canbus::sendData(ADD_MC1_CLEAR, 20, 0, 1);
             delay(10);
         }
 
-        int MotorTorques[2];
+        int MotorTorques[2] = {0};
         torqueVector(MotorTorques);
 
-        sendMCCommand(ADD_MC0_CTRL, MotorTorques[0], 0, 0); // MC 1
-        sendMCCommand(ADD_MC1_CTRL, MotorTorques[1], 1, 0); // MC 2
+        // TODO: is the clear faults address the same as sending torque address?
+        sendMCCommand(ADD_MC0_CLEAR, MotorTorques[0], 0, 0); // MC 1
+        sendMCCommand(ADD_MC1_CLEAR, MotorTorques[1], 1, 0); // MC 2
 
-        if (Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT)) {
+        if (Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT))
+        {
             Log.w(ID, "Going back to Idle state");
             break;
         }
 
-        if (Fault::hardFault()) {
+        if (FaultCheck())
+        {
             //TODO: anything extra when a fault happens while driving?
             return &ECUStates::FaultState;
         }
@@ -252,7 +308,8 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
     return &ECUStates::Idle_State;
 }
 
-State::State_t *ECUStates::FaultState::run(void) { // IMPROVE: Should fault state do anything else?
+State::State_t *ECUStates::FaultState::run(void)
+{ // IMPROVE: Should fault state do anything else?
     Canbus::enableInterrupts(false);
     Log.f(ID, "FAULT STATE");
     Fault::logFault();
@@ -260,11 +317,13 @@ State::State_t *ECUStates::FaultState::run(void) { // IMPROVE: Should fault stat
     return &ECUStates::FaultState;
 }
 
-State::State_t *ECUStates::Logger_t::run(void) {
+State::State_t *ECUStates::Logger_t::run(void)
+{
 
     static elapsedMillis timeElapsed;
 
-    if (timeElapsed >= 2000) {
+    if (timeElapsed >= 2000)
+    {
         timeElapsed = timeElapsed - 2000;
         Log(ID, "A7 Pin Value:", Pins::getPinValue(0));
         Log("FAKE ID", "A7 Pin Value:");
@@ -276,7 +335,8 @@ State::State_t *ECUStates::Logger_t::run(void) {
     return &ECUStates::Bounce;
 };
 
-State::State_t *ECUStates::Bounce_t::run(void) {
+State::State_t *ECUStates::Bounce_t::run(void)
+{
     delay(250);
     Log.i(ID, "Bounce!");
     State::notify(random(100));
