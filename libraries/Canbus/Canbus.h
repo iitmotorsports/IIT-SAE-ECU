@@ -69,7 +69,7 @@ void getData(const uint32_t address, uint8_t buf[8]);
  * Use pushData to push the data after modifying the buffer.
  * Invalid addresses will return a buffer that is ignored.
  * @note buffers that are for incoming addresses should not be modified, but can be monitored
- * @note use setSemaphore before calling or using a given address while interrupts are active as undefined behavior may occur
+ * @note use setSemaphore before using the given pointer while interrupts are active as undefined behavior may occur
  * @param address The outgoing address
  * @return uint8_t[8] buffer array of the message, length 8
  */
