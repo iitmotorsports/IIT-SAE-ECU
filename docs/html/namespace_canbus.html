@@ -250,7 +250,7 @@ Semaphores do not have to be used within the function to read from the given buf
 <p>Get the buffer of an outgoing address in order to set it's values to be pushed later. Use pushData to push the data after modifying the buffer. Invalid addresses will return a buffer that is ignored. </p>
 <dl class="section note"><dt>Note</dt><dd>buffers that are for incoming addresses should not be modified, but can be monitored </dd>
 <dd>
-use setSemaphore before calling or using a given address while interrupts are active as undefined behavior may occur </dd></dl>
+use setSemaphore before using the given pointer while interrupts are active as undefined behavior may occur </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">address</td><td>The outgoing address </td></tr>
