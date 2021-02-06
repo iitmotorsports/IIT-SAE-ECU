@@ -29,9 +29,9 @@ namespace ECUStates
     static struct PreCharge_State : State::State_t
     {
     private:
-        uint8_t *BMS_Voltage_Buffer;
-        uint8_t *MC0_Voltage_Buffer;
-        uint8_t *MC1_Voltage_Buffer;
+        uint8_t *BMS_VOLT_Buffer;
+        uint8_t *MC0_VOLT_Buffer;
+        uint8_t *MC1_VOLT_Buffer;
         void getBuffers();
         State::State_t *PreCharFault();
         bool voltageCheck();
@@ -88,8 +88,10 @@ namespace ECUStates
         static const float wheelRadius = 1.8; // TODO: Get car wheel radius
         uint8_t *MC0_RPM_Buffer;
         uint8_t *MC1_RPM_Buffer;
-        uint8_t *MC0_PWR_Buffer;
-        uint8_t *MC1_PWR_Buffer;
+        uint8_t *MC0_VOLT_Buffer;
+        uint8_t *MC1_VOLT_Buffer;
+        uint8_t *MC0_CURR_Buffer;
+        uint8_t *MC1_CURR_Buffer;
         uint8_t *BMS_SOC_Buffer;
         void getBuffers();
         void sendMCCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit);
