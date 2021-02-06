@@ -80,7 +80,6 @@ State::State_t *ECUStates::PreCharge_State::run(void) { // TODO: set pins to LOW
     Pins::setPinValue(PINS_BACK_AIR1, HIGH);
     Pins::setPinValue(PINS_BACK_PRECHARGE_RELAY, HIGH);
 
-    // TODO: add soft faults wherever we check hard faults
     if (FaultCheck()) {
         Log.e(ID, "Precharge Faulted after charge");
         return PreCharFault();
@@ -235,7 +234,6 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             Canbus::setSemaphore(ADD_MC1_RPM);
             int16_t MC_Rpm_Val_1 = *(int16_t *)(MC1_RPM_Buffer + 2); // Bytes 2-3 : Angular Velocity
             Canbus::clearSemaphore();
-            // TODO: convert value RPM -> m/s
             float MC_Spd_Val_0 = wheelRadius * 2 * 3.1415926536 / 60 * MC_Rpm_Val_0;
             float MC_Spd_Val_1 = wheelRadius * 2 * 3.1415926536 / 60 * MC_Rpm_Val_1;
             float speed = (MC_Spd_Val_0 + MC_Spd_Val_1) / 2;
@@ -247,7 +245,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
         Log.d(ID, "Sending Fault reset to MCs complete");
 
         for (size_t i = 0; i < 4; i++) {               // IMPROVE: Send only once? Check MC heartbeat catches it
-            Canbus::sendData(ADD_MC0_CLEAR, 20, 0, 1); // TODO: test whether MCs are little or big endian
+            Canbus::sendData(ADD_MC0_CLEAR, 20, 0, 1); // NOTE: We are assuming MCs are little endian
             Canbus::sendData(ADD_MC1_CLEAR, 20, 0, 1);
             delay(10);
         }
@@ -265,7 +263,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
         }
 
         if (FaultCheck()) {
-            //TODO: anything extra when a fault happens while driving?
+            // TODO: anything extra when a fault happens while driving?
             return &ECUStates::FaultState;
         }
 #endif
