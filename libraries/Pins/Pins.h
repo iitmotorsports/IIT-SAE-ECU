@@ -15,7 +15,7 @@
 #define __ECU_PINS_H__
 
 // IMPROVE: pin priority
-// TODO: add analog resolution and frequency option, low priority
+// TODO: add analog resolution and frequency option, will be used by DAC
 
 #include "PinConfig.def"
 #include <stdint.h>

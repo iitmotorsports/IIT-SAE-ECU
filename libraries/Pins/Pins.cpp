@@ -21,6 +21,8 @@
 #include "Log.h"
 #include "PinConfig.def"
 
+// TODO: initialize pins to a set value
+
 namespace Pins {
 
 static int A_GPIO[CORE_NUM_TOTAL_PINS]; // IMPROVE: Use CORE_NUM_ANALOG instead
@@ -57,7 +59,7 @@ struct digitalCanPinMsg_t : CanPinMsg_t {
         Canbus::sendData(address, buf);
     };
     void receive(uint8_t buffer[8]) {
-        bufmap = (uint64_t *)buffer;  // use bufmap, as if we are receiving we can't be sending
+        bufmap = (uint64_t *)buffer; // use bufmap, as if we are receiving we can't be sending
         for (int i = activedigitalCanPins - 1; i >= 0; i--) {
             CAN_GPIO[digitalPinPos[i]] = *bufmap & 1;
             *bufmap = *bufmap >> 1;

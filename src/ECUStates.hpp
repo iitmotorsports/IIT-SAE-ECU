@@ -88,7 +88,7 @@ private:
     uint8_t *BMS_SOC_Buffer;
     void getBuffers();
     void sendMCCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit);
-    void torqueVector(int torques[2]);
+    void torqueVector(int torques[2], float pedalVal);
     uint32_t BMSSOC();
     uint32_t powerValue();
 
