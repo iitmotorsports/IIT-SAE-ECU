@@ -3,6 +3,8 @@
 #include "Faults.h"
 #include "Log.h"
 
+// TODO: Separate teensy file for front teensy
+
 static bool FaultCheck() { // NOTE: Will only return true if hardfault occurs
     if (Fault::softFault())
         Fault::logFault();
@@ -220,6 +222,8 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
     getBuffers();
     Log.i(ID, "Driving mode on");
 
+    // TODO: turn on LED on front teensy
+
 #if CONF_ECU_POSITION == FRONT_ECU
     elapsedMillis timeElapsed;
 #endif
@@ -296,6 +300,8 @@ State::State_t *ECUStates::FaultState::run(void) { // IMPROVE: Should fault stat
     Pins::setPinValue(PINS_BACK_PRECHARGE_RELAY, LOW);
 
     // TODO: Re-Initialize pins to starting state
+
+    // TODO: Turn on appropriate Fault LEDs on front teensy, boolean receive from back teensy
 
     while (true) {
         Log.f(ID, "FAULT STATE");
