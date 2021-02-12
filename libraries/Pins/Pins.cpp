@@ -248,11 +248,7 @@ static void populateCanbusMap(std::multimap<uint32_t, std::tuple<uint, uint8_t, 
     }
 }
 
-void initialize(void) {
-    Log.i(ID, "Setting up physical pins");
-
-    analogWriteResolution(12);
-
+void resetPhysicalPins() {
 #define X(pin, Type, IO, init)  \
     pinMode(pin, IO);           \
     if (init != NIL) {          \
@@ -260,6 +256,13 @@ void initialize(void) {
     }
     ECU_PINS
 #undef X
+}
+
+void initialize(void) {
+    Log.i(ID, "Setting up physical pins");
+
+    analogWriteResolution(12);
+    resetPhysicalPins();
 
     Log.i(ID, "Setting up outgoing canbus pins");
     std::multimap<uint32_t, std::tuple<uint, uint8_t, bool>> pinMap;

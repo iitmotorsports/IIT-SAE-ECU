@@ -62,12 +62,19 @@ void setPinValue(uint8_t GPIO_Pin, int value);
 
 /**
  * @brief Set the value of an internal pin
- * @note These are fake pins that are usefully for sending gpio like values over canbus, See PinConfig.def for more info
+ * @details These are fake pins that are usefully for sending gpio like values over canbus, See PinConfig.def for more info
  * 
  * @param Internal_Pin The Internal pin to set
  * @param value The value to set the analog/digital pin to
  */
 void setInternalValue(uint8_t Internal_Pin, int value);
+
+/**
+ * @brief Resets physical pins to their inital state
+ * @details This function sets pins as input/output and, if an output pin, sets them to their given init value. This is defined in PinConfig.def
+ * 
+ */
+void resetPhysicalPins();
 
 /**
  * @brief Poll analog pin values
