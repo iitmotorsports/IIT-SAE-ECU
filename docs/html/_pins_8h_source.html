@@ -110,13 +110,15 @@ $(document).ready(function(){initNavTree('_pins_8h_source.html',''); initResizab
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
 <div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="namespace_pins.html#a9d8cba01aef10c12ca76fe5cb0bc67c6">   70</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a9d8cba01aef10c12ca76fe5cb0bc67c6">setInternalValue</a>(uint8_t Internal_Pin, <span class="keywordtype">int</span> value);</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35">   76</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35">update</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="namespace_pins.html#a50fdd17267e54bd2a3d4ed2a6884c5c1">   81</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a50fdd17267e54bd2a3d4ed2a6884c5c1">initialize</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;} <span class="comment">// namespace Pins</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="namespace_pins.html#aeb44a1100800f7a1984d725a5d1255f2">   77</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#aeb44a1100800f7a1984d725a5d1255f2">resetPhysicalPins</a>();</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35">   83</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35">update</a>(<span class="keywordtype">void</span>);</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __ECU_PINS_H__</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="namespace_pins.html#a50fdd17267e54bd2a3d4ed2a6884c5c1">   88</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a50fdd17267e54bd2a3d4ed2a6884c5c1">initialize</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;} <span class="comment">// namespace Pins</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __ECU_PINS_H__</span></div>
 <div class="ttc" id="a_pin_config_8def_html"><div class="ttname"><a href="_pin_config_8def.html">PinConfig.def</a></div><div class="ttdoc">Pin Configuration for the ECU.</div></div>
 <div class="ttc" id="anamespace_pins_html"><div class="ttname"><a href="namespace_pins.html">Pins</a></div><div class="ttdoc">Get and set values to predefined pins.</div><div class="ttdef"><b>Definition:</b> <a href="_pins_8h_source.html#l00030">Pins.h:30</a></div></div>
 <div class="ttc" id="anamespace_pins_html_a2d60349cb2aec2c336856187093aea61"><div class="ttname"><a href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a></div><div class="ttdeci">void setPinValue(uint8_t GPIO_Pin, int value)</div><div class="ttdoc">Set the pin value of a predefined pin.</div></div>
@@ -126,6 +128,7 @@ $(document).ready(function(){initNavTree('_pins_8h_source.html',''); initResizab
 <div class="ttc" id="anamespace_pins_html_a5bb778c9151687c75d254d2fef4509fd"><div class="ttname"><a href="namespace_pins.html#a5bb778c9151687c75d254d2fef4509fd">Pins::getPinValue</a></div><div class="ttdeci">int getPinValue(uint8_t GPIO_Pin)</div><div class="ttdoc">Get the pin value of a predefined pin.</div></div>
 <div class="ttc" id="anamespace_pins_html_a66c4b641f395a60dedbe5271d4acfd35"><div class="ttname"><a href="namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35">Pins::update</a></div><div class="ttdeci">void update(void)</div><div class="ttdoc">Poll analog pin values.</div></div>
 <div class="ttc" id="anamespace_pins_html_a9d8cba01aef10c12ca76fe5cb0bc67c6"><div class="ttname"><a href="namespace_pins.html#a9d8cba01aef10c12ca76fe5cb0bc67c6">Pins::setInternalValue</a></div><div class="ttdeci">void setInternalValue(uint8_t Internal_Pin, int value)</div><div class="ttdoc">Set the value of an internal pin.</div></div>
+<div class="ttc" id="anamespace_pins_html_aeb44a1100800f7a1984d725a5d1255f2"><div class="ttname"><a href="namespace_pins.html#aeb44a1100800f7a1984d725a5d1255f2">Pins::resetPhysicalPins</a></div><div class="ttdeci">void resetPhysicalPins()</div><div class="ttdoc">Resets physical pins to their inital state.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

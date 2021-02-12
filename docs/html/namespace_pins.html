@@ -116,6 +116,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a9d8cba01aef10c12ca76fe5cb0bc67c6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_pins.html#a9d8cba01aef10c12ca76fe5cb0bc67c6">setInternalValue</a> (uint8_t Internal_Pin, int value)</td></tr>
 <tr class="memdesc:a9d8cba01aef10c12ca76fe5cb0bc67c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the value of an internal pin.  <a href="namespace_pins.html#a9d8cba01aef10c12ca76fe5cb0bc67c6">More...</a><br /></td></tr>
 <tr class="separator:a9d8cba01aef10c12ca76fe5cb0bc67c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb44a1100800f7a1984d725a5d1255f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_pins.html#aeb44a1100800f7a1984d725a5d1255f2">resetPhysicalPins</a> ()</td></tr>
+<tr class="memdesc:aeb44a1100800f7a1984d725a5d1255f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets physical pins to their inital state.  <a href="namespace_pins.html#aeb44a1100800f7a1984d725a5d1255f2">More...</a><br /></td></tr>
+<tr class="separator:aeb44a1100800f7a1984d725a5d1255f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a66c4b641f395a60dedbe5271d4acfd35"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35">update</a> (void)</td></tr>
 <tr class="memdesc:a66c4b641f395a60dedbe5271d4acfd35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Poll analog pin values.  <a href="namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35">More...</a><br /></td></tr>
 <tr class="separator:a66c4b641f395a60dedbe5271d4acfd35"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -184,6 +187,26 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 
 </div>
 </div>
+<a id="aeb44a1100800f7a1984d725a5d1255f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb44a1100800f7a1984d725a5d1255f2">&#9670;&nbsp;</a></span>resetPhysicalPins()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Pins::resetPhysicalPins </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resets physical pins to their inital state. </p>
+<p>This function sets pins as input/output and, if an output pin, sets them to their given init value. This is defined in <a class="el" href="_pin_config_8def.html" title="Pin Configuration for the ECU.">PinConfig.def</a> </p>
+
+</div>
+</div>
 <a id="a9d8cba01aef10c12ca76fe5cb0bc67c6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9d8cba01aef10c12ca76fe5cb0bc67c6">&#9670;&nbsp;</a></span>setInternalValue()</h2>
 
@@ -211,7 +234,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 </div><div class="memdoc">
 
 <p>Set the value of an internal pin. </p>
-<dl class="section note"><dt>Note</dt><dd>These are fake pins that are usefully for sending gpio like values over canbus, See <a class="el" href="_pin_config_8def.html" title="Pin Configuration for the ECU.">PinConfig.def</a> for more info</dd></dl>
+<p>These are fake pins that are usefully for sending gpio like values over canbus, See <a class="el" href="_pin_config_8def.html" title="Pin Configuration for the ECU.">PinConfig.def</a> for more info</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">Internal_Pin</td><td>The Internal pin to set </td></tr>
