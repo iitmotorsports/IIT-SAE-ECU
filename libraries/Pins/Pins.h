@@ -15,7 +15,6 @@
 #define __ECU_PINS_H__
 
 // IMPROVE: pin priority
-// TODO: add analog resolution and frequency option, will be used by DAC
 
 #include "PinConfig.def"
 #include <stdint.h>
@@ -62,7 +61,17 @@ int getPinValue(uint8_t GPIO_Pin);
 void setPinValue(uint8_t GPIO_Pin, int value);
 
 /**
+ * @brief Set the value of an internal pin
+ * @note These are fake pins that are usefully for sending gpio like values over canbus, See PinConfig.def for more info
+ * 
+ * @param Internal_Pin The Internal pin to set
+ * @param value The value to set the analog/digital pin to
+ */
+void setInternalValue(uint8_t Internal_Pin, int value);
+
+/**
  * @brief Poll analog pin values
+ * @note WIP
  */
 void update(void);
 

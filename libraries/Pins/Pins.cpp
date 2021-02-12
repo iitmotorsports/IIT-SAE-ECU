@@ -25,17 +25,28 @@
 
 namespace Pins {
 
-static int A_GPIO[CORE_NUM_TOTAL_PINS]; // IMPROVE: Use CORE_NUM_ANALOG instead
+// NOTE: analogpin indexes extend beyond CORE_NUM_TOTAL_PINS, eg. DAC0
+// static int A_GPIO[CORE_NUM_TOTAL_PINS]; // IMPROVE: Use CORE_NUM_ANALOG instead
 
 #define X ,
-static const uint analogCanPinCount = PP_NARG_MO(PINS_CANBUS_ANALOG);
-static const uint analogCanMsgCount = PP_NARG_MO(PINS_CANBUS_ANALOG) / 2 + PP_NARG_MO(PINS_CANBUS_ANALOG) % 2;
-static const uint digitalCanPinCount = PP_NARG_MO(PINS_CANBUS_DIGITAL);
+
+static const uint analogCanMsgCount_OUT = PP_NARG_MO(PINS_CANBUS_ANALOG_OUT) / 2 + PP_NARG_MO(PINS_CANBUS_ANALOG_OUT) % 2;
+static const uint analogCanPinCount_OUT = PP_NARG_MO(PINS_CANBUS_ANALOG_OUT);
+static const uint digitalCanPinCount_OUT = PP_NARG_MO(PINS_CANBUS_DIGITAL_OUT);
+static const uint analogCanPinCount_IN = PP_NARG_MO(PINS_CANBUS_ANALOG_IN);
+static const uint analogCanMsgCount_IN = PP_NARG_MO(PINS_CANBUS_ANALOG_IN) / 2 + PP_NARG_MO(PINS_CANBUS_ANALOG_IN) % 2;
+static const uint digitalCanPinCount_IN = PP_NARG_MO(PINS_CANBUS_DIGITAL_IN);
+
+#if PP_NARG_MO(PINS_CANBUS_DIGITAL_OUT) > 8
+#error Too many digital out canPins defined
+#elif PP_NARG_MO(PINS_CANBUS_DIGITAL_IN) > 8
+#error Too many digital in canPins defined
+#endif
 #undef X
 
 static std::unordered_map<uint8_t, int *> CAN_GPIO_MAP;
-static int CAN_GPIO[analogCanPinCount + digitalCanPinCount] = {0};    // Store canpin values
-static const uint activedigitalCanPins = min(digitalCanPinCount, 8U); // NOTE: MAX 8 Digital pins per msg
+static int CAN_GPIO[analogCanPinCount_IN + digitalCanPinCount_IN] = {0}; // Store canpin values
+static const uint activedigitalCanPins = 8;                              // NOTE: MAX 8 Digital pins per msg for now
 
 static IntervalTimer canbusPinUpdate;
 static const LOG_TAG ID = "Pins";
@@ -89,8 +100,10 @@ struct analogCanPinMsg_t : CanPinMsg_t {
     }
 };
 
-static digitalCanPinMsg_t digitalCanPinMessage;
-static analogCanPinMsg_t analogCanPinMessages[analogCanMsgCount];
+static digitalCanPinMsg_t digitalCanPinMessage_IN;
+static digitalCanPinMsg_t digitalCanPinMessage_OUT;
+static analogCanPinMsg_t analogCanPinMessages_IN[analogCanMsgCount_IN];
+static analogCanPinMsg_t analogCanPinMessages_OUT[analogCanMsgCount_OUT];
 
 #define __WRITEPIN_DIGITALOUTPUT(PIN, VAL) \
     }                                      \
@@ -119,46 +132,41 @@ static analogCanPinMsg_t analogCanPinMessages[analogCanMsgCount];
 #define __READPIN_DIGITALOUTPUT(PIN)
 #define __READPIN_ANALOGOUTPUT(PIN)
 
-#define __INTERNAL_READ_ANALOG(PIN) A_GPIO[PIN] = analogRead(PIN);
-#define __INTERNAL_READ_DIGITAL(PIN)
-
-#if PINS_CANBUS_DIRECTION == INPUT
+// #define __INTERNAL_READ_ANALOG(PIN) A_GPIO[PIN] = analogRead(PIN);
+// #define __INTERNAL_READ_DIGITAL(PIN)
 
 static void _receiveDigitalCanbusPin(uint32_t address, uint8_t *buffer) {
-    digitalCanPinMessage.receive(buffer);
+    digitalCanPinMessage_IN.receive(buffer);
 }
 
 static void _receiveAnalogCanbusPin(uint32_t address, uint8_t *buffer) { // IMPROVE: faster callback for analog pins
-    for (size_t i = 0; i < analogCanMsgCount; i++) {
-        if (analogCanPinMessages[i].address == address) {
-            analogCanPinMessages[i].receive(buffer);
+    for (size_t i = 0; i < analogCanMsgCount_IN; i++) {
+        if (analogCanPinMessages_IN[i].address == address) {
+            analogCanPinMessages_IN[i].receive(buffer);
             break;
         }
     }
 }
 
-#else
-
 static void _pushCanbusPins(void) {
-    digitalCanPinMessage.send();
-    for (size_t i = 0; i < analogCanMsgCount; i++) {
-        analogCanPinMessages[i].send();
+    digitalCanPinMessage_OUT.send();
+    for (size_t i = 0; i < analogCanMsgCount_OUT; i++) {
+        analogCanPinMessages_OUT[i].send();
     }
 }
 
-#endif
+void setInternalValue(uint8_t Internal_Pin, int value) {
+    *CAN_GPIO_MAP[Internal_Pin] = value;
+}
 
 int getCanPinValue(uint8_t CAN_GPIO_Pin) {
     return *CAN_GPIO_MAP[CAN_GPIO_Pin];
 }
 
-int getPinValue(uint8_t GPIO_Pin) {
-    if (GPIO_Pin > CORE_NUM_TOTAL_PINS) {
-#ifdef CONF_ECU_DEBUG
-        Log.e(ID, "Acessing out of range pin", GPIO_Pin);
-#endif
-        return 0;
-#define X(pin, Type, IO) __READPIN_##Type##IO(pin);
+int getPinValue(uint8_t GPIO_Pin) { // IMPROVE: Make getPinValue compatible with canPins
+    if (GPIO_Pin >= 100) {          // pins >= 100 are internal pins
+        return getCanPinValue(GPIO_Pin);
+#define X(pin, Type, IO, init) __READPIN_##Type##IO(pin);
         ECU_PINS
 #undef X
     } else {
@@ -169,42 +177,22 @@ int getPinValue(uint8_t GPIO_Pin) {
     }
 }
 
-void setPinValue(uint8_t GPIO_Pin, int value) {
-    if (GPIO_Pin > CORE_NUM_TOTAL_PINS) {
-        return;
-#define X(pin, Type, IO) __WRITEPIN_##Type##IO(pin, value);
+void setPinValue(uint8_t GPIO_Pin, int value) { // IMPROVE: Make setPinValue compatible with canPins
+    if (GPIO_Pin >= 100) {
+        return setInternalValue(GPIO_Pin, value);
+#define X(pin, Type, IO, init) __WRITEPIN_##Type##IO(pin, value);
         ECU_PINS
 #undef X
     }
 }
 
 void update(void) {
-#define X(pin, Type, IO) __INTERNAL_READ_##Type(pin);
-    ECU_PINS
-#undef X
+    // #define X(pin, Type, IO) __INTERNAL_READ_##Type(pin);
+    //     ECU_PINS
+    // #undef X
 }
 
-void initialize(void) {
-    Log.i(ID, "Setting up physical pins");
-
-#define X(pin, Type, IO) pinMode(pin, IO);
-    ECU_PINS
-#undef X
-
-    Log.i(ID, "Setting up canbus pins");
-    std::multimap<uint32_t, std::tuple<uint, uint8_t, bool>> pinMap;
-    bool isAnalog = true;
-    uint i = 0;
-
-#define X(address, pin)                                                        \
-    pinMap.insert(std::make_pair(address, std::make_tuple(i, pin, isAnalog))); \
-    CAN_GPIO_MAP[pin] = &CAN_GPIO[i];                                          \
-    i++;
-    PINS_CANBUS_ANALOG
-    isAnalog = false;
-    PINS_CANBUS_DIGITAL
-#undef X
-
+static void populateCanbusMap(std::multimap<uint32_t, std::tuple<uint, uint8_t, bool>> pinMap, analogCanPinMsg_t *analogCanPinStructArray, uint maxAnalogMsg, digitalCanPinMsg_t *digitalCanPinStruct, uint activeDigitalCanPinCount) {
     uint amsgc = 0;
     uint dmsgc = 0;
     decltype(pinMap.equal_range(0)) range;
@@ -217,7 +205,7 @@ void initialize(void) {
 
         for (auto d = range.first; d != range.second; ++d) {
             if (std::get<2>(d->second)) { // Analog
-                if (amsgc == analogCanMsgCount) {
+                if (amsgc == maxAnalogMsg) {
                     Log.e(ID, "Exceeded number of allocated analog canbus buffers, maximize the number of analog pins per address", amsgc);
                     break;
                 }
@@ -225,27 +213,27 @@ void initialize(void) {
                     Log.w(ID, "Address has too many analog pins allocated, ignoring additional pins", address);
                     break;
                 }
-                analogCanPinMessages[amsgc].address = address;
-                analogCanPinMessages[amsgc].analogPinPos[ac] = std::get<0>(d->second);
-                analogCanPinMessages[amsgc].analogPins[ac] = std::get<1>(d->second);
+                analogCanPinStructArray[amsgc].address = address;
+                analogCanPinStructArray[amsgc].analogPinPos[ac] = std::get<0>(d->second);
+                analogCanPinStructArray[amsgc].analogPins[ac] = std::get<1>(d->second);
                 ac++;
-            } else { // Digital
-                if (dmsgc == 1) {
+            } else {              // Digital
+                if (dmsgc == 1) { // NOTE: Hardcoded single digital message
                     Log.e(ID, "Exceeded number of allocated digital canbus buffers, currently only one digital buffer is supported", dmsgc);
                     break;
                 }
-                if (dc == activedigitalCanPins) {
+                if (dc == activeDigitalCanPinCount) {
                     Log.w(ID, "Address has too many digital pins allocated, ignoring additional pins", address);
                     break;
                 }
-                digitalCanPinMessage.address = address;
-                digitalCanPinMessage.digitalPinPos[dc] = std::get<0>(d->second);
-                digitalCanPinMessage.digitalPins[dc] = std::get<1>(d->second);
+                digitalCanPinStruct->address = address;
+                digitalCanPinStruct->digitalPinPos[dc] = std::get<0>(d->second);
+                digitalCanPinStruct->digitalPins[dc] = std::get<1>(d->second);
                 dc++;
             }
         }
 
-        if (ac | dc) {
+        if (ac || dc) {
             if (ac != 0) {
                 amsgc++;
                 Log.i(ID, "Set analog canbus buffer:", address);
@@ -258,18 +246,65 @@ void initialize(void) {
             Log.w(ID, "No pins were set for address: ", address);
         }
     }
+}
 
-#if PINS_CANBUS_DIRECTION == INPUT // Only need to update when pins are outgoing
-    Log.i(ID, "Adding Canbus callbacks");
-    Canbus::addCallback(digitalCanPinMessage.address, _receiveDigitalCanbusPin);
-    for (size_t i = 0; i < analogCanMsgCount; i++) {
-        Canbus::addCallback(analogCanPinMessages[i].address, _receiveAnalogCanbusPin);
+void initialize(void) {
+    Log.i(ID, "Setting up physical pins");
+
+    analogWriteResolution(12);
+
+#define X(pin, Type, IO, init)  \
+    pinMode(pin, IO);           \
+    if (init != NIL) {          \
+        setPinValue(pin, init); \
+    }
+    ECU_PINS
+#undef X
+
+    Log.i(ID, "Setting up outgoing canbus pins");
+    std::multimap<uint32_t, std::tuple<uint, uint8_t, bool>> pinMap;
+    bool isAnalog = true;
+    uint i = 0;
+
+#define X(address, pin)                                                        \
+    pinMap.insert(std::make_pair(address, std::make_tuple(i, pin, isAnalog))); \
+    i++;
+    PINS_CANBUS_ANALOG_OUT
+    isAnalog = false;
+    PINS_CANBUS_DIGITAL_OUT
+#undef X
+
+    Log.i(ID, "Populating outgoing messages");
+    populateCanbusMap(pinMap, analogCanPinMessages_OUT, analogCanMsgCount_OUT, &digitalCanPinMessage_OUT, digitalCanPinCount_OUT);
+
+    Log.i(ID, "Setting up incoming canbus pins");
+    pinMap.clear();
+    isAnalog = true;
+    i = 0;
+
+#define X(address, pin)                                                        \
+    pinMap.insert(std::make_pair(address, std::make_tuple(i, pin, isAnalog))); \
+    CAN_GPIO_MAP[pin] = &CAN_GPIO[i];                                          \
+    i++;
+    PINS_CANBUS_ANALOG_IN
+    isAnalog = false;
+    PINS_CANBUS_DIGITAL_IN
+#undef X
+
+    Log.i(ID, "Populating incoming messages");
+    populateCanbusMap(pinMap, analogCanPinMessages_IN, analogCanMsgCount_IN, &digitalCanPinMessage_IN, digitalCanPinCount_IN);
+
+    Log.i(ID, "Adding incoming canpin callbacks");
+    if (digitalCanPinCount_IN != 0)
+        Canbus::addCallback(digitalCanPinMessage_IN.address, _receiveDigitalCanbusPin);
+    for (size_t i = 0; i < analogCanMsgCount_IN; i++) {
+        Canbus::addCallback(analogCanPinMessages_IN[i].address, _receiveAnalogCanbusPin);
     }
 
-#else
-    Log.i(ID, "Starting canbus pin update timer");
-    canbusPinUpdate.begin(_pushCanbusPins, CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO);
-#endif
+    if (digitalCanPinCount_OUT + analogCanPinCount_OUT != 0) {
+        Log.i(ID, "Starting outgoing canpin update timer");
+        canbusPinUpdate.begin(_pushCanbusPins, CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO);
+    }
 }
 
 } // namespace Pins
