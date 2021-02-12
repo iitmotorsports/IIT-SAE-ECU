@@ -78,7 +78,7 @@ static struct Button_State : State::State_t {
  */
 static struct Driving_Mode_State : State::State_t {
 private:
-    static const float wheelRadius = 1.8; // TODO: Get car wheel radius
+    static constexpr float wheelRadius = 1.8; // TODO: Get car wheel radius
     uint8_t *MC0_RPM_Buffer;
     uint8_t *MC1_RPM_Buffer;
     uint8_t *MC0_VOLT_Buffer;
@@ -89,6 +89,7 @@ private:
     void getBuffers();
     void sendMCCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit);
     void torqueVector(int torques[2], float pedalVal);
+    void carCooling(float temp);
     uint32_t BMSSOC();
     uint32_t powerValue();
 

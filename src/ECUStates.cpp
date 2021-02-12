@@ -13,6 +13,8 @@ static bool FaultCheck() { // NOTE: Will only return true if hardfault occurs
     return false;
 }
 
+#pragma region Initialize State
+
 State::State_t *ECUStates::Initialize::run(void) {
 #if CONF_ECU_POSITION == BACK_ECU
     Log.i(ID, "Teensy 3.6 SAE BACK ECU Initalizing");
@@ -25,11 +27,6 @@ State::State_t *ECUStates::Initialize::run(void) {
 #if CONF_ECU_POSITION == FRONT_ECU
     Logging::enableCanbusRelay(); // Allow logging though canbus
 #endif
-
-    Pins::setPinValue(PINS_BOTH_OPT_CAN_TRAN, LOW); // optional CAN transceiver enable pin
-
-    // FIXME: Temporary
-    Pins::setPinValue(PINS_BACK_CHARGING_RELAY, HIGH);
 
     if (FaultCheck()) {
         return &ECUStates::FaultState;
@@ -44,6 +41,8 @@ State::State_t *ECUStates::Initialize::run(void) {
     return &ECUStates::PreCharge_State;
 };
 
+#pragma endregion
+#pragma region Precharge State
 State::State_t *ECUStates::PreCharge_State::PreCharFault(void) {
     Log.w(ID, "Opening Air1, Air2 and Precharge Relay");
     Pins::setPinValue(PINS_BACK_AIR1, LOW);
@@ -107,6 +106,9 @@ State::State_t *ECUStates::PreCharge_State::run(void) { // NOTE: Low = Closed, H
     return PreCharFault();
 };
 
+#pragma endregion
+#pragma region Idle State
+
 State::State_t *ECUStates::Idle_State::run(void) {
     Log.i(ID, "Waiting for Button or Charging Press");
 
@@ -114,7 +116,7 @@ State::State_t *ECUStates::Idle_State::run(void) {
         if (Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT)) {
             Log.i(ID, "Button Pressed");
             return &ECUStates::Button_State;
-        } else if (Pins::getPinValue(PINS_BACK_CHARGING_INPUT)) { // TODO: replace with tablet input
+        } else if (Pins::getPinValue(PINS_INTERNAL_CHARGE_SIGNAL)) { // TODO: set internal charging pin on front
             Log.i(ID, "Charging Pressed");
             return &ECUStates::Charging_State;
         } else if (FaultCheck()) {
@@ -124,6 +126,9 @@ State::State_t *ECUStates::Idle_State::run(void) {
     }
     return &ECUStates::FaultState;
 }
+
+#pragma endregion
+#pragma region Charging State
 
 State::State_t *ECUStates::Charging_State::run(void) {
     Pins::setPinValue(PINS_BACK_CHARGING_RELAY, HIGH);
@@ -140,7 +145,7 @@ State::State_t *ECUStates::Charging_State::run(void) {
         }
         if (voltLogNotify >= 1000) { // Notify every secondish
             voltLogNotify = 0;
-            Log.i(ID, "Voltage", Pins::getPinValue(PINS_BACK_CHARGING_VOLTAGE));
+            Log.i(ID, "Voltage", Pins::getPinValue(PINS_BACK_CHARGING_VOLTAGE)); // TODO: what voltage are we sending
         }
     }
 
@@ -149,6 +154,9 @@ State::State_t *ECUStates::Charging_State::run(void) {
 
     return &ECUStates::Idle_State;
 }
+
+#pragma endregion
+#pragma region Button State
 
 State::State_t *ECUStates::Button_State::run(void) {
     Log.i(ID, "Playing sound");
@@ -171,6 +179,9 @@ State::State_t *ECUStates::Button_State::run(void) {
 
     return &ECUStates::Driving_Mode_State;
 }
+
+#pragma endregion
+#pragma region Driving State
 
 void ECUStates::Driving_Mode_State::sendMCCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit) {
     int percentTorque = constrain(map(torque, 0, 1024, 0, 400), 0, 400); // separate func for negative vals (regen)
@@ -217,12 +228,21 @@ void ECUStates::Driving_Mode_State::getBuffers() {
     BMS_SOC_Buffer = Canbus::getBuffer(ADD_BMS_SOC);
 }
 
+void ECUStates::Driving_Mode_State::carCooling(float temp) { // TODO: map temp to voltages
+    Pins::setPinValue(PINS_BACK_PUMP_DAC, (int)map(temp, 0, 100, 4095.0f * 2.0f / 5, 4095.0f * 2.5f / 5));
+    int fanSet = (int)map(temp, 0, 100, 0, 4095);
+    Pins::setPinValue(PINS_BACK_FAN1_PWM, fanSet);
+    Pins::setPinValue(PINS_BACK_FAN2_PWM, fanSet);
+    Pins::setPinValue(PINS_BACK_FAN3_PWM, fanSet);
+    Pins::setPinValue(PINS_BACK_FAN4_PWM, fanSet);
+}
+
 State::State_t *ECUStates::Driving_Mode_State::run(void) {
     Log.i(ID, "Loading Buffers");
     getBuffers();
     Log.i(ID, "Driving mode on");
 
-    // TODO: turn on LED on front teensy
+    Pins::setInternalValue(PINS_INTERNAL_START, 1); // TODO: turn on LED on front teensy
 
 #if CONF_ECU_POSITION == FRONT_ECU
     elapsedMillis timeElapsed;
@@ -247,7 +267,8 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             Log.i(ID, "BMS State Of Charge Value:", BMSSOC()); // Canbus message
         }
 #else
-        // TODO: figure out DAC, output 2-2.5V to pump pin and fans using a cooling function
+        int BMSTemp = 30;
+        carCooling((float)BMSTemp); // TODO: what temp are we using for cooling?
 
         for (size_t i = 0; i < 4; i++) {               // IMPROVE: Send only once? Check MC heartbeat catches it
             Canbus::sendData(ADD_MC0_CLEAR, 20, 0, 1); // NOTE: We are assuming MCs are little endian
@@ -264,7 +285,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             return &ECUStates::FaultState;
         }
 
-        if (Pins::getCanPinValue(PINS_FRONT_BRAKE) / ANALOGMAX > 4) { // TODO: divide by whatever ADC max value is
+        if (Pins::getCanPinValue(PINS_FRONT_BRAKE) / 4095 > 4) { // NOTE: analog res is at 12 bits which means 4095 is max value
             Pins::setPinValue(PINS_BACK_BRAKE_LIGHT, HIGH);
         } else {
             Pins::setPinValue(PINS_BACK_BRAKE_LIGHT, LOW);
@@ -288,10 +309,14 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
     }
 
     Log.i(ID, "Driving mode off");
+    Pins::setInternalValue(PINS_INTERNAL_START, 0);
     return &ECUStates::Idle_State;
 }
 
-State::State_t *ECUStates::FaultState::run(void) { // IMPROVE: Should fault state do anything else?
+#pragma endregion
+#pragma region AUX States
+
+State::State_t *ECUStates::FaultState::run(void) {
     Canbus::enableInterrupts(false);
 
     Log.w(ID, "Opening Air1, Air2 and Precharge Relay");
@@ -299,14 +324,14 @@ State::State_t *ECUStates::FaultState::run(void) { // IMPROVE: Should fault stat
     Pins::setPinValue(PINS_BACK_AIR2, LOW);
     Pins::setPinValue(PINS_BACK_PRECHARGE_RELAY, LOW);
 
-    // TODO: Re-Initialize pins to starting state
-
-    // TODO: Turn on appropriate Fault LEDs on front teensy, boolean receive from back teensy
+    Pins::resetPhysicalPins();
+    Pins::setInternalValue(PINS_INTERNAL_BMS_FAULT, 1);
+    Pins::setInternalValue(PINS_INTERNAL_IMD_FAULT, 1); // TODO: receive pins on front teensy
 
     while (true) {
         Log.f(ID, "FAULT STATE");
         Fault::logFault();
-        delay(250);
+        delay(1000);
     }
     return &ECUStates::FaultState;
 }
@@ -334,3 +359,5 @@ State::State_t *ECUStates::Bounce_t::run(void) {
     delay(250);
     return State::getLastState();
 }
+
+#pragma endregion
