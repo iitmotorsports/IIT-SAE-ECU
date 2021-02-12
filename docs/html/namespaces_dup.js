@@ -28,6 +28,7 @@ var namespaces_dup =
       [ "getCanPinValue", "namespace_pins.html#a499aec4c5df462d2e58fd797756a645f", null ],
       [ "getPinValue", "namespace_pins.html#a5bb778c9151687c75d254d2fef4509fd", null ],
       [ "initialize", "namespace_pins.html#a50fdd17267e54bd2a3d4ed2a6884c5c1", null ],
+      [ "setInternalValue", "namespace_pins.html#a9d8cba01aef10c12ca76fe5cb0bc67c6", null ],
       [ "setPinValue", "namespace_pins.html#a2d60349cb2aec2c336856187093aea61", null ],
       [ "update", "namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35", null ]
     ] ],

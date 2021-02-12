@@ -105,6 +105,9 @@ Macros</h2></td></tr>
 <tr class="memitem:a06c1bfa4845b6dc559c0212de491a02c"><td class="memItemLeft" align="right" valign="top"><a id="a06c1bfa4845b6dc559c0212de491a02c"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>ADD_MC1_OFFSET</b>&#160;&#160;&#160;0x00D0</td></tr>
 <tr class="separator:a06c1bfa4845b6dc559c0212de491a02c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c5d27d768665fd85b55ba4f284d6472"><td class="memItemLeft" align="right" valign="top"><a id="a7c5d27d768665fd85b55ba4f284d6472"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ADD_BMS_OFFSET</b>&#160;&#160;&#160;0x0000</td></tr>
+<tr class="separator:a7c5d27d768665fd85b55ba4f284d6472"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa7a98234bac49a35b8868f32f0c98ce4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_can_bus_addresses_8def.html#aa7a98234bac49a35b8868f32f0c98ce4">CAN_ADDRESS</a></td></tr>
 <tr class="memdesc:aa7a98234bac49a35b8868f32f0c98ce4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the Can bus addresses that will be used to receive and send data.  <a href="_can_bus_addresses_8def.html#aa7a98234bac49a35b8868f32f0c98ce4">More...</a><br /></td></tr>
 <tr class="separator:aa7a98234bac49a35b8868f32f0c98ce4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -135,10 +138,14 @@ Macros</h2></td></tr>
 <div class="line">    X(ADD_MC1_VOLT, INPUT)   \</div>
 <div class="line">    X(ADD_MC0_RPM, INPUT)    \</div>
 <div class="line">    X(ADD_MC1_RPM, INPUT)    \</div>
-<div class="line">    X(ADD_MC0_PWR, INPUT)    \</div>
-<div class="line">    X(ADD_MC1_PWR, INPUT)    \</div>
+<div class="line">    X(ADD_MC0_CURR, INPUT)   \</div>
+<div class="line">    X(ADD_MC1_CURR, INPUT)   \</div>
+<div class="line">    X(ADD_MC0_CTRL, OUTPUT)  \</div>
+<div class="line">    X(ADD_MC1_CTRL, OUTPUT)  \</div>
 <div class="line">    X(ADD_MC0_CLEAR, OUTPUT) \</div>
-<div class="line">    X(ADD_MC1_CTRL, OUTPUT)</div>
+<div class="line">    X(ADD_MC1_CLEAR, OUTPUT) \</div>
+<div class="line">    X(ADD_MC0_FAULTS, INPUT) \</div>
+<div class="line">    X(ADD_MC1_FAULTS, INPUT)</div>
 </div><!-- fragment -->
 <p>Defines the Can bus addresses that will be used to receive and send data. </p>
 <p>Every definition is given a direction denoting whether it is incoming(INPUT) or outgoing(OUTPUT)</p>
@@ -147,7 +154,7 @@ Macros</h2></td></tr>
 <p>Only the last entry should NOT have a '\'</p>
 <dl class="section note"><dt>Note</dt><dd>Currently, address 0x0000 cannot be used </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_can_bus_addresses_8def_source.html#l00058">58</a> of file <a class="el" href="_can_bus_addresses_8def_source.html">CanBusAddresses.def</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_can_bus_addresses_8def_source.html#l00062">62</a> of file <a class="el" href="_can_bus_addresses_8def_source.html">CanBusAddresses.def</a>.</p>
 
 </div>
 </div>

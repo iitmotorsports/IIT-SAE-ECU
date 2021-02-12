@@ -96,27 +96,29 @@ $(document).ready(function(){initNavTree('_fault_config_8def_source.html',''); i
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_p_p_help_8h.html">PPhelp.h</a>&quot;</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="_fault_config_8def.html#ad16cea3900e240c28be81e1fae70174a">   31</a></span>&#160;<span class="preprocessor">#define HARD_PIN_FAULTS                    \</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">    X(0, ==, 1, _LogPrebuildString(&quot;BMS&quot;</span>)) \</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    X(2, &gt;, 45, _LogPrebuildString(&quot;RMS&quot;))</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="_fault_config_8def.html#a390419930292eef5516ad68b3b5e2af6">   47</a></span>&#160;<span class="preprocessor">#define SOFT_PIN_FAULTS                       \</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">    X(0, ==, 1, _LogPrebuildString(&quot;bumnga&quot;</span>)) \</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    X(2, &gt;, 45, _LogPrebuildString(&quot;whahg&quot;))</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="_fault_config_8def.html#a725d76d669362031fe65a6c678180998">   63</a></span>&#160;<span class="preprocessor">#define HARD_FAULT_ADD                \</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">    X(0x0, 0x4000020120100080, &quot;BMS&quot;</span>) \</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    X(0x0, 0x0000000000000000, &quot;RMS&quot;)</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno"><a class="line" href="_fault_config_8def.html#a64da401593bb14ccb3e214d872874078">   79</a></span>&#160;<span class="preprocessor">#define SOFT_FAULT_ADD                \</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">    X(0x0, 0x0000000000000000, &quot;nil&quot;</span>) \</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    X(0x0, 0x0000000000000000, &quot;nil&quot;)</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
-<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="_fault_config_8def.html#a65134624a3ade585cbb1be89af77e5b3">   97</a></span>&#160;<span class="preprocessor">#define ID_FAULT                                                                                          \</span></div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="preprocessor">    X(0x0, 0b0000000000000000000000000000000000000000000000000000000000000000, _LogPrebuildString(&quot;nil&quot;</span>)) \</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    X(0x0, 0b0000000000000000000000000000000000000000000000000000000000000000, _LogPrebuildString(&quot;nil&quot;))</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __ECU_FAULTCONFIG_DEF__</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">// TODO: add pins from excel document</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="_fault_config_8def.html#ad16cea3900e240c28be81e1fae70174a">   33</a></span>&#160;<span class="preprocessor">#define HARD_PIN_FAULTS                    \</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">    X(0, ==, 1, _LogPrebuildString(&quot;BMS&quot;</span>)) \</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    X(2, &gt;, 45, _LogPrebuildString(&quot;RMS&quot;))</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="_fault_config_8def.html#a390419930292eef5516ad68b3b5e2af6">   49</a></span>&#160;<span class="preprocessor">#define SOFT_PIN_FAULTS                       \</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">    X(0, ==, 1, _LogPrebuildString(&quot;bumnga&quot;</span>)) \</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    X(2, &gt;, 45, _LogPrebuildString(&quot;whahg&quot;))</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="_fault_config_8def.html#a725d76d669362031fe65a6c678180998">   65</a></span>&#160;<span class="preprocessor">#define HARD_FAULT_ADD                \</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">    X(0x0, 0x4000020120100080, &quot;BMS&quot;</span>) \</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    X(0x0, 0x0000000000000000, &quot;RMS&quot;)</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="_fault_config_8def.html#a64da401593bb14ccb3e214d872874078">   81</a></span>&#160;<span class="preprocessor">#define SOFT_FAULT_ADD                \</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor">    X(0x0, 0x0000000000000000, &quot;nil&quot;</span>) \</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    X(0x0, 0x0000000000000000, &quot;nil&quot;)</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="_fault_config_8def.html#a65134624a3ade585cbb1be89af77e5b3">   99</a></span>&#160;<span class="preprocessor">#define ID_FAULT                                                                                          \</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor">    X(0x0, 0b0000000000000000000000000000000000000000000000000000000000000000, _LogPrebuildString(&quot;nil&quot;</span>)) \</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    X(0x0, 0b0000000000000000000000000000000000000000000000000000000000000000, _LogPrebuildString(&quot;nil&quot;))</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __ECU_FAULTCONFIG_DEF__</span></div>
 <div class="ttc" id="a_p_p_help_8h_html"><div class="ttname"><a href="_p_p_help_8h.html">PPHelp.h</a></div><div class="ttdoc">Compilation of various helpful preprocessor macros.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
