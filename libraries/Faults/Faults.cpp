@@ -19,7 +19,7 @@
 
 namespace Fault {
 
-static LOG_TAG ID = "Canbus";
+static LOG_TAG ID = "Fault Check";
 
 #define X(...) ,
 static const int HARD_CAN_COUNT = PP_NARG_MO(HARD_FAULT_ADD);
@@ -89,31 +89,37 @@ void logFault(void) {
 // NOTE: If we want to ensure we check all faults, even after tripping one, we need 2 more arrays
 // TODO: Do any canPins need to be checked for faults? Only physical pins can be checked
 bool hardFault(void) {
-    Log.d(ID, "Checking for Hard Fault");
+    // Log.d(ID, "Checking for Hard Fault");
     for (size_t i = 0; i < HARD_CAN_COUNT; i++) {
         Canbus::setSemaphore(hard_addresses[i]);
         if (*hard_buffers[i] & hard_masks[i]) {
             faulted_address = hard_addresses[i];
             memcpy(&faulted_buffer, hard_buffers, 8); // 8 byte buffer
             Canbus::clearSemaphore();
+#ifdef CONF_ECU_DEBUG
+            Log.e(ID, "HardFault address:", faulted_address);
+#endif
             return true;
         }
     }
+    faulted_address = 0;
     Canbus::clearSemaphore();
 
-#define X(pin, comp, value, id) ((faulted_pin = Pins::getPinValue(pin)) comp value) ||
+#define X(pin, comp, value, id) (((faulted_pin = pin) && Pins::getPinValue(pin)) comp value) ||
     if (HARD_PIN_FAULTS 0) {
+#ifdef CONF_ECU_DEBUG
+        Log.e(ID, "HardFault pin:", faulted_pin);
+#endif
         return true;
     }
 #undef X
     faulted_pin = 255;
-
-    Log.d(ID, "No hard fault tripped");
+    // Log.d(ID, "No hard fault tripped");
     return false;
 }
 
 bool softFault(void) {
-    Log.d(ID, "Checking for Soft Fault");
+    // Log.d(ID, "Checking for Soft Fault");
     for (size_t i = 0; i < SOFT_CAN_COUNT; i++) {
         Canbus::setSemaphore(soft_addresses[i]);
         if (*soft_buffers[i] & soft_masks[i]) {
@@ -125,14 +131,17 @@ bool softFault(void) {
     }
     Canbus::clearSemaphore();
 
-#define X(pin, comp, value, id) ((faulted_pin = Pins::getPinValue(pin)) comp value) ||
+#define X(pin, comp, value, id) (((faulted_pin = pin) && Pins::getPinValue(pin)) comp value) ||
     if (SOFT_PIN_FAULTS 0) {
+#ifdef CONF_ECU_DEBUG
+        Log.e(ID, "SoftFault pin:", faulted_pin);
+#endif
         return true;
     }
 #undef X
     faulted_pin = 255;
 
-    Log.d(ID, "No soft fault tripped");
+    // Log.d(ID, "No soft fault tripped");
     return false;
 }
 
