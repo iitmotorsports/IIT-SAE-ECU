@@ -70,23 +70,6 @@ static uint8_t log_buf[8] = {0};
 
 /**
  * |0    |1   |2   |3   |4   |5   |6   |7   |
- * |State Code|String ID|      Not Sent     |
- */
-static void __logger_print(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE) {
-    memcpy(log_buf, &TAG, 2);
-    memcpy(log_buf + 2, &MESSAGE, 2);
-#if CONF_ECU_POSITION == BACK_ECU
-#ifdef CONF_ECU_DEBUG
-    Serial.write(log_buf, 8);
-#endif
-    Canbus::sendData(ADD_AUX_LOGGING, log_buf);
-#else
-    Serial.write(log_buf, 8);
-#endif
-}
-
-/**
- * |0    |1   |2   |3   |4   |5   |6   |7   |
  * |State Code|String ID|      uint32_t     |
  */
 static void __logger_print_num(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const uint32_t NUMBER) {
@@ -101,6 +84,14 @@ static void __logger_print_num(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const u
 #else
     Serial.write(log_buf, 8);
 #endif
+}
+
+/**
+ * |0    |1   |2   |3   |4   |5   |6   |7   |
+ * |State Code|String ID|         0         |
+ */
+static void __logger_print(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE) {
+    __logger_print_num(TYPE, TAG, MESSAGE, 0);
 }
 
 #else
