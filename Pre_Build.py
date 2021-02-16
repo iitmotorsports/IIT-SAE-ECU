@@ -54,6 +54,8 @@ Note, however, if this script is not run the macro should still allow everything
 
 # @cond
 
+#TODO: Keep same lookup table when compiling both back and front teensy
+
 import fileinput
 import shutil
 import hashlib
