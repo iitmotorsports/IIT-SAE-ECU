@@ -40,21 +40,28 @@ static CAN_message_t send;
 
 static void _setMailboxes() {
     F_Can.setMaxMB(16); // set number of possible TX & RX MBs // NOTE: Teensy 3.6 only has max 16 MBs
-    for (int i = 0; i < CONF_FLEXCAN_TX_MAILBOXES; i++) {
-        F_Can.setMB((FLEXCAN_MAILBOX)i, TX, EXT);
-    }
+    Log.d(ID, "Setting MB RX");
     for (int i = CONF_FLEXCAN_TX_MAILBOXES; i < 16; i++) {
-        F_Can.setMB((FLEXCAN_MAILBOX)i, RX, EXT);
+        F_Can.setMB((FLEXCAN_MAILBOX)i, RX, NONE);
+    }
+    Log.d(ID, "Setting MB TX");
+    for (int i = 0; i < CONF_FLEXCAN_TX_MAILBOXES; i++) {
+        F_Can.setMB((FLEXCAN_MAILBOX)i, TX, NONE);
     }
 
+    Log.d(ID, "Allocating addresses");
     int c = 0;
 // Auto setup TX & RX MBs
-#define X(address, direction)   \
-    addressList[c] = address;   \
-    addressFlow[c] = direction; \
+#define X(address, direction)            \
+    addressList[c] = address;            \
+    addressFlow[c] = direction;          \
+    Log.i(ID, "New address:", address);  \
+    Log.i(ID, "Address IO:", direction); \
     c++;
     CAN_ADDRESS
 #undef X
+
+    Log.d(ID, "Sorting addresses");
     for (size_t i = 0; i < ADDRESS_COUNT; i++) { // Selection sort values
         uint32_t add = addressList[i];
         bool add_f = addressFlow[i];
@@ -69,6 +76,7 @@ static void _setMailboxes() {
         addressFlow[i] = addressFlow[min]; // Swap direction indicators
         addressFlow[min] = add_f;
     }
+    Log.d(ID, "Done sorting");
 }
 
 // IMPROVE: We have to binary search all mailboxes each time we want to get data
@@ -114,11 +122,12 @@ void enableInterrupts(bool enable) {
 }
 
 void setup(void) {
+    Log.d(ID, "Starting");
+    F_Can.begin(); // NOTE: canbus must first be started before it can be configured
     _setMailboxes();
     F_Can.setBaudRate(CONF_FLEXCAN_BAUD_RATE);
     F_Can.onReceive(_receiveCan);
     F_Can.enableMBInterrupts();
-    F_Can.begin();
     // updateTimer.begin(update, 1); // Choose an appropriate update time if a timer is used
 }
 
