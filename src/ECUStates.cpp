@@ -11,8 +11,6 @@ static bool FaultCheck() { // NOTE: Will only return true if hardfault occurs
     return false;
 }
 
-#pragma region Initialize State
-
 State::State_t *ECUStates::Initialize::run(void) {
     Log.i(ID, "Teensy 3.6 SAE BACK ECU Initalizing");
     Canbus::setup();    // allocate and organize addresses
@@ -32,8 +30,6 @@ State::State_t *ECUStates::Initialize::run(void) {
     return &ECUStates::PreCharge_State;
 };
 
-#pragma endregion
-#pragma region Precharge State
 State::State_t *ECUStates::PreCharge_State::PreCharFault(void) {
     Log.w(ID, "Opening Air1, Air2 and Precharge Relay");
     Pins::setPinValue(PINS_BACK_AIR1, LOW);
@@ -97,9 +93,6 @@ State::State_t *ECUStates::PreCharge_State::run(void) { // NOTE: Low = Closed, H
     return PreCharFault();
 };
 
-#pragma endregion
-#pragma region Idle State
-
 State::State_t *ECUStates::Idle_State::run(void) {
     Log.i(ID, "Waiting for Button or Charging Press");
     Pins::setInternalValue(PINS_INTERNAL_IDLE_STATE, HIGH);
@@ -121,9 +114,6 @@ State::State_t *ECUStates::Idle_State::run(void) {
     Pins::setInternalValue(PINS_INTERNAL_IDLE_STATE, LOW);
     return &ECUStates::FaultState;
 }
-
-#pragma endregion
-#pragma region Charging State
 
 State::State_t *ECUStates::Charging_State::run(void) {
     Pins::setPinValue(PINS_BACK_CHARGING_RELAY, HIGH);
@@ -150,9 +140,6 @@ State::State_t *ECUStates::Charging_State::run(void) {
     return &ECUStates::Idle_State;
 }
 
-#pragma endregion
-#pragma region Button State
-
 State::State_t *ECUStates::Button_State::run(void) {
     Log.i(ID, "Playing sound");
 
@@ -174,9 +161,6 @@ State::State_t *ECUStates::Button_State::run(void) {
 
     return &ECUStates::Driving_Mode_State;
 }
-
-#pragma endregion
-#pragma region Driving State
 
 void ECUStates::Driving_Mode_State::sendMCCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit) {
     int percentTorque = constrain(map(torque, 0, 1024, 0, 400), 0, 400); // separate func for negative vals (regen)
@@ -253,9 +237,6 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
     return &ECUStates::Idle_State;
 }
 
-#pragma endregion
-#pragma region AUX States
-
 State::State_t *ECUStates::FaultState::run(void) {
     Canbus::enableInterrupts(false);
 
@@ -300,5 +281,3 @@ State::State_t *ECUStates::Bounce_t::run(void) {
     delay(250);
     return State::getLastState();
 }
-
-#pragma endregion
