@@ -43,7 +43,8 @@
         "cinttypes": "cpp",
         "utility": "cpp",
         "map": "cpp",
-        "*.obj": "cpp"
+        "*.obj": "cpp",
+        "string": "cpp"
     },
     "doxygen_runner.configuration_file_override": "${workspaceFolder}\\docs\\Doxyfile"
 }

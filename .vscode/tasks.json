@@ -136,6 +136,33 @@
             "problemMatcher": []
         },
         {
+            "label": "Monitor Raw",
+            "type": "shell",
+            "detail": "Monitor teensy hex values over a CLI",
+            "presentation": {
+                "panel": "shared",
+                "showReuseMessage": false
+            },
+            "command": "cmd.exe",
+            "args": [
+                "/d",
+                "/c",
+                "${workspaceFolder}\\${config:TOOLCHAIN_OFFSET}\\tools\\ComMonitor.exe",
+                "${input:TEENSY_USB_PORTNAME}",
+                "${input:TEENSY_BAUDRATE}",
+                "-tH",
+                "-m8",
+                "-r",
+                "-w",
+            ],
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "Shebang",
             "type": "shell",
             "detail": "Run all tasks required to program teensy",
