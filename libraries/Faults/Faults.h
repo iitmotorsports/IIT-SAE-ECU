@@ -9,6 +9,9 @@
  * 
  */
 
+#include <stdint.h>
+#include <stdlib.h>
+
 /**
  * @brief Fault checking functionality.
  * Refer to Faults.h
