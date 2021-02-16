@@ -29,7 +29,7 @@
 /**
  * @brief The interval in micros to update outgoing canPins
  */
-#define CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO 20 // TODO: Pick an appropriate interval
+#define CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO 100 // TODO: Pick an appropriate interval
 
 // @cond
 
@@ -39,9 +39,10 @@
  * @note Whether the pin is analog or digital depends on which message type it is sent/received on, meaning it is either a digital or analog value.
  */
 #define PINS_INTERNAL_CHARGE_SIGNAL 100
-#define PINS_INTERNAL_START 101
-#define PINS_INTERNAL_BMS_FAULT 102
-#define PINS_INTERNAL_IMD_FAULT 103
+#define PINS_INTERNAL_IDLE_STATE 101
+#define PINS_INTERNAL_START 102
+#define PINS_INTERNAL_BMS_FAULT 103
+#define PINS_INTERNAL_IMD_FAULT 104
 
 // Both ECUs
 #define PINS_BOTH_LED 13
@@ -163,7 +164,8 @@
 #define PINS_CANBUS_DIGITAL_OUT                     \
     X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_START)     \
     X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_BMS_FAULT) \
-    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_IMD_FAULT)
+    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_IMD_FAULT) \
+    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_IDLE_STATE)
 
 #else
 #define ECU_PINS                                    \
@@ -191,10 +193,11 @@
 #define PINS_CANBUS_DIGITAL_IN                      \
     X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_START)     \
     X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_BMS_FAULT) \
-    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_IMD_FAULT)
+    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_IMD_FAULT) \
+    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_IDLE_STATE)
 
 #define PINS_CANBUS_DIGITAL_OUT \
-    X(ADD_CANPIN_DIGITAL1, PINS_INTERNAL_CHARGE_SIGNAL)
+    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_CHARGE_SIGNAL)
 
 #endif
 
