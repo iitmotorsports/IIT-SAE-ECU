@@ -14,6 +14,7 @@
 #include "Canbus.h"
 #include "CanBusAddresses.def"
 #include "CanbusConfig.def"
+#include "ECUGlobalConfig.h"
 #include "Log.h"
 
 namespace Canbus {
@@ -38,6 +39,33 @@ static uint32_t addressSemaphore = 0; // Address buffer semaphore, // NOTE: addr
 static CAN_message_t receive;
 static CAN_message_t send;
 
+static bool started = false; // used to prevent sending messages when canbus has not been started
+
+static void _swap(uint32_t &a, uint32_t &b) {
+    uint32_t temp = a;
+    a = b;
+    b = temp;
+}
+
+static void _swap(bool &a, bool &b) {
+    bool temp = a;
+    a = b;
+    b = temp;
+}
+
+static void _selectionSort(uint32_t *array, bool *aux_array, int size) {
+    int i, j, imin;
+    for (i = 0; i < size - 1; i++) {
+        imin = i;
+        for (j = i + 1; j < size; j++) {
+            if (array[j] < array[imin])
+                imin = j;
+        }
+        _swap(array[i], array[imin]);
+        _swap(aux_array[i], aux_array[imin]);
+    }
+}
+
 static void _setMailboxes() {
     F_Can.setMaxMB(16); // set number of possible TX & RX MBs // NOTE: Teensy 3.6 only has max 16 MBs
     Log.d(ID, "Setting MB RX");
@@ -61,22 +89,15 @@ static void _setMailboxes() {
     CAN_ADDRESS
 #undef X
 
-    Log.d(ID, "Sorting addresses");
-    for (size_t i = 0; i < ADDRESS_COUNT; i++) { // Selection sort values
-        uint32_t add = addressList[i];
-        bool add_f = addressFlow[i];
-        int min = i;
-        for (size_t j = i; j < ADDRESS_COUNT; j++) {
-            if (addressList[j] < add) {
-                min = j;
-            }
-        }
-        addressList[i] = addressList[min]; // Swap addresses
-        addressList[min] = add;
-        addressFlow[i] = addressFlow[min]; // Swap direction indicators
-        addressFlow[min] = add_f;
-    }
+    Log.d(ID, "Sorting addresses", ADDRESS_COUNT);
+    _selectionSort(addressList, addressFlow, ADDRESS_COUNT);
     Log.d(ID, "Done sorting");
+#ifdef CONF_ECU_DEBUG
+    for (size_t i = 0; i < ADDRESS_COUNT; i++) {
+        Log.d(ID, "Sorted address:", addressList[i]);
+        Log.d(ID, "Address IO:", addressFlow[i]);
+    }
+#endif
 }
 
 // IMPROVE: We have to binary search all mailboxes each time we want to get data
@@ -127,7 +148,12 @@ void setup(void) {
     _setMailboxes();
     F_Can.setBaudRate(CONF_FLEXCAN_BAUD_RATE);
     F_Can.onReceive(_receiveCan);
+    delay(100); // Just in case canbus needs to do stuff
     F_Can.enableMBInterrupts();
+#ifdef CONF_ECU_DEBUG
+    F_Can.mailboxStatus(); // Only shows actual data in ASCII mode
+#endif
+    started = true;
     // updateTimer.begin(update, 1); // Choose an appropriate update time if a timer is used
 }
 
@@ -163,7 +189,7 @@ void clearSemaphore() {
 }
 
 static void _pushSendMsg() {
-#ifdef CONF_ECU_DEBUG
+#if defined(CONF_ECU_DEBUG) && CONF_ECU_POSITION == FRONT_ECU // Back ECU will be on a loop if we also print debug strings
     if (F_Can.write(send) == 1) {
         Log.d(ID, "Message Sent", send.id);
     } else {
@@ -181,9 +207,11 @@ void pushData(const uint32_t address) {
 }
 
 void sendData(const uint32_t address, uint8_t buf[8]) {
-    send.id = address;
-    memcpy(send.buf, buf, 8); // 8 Bytes
-    _pushSendMsg();
+    if (started) { // Only do stuff if we have actually enabled canbus
+        send.id = address;
+        memcpy(send.buf, buf, 8); // 8 Bytes
+        _pushSendMsg();
+    }
 }
 
 void sendData(const uint32_t address, const uint8_t buf_0, const uint8_t buf_1, const uint8_t buf_2, const uint8_t buf_3, const uint8_t buf_4, const uint8_t buf_5, const uint8_t buf_6, const uint8_t buf_7) {
