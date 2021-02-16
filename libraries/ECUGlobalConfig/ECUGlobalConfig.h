@@ -1,7 +1,7 @@
 #ifndef __ECU_GLOBALCONFIG_H__
 #define __ECU_GLOBALCONFIG_H__
 
-#define CONF_ECU_DEBUG // Define to include extra logging and checks to be run throughout libaries
+#define CONF_ECU_DEBUG // Define to enable normal logging on back teensy and checks to be run throughout libaries
 
 #define FRONT_ECU 1
 #define BACK_ECU 0
