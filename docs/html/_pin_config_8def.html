@@ -99,7 +99,7 @@ $(document).ready(function(){initNavTree('_pin_config_8def.html',''); initResiza
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a30388a88a1fdecdb193647dc80a97084"><td class="memItemLeft" align="right" valign="top"><a id="a30388a88a1fdecdb193647dc80a97084"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_pin_config_8def.html#a30388a88a1fdecdb193647dc80a97084">CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO</a>&#160;&#160;&#160;20</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_pin_config_8def.html#a30388a88a1fdecdb193647dc80a97084">CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO</a>&#160;&#160;&#160;100</td></tr>
 <tr class="memdesc:a30388a88a1fdecdb193647dc80a97084"><td class="mdescLeft">&#160;</td><td class="mdescRight">The interval in micros to update outgoing canPins. <br /></td></tr>
 <tr class="separator:a30388a88a1fdecdb193647dc80a97084"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7603185bc328f16ab177087d225c6848"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_pin_config_8def.html#a7603185bc328f16ab177087d225c6848">ECU_PINS</a></td></tr>
@@ -161,7 +161,6 @@ Macros</h2></td></tr>
 <div class="line">    X(PINS_BACK_PUMP_DAC, ANALOG, OUTPUT, 0)</div>
 </div><!-- fragment -->
 <p>The defintions of every physical pin. </p>
-<p>/**</p>
 <p>The pinout setup for the ECU, set the specific pin, whether it is analog or digital, and whether we are taking input or giving an output on the pin</p>
 <p>Unless it is the last entry, this is how to add a new pin</p>
 <p>X(GPIO, ANALOG/DIGITAL, INPUT/OUTPUT, INITAL_STATE) \</p>
@@ -221,7 +220,7 @@ Currently, only one address is supported, support for up to 64 pins can be added
 <p>X(Address, Pin) \</p>
 <p>Only the last entry should NOT have a '\' </p>
 
-<p class="definition">Definition at line <a class="el" href="_pin_config_8def_source.html#l00157">157</a> of file <a class="el" href="_pin_config_8def_source.html">PinConfig.def</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_pin_config_8def_source.html#l00156">156</a> of file <a class="el" href="_pin_config_8def_source.html">PinConfig.def</a>.</p>
 
 </div>
 </div>
@@ -238,11 +237,12 @@ Currently, only one address is supported, support for up to 64 pins can be added
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_START)     \</div>
 <div class="line">    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_BMS_FAULT) \</div>
-<div class="line">    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_IMD_FAULT)</div>
+<div class="line">    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_IMD_FAULT) \</div>
+<div class="line">    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_IDLE_STATE)</div>
 </div><!-- fragment -->
 <p>Same as PINS_CANBUS_DIGITAL_IN only for the digital pins that are outgoing. </p>
 
-<p class="definition">Definition at line <a class="el" href="_pin_config_8def_source.html#l00163">163</a> of file <a class="el" href="_pin_config_8def_source.html">PinConfig.def</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_pin_config_8def_source.html#l00162">162</a> of file <a class="el" href="_pin_config_8def_source.html">PinConfig.def</a>.</p>
 
 </div>
 </div>

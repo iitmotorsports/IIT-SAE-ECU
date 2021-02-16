@@ -22,6 +22,9 @@ var namespaces_dup =
       [ "setup", "namespace_fault.html#a5d866df0efc11ff65ac5c22bf8f6569a", null ],
       [ "softFault", "namespace_fault.html#a4ffa144bc1e88734c7d7e95bb008aa67", null ]
     ] ],
+    [ "Front", "namespace_front.html", [
+      [ "run", "namespace_front.html#a2deb9201e361171c69d361ce69047a15", null ]
+    ] ],
     [ "Logging", "namespace_logging.html", "namespace_logging" ],
     [ "Pins", "namespace_pins.html", [
       [ "PinHandler", "namespace_pins.html#a3e6834ba621655f97e8313f86a97c33b", null ],

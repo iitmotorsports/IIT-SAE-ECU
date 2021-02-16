@@ -120,166 +120,175 @@ $(document).ready(function(){initNavTree('_canbus_8cpp_source.html',''); initRes
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> _setMailboxes() {</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    F_Can.setMaxMB(16); <span class="comment">// set number of possible TX &amp; RX MBs // NOTE: Teensy 3.6 only has max 16 MBs</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="_canbus_config_8def.html#acfa9a5267724c47e76b7738da96e5367">CONF_FLEXCAN_TX_MAILBOXES</a>; i++) {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        F_Can.setMB((FLEXCAN_MAILBOX)i, TX, EXT);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    }</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = <a class="code" href="_canbus_config_8def.html#acfa9a5267724c47e76b7738da96e5367">CONF_FLEXCAN_TX_MAILBOXES</a>; i &lt; 16; i++) {</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        F_Can.setMB((FLEXCAN_MAILBOX)i, RX, EXT);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    }</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">int</span> c = 0;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="comment">// Auto setup TX &amp; RX MBs</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#define X(address, direction)   \</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">    addressList[c] = address;   \</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">    addressFlow[c] = direction; \</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">    c++;</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <a class="code" href="_can_bus_addresses_8def.html#aa7a98234bac49a35b8868f32f0c98ce4">CAN_ADDRESS</a></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#undef X</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; ADDRESS_COUNT; i++) { <span class="comment">// Selection sort values</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        uint32_t add = addressList[i];</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keywordtype">bool</span> add_f = addressFlow[i];</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordtype">int</span> min = i;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> j = i; j &lt; ADDRESS_COUNT; j++) {</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            <span class="keywordflow">if</span> (addressList[j] &lt; add) {</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                min = j;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            }</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        }</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        addressList[i] = addressList[min]; <span class="comment">// Swap addresses</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        addressList[min] = add;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        addressFlow[i] = addressFlow[min]; <span class="comment">// Swap direction indicators</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        addressFlow[min] = add_f;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    }</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="comment">// IMPROVE: We have to binary search all mailboxes each time we want to get data</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keyword">static</span> uint _getAddressPos(<span class="keyword">const</span> uint32_t address) {</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordtype">int</span> s = 0;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordtype">int</span> e = ADDRESS_COUNT;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordflow">while</span> (s &lt;= e) {</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="keywordtype">int</span> mid = (s + e) / 2;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <span class="keywordflow">if</span> (addressList[mid] == address) {</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            <span class="keywordflow">return</span> mid;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (addressList[mid] &gt; address) {</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            e = mid - 1;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            s = mid + 1;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        }</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    }</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordflow">return</span> ADDRESS_COUNT; <span class="comment">// Out of range index</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> _receiveCan(<span class="keyword">const</span> CAN_message_t &amp;msg) {</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordflow">if</span> (addressSemaphore == msg.id) <span class="comment">// Throw data away, we are already processing previous msg</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    uint pos = _getAddressPos(msg.id);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    memcpy(addressBuffers[pos], msg.buf, 8);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keywordflow">if</span> (callbacks[pos])</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        callbacks[pos](msg.id, addressBuffers[pos]);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;}</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#a884781debf9732f3e4676830d294e6bc">addCallback</a>(<span class="keyword">const</span> uint32_t address, <a class="code" href="namespace_canbus.html#a96968bb5813d30685ce26670a362cc79">canCallback</a> callback) {</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    callbacks[_getAddressPos(address)] = callback;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;}</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#ae66521cf8ac5e63c2e89d6b2f009b38a">enableInterrupts</a>(<span class="keywordtype">bool</span> enable) {</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    F_Can.enableMBInterrupts(enable);</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="preprocessor">#ifdef CONF_ECU_DEBUG</span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keywordflow">if</span> (enable) {</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Interrupts enabled&quot;</span>);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Interrupts disabled&quot;</span>);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    }</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;}</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#ac87cf65470012914f1ae29c0eb987b87">setup</a>(<span class="keywordtype">void</span>) {</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    _setMailboxes();</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    F_Can.setBaudRate(<a class="code" href="_canbus_config_8def.html#af0c679cd1f59bfbdceac0c8e18b17f5b">CONF_FLEXCAN_BAUD_RATE</a>);</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    F_Can.onReceive(_receiveCan);</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    F_Can.enableMBInterrupts();</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    F_Can.begin();</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <span class="comment">// updateTimer.begin(update, 1); // Choose an appropriate update time if a timer is used</span></div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;}</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#a386cdddf9229348b8108640075b5c3e4">update</a>(<span class="keywordtype">void</span>) { <span class="comment">// TODO: Test if canbus interrupts actually work as intended</span></div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    F_Can.events(); <span class="comment">// Should we update using a timer or just through state loops?</span></div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;}</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160; </div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#aed796b6196e7d80b59dd205de7a8edfd">getData</a>(<span class="keyword">const</span> uint32_t address, uint8_t buf[8]) {</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    <span class="keywordtype">int</span> pos = _getAddressPos(address);</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keywordflow">if</span> (pos != ADDRESS_COUNT &amp;&amp; !addressFlow[pos]) { <span class="comment">// 0 == incoming</span></div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">setSemaphore</a>(address);                       <span class="comment">// Semaphore needed to ensure interrupt does not replace data mid transfer</span></div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        memcpy(buf, addressBuffers[pos], 8);         <span class="comment">// 8 Bytes // IMPROVE: can we just give the array instead of copying?</span></div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        <a class="code" href="namespace_canbus.html#a441c8b2dbc00d94dd9a6b8d252f09f20">clearSemaphore</a>();</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    }</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">e</a>(ID, <span class="stringliteral">&quot;Given address is not incoming or is invalid:&quot;</span>, address);</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;}</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160; </div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;uint8_t *<a class="code" href="namespace_canbus.html#a822044e240364d0df5ebaee32e7dbdd6">getBuffer</a>(<span class="keyword">const</span> uint32_t address) {</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    uint pos = _getAddressPos(address);</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    <span class="keywordflow">if</span> (pos == ADDRESS_COUNT) {</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">e</a>(ID, <span class="stringliteral">&quot;Address has not been allocated: &quot;</span>, address);</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    }</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <span class="keywordflow">return</span> addressBuffers[pos];</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;}</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; </div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">setSemaphore</a>(<span class="keyword">const</span> uint32_t address) {</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    addressSemaphore = address;</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;}</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160; </div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#a441c8b2dbc00d94dd9a6b8d252f09f20">clearSemaphore</a>() {</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    addressSemaphore = 0;</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;}</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160; </div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> _pushSendMsg() {</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="preprocessor">#ifdef CONF_ECU_DEBUG</span></div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    <span class="keywordflow">if</span> (F_Can.write(send) == 1) {</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Message Sent&quot;</span>, send.id);</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Message Queued&quot;</span>, send.id);</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    }</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    F_Can.write(send);</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;}</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160; </div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#a2c59e4ee5bcc1d66fee1c1d91af4731b">pushData</a>(<span class="keyword">const</span> uint32_t address) {</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    send.id = address;</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    memcpy(send.buf, addressBuffers[_getAddressPos(address)], 8); <span class="comment">// 8 Bytes</span></div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    _pushSendMsg();</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;}</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160; </div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">sendData</a>(<span class="keyword">const</span> uint32_t address, uint8_t buf[8]) {</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    send.id = address;</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    memcpy(send.buf, buf, 8); <span class="comment">// 8 Bytes</span></div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    _pushSendMsg();</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;}</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160; </div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">sendData</a>(<span class="keyword">const</span> uint32_t address, <span class="keyword">const</span> uint8_t buf_0, <span class="keyword">const</span> uint8_t buf_1, <span class="keyword">const</span> uint8_t buf_2, <span class="keyword">const</span> uint8_t buf_3, <span class="keyword">const</span> uint8_t buf_4, <span class="keyword">const</span> uint8_t buf_5, <span class="keyword">const</span> uint8_t buf_6, <span class="keyword">const</span> uint8_t buf_7) {</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    send.id = address;</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    send.buf[0] = buf_0;</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    send.buf[1] = buf_1;</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    send.buf[2] = buf_2;</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    send.buf[3] = buf_3;</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    send.buf[4] = buf_4;</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    send.buf[5] = buf_5;</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    send.buf[6] = buf_6;</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    send.buf[7] = buf_7;</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    _pushSendMsg();</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;}</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160; </div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;} <span class="comment">// namespace Canbus</span></div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160; </div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;<span class="comment">// @endcond</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Setting MB RX&quot;</span>);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = <a class="code" href="_canbus_config_8def.html#acfa9a5267724c47e76b7738da96e5367">CONF_FLEXCAN_TX_MAILBOXES</a>; i &lt; 16; i++) {</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        F_Can.setMB((FLEXCAN_MAILBOX)i, RX, NONE);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    }</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Setting MB TX&quot;</span>);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="_canbus_config_8def.html#acfa9a5267724c47e76b7738da96e5367">CONF_FLEXCAN_TX_MAILBOXES</a>; i++) {</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        F_Can.setMB((FLEXCAN_MAILBOX)i, TX, NONE);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    }</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Allocating addresses&quot;</span>);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordtype">int</span> c = 0;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment">// Auto setup TX &amp; RX MBs</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#define X(address, direction)            \</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">    addressList[c] = address;            \</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">    addressFlow[c] = direction;          \</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">    Log.i(ID, &quot;New address:&quot;</span>, address);  \</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    Log.i(ID, &quot;Address IO:&quot;, direction); \</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    c++;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <a class="code" href="_can_bus_addresses_8def.html#aa7a98234bac49a35b8868f32f0c98ce4">CAN_ADDRESS</a></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#undef X</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Sorting addresses&quot;</span>);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; ADDRESS_COUNT; i++) { <span class="comment">// Selection sort values</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        uint32_t add = addressList[i];</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordtype">bool</span> add_f = addressFlow[i];</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keywordtype">int</span> min = i;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> j = i; j &lt; ADDRESS_COUNT; j++) {</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <span class="keywordflow">if</span> (addressList[j] &lt; add) {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                min = j;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        }</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        addressList[i] = addressList[min]; <span class="comment">// Swap addresses</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        addressList[min] = add;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        addressFlow[i] = addressFlow[min]; <span class="comment">// Swap direction indicators</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        addressFlow[min] = add_f;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    }</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Done sorting&quot;</span>);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment">// IMPROVE: We have to binary search all mailboxes each time we want to get data</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="keyword">static</span> uint _getAddressPos(<span class="keyword">const</span> uint32_t address) {</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordtype">int</span> s = 0;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordtype">int</span> e = ADDRESS_COUNT;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordflow">while</span> (s &lt;= e) {</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordtype">int</span> mid = (s + e) / 2;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <span class="keywordflow">if</span> (addressList[mid] == address) {</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            <span class="keywordflow">return</span> mid;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (addressList[mid] &gt; address) {</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            e = mid - 1;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            s = mid + 1;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        }</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    }</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keywordflow">return</span> ADDRESS_COUNT; <span class="comment">// Out of range index</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;}</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> _receiveCan(<span class="keyword">const</span> CAN_message_t &amp;msg) {</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordflow">if</span> (addressSemaphore == msg.id) <span class="comment">// Throw data away, we are already processing previous msg</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    uint pos = _getAddressPos(msg.id);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    memcpy(addressBuffers[pos], msg.buf, 8);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keywordflow">if</span> (callbacks[pos])</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        callbacks[pos](msg.id, addressBuffers[pos]);</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;}</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#a884781debf9732f3e4676830d294e6bc">addCallback</a>(<span class="keyword">const</span> uint32_t address, <a class="code" href="namespace_canbus.html#a96968bb5813d30685ce26670a362cc79">canCallback</a> callback) {</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    callbacks[_getAddressPos(address)] = callback;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;}</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#ae66521cf8ac5e63c2e89d6b2f009b38a">enableInterrupts</a>(<span class="keywordtype">bool</span> enable) {</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    F_Can.enableMBInterrupts(enable);</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="preprocessor">#ifdef CONF_ECU_DEBUG</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keywordflow">if</span> (enable) {</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Interrupts enabled&quot;</span>);</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Interrupts disabled&quot;</span>);</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    }</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;}</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#ac87cf65470012914f1ae29c0eb987b87">setup</a>(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Starting&quot;</span>);</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    F_Can.begin(); <span class="comment">// NOTE: canbus must first be started before it can be configured</span></div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    _setMailboxes();</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    F_Can.setBaudRate(<a class="code" href="_canbus_config_8def.html#af0c679cd1f59bfbdceac0c8e18b17f5b">CONF_FLEXCAN_BAUD_RATE</a>);</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    F_Can.onReceive(_receiveCan);</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    F_Can.enableMBInterrupts();</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="comment">// updateTimer.begin(update, 1); // Choose an appropriate update time if a timer is used</span></div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;}</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160; </div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#a386cdddf9229348b8108640075b5c3e4">update</a>(<span class="keywordtype">void</span>) { <span class="comment">// TODO: Test if canbus interrupts actually work as intended</span></div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    F_Can.events(); <span class="comment">// Should we update using a timer or just through state loops?</span></div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;}</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#aed796b6196e7d80b59dd205de7a8edfd">getData</a>(<span class="keyword">const</span> uint32_t address, uint8_t buf[8]) {</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <span class="keywordtype">int</span> pos = _getAddressPos(address);</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    <span class="keywordflow">if</span> (pos != ADDRESS_COUNT &amp;&amp; !addressFlow[pos]) { <span class="comment">// 0 == incoming</span></div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">setSemaphore</a>(address);                       <span class="comment">// Semaphore needed to ensure interrupt does not replace data mid transfer</span></div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;        memcpy(buf, addressBuffers[pos], 8);         <span class="comment">// 8 Bytes // IMPROVE: can we just give the array instead of copying?</span></div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;        <a class="code" href="namespace_canbus.html#a441c8b2dbc00d94dd9a6b8d252f09f20">clearSemaphore</a>();</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    }</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">e</a>(ID, <span class="stringliteral">&quot;Given address is not incoming or is invalid:&quot;</span>, address);</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;}</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160; </div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;uint8_t *<a class="code" href="namespace_canbus.html#a822044e240364d0df5ebaee32e7dbdd6">getBuffer</a>(<span class="keyword">const</span> uint32_t address) {</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    uint pos = _getAddressPos(address);</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    <span class="keywordflow">if</span> (pos == ADDRESS_COUNT) {</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">e</a>(ID, <span class="stringliteral">&quot;Address has not been allocated: &quot;</span>, address);</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    }</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <span class="keywordflow">return</span> addressBuffers[pos];</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;}</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160; </div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">setSemaphore</a>(<span class="keyword">const</span> uint32_t address) {</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    addressSemaphore = address;</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;}</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160; </div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#a441c8b2dbc00d94dd9a6b8d252f09f20">clearSemaphore</a>() {</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    addressSemaphore = 0;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;}</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160; </div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> _pushSendMsg() {</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="preprocessor">#ifdef CONF_ECU_DEBUG</span></div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <span class="keywordflow">if</span> (F_Can.write(send) == 1) {</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Message Sent&quot;</span>, send.id);</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Message Queued&quot;</span>, send.id);</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    }</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    F_Can.write(send);</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;}</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160; </div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#a2c59e4ee5bcc1d66fee1c1d91af4731b">pushData</a>(<span class="keyword">const</span> uint32_t address) {</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    send.id = address;</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    memcpy(send.buf, addressBuffers[_getAddressPos(address)], 8); <span class="comment">// 8 Bytes</span></div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    _pushSendMsg();</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;}</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160; </div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">sendData</a>(<span class="keyword">const</span> uint32_t address, uint8_t buf[8]) {</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    send.id = address;</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    memcpy(send.buf, buf, 8); <span class="comment">// 8 Bytes</span></div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    _pushSendMsg();</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;}</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160; </div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">sendData</a>(<span class="keyword">const</span> uint32_t address, <span class="keyword">const</span> uint8_t buf_0, <span class="keyword">const</span> uint8_t buf_1, <span class="keyword">const</span> uint8_t buf_2, <span class="keyword">const</span> uint8_t buf_3, <span class="keyword">const</span> uint8_t buf_4, <span class="keyword">const</span> uint8_t buf_5, <span class="keyword">const</span> uint8_t buf_6, <span class="keyword">const</span> uint8_t buf_7) {</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    send.id = address;</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    send.buf[0] = buf_0;</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    send.buf[1] = buf_1;</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    send.buf[2] = buf_2;</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    send.buf[3] = buf_3;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    send.buf[4] = buf_4;</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    send.buf[5] = buf_5;</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    send.buf[6] = buf_6;</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    send.buf[7] = buf_7;</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    _pushSendMsg();</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;}</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160; </div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;} <span class="comment">// namespace Canbus</span></div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160; </div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;<span class="comment">// @endcond</span></div>
 <div class="ttc" id="a_can_bus_addresses_8def_html"><div class="ttname"><a href="_can_bus_addresses_8def.html">CanBusAddresses.def</a></div><div class="ttdoc">Define incoming CAN line addresses.</div></div>
-<div class="ttc" id="a_can_bus_addresses_8def_html_aa7a98234bac49a35b8868f32f0c98ce4"><div class="ttname"><a href="_can_bus_addresses_8def.html#aa7a98234bac49a35b8868f32f0c98ce4">CAN_ADDRESS</a></div><div class="ttdeci">#define CAN_ADDRESS</div><div class="ttdoc">Defines the Can bus addresses that will be used to receive and send data.</div><div class="ttdef"><b>Definition:</b> <a href="_can_bus_addresses_8def_source.html#l00062">CanBusAddresses.def:62</a></div></div>
+<div class="ttc" id="a_can_bus_addresses_8def_html_aa7a98234bac49a35b8868f32f0c98ce4"><div class="ttname"><a href="_can_bus_addresses_8def.html#aa7a98234bac49a35b8868f32f0c98ce4">CAN_ADDRESS</a></div><div class="ttdeci">#define CAN_ADDRESS</div><div class="ttdoc">Defines the Can bus addresses that will be used to receive and send data.</div><div class="ttdef"><b>Definition:</b> <a href="_can_bus_addresses_8def_source.html#l00061">CanBusAddresses.def:61</a></div></div>
 <div class="ttc" id="a_canbus_8h_html"><div class="ttname"><a href="_canbus_8h.html">Canbus.h</a></div><div class="ttdoc">FlexCAN_T4 wrapper This library is made specifically for SAE.</div></div>
 <div class="ttc" id="a_canbus_config_8def_html"><div class="ttname"><a href="_canbus_config_8def.html">CanbusConfig.def</a></div><div class="ttdoc">Configure canbus functionality.</div></div>
 <div class="ttc" id="a_canbus_config_8def_html_acfa9a5267724c47e76b7738da96e5367"><div class="ttname"><a href="_canbus_config_8def.html#acfa9a5267724c47e76b7738da96e5367">CONF_FLEXCAN_TX_MAILBOXES</a></div><div class="ttdeci">#define CONF_FLEXCAN_TX_MAILBOXES</div><div class="ttdoc">Set the number of outgoing mailboxes.</div><div class="ttdef"><b>Definition:</b> <a href="_canbus_config_8def_source.html#l00034">CanbusConfig.def:34</a></div></div>
 <div class="ttc" id="a_canbus_config_8def_html_af0c679cd1f59bfbdceac0c8e18b17f5b"><div class="ttname"><a href="_canbus_config_8def.html#af0c679cd1f59bfbdceac0c8e18b17f5b">CONF_FLEXCAN_BAUD_RATE</a></div><div class="ttdeci">#define CONF_FLEXCAN_BAUD_RATE</div><div class="ttdoc">Set the baud rate at which the CAN line should run.</div><div class="ttdef"><b>Definition:</b> <a href="_canbus_config_8def_source.html#l00028">CanbusConfig.def:28</a></div></div>
-<div class="ttc" id="a_log_8cpp_html_aa5fd43862d543e82b7775410573c9142"><div class="ttname"><a href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a></div><div class="ttdeci">Logging::Log_t Log</div><div class="ttdoc">Internal definition of static Log class.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00226">Log.cpp:226</a></div></div>
+<div class="ttc" id="a_log_8cpp_html_aa5fd43862d543e82b7775410573c9142"><div class="ttname"><a href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a></div><div class="ttdeci">Logging::Log_t Log</div><div class="ttdoc">Internal definition of static Log class.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00217">Log.cpp:217</a></div></div>
 <div class="ttc" id="a_log_8h_html"><div class="ttname"><a href="_log_8h.html">Log.h</a></div><div class="ttdoc">Special logging functionality.</div></div>
 <div class="ttc" id="a_log_8h_html_a746b6eae8886ab8bb40046729eed2983"><div class="ttname"><a href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a></div><div class="ttdeci">const char * LOG_TAG</div><div class="ttdoc">Type definition of logging tags This typedef is necessary to allow for easier manipulation of code by...</div><div class="ttdef"><b>Definition:</b> <a href="_log_8h_source.html#l00043">Log.h:43</a></div></div>
 <div class="ttc" id="anamespace_canbus_html"><div class="ttname"><a href="namespace_canbus.html">Canbus</a></div><div class="ttdoc">Canbus functionality. Refer to Canbus.h for more info.</div><div class="ttdef"><b>Definition:</b> <a href="_canbus_8h_source.html#l00027">Canbus.h:27</a></div></div>
@@ -294,8 +303,8 @@ $(document).ready(function(){initNavTree('_canbus_8cpp_source.html',''); initRes
 <div class="ttc" id="anamespace_canbus_html_ac87cf65470012914f1ae29c0eb987b87"><div class="ttname"><a href="namespace_canbus.html#ac87cf65470012914f1ae29c0eb987b87">Canbus::setup</a></div><div class="ttdeci">void setup(void)</div><div class="ttdoc">Setup the teensy Canbus line.</div></div>
 <div class="ttc" id="anamespace_canbus_html_ae66521cf8ac5e63c2e89d6b2f009b38a"><div class="ttname"><a href="namespace_canbus.html#ae66521cf8ac5e63c2e89d6b2f009b38a">Canbus::enableInterrupts</a></div><div class="ttdeci">void enableInterrupts(bool enable)</div><div class="ttdoc">Enable mailbox interrupts, allowing values to automaticaly update. Enabled by default.</div></div>
 <div class="ttc" id="anamespace_canbus_html_aed796b6196e7d80b59dd205de7a8edfd"><div class="ttname"><a href="namespace_canbus.html#aed796b6196e7d80b59dd205de7a8edfd">Canbus::getData</a></div><div class="ttdeci">void getData(const uint32_t address, uint8_t buf[8])</div><div class="ttdoc">Get raw data from a canbus address.</div></div>
-<div class="ttc" id="astruct_logging_1_1_log__t_html_a4b75f2065645b98fef1d6b4edea2b5a2"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">Logging::Log_t::d</a></div><div class="ttdeci">void d(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a debug tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00147">Log.cpp:147</a></div></div>
-<div class="ttc" id="astruct_logging_1_1_log__t_html_a6a390467c80768f38c116e26c6c35a39"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">Logging::Log_t::e</a></div><div class="ttdeci">void e(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using an error tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00165">Log.cpp:165</a></div></div>
+<div class="ttc" id="astruct_logging_1_1_log__t_html_a4b75f2065645b98fef1d6b4edea2b5a2"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">Logging::Log_t::d</a></div><div class="ttdeci">void d(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a debug tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00138">Log.cpp:138</a></div></div>
+<div class="ttc" id="astruct_logging_1_1_log__t_html_a6a390467c80768f38c116e26c6c35a39"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">Logging::Log_t::e</a></div><div class="ttdeci">void e(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using an error tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00156">Log.cpp:156</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

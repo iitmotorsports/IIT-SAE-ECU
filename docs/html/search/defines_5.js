@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['pins_5fcanbus_5fanalog_5fin_172',['PINS_CANBUS_ANALOG_IN',['../_pin_config_8def.html#a3e53e34fe101af281d46c65263020503',1,'PinConfig.def']]],
-  ['pins_5fcanbus_5fanalog_5fout_173',['PINS_CANBUS_ANALOG_OUT',['../_pin_config_8def.html#a7425d04658a4f1cc0d80df2c252cdfd6',1,'PinConfig.def']]],
-  ['pins_5fcanbus_5fdigital_5fin_174',['PINS_CANBUS_DIGITAL_IN',['../_pin_config_8def.html#acae56fbcae983449c6f760dd4a501446',1,'PinConfig.def']]],
-  ['pins_5fcanbus_5fdigital_5fout_175',['PINS_CANBUS_DIGITAL_OUT',['../_pin_config_8def.html#a1c67d5e7fbb164aad1ba799b444f7a23',1,'PinConfig.def']]]
+  ['hard_5ffault_5fadd_185',['HARD_FAULT_ADD',['../_fault_config_8def.html#a725d76d669362031fe65a6c678180998',1,'FaultConfig.def']]],
+  ['hard_5fpin_5ffaults_186',['HARD_PIN_FAULTS',['../_fault_config_8def.html#ad16cea3900e240c28be81e1fae70174a',1,'FaultConfig.def']]]
 ];

@@ -88,27 +88,31 @@ $(document).ready(function(){initNavTree('_e_c_u_global_config_8h_source.html','
 <div class="title">ECUGlobalConfig.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef __ECU_GLOBALCONFIG_H__</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define __ECU_GLOBALCONFIG_H__</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#define CONF_ECU_DEBUG </span><span class="comment">// Define to include extra logging and checks to be run throughout libaries</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define FRONT_ECU 1</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define BACK_ECU 0</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define CONF_ECU_POSITION BACK_ECU </span><span class="comment">// Back Teensy, Used for documentation</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">// #define CONF_ECU_POSITION FRONT_ECU // Front Teensy</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#define CONF_TEENSY_BAUD_RATE 115200</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#define CONF_TEENSY_INITAL_DELAY 2000</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __ECU_GLOBALCONFIG_H__</span></div>
+<a href="_e_c_u_global_config_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#ifndef __ECU_GLOBALCONFIG_H__</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">// @cond</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#define __ECU_GLOBALCONFIG_H__</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">// @endcond</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="_e_c_u_global_config_8h.html#a0651c808bd53ef4c66b2b1dc49049cd1">   20</a></span>&#160;<span class="preprocessor">#define CONF_ECU_DEBUG</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="_e_c_u_global_config_8h.html#a345c47b0f8469dac0da0d062c49bd336">   25</a></span>&#160;<span class="preprocessor">#define FRONT_ECU 1</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="_e_c_u_global_config_8h.html#af973003c8777fff677a243b446bbf40c">   29</a></span>&#160;<span class="preprocessor">#define BACK_ECU 0</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="_e_c_u_global_config_8h.html#a830821e6c93b8185b3896b490755c43f">   35</a></span>&#160;<span class="preprocessor">#define CONF_ECU_POSITION BACK_ECU</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">// #define CONF_ECU_POSITION FRONT_ECU // Defines build is for front ECU</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="_e_c_u_global_config_8h.html#ab333d25e1992765a2bd6d7ec19cf1285">   41</a></span>&#160;<span class="preprocessor">#define CONF_TEENSY_BAUD_RATE 115200</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="_e_c_u_global_config_8h.html#a79068381d6280ae6890e7e07a2e498c8">   46</a></span>&#160;<span class="preprocessor">#define CONF_TEENSY_INITAL_DELAY 2000</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __ECU_GLOBALCONFIG_H__</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="dir_6b3011714a9caa853510150e62cb1109.html">ECUGlobalConfig</a></li><li class="navelem"><b>ECUGlobalConfig.h</b></li>
+    <li class="navelem"><a class="el" href="dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="dir_6b3011714a9caa853510150e62cb1109.html">ECUGlobalConfig</a></li><li class="navelem"><a class="el" href="_e_c_u_global_config_8h.html">ECUGlobalConfig.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>

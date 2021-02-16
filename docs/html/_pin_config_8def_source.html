@@ -96,7 +96,7 @@ $(document).ready(function(){initNavTree('_pin_config_8def_source.html',''); ini
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#define __ECU_PINCONFIG_H__</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_canbus_8h.html">Canbus.h</a>&quot;</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;ECUGlobalConfig.h&quot;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_e_c_u_global_config_8h.html">ECUGlobalConfig.h</a>&quot;</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_p_p_help_8h.html">PPHelp.h</a>&quot;</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;WProgram.h&quot;</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
@@ -106,14 +106,19 @@ $(document).ready(function(){initNavTree('_pin_config_8def_source.html',''); ini
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">// @endcond</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="_pin_config_8def.html#a30388a88a1fdecdb193647dc80a97084">   32</a></span>&#160;<span class="preprocessor">#define CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO 20 </span><span class="comment">// TODO: Pick an appropriate interval</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="_pin_config_8def.html#a30388a88a1fdecdb193647dc80a97084">   32</a></span>&#160;<span class="preprocessor">#define CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO 100 </span><span class="comment">// TODO: Pick an appropriate interval</span></div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">// @cond</span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#define PINS_INTERNAL_CHARGE_SIGNAL 100</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#define PINS_INTERNAL_START 101</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#define PINS_INTERNAL_BMS_FAULT 102</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#define PINS_INTERNAL_IMD_FAULT 103</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">// Internal Pins</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">// Virtual pins that can be used as a canPin, must all be unique to eachother with values 100 - 254</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment">// Whether the pin is analog or digital depends on which message type it is sent/received on, meaning it is either a digital or analog value.</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#define PINS_INTERNAL_CHARGE_SIGNAL 100</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#define PINS_INTERNAL_IDLE_STATE 101</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#define PINS_INTERNAL_START 102</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#define PINS_INTERNAL_BMS_FAULT 103</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#define PINS_INTERNAL_IMD_FAULT 104</span></div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment">// Both ECUs</span></div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#define PINS_BOTH_LED 13</span></div>
@@ -183,15 +188,16 @@ $(document).ready(function(){initNavTree('_pin_config_8def_source.html',''); ini
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="preprocessor">    X(ADD_CANPIN_ANALOG2, PINS_FRONT_STEER)  \</span></div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="preprocessor">    X(ADD_CANPIN_ANALOG2, PINS_FRONT_BRAKE)</span></div>
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160; </div>
-<div class="line"><a name="l00143"></a><span class="lineno"><a class="line" href="_pin_config_8def.html#a7425d04658a4f1cc0d80df2c252cdfd6">  143</a></span>&#160;<span class="preprocessor">#define PINS_CANBUS_ANALOG_OUT</span></div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160; </div>
-<div class="line"><a name="l00157"></a><span class="lineno"><a class="line" href="_pin_config_8def.html#acae56fbcae983449c6f760dd4a501446">  157</a></span>&#160;<span class="preprocessor">#define PINS_CANBUS_DIGITAL_IN \</span></div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="preprocessor">    X(ADD_CANPIN_DIGITAL1, PINS_INTERNAL_CHARGE_SIGNAL)</span></div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160; </div>
-<div class="line"><a name="l00163"></a><span class="lineno"><a class="line" href="_pin_config_8def.html#a1c67d5e7fbb164aad1ba799b444f7a23">  163</a></span>&#160;<span class="preprocessor">#define PINS_CANBUS_DIGITAL_OUT                     \</span></div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="preprocessor">    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_START)     \</span></div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="preprocessor">    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_BMS_FAULT) \</span></div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="preprocessor">    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_IMD_FAULT)</span></div>
+<div class="line"><a name="l00142"></a><span class="lineno"><a class="line" href="_pin_config_8def.html#a7425d04658a4f1cc0d80df2c252cdfd6">  142</a></span>&#160;<span class="preprocessor">#define PINS_CANBUS_ANALOG_OUT</span></div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160; </div>
+<div class="line"><a name="l00156"></a><span class="lineno"><a class="line" href="_pin_config_8def.html#acae56fbcae983449c6f760dd4a501446">  156</a></span>&#160;<span class="preprocessor">#define PINS_CANBUS_DIGITAL_IN \</span></div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="preprocessor">    X(ADD_CANPIN_DIGITAL1, PINS_INTERNAL_CHARGE_SIGNAL)</span></div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160; </div>
+<div class="line"><a name="l00162"></a><span class="lineno"><a class="line" href="_pin_config_8def.html#a1c67d5e7fbb164aad1ba799b444f7a23">  162</a></span>&#160;<span class="preprocessor">#define PINS_CANBUS_DIGITAL_OUT                     \</span></div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;<span class="preprocessor">    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_START)     \</span></div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="preprocessor">    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_BMS_FAULT) \</span></div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="preprocessor">    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_IMD_FAULT) \</span></div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="preprocessor">    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_IDLE_STATE)</span></div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160; </div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="preprocessor">#else</span></div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="preprocessor">#define ECU_PINS                                    \</span></div>
@@ -219,15 +225,17 @@ $(document).ready(function(){initNavTree('_pin_config_8def_source.html',''); ini
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="preprocessor">#define PINS_CANBUS_DIGITAL_IN                      \</span></div>
 <div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<span class="preprocessor">    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_START)     \</span></div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;<span class="preprocessor">    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_BMS_FAULT) \</span></div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="preprocessor">    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_IMD_FAULT)</span></div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160; </div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;<span class="preprocessor">#define PINS_CANBUS_DIGITAL_OUT \</span></div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;<span class="preprocessor">    X(ADD_CANPIN_DIGITAL1, PINS_INTERNAL_CHARGE_SIGNAL)</span></div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160; </div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160; </div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __ECU_PINCONFIG_H__</span></div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="preprocessor">    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_IMD_FAULT) \</span></div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;<span class="preprocessor">    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_IDLE_STATE)</span></div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160; </div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;<span class="preprocessor">#define PINS_CANBUS_DIGITAL_OUT \</span></div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;<span class="preprocessor">    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_CHARGE_SIGNAL)</span></div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160; </div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160; </div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __ECU_PINCONFIG_H__</span></div>
 <div class="ttc" id="a_canbus_8h_html"><div class="ttname"><a href="_canbus_8h.html">Canbus.h</a></div><div class="ttdoc">FlexCAN_T4 wrapper This library is made specifically for SAE.</div></div>
+<div class="ttc" id="a_e_c_u_global_config_8h_html"><div class="ttname"><a href="_e_c_u_global_config_8h.html">ECUGlobalConfig.h</a></div><div class="ttdoc">Configure global build properties.</div></div>
 <div class="ttc" id="a_p_p_help_8h_html"><div class="ttname"><a href="_p_p_help_8h.html">PPHelp.h</a></div><div class="ttdoc">Compilation of various helpful preprocessor macros.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

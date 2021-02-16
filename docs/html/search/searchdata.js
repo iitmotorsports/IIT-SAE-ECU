@@ -3,13 +3,13 @@ var indexSectionsWithContent =
   0: "_abcdefghilnoprsuw",
   1: "ls",
   2: "ceflps",
-  3: "cflps",
+  3: "ceflps",
   4: "abcdefghilnoprsuw",
   5: "iln",
   6: "clp",
   7: "n",
   8: "e",
-  9: "_cehips",
+  9: "_bcefhips",
   10: "s"
 };
 

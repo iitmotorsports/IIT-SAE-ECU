@@ -33,11 +33,10 @@
 
 // @cond
 
-/**
- * @brief Internal Pins
- * @details Virtual pins that can be used as a canPin, must all be unique to eachother with values 100 - 254
- * @note Whether the pin is analog or digital depends on which message type it is sent/received on, meaning it is either a digital or analog value.
- */
+
+// Internal Pins
+// Virtual pins that can be used as a canPin, must all be unique to eachother with values 100 - 254
+// Whether the pin is analog or digital depends on which message type it is sent/received on, meaning it is either a digital or analog value.
 #define PINS_INTERNAL_CHARGE_SIGNAL 100
 #define PINS_INTERNAL_IDLE_STATE 101
 #define PINS_INTERNAL_START 102
@@ -140,7 +139,6 @@
 /**
  * @brief Same as PINS_CANBUS_ANALOG_IN only for the analog pins that are outgoing
  */
-
 #define PINS_CANBUS_ANALOG_OUT
 
 /**
