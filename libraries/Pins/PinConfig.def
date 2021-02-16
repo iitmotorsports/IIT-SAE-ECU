@@ -33,7 +33,6 @@
 
 // @cond
 
-
 // Internal Pins
 // Virtual pins that can be used as a canPin, must all be unique to eachother with values 100 - 254
 // Whether the pin is analog or digital depends on which message type it is sent/received on, meaning it is either a digital or analog value.
@@ -153,8 +152,9 @@
  * 
  * Only the last entry should NOT have a '\'
  */
-#define PINS_CANBUS_DIGITAL_IN \
-    X(ADD_CANPIN_DIGITAL1, PINS_INTERNAL_CHARGE_SIGNAL)
+#define PINS_CANBUS_DIGITAL_IN                          \
+    X(ADD_CANPIN_DIGITAL1, PINS_INTERNAL_CHARGE_SIGNAL) \
+    X(ADD_CANPIN_DIGITAL1, PINS_FRONT_BUTTON_INPUT)
 
 /**
  * @brief Same as PINS_CANBUS_DIGITAL_IN only for the digital pins that are outgoing
