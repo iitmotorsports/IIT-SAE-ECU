@@ -3,8 +3,6 @@
 #include "Faults.h"
 #include "Log.h"
 
-// TODO: Separate teensy file for front teensy
-
 static bool FaultCheck() { // NOTE: Will only return true if hardfault occurs
     if (Fault::softFault())
         Fault::logFault();
@@ -16,17 +14,10 @@ static bool FaultCheck() { // NOTE: Will only return true if hardfault occurs
 #pragma region Initialize State
 
 State::State_t *ECUStates::Initialize::run(void) {
-#if CONF_ECU_POSITION == BACK_ECU
     Log.i(ID, "Teensy 3.6 SAE BACK ECU Initalizing");
-#else
-    Log.i(ID, "Teensy 3.6 SAE FRONT ECU Initalizing");
-#endif
     Canbus::setup();    // allocate and organize addresses
     Pins::initialize(); // setup predefined pins
     Fault::setup();     // load all buffers
-#if CONF_ECU_POSITION == FRONT_ECU
-    Logging::enableCanbusRelay(); // Allow logging though canbus
-#endif
 
     if (FaultCheck()) {
         return &ECUStates::FaultState;
@@ -111,19 +102,23 @@ State::State_t *ECUStates::PreCharge_State::run(void) { // NOTE: Low = Closed, H
 
 State::State_t *ECUStates::Idle_State::run(void) {
     Log.i(ID, "Waiting for Button or Charging Press");
+    Pins::setInternalValue(PINS_INTERNAL_IDLE_STATE, HIGH);
 
     while (true) {
         if (Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT)) {
             Log.i(ID, "Button Pressed");
+            Pins::setInternalValue(PINS_INTERNAL_IDLE_STATE, LOW);
             return &ECUStates::Button_State;
-        } else if (Pins::getPinValue(PINS_INTERNAL_CHARGE_SIGNAL)) { // TODO: set internal charging pin on front
+        } else if (Pins::getCanPinValue(PINS_INTERNAL_CHARGE_SIGNAL)) {
             Log.i(ID, "Charging Pressed");
+            Pins::setInternalValue(PINS_INTERNAL_IDLE_STATE, LOW);
             return &ECUStates::Charging_State;
         } else if (FaultCheck()) {
             break;
         }
         Log.d(ID, "Waiting");
     }
+    Pins::setInternalValue(PINS_INTERNAL_IDLE_STATE, LOW);
     return &ECUStates::FaultState;
 }
 
@@ -136,17 +131,17 @@ State::State_t *ECUStates::Charging_State::run(void) {
 
     elapsedMillis voltLogNotify;
 
-    while (Pins::getPinValue(PINS_BACK_CHARGING_SIGNAL)) {
+    while (Pins::getCanPinValue(PINS_INTERNAL_CHARGE_SIGNAL)) {
         // IMPROVE: Don't use fault to stop charging
         if (FaultCheck()) {
             Pins::setPinValue(PINS_BACK_CHARGING_RELAY, LOW);
             Log.e(ID, "Charging faulted, turning off");
             return &ECUStates::FaultState;
         }
-        if (voltLogNotify >= 1000) { // Notify every secondish
-            voltLogNotify = 0;
-            Log.i(ID, "Voltage", Pins::getPinValue(PINS_BACK_CHARGING_VOLTAGE)); // TODO: what voltage are we sending
-        }
+        // if (voltLogNotify >= 1000) { // Notify every secondish
+        //     voltLogNotify = 0;
+        //     Log.i(ID, "Voltage", Pins::getPinValue(PINS_BACK_CHARGING_VOLTAGE)); // TODO: what voltage are we sending
+        // }
     }
 
     Pins::setPinValue(PINS_BACK_CHARGING_RELAY, LOW);
@@ -197,37 +192,6 @@ void ECUStates::Driving_Mode_State::torqueVector(int torques[2], float pedalVal)
     torques[1] = pedalVal;
 }
 
-uint32_t ECUStates::Driving_Mode_State::BMSSOC() {
-    Canbus::setSemaphore(ADD_BMS_SOC);
-    return *(uint8_t *)(BMS_SOC_Buffer + 4); // Byte 4: BMS State of charge buffer
-    Canbus::clearSemaphore();
-}
-
-uint32_t ECUStates::Driving_Mode_State::powerValue() { // IMPROVE: get power value using three phase values, or find a power value address
-    Canbus::setSemaphore(ADD_MC0_VOLT);
-    int16_t MC0_VOLT = *((int16_t *)(MC0_VOLT_Buffer)) / 10; // Bytes 0-1: DC BUS MC Voltage
-    Canbus::setSemaphore(ADD_MC0_CURR);
-    int16_t MC0_CURR = *((int16_t *)(MC0_CURR_Buffer + 6)) / 10; // Bytes 6-7: DC BUS MC Current
-    int MC0_PWR = MC0_VOLT * MC0_CURR;
-    Canbus::setSemaphore(ADD_MC1_VOLT);
-    int16_t MC1_VOLT = *((int16_t *)(MC1_VOLT_Buffer)) / 10; // Bytes 0-1: DC BUS MC Voltage
-    Canbus::setSemaphore(ADD_MC1_CURR);
-    int16_t MC1_CURR = *((int16_t *)(MC1_CURR_Buffer + 6)) / 10; // Bytes 6-7:
-    int MC1_PWR = MC1_VOLT * MC1_CURR;
-    Canbus::clearSemaphore();
-    return (MC0_PWR + MC1_PWR) / 1000; // Sending kilowatts
-}
-
-void ECUStates::Driving_Mode_State::getBuffers() {
-    MC0_RPM_Buffer = Canbus::getBuffer(ADD_MC0_RPM);
-    MC1_RPM_Buffer = Canbus::getBuffer(ADD_MC1_RPM);
-    MC0_VOLT_Buffer = Canbus::getBuffer(ADD_MC0_VOLT);
-    MC1_VOLT_Buffer = Canbus::getBuffer(ADD_MC1_VOLT);
-    MC0_CURR_Buffer = Canbus::getBuffer(ADD_MC0_CURR);
-    MC1_CURR_Buffer = Canbus::getBuffer(ADD_MC1_CURR);
-    BMS_SOC_Buffer = Canbus::getBuffer(ADD_BMS_SOC);
-}
-
 void ECUStates::Driving_Mode_State::carCooling(float temp) { // TODO: map temp to voltages
     Pins::setPinValue(PINS_BACK_PUMP_DAC, (int)map(temp, 0, 100, 4095.0f * 2.0f / 5, 4095.0f * 2.5f / 5));
     int fanSet = (int)map(temp, 0, 100, 0, 4095);
@@ -238,37 +202,14 @@ void ECUStates::Driving_Mode_State::carCooling(float temp) { // TODO: map temp t
 }
 
 State::State_t *ECUStates::Driving_Mode_State::run(void) {
-    Log.i(ID, "Loading Buffers");
-    getBuffers();
     Log.i(ID, "Driving mode on");
 
-    Pins::setInternalValue(PINS_INTERNAL_START, 1); // TODO: turn on LED on front teensy
-
-#if CONF_ECU_POSITION == FRONT_ECU
-    elapsedMillis timeElapsed;
-#endif
+    Pins::setInternalValue(PINS_INTERNAL_START, 1);
 
     while (true) {
         Canbus::update();
-#if CONF_ECU_POSITION == FRONT_ECU
-        if (timeElapsed >= 5) { // Update Tablet every 5ms
-            timeElapsed = 0;
-            // receive rpm of MCs, interpret, then send to from teensy for logging
-            Canbus::setSemaphore(ADD_MC0_RPM);
-            int16_t MC_Rpm_Val_0 = *(int16_t *)(MC0_RPM_Buffer + 2); // Bytes 2-3 : Angular Velocity
-            Canbus::setSemaphore(ADD_MC1_RPM);
-            int16_t MC_Rpm_Val_1 = *(int16_t *)(MC1_RPM_Buffer + 2); // Bytes 2-3 : Angular Velocity
-            Canbus::clearSemaphore();
-            float MC_Spd_Val_0 = wheelRadius * 2 * 3.1415926536 / 60 * MC_Rpm_Val_0;
-            float MC_Spd_Val_1 = wheelRadius * 2 * 3.1415926536 / 60 * MC_Rpm_Val_1;
-            float speed = (MC_Spd_Val_0 + MC_Spd_Val_1) / 2;
-            Log.i(ID, "Current Motor Speed:", speed);
-            Log.i(ID, "Current Power Value:", powerValue());   // Canbus message from MCs
-            Log.i(ID, "BMS State Of Charge Value:", BMSSOC()); // Canbus message
-        }
-#else
-        int BMSTemp = 30;
-        carCooling((float)BMSTemp); // TODO: what temp are we using for cooling?
+        // int BMSTemp = 30;
+        // carCooling((float)BMSTemp); // TODO: what temp are we using for cooling?
 
         for (size_t i = 0; i < 4; i++) {               // IMPROVE: Send only once? Check MC heartbeat catches it
             Canbus::sendData(ADD_MC0_CLEAR, 20, 0, 1); // NOTE: We are assuming MCs are little endian
@@ -286,9 +227,9 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
         }
 
         if (Pins::getCanPinValue(PINS_FRONT_BRAKE) / 4095 > 4) { // NOTE: analog res is at 12 bits which means 4095 is max value
-            Pins::setPinValue(PINS_BACK_BRAKE_LIGHT, HIGH);
+            Pins::setPinValue(PINS_BACK_BRAKE_LIGHT, 4095);
         } else {
-            Pins::setPinValue(PINS_BACK_BRAKE_LIGHT, LOW);
+            Pins::setPinValue(PINS_BACK_BRAKE_LIGHT, 0);
         }
 
         int MotorTorques[2] = {0};
@@ -305,7 +246,6 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
         if (FaultCheck()) {
             return &ECUStates::FaultState;
         }
-#endif
     }
 
     Log.i(ID, "Driving mode off");
@@ -325,8 +265,9 @@ State::State_t *ECUStates::FaultState::run(void) {
     Pins::setPinValue(PINS_BACK_PRECHARGE_RELAY, LOW);
 
     Pins::resetPhysicalPins();
+    Pins::setInternalValue(PINS_INTERNAL_START, 0);
     Pins::setInternalValue(PINS_INTERNAL_BMS_FAULT, 1);
-    Pins::setInternalValue(PINS_INTERNAL_IMD_FAULT, 1); // TODO: receive pins on front teensy
+    Pins::setInternalValue(PINS_INTERNAL_IMD_FAULT, 1);
 
     while (true) {
         Log.f(ID, "FAULT STATE");
