@@ -46,7 +46,7 @@ static const uint digitalCanPinCount_IN = PP_NARG_MO(PINS_CANBUS_DIGITAL_IN);
 
 static std::unordered_map<uint8_t, int *> CAN_GPIO_MAP;
 static int CAN_GPIO[analogCanPinCount_IN + digitalCanPinCount_IN] = {0}; // Store canpin values
-static const uint activedigitalCanPins = 8;                              // NOTE: MAX 8 Digital pins per msg for now
+static const int maxActiveDigitalPins = 8;                               // NOTE: MAX 8 Digital pins per msg for now
 
 static IntervalTimer canbusPinUpdate;
 static const LOG_TAG ID = "Pins";
@@ -59,8 +59,9 @@ struct CanPinMsg_t {
 
 // IMPROVE: Make use of all 64 avaliable flags
 struct digitalCanPinMsg_t : CanPinMsg_t {
-    uint8_t digitalPins[activedigitalCanPins];
-    uint digitalPinPos[activedigitalCanPins];
+    uint32_t activedigitalCanPins = 0;
+    uint8_t digitalPins[maxActiveDigitalPins];
+    uint digitalPinPos[maxActiveDigitalPins];
     void send() {
         for (size_t i = 0; i < activedigitalCanPins; i++) {
             *bufmap = *bufmap << 1;
@@ -96,7 +97,8 @@ struct analogCanPinMsg_t : CanPinMsg_t {
         int a0 = *bufmap >> 32;
         int a1 = *bufmap & 0x00000000FFFFFFFF;
         CAN_GPIO[analogPinPos[0]] = a0;
-        CAN_GPIO[analogPinPos[1]] = a1;
+        if (analogPins[1] != 255) // Ensure this buffer only allocated one analog val
+            CAN_GPIO[analogPinPos[1]] = a1;
     }
 };
 
@@ -156,7 +158,8 @@ static void _pushCanbusPins(void) {
 }
 
 void setInternalValue(uint8_t Internal_Pin, int value) {
-    *CAN_GPIO_MAP[Internal_Pin] = value;
+    if (CAN_GPIO_MAP.find(Internal_Pin) != CAN_GPIO_MAP.end())
+        *CAN_GPIO_MAP[Internal_Pin] = value;
 }
 
 int getCanPinValue(uint8_t CAN_GPIO_Pin) {
@@ -229,6 +232,7 @@ static void populateCanbusMap(std::multimap<uint32_t, std::tuple<uint, uint8_t, 
                 digitalCanPinStruct->address = address;
                 digitalCanPinStruct->digitalPinPos[dc] = std::get<0>(d->second);
                 digitalCanPinStruct->digitalPins[dc] = std::get<1>(d->second);
+                digitalCanPinStruct->activedigitalCanPins = dc; // Set number of active pins out of 8 on digital message
                 dc++;
             }
         }
