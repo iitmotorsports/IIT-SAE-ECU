@@ -1,6 +1,8 @@
 #include "ECU.h"
 #include "ECUGlobalConfig.h"
+#if CONF_ECU_POSITION == FRONT_ECU
 #include "Front.h"
+#endif
 
 // NOTE: Consider using back teensy as a dumb relay and have front teensy only be used for actual logic
 

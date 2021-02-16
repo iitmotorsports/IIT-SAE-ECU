@@ -1,3 +1,5 @@
+#include "ECUGlobalConfig.h"
+#if CONF_ECU_POSITION == FRONT_ECU
 #include "Front.h"
 
 static LOG_TAG ID = "Front Teensy";
@@ -116,3 +118,4 @@ void Front::run() {
         }
     }
 }
+#endif
