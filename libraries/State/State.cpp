@@ -56,6 +56,8 @@ State::State_t *State::getLastState() {
 void State::begin(State_t &entry) {
     setNextState(&entry);
 
+    Log.d(TAG, "Starting State Machine");
+
     while (notifyCode != State::E_FATAL) {
         notifyCode = 0;
         Log.d(TAG, "Start");
