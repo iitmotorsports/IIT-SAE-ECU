@@ -97,6 +97,8 @@ State::State_t *ECUStates::Idle_State::run(void) {
     Log.i(ID, "Waiting for Button or Charging Press");
     Pins::setInternalValue(PINS_INTERNAL_IDLE_STATE, HIGH);
 
+    elapsedMillis waiting;
+
     while (true) {
         if (Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT)) {
             Log.i(ID, "Button Pressed");
@@ -109,7 +111,10 @@ State::State_t *ECUStates::Idle_State::run(void) {
         } else if (FaultCheck()) {
             break;
         }
-        Log.d(ID, "Waiting");
+        if (waiting >= 1000) { // Notify every secondish
+            waiting = 0;
+            Log.d(ID, "Waiting for button press");
+        }
     }
     Pins::setInternalValue(PINS_INTERNAL_IDLE_STATE, LOW);
     return &ECUStates::FaultState;
@@ -245,10 +250,17 @@ State::State_t *ECUStates::FaultState::run(void) {
     Pins::setPinValue(PINS_BACK_AIR2, LOW);
     Pins::setPinValue(PINS_BACK_PRECHARGE_RELAY, LOW);
 
+    Log.w(ID, "Resetting pins");
     Pins::resetPhysicalPins();
+
+    Log.d(ID, "Setting fault canpins");
     Pins::setInternalValue(PINS_INTERNAL_START, 0);
     Pins::setInternalValue(PINS_INTERNAL_BMS_FAULT, 1);
     Pins::setInternalValue(PINS_INTERNAL_IMD_FAULT, 1);
+
+    delay(1000);
+    Log.e(ID, "Stopping canpins");
+    Pins::stop();
 
     while (true) {
         Log.f(ID, "FAULT STATE");
