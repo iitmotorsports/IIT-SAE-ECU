@@ -83,6 +83,12 @@ void resetPhysicalPins();
 void update(void);
 
 /**
+ * @brief Stops background interrupts from running
+ * @note cannot be restarted after stopping
+ */
+void stop(void);
+
+/**
  * @brief Initialize all predefined pins
  */
 void initialize(void);
