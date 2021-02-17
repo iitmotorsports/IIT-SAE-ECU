@@ -1,5 +1,4 @@
 #include "ECUGlobalConfig.h"
-#if CONF_ECU_POSITION == FRONT_ECU
 #include "Front.h"
 
 static LOG_TAG ID = "Front Teensy";
@@ -55,9 +54,6 @@ void Front::run() {
     MC1_CURR_Buffer = Canbus::getBuffer(ADD_MC1_CURR);
     BMS_SOC_Buffer = Canbus::getBuffer(ADD_BMS_SOC);
 
-    Log.d(ID, "Delaying for debug");
-    delay(10000);
-
     while (true) {
         if (timeElapsed >= 10) { // Update Tablet every 10ms
             timeElapsed = 0;
@@ -112,10 +108,9 @@ void Front::run() {
             float MC_Spd_Val_0 = wheelRadius * 2 * 3.1415926536 / 60 * MC_Rpm_Val_0;
             float MC_Spd_Val_1 = wheelRadius * 2 * 3.1415926536 / 60 * MC_Rpm_Val_1;
             float speed = (MC_Spd_Val_0 + MC_Spd_Val_1) / 2;
-            // Log.i(ID, "Current Motor Speed:", speed);
-            // Log.i(ID, "Current Power Value:", powerValue());   // Canbus message from MCs
-            // Log.i(ID, "BMS State Of Charge Value:", BMSSOC()); // Canbus message
+            Log.i(ID, "Current Motor Speed:", speed);
+            Log.i(ID, "Current Power Value:", powerValue());   // Canbus message from MCs
+            Log.i(ID, "BMS State Of Charge Value:", BMSSOC()); // Canbus message
         }
     }
 }
-#endif
