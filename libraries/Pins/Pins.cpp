@@ -22,8 +22,6 @@
 #include "Log.h"
 #include "PinConfig.def"
 
-// TODO: initialize pins to a set value
-
 namespace Pins {
 
 // NOTE: analogpin indexes extend beyond CORE_NUM_TOTAL_PINS, eg. DAC0
