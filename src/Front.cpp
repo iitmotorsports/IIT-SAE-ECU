@@ -108,6 +108,7 @@ void Front::run() {
             float MC_Spd_Val_0 = wheelRadius * 2 * 3.1415926536 / 60 * MC_Rpm_Val_0;
             float MC_Spd_Val_1 = wheelRadius * 2 * 3.1415926536 / 60 * MC_Rpm_Val_1;
             float speed = (MC_Spd_Val_0 + MC_Spd_Val_1) / 2;
+            // TODO: Send both mc voltages
             Log.i(ID, "Current Motor Speed:", speed);
             Log.i(ID, "Current Power Value:", powerValue());   // Canbus message from MCs
             Log.i(ID, "BMS State Of Charge Value:", BMSSOC()); // Canbus message
