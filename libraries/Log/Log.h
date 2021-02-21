@@ -22,9 +22,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-// TODO: update andriod app to send 
-
-// TODO: update android app to accept new message format
 // IMPROVE: Add option to log to an sd card instead/aswell
 
 #if CONF_LOGGING_MAPPED_MODE > 0
