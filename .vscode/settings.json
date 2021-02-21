@@ -46,5 +46,8 @@
         "*.obj": "cpp",
         "string": "cpp"
     },
-    "doxygen_runner.configuration_file_override": "${workspaceFolder}\\docs\\Doxyfile"
+    "doxygen_runner.configuration_file_override": "${workspaceFolder}\\docs\\Doxyfile",
+    "python.linting.pylintEnabled": false,
+    "python.linting.enabled": true,
+    "python.linting.flake8Enabled": true
 }
