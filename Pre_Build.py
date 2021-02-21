@@ -97,10 +97,15 @@ BUF_SIZE = 65536
 # PLACEHOLDER_TAG = "__PYTHON__TAG__PLACEHOLDER__{}__"
 # PLACEHOLDER_ID = "__PYTHON__ID__PLACEHOLDER__{}__"
 
+RamMemo = False
+
 
 def AvailableRam():
-    out = subprocess.check_output("wmic OS get FreePhysicalMemory /Value", stderr=subprocess.STDOUT, shell=True)
-    return round(int(str(out).strip("b").strip("'").replace("\\r", "").replace("\\n", "").replace("FreePhysicalMemory=", "")) / 1048576, 2)
+    global RamMemo
+    if not RamMemo:
+        out = subprocess.check_output("wmic OS get FreePhysicalMemory /Value", stderr=subprocess.STDOUT, shell=True)
+        RamMemo = round(int(str(out).strip("b").strip("'").replace("\\r", "").replace("\\n", "").replace("FreePhysicalMemory=", "")) / 1048576, 2)
+    return RamMemo
 
 
 def hashFile(filePath):
