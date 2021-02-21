@@ -164,7 +164,6 @@
         },
         {
             "label": "Shebang",
-            "type": "shell",
             "detail": "Run all tasks required to program teensy",
             "dependsOrder": "sequence",
             "dependsOn": [
@@ -181,6 +180,84 @@
             "group": {
                 "kind": "build",
                 "isDefault": true
+            }
+        },
+        {
+            "label": "Build Front ECU",
+            "type": "shell",
+            "detail": "Builds for Front teensy",
+            "presentation": {
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "command": "cmd.exe",
+            "args": [
+                "/d",
+                "/c",
+                "python",
+                "ECUBuildPick.py",
+                "1",
+                "&&",
+                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
+                "build",
+                "-s"
+            ],
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            },
+            "problemMatcher": {
+                "base": "$gcc",
+                "pattern": {
+                    "regexp": "^(?:Pre_Build\/)?(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        },
+        {
+            "label": "Build Back ECU",
+            "type": "shell",
+            "detail": "Builds for Back teensy",
+            "presentation": {
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "command": "cmd.exe",
+            "args": [
+                "/d",
+                "/c",
+                "python",
+                "ECUBuildPick.py",
+                "0",
+                "&&",
+                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
+                "build",
+                "-s"
+            ],
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            },
+            "problemMatcher": {
+                "base": "$gcc",
+                "pattern": {
+                    "regexp": "^(?:Pre_Build\/)?(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
             }
         },
         {
