@@ -23,7 +23,7 @@ Eg.
 Log(ID, "My Message"); -> Log(ID, 1);
 Log("My Str ID", "My Message"); -> Log(1, 1);
 ```
-    
+
 Calls to Log functions also have the option to send a number with a third parameter. \n
 
 Eg.
@@ -31,7 +31,7 @@ Eg.
 Log("My Str ID", "My Message", 56); -> Log(1, 1, 56);
 Log(ID, "My Message", A_Num_Var); -> Log(ID, 1, A_Num_Var);
 ```
-    
+
 Declarations of `LOG_TAG` also have their strings replaced with a unique ID. \n
 NOTE: Definition of `LOG_TAG`s must always be an inline string. \n
 
@@ -54,30 +54,23 @@ Note, however, if this script is not run the macro should still allow everything
 
 # @cond
 
-#TODO: Keep same lookup table when compiling both back and front teensy
+# TODO: Keep same lookup table when compiling both back and front teensy
 
-import fileinput
 import shutil
 import hashlib
 import os
-import ctypes
 import asyncio
 import threading
 import time
 import errno
-import pprint
-import weakref
-import gc
 import re
 import sys
 import json
 import pickle
 from pathlib import Path
-import math
 import io
-from typing import List, BinaryIO, TextIO, Iterator, Union, Optional, Callable, Tuple, Type, Any, IO, Iterable
-import random
-import multiprocessing
+from typing import Optional, IO
+import subprocess
 
 SOURCE_NAME = "src"
 LIBRARIES_NAME = "libraries"
@@ -98,34 +91,16 @@ SOURCE_DEST_NAME = "{}{}".format(WORKING_DIRECTORY_OFFSET, SOURCE_NAME)
 LIBRARIES_DEST_NAME = "{}{}".format(WORKING_DIRECTORY_OFFSET, LIBRARIES_NAME)
 DATA_FILE = "{}.LogInfo".format(WORKING_DIRECTORY_OFFSET)
 
+LOW_RAM = 4
+BUF_SIZE = 65536
+
 # PLACEHOLDER_TAG = "__PYTHON__TAG__PLACEHOLDER__{}__"
 # PLACEHOLDER_ID = "__PYTHON__ID__PLACEHOLDER__{}__"
 
 
 def AvailableRam():
-    kernel32 = ctypes.windll.kernel32
-    c_ulong = ctypes.c_ulong
-
-    class MEMORYSTATUS(ctypes.Structure):
-        _fields_ = [
-            ("dwLength", c_ulong),
-            ("dwMemoryLoad", c_ulong),
-            ("dwTotalPhys", c_ulong),
-            ("dwAvailPhys", c_ulong),
-            ("dwTotalPageFile", c_ulong),
-            ("dwAvailPageFile", c_ulong),
-            ("dwTotalVirtual", c_ulong),
-            ("dwAvailVirtual", c_ulong),
-        ]
-
-    memoryStatus = MEMORYSTATUS()
-    memoryStatus.dwLength = ctypes.sizeof(MEMORYSTATUS)
-    kernel32.GlobalMemoryStatus(ctypes.byref(memoryStatus))
-    return int((((1 - memoryStatus.dwMemoryLoad / 100) * memoryStatus.dwAvailPhys) * 10) / 1073741824)
-
-
-LOW_RAM = 4
-BUF_SIZE = 65536
+    out = subprocess.check_output("wmic OS get FreePhysicalMemory /Value", stderr=subprocess.STDOUT, shell=True)
+    return round(int(str(out).strip("b").strip("'").replace("\\r", "").replace("\\n", "").replace("FreePhysicalMemory=", "")) / 1048576, 2)
 
 
 def hashFile(filePath):
@@ -284,7 +259,10 @@ async def getUniqueTAG(findDuplicate=None):
     # Attempt to clear up some IDs
     raise OutOfIDsException
 
-FIND_SPECIAL_REGEX = r"_LogPrebuildString\s*\(\s*(\".*?\")\s*\)" # -> _LogPrebuildString("Str") # Special case where we can indirectly allocate a string
+
+FIND_SPECIAL_REGEX = (
+    r"_LogPrebuildString\s*\(\s*(\".*?\")\s*\)"  # -> _LogPrebuildString("Str") # Special case where we can indirectly allocate a string
+)
 FIND_CALL_REGEX_SS = r"Log(\.[diwef])?\s*\(\s*(\".*?\")\s*,\s*(\".*?\")\s*\)\s*;"  # -> Log("Str", "Str");
 FIND_CALL_REGEX_VS = r"Log(\.[diwef])?\s*\(\s*([^\"]+?)\s*,\s*(\".*?\")\s*\)\s*;"  # -> Log(Var, "Str");
 FIND_CALL_REGEX_SSV = r"Log(\.[diwef])?\s*\(\s*(\".*?\")\s*,\s*(\".*?\")\s*,\s*([^\"]+?)\s*\)\s*;"  # -> Log("Str", "Str", Var);
@@ -345,7 +323,7 @@ class FileEntry:  # IMPROVE: Make IDs persistent
         return numberID
 
     async def SPECIAL_STR(self, line, reMatch):
-        ID = await self.addNewID("", reMatch) # Special strings are always LOG for simplicity
+        ID = await self.addNewID("", reMatch)  # Special strings are always LOG for simplicity
         return line.replace(reMatch, str(ID))
 
     async def VSX(self, line, reMatch):
@@ -364,14 +342,13 @@ class FileEntry:  # IMPROVE: Make IDs persistent
     async def walkLines(self, function):
         tempPath = self.workingPath + ".__Lock"
         lineNo = 1
-        synced = False
         newline = ""
         with open(self.path, "r", encoding="utf-8") as f1, open(tempPath, "w", encoding="utf-8") as f2:
             for line in f1:
                 try:
                     newline = await function(line)
                     f2.buffer.write(newline.encode("utf-8"))
-                except Exception as e: # If prev exception was about IO then oh well
+                except Exception as e:  # If prev exception was about IO then oh well
                     self.error = "{}{}{}\n".format(
                         self.error,
                         Text.warning("  {}:{}\n".format(self.path, lineNo)),
@@ -665,8 +642,7 @@ def save_lookup(path):
 
 
 # Start Script
-
-if __name__ == "__main__":
+def main():
     touch(SOURCE_DEST_NAME)
     touch(LIBRARIES_DEST_NAME)
 
@@ -708,5 +684,8 @@ if __name__ == "__main__":
     # except FileNotFoundError:
     #     pass
 
-# @endcond
 
+if __name__ == "__main__":
+    main()
+
+# @endcond
