@@ -58,7 +58,7 @@ void Front::run() {
         if (timeElapsed >= 10) { // Update Tablet every 10ms
             timeElapsed = 0;
 
-            Log.d(ID, "Checking Internal Pins");
+            // Log.d(ID, "Checking Internal Pins");
             if (Pins::getCanPinValue(PINS_INTERNAL_START)) {
                 Pins::setPinValue(PINS_FRONT_START_LIGHT, HIGH);
             } else {
@@ -75,7 +75,7 @@ void Front::run() {
                 Pins::setPinValue(PINS_FRONT_IMD_LIGHT, LOW);
             }
 
-            Log.d(ID, "Checking Tablet Serial");
+            // Log.d(ID, "Checking Tablet Serial");
 
             uint8_t serialData = 0;
             if (Serial.available()) {
@@ -95,7 +95,7 @@ void Front::run() {
                 }
             }
 
-            Log.d(ID, "Updating Tablet data");
+            // Log.d(ID, "Updating Tablet data");
 
             // TODO: explicitly tell tablet about being in a fault state
 
@@ -109,9 +109,9 @@ void Front::run() {
             float MC_Spd_Val_1 = wheelRadius * 2 * 3.1415926536 / 60 * MC_Rpm_Val_1;
             float speed = (MC_Spd_Val_0 + MC_Spd_Val_1) / 2;
             // TODO: Send both mc voltages
-            Log.i(ID, "Current Motor Speed:", speed);
-            Log.i(ID, "Current Power Value:", powerValue());   // Canbus message from MCs
-            Log.i(ID, "BMS State Of Charge Value:", BMSSOC()); // Canbus message
+            // Log.i(ID, "Current Motor Speed:", speed);
+            // Log.i(ID, "Current Power Value:", powerValue());   // Canbus message from MCs
+            // Log.i(ID, "BMS State Of Charge Value:", BMSSOC()); // Canbus message
         }
     }
 }
