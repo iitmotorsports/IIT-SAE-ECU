@@ -345,14 +345,14 @@ void initialize(void) {
         Log.i(ID, "Starting outgoing canpin update timer");
         canbusPinUpdate.begin(_pushCanbusPins, CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO);
     }
-#ifdef CONF_ECU_DEBUG
-    Serial.print("Printing active canpins");
-    for (auto i : CAN_GPIO_MAP_IN) {
-        Serial.print(i.first);
-        Serial.print(" ");
-        Serial.println(*i.second);
-    }
-#endif
+// #ifdef CONF_ECU_DEBUG
+//     Serial.print("Printing active canpins");
+//     for (auto i : CAN_GPIO_MAP_IN) {
+//         Serial.print(i.first);
+//         Serial.print(" ");
+//         Serial.println(*i.second);
+//     }
+// #endif
 }
 
 } // namespace Pins

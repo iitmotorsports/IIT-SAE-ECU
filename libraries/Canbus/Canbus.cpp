@@ -150,9 +150,9 @@ void setup(void) {
     F_Can.onReceive(_receiveCan);
     delay(100); // Just in case canbus needs to do stuff
     F_Can.enableMBInterrupts();
-#ifdef CONF_ECU_DEBUG
-    F_Can.mailboxStatus(); // Only shows actual data in ASCII mode
-#endif
+// #ifdef CONF_ECU_DEBUG
+//     F_Can.mailboxStatus(); // Only shows actual data in ASCII mode
+// #endif
     started = true;
     // updateTimer.begin(update, 1); // Choose an appropriate update time if a timer is used
 }
@@ -189,15 +189,15 @@ void clearSemaphore() {
 }
 
 static void _pushSendMsg() {
-#if defined(CONF_ECU_DEBUG) && CONF_ECU_POSITION == FRONT_ECU // Back ECU will be on a loop if we also print debug strings
-    if (F_Can.write(send) == 1) {
-        Log.d(ID, "Message Sent", send.id);
-    } else {
-        Log.d(ID, "Message Queued", send.id);
-    }
-#else
+    // #if defined(CONF_ECU_DEBUG) && CONF_ECU_POSITION == FRONT_ECU // Back ECU will be on a loop if we also print debug strings
+    //     if (F_Can.write(send) == 1) {
+    //         Log.d(ID, "Message Sent", send.id);
+    //     } else {
+    //         Log.d(ID, "Message Queued", send.id);
+    //     }
+    // #else
     F_Can.write(send);
-#endif
+    // #endif
 }
 
 void pushData(const uint32_t address) {
