@@ -28,13 +28,13 @@ static const int CAN_COUNT = PP_NARG_MO(HARD_FAULT_ADD) + PP_NARG_MO(SOFT_FAULT_
 #undef X
 
 // NOTE: buffers are actually uint8_t buf[8] but to help mask them they are casted to a uint64_t*
-static uint64_t *hard_buffers[CAN_COUNT];  // store the incoming message buffers to quickly access
-static uint32_t hard_addresses[CAN_COUNT]; // mapped to buffers to later identify what fault occurred
-static uint64_t hard_masks[CAN_COUNT];     // mapped to addresses to later identify what fault occurred
+static uint64_t *hard_buffers[HARD_CAN_COUNT];  // store the incoming message buffers to quickly access
+static uint32_t hard_addresses[HARD_CAN_COUNT]; // mapped to buffers to later identify what fault occurred
+static uint64_t hard_masks[HARD_CAN_COUNT];     // mapped to addresses to later identify what fault occurred
 
-static uint64_t *soft_buffers[CAN_COUNT];  // store the incoming message buffers to quickly access
-static uint32_t soft_addresses[CAN_COUNT]; // mapped to buffers to later identify what fault occurred
-static uint64_t soft_masks[CAN_COUNT];     // mapped to addresses to later identify what fault occurred
+static uint64_t *soft_buffers[SOFT_CAN_COUNT];  // store the incoming message buffers to quickly access
+static uint32_t soft_addresses[SOFT_CAN_COUNT]; // mapped to buffers to later identify what fault occurred
+static uint64_t soft_masks[SOFT_CAN_COUNT];     // mapped to addresses to later identify what fault occurred
 
 // NOTE: these values are overwritten whenever a fault is tripped, whether a hard or soft fault
 static uint32_t faulted_address = 0; // Store what address caused a fault if it caused it
