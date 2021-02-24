@@ -94,6 +94,10 @@ State::State_t *ECUStates::PreCharge_State::run(void) { // NOTE: Low = Closed, H
 };
 
 State::State_t *ECUStates::Idle_State::run(void) {
+    Log.i(ID, "Waiting for Button not to be pressed");
+    while (Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT)) {
+    }
+
     Log.i(ID, "Waiting for Button or Charging Press");
     Pins::setInternalValue(PINS_INTERNAL_IDLE_STATE, HIGH);
 
@@ -169,7 +173,7 @@ State::State_t *ECUStates::Button_State::run(void) {
 
 void ECUStates::Driving_Mode_State::sendMCCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit) {
     int percentTorque = constrain(map(torque, 0, 1024, 0, 400), 0, 400); // separate func for negative vals (regen)
-    Log.d(ID, "Torque percent: ", percentTorque);
+    // Log.d(ID, "Torque percent: ", percentTorque);
     // Calculations value = (high_byte x 256) + low_byte
     uint8_t low_byte = percentTorque % 256;
     uint8_t high_byte = percentTorque / 256;
@@ -196,7 +200,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
     Pins::setInternalValue(PINS_INTERNAL_START, 1);
 
     while (true) {
-        Canbus::update();
+        // Canbus::update();
         // int BMSTemp = 30;
         // carCooling((float)BMSTemp); // TODO: what temp are we using for cooling?
 
@@ -206,12 +210,14 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             delay(10);
         }
 
-        Log.d(ID, "Sending Fault reset to MCs complete");
+        // Log.d(ID, "Sending Fault reset to MCs complete");
 
         int pedal0 = Pins::getCanPinValue(PINS_FRONT_PEDAL0);
         int pedal1 = Pins::getCanPinValue(PINS_FRONT_PEDAL1);
         if (abs(pedal1 - pedal0) > (float)pedal0 * 5 / 100) {
             Log.e(ID, "Pedal value offset > 5%");
+            Log.i(ID, "", pedal0);
+            Log.i(ID, "", pedal1);
             return &ECUStates::FaultState;
         }
 
@@ -253,17 +259,13 @@ State::State_t *ECUStates::FaultState::run(void) {
     Log.w(ID, "Resetting pins");
     Pins::resetPhysicalPins();
 
-    Log.d(ID, "Setting fault canpins");
-    Pins::setInternalValue(PINS_INTERNAL_START, 0);
-    Pins::setInternalValue(PINS_INTERNAL_BMS_FAULT, 1);
-    Pins::setInternalValue(PINS_INTERNAL_IMD_FAULT, 1);
-
-    delay(1000);
-    Log.e(ID, "Stopping canpins");
-    Pins::stop();
+    Log.d(ID, "Continuously setting Fault Canpins");
 
     while (true) {
         Log.f(ID, "FAULT STATE");
+        Pins::setInternalValue(PINS_INTERNAL_START, 0);
+        Pins::setInternalValue(PINS_INTERNAL_BMS_FAULT, Pins::getPinValue(PINS_BACK_BMS_FAULT));
+        Pins::setInternalValue(PINS_INTERNAL_IMD_FAULT, Pins::getPinValue(PINS_BACK_IMD_FAULT));
         Fault::logFault();
         delay(1000);
     }
