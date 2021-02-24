@@ -93,6 +93,11 @@ void stop(void);
  */
 void initialize(void);
 
+/**
+ * @brief Used for debugging
+ */
+void debugPrint(void);
+
 } // namespace Pins
 
 #endif // __ECU_PINS_H__
