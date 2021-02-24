@@ -1,5 +1,5 @@
-#include "ECUGlobalConfig.h"
 #include "Front.h"
+#include "ECUGlobalConfig.h"
 
 static LOG_TAG ID = "Front Teensy";
 
