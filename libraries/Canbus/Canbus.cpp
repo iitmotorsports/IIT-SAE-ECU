@@ -28,12 +28,12 @@ static const int TX_MAILBOXES = CONF_FLEXCAN_TX_MAILBOXES;
 
 FlexCAN_T4<CONF_FLEXCAN_CAN_SELECT, RX_SIZE_256, TX_SIZE_16> F_Can;
 // static IntervalTimer updateTimer;
-static uint32_t addressList[ADDRESS_COUNT];          // Sorted list of all the addresses
-static uint8_t addressBuffers[ADDRESS_COUNT + 1][8]; // Store buffers for every address, last entry used as failsafe
-static bool addressFlow[ADDRESS_COUNT];              // Denote whether an address is incoming or outgoing, mapped to addressList
-static canCallback callbacks[ADDRESS_COUNT] = {0};   // Store any and all callbacks
-// NOTE: From what I can tell, a semaphore is needed whenever Can.events is not used, as canMsg handlers will automaticlly run without it.
-static uint32_t addressSemaphore = 0; // Address buffer semaphore, // NOTE: address 0x0 cannot be used
+static uint32_t addressList[ADDRESS_COUNT];                 // Sorted list of all the addresses
+static uint8_t addressBuffers[ADDRESS_COUNT + 1][8];        // Store buffers for every address, last entry used as failsafe
+static bool addressFlow[ADDRESS_COUNT];                     // Denote whether an address is incoming or outgoing, mapped to addressList
+static volatile canCallback callbacks[ADDRESS_COUNT] = {0}; // Store any and all callbacks
+// NOTE: From what I can tell, a semaphore is needed whenever Can.events is not used, as canMsg handlers will automaticaly run without it.
+static volatile uint32_t addressSemaphore = 0; // Address buffer semaphore, // NOTE: address 0x0 cannot be used
 
 // Reserved msg objs for sending and receiving
 static CAN_message_t receive;
@@ -114,10 +114,17 @@ static uint _getAddressPos(const uint32_t address) {
             s = mid + 1;
         }
     }
+    Log.e(ID, "Address has not been allocated: ", address);
     return ADDRESS_COUNT; // Out of range index
 }
 
+// FlexCan Callback function
 static void _receiveCan(const CAN_message_t &msg) {
+#if CONF_LOGGING_MAPPED_MODE > 0 // TEMPORARY FIX?
+    Serial.print("0000000");
+#else
+    Serial.print(""); // FIXME: Serial breaks when we don't do this? Somthing todo with interrupts, prob
+#endif
     if (addressSemaphore == msg.id) // Throw data away, we are already processing previous msg
         return;
     uint pos = _getAddressPos(msg.id);
@@ -127,7 +134,8 @@ static void _receiveCan(const CAN_message_t &msg) {
 }
 
 void addCallback(const uint32_t address, canCallback callback) {
-    callbacks[_getAddressPos(address)] = callback;
+    uint pos = _getAddressPos(address);
+    callbacks[pos] = callback;
 }
 
 void enableInterrupts(bool enable) {
@@ -147,14 +155,15 @@ void setup(void) {
     F_Can.begin(); // NOTE: canbus must first be started before it can be configured
     _setMailboxes();
     F_Can.setBaudRate(CONF_FLEXCAN_BAUD_RATE);
+    Log.d(ID, "Setting Callback");
     F_Can.onReceive(_receiveCan);
-    delay(100); // Just in case canbus needs to do stuff
-    F_Can.enableMBInterrupts();
-// #ifdef CONF_ECU_DEBUG
-//     F_Can.mailboxStatus(); // Only shows actual data in ASCII mode
-// #endif
+    Log.d(ID, "Enabling Interrupts");
+    delay(500);                 // Just in case canbus needs to do stuff
+    F_Can.enableMBInterrupts(); // FIXME: Gets stuck here why?
+    // #ifdef CONF_ECU_DEBUG
+    //     F_Can.mailboxStatus(); // Only shows actual data in ASCII mode
+    // #endif
     started = true;
-    // updateTimer.begin(update, 1); // Choose an appropriate update time if a timer is used
 }
 
 void update(void) { // TODO: Test if canbus interrupts actually work as intended
@@ -173,11 +182,7 @@ void getData(const uint32_t address, uint8_t buf[8]) {
 }
 
 uint8_t *getBuffer(const uint32_t address) {
-    uint pos = _getAddressPos(address);
-    if (pos == ADDRESS_COUNT) {
-        Log.e(ID, "Address has not been allocated: ", address);
-    }
-    return addressBuffers[pos];
+    return addressBuffers[_getAddressPos(address)];
 }
 
 void setSemaphore(const uint32_t address) {
@@ -189,15 +194,7 @@ void clearSemaphore() {
 }
 
 static void _pushSendMsg() {
-    // #if defined(CONF_ECU_DEBUG) && CONF_ECU_POSITION == FRONT_ECU // Back ECU will be on a loop if we also print debug strings
-    //     if (F_Can.write(send) == 1) {
-    //         Log.d(ID, "Message Sent", send.id);
-    //     } else {
-    //         Log.d(ID, "Message Queued", send.id);
-    //     }
-    // #else
     F_Can.write(send);
-    // #endif
 }
 
 void pushData(const uint32_t address) {
