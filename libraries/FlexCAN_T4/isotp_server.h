@@ -32,49 +32,47 @@
 #define _ISOTP_SERVER_H_
 
 #include "Arduino.h"
+#include "FlexCAN_T4.h"
 #include "circular_buffer.h"
 #include "isotp_server.h"
-#include "FlexCAN_T4.h"
 
 typedef enum ISOTP_ID_TYPE {
-  STANDARD_ID = 0,
-  EXTENDED_ID = 1,
+    STANDARD_ID = 0,
+    EXTENDED_ID = 1,
 } ISOTP_ID_TYPE;
 
-#define ISOTPSERVER_CLASS template<uint32_t canid, ISOTP_ID_TYPE extended, uint32_t request, uint8_t *buffer, uint16_t len>
-#define ISOTPSERVER_FUNC template<uint32_t canid, ISOTP_ID_TYPE extended, uint32_t request, uint8_t *buffer, uint16_t len>
+#define ISOTPSERVER_CLASS template <uint32_t canid, ISOTP_ID_TYPE extended, uint32_t request, uint8_t *buffer, uint16_t len>
+#define ISOTPSERVER_FUNC template <uint32_t canid, ISOTP_ID_TYPE extended, uint32_t request, uint8_t *buffer, uint16_t len>
 #define ISOTPSERVER_OPT isotp_server<canid, extended, request, buffer, len>
 
-
 class isotp_server_Base {
-  public:
+public:
     virtual void _process_frame_data(const CAN_message_t &msg) = 0;
     static int buffer_hosts;
-    FlexCAN_T4_Base* _isotp_server_busToWrite = nullptr;
+    FlexCAN_T4_Base *_isotp_server_busToWrite = nullptr;
 };
 
-static isotp_server_Base* _ISOTPSERVER_OBJ[16] = { nullptr };
+static isotp_server_Base *_ISOTPSERVER_OBJ[16] = {nullptr};
 
 ISOTPSERVER_CLASS class isotp_server : public isotp_server_Base {
-  public:
+public:
     isotp_server();
     void begin() { enable(); }
     void enable(bool yes = 1) { isotp_enabled = yes; }
-    void setWriteBus(FlexCAN_T4_Base* _busWritePtr) { _isotp_server_busToWrite = _busWritePtr; }
+    void setWriteBus(FlexCAN_T4_Base *_busWritePtr) { _isotp_server_busToWrite = _busWritePtr; }
     void setPadding(uint8_t _byte) { padding_value = _byte; }
 
-  private:
+private:
     void _process_frame_data(const CAN_message_t &msg);
     void send_first_frame();
     bool send_next_frame();
-    uint8_t header[2] = { 0 };
+    uint8_t header[2] = {0};
     volatile uint8_t request_size = 4;
     volatile uint16_t index_pos = 0;
     volatile uint8_t index_sequence = 1;
     volatile bool isotp_enabled = 0;
     uint8_t padding_value = 0xA5;
 };
-
 
 #include "isotp_server.tpp"
 #endif

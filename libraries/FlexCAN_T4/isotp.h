@@ -42,70 +42,70 @@
 #endif
 
 typedef struct ISOTP_data {
-  uint32_t id = 0;                         /* can identifier */
-  struct {
-    bool extended = 0;                     /* identifier is extended (29-bit) */
-    bool usePadding = 0;                   /* padd and use all 8 bytes instead of truncating len */
-    bool separation_uS = 0;                /* separation time in uS (100-900uS only) */
-  } flags;
-  uint16_t len = 8;                        /* length of CAN message or callback payload */
-  uint16_t blockSize = 0;                  /* used for flow control, specify how many frame blocks per frame control request */
-  uint8_t flow_control_type = 0;           /* flow control type: 0: Clear to Send, 1: Wait, 2: Abort */
-  uint16_t separation_time = 0;            /* time between frames */
+    uint32_t id = 0; /* can identifier */
+    struct {
+        bool extended = 0;      /* identifier is extended (29-bit) */
+        bool usePadding = 0;    /* padd and use all 8 bytes instead of truncating len */
+        bool separation_uS = 0; /* separation time in uS (100-900uS only) */
+    } flags;
+    uint16_t len = 8;              /* length of CAN message or callback payload */
+    uint16_t blockSize = 0;        /* used for flow control, specify how many frame blocks per frame control request */
+    uint8_t flow_control_type = 0; /* flow control type: 0: Clear to Send, 1: Wait, 2: Abort */
+    uint16_t separation_time = 0;  /* time between frames */
 } ISOTP_data;
 
 typedef enum ISOTP_RXBANKS_TABLE {
-  RX_BANKS_2 = (uint16_t)2,
-  RX_BANKS_4 = (uint16_t)4,
-  RX_BANKS_8 = (uint16_t)8,
-  RX_BANKS_16 = (uint16_t)16,
-  RX_BANKS_32 = (uint16_t)32,
-  RX_BANKS_64 = (uint16_t)64,
-  RX_BANKS_128 = (uint16_t)128,
-  RX_BANKS_256 = (uint16_t)256,
-  RX_BANKS_512 = (uint16_t)512,
-  RX_BANKS_1024 = (uint16_t)1024
+    RX_BANKS_2 = (uint16_t)2,
+    RX_BANKS_4 = (uint16_t)4,
+    RX_BANKS_8 = (uint16_t)8,
+    RX_BANKS_16 = (uint16_t)16,
+    RX_BANKS_32 = (uint16_t)32,
+    RX_BANKS_64 = (uint16_t)64,
+    RX_BANKS_128 = (uint16_t)128,
+    RX_BANKS_256 = (uint16_t)256,
+    RX_BANKS_512 = (uint16_t)512,
+    RX_BANKS_1024 = (uint16_t)1024
 } ISOTP_RXBANKS_TABLE;
 
-#define ISOTP_CLASS template<ISOTP_RXBANKS_TABLE _rxBanks = RX_BANKS_16, size_t _max_length = 32>
-#define ISOTP_FUNC template<ISOTP_RXBANKS_TABLE _rxBanks, size_t _max_length>
+#define ISOTP_CLASS template <ISOTP_RXBANKS_TABLE _rxBanks = RX_BANKS_16, size_t _max_length = 32>
+#define ISOTP_FUNC template <ISOTP_RXBANKS_TABLE _rxBanks, size_t _max_length>
 #define ISOTP_OPT isotp<_rxBanks, _max_length>
 
 typedef void (*_isotp_cb_ptr)(const ISOTP_data &config, const uint8_t *buf);
 
 #if defined(TEENSYDUINO) // Teensy
-static FlexCAN_T4_Base* _isotp_busToWrite = nullptr;
+static FlexCAN_T4_Base *_isotp_busToWrite = nullptr;
 #elif defined(ARDUINO_ARCH_ESP32) //ESP32
-static ESP32_CAN_Base* _isotp_busToWrite = nullptr;
+static ESP32_CAN_Base *_isotp_busToWrite = nullptr;
 #endif
 
 class isotp_Base {
-  public:
+public:
     virtual void _process_frame_data(const CAN_message_t &msg) = 0;
     virtual void write(const ISOTP_data &config, const uint8_t *buf, uint16_t size) = 0;
     _isotp_cb_ptr _isotp_handler = nullptr;
 };
 
-static isotp_Base* _ISOTP_OBJ = nullptr;
+static isotp_Base *_ISOTP_OBJ = nullptr;
 
 ISOTP_CLASS class isotp : public isotp_Base {
-  public:
+public:
     isotp() { _ISOTP_OBJ = this; }
 
 #if defined(TEENSYDUINO) // Teensy
-    void setWriteBus(FlexCAN_T4_Base* _busWritePtr) { _isotp_busToWrite = _busWritePtr; }
+    void setWriteBus(FlexCAN_T4_Base *_busWritePtr) { _isotp_busToWrite = _busWritePtr; }
 #elif defined(ARDUINO_ARCH_ESP32) //ESP32
-    void setWriteBus(ESP32_CAN_Base* _busWritePtr) { _isotp_busToWrite = _busWritePtr; }
+    void setWriteBus(ESP32_CAN_Base *_busWritePtr) { _isotp_busToWrite = _busWritePtr; }
 #endif
     void begin() { enable(); }
     void enable(bool yes = 1) { isotp_enabled = yes; }
     void setPadding(uint8_t _byte) { padding_value = _byte; }
     void onReceive(_isotp_cb_ptr handler) { _ISOTP_OBJ->_isotp_handler = handler; }
     void write(const ISOTP_data &config, const uint8_t *buf, uint16_t size);
-    void write(const ISOTP_data &config, const char *buf, uint16_t size) { write(config, (const uint8_t*)buf, size); }
+    void write(const ISOTP_data &config, const char *buf, uint16_t size) { write(config, (const uint8_t *)buf, size); }
     void sendFlowControl(const ISOTP_data &config);
 
-  private:
+private:
     void _process_frame_data(const CAN_message_t &msg);
     Circular_Buffer<uint8_t, _rxBanks, _max_length> _rx_slots;
     uint8_t padding_value = 0xA5;
