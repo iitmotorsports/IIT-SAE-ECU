@@ -95,8 +95,8 @@ void clearSemaphore();
  * If an incoming address buffer is updated it will call the given function.
  * Keep callbacks quick and simple.
  * @note Only one callback per address
- * @note If the semaphore is set to the given address the callback will not be called
- * @note Semaphores do not have to be used within the function to read from the given buffer
+ * @details If the semaphore is set to the given address the callback will not be called.
+ * Semaphores do not have to be used within the function to read from the given buffer.
  * @param address The incoming address
  * @param callback The callback function, refer to canCallback
  */
