@@ -65,19 +65,30 @@ struct digitalCanPinMsg_t : CanPinMsg_t {
     uint8_t digitalPins[maxActiveDigitalPins];
     uint digitalPinPos[maxActiveDigitalPins];
     void send() {
+        memset(buf, 0, 8);
         for (size_t i = 0; i < activedigitalCanPins; i++) {
             *bufmap = *bufmap << 1;
             *bufmap |= (bool)getOutgoingPinValue(digitalPins[i]);
         }
         // Log.d(ID, "Sending Digital Pins", address);
         Canbus::sendData(address, buf);
-    };
+    }
     void receive(uint8_t buffer[8]) {
         bufmap = (uint64_t *)buffer; // use bufmap, as if we are receiving we can't be sending
         for (int i = activedigitalCanPins - 1; i >= 0; i--) {
             CAN_GPIO_IN[digitalPinPos[i]] = *bufmap & 1;
-            Log.d(ID, "Received digital canPin:", digitalPinPos[i]);
+            // Log.d(ID, "Received digital canPin:", digitalPinPos[i]);
+            // Log.d(ID, "Value:", CAN_GPIO_IN[digitalPinPos[i]]);
             *bufmap = *bufmap >> 1;
+        }
+    }
+    void debugPrint() {
+        Serial.printf("Printing outgoing digital pin values: ");
+        Serial.println(activedigitalCanPins);
+        for (size_t i = 0; i < activedigitalCanPins; i++) {
+            Serial.print(digitalPins[i]);
+            Serial.print(" : ");
+            Serial.println(getOutgoingPinValue(digitalPins[i]));
         }
     }
 };
@@ -86,7 +97,7 @@ struct analogCanPinMsg_t : CanPinMsg_t {
     uint8_t analogPins[2] = {255, 255}; // NOTE: If pin 255 exists it cannot be used, mostly likely will not happen?
     uint analogPinPos[2];
     void send() {
-        *bufmap = 0;
+        memset(buf, 0, 8);
         for (size_t i = 0; i < 2; i++) {
             *bufmap = *bufmap << 32;
             if (analogPins[i] != 255)
@@ -94,7 +105,7 @@ struct analogCanPinMsg_t : CanPinMsg_t {
         }
         // Log.d(ID, "Sending Analog Pins", address);
         Canbus::sendData(address, buf);
-    };
+    }
     void receive(uint8_t buffer[8]) {
         bufmap = (uint64_t *)buffer; // use bufmap, as if we are receiving we can't be sending
         int a0 = *bufmap >> 32;
@@ -102,8 +113,14 @@ struct analogCanPinMsg_t : CanPinMsg_t {
         CAN_GPIO_IN[analogPinPos[0]] = a0;
         if (analogPins[1] != 255) // Ensure this buffer only allocated one analog val
             CAN_GPIO_IN[analogPinPos[1]] = a1;
-        Log.d(ID, "Received analog canPin:", analogPinPos[0]);
-        Log.d(ID, "Received analog canPin:", analogPinPos[1]);
+        // Log.d(ID, "Received analog canPin:", analogPinPos[0]);
+        // Log.d(ID, "Received analog canPin:", analogPinPos[1]);
+    }
+    void debugPrint() {
+        Serial.printf("Printing outgoing analog pin values for address: %u\n", address);
+        Serial.println(getOutgoingPinValue(analogPins[0]));
+        if (analogPins[1] != 255) // Ensure this buffer only allocated one analog val
+            Serial.println(getOutgoingPinValue(analogPins[1]));
     }
 };
 
@@ -152,6 +169,19 @@ static void _receiveAnalogCanbusPin(uint32_t address, uint8_t *buffer) { // IMPR
             analogCanPinMessages_IN[i].receive(buffer);
             break;
         }
+    }
+}
+
+void debugPrint(void) {
+    digitalCanPinMessage_OUT.debugPrint();
+    for (size_t i = 0; i < analogCanMsgCount_OUT; i++) {
+        analogCanPinMessages_OUT[i].debugPrint();
+    }
+    Serial.println("Printing CanPin Map");
+    for (auto i : CAN_GPIO_MAP_IN) {
+        Serial.print(i.first);
+        Serial.print(" ");
+        Serial.println(*i.second);
     }
 }
 
@@ -260,8 +290,8 @@ static void populateCanbusMap(std::multimap<uint32_t, std::tuple<uint, uint8_t, 
                 digitalCanPinStruct->address = address;
                 digitalCanPinStruct->digitalPinPos[dc] = std::get<0>(d->second);
                 digitalCanPinStruct->digitalPins[dc] = std::get<1>(d->second);
-                digitalCanPinStruct->activedigitalCanPins = dc; // Set number of active pins out of 8 on digital message
                 dc++;
+                digitalCanPinStruct->activedigitalCanPins = dc; // Set number of active pins out of 8 on digital message
             }
         }
 
@@ -269,10 +299,14 @@ static void populateCanbusMap(std::multimap<uint32_t, std::tuple<uint, uint8_t, 
             if (ac != 0) {
                 amsgc++;
                 Log.i(ID, "Set analog canbus buffer:", address);
+                Log.d(ID, "", std::get<1>(i->second));
             }
             if (dc != 0) {
                 dmsgc++;
                 Log.i(ID, "Set digital canbus buffer:", address);
+                for (auto d = range.first; d != range.second; ++d) {
+                    Log.d(ID, "", std::get<1>(d->second));
+                }
             }
         } else {
             Log.w(ID, "No pins were set for address: ", address);
@@ -345,14 +379,6 @@ void initialize(void) {
         Log.i(ID, "Starting outgoing canpin update timer");
         canbusPinUpdate.begin(_pushCanbusPins, CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO);
     }
-// #ifdef CONF_ECU_DEBUG
-//     Serial.print("Printing active canpins");
-//     for (auto i : CAN_GPIO_MAP_IN) {
-//         Serial.print(i.first);
-//         Serial.print(" ");
-//         Serial.println(*i.second);
-//     }
-// #endif
 }
 
 } // namespace Pins
