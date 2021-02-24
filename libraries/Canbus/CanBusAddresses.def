@@ -35,6 +35,9 @@
 #define ADD_MC1_CLEAR 0x0021 + ADD_MC1_OFFSET
 #define ADD_MC0_FAULTS 0x000B + ADD_MC0_OFFSET
 #define ADD_MC1_FAULTS 0x000B + ADD_MC1_OFFSET
+
+#define CANPIN 3
+
 // canPin addresses
 #define ADD_CANPIN_ANALOG0 0x0010
 #define ADD_CANPIN_ANALOG1 0x0020
@@ -50,6 +53,8 @@
  * 
  * Every definition is given a direction denoting whether it is incoming(INPUT) or outgoing(OUTPUT)
  * 
+ * CANPIN can also be used for direction, this simply reserves the address and ensures it is used for canpins
+ * 
  * Unless it is the last entry, this is how to add a new message
  * 
  * X(CAN address, direction) \
@@ -58,20 +63,26 @@
  * 
  * @note Currently, address 0x0000 cannot be used
  */
-#define CAN_ADDRESS          \
-    X(ADD_BMS_SOC, INPUT)    \
-    X(ADD_BMS_VOLT, INPUT)   \
-    X(ADD_MC0_VOLT, INPUT)   \
-    X(ADD_MC1_VOLT, INPUT)   \
-    X(ADD_MC0_RPM, INPUT)    \
-    X(ADD_MC1_RPM, INPUT)    \
-    X(ADD_MC0_CURR, INPUT)   \
-    X(ADD_MC1_CURR, INPUT)   \
-    X(ADD_MC0_CTRL, OUTPUT)  \
-    X(ADD_MC1_CTRL, OUTPUT)  \
-    X(ADD_MC0_CLEAR, OUTPUT) \
-    X(ADD_MC1_CLEAR, OUTPUT) \
-    X(ADD_MC0_FAULTS, INPUT) \
-    X(ADD_MC1_FAULTS, INPUT)
+#define CAN_ADDRESS                \
+    X(ADD_BMS_SOC, INPUT)          \
+    X(ADD_BMS_VOLT, INPUT)         \
+    X(ADD_MC0_VOLT, INPUT)         \
+    X(ADD_MC1_VOLT, INPUT)         \
+    X(ADD_MC0_RPM, INPUT)          \
+    X(ADD_MC1_RPM, INPUT)          \
+    X(ADD_MC0_CURR, INPUT)         \
+    X(ADD_MC1_CURR, INPUT)         \
+    X(ADD_MC0_CTRL, OUTPUT)        \
+    X(ADD_MC1_CTRL, OUTPUT)        \
+    X(ADD_MC0_CLEAR, OUTPUT)       \
+    X(ADD_MC1_CLEAR, OUTPUT)       \
+    X(ADD_MC0_FAULTS, INPUT)       \
+    X(ADD_MC1_FAULTS, INPUT)       \
+    X(ADD_CANPIN_ANALOG0, CANPIN)  \
+    X(ADD_CANPIN_ANALOG1, CANPIN)  \
+    X(ADD_CANPIN_ANALOG2, CANPIN)  \
+    X(ADD_CANPIN_DIGITAL0, CANPIN) \
+    X(ADD_CANPIN_DIGITAL1, CANPIN) \
+    X(ADD_AUX_LOGGING, CANPIN)
 
 #endif // __ECU_CANBUS_ADDRESSES_H__
