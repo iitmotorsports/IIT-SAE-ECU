@@ -29,7 +29,7 @@
 /**
  * @brief The interval in micros to update outgoing canPins
  */
-#define CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO 100 // TODO: Test whether 100 micros is an okay update interval
+#define CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO 10000 // TODO: Find a good update interval
 
 // @cond
 
@@ -46,7 +46,7 @@
 #define PINS_BOTH_LED 13
 
 // Back ECU Only - ECU0
-#define PINS_BACK_SERVO_OFF 0        // 
+#define PINS_BACK_SERVO_OFF 0        //
 #define PINS_BACK_TSV_SIGNAL 3       // digital input
 #define PINS_BACK_AIR2 4             // Air 2 control
 #define PINS_BACK_CHARGING_RELAY 5   // On or Off // FIXME: Set init state to 0
@@ -68,16 +68,16 @@
 #define PINS_BACK_PUMP_DAC PIN_A21   // DAC pump control 2-2.5V
 
 // Front ECU Only - ECU1
-#define PINS_FRONT_BUTTON_INPUT 2
-#define PINS_FRONT_WHEEL1 21
-#define PINS_FRONT_WHEEL0 20
-#define PINS_FRONT_PEDAL1 18
-#define PINS_FRONT_PEDAL0 16
-#define PINS_FRONT_STEER 15
-#define PINS_FRONT_BRAKE 14
-#define PINS_FRONT_IMD_LIGHT 38
-#define PINS_FRONT_BMS_LIGHT 37
-#define PINS_FRONT_START_LIGHT 36
+#define PINS_FRONT_BUTTON_INPUT 2 // Digital Start Button
+#define PINS_FRONT_WHEEL1 21      // 0-5v R wheel speed
+#define PINS_FRONT_WHEEL0 20      // 0-5v L wheel speed
+#define PINS_FRONT_PEDAL1 18      // Pedal 2
+#define PINS_FRONT_PEDAL0 16      // Pedal 1
+#define PINS_FRONT_STEER 15       // -5-5v steering wheel
+#define PINS_FRONT_BRAKE 14       // 0-3.3v brake
+#define PINS_FRONT_IMD_LIGHT 38   // imd led
+#define PINS_FRONT_BMS_LIGHT 37   // bms led
+#define PINS_FRONT_START_LIGHT 36 // start led
 // @endcond
 
 #if CONF_ECU_POSITION == BACK_ECU
@@ -196,8 +196,9 @@
     X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_IMD_FAULT) \
     X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_IDLE_STATE)
 
-#define PINS_CANBUS_DIGITAL_OUT \
-    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_CHARGE_SIGNAL)
+#define PINS_CANBUS_DIGITAL_OUT                         \
+    X(ADD_CANPIN_DIGITAL1, PINS_INTERNAL_CHARGE_SIGNAL) \
+    X(ADD_CANPIN_DIGITAL1, PINS_FRONT_BUTTON_INPUT)
 
 #endif
 
