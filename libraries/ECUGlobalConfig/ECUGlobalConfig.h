@@ -17,7 +17,7 @@
 /**
  * @brief Define to enable normal logging on back ECU and checks to be run throughout libaries
  */
-#define CONF_ECU_DEBUG
+#define CONF_ECU_DEBUG 1
 
 /**
  * @brief Front ECU value
