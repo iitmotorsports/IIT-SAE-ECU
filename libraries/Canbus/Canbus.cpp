@@ -101,6 +101,22 @@ static void _setMailboxes() {
 }
 
 // IMPROVE: We have to binary search all mailboxes each time we want to get data
+static uint __getAddressPos(const uint32_t address) {
+    int s = 0;
+    int e = ADDRESS_COUNT;
+    while (s <= e) {
+        int mid = (s + e) / 2;
+        if (addressList[mid] == address) {
+            return mid;
+        } else if (addressList[mid] > address) {
+            e = mid - 1;
+        } else {
+            s = mid + 1;
+        }
+    }
+    return ADDRESS_COUNT; // Out of range index
+}
+
 static uint _getAddressPos(const uint32_t address) {
     int s = 0;
     int e = ADDRESS_COUNT;
@@ -120,14 +136,14 @@ static uint _getAddressPos(const uint32_t address) {
 
 // FlexCan Callback function
 static void _receiveCan(const CAN_message_t &msg) {
-#if CONF_LOGGING_MAPPED_MODE > 0 // TEMPORARY FIX?
-    Serial.print("0000000");
-#else
-    Serial.print(""); // FIXME: Serial breaks when we don't do this? Somthing todo with interrupts, prob
-#endif
+    // #if CONF_LOGGING_MAPPED_MODE > 0 // TEMPORARY FIX?
+    //     Serial.print("0000000");
+    // #else
+    //     Serial.print(""); // FIXME: Serial breaks when we don't do this? Somthing todo with interrupts, prob
+    // #endif
     if (addressSemaphore == msg.id) // Throw data away, we are already processing previous msg
         return;
-    uint pos = _getAddressPos(msg.id);
+    uint pos = __getAddressPos(msg.id);
     memcpy(addressBuffers[pos], msg.buf, 8);
     if (callbacks[pos])
         callbacks[pos](msg.id, addressBuffers[pos]);
