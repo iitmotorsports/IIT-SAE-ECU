@@ -18,8 +18,11 @@
 #include "Log.h"
 #include "LogConfig.def"
 #include "WProgram.h"
+#include "circular_buffer.h"
 
 namespace Logging {
+
+Circular_Buffer<uint64_t, 16> canbusRelayBuffer; // TODO: send data after interrupt
 
 #ifndef CONF_LOGGING_MAX_LEVEL
 #define CONF_LOGGING_MAX_LEVEL 4
@@ -201,11 +204,12 @@ void Log_t::f(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
 #endif
 }
 
-static void _receiveLogBuffer(uint32_t address, uint8_t *buf) {
+static void _receiveLogBuffer(uint32_t address, uint8_t *buf) { // NOTE: only works in non ascii mode
+    Serial.println("data");
     Serial.write(buf, 8);
 }
 
-void enableCanbusRelay() {
+void enableCanbusRelay() { // FIXME: Serial.write cannot be used in interrupt?
     Canbus::addCallback(ADD_AUX_LOGGING, _receiveLogBuffer);
 }
 
