@@ -1,0 +1,13 @@
+Each Waveshare (WS) transceivers both have 120 Ohm termination resistors
+
+BMS_CAN1 (unless specially ordered), has one 120 ohm terminator built in
+    This means one WS <-> BMS_CAN1
+
+BMS_CAN2 does not have a terminator resistor
+    This means WS <-- BMS_CAN2 --> WS
+
+BMS CAN firmware must be specifically updated per CAN Bus
+
+Test Resistance on the line is correct
+    No power on lines
+    Total resistance should read 60
