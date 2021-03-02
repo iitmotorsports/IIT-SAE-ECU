@@ -301,10 +301,10 @@
             "description": "What portname the moniter should use",
             "type": "pickString",
             "options": [
-                "COM4",
+                "COM3",
                 "COM5"
             ],
-            "default": "COM4"
+            "default": "COM3"
         },
         {
             "id": "TEENSY_BAUDRATE",
