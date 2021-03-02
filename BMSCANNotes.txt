@@ -10,6 +10,7 @@ BMS_CAN2 does not have a terminator resistor
     This means WS <-- BMS_CAN2 --> WS
 
 BMS CAN firmware must be specifically updated per CAN Bus
+    CANdapter must individually connect to either line to program, take note of where termination resistors are located
 
 Test Resistance on the line is correct
     No power on lines
