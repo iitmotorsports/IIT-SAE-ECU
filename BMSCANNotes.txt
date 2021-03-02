@@ -1,3 +1,6 @@
+Waveshare transceiver serial number (Amazon Listing): SN65HVD230
+PCB transceiver serial number                       : SN65HVD230D
+
 Each Waveshare (WS) transceivers both have 120 Ohm termination resistors
 
 BMS_CAN1 (unless specially ordered), has one 120 ohm terminator built in
