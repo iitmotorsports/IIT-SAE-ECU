@@ -29,7 +29,7 @@
 /**
  * @brief Maps Voltages 0-5v to an appropriate analog value
  */
-#define PINS_VOLT_TO_ANALOG(x) min(max(map(x, 0, 5, PINS_ANALOG_MIN, PINS_ANALOG_HIGH), PINS_ANALOG_MIN), PINS_ANALOG_HIGH)
+#define PINS_VOLT_TO_ANALOG(x) (int)min(max((x / 5) * PINS_ANALOG_HIGH, PINS_ANALOG_MIN), PINS_ANALOG_HIGH)
 
 /**
  * @brief Get and set values to predefined pins.
