@@ -25,6 +25,9 @@
 namespace Pins {
 
 // NOTE: analogpin indexes extend beyond CORE_NUM_TOTAL_PINS, eg. DAC0
+
+// TODO: Test whether analog write pins need to be set to a freq of 14648.437 Hz
+
 // static int A_GPIO[CORE_NUM_TOTAL_PINS]; // IMPROVE: Use CORE_NUM_ANALOG instead
 
 #define X ,
@@ -331,7 +334,7 @@ void stop(void) {
 void initialize(void) {
     Log.i(ID, "Setting up physical pins");
 
-    analogWriteResolution(12);
+    analogWriteResolution(PINS_ANALOG_RES);
     resetPhysicalPins();
 
     Log.i(ID, "Setting up outgoing canbus pins");
