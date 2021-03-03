@@ -16,9 +16,20 @@
 
 // IMPROVE: pin priority
 
+#include "PPHelp.h"
 #include "PinConfig.def"
 #include <stdint.h>
 #include <stdlib.h>
+
+#define PINS_ANALOG_RES CONF_PINS_ANALOG_WRITE_RESOLUTION
+#define PINS_ANALOG_HIGH pow(2, PINS_ANALOG_RES)
+#define PINS_ANALOG_MAX PINS_ANALOG_HIGH - 1
+#define PINS_ANALOG_MIN 0
+
+/**
+ * @brief Maps Voltages 0-5v to an appropriate analog value
+ */
+#define PINS_VOLT_TO_ANALOG(x) min(max(map(x, 0, 5, PINS_ANALOG_MIN, PINS_ANALOG_MAX), PINS_ANALOG_MIN), PINS_ANALOG_MAX)
 
 /**
  * @brief Get and set values to predefined pins.
