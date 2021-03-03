@@ -1,4 +1,5 @@
 #include "ECUStates.hpp"
+#include "AeroServo.h"
 #include "ECUGlobalConfig.h"
 #include "Faults.h"
 #include "Log.h"
@@ -16,6 +17,7 @@ State::State_t *ECUStates::Initialize::run(void) {
     Canbus::setup();    // allocate and organize addresses
     Pins::initialize(); // setup predefined pins
     Fault::setup();     // load all buffers
+    Aero::setup();
 
     if (FaultCheck()) {
         return &ECUStates::FaultState;
@@ -221,11 +223,10 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             return &ECUStates::FaultState;
         }
 
-        if (Pins::getCanPinValue(PINS_FRONT_BRAKE) / 4095 > 4) { // NOTE: analog res is at 12 bits which means 4095 is max value
-            Pins::setPinValue(PINS_BACK_BRAKE_LIGHT, 4095);
-        } else {
-            Pins::setPinValue(PINS_BACK_BRAKE_LIGHT, 0);
-        }
+        static int breakVal = Pins::getCanPinValue(PINS_FRONT_BRAKE);
+        Aero::run(breakVal, Pins::getCanPinValue(PINS_FRONT_STEER));
+
+        Pins::setPinValue(PINS_BACK_BRAKE_LIGHT, PINS_ANALOG_HIGH * (breakVal / PINS_ANALOG_MAX > 4));
 
         int MotorTorques[2] = {0};
         torqueVector(MotorTorques, (float)(pedal0 + pedal1) / 2);
