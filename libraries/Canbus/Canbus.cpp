@@ -91,7 +91,7 @@ static void _setMailboxes() {
 
     Log.d(ID, "Sorting addresses", ADDRESS_COUNT);
     _selectionSort(addressList, addressFlow, ADDRESS_COUNT);
-    Log.d(ID, "Done sorting");
+    Log.d(ID, "Done");
 #ifdef CONF_ECU_DEBUG
     for (size_t i = 0; i < ADDRESS_COUNT; i++) {
         Log.d(ID, "Sorted address:", addressList[i]);
