@@ -9,8 +9,7 @@ BMS_CAN1 (unless specially ordered), has one 120 ohm terminator built in
 BMS_CAN2 does not have a terminator resistor
     This means WS <-- BMS_CAN2 --> WS
 
-BMS CAN firmware must be specifically updated per CAN Bus
-    CANdapter must individually connect to either line to program, take note of where termination resistors are located
+Any external devices connected to the Orion BMS's CAN interface must share a common ground with the BMS (Main I/O connector pin 12)
 
 Test Resistance on the line is correct
     No power on lines
