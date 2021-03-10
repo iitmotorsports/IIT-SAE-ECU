@@ -14,7 +14,6 @@ static uint8_t *MC1_CURR_Buffer;
 static uint8_t *BMS_SOC_Buffer;
 static uint8_t *LOG_Buffer;
 static constexpr float wheelRadius = 1.8; // TODO: Get car wheel radius
-static bool charging = false;
 
 static uint32_t BMSSOC() {
     Canbus::setSemaphore(ADD_BMS_SOC);
@@ -84,14 +83,11 @@ void Front::run() {
             }
 
             if (serialData == COMMAND_ENABLE_CHARGING) {
-                if (!charging && Pins::getCanPinValue(PINS_INTERNAL_IDLE_STATE)) {
+                if (Pins::getCanPinValue(PINS_INTERNAL_IDLE_STATE)) {
                     Pins::setInternalValue(PINS_INTERNAL_CHARGE_SIGNAL, HIGH);
                     Log.i(ID, "Charging Enabled");
-                    charging = true;
                 } else {
                     Pins::setInternalValue(PINS_INTERNAL_CHARGE_SIGNAL, LOW);
-                    Log.i(ID, "Charging Stopped"); // TODO: use back pin PINS_BACK_CHARGING_RELAY to determine when charging stops as well
-                    charging = false;
                 }
             }
 
@@ -111,9 +107,13 @@ void Front::run() {
             timeElapsedLong = 0;
             Log.i(ID, "Current Power Value:", powerValue() + Pins::getPinValue(PINS_FRONT_PEDAL1));   // Canbus message from MCs
             Log.i(ID, "BMS State Of Charge Value:", BMSSOC() + Pins::getPinValue(PINS_FRONT_PEDAL1)); // Canbus message
-            if (Pins::getPinValue(PINS_INTERNAL_GEN_FAULT)) {
-                Log.i(ID, "Fault State"); // Is there fault
+            static int charging = 0;
+            if (!(charging = Pins::getCanPinValue(PINS_INTERNAL_CHARGING))) {
+                Pins::setInternalValue(PINS_INTERNAL_CHARGE_SIGNAL, LOW);
             }
+            Log.i(ID, "Waiting for input", Pins::getCanPinValue(PINS_INTERNAL_IDLE_STATE)); // Canbus message
+            Log.i(ID, "Fault State", Pins::getCanPinValue(PINS_INTERNAL_GEN_FAULT));
+            Log.i(ID, "Charging status", charging);
         }
     }
 }

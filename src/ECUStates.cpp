@@ -128,6 +128,7 @@ State::State_t *ECUStates::Idle_State::run(void) {
 
 State::State_t *ECUStates::Charging_State::run(void) {
     Pins::setPinValue(PINS_BACK_CHARGING_RELAY, HIGH);
+    Pins::setInternalValue(PINS_INTERNAL_CHARGING, HIGH);
     Log.i(ID, "Charging on");
 
     elapsedMillis voltLogNotify;
@@ -146,6 +147,7 @@ State::State_t *ECUStates::Charging_State::run(void) {
     }
 
     Pins::setPinValue(PINS_BACK_CHARGING_RELAY, LOW);
+    Pins::setInternalValue(PINS_INTERNAL_CHARGING, LOW);
     Log.i(ID, "Charging turning off");
 
     return &ECUStates::Idle_State;
