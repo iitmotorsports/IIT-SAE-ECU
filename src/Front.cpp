@@ -57,8 +57,6 @@ void Front::run() {
     BMS_SOC_Buffer = Canbus::getBuffer(ADD_BMS_SOC);
     LOG_Buffer = Canbus::getBuffer(ADD_AUX_LOGGING);
 
-    // static uint64_t lastLog = *((uint64_t *)LOG_Buffer);
-
     while (true) {
         if (timeElapsed >= 20) { // Update Tablet every 20ms
             timeElapsed = 0;
@@ -108,8 +106,6 @@ void Front::run() {
             float speed = (MC_Spd_Val_0 + MC_Spd_Val_1) / 2;
             // TODO: Send both mc voltages
             Log.i(ID, "Current Motor Speed:", speed + Pins::getPinValue(PINS_FRONT_PEDAL1));
-            // Logging::printRelayBuffer();
-            // Serial.write(LOG_Buffer, 8);
         }
         if (timeElapsedLong >= 800) { // Update battery/charge every 800ms
             timeElapsedLong = 0;

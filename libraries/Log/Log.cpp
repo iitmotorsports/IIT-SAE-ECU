@@ -18,15 +18,8 @@
 #include "Log.h"
 #include "LogConfig.def"
 #include "WProgram.h"
-// #include "circular_buffer.h"
-#include "queue"
 
 namespace Logging {
-
-std::queue<uint64_t> canbusRelayBuffer;
-
-// Circular_Buffer<uint64_t, 64> canbusRelayBuffer;
-
 #ifndef CONF_LOGGING_MAX_LEVEL
 #define CONF_LOGGING_MAX_LEVEL 4
 #endif
@@ -218,27 +211,11 @@ void Log_t::f(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
 }
 
 static void _receiveLogBuffer(uint32_t address, uint8_t *buf) {
-    // uint64_t received = *((uint64_t *)buf);
-    // if (received != canbusRelayBuffer.front()) {
-    //     canbusRelayBuffer.push(received);
-    // }
-
     Serial.write(buf, 8);
-    // Serial.flush();
-
-    // canbusRelayBuffer.write(*((uint64_t *)buf));
 }
 
 void enableCanbusRelay() {
     Canbus::addCallback(ADD_AUX_LOGGING, _receiveLogBuffer);
-}
-
-void printRelayBuffer() {
-    if (!canbusRelayBuffer.empty()) {
-        static uint64_t buf = canbusRelayBuffer.front();
-        canbusRelayBuffer.pop();
-        Serial.write((const uint8_t *)(&buf), 8);
-    }
 }
 
 } // namespace Logging
