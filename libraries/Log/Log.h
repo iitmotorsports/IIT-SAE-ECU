@@ -27,6 +27,7 @@
 #if CONF_LOGGING_MAPPED_MODE > 0
 typedef const uint16_t LOG_TAG;
 typedef const uint32_t LOG_MSG;
+
 #else
 /**
  * @brief Type definition of logging tags
@@ -42,7 +43,17 @@ typedef const char *LOG_TAG;
  * @brief Type definition for logging messages, only used internally
  */
 typedef const char *LOG_MSG;
+
 #endif
+
+/**
+ * @brief Return the final numbervalue of a LOG_TAG
+ * @note If mapped mode is not on, this will just return 0
+ * 
+ * @param tagValue The LOG_TAG to convert
+ * @return uint16_t the number representation of the tag
+ */
+uint32_t TAG2NUM(LOG_TAG tagValue);
 
 /**
  * @brief Namespace to isolate Log_t struct.
