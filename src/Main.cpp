@@ -10,7 +10,7 @@ int main(void) {
     Serial.begin(CONF_TEENSY_BAUD_RATE);
     delay(CONF_TEENSY_INITAL_DELAY);
 #if CONF_ECU_POSITION == BACK_ECU
-    State::begin(ECUStates::Initialize);
+    State::begin(ECUStates::Initialize_State);
 #else
     Front::run();
 #endif
