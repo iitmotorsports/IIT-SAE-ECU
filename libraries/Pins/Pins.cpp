@@ -90,7 +90,7 @@ struct digitalCanPinMsg_t : CanPinMsg_t {
         Serial.println(activedigitalCanPins);
         for (size_t i = 0; i < activedigitalCanPins; i++) {
             Serial.print(digitalPins[i]);
-            Serial.print(" : ");
+            Serial.print(" = ");
             Serial.println(getOutgoingPinValue(digitalPins[i]));
         }
     }
@@ -121,9 +121,14 @@ struct analogCanPinMsg_t : CanPinMsg_t {
     }
     void debugPrint() {
         Serial.printf("Printing outgoing analog pin values for address: %u\n", address);
+        Serial.print(analogPins[0]);
+        Serial.print(" = ");
         Serial.println(getOutgoingPinValue(analogPins[0]));
-        if (analogPins[1] != 255) // Ensure this buffer only allocated one analog val
+        if (analogPins[1] != 255) { // Ensure this buffer only allocated one analog val
+            Serial.print(analogPins[1]);
+            Serial.print(" = ");
             Serial.println(getOutgoingPinValue(analogPins[1]));
+        }
     }
 };
 
@@ -180,11 +185,20 @@ void debugPrint(void) {
     for (size_t i = 0; i < analogCanMsgCount_OUT; i++) {
         analogCanPinMessages_OUT[i].debugPrint();
     }
+    digitalCanPinMessage_IN.debugPrint();
+    for (size_t i = 0; i < analogCanMsgCount_IN; i++) {
+        analogCanPinMessages_IN[i].debugPrint();
+    }
     Serial.println("Printing CanPin Map");
     for (auto i : CAN_GPIO_MAP_IN) {
         Serial.print(i.first);
         Serial.print(" ");
         Serial.println(*i.second);
+    }
+    for (auto i : CAN_GPIO_MAP_OUT) {
+        Serial.print(i.first);
+        Serial.print(" ");
+        Serial.println(i.second);
     }
 }
 
@@ -201,7 +215,11 @@ void setInternalValue(uint8_t Internal_Pin, int value) {
         Log.d(ID, "Setting Internal pin:", Internal_Pin);
         Log.d(ID, "Setting Internal pin to int:", value);
         CAN_GPIO_MAP_OUT[Internal_Pin] = value;
+    } else {
+        Log.w(ID, "Unable to set Internal pin to int:", value);
+        Log.w(ID, "Pin:", Internal_Pin);
     }
+
 #else
     if (CAN_GPIO_MAP.find(Internal_Pin) != CAN_GPIO_MAP.end())
         *CAN_GPIO_MAP[Internal_Pin] = value;
@@ -280,6 +298,7 @@ static void populateCanbusMap(std::multimap<uint32_t, std::tuple<uint, uint8_t, 
                 analogCanPinStructArray[amsgc].address = address;
                 analogCanPinStructArray[amsgc].analogPinPos[ac] = std::get<0>(d->second);
                 analogCanPinStructArray[amsgc].analogPins[ac] = std::get<1>(d->second);
+                Log.d(ID, "", std::get<1>(d->second));
                 ac++;
             } else {              // Digital
                 if (dmsgc == 1) { // NOTE: Hardcoded single digital message
@@ -302,7 +321,6 @@ static void populateCanbusMap(std::multimap<uint32_t, std::tuple<uint, uint8_t, 
             if (ac != 0) {
                 amsgc++;
                 Log.i(ID, "Set analog canbus buffer:", address);
-                Log.d(ID, "", std::get<1>(i->second));
             }
             if (dc != 0) {
                 dmsgc++;
@@ -382,6 +400,12 @@ void initialize(void) {
         Log.i(ID, "Starting outgoing canpin update timer");
         canbusPinUpdate.begin(_pushCanbusPins, CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO);
     }
+
+#ifdef CONF_ECU_DEBUG
+#if CONF_LOGGING_MAPPED_MODE == 0
+    debugPrint();
+#endif
+#endif
 }
 
 } // namespace Pins
