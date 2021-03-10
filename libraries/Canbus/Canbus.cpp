@@ -210,7 +210,8 @@ void clearSemaphore() {
 }
 
 static void _pushSendMsg() {
-    F_Can.write(send);
+    if (started) // Only do stuff if we have actually enabled canbus
+        F_Can.write(send);
 }
 
 void pushData(const uint32_t address) {
@@ -220,11 +221,9 @@ void pushData(const uint32_t address) {
 }
 
 void sendData(const uint32_t address, uint8_t buf[8]) {
-    if (started) { // Only do stuff if we have actually enabled canbus
-        send.id = address;
-        memcpy(send.buf, buf, 8); // 8 Bytes
-        _pushSendMsg();
-    }
+    send.id = address;
+    memcpy(send.buf, buf, 8); // 8 Bytes
+    _pushSendMsg();
 }
 
 void sendData(const uint32_t address, const uint8_t buf_0, const uint8_t buf_1, const uint8_t buf_2, const uint8_t buf_3, const uint8_t buf_4, const uint8_t buf_5, const uint8_t buf_6, const uint8_t buf_7) {
