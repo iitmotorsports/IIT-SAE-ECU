@@ -17,10 +17,11 @@ namespace ECUStates {
  * @brief Teensy initial state
  * State which initializes everything
  */
-static struct Initialize : State::State_t {
+static struct Initialize_State : State::State_t {
     LOG_TAG ID = "Teensy Initialize";
     State::State_t *run(void);
-} Initialize;
+    LOG_TAG getID(void) { return ID; }
+} Initialize_State;
 
 /**
  * @brief Teensy PreCharge State
@@ -38,6 +39,7 @@ private:
 public:
     LOG_TAG ID = "PreCharge State";
     State::State_t *run(void);
+    LOG_TAG getID(void) { return ID; }
 } PreCharge_State;
 
 /**
@@ -48,6 +50,7 @@ public:
 static struct Idle_State : State::State_t {
     LOG_TAG ID = "Idle State";
     State::State_t *run(void);
+    LOG_TAG getID(void) { return ID; }
 } Idle_State;
 
 /**
@@ -61,6 +64,7 @@ static struct Charging_State : State::State_t {
     String Voltage_Data = " ";
 
     State::State_t *run(void);
+    LOG_TAG getID(void) { return ID; }
 
 } Charging_State;
 
@@ -71,6 +75,7 @@ static struct Charging_State : State::State_t {
 static struct Button_State : State::State_t {
     LOG_TAG ID = "Button State";
     State::State_t *run(void);
+    LOG_TAG getID(void) { return ID; }
 
 } Button_State;
 
@@ -93,6 +98,7 @@ public:
     String Message_Handler = " ";
 
     State::State_t *run(void);
+    LOG_TAG getID(void) { return ID; }
 
 } Driving_Mode_State;
 
@@ -103,6 +109,7 @@ public:
 static struct FaultState : State::State_t {
     LOG_TAG ID = "Fault State";
     State::State_t *run(void);
+    LOG_TAG getID(void) { return ID; }
 } FaultState;
 
 /**
@@ -112,6 +119,7 @@ static struct FaultState : State::State_t {
 static struct Logger_t : State::State_t {
     LOG_TAG ID = "Logger";
     State::State_t *run(void);
+    LOG_TAG getID(void) { return ID; }
 } Logger;
 
 /**
@@ -120,6 +128,7 @@ static struct Logger_t : State::State_t {
 static struct Bounce_t : State::State_t {
     LOG_TAG ID = "Bouncer";
     State::State_t *run(void);
+    LOG_TAG getID(void) { return ID; }
 } Bounce;
 
 } // namespace ECUStates
