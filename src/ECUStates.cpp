@@ -12,7 +12,7 @@ static bool FaultCheck() { // NOTE: Will only return true if hardfault occurs
     return false;
 }
 
-State::State_t *ECUStates::Initialize::run(void) {
+State::State_t *ECUStates::Initialize_State::run(void) {
     Log.i(ID, "Teensy 3.6 SAE BACK ECU Initalizing");
     Canbus::setup();    // allocate and organize addresses
     Pins::initialize(); // setup predefined pins
@@ -101,18 +101,15 @@ State::State_t *ECUStates::Idle_State::run(void) {
     }
 
     Log.i(ID, "Waiting for Button or Charging Press");
-    Pins::setInternalValue(PINS_INTERNAL_IDLE_STATE, HIGH);
 
     elapsedMillis waiting;
 
     while (true) {
         if (Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT)) {
             Log.i(ID, "Button Pressed");
-            Pins::setInternalValue(PINS_INTERNAL_IDLE_STATE, LOW);
             return &ECUStates::Button_State;
         } else if (Pins::getCanPinValue(PINS_INTERNAL_CHARGE_SIGNAL)) {
             Log.i(ID, "Charging Pressed");
-            Pins::setInternalValue(PINS_INTERNAL_IDLE_STATE, LOW);
             return &ECUStates::Charging_State;
         } else if (FaultCheck()) {
             break;
@@ -122,13 +119,11 @@ State::State_t *ECUStates::Idle_State::run(void) {
             Log.d(ID, "Waiting for button press");
         }
     }
-    Pins::setInternalValue(PINS_INTERNAL_IDLE_STATE, LOW);
     return &ECUStates::FaultState;
 }
 
 State::State_t *ECUStates::Charging_State::run(void) {
     Pins::setPinValue(PINS_BACK_CHARGING_RELAY, HIGH);
-    Pins::setInternalValue(PINS_INTERNAL_CHARGING, HIGH);
     Log.i(ID, "Charging on");
 
     elapsedMillis voltLogNotify;
@@ -147,7 +142,6 @@ State::State_t *ECUStates::Charging_State::run(void) {
     }
 
     Pins::setPinValue(PINS_BACK_CHARGING_RELAY, LOW);
-    Pins::setInternalValue(PINS_INTERNAL_CHARGING, LOW);
     Log.i(ID, "Charging turning off");
 
     return &ECUStates::Idle_State;
