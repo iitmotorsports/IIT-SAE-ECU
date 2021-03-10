@@ -4,6 +4,7 @@
 static LOG_TAG ID = "Front Teensy";
 
 static elapsedMillis timeElapsed;
+static elapsedMillis timeElapsedLong;
 static uint8_t *MC0_RPM_Buffer;
 static uint8_t *MC1_RPM_Buffer;
 static uint8_t *MC0_VOLT_Buffer;
@@ -55,7 +56,7 @@ void Front::run() {
     BMS_SOC_Buffer = Canbus::getBuffer(ADD_BMS_SOC);
 
     while (true) {
-        if (timeElapsed >= 10) { // Update Tablet every 10ms
+        if (timeElapsed >= 20) { // Update Tablet every 20ms
             timeElapsed = 0;
 
             // Log.d(ID, "Checking Internal Pins");
@@ -109,9 +110,12 @@ void Front::run() {
             float MC_Spd_Val_1 = wheelRadius * 2 * 3.1415926536 / 60 * MC_Rpm_Val_1;
             float speed = (MC_Spd_Val_0 + MC_Spd_Val_1) / 2;
             // TODO: Send both mc voltages
-            Log.i(ID, "Current Motor Speed:", speed);
-            Log.i(ID, "Current Power Value:", powerValue());   // Canbus message from MCs
-            Log.i(ID, "BMS State Of Charge Value:", BMSSOC()); // Canbus message
+            Log.i(ID, "Current Motor Speed:", speed + Pins::getPinValue(PINS_FRONT_PEDAL1));
+        }
+        if (timeElapsedLong >= 800) { // Update battery/charge every 800ms
+            timeElapsedLong = 0;
+            Log.i(ID, "Current Power Value:", powerValue() + Pins::getPinValue(PINS_FRONT_PEDAL1));   // Canbus message from MCs
+            Log.i(ID, "BMS State Of Charge Value:", BMSSOC() + Pins::getPinValue(PINS_FRONT_PEDAL1)); // Canbus message
         }
     }
 }
