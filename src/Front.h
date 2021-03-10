@@ -3,6 +3,8 @@
 #include "Faults.h"
 #include "Log.h"
 
+#define COMMAND_ENABLE_CHARGING 123
+
 /**
  * @brief Name space used solely for front Teensy logic
  * 

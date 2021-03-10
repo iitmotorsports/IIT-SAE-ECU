@@ -59,7 +59,6 @@ void Front::run() {
         if (timeElapsed >= 20) { // Update Tablet every 20ms
             timeElapsed = 0;
 
-            // Log.d(ID, "Checking Internal Pins");
             if (Pins::getCanPinValue(PINS_INTERNAL_START)) {
                 Pins::setPinValue(PINS_FRONT_START_LIGHT, HIGH);
             } else {
@@ -76,16 +75,14 @@ void Front::run() {
                 Pins::setPinValue(PINS_FRONT_IMD_LIGHT, LOW);
             }
 
-            // Log.d(ID, "Checking Tablet Serial");
-
             uint8_t serialData = 0;
             if (Serial.available()) {
                 serialData = Serial.read();
                 Log.d(ID, "Data received: ", serialData);
             }
 
-            if (serialData == 123 /*&& Pins::getCanPinValue(PINS_INTERNAL_IDLE_STATE)*/) { // TODO: uncomment
-                if (!charging) {
+            if (serialData == COMMAND_ENABLE_CHARGING) {
+                if (!charging && Pins::getCanPinValue(PINS_INTERNAL_IDLE_STATE)) {
                     Pins::setInternalValue(PINS_INTERNAL_CHARGE_SIGNAL, HIGH);
                     Log.i(ID, "Charging Enabled");
                     charging = true;
@@ -95,10 +92,6 @@ void Front::run() {
                     charging = false;
                 }
             }
-
-            // Log.d(ID, "Updating Tablet data");
-
-            // TODO: explicitly tell tablet about being in a fault state
 
             // receive rpm of MCs, interpret, then send to from teensy for logging
             Canbus::setSemaphore(ADD_MC0_RPM);
@@ -116,6 +109,9 @@ void Front::run() {
             timeElapsedLong = 0;
             Log.i(ID, "Current Power Value:", powerValue() + Pins::getPinValue(PINS_FRONT_PEDAL1));   // Canbus message from MCs
             Log.i(ID, "BMS State Of Charge Value:", BMSSOC() + Pins::getPinValue(PINS_FRONT_PEDAL1)); // Canbus message
+            if (Pins::getPinValue(PINS_INTERNAL_GEN_FAULT)) {
+                Log.i(ID, "Fault State"); // Is there fault
+            }
         }
     }
 }
