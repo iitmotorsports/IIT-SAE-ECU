@@ -15,6 +15,7 @@ namespace ECUStates {
 
 /**
  * @brief Teensy initial state
+ * State which initializes everything
  */
 static struct Initialize : State::State_t {
     LOG_TAG ID = "Teensy Initialize";
@@ -22,7 +23,8 @@ static struct Initialize : State::State_t {
 } Initialize;
 
 /**
- * @brief Teensy PreCharge State. Steps though the precharge circuit, waiting when necessary.
+ * @brief Teensy PreCharge State
+ * State which goes through the precharge circuit
  */
 static struct PreCharge_State : State::State_t {
 private:
@@ -39,8 +41,8 @@ public:
 } PreCharge_State;
 
 /**
- * @brief Idle state has buttonpressed, charging state, 
- * and fault booleans with input time for this state
+ * @brief Idle state
+ * @details State that waits for input to go to Button or Charging state
  * 
  */
 static struct Idle_State : State::State_t {
@@ -49,7 +51,8 @@ static struct Idle_State : State::State_t {
 } Idle_State;
 
 /**
- * @brief charging state has booleans of relay charge, charging on, fault, and voltage data as a string
+ * @brief Charging state
+ * @details State for charging, stops either when signal is received from android or charging is done
  */
 static struct Charging_State : State::State_t {
     LOG_TAG ID = "Charging State";
@@ -62,8 +65,8 @@ static struct Charging_State : State::State_t {
 } Charging_State;
 
 /**
- * @brief Button state has playing sound, ready signal. and fault booleans 
- * for this state (input time acknowledged)
+ * @brief Button state 
+ * @details State where the speaker is played and enables driving mode
  */
 static struct Button_State : State::State_t {
     LOG_TAG ID = "Button State";
@@ -72,8 +75,8 @@ static struct Button_State : State::State_t {
 } Button_State;
 
 /**
- * @brief driving mode state has interrupt, driving mode, safe to continue, message incoming, fault, 
- * info of message, and message handler attributes for this state. 
+ * @brief Driving mode state 
+ * @details Main state that will run the car
  * 
  */
 static struct Driving_Mode_State : State::State_t {
@@ -94,8 +97,8 @@ public:
 } Driving_Mode_State;
 
 /**
- * @brief Demonstrate Serial logging
- * This state demonstrates the diffrent ways we can log things to serial
+ * @brief Fault state
+ * @details This state demonstrates the diffrent ways we can log things to serial
  */
 static struct FaultState : State::State_t {
     LOG_TAG ID = "Fault State";
