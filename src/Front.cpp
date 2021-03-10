@@ -1,9 +1,11 @@
 #include "Front.h"
 #include "ECUGlobalConfig.h"
+#include "unordered_map"
 
 static LOG_TAG ID = "Front Teensy";
 
 static elapsedMillis timeElapsed;
+static elapsedMillis timeElapsedMid;
 static elapsedMillis timeElapsedLong;
 static uint8_t *MC0_RPM_Buffer;
 static uint8_t *MC1_RPM_Buffer;
@@ -12,8 +14,19 @@ static uint8_t *MC1_VOLT_Buffer;
 static uint8_t *MC0_CURR_Buffer;
 static uint8_t *MC1_CURR_Buffer;
 static uint8_t *BMS_SOC_Buffer;
-static uint8_t *LOG_Buffer;
 static constexpr float wheelRadius = 1.8; // TODO: Get car wheel radius
+
+static struct State::State_t *states[] = {
+    &ECUStates::Initialize_State,
+    &ECUStates::PreCharge_State,
+    &ECUStates::Idle_State,
+    &ECUStates::Charging_State,
+    &ECUStates::Button_State,
+    &ECUStates::Driving_Mode_State,
+    &ECUStates::FaultState,
+};
+std::unordered_map<uint32_t, struct State::State_t *> stateMap;
+static struct State::State_t *currentState;
 
 static uint32_t BMSSOC() {
     Canbus::setSemaphore(ADD_BMS_SOC);
@@ -36,16 +49,29 @@ static uint32_t powerValue() { // IMPROVE: get power value using three phase val
     return (MC0_PWR + MC1_PWR) / 1000; // Sending kilowatts
 }
 
-void Front::run() {
-    Log.i(ID, "Teensy 3.6 SAE FRONT ECU Initalizing");
-    Log.i(ID, "Setting up Canbus");
-    Canbus::setup(); // allocate and organize addresses
-    Log.i(ID, "Initalizing Pins");
-    Pins::initialize(); // setup predefined pins
-    // Fault::setup();               // load all buffers
-    Log.i(ID, "Enabling Logging relay");
-    Logging::enableCanbusRelay(); // Allow logging though canbus
+static int32_t motorSpeed() {
+    // receive rpm of MCs, interpret, then send to from teensy for logging
+    Canbus::setSemaphore(ADD_MC0_RPM);
+    int16_t MC_Rpm_Val_0 = *(int16_t *)(MC0_RPM_Buffer + 2); // Bytes 2-3 : Angular Velocity
+    Canbus::setSemaphore(ADD_MC1_RPM);
+    int16_t MC_Rpm_Val_1 = *(int16_t *)(MC1_RPM_Buffer + 2); // Bytes 2-3 : Angular Velocity
+    Canbus::clearSemaphore();
+    float MC_Spd_Val_0 = wheelRadius * 2 * 3.1415926536 / 60 * MC_Rpm_Val_0;
+    float MC_Spd_Val_1 = wheelRadius * 2 * 3.1415926536 / 60 * MC_Rpm_Val_1;
+    return (MC_Spd_Val_0 + MC_Spd_Val_1) / 2;
+}
 
+static void readSerial() {
+    static uint8_t serialData = 0;
+    if (Serial.available()) {
+        serialData = Serial.read();
+        Log.d(ID, "Data received: ", serialData);
+    }
+    if (serialData == COMMAND_ENABLE_CHARGING)
+        Pins::setInternalValue(PINS_INTERNAL_CHARGE_SIGNAL, currentState == &ECUStates::Idle_State);
+}
+
+static void getBuffers() {
     Log.i(ID, "Loading Buffers");
     MC0_RPM_Buffer = Canbus::getBuffer(ADD_MC0_RPM);
     MC1_RPM_Buffer = Canbus::getBuffer(ADD_MC1_RPM);
@@ -54,66 +80,61 @@ void Front::run() {
     MC0_CURR_Buffer = Canbus::getBuffer(ADD_MC0_CURR);
     MC1_CURR_Buffer = Canbus::getBuffer(ADD_MC1_CURR);
     BMS_SOC_Buffer = Canbus::getBuffer(ADD_BMS_SOC);
-    LOG_Buffer = Canbus::getBuffer(ADD_AUX_LOGGING);
+}
+
+static void updateCurrentState() {
+    uint32_t currState = Pins::getCanPinValue(PINS_INTERNAL_STATE);
+    currentState = stateMap[currState]; // returns NULL if not found
+    Log.i(ID, "Current State", currState);
+}
+
+static void loadStateMap() {
+    Log.i(ID, "Loading State Map");
+    for (auto state : states) {
+        Log.d(ID, "New State", TAG2NUM(state->getID()));
+        Log.d(ID, "State Pointer", (uintptr_t)state);
+        stateMap[TAG2NUM(state->getID())] = state;
+    }
+}
+
+void Front::run() {
+    Log.i(ID, "Teensy 3.6 SAE FRONT ECU Initalizing");
+    Log.i(ID, "Setting up Canbus");
+    Canbus::setup(); // allocate and organize addresses
+    Log.i(ID, "Initalizing Pins");
+    Pins::initialize(); // setup predefined pins
+    Log.i(ID, "Enabling Logging relay");
+    Logging::enableCanbusRelay(); // Allow logging though canbus
+    getBuffers();
+    loadStateMap();
 
     while (true) {
-        if (timeElapsed >= 20) { // Update Tablet every 20ms
+        if (timeElapsed >= 20) { // High priority updates
             timeElapsed = 0;
 
-            if (Pins::getCanPinValue(PINS_INTERNAL_START)) {
-                Pins::setPinValue(PINS_FRONT_START_LIGHT, HIGH);
-            } else {
-                Pins::setPinValue(PINS_FRONT_START_LIGHT, LOW);
-            }
-            if (Pins::getCanPinValue(PINS_INTERNAL_BMS_FAULT)) {
-                Pins::setPinValue(PINS_FRONT_BMS_LIGHT, HIGH);
-            } else {
-                Pins::setPinValue(PINS_FRONT_BMS_LIGHT, LOW);
-            }
-            if (Pins::getCanPinValue(PINS_INTERNAL_IMD_FAULT)) {
-                Pins::setPinValue(PINS_FRONT_IMD_LIGHT, HIGH);
-            } else {
-                Pins::setPinValue(PINS_FRONT_IMD_LIGHT, LOW);
-            }
+            readSerial();
 
-            uint8_t serialData = 0;
-            if (Serial.available()) {
-                serialData = Serial.read();
-                Log.d(ID, "Data received: ", serialData);
-            }
-
-            if (serialData == COMMAND_ENABLE_CHARGING) {
-                if (Pins::getCanPinValue(PINS_INTERNAL_IDLE_STATE)) {
-                    Pins::setInternalValue(PINS_INTERNAL_CHARGE_SIGNAL, HIGH);
-                    Log.i(ID, "Charging Enabled");
-                } else {
-                    Pins::setInternalValue(PINS_INTERNAL_CHARGE_SIGNAL, LOW);
-                }
-            }
-
-            // receive rpm of MCs, interpret, then send to from teensy for logging
-            Canbus::setSemaphore(ADD_MC0_RPM);
-            int16_t MC_Rpm_Val_0 = *(int16_t *)(MC0_RPM_Buffer + 2); // Bytes 2-3 : Angular Velocity
-            Canbus::setSemaphore(ADD_MC1_RPM);
-            int16_t MC_Rpm_Val_1 = *(int16_t *)(MC1_RPM_Buffer + 2); // Bytes 2-3 : Angular Velocity
-            Canbus::clearSemaphore();
-            float MC_Spd_Val_0 = wheelRadius * 2 * 3.1415926536 / 60 * MC_Rpm_Val_0;
-            float MC_Spd_Val_1 = wheelRadius * 2 * 3.1415926536 / 60 * MC_Rpm_Val_1;
-            float speed = (MC_Spd_Val_0 + MC_Spd_Val_1) / 2;
-            // TODO: Send both mc voltages
-            Log.i(ID, "Current Motor Speed:", speed + Pins::getPinValue(PINS_FRONT_PEDAL1));
+            Log.i(ID, "Current Motor Speed:", motorSpeed() + Pins::getPinValue(PINS_FRONT_PEDAL1)); // TODO: remove test pedal value
         }
-        if (timeElapsedLong >= 800) { // Update battery/charge every 800ms
+        if (timeElapsedMid >= 200) { // Med priority updates
+            timeElapsedMid = 0;
+            updateCurrentState();
+        }
+        if (timeElapsedLong >= 800) { // Low priority updates
             timeElapsedLong = 0;
+
+            Pins::setPinValue(PINS_FRONT_START_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_START));
+            Pins::setPinValue(PINS_FRONT_BMS_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_BMS_FAULT));
+            Pins::setPinValue(PINS_FRONT_IMD_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_IMD_FAULT));
+
+            // TODO: Send both mc voltages
+
             Log.i(ID, "Current Power Value:", powerValue() + Pins::getPinValue(PINS_FRONT_PEDAL1));   // Canbus message from MCs
             Log.i(ID, "BMS State Of Charge Value:", BMSSOC() + Pins::getPinValue(PINS_FRONT_PEDAL1)); // Canbus message
-            static int charging = 0;
-            if (!(charging = Pins::getCanPinValue(PINS_INTERNAL_CHARGING))) {
+            Log.i(ID, "Fault State", Pins::getCanPinValue(PINS_INTERNAL_GEN_FAULT));
+            if (currentState != &ECUStates::Charging_State || currentState != &ECUStates::Idle_State) {
                 Pins::setInternalValue(PINS_INTERNAL_CHARGE_SIGNAL, LOW);
             }
-            Log.i(ID, "Waiting for input", Pins::getCanPinValue(PINS_INTERNAL_IDLE_STATE)); // Canbus message
-            Log.i(ID, "Fault State", Pins::getCanPinValue(PINS_INTERNAL_GEN_FAULT));
-            Log.i(ID, "Charging status", charging);
         }
     }
 }
