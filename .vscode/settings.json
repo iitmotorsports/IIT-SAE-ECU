@@ -44,7 +44,8 @@
         "utility": "cpp",
         "map": "cpp",
         "*.obj": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "queue": "cpp"
     },
     "doxygen_runner.configuration_file_override": "${workspaceFolder}\\docs\\Doxyfile",
     "python.linting.pylintEnabled": false,
