@@ -62,13 +62,13 @@ static int32_t motorSpeed() {
 }
 
 static void readSerial() {
-    static uint8_t serialData = 0;
+    uint8_t serialData = 0;
     if (Serial.available()) {
         serialData = Serial.read();
         Log.d(ID, "Data received: ", serialData);
+        if (serialData == COMMAND_ENABLE_CHARGING)
+            Pins::setInternalValue(PINS_INTERNAL_CHARGE_SIGNAL, currentState == &ECUStates::Idle_State);
     }
-    if (serialData == COMMAND_ENABLE_CHARGING)
-        Pins::setInternalValue(PINS_INTERNAL_CHARGE_SIGNAL, currentState == &ECUStates::Idle_State);
 }
 
 static void getBuffers() {
@@ -132,9 +132,9 @@ void Front::run() {
             Log.i(ID, "Current Power Value:", powerValue() + Pins::getPinValue(PINS_FRONT_PEDAL1));   // Canbus message from MCs
             Log.i(ID, "BMS State Of Charge Value:", BMSSOC() + Pins::getPinValue(PINS_FRONT_PEDAL1)); // Canbus message
             Log.i(ID, "Fault State", Pins::getCanPinValue(PINS_INTERNAL_GEN_FAULT));
-            if (currentState != &ECUStates::Charging_State || currentState != &ECUStates::Idle_State) {
-                Pins::setInternalValue(PINS_INTERNAL_CHARGE_SIGNAL, LOW);
-            }
+            // if (currentState != &ECUStates::Charging_State || currentState != &ECUStates::Idle_State) {
+            //     Pins::setInternalValue(PINS_INTERNAL_CHARGE_SIGNAL, LOW);
+            // }
         }
     }
 }
