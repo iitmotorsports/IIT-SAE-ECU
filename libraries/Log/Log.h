@@ -157,11 +157,6 @@ struct Log_t {
  */
 void enableCanbusRelay();
 
-/**
- * @brief Print any messages received through Canbus
- */
-void printRelayBuffer();
-
 } // namespace Logging
 
 /**
