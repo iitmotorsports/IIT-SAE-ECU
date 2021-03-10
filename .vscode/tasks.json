@@ -302,7 +302,7 @@
             "type": "pickString",
             "options": [
                 "COM3",
-                "COM5"
+                "COM4"
             ],
             "default": "COM3"
         },
