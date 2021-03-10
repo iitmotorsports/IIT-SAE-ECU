@@ -17,7 +17,6 @@ static const int angleMax = 72; // angle of attack is 42
 
 static PWMServo servo1;
 static PWMServo servo2;
-static int i;
 
 void setup() {
     Log.i(ID, "Initializing Aero servo pins");
