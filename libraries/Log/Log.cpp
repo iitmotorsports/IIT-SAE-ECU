@@ -66,33 +66,31 @@ static void *ERROR = NONE;
 static void *FATAL = NONE;
 
 static uint8_t log_buf[8] = {0};
-#if CONF_ECU_POSITION == BACK_ECU
 static uint16_t LAST_TAG = 0;
 static uint32_t LAST_MSG = 0;
 static uint32_t LAST_NUMBER = 0;
-#endif
 
 /**
  * |0    |1   |2   |3   |4   |5   |6   |7   |
  * |State Code|String ID|      uint32_t     |
  */
 static void __logger_print_num(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const uint32_t NUMBER) {
-    memcpy(log_buf, &TAG, 2);
-    memcpy(log_buf + 2, &MESSAGE, 2);
-    memcpy(log_buf + 4, &NUMBER, 4);
-#if CONF_ECU_POSITION == BACK_ECU
     if (LAST_MSG != MESSAGE || LAST_NUMBER != NUMBER || LAST_TAG != TAG) {
-#ifdef CONF_ECU_DEBUG
-        Serial.write(log_buf, 8);
-#endif
         LAST_TAG = TAG;
         LAST_MSG = MESSAGE;
         LAST_NUMBER = NUMBER;
-        Canbus::sendData(ADD_AUX_LOGGING, log_buf);
-    }
-#else
-    Serial.write(log_buf, 8);
+        memcpy(log_buf, &TAG, 2);
+        memcpy(log_buf + 2, &MESSAGE, 2);
+        memcpy(log_buf + 4, &NUMBER, 4);
+#if CONF_ECU_POSITION == BACK_ECU
+#ifdef CONF_ECU_DEBUG
+        Serial.write(log_buf, 8);
 #endif
+        Canbus::sendData(ADD_AUX_LOGGING, log_buf);
+#else
+        Serial.write(log_buf, 8);
+#endif
+    }
 }
 
 /**
@@ -224,3 +222,13 @@ void enableCanbusRelay() {
  * @brief Internal definition of static Log class
  */
 Logging::Log_t Log;
+
+#if CONF_LOGGING_MAPPED_MODE > 0
+uint32_t TAG2NUM(LOG_TAG tagValue) {
+    return tagValue;
+}
+#else
+uint32_t TAG2NUM(LOG_TAG tagValue) {
+    return 0;
+}
+#endif
