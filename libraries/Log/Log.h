@@ -152,10 +152,15 @@ struct Log_t {
 };
 
 /**
- * @brief If a set address is received through canbus, the data will be pushed through serial
- * @note the address is set in CanBusAddresses.def
+ * @brief If a set address is received through canbus, the data will be pushed to a buffer to be printed
+ * @note The address is set in CanBusAddresses.def
  */
 void enableCanbusRelay();
+
+/**
+ * @brief Print any messages received through Canbus
+ */
+void printRelayBuffer();
 
 } // namespace Logging
 

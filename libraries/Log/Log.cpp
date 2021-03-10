@@ -18,11 +18,14 @@
 #include "Log.h"
 #include "LogConfig.def"
 #include "WProgram.h"
-#include "circular_buffer.h"
+// #include "circular_buffer.h"
+#include "queue"
 
 namespace Logging {
 
-Circular_Buffer<uint64_t, 16> canbusRelayBuffer; // TODO: send data after interrupt
+std::queue<uint64_t> canbusRelayBuffer;
+
+// Circular_Buffer<uint64_t, 64> canbusRelayBuffer;
 
 #ifndef CONF_LOGGING_MAX_LEVEL
 #define CONF_LOGGING_MAX_LEVEL 4
@@ -70,6 +73,11 @@ static void *ERROR = NONE;
 static void *FATAL = NONE;
 
 static uint8_t log_buf[8] = {0};
+#if CONF_ECU_POSITION == BACK_ECU
+static uint16_t LAST_TAG = 0;
+static uint32_t LAST_MSG = 0;
+static uint32_t LAST_NUMBER = 0;
+#endif
 
 /**
  * |0    |1   |2   |3   |4   |5   |6   |7   |
@@ -80,10 +88,15 @@ static void __logger_print_num(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const u
     memcpy(log_buf + 2, &MESSAGE, 2);
     memcpy(log_buf + 4, &NUMBER, 4);
 #if CONF_ECU_POSITION == BACK_ECU
+    if (LAST_MSG != MESSAGE || LAST_NUMBER != NUMBER || LAST_TAG != TAG) {
 #ifdef CONF_ECU_DEBUG
-    Serial.write(log_buf, 8);
+        Serial.write(log_buf, 8);
 #endif
-    Canbus::sendData(ADD_AUX_LOGGING, log_buf);
+        LAST_TAG = TAG;
+        LAST_MSG = MESSAGE;
+        LAST_NUMBER = NUMBER;
+        Canbus::sendData(ADD_AUX_LOGGING, log_buf);
+    }
 #else
     Serial.write(log_buf, 8);
 #endif
@@ -204,13 +217,28 @@ void Log_t::f(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
 #endif
 }
 
-static void _receiveLogBuffer(uint32_t address, uint8_t *buf) { // NOTE: only works in non ascii mode
-    Serial.println("data");
+static void _receiveLogBuffer(uint32_t address, uint8_t *buf) {
+    // uint64_t received = *((uint64_t *)buf);
+    // if (received != canbusRelayBuffer.front()) {
+    //     canbusRelayBuffer.push(received);
+    // }
+
     Serial.write(buf, 8);
+    // Serial.flush();
+
+    // canbusRelayBuffer.write(*((uint64_t *)buf));
 }
 
-void enableCanbusRelay() { // FIXME: Serial.write cannot be used in interrupt?
+void enableCanbusRelay() {
     Canbus::addCallback(ADD_AUX_LOGGING, _receiveLogBuffer);
+}
+
+void printRelayBuffer() {
+    if (!canbusRelayBuffer.empty()) {
+        static uint64_t buf = canbusRelayBuffer.front();
+        canbusRelayBuffer.pop();
+        Serial.write((const uint8_t *)(&buf), 8);
+    }
 }
 
 } // namespace Logging

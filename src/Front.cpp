@@ -12,6 +12,7 @@ static uint8_t *MC1_VOLT_Buffer;
 static uint8_t *MC0_CURR_Buffer;
 static uint8_t *MC1_CURR_Buffer;
 static uint8_t *BMS_SOC_Buffer;
+static uint8_t *LOG_Buffer;
 static constexpr float wheelRadius = 1.8; // TODO: Get car wheel radius
 static bool charging = false;
 
@@ -54,6 +55,9 @@ void Front::run() {
     MC0_CURR_Buffer = Canbus::getBuffer(ADD_MC0_CURR);
     MC1_CURR_Buffer = Canbus::getBuffer(ADD_MC1_CURR);
     BMS_SOC_Buffer = Canbus::getBuffer(ADD_BMS_SOC);
+    LOG_Buffer = Canbus::getBuffer(ADD_AUX_LOGGING);
+
+    // static uint64_t lastLog = *((uint64_t *)LOG_Buffer);
 
     while (true) {
         if (timeElapsed >= 20) { // Update Tablet every 20ms
@@ -104,6 +108,8 @@ void Front::run() {
             float speed = (MC_Spd_Val_0 + MC_Spd_Val_1) / 2;
             // TODO: Send both mc voltages
             Log.i(ID, "Current Motor Speed:", speed + Pins::getPinValue(PINS_FRONT_PEDAL1));
+            // Logging::printRelayBuffer();
+            // Serial.write(LOG_Buffer, 8);
         }
         if (timeElapsedLong >= 800) { // Update battery/charge every 800ms
             timeElapsedLong = 0;
