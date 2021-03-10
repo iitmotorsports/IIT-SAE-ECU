@@ -9,8 +9,9 @@
  * 
  */
 #include "State.h"
-#include "WProgram.h"
 #include "Log.h"
+#include "Pins.h"
+#include "WProgram.h"
 
 static LOG_TAG TAG = "State Manager";
 
@@ -53,14 +54,18 @@ State::State_t *State::getLastState() {
     return lastState;
 }
 
+LOG_TAG State::State_t::getID() {
+    return (LOG_TAG)420;
+}
+
 void State::begin(State_t &entry) {
     setNextState(&entry);
 
     Log.d(TAG, "Starting State Machine");
-
     while (notifyCode != State::E_FATAL) {
         notifyCode = 0;
-        Log.d(TAG, "Start");
+        Log.d(TAG, "Start", TAG2NUM(currentState->getID())); // Cannot send initalizing state as pins are not defined yet
+        Pins::setInternalValue(PINS_INTERNAL_STATE, TAG2NUM(currentState->getID()));
         setNextState(currentState->run());
         currentState->notify = notifyCode;
         Log.d(TAG, "State returned code", notifyCode);

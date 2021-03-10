@@ -16,8 +16,8 @@
 #include <stdlib.h>
 #include <typeinfo>
 
-#include "PPHelp.h"
 #include "Log.h"
+#include "PPHelp.h"
 
 /**
  * @brief A state machine implementation, refer to State.h for more info.
@@ -82,6 +82,13 @@ public:
      * @return State_t* A pointer to the next state to switch to
      */
     virtual State_t *run(void);
+
+    /**
+     * @brief Returns the LOG_TAG of the state
+     * 
+     * @return LOG_TAG The unique tag 
+     */
+    virtual LOG_TAG getID(void);
 };
 
 /**
