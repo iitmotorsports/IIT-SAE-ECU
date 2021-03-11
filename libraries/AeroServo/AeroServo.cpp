@@ -25,13 +25,12 @@ void setup() {
     Log.i(ID, "Done");
 }
 
-// TODO: Smooth out input values
 void run(int breakPressure, int steeringAngle) { // Add 10 millisec delay
     // Brake pressure
-    static int breakPos = map(breakPressure, PINS_ANALOG_MIN, PINS_ANALOG_MAX, angleMin, angleMax);
+    int breakPos = map(breakPressure, PINS_ANALOG_MIN, PINS_ANALOG_MAX, angleMin, angleMax);
 
     // Steering angle sensor
-    static int steerPos = 0;
+    int steerPos = 0;
 
     if (steeringAngle <= steerLMin) {
         steerPos = map(steeringAngle, steerLMax, steerLMin, angleMax, angleMin);
@@ -39,14 +38,12 @@ void run(int breakPressure, int steeringAngle) { // Add 10 millisec delay
         steerPos = map(steeringAngle, steerRMin, steerRMax, angleMin, angleMax);
     }
 
-    // Set position to highest one
-    if (breakPos > steerPos) {
-        servo2.write(breakPos);
-        servo1.write(breakPos);
-    } else {
-        servo1.write(steerPos);
-        servo2.write(steerPos);
-    }
+    static int lastValue = angleMin;
+    int servoVal = (max(breakPos, steerPos) + lastValue * 3) / 4;
+    lastValue = servoVal;
+
+    servo1.write(servoVal);
+    servo2.write(servoVal);
 }
 
 } // namespace Aero
