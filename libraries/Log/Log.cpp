@@ -53,8 +53,6 @@ namespace Logging {
 
 #if CONF_LOGGING_MAPPED_MODE > 0
 
-#define LOG_END_MSG_FLAG CONF_LOGGING_END_MSG_FLAG
-
 // No Timestamping for this mode
 
 // Do this to use the same fuction header, we don't need these for mapped logging
