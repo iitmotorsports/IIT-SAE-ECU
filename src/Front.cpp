@@ -28,9 +28,18 @@ static struct State::State_t *states[] = {
 std::unordered_map<uint32_t, struct State::State_t *> stateMap;
 static struct State::State_t *currentState;
 
+// TODO: ensure buffers are derefrenced with a signed pointer if they are signed / etc.
+
 static uint32_t BMSSOC() {
     Canbus::setSemaphore(ADD_BMS_SOC);
     return *(uint8_t *)(BMS_SOC_Buffer + 4); // Byte 4: BMS State of charge buffer
+    Canbus::clearSemaphore();
+}
+
+static uint32_t BMSVOLT()
+{
+    Canbus::setSemaphore(ADD_BMS_SOC);
+    return *(uint16_t *)(BMS_SOC_Buffer + 2); // Byte 4: BMS State of charge buffer
     Canbus::clearSemaphore();
 }
 
