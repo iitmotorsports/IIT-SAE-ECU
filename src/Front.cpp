@@ -25,6 +25,7 @@ static struct State::State_t *states[] = {
     &ECUStates::Driving_Mode_State,
     &ECUStates::FaultState,
 };
+
 std::unordered_map<uint32_t, struct State::State_t *> stateMap;
 static struct State::State_t *currentState;
 
@@ -36,8 +37,7 @@ static uint32_t BMSSOC() {
     Canbus::clearSemaphore();
 }
 
-static uint32_t BMSVOLT()
-{
+static uint32_t BMSVOLT() {
     Canbus::setSemaphore(ADD_BMS_SOC);
     return *(uint16_t *)(BMS_SOC_Buffer + 2); // Byte 4: BMS State of charge buffer
     Canbus::clearSemaphore();
