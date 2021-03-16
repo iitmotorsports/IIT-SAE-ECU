@@ -175,15 +175,15 @@ void setup(void) {
     F_Can.onReceive(_receiveCan);
     Log.d(ID, "Enabling Interrupts");
     delay(500);                 // Just in case canbus needs to do stuff
-    F_Can.enableMBInterrupts(); // FIXME: Gets stuck here why?
+    F_Can.enableMBInterrupts(); // FIXME: Possible issue where it sometimes freezes here
     // #ifdef CONF_ECU_DEBUG
     //     F_Can.mailboxStatus(); // Only shows actual data in ASCII mode
     // #endif
     started = true;
 }
 
-void update(void) { // TODO: Test if canbus interrupts actually work as intended
-    F_Can.events(); // Should we update using a timer or just through state loops?
+void update(void) {
+    F_Can.events();
 }
 
 void getData(const uint32_t address, uint8_t buf[8]) {
@@ -201,12 +201,12 @@ uint8_t *getBuffer(const uint32_t address) {
     return addressBuffers[_getAddressPos(address)];
 }
 
-void setSemaphore(const uint32_t address) {
-    addressSemaphore = address;
+void setSemaphore(const uint32_t address) { // FIXME: During testing, teensy froze up when reading a BMS message, fixed when semaphores were disabled
+    // addressSemaphore = address;
 }
 
 void clearSemaphore() {
-    addressSemaphore = 0;
+    // addressSemaphore = 0;
 }
 
 static void _pushSendMsg() {
