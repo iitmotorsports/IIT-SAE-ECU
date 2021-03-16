@@ -135,14 +135,15 @@ static uint _getAddressPos(const uint32_t address) {
 }
 
 // FlexCan Callback function
-static void _receiveCan(const CAN_message_t &msg) {
-    // #if CONF_LOGGING_MAPPED_MODE > 0 // TEMPORARY FIX?
-    //     Serial.print("0000000");
-    // #else
-    //     Serial.print(""); // FIXME: Serial breaks when we don't do this? Somthing todo with interrupts, prob
-    // #endif
-    if (addressSemaphore == msg.id) // Throw data away, we are already processing previous msg
+static void _receiveCan(const CAN_message_t &msg) { // FIXME: potential issue where checking semaphore freezes, more testing needed
+    if (addressSemaphore == msg.id) {               // Throw data away, we are already processing previous msg
+#ifdef CONF_ECU_DEBUG
+#if CONF_LOGGING_MAPPED_MODE != 0
+        Serial.printf("Discarding can msg %u\n", msg.id);
+#endif
+#endif
         return;
+    }
     uint pos = __getAddressPos(msg.id);
     memcpy(addressBuffers[pos], msg.buf, 8);
     if (callbacks[pos])
