@@ -259,6 +259,7 @@ void sendData(const uint32_t address, const uint8_t buf_0, const uint8_t buf_1, 
     _pushSendMsg();
 }
 
+#ifdef CONF_LOGGING_ASCII_DEBUG
 static void _canSniff(const CAN_message_t &msg) {
     _receiveCan(msg);
     // Serial.print("MB ");
@@ -280,13 +281,19 @@ static void _canSniff(const CAN_message_t &msg) {
     }
     Serial.println();
 }
+#endif
 
-void enableCanbusSniffer() {
+void enableCanbusSniffer(bool enable) {
 #ifndef CONF_LOGGING_ASCII_DEBUG
     Log.w(ID, "Canbus sniffer only works in ascii debug mode");
 #else
-    Serial.println("Enabling canbus sniffer");
-    F_Can.onReceive(_canSniff);
+    if (enable) {
+        Serial.println("Enabling canbus sniffer");
+        F_Can.onReceive(_canSniff);
+    } else {
+        Serial.println("Disabling canbus sniffer");
+        F_Can.onReceive(_receiveCan);
+    }
 #endif
 }
 

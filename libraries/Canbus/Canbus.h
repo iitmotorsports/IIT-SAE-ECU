@@ -164,9 +164,8 @@ void copyVolatileCanMsg(volatile uint8_t src[8], uint8_t dest[8]);
 /**
  * @brief continuously prints out strings of any message that is received through canbus.
  * As such, this function only works when the ECU is in ascii debug mode.
- * 
  */
-void enableCanbusSniffer();
+void enableCanbusSniffer(bool enable);
 
 } // namespace Canbus
 
