@@ -12,8 +12,11 @@
 #ifndef __ECU_COMMAND_H__
 #define __ECU_COMMAND_H__
 
-#include "CommandConfig.def"
 #include <stdint.h>
 #include <stdlib.h>
+
+#define COMMAND_ENABLE_CHARGING 486
+#define COMMAND_SEND_CANBUS_MESSAGE 818
+#define COMMAND_CLEAR_FAULTS 679
 
 #endif // __ECU_COMMAND_H__
