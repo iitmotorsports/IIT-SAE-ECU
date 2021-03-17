@@ -259,6 +259,37 @@ void sendData(const uint32_t address, const uint8_t buf_0, const uint8_t buf_1, 
     _pushSendMsg();
 }
 
+static void _canSniff(const CAN_message_t &msg) {
+    _receiveCan(msg);
+    Serial.print("MB ");
+    Serial.print(msg.mb);
+    Serial.print("  OVERRUN: ");
+    Serial.print(msg.flags.overrun);
+    Serial.print("  LEN: ");
+    Serial.print(msg.len);
+    Serial.print(" EXT: ");
+    Serial.print(msg.flags.extended);
+    Serial.print(" TS: ");
+    Serial.print(msg.timestamp);
+    Serial.print(" ID: ");
+    Serial.print(msg.id, HEX);
+    Serial.print(" Buffer: ");
+    for (uint8_t i = 0; i < msg.len; i++) {
+        Serial.print(msg.buf[i], HEX);
+        Serial.print(" ");
+    }
+    Serial.println();
+}
+
+void enableCanbusSniffer() {
+#ifndef CONF_LOGGING_ASCII_DEBUG
+    Log.w(ID, "Canbus sniffer only works in ascii debug mode");
+#else
+    Serial.println("Enabling canbus sniffer");
+    F_Can.onReceive(_canSniff);
+#endif
+}
+
 } // namespace Canbus
 
 Canbus::Buffer::Buffer(const uint32_t address) {

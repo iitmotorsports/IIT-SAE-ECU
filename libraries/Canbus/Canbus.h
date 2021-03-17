@@ -161,6 +161,13 @@ void sendData(const uint32_t address, const uint8_t buf_0 = 0, const uint8_t buf
  */
 void copyVolatileCanMsg(volatile uint8_t src[8], uint8_t dest[8]);
 
+/**
+ * @brief continuously prints out strings of any message that is received through canbus.
+ * As such, this function only works when the ECU is in ascii debug mode.
+ * 
+ */
+void enableCanbusSniffer();
+
 } // namespace Canbus
 
 #endif // __ECU_CANBUS_H__
