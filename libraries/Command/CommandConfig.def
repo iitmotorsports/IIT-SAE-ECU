@@ -1,0 +1,5 @@
+#ifndef __ECU_COMMANDCONFIG_DEF__
+#define __ECU_COMMANDCONFIG_DEF__
+
+
+#endif // __ECU_COMMANDCONFIG_DEF__
