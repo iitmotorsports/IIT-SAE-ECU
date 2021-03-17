@@ -39,4 +39,10 @@
  */
 #define CONF_LOGGING_MAPPED_MODE 0
 
+#ifdef CONF_ECU_DEBUG
+#if CONF_LOGGING_MAPPED_MODE == 0
+#define CONF_LOGGING_ASCII_DEBUG 1
+#endif
+#endif
+
 #endif // __ECU_LOGCONFIG_H__
