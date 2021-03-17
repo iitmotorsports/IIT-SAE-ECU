@@ -18,7 +18,6 @@
 #include "Log.h"
 
 namespace Canbus {
-
 static LOG_TAG ID = "Canbus";
 
 #define X(...) ,
@@ -28,10 +27,10 @@ static const int TX_MAILBOXES = CONF_FLEXCAN_TX_MAILBOXES;
 
 FlexCAN_T4<CONF_FLEXCAN_CAN_SELECT, RX_SIZE_256, TX_SIZE_16> F_Can;
 // static IntervalTimer updateTimer;
-static uint32_t addressList[ADDRESS_COUNT];                 // Sorted list of all the addresses
-static uint8_t addressBuffers[ADDRESS_COUNT + 1][8];        // Store buffers for every address, last entry used as failsafe
-static bool addressFlow[ADDRESS_COUNT];                     // Denote whether an address is incoming or outgoing, mapped to addressList
-static volatile canCallback callbacks[ADDRESS_COUNT] = {0}; // Store any and all callbacks
+static uint32_t addressList[ADDRESS_COUNT];                   // Sorted list of all the addresses
+static volatile uint8_t addressBuffers[ADDRESS_COUNT + 1][8]; // Store buffers for every address, last entry used as failsafe
+static bool addressFlow[ADDRESS_COUNT];                       // Denote whether an address is incoming or outgoing, mapped to addressList
+static volatile canCallback callbacks[ADDRESS_COUNT] = {0};   // Store any and all callbacks
 // NOTE: From what I can tell, a semaphore is needed whenever Can.events is not used, as canMsg handlers will automaticaly run without it.
 static volatile uint32_t addressSemaphore = 0; // Address buffer semaphore, // NOTE: address 0x0 cannot be used
 
@@ -101,22 +100,6 @@ static void _setMailboxes() {
 }
 
 // IMPROVE: We have to binary search all mailboxes each time we want to get data
-static uint __getAddressPos(const uint32_t address) {
-    int s = 0;
-    int e = ADDRESS_COUNT;
-    while (s <= e) {
-        int mid = (s + e) / 2;
-        if (addressList[mid] == address) {
-            return mid;
-        } else if (addressList[mid] > address) {
-            e = mid - 1;
-        } else {
-            s = mid + 1;
-        }
-    }
-    return ADDRESS_COUNT; // Out of range index
-}
-
 static uint _getAddressPos(const uint32_t address) {
     int s = 0;
     int e = ADDRESS_COUNT;
@@ -130,28 +113,51 @@ static uint _getAddressPos(const uint32_t address) {
             s = mid + 1;
         }
     }
-    Log.e(ID, "Address has not been allocated: ", address);
     return ADDRESS_COUNT; // Out of range index
+}
+
+void copyVolatileCanMsg(volatile uint8_t src[8], uint8_t dest[8]) {
+    dest[0] = src[0];
+    dest[1] = src[1];
+    dest[2] = src[2];
+    dest[3] = src[3];
+    dest[4] = src[4];
+    dest[5] = src[5];
+    dest[6] = src[6];
+    dest[7] = src[7];
 }
 
 // FlexCan Callback function
 static void _receiveCan(const CAN_message_t &msg) { // FIXME: potential issue where checking semaphore freezes, more testing needed
     if (addressSemaphore == msg.id) {               // Throw data away, we are already processing previous msg
-#ifdef CONF_ECU_DEBUG
-#if CONF_LOGGING_MAPPED_MODE != 0
+#ifdef CONF_LOGGING_ASCII_DEBUG
         Serial.printf("Discarding can msg %u\n", msg.id);
-#endif
 #endif
         return;
     }
-    uint pos = __getAddressPos(msg.id);
-    memcpy(addressBuffers[pos], msg.buf, 8);
+
+    uint pos = _getAddressPos(msg.id);
+
+    volatile uint8_t *arr = addressBuffers[pos];
+    arr[0] = msg.buf[0];
+    arr[1] = msg.buf[1];
+    arr[2] = msg.buf[2];
+    arr[3] = msg.buf[3];
+    arr[4] = msg.buf[4];
+    arr[5] = msg.buf[5];
+    arr[6] = msg.buf[6];
+    arr[7] = msg.buf[7];
     if (callbacks[pos])
         callbacks[pos](msg.id, addressBuffers[pos]);
 }
 
 void addCallback(const uint32_t address, canCallback callback) {
     uint pos = _getAddressPos(address);
+    if (pos == ADDRESS_COUNT) {
+        Log.e(ID, "Address has not been allocated: ", address);
+        return;
+    }
+
     callbacks[pos] = callback;
 }
 
@@ -177,9 +183,9 @@ void setup(void) {
     Log.d(ID, "Enabling Interrupts");
     delay(500);                 // Just in case canbus needs to do stuff
     F_Can.enableMBInterrupts(); // FIXME: Possible issue where it sometimes freezes here
-    // #ifdef CONF_ECU_DEBUG
-    //     F_Can.mailboxStatus(); // Only shows actual data in ASCII mode
-    // #endif
+#ifdef CONF_LOGGING_ASCII_DEBUG
+    F_Can.mailboxStatus();
+#endif
     started = true;
 }
 
@@ -188,26 +194,30 @@ void update(void) {
 }
 
 void getData(const uint32_t address, uint8_t buf[8]) {
-    int pos = _getAddressPos(address);
+    uint pos = _getAddressPos(address);
     if (pos != ADDRESS_COUNT && !addressFlow[pos]) { // 0 == incoming
         setSemaphore(address);                       // Semaphore needed to ensure interrupt does not replace data mid transfer
-        memcpy(buf, addressBuffers[pos], 8);         // 8 Bytes // IMPROVE: can we just give the array instead of copying?
+        copyVolatileCanMsg(addressBuffers[pos], buf);
         clearSemaphore();
         return;
     }
     Log.e(ID, "Given address is not incoming or is invalid:", address);
 }
 
-uint8_t *getBuffer(const uint32_t address) {
-    return addressBuffers[_getAddressPos(address)];
+volatile uint8_t *getBuffer(const uint32_t address) {
+    uint pos = _getAddressPos(address);
+    if (pos == ADDRESS_COUNT) {
+        Log.e(ID, "Address has not been allocated: ", address);
+    }
+    return addressBuffers[pos];
 }
 
 void setSemaphore(const uint32_t address) { // FIXME: During testing, teensy froze up when reading a BMS message, fixed when semaphores were disabled
-    // addressSemaphore = address;
+    addressSemaphore = address;
 }
 
 void clearSemaphore() {
-    // addressSemaphore = 0;
+    addressSemaphore = 0;
 }
 
 static void _pushSendMsg() {
@@ -216,8 +226,17 @@ static void _pushSendMsg() {
 }
 
 void pushData(const uint32_t address) {
-    send.id = address;
+#ifdef CONF_ECU_DEBUG
+    uint pos = _getAddressPos(address);
+    if (pos == ADDRESS_COUNT) {
+        Log.e(ID, "Address has not been allocated: ", address);
+        return;
+    }
+    copyVolatileCanMsg(addressBuffers[pos], send.buf);
+#else
     memcpy(send.buf, addressBuffers[_getAddressPos(address)], 8); // 8 Bytes
+#endif
+    send.id = address;
     _pushSendMsg();
 }
 
@@ -241,5 +260,50 @@ void sendData(const uint32_t address, const uint8_t buf_0, const uint8_t buf_1, 
 }
 
 } // namespace Canbus
+
+Canbus::Buffer::Buffer(const uint32_t address) {
+    this->address = address;
+}
+
+void Canbus::Buffer::init() {
+    buffer = Canbus::getBuffer(address);
+}
+
+uint32_t Canbus::Buffer::getULong() {
+    setSemaphore(address);
+    uint32_t val = *(uint32_t *)(buffer);
+    clearSemaphore();
+    return val;
+}
+int32_t Canbus::Buffer::getLong() {
+    setSemaphore(address);
+    int32_t val = *(int32_t *)(buffer);
+    clearSemaphore();
+    return val;
+}
+uint16_t Canbus::Buffer::getUInt(int pos) {
+    setSemaphore(address);
+    uint16_t val = *(uint16_t *)(buffer + pos);
+    clearSemaphore();
+    return val;
+}
+int16_t Canbus::Buffer::getInt(int pos) {
+    setSemaphore(address);
+    int16_t val = *(int16_t *)(buffer + pos);
+    clearSemaphore();
+    return val;
+}
+uint8_t Canbus::Buffer::getUShort(int pos) {
+    setSemaphore(address);
+    uint8_t val = *(uint8_t *)(buffer + pos);
+    clearSemaphore();
+    return val;
+}
+int8_t Canbus::Buffer::getShort(int pos) {
+    setSemaphore(address);
+    int8_t val = *(int8_t *)(buffer + pos);
+    clearSemaphore();
+    return val;
+}
 
 // @endcond

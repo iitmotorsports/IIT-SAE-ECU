@@ -30,9 +30,25 @@ namespace Canbus {
  * @brief The function type to pass to addCallback
  * 
  * uint32_t The address
- * uint8_t * The 8 byte message buffer
+ * volatile uint8_t * The 8 byte message buffer
  */
-typedef void (*canCallback)(uint32_t, uint8_t *);
+typedef void (*canCallback)(uint32_t, volatile uint8_t *);
+
+/**
+ * @brief An incoming canbus message, allows the message data to be interpreted
+ */
+struct Buffer { // TODO: more rigorous testing on the get funcs
+    uint32_t address;
+    volatile uint8_t *buffer = 0;
+    Buffer(const uint32_t address);
+    void init();
+    uint32_t getULong();
+    int32_t getLong();
+    uint16_t getUInt(int pos);
+    int16_t getInt(int pos);
+    uint8_t getUShort(int pos);
+    int8_t getShort(int pos);
+};
 
 /**
  * @brief Update the Canbus line
@@ -65,15 +81,15 @@ void enableInterrupts(bool enable);
 void getData(const uint32_t address, uint8_t buf[8]);
 
 /**
- * @brief Get the buffer of an outgoing address in order to set it's values to be pushed later.
- * Use pushData to push the data after modifying the buffer.
+ * @brief Get the buffer of an any address.
+ * If it is outgoing, use pushData to push the data after modifying the buffer.
  * Invalid addresses will return a buffer that is ignored.
  * @note buffers that are for incoming addresses should not be modified, but can be monitored
- * @note use setSemaphore before using the given pointer while interrupts are active as undefined behavior may occur
- * @param address The outgoing address
- * @return uint8_t[8] buffer array of the message, length 8
+ * @note use setSemaphore before using the given pointer while interrupts are active as undefined behavior may occur, alternatively, use a Buffer struct
+ * @param address The address
+ * @return volatile uint8_t[8] buffer array of the message, length 8
  */
-uint8_t *getBuffer(const uint32_t address);
+volatile uint8_t *getBuffer(const uint32_t address);
 
 /**
  * @brief Sets whether an address buffer is being actively read from, must be set to the appropriate address if reading directly from a buffer.
@@ -136,6 +152,14 @@ void sendData(const uint32_t address, uint8_t buf[8]);
  * @param buf_7 byte 7 of the outgoing buffer
  */
 void sendData(const uint32_t address, const uint8_t buf_0 = 0, const uint8_t buf_1 = 0, const uint8_t buf_2 = 0, const uint8_t buf_3 = 0, const uint8_t buf_4 = 0, const uint8_t buf_5 = 0, const uint8_t buf_6 = 0, const uint8_t buf_7 = 0);
+
+/**
+ * @brief Copy a volatile canMsg array to a non-volatile array
+ * 
+ * @param src the volatile source array
+ * @param dest the non-volatile destination array
+ */
+void copyVolatileCanMsg(volatile uint8_t src[8], uint8_t dest[8]);
 
 } // namespace Canbus
 
