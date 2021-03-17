@@ -1,3 +1,6 @@
+#ifndef __ECU_AEROSERVO_H__
+#define __ECU_AEROSERVO_H__
+
 #include <stdint.h>
 #include <stdlib.h>
 
@@ -20,3 +23,5 @@ void setup(void);
 void run(int breakPressure, int steeringAngle);
 
 } // namespace Aero
+
+#endif // __ECU_AEROSERVO_H__
