@@ -206,8 +206,8 @@ void Log_t::f(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
 #endif
 }
 
-static void _receiveLogBuffer(uint32_t address, uint8_t *buf) {
-    Serial.write(buf, 8);
+static void _receiveLogBuffer(uint32_t address, volatile uint8_t * buf) {
+    Serial.write((uint8_t *)buf, 8); // TODO: does dropping the volatile cause any issues?
 }
 
 void enableCanbusRelay() {
