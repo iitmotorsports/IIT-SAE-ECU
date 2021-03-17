@@ -7,13 +7,14 @@ static LOG_TAG ID = "Front Teensy";
 static elapsedMillis timeElapsed;
 static elapsedMillis timeElapsedMid;
 static elapsedMillis timeElapsedLong;
-static uint8_t *MC0_RPM_Buffer;
-static uint8_t *MC1_RPM_Buffer;
-static uint8_t *MC0_VOLT_Buffer;
-static uint8_t *MC1_VOLT_Buffer;
-static uint8_t *MC0_CURR_Buffer;
-static uint8_t *MC1_CURR_Buffer;
-static uint8_t *BMS_SOC_Buffer;
+// TODO: ensure these declerations make sense
+static Canbus::Buffer MC0_RPM_Buffer(ADD_MC0_RPM);
+static Canbus::Buffer MC1_RPM_Buffer(ADD_MC1_RPM);
+static Canbus::Buffer MC0_VOLT_Buffer(ADD_MC0_VOLT);
+static Canbus::Buffer MC1_VOLT_Buffer(ADD_MC1_VOLT);
+static Canbus::Buffer MC0_CURR_Buffer(ADD_MC0_CURR);
+static Canbus::Buffer MC1_CURR_Buffer(ADD_MC1_CURR);
+static Canbus::Buffer BMS_SOC_Buffer(ADD_BMS_SOC);
 static constexpr float wheelRadius = 1.8; // TODO: Get car wheel radius
 
 static struct State::State_t *states[] = {
@@ -32,49 +33,33 @@ static struct State::State_t *currentState;
 // TODO: ensure buffers are derefrenced with a signed pointer if they are signed / etc.
 
 static uint32_t BMSSOC() {
-    Canbus::setSemaphore(ADD_BMS_SOC);
-    return *(uint8_t *)(BMS_SOC_Buffer + 4); // Byte 4: BMS State of charge buffer
-    Canbus::clearSemaphore();
+    return BMS_SOC_Buffer.getInt(4); // Byte 4: BMS State of charge buffer
 }
 
 static uint32_t BMSVOLT() {
-    Canbus::setSemaphore(ADD_BMS_SOC);
-    return *(uint16_t *)(BMS_SOC_Buffer + 2); // Byte 4: BMS State of charge buffer
-    Canbus::clearSemaphore();
+    return BMS_SOC_Buffer.getInt(2); // Byte 2: BMS Immediate voltage
 }
 
 static uint16_t MC0Voltage() {
-    Canbus::setSemaphore(ADD_MC0_VOLT);
-    int16_t MC0_VOLT = *((int16_t *)(MC0_VOLT_Buffer)) / 10; // Bytes 0-1: DC BUS MC Voltage
-    Canbus::clearSemaphore();
-    return MC0_VOLT;
+    return MC0_VOLT_Buffer.getInt(0) / 10; // Bytes 0-1: DC BUS MC Voltage
 }
 
 static uint16_t MC1Voltage() {
-    Canbus::setSemaphore(ADD_MC0_VOLT);
-    int16_t MC1_VOLT = *((int16_t *)(MC1_VOLT_Buffer)) / 10; // Bytes 0-1: DC BUS MC Voltage
-    Canbus::clearSemaphore();
-    return MC1_VOLT;
+    return MC1_VOLT_Buffer.getInt(0) / 10; // Bytes 0-1: DC BUS MC Voltage
 }
 
-static uint32_t powerValue() { // IMPROVE: get power value using three phase values, or find a power value address
-    Canbus::setSemaphore(ADD_MC0_CURR);
-    int16_t MC0_CURR = *((int16_t *)(MC0_CURR_Buffer + 6)) / 10; // Bytes 6-7: DC BUS MC Current
-    Canbus::setSemaphore(ADD_MC1_CURR);
-    int16_t MC1_CURR = *((int16_t *)(MC1_CURR_Buffer + 6)) / 10; // Bytes 6-7:
-    Canbus::clearSemaphore();
+static uint32_t powerValue() {                    // IMPROVE: get power value using three phase values, or find a power value address
+    int16_t MC1_CURR = MC0_CURR_Buffer.getInt(6); // Bytes 6-7: DC BUS MC Current
+    int16_t MC0_CURR = MC1_CURR_Buffer.getInt(6); // Bytes 6-7: DC BUS MC Current
     int MC0_PWR = MC0Voltage() * MC0_CURR;
     int MC1_PWR = MC1Voltage() * MC1_CURR;
     return (MC0_PWR + MC1_PWR) / 1000; // Sending kilowatts
 }
 
+// receive rpm of MCs, interpret, then send to from teensy for logging
 static int32_t motorSpeed() {
-    // receive rpm of MCs, interpret, then send to from teensy for logging
-    Canbus::setSemaphore(ADD_MC0_RPM);
-    int16_t MC_Rpm_Val_0 = *(int16_t *)(MC0_RPM_Buffer + 2); // Bytes 2-3 : Angular Velocity
-    Canbus::setSemaphore(ADD_MC1_RPM);
-    int16_t MC_Rpm_Val_1 = *(int16_t *)(MC1_RPM_Buffer + 2); // Bytes 2-3 : Angular Velocity
-    Canbus::clearSemaphore();
+    int16_t MC_Rpm_Val_0 = MC0_RPM_Buffer.getInt(2); // Bytes 2-3 : Angular Velocity
+    int16_t MC_Rpm_Val_1 = MC1_RPM_Buffer.getInt(2); // Bytes 2-3 : Angular Velocity
     float MC_Spd_Val_0 = wheelRadius * 2 * 3.1415926536 / 60 * MC_Rpm_Val_0;
     float MC_Spd_Val_1 = wheelRadius * 2 * 3.1415926536 / 60 * MC_Rpm_Val_1;
     return (MC_Spd_Val_0 + MC_Spd_Val_1) / 2;
@@ -90,15 +75,15 @@ static void readSerial() {
     }
 }
 
-static void getBuffers() {
+static void loadBuffers() {
     Log.i(ID, "Loading Buffers");
-    MC0_RPM_Buffer = Canbus::getBuffer(ADD_MC0_RPM);
-    MC1_RPM_Buffer = Canbus::getBuffer(ADD_MC1_RPM);
-    MC0_VOLT_Buffer = Canbus::getBuffer(ADD_MC0_VOLT);
-    MC1_VOLT_Buffer = Canbus::getBuffer(ADD_MC1_VOLT);
-    MC0_CURR_Buffer = Canbus::getBuffer(ADD_MC0_CURR);
-    MC1_CURR_Buffer = Canbus::getBuffer(ADD_MC1_CURR);
-    BMS_SOC_Buffer = Canbus::getBuffer(ADD_BMS_SOC);
+    MC0_RPM_Buffer.init();
+    MC1_RPM_Buffer.init();
+    MC0_VOLT_Buffer.init();
+    MC1_VOLT_Buffer.init();
+    MC0_CURR_Buffer.init();
+    MC1_CURR_Buffer.init();
+    BMS_SOC_Buffer.init();
 }
 
 static void updateCurrentState() {
@@ -124,7 +109,7 @@ void Front::run() {
     Pins::initialize(); // setup predefined pins
     Log.i(ID, "Enabling Logging relay");
     Logging::enableCanbusRelay(); // Allow logging though canbus
-    getBuffers();
+    loadBuffers();
     loadStateMap();
 
     static int testValue = 0;
@@ -154,6 +139,7 @@ void Front::run() {
             Log.i(ID, "MC1 Voltage:", MC1Voltage() + testValue);
             Log.i(ID, "Current Power Value:", powerValue() + testValue);   // Canbus message from MCs
             Log.i(ID, "BMS State Of Charge Value:", BMSSOC() + testValue); // Canbus message
+            Log.i(ID, "BMS Immediate Voltage:", BMSVOLT() + testValue);    // Canbus message
             Log.i(ID, "Fault State", Pins::getCanPinValue(PINS_INTERNAL_GEN_FAULT));
             // if (currentState != &ECUStates::Charging_State || currentState != &ECUStates::Idle_State) {
             //     Pins::setInternalValue(PINS_INTERNAL_CHARGE_SIGNAL, LOW);

@@ -40,23 +40,17 @@ State::State_t *ECUStates::PreCharge_State::PreCharFault(void) {
     return &ECUStates::FaultState;
 }
 
-// TODO: generalize buffer interpretation
-
 bool ECUStates::PreCharge_State::voltageCheck() {
-    Canbus::setSemaphore(ADD_BMS_VOLT);
-    int16_t BMSVolt = *((int16_t *)(BMS_VOLT_Buffer + 2)); // Byte 2-3: Pack Instant Voltage
-    Canbus::setSemaphore(ADD_MC0_VOLT);
-    int16_t MC0Volt = *((int16_t *)(MC0_VOLT_Buffer)) / 10; // Bytes 0-1: DC BUS MC Voltage
-    Canbus::setSemaphore(ADD_MC1_VOLT);
-    int16_t MC1Volt = *((int16_t *)(MC1_VOLT_Buffer)) / 10; // Bytes 0-1: DC BUS MC Voltage
-    Canbus::clearSemaphore();
+    int16_t BMSVolt = BMS_VOLT_Buffer.getInt(2);      // Byte 2-3: Pack Instant Voltage
+    int16_t MC0Volt = MC0_VOLT_Buffer.getInt(0) / 10; // Bytes 0-1: DC BUS MC Voltage
+    int16_t MC1Volt = MC1_VOLT_Buffer.getInt(0) / 10; // Bytes 0-1: DC BUS MC Voltage
     return 0.9 * BMSVolt <= (MC0Volt + MC1Volt) / 2;
 }
 
 void ECUStates::PreCharge_State::getBuffers() {
-    BMS_VOLT_Buffer = Canbus::getBuffer(ADD_BMS_VOLT);
-    MC0_VOLT_Buffer = Canbus::getBuffer(ADD_MC0_VOLT);
-    MC1_VOLT_Buffer = Canbus::getBuffer(ADD_MC1_VOLT);
+    BMS_VOLT_Buffer.init();
+    MC1_VOLT_Buffer.init();
+    MC0_VOLT_Buffer.init();
 };
 
 State::State_t *ECUStates::PreCharge_State::run(void) { // NOTE: Low = Closed, High = Open
