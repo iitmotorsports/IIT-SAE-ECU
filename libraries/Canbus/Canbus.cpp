@@ -261,16 +261,16 @@ void sendData(const uint32_t address, const uint8_t buf_0, const uint8_t buf_1, 
 
 static void _canSniff(const CAN_message_t &msg) {
     _receiveCan(msg);
-    Serial.print("MB ");
-    Serial.print(msg.mb);
-    Serial.print("  OVERRUN: ");
-    Serial.print(msg.flags.overrun);
-    Serial.print("  LEN: ");
-    Serial.print(msg.len);
-    Serial.print(" EXT: ");
-    Serial.print(msg.flags.extended);
-    Serial.print(" TS: ");
-    Serial.print(msg.timestamp);
+    // Serial.print("MB ");
+    // Serial.print(msg.mb);
+    // Serial.print("  OVERRUN: ");
+    // Serial.print(msg.flags.overrun);
+    // Serial.print("  LEN: ");
+    // Serial.print(msg.len);
+    // Serial.print(" EXT: ");
+    // Serial.print(msg.flags.extended);
+    // Serial.print(" TS: ");
+    // Serial.print(msg.timestamp);
     Serial.print(" ID: ");
     Serial.print(msg.id, HEX);
     Serial.print(" Buffer: ");
