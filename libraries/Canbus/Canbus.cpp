@@ -307,41 +307,47 @@ void Canbus::Buffer::init() {
     buffer = Canbus::getBuffer(address);
 }
 
-uint32_t Canbus::Buffer::getULong() {
+int64_t Canbus::Buffer::getULong() {
     setSemaphore(address);
-    uint32_t val = *(uint32_t *)(buffer);
+    int64_t val = *(int64_t *)(buffer);
     clearSemaphore();
     return val;
 }
-int32_t Canbus::Buffer::getLong() {
+int64_t Canbus::Buffer::getLong() {
     setSemaphore(address);
-    int32_t val = *(int32_t *)(buffer);
+    int64_t val = *(int64_t *)(buffer);
     clearSemaphore();
     return val;
 }
-uint16_t Canbus::Buffer::getUInt(int pos) {
+int32_t Canbus::Buffer::getUInt(int pos) {
     setSemaphore(address);
-    uint16_t val = *(uint16_t *)(buffer + pos);
+    int32_t val = *(int32_t *)(buffer + pos);
     clearSemaphore();
     return val;
 }
-int16_t Canbus::Buffer::getInt(int pos) {
+int32_t Canbus::Buffer::getInt(int pos) {
+    setSemaphore(address);
+    int32_t val = *(int32_t *)(buffer + pos);
+    clearSemaphore();
+    return val;
+}
+int16_t Canbus::Buffer::getUShort(int pos) {
     setSemaphore(address);
     int16_t val = *(int16_t *)(buffer + pos);
     clearSemaphore();
     return val;
 }
-uint8_t Canbus::Buffer::getUShort(int pos) {
+int16_t Canbus::Buffer::getShort(int pos) {
     setSemaphore(address);
-    uint8_t val = *(uint8_t *)(buffer + pos);
+    int16_t val = *(int16_t *)(buffer + pos);
     clearSemaphore();
     return val;
 }
-int8_t Canbus::Buffer::getShort(int pos) {
-    setSemaphore(address);
-    int8_t val = *(int8_t *)(buffer + pos);
-    clearSemaphore();
-    return val;
+uint8_t Canbus::Buffer::getUByte(int pos) {
+    return buffer[pos];
+}
+int8_t Canbus::Buffer::getByte(int pos) {
+    return (int8_t)buffer[pos];
 }
 
 // @endcond

@@ -43,12 +43,14 @@ struct Buffer { // TODO: more rigorous testing on the get funcs
     volatile uint8_t *buffer = 0;
     Buffer(const uint32_t address);
     void init();
-    uint32_t getULong();
-    int32_t getLong();
-    uint16_t getUInt(int pos);
-    int16_t getInt(int pos);
-    uint8_t getUShort(int pos);
-    int8_t getShort(int pos);
+    int64_t getULong();
+    int64_t getLong();
+    int32_t getUInt(int pos);
+    int32_t getInt(int pos);
+    int16_t getUShort(int pos);
+    int16_t getShort(int pos);
+    uint8_t getUByte(int pos);
+    int8_t getByte(int pos);
 };
 
 /**
