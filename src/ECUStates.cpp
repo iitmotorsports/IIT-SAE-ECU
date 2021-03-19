@@ -41,14 +41,14 @@ State::State_t *ECUStates::PreCharge_State::PreCharFault(void) {
 }
 
 bool ECUStates::PreCharge_State::voltageCheck() {
-    int16_t BMSVolt = BMS_VOLT_Buffer.getInt(2);      // Byte 2-3: Pack Instant Voltage
-    int16_t MC0Volt = MC0_VOLT_Buffer.getInt(0) / 10; // Bytes 0-1: DC BUS MC Voltage
-    int16_t MC1Volt = MC1_VOLT_Buffer.getInt(0) / 10; // Bytes 0-1: DC BUS MC Voltage
+    int16_t BMSVolt = BMS_DATA_Buffer.getShort(2);      // Byte 2-3: Pack Instant Voltage
+    int16_t MC0Volt = MC0_VOLT_Buffer.getShort(0) / 10; // Bytes 0-1: DC BUS MC Voltage
+    int16_t MC1Volt = MC1_VOLT_Buffer.getShort(0) / 10; // Bytes 0-1: DC BUS MC Voltage
     return 0.9 * BMSVolt <= (MC0Volt + MC1Volt) / 2;
 }
 
 void ECUStates::PreCharge_State::getBuffers() {
-    BMS_VOLT_Buffer.init();
+    BMS_DATA_Buffer.init();
     MC1_VOLT_Buffer.init();
     MC0_VOLT_Buffer.init();
 };
