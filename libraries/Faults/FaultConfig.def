@@ -19,8 +19,6 @@
 #include "PPhelp.h"
 #include "Pins.h"
 
-// TODO: add pins from excel document
-
 /**
  * @brief Defines Pins that should be checked for hard faults
  * 
