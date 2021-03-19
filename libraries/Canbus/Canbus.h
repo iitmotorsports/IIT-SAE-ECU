@@ -40,17 +40,19 @@ typedef void (*canCallback)(uint32_t, volatile uint8_t *);
  */
 struct Buffer { // TODO: more rigorous testing on the get funcs
     uint32_t address;
-    volatile uint8_t *buffer = 0;
     Buffer(const uint32_t address);
     void init();
-    int64_t getULong();
+    uint64_t getULong();
     int64_t getLong();
-    int32_t getUInt(int pos);
-    int32_t getInt(int pos);
-    int16_t getUShort(int pos);
-    int16_t getShort(int pos);
-    uint8_t getUByte(int pos);
-    int8_t getByte(int pos);
+    uint32_t getUInt(size_t pos);
+    int32_t getInt(size_t pos);
+    uint16_t getUShort(size_t pos);
+    int16_t getShort(size_t pos);
+    uint8_t getUByte(size_t pos);
+    int8_t getByte(size_t pos);
+
+private:
+    volatile uint8_t *buffer = 0;
 };
 
 /**
@@ -142,7 +144,7 @@ void sendData(const uint32_t address, uint8_t buf[8]);
 /**
  * @brief Send raw data over a given canbus address using given values
  * 
- * @note Function does not verify that address is outgoing, undefined behavior will occur if data is sent thorugh an incoming address
+ * @note Function does not verify that address is outgoing, undefined behavior may occur if data is sent thorugh an incoming address
  * 
  * @param address The outgoing address
  * @param buf_0 byte 0 of the outgoing buffer

@@ -307,9 +307,11 @@ void Canbus::Buffer::init() {
     buffer = Canbus::getBuffer(address);
 }
 
-int64_t Canbus::Buffer::getULong() {
+// IMPROVE: remove type-punning, maybe just use bitshifting?
+
+uint64_t Canbus::Buffer::getULong() {
     setSemaphore(address);
-    int64_t val = *(int64_t *)(buffer);
+    uint64_t val = *(uint64_t *)(buffer);
     clearSemaphore();
     return val;
 }
@@ -319,34 +321,34 @@ int64_t Canbus::Buffer::getLong() {
     clearSemaphore();
     return val;
 }
-int32_t Canbus::Buffer::getUInt(int pos) {
+uint32_t Canbus::Buffer::getUInt(size_t pos) {
+    setSemaphore(address);
+    uint32_t val = *(uint32_t *)(buffer + pos);
+    clearSemaphore();
+    return val;
+}
+int32_t Canbus::Buffer::getInt(size_t pos) {
     setSemaphore(address);
     int32_t val = *(int32_t *)(buffer + pos);
     clearSemaphore();
     return val;
 }
-int32_t Canbus::Buffer::getInt(int pos) {
+uint16_t Canbus::Buffer::getUShort(size_t pos) {
     setSemaphore(address);
-    int32_t val = *(int32_t *)(buffer + pos);
+    uint16_t val = *(uint16_t *)(buffer + pos);
     clearSemaphore();
     return val;
 }
-int16_t Canbus::Buffer::getUShort(int pos) {
-    setSemaphore(address);
-    int16_t val = *(int16_t *)(buffer + pos);
-    clearSemaphore();
-    return val;
-}
-int16_t Canbus::Buffer::getShort(int pos) {
+int16_t Canbus::Buffer::getShort(size_t pos) {
     setSemaphore(address);
     int16_t val = *(int16_t *)(buffer + pos);
     clearSemaphore();
     return val;
 }
-uint8_t Canbus::Buffer::getUByte(int pos) {
+uint8_t Canbus::Buffer::getUByte(size_t pos) {
     return buffer[pos];
 }
-int8_t Canbus::Buffer::getByte(int pos) {
+int8_t Canbus::Buffer::getByte(size_t pos) {
     return (int8_t)buffer[pos];
 }
 
