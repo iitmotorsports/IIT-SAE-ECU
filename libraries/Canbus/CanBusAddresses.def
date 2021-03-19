@@ -64,8 +64,7 @@
  * @note Currently, address 0x0000 cannot be used
  */
 #define CAN_ADDRESS                \
-    X(ADD_BMS_SOC, INPUT)          \
-    X(ADD_BMS_VOLT, INPUT)         \
+    X(ADD_BMS_DATA, INPUT)         \
     X(ADD_MC0_VOLT, INPUT)         \
     X(ADD_MC1_VOLT, INPUT)         \
     X(ADD_MC0_RPM, INPUT)          \
