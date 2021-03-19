@@ -21,8 +21,7 @@
 #define ADD_BMS_OFFSET 0x0000
 
 // Define addresses values here
-#define ADD_BMS_SOC 0x06B0 + ADD_BMS_OFFSET
-#define ADD_BMS_VOLT 0x06B0 + ADD_BMS_OFFSET // TODO: ensure BMS_VOLT address is read properly
+#define ADD_BMS_DATA 0x06B0 + ADD_BMS_OFFSET
 #define ADD_MC0_VOLT 0x0007 + ADD_MC0_OFFSET
 #define ADD_MC1_VOLT 0x0007 + ADD_MC1_OFFSET
 #define ADD_MC0_RPM 0x0005 + ADD_MC0_OFFSET
