@@ -6,7 +6,7 @@
 #define COMMAND_ENABLE_CHARGING 123
 #define COMMAND_SEND_CANBUS_MESSAGE 111
 #define COMMAND_CLEAR_FAULTS 045
-#define COMMAND_TOGGLE_CANBUS_SNIFF 222
+#define COMMAND_TOGGLE_CANBUS_SNIFF 127
 
 /**
  * @brief Defines commands that the ECU must react to
