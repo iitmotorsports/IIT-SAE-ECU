@@ -1,5 +1,6 @@
 #include "Front.h"
 #include "ECUGlobalConfig.h"
+#include "Heartbeat.h"
 #include "SerialCommand.h"
 #include "unordered_map"
 
@@ -97,11 +98,16 @@ static void setChargeSignal() {
 }
 
 static void pushCanMessage() {
-    char address[4];
+    uint32_t address;
     char buffer[8];
-    Serial.readBytes(address, 4);
-    Serial.readBytes(buffer, 8);
-    Canbus::sendData(*((uint32_t *)address), (uint8_t *)buffer);
+    size_t c = 0;
+    c += Serial.readBytes((char *)&address, 4);
+    c += Serial.readBytes(buffer, 8);
+    if (c != 12) {
+        Log.w(ID, "Did not read 12 Bytes, not pushing can message");
+        return;
+    }
+    Canbus::sendData(address, (uint8_t *)buffer);
 }
 
 static void toggleCanbusSniffer() {
@@ -124,7 +130,8 @@ void Front::run() {
     Command::setCommand(COMMAND_ENABLE_CHARGING, setChargeSignal);
     Command::setCommand(COMMAND_SEND_CANBUS_MESSAGE, pushCanMessage);
     Command::setCommand(COMMAND_TOGGLE_CANBUS_SNIFF, toggleCanbusSniffer);
-    // Command::setCommand(COMMAND_PING, pushCanMessage);
+
+    Heartbeat::beginReceiving();
 
     static int testValue = 0;
 
@@ -134,13 +141,14 @@ void Front::run() {
 
             Command::receiveCommand();
 
-            testValue = Pins::getPinValue(PINS_FRONT_PEDAL1);
+            testValue = Pins::getPinValue(PINS_FRONT_PEDAL1); // TODO: remove test pedal value
 
-            Log.i(ID, "Current Motor Speed:", motorSpeed() + testValue); // TODO: remove test pedal value
+            Log.i(ID, "Current Motor Speed:", motorSpeed() + testValue);
         }
         if (timeElapsedMid >= 200) { // Med priority updates
             timeElapsedMid = 0;
             updateCurrentState();
+            Heartbeat::checkBeat();
         }
         if (timeElapsedLong >= 800) { // Low priority updates
             timeElapsedLong = 0;

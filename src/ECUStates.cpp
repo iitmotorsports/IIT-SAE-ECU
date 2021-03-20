@@ -2,6 +2,7 @@
 #include "AeroServo.h"
 #include "ECUGlobalConfig.h"
 #include "Faults.h"
+#include "Heartbeat.h"
 #include "Log.h"
 
 static bool FaultCheck() { // NOTE: Will only return true if hardfault occurs
@@ -18,6 +19,7 @@ State::State_t *ECUStates::Initialize_State::run(void) {
     Pins::initialize(); // setup predefined pins
     Fault::setup();     // load all buffers
     Aero::setup();
+    Heartbeat::beginBeating();
 
     if (FaultCheck()) {
         return &ECUStates::FaultState;
