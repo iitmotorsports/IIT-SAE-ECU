@@ -1,0 +1,31 @@
+#ifndef __ECU_SERIALCOMMAND_DEF__
+#define __ECU_SERIALCOMMAND_DEF__
+
+#include "PPHelp.h"
+
+#define COMMAND_ENABLE_CHARGING 123
+#define COMMAND_SEND_CANBUS_MESSAGE 218
+#define COMMAND_CLEAR_FAULTS 379
+#define COMMAND_TOGGLE_CANBUS_SNIFF 492
+#define COMMAND_PING 518
+
+/**
+ * @brief Defines commands that the ECU must react to
+ * 
+ * @note the function callback must be set later using Command::setCommand
+ * 
+ * Unless it is the last entry, this is how to add a new message
+ * 
+ * X(Value) \
+ * 
+ * Only the last entry should NOT have a '\'
+ * 
+ */
+#define SERIAL_COMMANDS            \
+    X(COMMAND_ENABLE_CHARGING)     \
+    X(COMMAND_SEND_CANBUS_MESSAGE) \
+    X(COMMAND_CLEAR_FAULTS)        \
+    X(COMMAND_TOGGLE_CANBUS_SNIFF) \
+    X(COMMAND_PING)
+
+#endif // __ECU_SERIALCOMMAND_DEF__

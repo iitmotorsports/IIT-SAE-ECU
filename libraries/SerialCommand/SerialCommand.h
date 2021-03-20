@@ -12,25 +12,18 @@
 #ifndef __ECU_SERIALCOMMAND_H__
 #define __ECU_SERIALCOMMAND_H__
 
+#include "SerialCommand.def"
 #include "usb_serial.h"
 #include <stdint.h>
 #include <stdlib.h>
 
-#define COMMAND_ENABLE_CHARGING 186
-#define COMMAND_SEND_CANBUS_MESSAGE 218
-#define COMMAND_CLEAR_FAULTS 379
-#define COMMAND_TOGGLE_CANBUS_SNIFF 492
-#define COMMAND_PING 518
-
-typedef void (*CommandCallback)(uint8_t);
+typedef void (*CommandCallback)(void);
 
 namespace Command {
 
-void setCommand(uint8_t command, CommandCallback);
+void setCommand(uint8_t command, CommandCallback callback);
 
-size_t readBuffer(uint8_t count, uint8_t buffer[8]) {
-    return Serial.readBytes((char *)buffer, 8);
-}
+void receiveCommand();
 
 } // namespace Command
 
