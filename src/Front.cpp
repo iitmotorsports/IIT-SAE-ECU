@@ -1,5 +1,6 @@
 #include "Front.h"
 #include "ECUGlobalConfig.h"
+#include "SerialCommand.h"
 #include "unordered_map"
 
 static LOG_TAG ID = "Front Teensy";
@@ -65,16 +66,6 @@ static int32_t motorSpeed() {
     return (MC_Spd_Val_0 + MC_Spd_Val_1) / 2;
 }
 
-static void readSerial() {
-    uint8_t serialData = 0;
-    if (Serial.available()) {
-        serialData = Serial.read();
-        Log.d(ID, "Data received: ", serialData);
-        if (serialData == COMMAND_ENABLE_CHARGING)
-            Pins::setInternalValue(PINS_INTERNAL_CHARGE_SIGNAL, currentState == &ECUStates::Idle_State);
-    }
-}
-
 static void loadBuffers() {
     Log.i(ID, "Loading Buffers");
     MC0_RPM_Buffer.init();
@@ -101,6 +92,23 @@ static void loadStateMap() {
     }
 }
 
+static void setChargeSignal() {
+    Pins::setInternalValue(PINS_INTERNAL_CHARGE_SIGNAL, currentState == &ECUStates::Idle_State);
+}
+
+static void pushCanMessage() {
+    char address[4];
+    char buffer[8];
+    Serial.readBytes(address, 4);
+    Serial.readBytes(buffer, 8);
+    Canbus::sendData(*((uint32_t *)address), (uint8_t *)buffer);
+}
+
+static void toggleCanbusSniffer() {
+    static bool enabled = false;
+    Canbus::enableCanbusSniffer((enabled = !enabled));
+}
+
 void Front::run() {
     Log.i(ID, "Teensy 3.6 SAE FRONT ECU Initalizing");
     Log.i(ID, "Setting up Canbus");
@@ -112,15 +120,21 @@ void Front::run() {
     loadBuffers();
     loadStateMap();
 
+    Log.i(ID, "Setting commands");
+    Command::setCommand(COMMAND_ENABLE_CHARGING, setChargeSignal);
+    Command::setCommand(COMMAND_SEND_CANBUS_MESSAGE, pushCanMessage);
+    Command::setCommand(COMMAND_TOGGLE_CANBUS_SNIFF, toggleCanbusSniffer);
+    // Command::setCommand(COMMAND_PING, pushCanMessage);
+
     static int testValue = 0;
 
     while (true) {
         if (timeElapsed >= 20) { // High priority updates
             timeElapsed = 0;
 
-            testValue = Pins::getPinValue(PINS_FRONT_PEDAL1);
+            Command::receiveCommand();
 
-            readSerial();
+            testValue = Pins::getPinValue(PINS_FRONT_PEDAL1);
 
             Log.i(ID, "Current Motor Speed:", motorSpeed() + testValue); // TODO: remove test pedal value
         }
@@ -137,7 +151,7 @@ void Front::run() {
 
             Log.i(ID, "MC0 Voltage:", MC0Voltage() + testValue);
             Log.i(ID, "MC1 Voltage:", MC1Voltage() + testValue);
-            Log.i(ID, "Current Power Value:", MCPowerValue() + testValue);   // Canbus message from MCs
+            Log.i(ID, "Current Power Value:", MCPowerValue() + testValue); // Canbus message from MCs
             Log.i(ID, "BMS State Of Charge Value:", BMSSOC() + testValue); // Canbus message
             Log.i(ID, "BMS Immediate Voltage:", BMSVOLT() + testValue);    // Canbus message
             Log.i(ID, "Fault State", Pins::getCanPinValue(PINS_INTERNAL_GEN_FAULT));
