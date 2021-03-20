@@ -46,6 +46,8 @@
 #define ADD_CANPIN_DIGITAL1 0x0200
 // Logging address
 #define ADD_AUX_LOGGING 0x0123
+// Ping address
+#define ADD_HEART 0x0321
 // @endcond
 
 /**
@@ -83,6 +85,7 @@
     X(ADD_CANPIN_ANALOG3, CANPIN)  \
     X(ADD_CANPIN_DIGITAL0, CANPIN) \
     X(ADD_CANPIN_DIGITAL1, CANPIN) \
-    X(ADD_AUX_LOGGING, CANPIN)
+    X(ADD_AUX_LOGGING, CANPIN)     \
+    X(ADD_HEART, CANPIN)
 
 #endif // __ECU_CANBUS_ADDRESSES_H__
