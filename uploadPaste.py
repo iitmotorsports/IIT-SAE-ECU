@@ -1,3 +1,13 @@
+"""
+@file uploadPaste.py
+@author IR
+@brief 'Update' pastebin of log_lookup.json for easy download by android app
+@version 0.1
+@date 2021-03-23
+
+@copyright Copyright (c) 2021
+"""
+
 import base64
 from pip._vendor import requests
 import xml.etree.ElementTree as ET
