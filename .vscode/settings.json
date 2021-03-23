@@ -48,7 +48,7 @@
         "queue": "cpp"
     },
     "doxygen_runner.configuration_file_override": "${workspaceFolder}\\docs\\Doxyfile",
-    "python.linting.pylintEnabled": false,
+    "python.linting.pylintEnabled": true,
     "python.linting.enabled": true,
-    "python.linting.flake8Enabled": true
+    "python.linting.flake8Enabled": false
 }
