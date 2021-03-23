@@ -101,8 +101,8 @@
  * Only the last entry should NOT have a '\'
  */
 #define ECU_PINS                                      \
-    X(PINS_BACK_SERVO_OFF, DIGITAL, OUTPUT, 1)        \
     X(PINS_BOTH_LED, DIGITAL, OUTPUT, NIL)            \
+    X(PINS_BACK_SERVO_OFF, DIGITAL, OUTPUT, 1)        \
     X(PINS_BACK_TSV_SIGNAL, DIGITAL, INPUT, NIL)      \
     X(PINS_BACK_AIR2, ANALOG, OUTPUT, 0)              \
     X(PINS_BACK_CHARGING_RELAY, ANALOG, OUTPUT, 0)    \
@@ -176,6 +176,7 @@
 
 #else
 #define ECU_PINS                                    \
+    X(PINS_BOTH_LED, DIGITAL, OUTPUT, NIL)          \
     X(PINS_FRONT_BUTTON_INPUT, DIGITAL, INPUT, NIL) \
     X(PINS_FRONT_WHEEL1, ANALOG, INPUT, NIL)        \
     X(PINS_FRONT_WHEEL0, ANALOG, INPUT, NIL)        \
