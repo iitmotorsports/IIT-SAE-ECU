@@ -17,11 +17,19 @@
 namespace Heartbeat {
 static IntervalTimer canbusPinUpdate;
 static elapsedMillis lastBeat;
+static uint lastTime = 0;
 
 static LOG_TAG ID = "HeartBeat";
 
+static void toggleLED() {
+    static bool on = false;
+    on = !on;
+    digitalWriteFast(13, on);
+}
+
 static void beat() {
     Canbus::sendData(ADD_HEART);
+    toggleLED();
 }
 
 void beginBeating() {
@@ -30,8 +38,9 @@ void beginBeating() {
 }
 
 static void receiveBeat(uint32_t, volatile uint8_t *) {
-    Log.w(ID, "Beat", lastBeat);
+    lastTime = lastBeat;
     lastBeat = 0;
+    toggleLED();
 }
 
 void beginReceiving() {
@@ -41,6 +50,8 @@ void beginReceiving() {
 void checkBeat() {
     if (lastBeat > (CONF_HEARTBEAT_INTERVAL_MICRO / 1000) + CONF_HEARTBEAT_TIMEOUT_MILLI) {
         Log.w(ID, "Heartbeat is taking too long", lastBeat);
+    } else {
+        Log.i(ID, "Beat", lastTime);
     }
 }
 
