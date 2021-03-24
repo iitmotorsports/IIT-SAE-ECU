@@ -282,7 +282,7 @@
             "options": {
                 "statusbar": {
                     "label": "$(refresh)",
-                    "color": "#257fe6"
+                    "color": "#e62525"
                 }
             },
             "problemMatcher": []
