@@ -7,7 +7,8 @@
 static LOG_TAG ID = "Front Teensy";
 
 static elapsedMillis timeElapsed;
-static elapsedMillis timeElapsedMid;
+static elapsedMillis timeElapsedMidHigh;
+static elapsedMillis timeElapsedMidLow;
 static elapsedMillis timeElapsedLong;
 // TODO: ensure these declerations make sense
 static Canbus::Buffer MC0_RPM_Buffer(ADD_MC0_RPM);
@@ -145,15 +146,21 @@ void Front::run() {
 
             Log.i(ID, "Current Motor Speed:", motorSpeed() + testValue);
         }
-        if (timeElapsedMid >= 200) { // Med priority updates
-            timeElapsedMid = 0;
+        if (timeElapsedMidHigh >= 200) { // MedHigh priority updates
+            timeElapsedMidHigh = 0;
             updateCurrentState();
             Heartbeat::checkBeat();
         }
+        if (timeElapsedMidLow >= 500) { // MedLow priority updates
+            timeElapsedMidLow = 0;
+            if (Pins::getCanPinValue(PINS_INTERNAL_START)) {
+                static bool on = false;
+                on = !on;
+                Pins::setPinValue(PINS_FRONT_START_LIGHT, on);
+            }
+        }
         if (timeElapsedLong >= 800) { // Low priority updates
             timeElapsedLong = 0;
-
-            Pins::setPinValue(PINS_FRONT_START_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_START));
             Pins::setPinValue(PINS_FRONT_BMS_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_BMS_FAULT));
             Pins::setPinValue(PINS_FRONT_IMD_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_IMD_FAULT));
 
