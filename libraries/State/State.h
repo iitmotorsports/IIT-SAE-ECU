@@ -29,8 +29,9 @@ namespace State {
 
 /**
  * @brief Common codes that can be used by states.
+ * @note WIP
  */
-enum NotifyCode : int {
+enum NotifyValue : int {
     /**
      * @brief No error has occurred.
      */
@@ -59,17 +60,24 @@ enum NotifyCode : int {
 struct State_t {
 protected:
     /**
-    * @brief Get the code of the previous state
-    * 
-    * @return int notify code
-    */
+     * @brief Get the code of the previous state
+     * 
+     * @return int notify code
+     */
     int getNotify(void);
+
+    /**
+     * @brief Send a code to the next state
+     * 
+     * @param notify code to send
+     */
+    void notify(int notify);
 
 public:
     /**
      * @brief Used for receiving values from other states
      */
-    int notify = 0;
+    int notifyCode = 0;
 
     /**
      * @brief The unique ID of the state, used for logging
@@ -89,21 +97,14 @@ public:
      * @return LOG_TAG The unique tag 
      */
     virtual LOG_TAG getID(void);
+
+    /**
+     * @brief Get a pointer of the last state
+     * @note If the state machine has just started, this will return a nullptr
+     * @return State_t* pointer of last state
+     */
+    State_t *getLastState();
 };
-
-/**
- * @brief Send a code to the next state
- * 
- * @param notify code to send
- */
-void notify(int notify);
-
-/**
- * @brief Get a pointer of the last state
- * @note If the state machine has just started, this will return a nullptr
- * @return State_t* pointer of last state
- */
-State_t *getLastState();
 
 /**
  * @brief Begin the state machine with a pointer to a state
