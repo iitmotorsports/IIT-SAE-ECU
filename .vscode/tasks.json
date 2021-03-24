@@ -22,7 +22,8 @@
             ],
             "options": {
                 "statusbar": {
-                    "label": "$(database)"
+                    "label": "$(database)",
+                    "color": "#1ba82e"
                 }
             },
             "problemMatcher": {
@@ -101,7 +102,8 @@
             ],
             "options": {
                 "statusbar": {
-                    "label": "$(zap)"
+                    "label": "$(zap)",
+                    "color": "#e6d925"
                 }
             },
             "problemMatcher": []
@@ -130,7 +132,8 @@
             ],
             "options": {
                 "statusbar": {
-                    "label": "$(terminal)"
+                    "label": "$(terminal)",
+                    "color": "#000000"
                 }
             },
             "problemMatcher": []
@@ -173,7 +176,8 @@
             ],
             "options": {
                 "statusbar": {
-                    "label": "$(flame)"
+                    "label": "$(flame)",
+                    "color": "#e67c25"
                 }
             },
             "problemMatcher": [],
@@ -277,7 +281,27 @@
             ],
             "options": {
                 "statusbar": {
-                    "label": "$(refresh)"
+                    "label": "$(refresh)",
+                    "color": "#257fe6"
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Pastebin",
+            "type": "shell",
+            "detail": "Push lookup table to pastebin",
+            "presentation": {
+                "panel": "shared",
+                "showReuseMessage": false
+            },
+            "command": "python",
+            "args": [
+                "uploadPaste.py",
+            ],
+            "options": {
+                "statusbar": {
+                    "label": "$(file)"
                 }
             },
             "problemMatcher": []
