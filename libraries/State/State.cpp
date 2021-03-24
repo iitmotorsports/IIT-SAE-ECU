@@ -17,7 +17,7 @@ static LOG_TAG TAG = "State Manager";
 
 static State::State_t *lastState;
 static State::State_t *currentState;
-static int notifyCode = 0;
+static int currentNotifyCode = 0;
 
 static void setNextState(State::State_t *state) {
     lastState = currentState;
@@ -32,7 +32,7 @@ static struct UnhandledState_t : State::State_t {
 
     State_t *run(void) {
         Log.f(ID, "UNHANDLED STATE!");
-        State::notify(State::E_FATAL);
+        notify(State::E_FATAL);
         return this;
     };
 
@@ -42,15 +42,15 @@ State::State_t *State::State_t::run() {
     return &UnhandledState;
 }
 
-void State::notify(int notify) {
-    notifyCode = notify;
+void State::State_t::notify(int code) {
+    currentNotifyCode = code;
 }
 
 int State::State_t::getNotify() {
-    return this->notify;
+    return this->notifyCode;
 }
 
-State::State_t *State::getLastState() {
+State::State_t *State::State_t::getLastState() {
     return lastState;
 }
 
@@ -62,13 +62,13 @@ void State::begin(State_t &entry) {
     setNextState(&entry);
 
     Log.d(TAG, "Starting State Machine");
-    while (notifyCode != State::E_FATAL) {
-        notifyCode = 0;
+    while (currentNotifyCode != State::E_FATAL) {
+        currentNotifyCode = 0;
         Log.d(TAG, "Start", TAG2NUM(currentState->getID())); // Cannot send initalizing state as pins are not defined yet
         Pins::setInternalValue(PINS_INTERNAL_STATE, TAG2NUM(currentState->getID()));
         setNextState(currentState->run());
-        currentState->notify = notifyCode;
-        Log.d(TAG, "State returned code", notifyCode);
+        currentState->notifyCode = currentNotifyCode;
+        Log.d(TAG, "State returned code", currentNotifyCode);
     }
 
     Log.f(TAG, "STATE MACHINE STOPPED");
