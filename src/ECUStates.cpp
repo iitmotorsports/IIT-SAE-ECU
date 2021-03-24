@@ -252,18 +252,19 @@ State::State_t *ECUStates::FaultState::run(void) {
     Log.w(ID, "Resetting pins");
     Pins::resetPhysicalPins();
 
-    Log.d(ID, "Continuously setting Fault Canpins");
-
-    while (true) {
-        Log.f(ID, "FAULT STATE");
-        Pins::setInternalValue(PINS_INTERNAL_START, 0);
-        Pins::setInternalValue(PINS_INTERNAL_GEN_FAULT, 1);
-        Pins::setInternalValue(PINS_INTERNAL_BMS_FAULT, Pins::getPinValue(PINS_BACK_BMS_FAULT));
-        Pins::setInternalValue(PINS_INTERNAL_IMD_FAULT, Pins::getPinValue(PINS_BACK_IMD_FAULT));
-        Fault::logFault();
-        delay(1000);
+    if (getLastState() == &ECUStates::PreCharge_State) {
+        Log.d(ID, "Continuously setting Fault Canpins");
+        while (true) {
+            Log.f(ID, "FAULT STATE");
+            Pins::setInternalValue(PINS_INTERNAL_START, 0);
+            Pins::setInternalValue(PINS_INTERNAL_GEN_FAULT, 1);
+            Pins::setInternalValue(PINS_INTERNAL_BMS_FAULT, Pins::getPinValue(PINS_BACK_BMS_FAULT));
+            Pins::setInternalValue(PINS_INTERNAL_IMD_FAULT, Pins::getPinValue(PINS_BACK_IMD_FAULT));
+            Fault::logFault();
+            delay(1000);
+        }
     }
-    return &ECUStates::FaultState;
+    return &ECUStates::Initialize_State;
 }
 
 State::State_t *ECUStates::Logger_t::run(void) {
@@ -285,7 +286,7 @@ State::State_t *ECUStates::Logger_t::run(void) {
 State::State_t *ECUStates::Bounce_t::run(void) {
     delay(250);
     Log.i(ID, "Bounce!");
-    State::notify(random(100));
+    notify(random(100));
     delay(250);
-    return State::getLastState();
+    return getLastState();
 }
