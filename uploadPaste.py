@@ -76,6 +76,8 @@ async def main():
     for pasteID in pasteList[1]:
         await deletePaste(pasteID)
 
+    print("New ID {}".format(status[1]))
+
 
 if __name__ == "__main__":
     asyncio.run(main())
