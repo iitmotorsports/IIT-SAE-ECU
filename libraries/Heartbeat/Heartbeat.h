@@ -25,7 +25,7 @@ void beginBeating();
 
 void beginReceiving();
 
-void checkBeat();
+int checkBeat();
 
 } // namespace Heartbeat
 

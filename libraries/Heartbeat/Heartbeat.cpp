@@ -48,11 +48,13 @@ void beginReceiving() {
     Canbus::addCallback(ADD_HEART, receiveBeat);
 }
 
-void checkBeat() {
+int checkBeat() {
     if (lastBeat > (CONF_HEARTBEAT_INTERVAL_MICRO / 1000) + CONF_HEARTBEAT_TIMEOUT_MILLI) {
         Log.w(ID, "Heartbeat is taking too long", lastBeat);
+        return 0;
     } else {
         Log.i(ID, "Beat", lastTime);
+        return 1;
     }
 }
 

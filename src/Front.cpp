@@ -135,6 +135,7 @@ void Front::run() {
     Heartbeat::beginReceiving();
 
     static int testValue = 0;
+    static bool hasBeat = false;
 
     while (true) {
         if (timeElapsed >= 20) { // High priority updates
@@ -149,12 +150,12 @@ void Front::run() {
         if (timeElapsedMidHigh >= 200) { // MedHigh priority updates
             timeElapsedMidHigh = 0;
             updateCurrentState();
-            Heartbeat::checkBeat();
+            hasBeat = Heartbeat::checkBeat();
         }
         if (timeElapsedMidLow >= 500) { // MedLow priority updates
             timeElapsedMidLow = 0;
             static bool on = false;
-            if (currentState == &ECUStates::Idle_State || currentState == &ECUStates::Charging_State) {
+            if (hasBeat && (currentState == &ECUStates::Idle_State || currentState == &ECUStates::Charging_State)) {
                 on = !on;
             } else {
                 on = 0;
