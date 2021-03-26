@@ -177,8 +177,10 @@ void ECUStates::Driving_Mode_State::sendMCCommand(uint32_t MC_ADD, int torque, b
     Canbus::sendData(MC_ADD, low_byte, high_byte, 0, 0, direction, enableBit); // TODO: check that low and high are in the right place
 }
 
-void ECUStates::Driving_Mode_State::torqueVector(int torques[2], float pedalVal) {
-    torques[0] = pedalVal; // TODO: Add Torque vectoring algorithms
+void ECUStates::Driving_Mode_State::torqueVector(int torques[2], int pedal0, int pedal1) {
+    // TODO: Add Torque vectoring algorithms
+    int pedalVal = (pedal0 + pedal1) / 2;
+    torques[0] = pedalVal; // TODO: must be in percentage value?
     torques[1] = pedalVal;
 }
 
@@ -232,7 +234,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
         Pins::setPinValue(PINS_BACK_BRAKE_LIGHT, PINS_ANALOG_HIGH * ((breakVal / PINS_ANALOG_MAX) > 4));
 
         int MotorTorques[2] = {0};
-        torqueVector(MotorTorques, (float)(pedal0 + pedal1) / 2);
+        torqueVector(MotorTorques, pedal0, pedal1);
 
         Aero::run(breakVal, Pins::getCanPinValue(PINS_FRONT_STEER));
 
