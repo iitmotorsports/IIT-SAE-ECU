@@ -17,6 +17,8 @@
 #include "ECUGlobalConfig.h"
 #include "Log.h"
 
+// TODO: look into filtering only addresses we care about
+
 namespace Canbus {
 static LOG_TAG ID = "Canbus";
 
