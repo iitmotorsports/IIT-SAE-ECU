@@ -15,6 +15,9 @@ static bool FaultCheck() { // NOTE: Will only return true if hardfault occurs
 
 State::State_t *ECUStates::Initialize_State::run(void) {
     Log.i(ID, "Teensy 3.6 SAE BACK ECU Initalizing");
+#ifdef CONF_ECU_DEBUG
+    delay(2000); // prevent test faults to continuosly loop
+#endif
     Canbus::setup();    // allocate and organize addresses
     Pins::initialize(); // setup predefined pins
     Fault::setup();     // load all buffers
@@ -174,7 +177,7 @@ void ECUStates::Driving_Mode_State::sendMCCommand(uint32_t MC_ADD, int torque, b
     // Calculations value = (high_byte x 256) + low_byte
     uint8_t low_byte = percentTorque % 256;
     uint8_t high_byte = percentTorque / 256;
-    Canbus::sendData(MC_ADD, low_byte, high_byte, 0, 0, direction, enableBit); // TODO: check that low and high are in the right place
+    Canbus::sendData(MC_ADD, low_byte, high_byte, 0, 0, direction, 0b11000000 * enableBit); // TODO: check that low and high are in the right place
 }
 
 void ECUStates::Driving_Mode_State::torqueVector(int torques[2], int pedal0, int pedal1) {
@@ -216,6 +219,9 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
     sendMCCommand(ADD_MC0_CTRL, 0, 0, 0);
     sendMCCommand(ADD_MC1_CTRL, 0, 1, 0);
 
+    elapsedMillis controlDelay;
+
+    Log.d(ID, "Entering drive loop");
     while (true) {
         if (FaultCheck()) {
             return DrivingModeFault();
@@ -223,7 +229,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
 
         int pedal0 = Pins::getCanPinValue(PINS_FRONT_PEDAL0);
         int pedal1 = Pins::getCanPinValue(PINS_FRONT_PEDAL1);
-        if (abs(pedal1 - pedal0) > (float)pedal0 * 5 / 100) {
+        if (abs(pedal1 - pedal0) > (pedal0 * 5) / 100) {
             Log.e(ID, "Pedal value offset > 5%");
             Log.i(ID, "", pedal0);
             Log.i(ID, "", pedal1);
@@ -233,13 +239,15 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
         static int breakVal = Pins::getCanPinValue(PINS_FRONT_BRAKE);
         Pins::setPinValue(PINS_BACK_BRAKE_LIGHT, PINS_ANALOG_HIGH * ((breakVal / PINS_ANALOG_MAX) > 4));
 
-        int MotorTorques[2] = {0};
-        torqueVector(MotorTorques, pedal0, pedal1);
+        if (controlDelay > 10) {
+            controlDelay = 0;
+            int MotorTorques[2] = {0};
+            torqueVector(MotorTorques, pedal0, pedal1);
+            sendMCCommand(ADD_MC0_CTRL, MotorTorques[0], 0, 1); // MC 1
+            sendMCCommand(ADD_MC1_CTRL, MotorTorques[1], 1, 1); // MC 2
+        }
 
         Aero::run(breakVal, Pins::getCanPinValue(PINS_FRONT_STEER));
-
-        sendMCCommand(ADD_MC0_CTRL, MotorTorques[0], 0, 1); // MC 1
-        sendMCCommand(ADD_MC1_CTRL, MotorTorques[1], 1, 1); // MC 2
 
         if (Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT)) {
             Log.w(ID, "Going back to Idle state");
@@ -255,6 +263,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
 }
 
 State::State_t *ECUStates::FaultState::run(void) {
+    Pins::setInternalValue(PINS_INTERNAL_GEN_FAULT, 1);
     Canbus::enableInterrupts(false);
 
     Log.w(ID, "Opening Air1, Air2 and Precharge Relay");
@@ -266,17 +275,20 @@ State::State_t *ECUStates::FaultState::run(void) {
     Pins::resetPhysicalPins();
 
     if (getLastState() == &ECUStates::PreCharge_State) {
-        Log.d(ID, "Continuously setting Fault Canpins");
+        Log.f(ID, "Precharge fault");
         while (true) {
-            Log.f(ID, "FAULT STATE");
-            // Pins::setInternalValue(PINS_INTERNAL_START, 0);
             Pins::setInternalValue(PINS_INTERNAL_GEN_FAULT, 1);
             Pins::setInternalValue(PINS_INTERNAL_BMS_FAULT, Pins::getPinValue(PINS_BACK_BMS_FAULT));
             Pins::setInternalValue(PINS_INTERNAL_IMD_FAULT, Pins::getPinValue(PINS_BACK_IMD_FAULT));
             Fault::logFault();
             delay(1000);
         }
+    } else {
+        Log.e(ID, "FAULT STATE");
+        Fault::logFault();
+        delay(1000);
     }
+    Pins::setInternalValue(PINS_INTERNAL_GEN_FAULT, 0);
     return &ECUStates::Initialize_State;
 }
 
