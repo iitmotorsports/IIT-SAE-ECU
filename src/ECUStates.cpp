@@ -21,6 +21,8 @@ State::State_t *ECUStates::Initialize_State::run(void) {
     Aero::setup();
     Heartbeat::beginBeating();
 
+    // Front teensy should know when to blink start light
+
     if (FaultCheck()) {
         return &ECUStates::FaultState;
     }
@@ -39,6 +41,7 @@ State::State_t *ECUStates::PreCharge_State::PreCharFault(void) {
     Pins::setPinValue(PINS_BACK_AIR1, LOW);
     Pins::setPinValue(PINS_BACK_AIR2, LOW);
     Pins::setPinValue(PINS_BACK_PRECHARGE_RELAY, LOW);
+    Log.e(ID, "Precharge Faulted during precharge");
     return &ECUStates::FaultState;
 }
 
@@ -61,28 +64,28 @@ State::State_t *ECUStates::PreCharge_State::run(void) { // NOTE: Low = Closed, H
     Log.i(ID, "Precharge running");
 
     if (FaultCheck()) {
-        Log.e(ID, "Precharge Faulted before charge");
-        return PreCharFault();
+        Log.e(ID, "Precharge Faulted before precharge");
+        return &ECUStates::FaultState;
     }
 
     // NOTE: Assuming Air2 is correct
     Log.w(ID, "Closing Air2 and Precharge Relay and opening Air1");
-    Pins::setPinValue(PINS_BACK_AIR2, HIGH);
-    Pins::setPinValue(PINS_BACK_PRECHARGE_RELAY, HIGH);
+    Pins::setPinValue(PINS_BACK_AIR2, PINS_ANALOG_HIGH);
+    Pins::setPinValue(PINS_BACK_PRECHARGE_RELAY, PINS_ANALOG_HIGH);
     Pins::setPinValue(PINS_BACK_AIR1, LOW);
 
     if (FaultCheck()) {
-        Log.e(ID, "Precharge Faulted after charge");
         return PreCharFault();
     }
 
     elapsedMillis timeElapsed;
 
-    while (timeElapsed < 5000) {
+    while (timeElapsed <= 5000) {
         if (voltageCheck()) {
+            Log.w(ID, "Opening precharge relay");
             Pins::setPinValue(PINS_BACK_PRECHARGE_RELAY, LOW);
             Log.i(ID, "Precharge Finished, closing Air1");
-            Pins::setPinValue(PINS_BACK_AIR1, LOW);
+            Pins::setPinValue(PINS_BACK_AIR1, PINS_ANALOG_HIGH);
             return &ECUStates::Idle_State;
         }
     }
@@ -98,21 +101,22 @@ State::State_t *ECUStates::Idle_State::run(void) {
 
     Log.i(ID, "Waiting for Button or Charging Press");
 
+    // Front teensy should already be blinking start light
+
     elapsedMillis waiting;
 
     while (true) {
         if (Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT)) {
             Log.i(ID, "Button Pressed");
+            // Front teensy will stop blinking start light
             return &ECUStates::Button_State;
         } else if (Pins::getCanPinValue(PINS_INTERNAL_CHARGE_SIGNAL)) {
             Log.i(ID, "Charging Pressed");
+            // Front teensy will continue blinking start light in charge state
             return &ECUStates::Charging_State;
         } else if (FaultCheck()) {
+            Log.w(ID, "Fault in idle state");
             break;
-        }
-        if (waiting >= 1000) { // Notify every secondish
-            waiting = 0;
-            Log.d(ID, "Waiting for button press");
         }
     }
     return &ECUStates::FaultState;
@@ -146,12 +150,11 @@ State::State_t *ECUStates::Charging_State::run(void) {
 State::State_t *ECUStates::Button_State::run(void) {
     Log.i(ID, "Playing sound");
 
-    // motor controller enable bit off
-    Pins::setPinValue(PINS_BACK_SOUND_DRIVER, HIGH);
+    Pins::setPinValue(PINS_BACK_SOUND_DRIVER, PINS_ANALOG_HIGH);
 
     elapsedMillis soundTimer;
 
-    while (soundTimer <= 2000) {
+    while (soundTimer < 2000) {
         if (FaultCheck()) {
             Log.e(ID, "Failed to play sound");
             Pins::setPinValue(PINS_BACK_SOUND_DRIVER, LOW);
@@ -180,31 +183,41 @@ void ECUStates::Driving_Mode_State::torqueVector(int torques[2], float pedalVal)
 }
 
 void ECUStates::Driving_Mode_State::carCooling(float temp) { // TODO: map temp to voltages
-    Pins::setPinValue(PINS_BACK_PUMP_DAC, (int)map(temp, 0, 100, 4095.0f * 2.0f / 5, 4095.0f * 2.5f / 5));
-    int fanSet = (int)map(temp, 0, 100, 0, 4095);
+    Pins::setPinValue(PINS_BACK_PUMP_DAC, (int)map(temp, 0, 100, PINS_ANALOG_HIGH * 2.0f / 5, PINS_ANALOG_HIGH * 2.5f / 5));
+    int fanSet = (int)map(temp, 0, 100, 0, PINS_ANALOG_HIGH);
     Pins::setPinValue(PINS_BACK_FAN1_PWM, fanSet);
     Pins::setPinValue(PINS_BACK_FAN2_PWM, fanSet);
     Pins::setPinValue(PINS_BACK_FAN3_PWM, fanSet);
     Pins::setPinValue(PINS_BACK_FAN4_PWM, fanSet);
 }
 
+State::State_t *ECUStates::Driving_Mode_State::DrivingModeFault(void) {
+    Log.i(ID, "Fault happened in driving state");
+    sendMCCommand(ADD_MC0_CTRL, 0, 0, 0); // TODO: don't we want to stop the motors as well?
+    sendMCCommand(ADD_MC1_CTRL, 0, 1, 0);
+    return &ECUStates::FaultState;
+}
+
 State::State_t *ECUStates::Driving_Mode_State::run(void) {
     Log.i(ID, "Driving mode on");
 
-    // Pins::setInternalValue(PINS_INTERNAL_START, 1);
+    carCooling(60); // TODO: what temp are we using for cooling?
+
+    for (size_t i = 0; i < 4; i++) {               // IMPROVE: Send only once? Check MC heartbeat catches it
+        Canbus::sendData(ADD_MC0_CLEAR, 20, 0, 1); // NOTE: We are assuming MCs are little endian
+        Canbus::sendData(ADD_MC1_CLEAR, 20, 0, 1);
+        delay(10);
+    }
+
+    Log.d(ID, "Sending Fault reset to MCs complete");
+
+    sendMCCommand(ADD_MC0_CTRL, 0, 0, 0);
+    sendMCCommand(ADD_MC1_CTRL, 0, 1, 0);
 
     while (true) {
-        // Canbus::update();
-        // int BMSTemp = 30;
-        // carCooling((float)BMSTemp); // TODO: what temp are we using for cooling?
-
-        for (size_t i = 0; i < 4; i++) {               // IMPROVE: Send only once? Check MC heartbeat catches it
-            Canbus::sendData(ADD_MC0_CLEAR, 20, 0, 1); // NOTE: We are assuming MCs are little endian
-            Canbus::sendData(ADD_MC1_CLEAR, 20, 0, 1);
-            delay(10);
+        if (FaultCheck()) {
+            return DrivingModeFault();
         }
-
-        // Log.d(ID, "Sending Fault reset to MCs complete");
 
         int pedal0 = Pins::getCanPinValue(PINS_FRONT_PEDAL0);
         int pedal1 = Pins::getCanPinValue(PINS_FRONT_PEDAL1);
@@ -212,32 +225,30 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             Log.e(ID, "Pedal value offset > 5%");
             Log.i(ID, "", pedal0);
             Log.i(ID, "", pedal1);
-            return &ECUStates::FaultState;
+            return DrivingModeFault();
         }
 
         static int breakVal = Pins::getCanPinValue(PINS_FRONT_BRAKE);
-        Aero::run(breakVal, Pins::getCanPinValue(PINS_FRONT_STEER));
-
-        Pins::setPinValue(PINS_BACK_BRAKE_LIGHT, PINS_ANALOG_HIGH * (breakVal / PINS_ANALOG_MAX > 4));
+        Pins::setPinValue(PINS_BACK_BRAKE_LIGHT, PINS_ANALOG_HIGH * ((breakVal / PINS_ANALOG_MAX) > 4));
 
         int MotorTorques[2] = {0};
         torqueVector(MotorTorques, (float)(pedal0 + pedal1) / 2);
 
-        sendMCCommand(ADD_MC0_CTRL, MotorTorques[0], 0, 0); // MC 1
-        sendMCCommand(ADD_MC1_CTRL, MotorTorques[1], 1, 0); // MC 2
+        Aero::run(breakVal, Pins::getCanPinValue(PINS_FRONT_STEER));
+
+        sendMCCommand(ADD_MC0_CTRL, MotorTorques[0], 0, 1); // MC 1
+        sendMCCommand(ADD_MC1_CTRL, MotorTorques[1], 1, 1); // MC 2
 
         if (Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT)) {
             Log.w(ID, "Going back to Idle state");
             break;
         }
-
-        if (FaultCheck()) {
-            return &ECUStates::FaultState;
-        }
     }
 
+    sendMCCommand(ADD_MC0_CTRL, 0, 0, 0);
+    sendMCCommand(ADD_MC1_CTRL, 0, 1, 0);
+
     Log.i(ID, "Driving mode off");
-    // Pins::setInternalValue(PINS_INTERNAL_START, 0);
     return &ECUStates::Idle_State;
 }
 
