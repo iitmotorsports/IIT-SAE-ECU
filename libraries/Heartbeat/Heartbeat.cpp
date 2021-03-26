@@ -13,6 +13,7 @@
 #include "Canbus.h"
 #include "ECUGlobalConfig.h"
 #include "Log.h"
+#include "Pins.h"
 
 namespace Heartbeat {
 static IntervalTimer canbusPinUpdate;
@@ -24,7 +25,7 @@ static LOG_TAG ID = "HeartBeat";
 static void toggleLED() {
     static bool on = false;
     on = !on;
-    digitalWriteFast(13, on);
+    Pins::setPinValue(PINS_BOTH_LED, on);
 }
 
 static void beat() {
