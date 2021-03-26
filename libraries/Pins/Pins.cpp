@@ -358,6 +358,7 @@ void initialize(void) {
     Log.i(ID, "Setting up physical pins");
 
     analogWriteResolution(PINS_ANALOG_RES);
+    analogReadResolution(PINS_ANALOG_RES);
     resetPhysicalPins();
 
     Log.i(ID, "Setting up outgoing canbus pins");
