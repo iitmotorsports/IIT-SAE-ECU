@@ -153,11 +153,13 @@ void Front::run() {
         }
         if (timeElapsedMidLow >= 500) { // MedLow priority updates
             timeElapsedMidLow = 0;
-            if (Pins::getCanPinValue(PINS_INTERNAL_START)) {
-                static bool on = false;
+            static bool on = false;
+            if (currentState == &ECUStates::Idle_State) {
                 on = !on;
-                Pins::setPinValue(PINS_FRONT_START_LIGHT, on);
+            } else {
+                on = 0;
             }
+            Pins::setPinValue(PINS_FRONT_START_LIGHT, on);
         }
         if (timeElapsedLong >= 800) { // Low priority updates
             timeElapsedLong = 0;

@@ -191,7 +191,7 @@ void ECUStates::Driving_Mode_State::carCooling(float temp) { // TODO: map temp t
 State::State_t *ECUStates::Driving_Mode_State::run(void) {
     Log.i(ID, "Driving mode on");
 
-    Pins::setInternalValue(PINS_INTERNAL_START, 1);
+    // Pins::setInternalValue(PINS_INTERNAL_START, 1);
 
     while (true) {
         // Canbus::update();
@@ -237,7 +237,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
     }
 
     Log.i(ID, "Driving mode off");
-    Pins::setInternalValue(PINS_INTERNAL_START, 0);
+    // Pins::setInternalValue(PINS_INTERNAL_START, 0);
     return &ECUStates::Idle_State;
 }
 
@@ -256,7 +256,7 @@ State::State_t *ECUStates::FaultState::run(void) {
         Log.d(ID, "Continuously setting Fault Canpins");
         while (true) {
             Log.f(ID, "FAULT STATE");
-            Pins::setInternalValue(PINS_INTERNAL_START, 0);
+            // Pins::setInternalValue(PINS_INTERNAL_START, 0);
             Pins::setInternalValue(PINS_INTERNAL_GEN_FAULT, 1);
             Pins::setInternalValue(PINS_INTERNAL_BMS_FAULT, Pins::getPinValue(PINS_BACK_BMS_FAULT));
             Pins::setInternalValue(PINS_INTERNAL_IMD_FAULT, Pins::getPinValue(PINS_BACK_IMD_FAULT));
