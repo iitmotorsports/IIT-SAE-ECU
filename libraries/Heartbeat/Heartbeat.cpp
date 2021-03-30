@@ -53,7 +53,7 @@ int checkBeat() {
         Log.w(ID, "Heartbeat is taking too long", lastBeat);
         return 0;
     } else {
-        Log.i(ID, "Beat", lastTime);
+        Log(ID, "Beat", lastTime);
         return 1;
     }
 }

@@ -33,8 +33,6 @@ static struct State::State_t *states[] = {
 std::unordered_map<uint32_t, struct State::State_t *> stateMap;
 static struct State::State_t *currentState;
 
-// TODO: ensure buffers are interpreted as signed if they are signed, unsigned if they are unsigned
-
 static uint32_t BMSSOC() {
     return BMS_DATA_Buffer.getShort(4); // Byte 4: BMS State of charge buffer
 }
@@ -82,7 +80,7 @@ static void loadBuffers() {
 static void updateCurrentState() {
     uint32_t currState = Pins::getCanPinValue(PINS_INTERNAL_STATE);
     currentState = stateMap[currState]; // returns NULL if not found
-    Log.i(ID, "Current State", currState);
+    Log(ID, "Current State", currState);
 }
 
 static void loadStateMap() {
@@ -108,6 +106,7 @@ static void pushCanMessage() {
         Log.w(ID, "Did not read 12 Bytes, not pushing can message");
         return;
     }
+    Log.d(ID, "Pushing Can Message", address);
     Canbus::sendData(address, (uint8_t *)buffer);
 }
 
@@ -145,7 +144,7 @@ void Front::run() {
 
             testValue = Pins::getPinValue(PINS_FRONT_PEDAL1); // TODO: remove test pedal value
 
-            Log.i(ID, "Current Motor Speed:", motorSpeed() + testValue);
+            Log(ID, "Current Motor Speed:", motorSpeed() + testValue);
         }
         if (timeElapsedMidHigh >= 200) { // MedHigh priority updates
             timeElapsedMidHigh = 0;
@@ -160,7 +159,7 @@ void Front::run() {
             } else {
                 on = 0;
             }
-            Log.i(ID, "Start Light", on);
+            Log(ID, "Start Light", on);
             Pins::setPinValue(PINS_FRONT_START_LIGHT, on);
         }
         if (timeElapsedLong >= 800) { // Low priority updates
@@ -168,12 +167,12 @@ void Front::run() {
             Pins::setPinValue(PINS_FRONT_BMS_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_BMS_FAULT));
             Pins::setPinValue(PINS_FRONT_IMD_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_IMD_FAULT));
 
-            Log.i(ID, "MC0 Voltage:", MC0Voltage() + testValue);
-            Log.i(ID, "MC1 Voltage:", MC1Voltage() + testValue);
-            Log.i(ID, "Current Power Value:", MCPowerValue() + testValue); // Canbus message from MCs
-            Log.i(ID, "BMS State Of Charge Value:", BMSSOC() + testValue); // Canbus message
-            Log.i(ID, "BMS Immediate Voltage:", BMSVOLT() + testValue);    // Canbus message
-            Log.i(ID, "Fault State", Pins::getCanPinValue(PINS_INTERNAL_GEN_FAULT));
+            Log(ID, "MC0 Voltage:", MC0Voltage() + testValue);
+            Log(ID, "MC1 Voltage:", MC1Voltage() + testValue);
+            Log(ID, "Current Power Value:", MCPowerValue() + testValue); // Canbus message from MCs
+            Log(ID, "BMS State Of Charge Value:", BMSSOC() + testValue); // Canbus message
+            Log(ID, "BMS Immediate Voltage:", BMSVOLT() + testValue);    // Canbus message
+            Log(ID, "Fault State", Pins::getCanPinValue(PINS_INTERNAL_GEN_FAULT));
             // if (currentState != &ECUStates::Charging_State || currentState != &ECUStates::Idle_State) {
             //     Pins::setInternalValue(PINS_INTERNAL_CHARGE_SIGNAL, LOW);
             // }
