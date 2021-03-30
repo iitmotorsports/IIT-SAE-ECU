@@ -94,10 +94,14 @@ void resetPhysicalPins();
 void update(void);
 
 /**
- * @brief Stops background interrupts from running
- * @note cannot be restarted after stopping
+ * @brief Stops background interrupts from sending canPins
  */
-void stop(void);
+void stopCanPins(void);
+
+/**
+ * @brief Starts background interrupts to send canPins, if any are to be sent
+ */
+void startCanPins(void);
 
 /**
  * @brief Initialize all predefined pins

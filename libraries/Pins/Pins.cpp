@@ -350,8 +350,15 @@ void resetPhysicalPins() {
 #undef X
 }
 
-void stop(void) {
+void stopCanPins(void) {
     canbusPinUpdate.end();
+}
+
+void startCanPins(void) {
+    if (digitalCanPinCount_OUT + analogCanPinCount_OUT != 0) {
+        Log.i(ID, "Starting outgoing canpin update timer");
+        canbusPinUpdate.begin(_pushCanbusPins, CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO);
+    }
 }
 
 void initialize(void) {
@@ -402,10 +409,7 @@ void initialize(void) {
         Canbus::addCallback(analogCanPinMessages_IN[i].address, _receiveAnalogCanbusPin);
     }
 
-    if (digitalCanPinCount_OUT + analogCanPinCount_OUT != 0) {
-        Log.i(ID, "Starting outgoing canpin update timer");
-        canbusPinUpdate.begin(_pushCanbusPins, CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO);
-    }
+    startCanPins();
 
 #ifdef CONF_ECU_DEBUG
 #if CONF_LOGGING_MAPPED_MODE == 0
