@@ -52,6 +52,7 @@ void setCommand(uint8_t command, CommandCallback callback) {
         if (cmdMap[i] == command) {
             callbacks[i] = callback;
             Log.i(ID, "Command set for:", command);
+            return;
         }
     }
     Log.w(ID, "No Command found for command:", command);
