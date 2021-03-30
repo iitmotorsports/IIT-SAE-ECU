@@ -116,8 +116,11 @@ Namespaces</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a3402a2c8efbb932ddbe58e66b9cc550c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_logging.html#a3402a2c8efbb932ddbe58e66b9cc550c">Logging::enableCanbusRelay</a> ()</td></tr>
-<tr class="memdesc:a3402a2c8efbb932ddbe58e66b9cc550c"><td class="mdescLeft">&#160;</td><td class="mdescRight">If a set address is received through canbus, the data will be pushed through serial.  <a href="namespace_logging.html#a3402a2c8efbb932ddbe58e66b9cc550c">More...</a><br /></td></tr>
+<tr class="memdesc:a3402a2c8efbb932ddbe58e66b9cc550c"><td class="mdescLeft">&#160;</td><td class="mdescRight">If a set address is received through canbus, the data will be pushed to a buffer to be printed.  <a href="namespace_logging.html#a3402a2c8efbb932ddbe58e66b9cc550c">More...</a><br /></td></tr>
 <tr class="separator:a3402a2c8efbb932ddbe58e66b9cc550c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0acd70772d752e8468d733cbda6a1b31"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_log_8cpp.html#a0acd70772d752e8468d733cbda6a1b31">TAG2NUM</a> (<a class="el" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a> tagValue)</td></tr>
+<tr class="memdesc:a0acd70772d752e8468d733cbda6a1b31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the final numbervalue of a LOG_TAG.  <a href="_log_8cpp.html#a0acd70772d752e8468d733cbda6a1b31">More...</a><br /></td></tr>
+<tr class="separator:a0acd70772d752e8468d733cbda6a1b31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -133,7 +136,38 @@ Variables</h2></td></tr>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2020 </dd></dl>
 
 <p class="definition">Definition in file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
-</div><h2 class="groupheader">Variable Documentation</h2>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a0acd70772d752e8468d733cbda6a1b31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0acd70772d752e8468d733cbda6a1b31">&#9670;&nbsp;</a></span>TAG2NUM()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t TAG2NUM </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a>&#160;</td>
+          <td class="paramname"><em>tagValue</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return the final numbervalue of a LOG_TAG. </p>
+<dl class="section note"><dt>Note</dt><dd>If mapped mode is not on, this will just return 0</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tagValue</td><td>The LOG_TAG to convert </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>uint16_t the number representation of the tag </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00229">229</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
 <a id="aa5fd43862d543e82b7775410573c9142"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa5fd43862d543e82b7775410573c9142">&#9670;&nbsp;</a></span>Log</h2>
 
@@ -149,7 +183,7 @@ Variables</h2></td></tr>
 <p>Internal definition of static Log class. </p>
 <p>Refer to Log_t. </p>
 
-<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00217">217</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_log_8cpp_source.html#l00222">222</a> of file <a class="el" href="_log_8cpp_source.html">Log.cpp</a>.</p>
 
 </div>
 </div>

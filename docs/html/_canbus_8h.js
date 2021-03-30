@@ -1,10 +1,13 @@
 var _canbus_8h =
 [
-    [ "canCallback", "_canbus_8h.html#a96968bb5813d30685ce26670a362cc79", null ],
+    [ "Buffer", "struct_canbus_1_1_buffer.html", "struct_canbus_1_1_buffer" ],
+    [ "canCallback", "_canbus_8h.html#a2717aca0b434ab0e4ec3a6c33f007296", null ],
     [ "addCallback", "_canbus_8h.html#a884781debf9732f3e4676830d294e6bc", null ],
     [ "clearSemaphore", "_canbus_8h.html#a441c8b2dbc00d94dd9a6b8d252f09f20", null ],
+    [ "copyVolatileCanMsg", "_canbus_8h.html#a77f67ab89d9f23f059f1e41123cc65a5", null ],
+    [ "enableCanbusSniffer", "_canbus_8h.html#a6cc917014cdbf17f5f950ae802c03a8e", null ],
     [ "enableInterrupts", "_canbus_8h.html#ae66521cf8ac5e63c2e89d6b2f009b38a", null ],
-    [ "getBuffer", "_canbus_8h.html#a822044e240364d0df5ebaee32e7dbdd6", null ],
+    [ "getBuffer", "_canbus_8h.html#a03f8ea340d0e1c730a61936310ea2914", null ],
     [ "getData", "_canbus_8h.html#aed796b6196e7d80b59dd205de7a8edfd", null ],
     [ "pushData", "_canbus_8h.html#a2c59e4ee5bcc1d66fee1c1d91af4731b", null ],
     [ "sendData", "_canbus_8h.html#a685569d6ee66f2c88962d158a5caf22c", null ],

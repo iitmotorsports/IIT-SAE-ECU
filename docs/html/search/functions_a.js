@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['notify_143',['notify',['../namespace_state.html#a9dfe9cc449047d893920a8ab4c527c29',1,'State']]]
+  ['notify_183',['notify',['../struct_state_1_1_state__t.html#a5616e88bc624eeccc06e5b01b3a929d8',1,'State::State_t']]]
 ];

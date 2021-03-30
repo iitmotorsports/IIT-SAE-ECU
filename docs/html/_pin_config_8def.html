@@ -99,9 +99,13 @@ $(document).ready(function(){initNavTree('_pin_config_8def.html',''); initResiza
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a30388a88a1fdecdb193647dc80a97084"><td class="memItemLeft" align="right" valign="top"><a id="a30388a88a1fdecdb193647dc80a97084"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_pin_config_8def.html#a30388a88a1fdecdb193647dc80a97084">CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO</a>&#160;&#160;&#160;100</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_pin_config_8def.html#a30388a88a1fdecdb193647dc80a97084">CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO</a>&#160;&#160;&#160;10000</td></tr>
 <tr class="memdesc:a30388a88a1fdecdb193647dc80a97084"><td class="mdescLeft">&#160;</td><td class="mdescRight">The interval in micros to update outgoing canPins. <br /></td></tr>
 <tr class="separator:a30388a88a1fdecdb193647dc80a97084"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a154bf0cb94eefac8b5069c4a282f1dda"><td class="memItemLeft" align="right" valign="top"><a id="a154bf0cb94eefac8b5069c4a282f1dda"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_pin_config_8def.html#a154bf0cb94eefac8b5069c4a282f1dda">CONF_PINS_ANALOG_WRITE_RESOLUTION</a>&#160;&#160;&#160;12</td></tr>
+<tr class="memdesc:a154bf0cb94eefac8b5069c4a282f1dda"><td class="mdescLeft">&#160;</td><td class="mdescRight">The write resolution for analog pins. <br /></td></tr>
+<tr class="separator:a154bf0cb94eefac8b5069c4a282f1dda"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7603185bc328f16ab177087d225c6848"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_pin_config_8def.html#a7603185bc328f16ab177087d225c6848">ECU_PINS</a></td></tr>
 <tr class="memdesc:a7603185bc328f16ab177087d225c6848"><td class="mdescLeft">&#160;</td><td class="mdescRight">The defintions of every physical pin.  <a href="_pin_config_8def.html#a7603185bc328f16ab177087d225c6848">More...</a><br /></td></tr>
 <tr class="separator:a7603185bc328f16ab177087d225c6848"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -109,10 +113,10 @@ Macros</h2></td></tr>
 <tr class="memdesc:a3e53e34fe101af281d46c65263020503"><td class="mdescLeft">&#160;</td><td class="mdescRight">The defintions of every analog pin to be received over canbus.  <a href="_pin_config_8def.html#a3e53e34fe101af281d46c65263020503">More...</a><br /></td></tr>
 <tr class="separator:a3e53e34fe101af281d46c65263020503"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7425d04658a4f1cc0d80df2c252cdfd6"><td class="memItemLeft" align="right" valign="top"><a id="a7425d04658a4f1cc0d80df2c252cdfd6"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_pin_config_8def.html#a7425d04658a4f1cc0d80df2c252cdfd6">PINS_CANBUS_ANALOG_OUT</a></td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_pin_config_8def.html#a7425d04658a4f1cc0d80df2c252cdfd6">PINS_CANBUS_ANALOG_OUT</a>&#160;&#160;&#160;    X(ADD_CANPIN_ANALOG3, PINS_INTERNAL_STATE)</td></tr>
 <tr class="memdesc:a7425d04658a4f1cc0d80df2c252cdfd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Same as PINS_CANBUS_ANALOG_IN only for the analog pins that are outgoing. <br /></td></tr>
 <tr class="separator:a7425d04658a4f1cc0d80df2c252cdfd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acae56fbcae983449c6f760dd4a501446"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_pin_config_8def.html#acae56fbcae983449c6f760dd4a501446">PINS_CANBUS_DIGITAL_IN</a>&#160;&#160;&#160;    X(ADD_CANPIN_DIGITAL1, PINS_INTERNAL_CHARGE_SIGNAL)</td></tr>
+<tr class="memitem:acae56fbcae983449c6f760dd4a501446"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_pin_config_8def.html#acae56fbcae983449c6f760dd4a501446">PINS_CANBUS_DIGITAL_IN</a></td></tr>
 <tr class="memdesc:acae56fbcae983449c6f760dd4a501446"><td class="mdescLeft">&#160;</td><td class="mdescRight">The defintions of every digital pin to be received over canbus.  <a href="_pin_config_8def.html#acae56fbcae983449c6f760dd4a501446">More...</a><br /></td></tr>
 <tr class="separator:acae56fbcae983449c6f760dd4a501446"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c67d5e7fbb164aad1ba799b444f7a23"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_pin_config_8def.html#a1c67d5e7fbb164aad1ba799b444f7a23">PINS_CANBUS_DIGITAL_OUT</a></td></tr>
@@ -140,9 +144,10 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    X(PINS_BOTH_LED, DIGITAL, OUTPUT, NIL)            \</div>
+<div class="line">    X(PINS_BACK_SERVO_OFF, DIGITAL, OUTPUT, 1)        \</div>
 <div class="line">    X(PINS_BACK_TSV_SIGNAL, DIGITAL, INPUT, NIL)      \</div>
 <div class="line">    X(PINS_BACK_AIR2, ANALOG, OUTPUT, 0)              \</div>
-<div class="line">    X(PINS_BACK_CHARGING_RELAY, ANALOG, OUTPUT, 1)    \</div>
+<div class="line">    X(PINS_BACK_CHARGING_RELAY, ANALOG, OUTPUT, 0)    \</div>
 <div class="line">    X(PINS_BACK_SOUND_DRIVER, ANALOG, OUTPUT, 0)      \</div>
 <div class="line">    X(PINS_BACK_BRAKE_LIGHT, ANALOG, OUTPUT, 0)       \</div>
 <div class="line">    X(PINS_BACK_SERVO1_PWM, ANALOG, OUTPUT, NIL)      \</div>
@@ -166,7 +171,7 @@ Macros</h2></td></tr>
 <p>X(GPIO, ANALOG/DIGITAL, INPUT/OUTPUT, INITAL_STATE) \</p>
 <p>Only the last entry should NOT have a '\' </p>
 
-<p class="definition">Definition at line <a class="el" href="_pin_config_8def_source.html#l00097">97</a> of file <a class="el" href="_pin_config_8def_source.html">PinConfig.def</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_pin_config_8def_source.html#l00103">103</a> of file <a class="el" href="_pin_config_8def_source.html">PinConfig.def</a>.</p>
 
 </div>
 </div>
@@ -196,7 +201,7 @@ The number of pins per address must be maximized</dd></dl>
 <p>X(Address, Pin) \</p>
 <p>Only the last entry should NOT have a '\' </p>
 
-<p class="definition">Definition at line <a class="el" href="_pin_config_8def_source.html#l00131">131</a> of file <a class="el" href="_pin_config_8def_source.html">PinConfig.def</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_pin_config_8def_source.html#l00138">138</a> of file <a class="el" href="_pin_config_8def_source.html">PinConfig.def</a>.</p>
 
 </div>
 </div>
@@ -207,11 +212,13 @@ The number of pins per address must be maximized</dd></dl>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define PINS_CANBUS_DIGITAL_IN&#160;&#160;&#160;    X(ADD_CANPIN_DIGITAL1, PINS_INTERNAL_CHARGE_SIGNAL)</td>
+          <td class="memname">#define PINS_CANBUS_DIGITAL_IN</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
+<b>Value:</b><div class="fragment"><div class="line">    X(ADD_CANPIN_DIGITAL1, PINS_INTERNAL_CHARGE_SIGNAL) \</div>
+<div class="line">    X(ADD_CANPIN_DIGITAL1, PINS_FRONT_BUTTON_INPUT)</div>
+</div><!-- fragment -->
 <p>The defintions of every digital pin to be received over canbus. </p>
 <dl class="section note"><dt>Note</dt><dd>Only 8 digital pins can be allocated per address </dd>
 <dd>
@@ -220,7 +227,7 @@ Currently, only one address is supported, support for up to 64 pins can be added
 <p>X(Address, Pin) \</p>
 <p>Only the last entry should NOT have a '\' </p>
 
-<p class="definition">Definition at line <a class="el" href="_pin_config_8def_source.html#l00156">156</a> of file <a class="el" href="_pin_config_8def_source.html">PinConfig.def</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_pin_config_8def_source.html#l00164">164</a> of file <a class="el" href="_pin_config_8def_source.html">PinConfig.def</a>.</p>
 
 </div>
 </div>
@@ -238,11 +245,11 @@ Currently, only one address is supported, support for up to 64 pins can be added
 <b>Value:</b><div class="fragment"><div class="line">    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_START)     \</div>
 <div class="line">    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_BMS_FAULT) \</div>
 <div class="line">    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_IMD_FAULT) \</div>
-<div class="line">    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_IDLE_STATE)</div>
+<div class="line">    X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_GEN_FAULT)</div>
 </div><!-- fragment -->
 <p>Same as PINS_CANBUS_DIGITAL_IN only for the digital pins that are outgoing. </p>
 
-<p class="definition">Definition at line <a class="el" href="_pin_config_8def_source.html#l00162">162</a> of file <a class="el" href="_pin_config_8def_source.html">PinConfig.def</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_pin_config_8def_source.html#l00171">171</a> of file <a class="el" href="_pin_config_8def_source.html">PinConfig.def</a>.</p>
 
 </div>
 </div>

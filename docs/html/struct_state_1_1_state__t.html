@@ -99,20 +99,26 @@ $(document).ready(function(){initNavTree('struct_state_1_1_state__t.html',''); i
 
 <p><code>#include &lt;<a class="el" href="_state_8h_source.html">State.h</a>&gt;</code></p>
 
-<p>Inherited by ECUStates::Bounce_t, ECUStates::Button_State, ECUStates::Charging_State, ECUStates::Driving_Mode_State, ECUStates::FaultState, ECUStates::Idle_State, ECUStates::Initialize, ECUStates::Logger_t, ECUStates::PreCharge_State, and UnhandledState_t.</p>
+<p>Inherited by ECUStates::Bounce_t, ECUStates::Button_State, ECUStates::Charging_State, ECUStates::Driving_Mode_State, ECUStates::FaultState, ECUStates::Idle_State, ECUStates::Initialize_State, ECUStates::Logger_t, ECUStates::PreCharge_State, and UnhandledState_t.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:abeffe595f1820dff610a07015241ea39"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="struct_state_1_1_state__t.html">State_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_state_1_1_state__t.html#abeffe595f1820dff610a07015241ea39">run</a> (void)</td></tr>
 <tr class="memdesc:abeffe595f1820dff610a07015241ea39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs the state.  <a href="struct_state_1_1_state__t.html#abeffe595f1820dff610a07015241ea39">More...</a><br /></td></tr>
 <tr class="separator:abeffe595f1820dff610a07015241ea39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9292f387393f0e5c4b48d75bceba605"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_state_1_1_state__t.html#ae9292f387393f0e5c4b48d75bceba605">getID</a> (void)</td></tr>
+<tr class="memdesc:ae9292f387393f0e5c4b48d75bceba605"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the LOG_TAG of the state.  <a href="struct_state_1_1_state__t.html#ae9292f387393f0e5c4b48d75bceba605">More...</a><br /></td></tr>
+<tr class="separator:ae9292f387393f0e5c4b48d75bceba605"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6394d19f62ed7594f379443fe6b84d62"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_state_1_1_state__t.html">State_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_state_1_1_state__t.html#a6394d19f62ed7594f379443fe6b84d62">getLastState</a> ()</td></tr>
+<tr class="memdesc:a6394d19f62ed7594f379443fe6b84d62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a pointer of the last state.  <a href="struct_state_1_1_state__t.html#a6394d19f62ed7594f379443fe6b84d62">More...</a><br /></td></tr>
+<tr class="separator:a6394d19f62ed7594f379443fe6b84d62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:aee07986f8fa2a473a012a242fe85cb9f"><td class="memItemLeft" align="right" valign="top"><a id="aee07986f8fa2a473a012a242fe85cb9f"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_state_1_1_state__t.html#aee07986f8fa2a473a012a242fe85cb9f">notify</a> = 0</td></tr>
-<tr class="memdesc:aee07986f8fa2a473a012a242fe85cb9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used for receiving values from other states. <br /></td></tr>
-<tr class="separator:aee07986f8fa2a473a012a242fe85cb9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a447eecb03b56de38b0b002696fdec881"><td class="memItemLeft" align="right" valign="top"><a id="a447eecb03b56de38b0b002696fdec881"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_state_1_1_state__t.html#a447eecb03b56de38b0b002696fdec881">notifyCode</a> = 0</td></tr>
+<tr class="memdesc:a447eecb03b56de38b0b002696fdec881"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used for receiving values from other states. <br /></td></tr>
+<tr class="separator:a447eecb03b56de38b0b002696fdec881"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a70bcb88c1c3ae44d32f5624a683164e9"><td class="memItemLeft" align="right" valign="top"><a id="a70bcb88c1c3ae44d32f5624a683164e9"></a>
 <a class="el" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_state_1_1_state__t.html#a70bcb88c1c3ae44d32f5624a683164e9">ID</a> = &quot;ID NOT SET&quot;</td></tr>
 <tr class="memdesc:a70bcb88c1c3ae44d32f5624a683164e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The unique ID of the state, used for logging. <br /></td></tr>
@@ -123,12 +129,69 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:aeae12a5d68f5c0d84c8c85160de43fd7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_state_1_1_state__t.html#aeae12a5d68f5c0d84c8c85160de43fd7">getNotify</a> (void)</td></tr>
 <tr class="memdesc:aeae12a5d68f5c0d84c8c85160de43fd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the code of the previous state.  <a href="struct_state_1_1_state__t.html#aeae12a5d68f5c0d84c8c85160de43fd7">More...</a><br /></td></tr>
 <tr class="separator:aeae12a5d68f5c0d84c8c85160de43fd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5616e88bc624eeccc06e5b01b3a929d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_state_1_1_state__t.html#a5616e88bc624eeccc06e5b01b3a929d8">notify</a> (int notify)</td></tr>
+<tr class="memdesc:a5616e88bc624eeccc06e5b01b3a929d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a code to the next state.  <a href="struct_state_1_1_state__t.html#a5616e88bc624eeccc06e5b01b3a929d8">More...</a><br /></td></tr>
+<tr class="separator:a5616e88bc624eeccc06e5b01b3a929d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The parent state structure to extend from to create more states. </p>
 
-<p class="definition">Definition at line <a class="el" href="_state_8h_source.html#l00059">59</a> of file <a class="el" href="_state_8h_source.html">State.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_state_8h_source.html#l00060">60</a> of file <a class="el" href="_state_8h_source.html">State.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="ae9292f387393f0e5c4b48d75bceba605"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9292f387393f0e5c4b48d75bceba605">&#9670;&nbsp;</a></span>getID()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a> State::State_t::getID </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the LOG_TAG of the state. </p>
+<dl class="section return"><dt>Returns</dt><dd>LOG_TAG The unique tag </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_state_8cpp_source.html#l00057">57</a> of file <a class="el" href="_state_8cpp_source.html">State.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a6394d19f62ed7594f379443fe6b84d62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6394d19f62ed7594f379443fe6b84d62">&#9670;&nbsp;</a></span>getLastState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_state_1_1_state__t.html">State::State_t</a> * State::State_t::getLastState </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get a pointer of the last state. </p>
+<dl class="section note"><dt>Note</dt><dd>If the state machine has just started, this will return a nullptr </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>State_t* pointer of last state </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_state_8cpp_source.html#l00053">53</a> of file <a class="el" href="_state_8cpp_source.html">State.cpp</a>.</p>
+
+</div>
+</div>
 <a id="aeae12a5d68f5c0d84c8c85160de43fd7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aeae12a5d68f5c0d84c8c85160de43fd7">&#9670;&nbsp;</a></span>getNotify()</h2>
 
@@ -156,7 +219,43 @@ Protected Member Functions</h2></td></tr>
 <p>Get the code of the previous state. </p>
 <dl class="section return"><dt>Returns</dt><dd>int notify code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_state_8cpp_source.html#l00048">48</a> of file <a class="el" href="_state_8cpp_source.html">State.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_state_8cpp_source.html#l00049">49</a> of file <a class="el" href="_state_8cpp_source.html">State.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a5616e88bc624eeccc06e5b01b3a929d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5616e88bc624eeccc06e5b01b3a929d8">&#9670;&nbsp;</a></span>notify()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void State::State_t::notify </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>notify</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Send a code to the next state. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">notify</td><td>code to send </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_state_8cpp_source.html#l00045">45</a> of file <a class="el" href="_state_8cpp_source.html">State.cpp</a>.</p>
 
 </div>
 </div>
@@ -187,7 +286,7 @@ Protected Member Functions</h2></td></tr>
 <p>Runs the state. </p>
 <dl class="section return"><dt>Returns</dt><dd>State_t* A pointer to the next state to switch to </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_state_8cpp_source.html#l00040">40</a> of file <a class="el" href="_state_8cpp_source.html">State.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_state_8cpp_source.html#l00041">41</a> of file <a class="el" href="_state_8cpp_source.html">State.cpp</a>.</p>
 
 </div>
 </div>

@@ -122,29 +122,37 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    X(ADD_BMS_SOC, INPUT)    \</div>
-<div class="line">    X(ADD_BMS_VOLT, INPUT)   \</div>
-<div class="line">    X(ADD_MC0_VOLT, INPUT)   \</div>
-<div class="line">    X(ADD_MC1_VOLT, INPUT)   \</div>
-<div class="line">    X(ADD_MC0_RPM, INPUT)    \</div>
-<div class="line">    X(ADD_MC1_RPM, INPUT)    \</div>
-<div class="line">    X(ADD_MC0_CURR, INPUT)   \</div>
-<div class="line">    X(ADD_MC1_CURR, INPUT)   \</div>
-<div class="line">    X(ADD_MC0_CTRL, OUTPUT)  \</div>
-<div class="line">    X(ADD_MC1_CTRL, OUTPUT)  \</div>
-<div class="line">    X(ADD_MC0_CLEAR, OUTPUT) \</div>
-<div class="line">    X(ADD_MC1_CLEAR, OUTPUT) \</div>
-<div class="line">    X(ADD_MC0_FAULTS, INPUT) \</div>
-<div class="line">    X(ADD_MC1_FAULTS, INPUT)</div>
+<b>Value:</b><div class="fragment"><div class="line">    X(ADD_BMS_DATA, INPUT)         \</div>
+<div class="line">    X(ADD_MC0_VOLT, INPUT)         \</div>
+<div class="line">    X(ADD_MC1_VOLT, INPUT)         \</div>
+<div class="line">    X(ADD_MC0_RPM, INPUT)          \</div>
+<div class="line">    X(ADD_MC1_RPM, INPUT)          \</div>
+<div class="line">    X(ADD_MC0_CURR, INPUT)         \</div>
+<div class="line">    X(ADD_MC1_CURR, INPUT)         \</div>
+<div class="line">    X(ADD_MC0_CTRL, OUTPUT)        \</div>
+<div class="line">    X(ADD_MC1_CTRL, OUTPUT)        \</div>
+<div class="line">    X(ADD_MC0_CLEAR, OUTPUT)       \</div>
+<div class="line">    X(ADD_MC1_CLEAR, OUTPUT)       \</div>
+<div class="line">    X(ADD_MC0_FAULTS, INPUT)       \</div>
+<div class="line">    X(ADD_MC1_FAULTS, INPUT)       \</div>
+<div class="line">    X(ADD_CANPIN_ANALOG0, CANPIN)  \</div>
+<div class="line">    X(ADD_CANPIN_ANALOG1, CANPIN)  \</div>
+<div class="line">    X(ADD_CANPIN_ANALOG2, CANPIN)  \</div>
+<div class="line">    X(ADD_CANPIN_ANALOG3, CANPIN)  \</div>
+<div class="line">    X(ADD_CANPIN_DIGITAL0, CANPIN) \</div>
+<div class="line">    X(ADD_CANPIN_DIGITAL1, CANPIN) \</div>
+<div class="line">    X(ADD_AUX_LOGGING, CANPIN)     \</div>
+<div class="line">    X(ADD_HEART, CANPIN)</div>
 </div><!-- fragment -->
 <p>Defines the Can bus addresses that will be used to receive and send data. </p>
 <p>Every definition is given a direction denoting whether it is incoming(INPUT) or outgoing(OUTPUT)</p>
+<p>CANPIN can also be used for direction, this simply reserves the address and ensures it is used for canpins</p>
 <p>Unless it is the last entry, this is how to add a new message</p>
 <p>X(CAN address, direction) \</p>
 <p>Only the last entry should NOT have a '\'</p>
 <dl class="section note"><dt>Note</dt><dd>Currently, address 0x0000 cannot be used </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_can_bus_addresses_8def_source.html#l00061">61</a> of file <a class="el" href="_can_bus_addresses_8def_source.html">CanBusAddresses.def</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_can_bus_addresses_8def_source.html#l00068">68</a> of file <a class="el" href="_can_bus_addresses_8def_source.html">CanBusAddresses.def</a>.</p>
 
 </div>
 </div>

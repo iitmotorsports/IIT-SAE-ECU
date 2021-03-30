@@ -1,5 +1,6 @@
 var _pin_config_8def =
 [
+    [ "CONF_PINS_ANALOG_WRITE_RESOLUTION", "_pin_config_8def.html#a154bf0cb94eefac8b5069c4a282f1dda", null ],
     [ "CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO", "_pin_config_8def.html#a30388a88a1fdecdb193647dc80a97084", null ],
     [ "ECU_PINS", "_pin_config_8def.html#a7603185bc328f16ab177087d225c6848", null ],
     [ "PINS_CANBUS_ANALOG_IN", "_pin_config_8def.html#a3e53e34fe101af281d46c65263020503", null ],

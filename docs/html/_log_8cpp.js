@@ -6,5 +6,6 @@ var _log_8cpp =
     [ "__LOGGER_NONE_PRINT", "_log_8cpp.html#a7157a7dd7ec33f8f6cee1cc8369e1a4d", null ],
     [ "__LOGGER_WARN_PRINT", "_log_8cpp.html#afa08f14bd9f570e8f08bb4517ca54c48", null ],
     [ "enableCanbusRelay", "_log_8cpp.html#a3402a2c8efbb932ddbe58e66b9cc550c", null ],
+    [ "TAG2NUM", "_log_8cpp.html#a0acd70772d752e8468d733cbda6a1b31", null ],
     [ "Log", "_log_8cpp.html#aa5fd43862d543e82b7775410573c9142", null ]
 ];
