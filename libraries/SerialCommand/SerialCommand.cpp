@@ -35,8 +35,8 @@ static size_t matchCommand(uint8_t val) {
     return COMMAND_COUNT;
 }
 
-void receiveCommand() {
-    int serialData = 0;
+int receiveCommand(void) {
+    int serialData = -1;
     if (Serial.available()) {
         serialData = Serial.read();
         Log.d(ID, "Data received: ", serialData);
@@ -45,6 +45,7 @@ void receiveCommand() {
             callbacks[i]();
         }
     }
+    return serialData;
 }
 
 void setCommand(uint8_t command, CommandCallback callback) {

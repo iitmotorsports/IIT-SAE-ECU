@@ -1,6 +1,7 @@
 #include "Front.h"
 #include "ECUGlobalConfig.h"
 #include "Heartbeat.h"
+#include "Mirror.h"
 #include "SerialCommand.h"
 #include "unordered_map"
 
@@ -132,6 +133,9 @@ void Front::run() {
     Command::setCommand(COMMAND_TOGGLE_CANBUS_SNIFF, toggleCanbusSniffer);
 
     Heartbeat::beginReceiving();
+#ifdef CONF_ECU_DEBUG
+    Mirror::setup();
+#endif
 
     static int testValue = 0;
     static bool hasBeat = false;

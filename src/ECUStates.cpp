@@ -4,6 +4,7 @@
 #include "Faults.h"
 #include "Heartbeat.h"
 #include "Log.h"
+#include "Mirror.h"
 
 static bool FaultCheck() { // NOTE: Will only return true if hardfault occurs
     if (Fault::softFault())
@@ -23,6 +24,9 @@ State::State_t *ECUStates::Initialize_State::run(void) {
     Fault::setup();     // load all buffers
     Aero::setup();
     Heartbeat::beginBeating();
+#ifdef CONF_ECU_DEBUG
+    Mirror::setup();
+#endif
 
     // Front teensy should know when to blink start light
 

@@ -23,7 +23,7 @@ namespace Command {
 
 void setCommand(uint8_t command, CommandCallback callback);
 
-void receiveCommand();
+int receiveCommand(void);
 
 } // namespace Command
 
