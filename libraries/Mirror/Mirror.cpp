@@ -22,11 +22,10 @@ namespace Mirror {
 
 static LOG_TAG ID = "Mirror";
 static IntervalTimer serialCheckTimer;
-static bool cont = true;
+static bool cont = false;
 
 static void toggleMirrorMode(void) {
     cont = !cont;
-    // Canbus::sendData(ADD_MIRROR, cont);
     if (cont) {
         enterMirrorMode();
     } else {
@@ -34,16 +33,8 @@ static void toggleMirrorMode(void) {
     }
 }
 
-// static void setMirrorMode(uint32_t val, volatile uint8_t *pnt) {
-//     if (cont = pnt[0]) {
-//         enterMirrorMode();
-//     } else {
-//         exitMirrorMode();
-//     }
-// }
-
 void timerReceive() {
-    Command::receiveCommand()
+    Command::receiveCommand();
 }
 
 void setup(void) { // TODO: auto receive on back ECU using timer
@@ -51,9 +42,28 @@ void setup(void) { // TODO: auto receive on back ECU using timer
     serialCheckTimer.begin(timerReceive, TIMER_RECEIVE_MICROS);
 #endif
     Command::setCommand(COMMAND_TOGGLE_MIRROR_MODE, toggleMirrorMode);
-    // #else
-    // Canbus::addCallback(ADD_MIRROR, setMirrorMode);
-    // #endif
+}
+
+static int getSerialByte() {
+    int serialData = 0;
+    while (!Serial.available()) {
+    }
+    serialData = Serial.read();
+    Log.d(ID, "Data received:", serialData);
+    return serialData;
+}
+
+static int getSerialInt() {
+    int serialData = 0;
+    while (!Serial.available()) {
+    }
+    size_t count = Serial.readBytes((char *)(&serialData), 4);
+    if (count != 4) {
+        Log.w(ID, "Did not receive 4 bytes for integer", count);
+    }
+
+    Log.d(ID, "Data received:", serialData);
+    return serialData;
 }
 
 void enterMirrorMode(void) {
@@ -62,12 +72,19 @@ void enterMirrorMode(void) {
 #endif
     cont = true;
     while (cont) {
-        // #if CONF_ECU_POSITION == FRONT_ECU
-        int pin = Command::receiveCommand();
-        if (pin != -1) {
-            Log(ID, "Requested pin", Pins::getPinValue(pin));
+        Log(ID, "Waiting for data");
+        int serialData = getSerialByte();
+        if (serialData == 255) {
+            Log(ID, "Waiting for a pin to set");
+            int pin = getSerialByte();
+            Log(ID, "Waiting for the value to set it to");
+            int value = getSerialInt();
+            Log(ID, "Setting pin:", pin);
+            Log(ID, "To value:", value);
+            Pins::setPinValue(pin, value);
+        } else if (serialData != -1) {
+            Log(ID, "Requested pin", Pins::getPinValue(serialData));
         }
-        // #endif
     }
 #if CONF_ECU_POSITION == BACK_ECU
     serialCheckTimer.begin(timerReceive, TIMER_RECEIVE_MICROS);
