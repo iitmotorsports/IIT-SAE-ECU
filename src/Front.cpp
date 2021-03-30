@@ -154,7 +154,7 @@ void Front::run() {
         if (timeElapsedMidLow >= 500) { // MedLow priority updates
             timeElapsedMidLow = 0;
             static bool on = false;
-            if (hasBeat && (currentState == &ECUStates::Idle_State || currentState == &ECUStates::Charging_State)) {
+            if (hasBeat && (currentState == &ECUStates::Idle_State)) {
                 on = !on;
             } else {
                 on = 0;
