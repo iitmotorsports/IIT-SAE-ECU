@@ -71,10 +71,13 @@ void enterMirrorMode(void) {
     serialCheckTimer.end();
 #endif
     cont = true;
+    Log(ID, "Mirror Mode Enabled");
     while (cont) {
         Log(ID, "Waiting for data");
         int serialData = getSerialByte();
-        if (serialData == 255) {
+        if (serialData == COMMAND_TOGGLE_MIRROR_MODE) {
+            toggleMirrorMode();
+        } else if (serialData == COMMAND_ENTER_MIRROR_SET) {
             Log(ID, "Waiting for a pin to set");
             int pin = getSerialByte();
             Log(ID, "Waiting for the value to set it to");
@@ -82,10 +85,11 @@ void enterMirrorMode(void) {
             Log(ID, "Setting pin:", pin);
             Log(ID, "To value:", value);
             Pins::setPinValue(pin, value);
-        } else if (serialData != -1) {
+        } else {
             Log(ID, "Requested pin", Pins::getPinValue(serialData));
         }
     }
+    Log(ID, "Mirror Mode Disabled");
 #if CONF_ECU_POSITION == BACK_ECU
     serialCheckTimer.begin(timerReceive, TIMER_RECEIVE_MICROS);
 #endif

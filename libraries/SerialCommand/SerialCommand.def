@@ -7,6 +7,7 @@
 #define COMMAND_SEND_CANBUS_MESSAGE 111
 #define COMMAND_TOGGLE_CANBUS_SNIFF 127
 #define COMMAND_TOGGLE_MIRROR_MODE 90
+#define COMMAND_ENTER_MIRROR_SET 255
 
 /**
  * @brief Defines commands that the ECU must react to
