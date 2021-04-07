@@ -270,6 +270,11 @@ void setPinValue(uint8_t GPIO_Pin, int value) { // IMPROVE: Make setPinValue com
         ECU_PINS
 #undef X
     }
+#ifdef CONF_ECU_DEBUG
+    else {
+        Log.d(ID, "No pin defined", GPIO_Pin);
+    }
+    #endif
 }
 
 void update(void) {
