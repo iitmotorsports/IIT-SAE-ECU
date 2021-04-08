@@ -68,10 +68,10 @@ void logFault(void) {
         Log.w(ID, "Buffer half 0", (uint32_t)faulted_buffer);
         Log.w(ID, "Buffer half 1", (uint32_t)(faulted_buffer << 32));
         // TODO: map and log fault's appropriate identifying strings
-        // #define X(add, mask, id)                                   \
-//     if (add == faulted_address && mask & faulted_buffer) { \
-//         Log.e(ID, id);                                     \
-//     }
+        // #define X(add, mask, id)
+        //     if (add == faulted_address && mask & faulted_buffer) {
+        //         Log.e(ID, id);
+        //     }
         //         // Ignore Pre_Build error
         //         ID_FAULT
         // #undef X
@@ -94,7 +94,7 @@ bool hardFault(void) {
         Canbus::setSemaphore(hard_addresses[i]);
         if (*hard_buffers[i] & hard_masks[i]) {
             faulted_address = hard_addresses[i];
-            memcpy(&faulted_buffer, hard_buffers, 8); // 8 byte buffer
+            faulted_buffer = *hard_buffers[i];
             Canbus::clearSemaphore();
 #ifdef CONF_ECU_DEBUG
             Log.e(ID, "HardFault address:", faulted_address);
