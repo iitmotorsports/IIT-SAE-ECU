@@ -109,6 +109,29 @@
             "problemMatcher": []
         },
         {
+            "label": "Upload2",
+            "type": "process",
+            "detail": "Upload compiled binary to teensy",
+            "presentation": {
+                "panel": "shared",
+                "showReuseMessage": false
+            },
+            "command": "cmd.exe",
+            "args": [
+                "/d",
+                "/c",
+                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
+                "upload",
+                "${input:TEENSY_USB_PORTNAME2}"
+            ],
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "Monitor",
             "type": "shell",
             "detail": "Monitor teensy over a CLI",
@@ -134,6 +157,35 @@
                 "statusbar": {
                     "label": "$(terminal)",
                     "color": "#000000"
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Monitor2",
+            "type": "shell",
+            "detail": "Monitor teensy over a CLI",
+            "presentation": {
+                "panel": "shared",
+                "showReuseMessage": false
+            },
+            "command": "cmd.exe",
+            "args": [
+                "/d",
+                "/c",
+                "${workspaceFolder}\\${config:TOOLCHAIN_OFFSET}\\tools\\ComMonitor.exe",
+                "${input:TEENSY_USB_PORTNAME2}",
+                "${input:TEENSY_BAUDRATE}",
+                "-t${input:TEENSY_COM_TYPE}",
+                "-m8",
+                "--jsonPath",
+                "${workspaceFolder}\\log_lookup.json",
+                "-r",
+                "-w",
+            ],
+            "options": {
+                "statusbar": {
+                    "hide": true
                 }
             },
             "problemMatcher": []
@@ -166,13 +218,56 @@
             "problemMatcher": []
         },
         {
-            "label": "Shebang",
-            "detail": "Run all tasks required to program teensy",
+            "label": "Shebang Back",
+            "detail": "Run all tasks required to program back teensy",
             "dependsOrder": "sequence",
             "dependsOn": [
                 "Build",
                 "Upload",
                 "Monitor"
+            ],
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Shebang Front",
+            "detail": "Run all tasks required to program front teensy",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Build",
+                "Build Front ECU",
+                "Upload",
+                "Monitor"
+            ],
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Shebang Both",
+            "detail": "Run all tasks required to program both teensies",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Build",
+                "Upload",
+                "Build Front ECU",
+                "Upload2",
+                "Monitor2"
             ],
             "options": {
                 "statusbar": {
@@ -322,13 +417,23 @@
         },
         {
             "id": "TEENSY_USB_PORTNAME",
-            "description": "What portname the moniter should use",
+            "description": "What portname should be use",
             "type": "pickString",
             "options": [
                 "COM3",
                 "COM4"
             ],
             "default": "COM3"
+        },
+        {
+            "id": "TEENSY_USB_PORTNAME2",
+            "description": "What secondary portname should be use",
+            "type": "pickString",
+            "options": [
+                "COM3",
+                "COM4"
+            ],
+            "default": "COM4"
         },
         {
             "id": "TEENSY_BAUDRATE",
