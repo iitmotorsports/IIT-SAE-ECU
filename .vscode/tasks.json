@@ -109,9 +109,9 @@
             "problemMatcher": []
         },
         {
-            "label": "Upload2",
+            "label": "Upload Back",
             "type": "process",
-            "detail": "Upload compiled binary to teensy",
+            "detail": "Upload compiled binary to back teensy",
             "presentation": {
                 "panel": "shared",
                 "showReuseMessage": false
@@ -122,7 +122,30 @@
                 "/c",
                 "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
                 "upload",
-                "${input:TEENSY_USB_PORTNAME2}"
+                "${config:BACK_TEENSY_PORT}"
+            ],
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Upload Front",
+            "type": "process",
+            "detail": "Upload compiled binary to front teensy",
+            "presentation": {
+                "panel": "shared",
+                "showReuseMessage": false
+            },
+            "command": "cmd.exe",
+            "args": [
+                "/d",
+                "/c",
+                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
+                "upload",
+                "${config:FRONT_TEENSY_PORT}"
             ],
             "options": {
                 "statusbar": {
@@ -145,7 +168,7 @@
                 "/c",
                 "${workspaceFolder}\\${config:TOOLCHAIN_OFFSET}\\tools\\ComMonitor.exe",
                 "${input:TEENSY_USB_PORTNAME}",
-                "${input:TEENSY_BAUDRATE}",
+                "${config:TEENSY_BAUDRATE}",
                 "-t${input:TEENSY_COM_TYPE}",
                 "-m8",
                 "--jsonPath",
@@ -157,35 +180,6 @@
                 "statusbar": {
                     "label": "$(terminal)",
                     "color": "#000000"
-                }
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "Monitor2",
-            "type": "shell",
-            "detail": "Monitor teensy over a CLI",
-            "presentation": {
-                "panel": "shared",
-                "showReuseMessage": false
-            },
-            "command": "cmd.exe",
-            "args": [
-                "/d",
-                "/c",
-                "${workspaceFolder}\\${config:TOOLCHAIN_OFFSET}\\tools\\ComMonitor.exe",
-                "${input:TEENSY_USB_PORTNAME2}",
-                "${input:TEENSY_BAUDRATE}",
-                "-t${input:TEENSY_COM_TYPE}",
-                "-m8",
-                "--jsonPath",
-                "${workspaceFolder}\\log_lookup.json",
-                "-r",
-                "-w",
-            ],
-            "options": {
-                "statusbar": {
-                    "hide": true
                 }
             },
             "problemMatcher": []
@@ -204,7 +198,7 @@
                 "/c",
                 "${workspaceFolder}\\${config:TOOLCHAIN_OFFSET}\\tools\\ComMonitor.exe",
                 "${input:TEENSY_USB_PORTNAME}",
-                "${input:TEENSY_BAUDRATE}",
+                "${config:TEENSY_BAUDRATE}",
                 "-tH",
                 "-m8",
                 "-r",
@@ -223,7 +217,7 @@
             "dependsOrder": "sequence",
             "dependsOn": [
                 "Build",
-                "Upload",
+                "Upload Back",
                 "Monitor"
             ],
             "options": {
@@ -244,7 +238,7 @@
             "dependsOn": [
                 "Build",
                 "Build Front ECU",
-                "Upload",
+                "Upload Front",
                 "Monitor"
             ],
             "options": {
@@ -264,10 +258,10 @@
             "dependsOrder": "sequence",
             "dependsOn": [
                 "Build",
-                "Upload",
+                "Upload Back",
                 "Build Front ECU",
-                "Upload2",
-                "Monitor2"
+                "Upload Front",
+                "Monitor"
             ],
             "options": {
                 "statusbar": {
@@ -413,46 +407,23 @@
                 "Decimal",
                 "Binary",
             ],
-            "default": "Ascii"
+            "default": "Hex"
         },
         {
             "id": "TEENSY_USB_PORTNAME",
             "description": "What portname should be use",
             "type": "pickString",
             "options": [
-                "COM3",
-                "COM4"
+                {
+                    "label": "Front Teensy",
+                    "value": "${config:FRONT_TEENSY_PORT}"
+                },
+                {
+                    "label": "Back Teensy",
+                    "value": "${config:BACK_TEENSY_PORT}"
+                }
             ],
-            "default": "COM3"
-        },
-        {
-            "id": "TEENSY_USB_PORTNAME2",
-            "description": "What secondary portname should be use",
-            "type": "pickString",
-            "options": [
-                "COM3",
-                "COM4"
-            ],
-            "default": "COM4"
-        },
-        {
-            "id": "TEENSY_BAUDRATE",
-            "description": "What standard baudrate the moniter should use",
-            "type": "pickString",
-            "options": [
-                "1200",
-                "2400",
-                "4800",
-                "9600",
-                "19200",
-                "38400",
-                "57600",
-                "115200",
-                "230400",
-                "460800",
-                "921600"
-            ],
-            "default": "115200"
+            "default": "${config:FRONT_TEENSY_PORT}"
         }
     ]
 }
