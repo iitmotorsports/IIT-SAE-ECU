@@ -29,7 +29,8 @@
             "problemMatcher": {
                 "base": "$gcc",
                 "pattern": {
-                    "regexp": "^(?:Pre_Build\/)?(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    // "regexp": "^(?:Pre_Build\/)?(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "regexp": "^Pre_Build\/(.*?):(\\d+):(\\d*):?\\s+(?:fatal\\s+)?(warning|error):\\s+(.*)$",
                     "file": 1,
                     "line": 2,
                     "column": 3,
