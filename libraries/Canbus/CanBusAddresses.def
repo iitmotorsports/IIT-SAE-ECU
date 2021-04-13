@@ -28,9 +28,9 @@
 #define ADD_MC1_RPM 0x0005 + ADD_MC1_OFFSET
 #define ADD_MC0_CURR 0x0006 + ADD_MC0_OFFSET
 #define ADD_MC1_CURR 0x0006 + ADD_MC1_OFFSET
-#define ADD_MC0_CTRL 0x0020 + ADD_MC0_OFFSET
+#define ADD_MC0_CTRL 0x0020 + ADD_MC0_OFFSET // For sending commands (Normally 0xC0)
 #define ADD_MC1_CTRL 0x0020 + ADD_MC1_OFFSET
-#define ADD_MC0_CLEAR 0x0021 + ADD_MC0_OFFSET
+#define ADD_MC0_CLEAR 0x0021 + ADD_MC0_OFFSET // For clearing faults (Normally 0xC1)
 #define ADD_MC1_CLEAR 0x0021 + ADD_MC1_OFFSET
 #define ADD_MC0_FAULTS 0x000B + ADD_MC0_OFFSET
 #define ADD_MC1_FAULTS 0x000B + ADD_MC1_OFFSET
@@ -63,7 +63,7 @@
  * 
  * Only the last entry should NOT have a '\'
  * 
- * @note Currently, address 0x0000 cannot be used
+ * @note Currently, address 0xFFFFFFFF cannot be used
  */
 #define CAN_ADDRESS                \
     X(ADD_BMS_DATA, INPUT)         \

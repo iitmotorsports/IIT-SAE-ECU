@@ -34,7 +34,7 @@ static volatile uint8_t addressBuffers[ADDRESS_COUNT + 1][8]; // Store buffers f
 static bool addressFlow[ADDRESS_COUNT];                       // Denote whether an address is incoming or outgoing, mapped to addressList
 static volatile canCallback callbacks[ADDRESS_COUNT] = {0};   // Store any and all callbacks
 // NOTE: From what I can tell, a semaphore is needed whenever Can.events is not used, as canMsg handlers will automaticaly run without it.
-static volatile uint32_t addressSemaphore = 0; // Address buffer semaphore, // NOTE: address 0x0 cannot be used
+static volatile uint32_t addressSemaphore = 0xFFFFFFFF; // Address buffer semaphore, // NOTE: address 0xFFFFFFFF cannot be used
 
 // Reserved msg objs for sending and receiving
 static CAN_message_t receive;
@@ -217,7 +217,7 @@ void setSemaphore(const uint32_t address) {
 }
 
 void clearSemaphore() { // NOTE: make sure to clear the semaphore BEFORE returning.
-    addressSemaphore = 0;
+    addressSemaphore = 0xFFFFFFFF;
 }
 
 static void _pushSendMsg() {
