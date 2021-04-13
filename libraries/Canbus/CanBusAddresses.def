@@ -21,6 +21,7 @@
 #define ADD_BMS_OFFSET 0x0000
 
 // Define addresses values here
+// NOTE: RMS Docs state a default 0x0A0 Offset
 #define ADD_BMS_DATA 0x06B0 + ADD_BMS_OFFSET
 #define ADD_MC0_VOLT 0x0007 + ADD_MC0_OFFSET
 #define ADD_MC1_VOLT 0x0007 + ADD_MC1_OFFSET
