@@ -93,12 +93,10 @@ static void _setMailboxes() {
     Log.d(ID, "Sorting addresses", ADDRESS_COUNT);
     _selectionSort(addressList, addressFlow, ADDRESS_COUNT);
     Log.d(ID, "Done");
-#ifdef CONF_ECU_DEBUG
     for (size_t i = 0; i < ADDRESS_COUNT; i++) {
         Log.d(ID, "Sorted address:", addressList[i]);
         Log.d(ID, "Address IO:", addressFlow[i]);
     }
-#endif
 }
 
 // IMPROVE: We have to binary search all mailboxes each time we want to get data
@@ -261,7 +259,6 @@ void sendData(const uint32_t address, const uint8_t buf_0, const uint8_t buf_1, 
     _pushSendMsg();
 }
 
-#ifdef CONF_LOGGING_ASCII_DEBUG
 static void _canSniff(const CAN_message_t &msg) {
     _receiveCan(msg);
     // Serial.print("MB ");
@@ -283,12 +280,11 @@ static void _canSniff(const CAN_message_t &msg) {
     }
     Serial.println();
 }
-#endif
 
 void enableCanbusSniffer(bool enable) {
 #ifndef CONF_LOGGING_ASCII_DEBUG
-    Log.w(ID, "Canbus sniffer only works in ascii debug mode");
-#else
+    Log.w(ID, "Canbus sniffer will now be outputing raw ascii strings");
+#endif
     if (enable) {
         Serial.println("Enabling canbus sniffer");
         F_Can.onReceive(_canSniff);
@@ -296,7 +292,6 @@ void enableCanbusSniffer(bool enable) {
         Serial.println("Disabling canbus sniffer");
         F_Can.onReceive(_receiveCan);
     }
-#endif
 }
 
 } // namespace Canbus
