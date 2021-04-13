@@ -90,6 +90,7 @@ private:
     void torqueVector(int torques[2], int pedal0, int pedal1);
     void carCooling(float temp);
     void clearMCs();
+    void clearFault();
     State::State_t *DrivingModeFault(void);
 
 public:

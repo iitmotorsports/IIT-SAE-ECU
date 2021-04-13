@@ -204,15 +204,20 @@ void ECUStates::Driving_Mode_State::carCooling(float temp) { // TODO: map temp t
     Pins::setPinValue(PINS_BACK_FAN4_PWM, fanSet);
 }
 
+State::State_t *ECUStates::Driving_Mode_State::DrivingModeFault(void) {
+    Log.i(ID, "Fault happened in driving state");
+    clearMCs();
+    return &ECUStates::FaultState;
+}
+
 void ECUStates::Driving_Mode_State::clearMCs() {
     sendMCCommand(ADD_MC0_CTRL, 0, 0, 0);
     sendMCCommand(ADD_MC1_CTRL, 0, 1, 0);
 }
 
-State::State_t *ECUStates::Driving_Mode_State::DrivingModeFault(void) {
-    Log.i(ID, "Fault happened in driving state");
-    clearMCs();
-    return &ECUStates::FaultState;
+void ECUStates::Driving_Mode_State::clearFault(void) {
+    Canbus::sendData(ADD_MC0_CLEAR, 20, 0, 1); // NOTE: We are assuming MCs are little endian
+    Canbus::sendData(ADD_MC1_CLEAR, 20, 0, 1);
 }
 
 State::State_t *ECUStates::Driving_Mode_State::run(void) {
@@ -220,9 +225,8 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
 
     carCooling(60); // TODO: what temp are we using for cooling?
 
-    for (size_t i = 0; i < 4; i++) {               // IMPROVE: Send only once? Check MC heartbeat catches it
-        Canbus::sendData(ADD_MC0_CLEAR, 20, 0, 1); // NOTE: We are assuming MCs are little endian
-        Canbus::sendData(ADD_MC1_CLEAR, 20, 0, 1);
+    for (size_t i = 0; i < 4; i++) { // IMPROVE: Send only once? Check MC heartbeat catches it
+        clearFault();
         delay(10);
     }
 
