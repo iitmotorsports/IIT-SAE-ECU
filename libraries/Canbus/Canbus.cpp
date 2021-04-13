@@ -17,7 +17,7 @@
 #include "ECUGlobalConfig.h"
 #include "Log.h"
 
-// TODO: look into filtering only addresses we care about
+// IMPROVE: look into filtering only addresses we care about, if it is hardware filtering this should help with bandwidth
 
 namespace Canbus {
 static LOG_TAG ID = "Canbus";
@@ -130,8 +130,8 @@ void copyVolatileCanMsg(volatile uint8_t src[8], uint8_t dest[8]) {
 // FlexCan Callback function
 static void _receiveCan(const CAN_message_t &msg) { // FIXME: potential issue where checking semaphore freezes, more testing needed
     if (addressSemaphore == msg.id) {               // Throw data away, we are already processing previous msg
-#ifdef CONF_LOGGING_ASCII_DEBUG
-        Serial.printf("Discarding can msg %u\n", msg.id);
+#ifdef CONF_ECU_DEBUG
+        Log.w(ID, "Discarding can msg", msg.id);
 #endif
         return;
     }
