@@ -89,6 +89,7 @@ private:
     void sendMCCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit);
     void torqueVector(int torques[2], int pedal0, int pedal1);
     void carCooling(float temp);
+    void clearMCs();
     State::State_t *DrivingModeFault(void);
 
 public:

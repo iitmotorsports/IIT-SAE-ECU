@@ -204,10 +204,14 @@ void ECUStates::Driving_Mode_State::carCooling(float temp) { // TODO: map temp t
     Pins::setPinValue(PINS_BACK_FAN4_PWM, fanSet);
 }
 
-State::State_t *ECUStates::Driving_Mode_State::DrivingModeFault(void) {
-    Log.i(ID, "Fault happened in driving state");
+void ECUStates::Driving_Mode_State::clearMCs() {
     sendMCCommand(ADD_MC0_CTRL, 0, 0, 0);
     sendMCCommand(ADD_MC1_CTRL, 0, 1, 0);
+}
+
+State::State_t *ECUStates::Driving_Mode_State::DrivingModeFault(void) {
+    Log.i(ID, "Fault happened in driving state");
+    clearMCs();
     return &ECUStates::FaultState;
 }
 
@@ -224,8 +228,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
 
     Log.d(ID, "Sending Fault reset to MCs complete");
 
-    sendMCCommand(ADD_MC0_CTRL, 0, 0, 0);
-    sendMCCommand(ADD_MC1_CTRL, 0, 1, 0);
+    clearMCs();
 
     elapsedMillis controlDelay;
 
@@ -263,8 +266,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
         }
     }
 
-    sendMCCommand(ADD_MC0_CTRL, 0, 0, 0);
-    sendMCCommand(ADD_MC1_CTRL, 0, 1, 0);
+    clearMCs();
 
     Log.i(ID, "Driving mode off");
     return &ECUStates::Idle_State;
