@@ -28,8 +28,6 @@
  */
 #define BACK_ECU 0
 
-// TODO: build script not ignoring python script when compiling secondary build
-
 /**
  * @brief Defines build is for back ECU
  * @details Used for documentation

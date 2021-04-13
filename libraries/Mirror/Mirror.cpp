@@ -37,7 +37,7 @@ void timerReceive() {
     Command::receiveCommand();
 }
 
-void setup(void) { // TODO: auto receive on back ECU using timer
+void setup(void) {
 #if CONF_ECU_POSITION == BACK_ECU
     serialCheckTimer.begin(timerReceive, TIMER_RECEIVE_MICROS);
 #endif

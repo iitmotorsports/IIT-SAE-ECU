@@ -38,7 +38,7 @@ typedef void (*canCallback)(uint32_t, volatile uint8_t *);
 /**
  * @brief An incoming canbus message, allows the message data to be interpreted
  */
-struct Buffer { // TODO: more rigorous testing on the get funcs
+struct Buffer { // IMPROVE: more rigorous testing on the get funcs
     uint32_t address;
     Buffer(const uint32_t address);
     void init();

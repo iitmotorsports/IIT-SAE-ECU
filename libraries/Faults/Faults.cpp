@@ -87,7 +87,7 @@ void logFault(void) {
 }
 
 // NOTE: If we want to ensure we check all faults, even after tripping one, we need 2 more arrays
-// TODO: Do any canPins need to be checked for faults? Only physical pins can be checked
+// NOTE: Only physical pins can be checked for faults
 bool hardFault(void) {
     // Log.d(ID, "Checking for Hard Fault");
     for (size_t i = 0; i < HARD_CAN_COUNT; i++) {
