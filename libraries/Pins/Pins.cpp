@@ -274,7 +274,7 @@ void setPinValue(uint8_t GPIO_Pin, int value) { // IMPROVE: Make setPinValue com
     else {
         Log.d(ID, "No pin defined", GPIO_Pin);
     }
-    #endif
+#endif
 }
 
 void update(void) {
@@ -416,10 +416,8 @@ void initialize(void) {
 
     startCanPins();
 
-#ifdef CONF_ECU_DEBUG
-#if CONF_LOGGING_MAPPED_MODE == 0
+#ifdef CONF_LOGGING_ASCII_DEBUG
     debugPrint();
-#endif
 #endif
 }
 
