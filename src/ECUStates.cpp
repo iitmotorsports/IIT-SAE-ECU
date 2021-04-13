@@ -206,7 +206,7 @@ void ECUStates::Driving_Mode_State::carCooling(float temp) { // TODO: map temp t
 
 State::State_t *ECUStates::Driving_Mode_State::DrivingModeFault(void) {
     Log.i(ID, "Fault happened in driving state");
-    sendMCCommand(ADD_MC0_CTRL, 0, 0, 0); // TODO: don't we want to stop the motors as well?
+    sendMCCommand(ADD_MC0_CTRL, 0, 0, 0);
     sendMCCommand(ADD_MC1_CTRL, 0, 1, 0);
     return &ECUStates::FaultState;
 }

@@ -212,11 +212,11 @@ volatile uint8_t *getBuffer(const uint32_t address) {
     return addressBuffers[pos];
 }
 
-void setSemaphore(const uint32_t address) { // FIXME: During testing, teensy froze up when reading a BMS message, fixed when semaphores were disabled
+void setSemaphore(const uint32_t address) {
     addressSemaphore = address;
 }
 
-void clearSemaphore() {
+void clearSemaphore() { // NOTE: make sure to clear the semaphore BEFORE returning.
     addressSemaphore = 0;
 }
 

@@ -28,7 +28,7 @@ static struct Initialize_State : State::State_t {
  * State which goes through the precharge circuit
  */
 static struct PreCharge_State : State::State_t {
-private: // TODO: ensure these declerations make sense
+private: // NOTE: defining as a number runs Buffer constructor to 'convert' it to a Buffer struct
     Canbus::Buffer BMS_DATA_Buffer = ADD_BMS_DATA;
     Canbus::Buffer MC0_VOLT_Buffer = ADD_MC0_VOLT;
     Canbus::Buffer MC1_VOLT_Buffer = ADD_MC1_VOLT;

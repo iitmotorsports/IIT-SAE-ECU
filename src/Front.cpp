@@ -11,7 +11,6 @@ static elapsedMillis timeElapsed;
 static elapsedMillis timeElapsedMidHigh;
 static elapsedMillis timeElapsedMidLow;
 static elapsedMillis timeElapsedLong;
-// TODO: ensure these declerations make sense
 static Canbus::Buffer MC0_RPM_Buffer(ADD_MC0_RPM);
 static Canbus::Buffer MC1_RPM_Buffer(ADD_MC1_RPM);
 static Canbus::Buffer MC0_VOLT_Buffer(ADD_MC0_VOLT);
