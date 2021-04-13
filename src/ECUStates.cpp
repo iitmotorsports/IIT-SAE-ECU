@@ -34,10 +34,11 @@ State::State_t *ECUStates::Initialize_State::run(void) {
         return &ECUStates::FaultState;
     }
 
-    Log.i(ID, "Waiting for TSV Signal");
+    // TSV
+    Log.i(ID, "Waiting for shutdown signal");
     while (!Pins::getPinValue(PINS_BACK_SHUTDOWN_SIGNAL)) {
     }
-    Log.i(ID, "TSV On");
+    Log.i(ID, "Shutdown signal received");
 
     Log.d(ID, "Finshed Setup");
     return &ECUStates::PreCharge_State;
