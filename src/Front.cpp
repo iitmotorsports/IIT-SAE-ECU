@@ -1,5 +1,6 @@
 #include "Front.h"
 #include "ECUGlobalConfig.h"
+#include "Echo.h"
 #include "Heartbeat.h"
 #include "Mirror.h"
 #include "SerialCommand.h"
@@ -103,16 +104,32 @@ static void pushCanMessage() {
     c += Serial.readBytes((char *)&address, 4);
     c += Serial.readBytes(buffer, 8);
     if (c != 12) {
-        Log.w(ID, "Did not read 12 Bytes, not pushing can message");
+        Log.w(ID, "Did not read correct number of Bytes, not pushing message", 12);
         return;
     }
-    Log.d(ID, "Pushing Can Message", address);
+    Log.d(ID, "Pushing Message", address);
     Canbus::sendData(address, (uint8_t *)buffer);
 }
 
 static void toggleCanbusSniffer() {
     static bool enabled = false;
     Canbus::enableCanbusSniffer((enabled = !enabled));
+}
+
+static void sendEchoMessage() {
+    uint32_t delay;
+    uint32_t address;
+    char buffer[8];
+    size_t c = 0;
+    c += Serial.readBytes((char *)&delay, 4);
+    c += Serial.readBytes((char *)&address, 4);
+    c += Serial.readBytes(buffer, 8);
+    if (c != 20) {
+        Log.w(ID, "Did not read correct number of Bytes, not pushing message", 20);
+        return;
+    }
+    Log.d(ID, "Pushing Message", address);
+    Echo::echo(delay, address, (uint8_t *)buffer);
 }
 
 void Front::run() {
@@ -130,6 +147,7 @@ void Front::run() {
     Command::setCommand(COMMAND_ENABLE_CHARGING, setChargeSignal);
     Command::setCommand(COMMAND_SEND_CANBUS_MESSAGE, pushCanMessage);
     Command::setCommand(COMMAND_TOGGLE_CANBUS_SNIFF, toggleCanbusSniffer);
+    Command::setCommand(COMMAND_SEND_ECHO, sendEchoMessage);
 
     Heartbeat::beginReceiving();
 #ifdef CONF_ECU_DEBUG

@@ -1,6 +1,7 @@
 #include "ECUStates.hpp"
 #include "AeroServo.h"
 #include "ECUGlobalConfig.h"
+#include "Echo.h"
 #include "Faults.h"
 #include "Heartbeat.h"
 #include "Log.h"
@@ -26,6 +27,7 @@ State::State_t *ECUStates::Initialize_State::run(void) {
     Heartbeat::beginBeating();
 #ifdef CONF_ECU_DEBUG
     Mirror::setup();
+    Echo::setup();
 #endif
 
     // Front teensy should know when to blink start light
@@ -226,7 +228,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
     carCooling(60); // TODO: what temp are we using for cooling?
 
     for (size_t i = 0; i < 4; i++) { // IMPROVE: Send only once? Check MC heartbeat fault is actually cleared
-        clearFault(); // Clear heartbeat fault
+        clearFault();                // Clear heartbeat fault
         delay(10);
     }
 
