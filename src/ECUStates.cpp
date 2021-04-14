@@ -226,7 +226,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
     carCooling(60); // TODO: what temp are we using for cooling?
 
     for (size_t i = 0; i < 4; i++) { // IMPROVE: Send only once? Check MC heartbeat fault is actually cleared
-        clearFault();
+        clearFault(); // Clear heartbeat fault
         delay(10);
     }
 
