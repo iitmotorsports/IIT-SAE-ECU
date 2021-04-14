@@ -16,25 +16,31 @@
 #include "PPhelp.h"
 
 // Address offsets
-#define ADD_MC0_OFFSET 0x0000
-#define ADD_MC1_OFFSET 0x00D0
+#define ADD_MC0_OFFSET -0x00A0
+#define ADD_MC1_OFFSET 0x0030
 #define ADD_BMS_OFFSET 0x0000
 
 // Define addresses values here
 // NOTE: RMS Docs state a default 0x0A0 Offset
 #define ADD_BMS_DATA 0x06B0 + ADD_BMS_OFFSET
-#define ADD_MC0_VOLT 0x0007 + ADD_MC0_OFFSET
-#define ADD_MC1_VOLT 0x0007 + ADD_MC1_OFFSET
-#define ADD_MC0_RPM 0x0005 + ADD_MC0_OFFSET
-#define ADD_MC1_RPM 0x0005 + ADD_MC1_OFFSET
-#define ADD_MC0_CURR 0x0006 + ADD_MC0_OFFSET
-#define ADD_MC1_CURR 0x0006 + ADD_MC1_OFFSET
-#define ADD_MC0_CTRL 0x0020 + ADD_MC0_OFFSET // For sending commands (Normally 0xC0)
-#define ADD_MC1_CTRL 0x0020 + ADD_MC1_OFFSET
-#define ADD_MC0_CLEAR 0x0021 + ADD_MC0_OFFSET // For clearing faults (Normally 0xC1)
-#define ADD_MC1_CLEAR 0x0021 + ADD_MC1_OFFSET
-#define ADD_MC0_FAULTS 0x000B + ADD_MC0_OFFSET
-#define ADD_MC1_FAULTS 0x000B + ADD_MC1_OFFSET
+#define ADD_MC0_TEMP1 0x00A0 + ADD_MC0_OFFSET // Temperatures #1
+#define ADD_MC1_TEMP1 0x00A0 + ADD_MC1_OFFSET
+#define ADD_MC0_TEMP2 0x00A1 + ADD_MC0_OFFSET // Temperatures #2
+#define ADD_MC1_TEMP2 0x00A1 + ADD_MC1_OFFSET
+#define ADD_MC0_TEMP3 0x00A2 + ADD_MC0_OFFSET // Temperatures #3
+#define ADD_MC1_TEMP3 0x00A2 + ADD_MC1_OFFSET
+#define ADD_MC0_RPM 0x00A5 + ADD_MC0_OFFSET // Motor Position Information
+#define ADD_MC1_RPM 0x00A5 + ADD_MC1_OFFSET
+#define ADD_MC0_CURR 0x00A6 + ADD_MC0_OFFSET // Current Information
+#define ADD_MC1_CURR 0x00A6 + ADD_MC1_OFFSET
+#define ADD_MC0_VOLT 0x00A7 + ADD_MC0_OFFSET // Voltage Information
+#define ADD_MC1_VOLT 0x00A7 + ADD_MC1_OFFSET
+#define ADD_MC0_FAULTS 0x00AB + ADD_MC0_OFFSET // Fault Codes
+#define ADD_MC1_FAULTS 0x00AB + ADD_MC1_OFFSET
+#define ADD_MC0_CTRL 0x00C0 + ADD_MC0_OFFSET // For sending commands
+#define ADD_MC1_CTRL 0x00C0 + ADD_MC1_OFFSET
+#define ADD_MC0_CLEAR 0x00C1 + ADD_MC0_OFFSET // For clearing faults
+#define ADD_MC1_CLEAR 0x00C1 + ADD_MC1_OFFSET
 
 #define CANPIN 3
 
