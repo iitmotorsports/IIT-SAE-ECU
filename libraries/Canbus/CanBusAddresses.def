@@ -76,6 +76,12 @@
     X(ADD_BMS_DATA, INPUT)         \
     X(ADD_MC0_VOLT, INPUT)         \
     X(ADD_MC1_VOLT, INPUT)         \
+    X(ADD_MC0_TEMP1, INPUT)        \
+    X(ADD_MC1_TEMP1, INPUT)        \
+    X(ADD_MC0_TEMP2, INPUT)        \
+    X(ADD_MC1_TEMP2, INPUT)        \
+    X(ADD_MC0_TEMP3, INPUT)        \
+    X(ADD_MC1_TEMP3, INPUT)        \
     X(ADD_MC0_RPM, INPUT)          \
     X(ADD_MC1_RPM, INPUT)          \
     X(ADD_MC0_CURR, INPUT)         \
