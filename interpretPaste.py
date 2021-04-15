@@ -88,8 +88,23 @@ def graph(value: str, string: str):
         y.append(int(msg[2]))
 
     x = np.linspace(0, 1, len(y))
+    import matplotlib
 
-    plt.plot(x, y, linewidth=1, color=(0, 0, 0, 0.5))
+    plt.figure(facecolor="#0a0a0a")
+
+    ax = plt.axes()
+    ax.set_facecolor("#131313")
+    ax.spines["bottom"].set_color("#131313")
+    ax.spines["top"].set_color("#131313")
+    ax.spines["right"].set_color("#131313")
+    ax.spines["left"].set_color("#131313")
+    ax.yaxis.label.set_color("#d2d2d2")
+    ax.xaxis.label.set_color("#d2d2d2")
+    ax.title.set_color("#d2d2d2")
+    ax.tick_params(axis="x", colors="#d2d2d2", which="both")
+    ax.tick_params(axis="y", colors="#d2d2d2", which="both")
+
+    plt.plot(x, y, linewidth=1, color=(1, 0, 0, 0.3))
     plt.plot(x, y, linewidth=0.125, color=(1, 0, 0))
 
     plt.xlabel("Time Step")
