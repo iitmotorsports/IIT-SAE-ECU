@@ -2,3 +2,4 @@ log_lookup.json
 /build
 *.disable
 *.log
+*.png
