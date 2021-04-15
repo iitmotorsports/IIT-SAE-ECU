@@ -89,12 +89,13 @@ def graph(value: str, string: str):
 
     x = np.linspace(0, 1, len(y))
 
-    plt.plot(x, y)
+    plt.plot(x, y, linewidth=1, color=(0, 0, 0, 0.5))
+    plt.plot(x, y, linewidth=0.125, color=(1, 0, 0))
 
     plt.xlabel("Time Step")
     plt.ylabel("Value")
     plt.title(value)
-    plt.savefig("interpret.png")
+    plt.savefig("interpret.png", dpi=2048)
 
 
 def main():
