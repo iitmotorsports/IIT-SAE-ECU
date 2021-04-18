@@ -10,7 +10,6 @@
 
 import base64
 from pip._vendor import requests
-import xml.etree.ElementTree as ET
 import json
 from time import sleep
 import asyncio
@@ -136,7 +135,7 @@ def graph(value: str, string: str):
     plt.xlabel("Time Step")
     plt.ylabel("Value")
     plt.title(value)
-    # plt.savefig("interpret.png", dpi=2048)
+    plt.savefig("interpret.png", dpi=2048)
 
     wb = openpyxl.Workbook()
     ws = wb.active
