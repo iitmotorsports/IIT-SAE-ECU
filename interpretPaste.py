@@ -135,7 +135,7 @@ def graph(value: str, string: str):
     plt.xlabel("Time Step")
     plt.ylabel("Value")
     plt.title(value)
-    plt.savefig("interpret.png", dpi=2048)
+    plt.savefig("interpret.png", dpi=512)
 
     wb = openpyxl.Workbook()
     ws = wb.active
