@@ -16,10 +16,24 @@ from time import sleep
 import asyncio
 import sys
 import math
+import os
+
+try:
+    import matplotlib
+except ImportError:
+    print("Trying to Install required module: matplotlib")
+    os.system("python -m pip install matplotlib")
+import matplotlib
+
+try:
+    import openpyxl
+except ImportError:
+    print("Trying to Install required module: openpyxl")
+    os.system("python -m pip install openpyxl")
+import openpyxl
 
 from matplotlib import pyplot as plt
 import numpy as np
-import openpyxl
 from openpyxl.chart import LineChart, Reference, Series
 
 
@@ -123,13 +137,13 @@ def graph(value: str, string: str):
     plt.ylabel("Value")
     plt.title(value)
     # plt.savefig("interpret.png", dpi=2048)
-    
+
     wb = openpyxl.Workbook()
     ws = wb.active
 
     for v in y:
         ws.append([v])
-    
+
     values = Reference(ws, min_col=1, min_row=1, max_col=1, max_row=len(y))
 
     chart = LineChart()
@@ -138,7 +152,7 @@ def graph(value: str, string: str):
     chart.title = value
     chart.x_axis.title = "Time Step"
     chart.y_axis.title = "Value"
-    
+
     ws.add_chart(chart, "E2")
     wb.save("interpret.xlsx")
 
