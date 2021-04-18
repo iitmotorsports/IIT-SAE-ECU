@@ -70,7 +70,16 @@ def interpret(string: str):
             msg = line.split(" ")
             if len(msg) != 3:
                 continue
-            logFile.write(TagDict[int(msg[0])] + StrDict[int(msg[1])] + " " + str(int(msg[2])) + "\n")
+            TagStr = StrStr = "Invalid Msg Key"
+            try:
+                TagStr = TagDict[int(msg[0])]
+            except KeyError:
+                pass
+            try:
+                StrStr = StrDict[int(msg[1])]
+            except KeyError:
+                pass
+            logFile.write(TagStr + StrStr + " " + str(int(msg[2])) + "\n")
 
 
 def graph(value: str, string: str):
