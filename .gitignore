@@ -3,3 +3,4 @@ log_lookup.json
 *.disable
 *.log
 *.png
+*.xlsx

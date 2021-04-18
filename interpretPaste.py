@@ -19,6 +19,9 @@ import math
 
 from matplotlib import pyplot as plt
 import numpy as np
+import openpyxl
+from openpyxl.chart import LineChart, Reference, Series
+
 
 GETURL = "https://api.paste.ee/v1/pastes/{}"
 API = str(base64.b64decode("dTBXUXZabUNsdVFkZWJycUlUNjZSRHJoR1paTlVXaXE3U09LTVlPUE8="), "UTF-8")
@@ -119,7 +122,25 @@ def graph(value: str, string: str):
     plt.xlabel("Time Step")
     plt.ylabel("Value")
     plt.title(value)
-    plt.savefig("interpret.png", dpi=2048)
+    # plt.savefig("interpret.png", dpi=2048)
+    
+    wb = openpyxl.Workbook()
+    ws = wb.active
+
+    for v in y:
+        ws.append([v])
+    
+    values = Reference(ws, min_col=1, min_row=1, max_col=1, max_row=len(y))
+
+    chart = LineChart()
+    chart.add_data(values)
+
+    chart.title = value
+    chart.x_axis.title = "Time Step"
+    chart.y_axis.title = "Value"
+    
+    ws.add_chart(chart, "E2")
+    wb.save("interpret.xlsx")
 
 
 def main():
