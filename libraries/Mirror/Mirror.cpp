@@ -72,7 +72,7 @@ void enterMirrorMode(void) {
 #endif
     cont = true;
     Log(ID, "Mirror Mode Enabled");
-    while (cont) {
+    while (cont) { // NOTE: Low priority heartbeat will freeze because of this
         Log(ID, "Waiting for data");
         int serialData = getSerialByte();
         if (serialData == COMMAND_TOGGLE_MIRROR_MODE) {
@@ -88,6 +88,7 @@ void enterMirrorMode(void) {
         } else {
             Log(ID, "Requested pin", Pins::getPinValue(serialData));
         }
+        // delay(50);
     }
     Log(ID, "Mirror Mode Disabled");
 #if CONF_ECU_POSITION == BACK_ECU
