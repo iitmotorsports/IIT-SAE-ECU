@@ -345,11 +345,11 @@ static void populateCanbusMap(std::multimap<uint32_t, std::tuple<uint, uint8_t, 
 }
 
 void resetPhysicalPins() {
-#define X(pin, Type, IO, init)   \
-    pinMode(pin, IO);            \
-    Log.d(ID, "Reset pin", pin); \
-    if (init != NIL) {           \
-        setPinValue(pin, init);  \
+#define X(pin, Type, IO, init)       \
+    pinMode(pin, IO);                \
+    if (init != NIL) {               \
+        Log.d(ID, "Reset pin", pin); \
+        setPinValue(pin, init);      \
     }
     ECU_PINS
 #undef X
