@@ -158,6 +158,9 @@ State::State_t *ECUStates::Charging_State::run(void) {
 }
 
 State::State_t *ECUStates::Button_State::run(void) {
+    Log.i(ID, "Waiting for Button not to be pressed");
+    while (Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT)) {
+    }
     Log.i(ID, "Playing sound");
 
     Pins::setPinValue(PINS_BACK_SOUND_DRIVER, PINS_ANALOG_HIGH);
