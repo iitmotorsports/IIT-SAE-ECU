@@ -16,13 +16,7 @@ import asyncio
 import sys
 import math
 import os
-
-try:
-    import matplotlib
-except ImportError:
-    print("Trying to Install required module: matplotlib")
-    os.system("python -m pip install matplotlib")
-import matplotlib
+import datetime
 
 try:
     import openpyxl
@@ -31,9 +25,7 @@ except ImportError:
     os.system("python -m pip install openpyxl")
 import openpyxl
 
-from matplotlib import pyplot as plt
-import numpy as np
-from openpyxl.chart import LineChart, Reference, Series
+from openpyxl.chart import ScatterChart, Reference, Series
 
 
 GETURL = "https://api.paste.ee/v1/pastes/{}"
@@ -41,6 +33,7 @@ API = str(base64.b64decode("dTBXUXZabUNsdVFkZWJycUlUNjZSRHJoR1paTlVXaXE3U09LTVlP
 headers = {"X-Auth-Token": API}
 BeginJSON = "---[ LOG MAP START ]---"
 EndJSON = "---[ LOG MAP END ]---"
+SaveName = "_Interpret"
 
 
 def listPastes():
@@ -67,7 +60,11 @@ def getPaste(id):
         print(req.status_code, req.reason)
     else:
         print(req.status_code, req.reason, req.text)
-    return json.loads(req.text)["paste"]["sections"][0]["contents"]
+    raw = json.loads(req.text)["paste"]["sections"][0]["contents"]
+    with open("{}_raw.log".format(SaveName), "w") as rawFile:
+        rawFile.writelines(raw)
+
+    return raw
 
 
 def usage():
@@ -80,80 +77,139 @@ def interpret(string: str):
     TagDict = {v: k for k, v in jsonOBJ[0].items()}
     StrDict = {v: k for k, v in jsonOBJ[1].items()}
 
-    with open("interpret.log", "w") as logFile:
+    with open("{}.log".format(SaveName), "w") as logFile:
         logFile.writelines(string[string.find(BeginJSON) + len(BeginJSON) : string.find(EndJSON)])
         for line in dataStream.splitlines():
             msg = line.split(" ")
-            if len(msg) != 3:
+            if len(msg) != 4:
                 continue
+            # epoch = datetime.datetime.fromtimestamp(int(msg[0]) / 1000.0).strftime("%H:%M:%S:%f")
+            epoch = int(msg[0])
             TagStr = StrStr = "Invalid Msg Key"
             try:
-                TagStr = TagDict[int(msg[0])]
+                TagStr = TagDict[int(msg[1])]
             except KeyError:
                 pass
             try:
-                StrStr = StrDict[int(msg[1])]
+                StrStr = StrDict[int(msg[2])]
             except KeyError:
                 pass
-            logFile.write(TagStr + StrStr + " " + str(int(msg[2])) + "\n")
+            logFile.write("[{0}] {1: <16s} {2: <35s} {3}\n".format(epoch, TagStr, StrStr, str(int(msg[3]))))
 
 
-def graph(value: str, string: str):
+import pprint
+
+from itertools import repeat
+
+
+def graph(string: str):
 
     jsonOBJ = json.loads(string[string.find(BeginJSON) + len(BeginJSON) : string.find(EndJSON)])
     dataStream = string[string.find(EndJSON) + len(EndJSON) :]
-    strKey = str(jsonOBJ[1][value])
+    StrDict = {v: k for k, v in jsonOBJ[1].items()}
 
-    y = []
+    data = dict()
+
+    dataTitles = list(["Elapsed Time (s)"])
+
+    epochSmol = -1
 
     for line in dataStream.splitlines():
-        msg = line.split(" ")
-        if len(msg) != 3 or msg[1] != strKey:
-            continue
-        y.append(int(msg[2]))
+        try:
+            msg = line.split(" ")
+            if len(msg) != 4 or not StrDict.get(int(msg[2])):
+                continue
+            msgID = StrDict[int(msg[2])]
+            if not data.get(msgID):
+                data[msgID] = list()
+                dataTitles.append(msgID)
+            epoch = int(msg[0])
+            data[msgID].append(list((epoch, int(msg[3]), data[msgID])))
 
-    x = np.linspace(0, 1, len(y))
-    import matplotlib
+            if epochSmol == -1 or epoch < epochSmol:
+                epochSmol = epoch
 
-    plt.figure(facecolor="#0a0a0a")
+        except KeyError as e:
+            print("KeyError: ", e)
+            pass
 
-    ax = plt.axes()
-    ax.set_facecolor("#131313")
-    ax.spines["bottom"].set_color("#131313")
-    ax.spines["top"].set_color("#131313")
-    ax.spines["right"].set_color("#131313")
-    ax.spines["left"].set_color("#131313")
-    ax.yaxis.label.set_color("#d2d2d2")
-    ax.xaxis.label.set_color("#d2d2d2")
-    ax.title.set_color("#d2d2d2")
-    ax.tick_params(axis="x", colors="#d2d2d2", which="both")
-    ax.tick_params(axis="y", colors="#d2d2d2", which="both")
-
-    plt.plot(x, y, linewidth=1, color=(1, 0, 0, 0.3))
-    plt.plot(x, y, linewidth=0.125, color=(1, 0, 0))
-
-    plt.xlabel("Time Step")
-    plt.ylabel("Value")
-    plt.title(value)
-    plt.savefig("interpret.png", dpi=512)
+    for _, value in data.items():
+        value.sort(key=lambda x: x[0])
+        for lst in value:
+            lst[0] -= epochSmol
+            lst[0] /= 1000000000
 
     wb = openpyxl.Workbook()
     ws = wb.active
 
-    for v in y:
-        ws.append([v])
+    ws.append(dataTitles)
 
-    values = Reference(ws, min_col=1, min_row=1, max_col=1, max_row=len(y))
+    rows = list()
 
-    chart = LineChart()
-    chart.add_data(values)
+    def getRow():
+        row = list()
+        for title in dataTitles:
+            column = data.get(title)
+            if not column or len(column) == 0:
+                row.append((epochSmol + 1, 0))
+            else:
+                row.append(column[0])
 
-    chart.title = value
-    chart.x_axis.title = "Time Step"
+        smallestEpoch = epochSmol
+
+        for item in row:
+            if item[0] < smallestEpoch:
+                smallestEpoch = item[0]
+
+        if smallestEpoch == epochSmol:
+            return
+
+        finalRow = list([smallestEpoch])
+        row.pop(0)
+
+        for item in row:
+            if item[0] != smallestEpoch:
+                finalRow.append(item[1])
+            else:
+                finalRow.append(item[2].pop(0)[1])
+
+        if len(finalRow) == 1:
+            return
+
+        return finalRow
+
+    while True:
+        row = getRow()
+        if row:
+            rows.append(row)
+        else:
+            break
+
+    for row in rows:
+        ws.append(row)
+
+    chart = ScatterChart()
+    chart.title = "Interpreted Data"
+    chart.style = 2
+    chart.x_axis.title = "Elapsed Time (s)"
     chart.y_axis.title = "Value"
+    chart.height = 20
+    chart.width = 45
 
-    ws.add_chart(chart, "E2")
-    wb.save("interpret.xlsx")
+    xvalues = Reference(ws, min_col=1, min_row=2, max_row=len(rows) + 1)
+
+    for i in range(2, len(dataTitles) + 1):
+        values = Reference(ws, min_col=i, min_row=1, max_row=len(rows) + 1)
+        series = Series(values, xvalues, title_from_data=True)
+        # series.marker.symbol = "circle"
+        # series.marker.size = 3
+        # series.graphicalProperties.line.noFill = True
+        series.smooth = True
+        series.graphicalProperties.line.width = 10000 # width in EMUs
+        chart.series.append(series)
+
+    ws.add_chart(chart, "A1")
+    wb.save("{}.xlsx".format(SaveName))
 
 
 def main():
@@ -167,9 +223,9 @@ def main():
 
     if len(sys.argv) > 2 and sys.argv[2][0:2] == "-g":
         id = sys.argv[1][2:]
-        strId = sys.argv[2][2:]
-        print(id, strId)
-        graph(strId, getPaste(id))
+        # strId = sys.argv[2][2:]
+        # print(id, strId)
+        graph(getPaste(id))
         exit()
 
     if sys.argv[1][0:2] == "-p":
