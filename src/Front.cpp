@@ -35,11 +35,15 @@ std::unordered_map<uint32_t, struct State::State_t *> stateMap;
 static struct State::State_t *currentState;
 
 static uint32_t BMSSOC() {
-    return BMS_DATA_Buffer.getShort(4); // Byte 4: BMS State of charge buffer
+    return BMS_DATA_Buffer.getShort(4); // Byte 4-5: BMS State of charge buffer
 }
 
 static uint32_t BMSVOLT() {
     return BMS_DATA_Buffer.getShort(2); // Byte 2-3: BMS Immediate voltage
+}
+
+static int32_t BMSAMP() {
+    return BMS_DATA_Buffer.getShort(0); // Byte 0-1: BMS Immediate amperage
 }
 
 static uint16_t MC0Voltage() {
@@ -188,15 +192,13 @@ void Front::run() {
             Pins::setPinValue(PINS_FRONT_BMS_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_BMS_FAULT));
             Pins::setPinValue(PINS_FRONT_IMD_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_IMD_FAULT));
 
-            Log(ID, "MC0 Voltage:", MC0Voltage() + testValue);
-            Log(ID, "MC1 Voltage:", MC1Voltage() + testValue);
-            Log(ID, "Current Power Value:", MCPowerValue() + testValue); // Canbus message from MCs
-            Log(ID, "BMS State Of Charge Value:", BMSSOC() + testValue); // Canbus message
-            Log(ID, "BMS Immediate Voltage:", BMSVOLT() + testValue);    // Canbus message
+            Log(ID, "MC0 Voltage:", MC0Voltage());
+            Log(ID, "MC1 Voltage:", MC1Voltage());
+            Log(ID, "Current Power Value:", MCPowerValue()); // Canbus message from MCs
+            Log(ID, "BMS State Of Charge Value:", BMSSOC()); // Canbus message
+            Log(ID, "BMS Immediate Voltage:", BMSVOLT());    // Canbus message
+            Log(ID, "BMS Immediate Amperage:", BMSAMP());    // Canbus message
             Log(ID, "Fault State", Pins::getCanPinValue(PINS_INTERNAL_GEN_FAULT));
-            // if (currentState != &ECUStates::Charging_State || currentState != &ECUStates::Idle_State) {
-            //     Pins::setInternalValue(PINS_INTERNAL_CHARGE_SIGNAL, LOW);
-            // }
         }
     }
 }
