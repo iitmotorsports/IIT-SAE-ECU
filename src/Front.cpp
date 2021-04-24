@@ -197,7 +197,7 @@ void Front::run() {
             Log(ID, "Current Power Value:", MCPowerValue()); // Canbus message from MCs
             Log(ID, "BMS State Of Charge Value:", BMSSOC()); // Canbus message
             Log(ID, "BMS Immediate Voltage:", BMSVOLT());    // Canbus message
-            Log(ID, "BMS Immediate Amperage:", BMSAMP());    // Canbus message
+            Log(ID, "BMS Pack Average Current:", BMSAMP());    // Canbus message
             Log(ID, "Fault State", Pins::getCanPinValue(PINS_INTERNAL_GEN_FAULT));
         }
     }
