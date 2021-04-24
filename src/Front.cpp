@@ -35,7 +35,7 @@ std::unordered_map<uint32_t, struct State::State_t *> stateMap;
 static struct State::State_t *currentState;
 
 static uint32_t BMSSOC() {
-    return BMS_DATA_Buffer.getShort(4); // Byte 4-5: BMS State of charge buffer
+    return BMS_DATA_Buffer.getByte(4); // Byte 4: BMS State of charge buffer
 }
 
 static uint32_t BMSVOLT() {
