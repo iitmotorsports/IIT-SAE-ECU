@@ -199,6 +199,7 @@ void Front::run() {
             Log(ID, "BMS Immediate Voltage:", BMSVOLT());    // Canbus message
             Log(ID, "BMS Pack Average Current:", BMSAMP());    // Canbus message
             Log(ID, "Fault State", Pins::getCanPinValue(PINS_INTERNAL_GEN_FAULT));
+            // TODO: send MC temps, Motor temps, aero angles, DC BUS current
         }
     }
 }
