@@ -200,7 +200,8 @@ void Front::run() {
             Log(ID, "BMS Pack Average Current:", BMSAMP());    // Canbus message
             Log(ID, "Fault State", Pins::getCanPinValue(PINS_INTERNAL_GEN_FAULT));
             // TODO: send MC temps, Motor temps, aero angles, DC BUS current
-            // TODO: send batt temp, charge current limit, discharge current limit
+            // TODO: send batt temp, charge current limit, discharge current limit, DC BUS Volt
+            // TODO: update Android with proper string keys
         }
     }
 }
