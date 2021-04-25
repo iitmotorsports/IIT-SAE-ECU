@@ -12,13 +12,22 @@ static elapsedMillis timeElapsed;
 static elapsedMillis timeElapsedMidHigh;
 static elapsedMillis timeElapsedMidLow;
 static elapsedMillis timeElapsedLong;
+
 static Canbus::Buffer MC0_RPM_Buffer(ADD_MC0_RPM);
 static Canbus::Buffer MC1_RPM_Buffer(ADD_MC1_RPM);
 static Canbus::Buffer MC0_VOLT_Buffer(ADD_MC0_VOLT);
 static Canbus::Buffer MC1_VOLT_Buffer(ADD_MC1_VOLT);
 static Canbus::Buffer MC0_CURR_Buffer(ADD_MC0_CURR);
 static Canbus::Buffer MC1_CURR_Buffer(ADD_MC1_CURR);
+static Canbus::Buffer MC0_TEMP2_Buffer(ADD_MC0_TEMP2);
+static Canbus::Buffer MC1_TEMP2_Buffer(ADD_MC1_TEMP2);
+static Canbus::Buffer MC0_TEMP3_Buffer(ADD_MC0_TEMP3);
+static Canbus::Buffer MC1_TEMP3_Buffer(ADD_MC1_TEMP3);
+
 static Canbus::Buffer BMS_DATA_Buffer(ADD_BMS_DATA);
+static Canbus::Buffer BMS_BATT_TEMP_Buffer(ADD_BMS_BATT_TEMP);
+static Canbus::Buffer BMS_CURR_LIMIT_Buffer(ADD_BMS_CURR_LIMIT);
+
 static constexpr float wheelRadius = 1.8; // TODO: Get car wheel radius
 
 static struct State::State_t *states[] = {
@@ -34,16 +43,48 @@ static struct State::State_t *states[] = {
 std::unordered_map<uint32_t, struct State::State_t *> stateMap;
 static struct State::State_t *currentState;
 
-static uint32_t BMSSOC() {
+static uint8_t BMSSOC() {
     return BMS_DATA_Buffer.getByte(4); // Byte 4: BMS State of charge buffer
 }
 
-static uint32_t BMSVOLT() {
+static uint16_t BMSVOLT() {
     return BMS_DATA_Buffer.getShort(2); // Byte 2-3: BMS Immediate voltage
 }
 
-static int32_t BMSAMP() {
+static uint16_t BMSAMP() {
     return BMS_DATA_Buffer.getShort(0); // Byte 0-1: BMS Immediate amperage
+}
+
+static uint8_t BMSTempHigh() {
+    return BMS_BATT_TEMP_Buffer.getByte(4); // Byte 4: BMS Highest Battery Temp
+}
+
+static uint8_t BMSTempLow() {
+    return BMS_BATT_TEMP_Buffer.getByte(5); // Byte 5: BMS Lowest Battery Temp
+}
+
+static uint16_t BMSDischargeCurrentLimit() {
+    return BMS_CURR_LIMIT_Buffer.getShort(0); // Byte 0-1: BMS Discharge Current Limit
+}
+
+static uint16_t BMSChargeCurrentLimit() {
+    return BMS_CURR_LIMIT_Buffer.getShort(2); // Byte 2-3: BMS Charge Current Limit
+}
+
+static uint16_t MC0BoardTemp() {
+    return MC0_TEMP2_Buffer.getShort(0) / 10; // Bytes 0-1: Temperature of Control Board
+}
+
+static uint16_t MC1BoardTemp() {
+    return MC1_TEMP2_Buffer.getShort(0) / 10; // Bytes 0-1: Temperature of Control Board
+}
+
+static uint16_t MC0MotorTemp() {
+    return MC0_TEMP3_Buffer.getShort(4) / 10; // Bytes 4-5: Filtered temperature value from the motor temperature sensor
+}
+
+static uint16_t MC1MotorTemp() {
+    return MC1_TEMP3_Buffer.getShort(4) / 10; // Bytes 4-5: Filtered temperature value from the motor temperature sensor
 }
 
 static uint16_t MC0Voltage() {
@@ -54,11 +95,17 @@ static uint16_t MC1Voltage() {
     return MC1_VOLT_Buffer.getShort(0) / 10; // Bytes 0-1: DC BUS MC Voltage
 }
 
-static uint32_t MCPowerValue() {                    // IMPROVE: get power value using three phase values, or find a power value address
-    int16_t MC1_CURR = MC0_CURR_Buffer.getShort(6); // Bytes 6-7: DC BUS MC Current
-    int16_t MC0_CURR = MC1_CURR_Buffer.getShort(6); // Bytes 6-7: DC BUS MC Current
-    int MC0_PWR = MC0Voltage() * MC0_CURR;
-    int MC1_PWR = MC1Voltage() * MC1_CURR;
+static uint16_t MC0Current() {
+    return MC0_CURR_Buffer.getShort(6) / 10; // Bytes 6-7: DC BUS MC Current
+}
+
+static uint16_t MC1Current() {
+    return MC0_CURR_Buffer.getShort(6) / 10; // Bytes 6-7: DC BUS MC Current
+}
+
+static uint32_t MCPowerValue() { // IMPROVE: get power value using three phase values, or find a power value address
+    int MC0_PWR = MC0Voltage() * MC0Current();
+    int MC1_PWR = MC1Voltage() * MC1Current();
     return (MC0_PWR + MC1_PWR) / 1000; // Sending kilowatts
 }
 
@@ -192,16 +239,28 @@ void Front::run() {
             Pins::setPinValue(PINS_FRONT_BMS_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_BMS_FAULT));
             Pins::setPinValue(PINS_FRONT_IMD_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_IMD_FAULT));
 
-            Log(ID, "MC0 Voltage:", MC0Voltage());
-            Log(ID, "MC1 Voltage:", MC1Voltage());
-            Log(ID, "Current Power Value:", MCPowerValue()); // Canbus message from MCs
-            Log(ID, "BMS State Of Charge Value:", BMSSOC()); // Canbus message
-            Log(ID, "BMS Immediate Voltage:", BMSVOLT());    // Canbus message
-            Log(ID, "BMS Pack Average Current:", BMSAMP());    // Canbus message
+            // Motor controllers
+            Log(ID, "MC0 DC BUS Voltage:", MC0Voltage());
+            Log(ID, "MC1 DC BUS Voltage:", MC1Voltage());
+            Log(ID, "MC0 DC BUS Current:", MC0Current());
+            Log(ID, "MC1 DC BUS Current:", MC1Current());
+            Log(ID, "MC0 Board Temp:", MC0BoardTemp());
+            Log(ID, "MC1 Board Temp:", MC1BoardTemp());
+            Log(ID, "MC0 Motor Temp:", MC0MotorTemp());
+            Log(ID, "MC1 Motor Temp:", MC1MotorTemp());
+            Log(ID, "MC Current Power:", MCPowerValue());
+
+            // BMS
+            Log(ID, "BMS State Of Charge:", BMSSOC());
+            Log(ID, "BMS Immediate Voltage:", BMSVOLT());
+            Log(ID, "BMS Pack Average Current:", BMSAMP());
+            Log(ID, "BMS Pack Highest Temp:", BMSTempHigh());
+            Log(ID, "BMS Pack Lowest Temp:", BMSTempLow());
+            Log(ID, "BMS Discharge current limit:", BMSDischargeCurrentLimit());
+            Log(ID, "BMS Charge current limit:", BMSChargeCurrentLimit());
+
+            // General
             Log(ID, "Fault State", Pins::getCanPinValue(PINS_INTERNAL_GEN_FAULT));
-            // TODO: send MC temps, Motor temps, aero angles, DC BUS current
-            // TODO: send batt temp, charge current limit, discharge current limit, DC BUS Volt
-            // TODO: update Android with proper string keys
         }
     }
 }

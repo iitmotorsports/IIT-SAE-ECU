@@ -16,13 +16,15 @@
 #include "PPhelp.h"
 
 // Address offsets
-#define ADD_MC0_OFFSET -0x00A0
+#define ADD_MC0_OFFSET -0x00A0 
 #define ADD_MC1_OFFSET 0x0030
 #define ADD_BMS_OFFSET 0x0000
 
 // Define addresses values here
-// NOTE: RMS Docs state a default 0x0A0 Offset
 #define ADD_BMS_DATA 0x06B0 + ADD_BMS_OFFSET
+#define ADD_BMS_BATT_TEMP 0x06B1 + ADD_BMS_OFFSET
+#define ADD_BMS_CURR_LIMIT 0x0202 + ADD_BMS_OFFSET
+// NOTE: RMS Docs state a default 0x0A0 Offset
 #define ADD_MC0_TEMP1 0x00A0 + ADD_MC0_OFFSET // Temperatures #1
 #define ADD_MC1_TEMP1 0x00A0 + ADD_MC1_OFFSET
 #define ADD_MC0_TEMP2 0x00A1 + ADD_MC0_OFFSET // Temperatures #2
@@ -77,6 +79,8 @@
  */
 #define CAN_ADDRESS                \
     X(ADD_BMS_DATA, INPUT)         \
+    X(ADD_BMS_BATT_TEMP, INPUT)    \
+    X(ADD_BMS_CURR_LIMIT, INPUT)   \
     X(ADD_MC0_VOLT, INPUT)         \
     X(ADD_MC1_VOLT, INPUT)         \
     X(ADD_MC0_TEMP1, INPUT)        \
