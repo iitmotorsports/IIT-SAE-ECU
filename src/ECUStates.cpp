@@ -240,6 +240,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
     disableMCs();
 
     elapsedMillis controlDelay;
+    size_t counter = 0;
 
     Log.d(ID, "Entering drive loop");
     while (true) {
@@ -265,6 +266,11 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             torqueVector(MotorTorques, pedal0, pedal1);
             sendMCCommand(ADD_MC0_CTRL, MotorTorques[0], 0, 1); // MC 1
             sendMCCommand(ADD_MC1_CTRL, MotorTorques[1], 1, 1); // MC 2
+
+            if (++counter > 10) {
+                counter = 0;
+                Log.i(ID, "Aero servo position:", Aero::getServoValue());
+            }
         }
 
         Aero::run(breakVal, Pins::getCanPinValue(PINS_FRONT_STEER));

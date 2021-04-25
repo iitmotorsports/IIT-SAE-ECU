@@ -18,11 +18,17 @@ static const int angleMax = 72; // angle of attack is 42
 static PWMServo servo1;
 static PWMServo servo2;
 
+static int servoVal;
+
 void setup() {
     Log.i(ID, "Initializing Aero servo pins");
     servo1.attach(PINS_BACK_SERVO1_PWM);
     servo2.attach(PINS_BACK_SERVO2_PWM);
     Log.i(ID, "Done");
+}
+
+int getServoValue(){
+    return servoVal;
 }
 
 void run(int breakPressure, int steeringAngle) { // Add 10 millisec delay
@@ -39,7 +45,7 @@ void run(int breakPressure, int steeringAngle) { // Add 10 millisec delay
     }
 
     static int lastValue = angleMin;
-    int servoVal = (max(breakPos, steerPos) + lastValue * 3) / 4;
+    servoVal = (max(breakPos, steerPos) + lastValue * 3) / 4;
     lastValue = servoVal;
 
     servo1.write(servoVal);

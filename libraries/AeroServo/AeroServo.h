@@ -22,6 +22,13 @@ void setup(void);
  */
 void run(int breakPressure, int steeringAngle);
 
+/**
+ * @brief Get the current servo position value
+ * 
+ * @return int servo position value
+ */
+int getServoValue();
+
 } // namespace Aero
 
 #endif // __ECU_AEROSERVO_H__
