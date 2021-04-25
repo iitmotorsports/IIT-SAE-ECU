@@ -34,7 +34,7 @@ static void startEcho() {
 static void checkStart() {
     count++;
     if (count == 2) {
-        send();
+        startEcho();
         count = 0;
     }
 }
