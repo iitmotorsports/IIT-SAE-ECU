@@ -24,6 +24,8 @@ void setup() {
     Log.i(ID, "Initializing Aero servo pins");
     servo1.attach(PINS_BACK_SERVO1_PWM);
     servo2.attach(PINS_BACK_SERVO2_PWM);
+    Log.i(ID, "Turning on servos");
+    Pins::setPinValue(PINS_BACK_SERVO_OFF, 0);
     Log.i(ID, "Done");
 }
 

@@ -52,7 +52,7 @@
 #define PINS_BOTH_LED 13
 
 // Back ECU Only - ECU0
-#define PINS_BACK_SERVO_OFF 0        //
+#define PINS_BACK_SERVO_OFF 0        // Turn the back servos off
 #define PINS_BACK_TSV_SIGNAL 3       // digital input
 #define PINS_BACK_AIR2 4             // Air 2 control
 #define PINS_BACK_CHARGING_RELAY 5   // On or Off
