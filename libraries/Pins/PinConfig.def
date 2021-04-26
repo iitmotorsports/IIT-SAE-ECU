@@ -74,7 +74,7 @@
 #define PINS_BACK_PUMP_DAC PIN_A21   // DAC pump control 2-2.5V
 
 // Front ECU Only - ECU1
-#define PINS_FRONT_BUTTON_INPUT 2 // Digital Start Button
+#define PINS_FRONT_BUTTON_INPUT_OFF 2 // Digital Start Button
 #define PINS_FRONT_WHEEL1 21      // 0-5v R wheel speed
 #define PINS_FRONT_WHEEL0 20      // 0-5v L wheel speed
 #define PINS_FRONT_PEDAL1 18      // Pedal 2
@@ -163,7 +163,7 @@
  */
 #define PINS_CANBUS_DIGITAL_IN                          \
     X(ADD_CANPIN_DIGITAL1, PINS_INTERNAL_CHARGE_SIGNAL) \
-    X(ADD_CANPIN_DIGITAL1, PINS_FRONT_BUTTON_INPUT)
+    X(ADD_CANPIN_DIGITAL1, PINS_FRONT_BUTTON_INPUT_OFF)
 
 /**
  * @brief Same as PINS_CANBUS_DIGITAL_IN only for the digital pins that are outgoing
@@ -177,7 +177,7 @@
 #else
 #define ECU_PINS                                    \
     X(PINS_BOTH_LED, DIGITAL, OUTPUT, NIL)          \
-    X(PINS_FRONT_BUTTON_INPUT, DIGITAL, INPUT, NIL) \
+    X(PINS_FRONT_BUTTON_INPUT_OFF, DIGITAL, INPUT, NIL) \
     X(PINS_FRONT_WHEEL1, ANALOG, INPUT, NIL)        \
     X(PINS_FRONT_WHEEL0, ANALOG, INPUT, NIL)        \
     X(PINS_FRONT_PEDAL1, ANALOG, INPUT, NIL)        \
@@ -207,7 +207,7 @@
 
 #define PINS_CANBUS_DIGITAL_OUT                         \
     X(ADD_CANPIN_DIGITAL1, PINS_INTERNAL_CHARGE_SIGNAL) \
-    X(ADD_CANPIN_DIGITAL1, PINS_FRONT_BUTTON_INPUT)
+    X(ADD_CANPIN_DIGITAL1, PINS_FRONT_BUTTON_INPUT_OFF)
 
 #endif
 
