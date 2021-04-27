@@ -202,7 +202,7 @@ void ECUStates::Driving_Mode_State::carCooling(float temp) { // TODO: map temp t
     // int fanSet = (int)map(temp, 0, 100, 0, PINS_ANALOG_HIGH);
     // Rashed says to just set them to high, shouldn't be capable of over-cooling
     Pins::setPinValue(PINS_BACK_PUMP_DAC, 2470);
-    int fanSet = PINS_ANALOG_HIGH;
+    int fanSet = PINS_ANALOG_MAX / 2;
     Pins::setPinValue(PINS_BACK_FAN1_PWM, fanSet);
     Pins::setPinValue(PINS_BACK_FAN2_PWM, fanSet);
     Pins::setPinValue(PINS_BACK_FAN3_PWM, fanSet);
