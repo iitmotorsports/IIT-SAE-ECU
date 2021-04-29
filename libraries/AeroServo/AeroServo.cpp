@@ -14,11 +14,12 @@ static const int steerRMax = PINS_VOLT_TO_ANALOG(5);
 
 static const int angleMin = 30; // 30 is min possible servo angle, 180 is max
 static const int angleMax = 72; // angle of attack is 42
+static const int lerpConst = 50;
 
 static PWMServo servo1;
 static PWMServo servo2;
 
-static int servoVal;
+static int servoVal = angleMin * lerpConst;
 
 void setup() {
     Log.i(ID, "Initializing Aero servo pins");
@@ -29,8 +30,8 @@ void setup() {
     Log.i(ID, "Done");
 }
 
-int getServoValue(){
-    return servoVal;
+int getServoValue() {
+    return servoVal / lerpConst;
 }
 
 void run(int breakPressure, int steeringAngle) { // Add 10 millisec delay
@@ -46,12 +47,10 @@ void run(int breakPressure, int steeringAngle) { // Add 10 millisec delay
         steerPos = map(steeringAngle, steerRMin, steerRMax, angleMin, angleMax);
     }
 
-    static int lastValue = angleMin;
-    servoVal = (max(breakPos, steerPos) + lastValue * 3) / 4;
-    lastValue = servoVal;
+    servoVal += max(breakPos, steerPos) - (servoVal / lerpConst);
 
-    servo1.write(servoVal);
-    servo2.write(servoVal);
+    servo1.write(servoVal / lerpConst);
+    servo2.write(servoVal / lerpConst);
 }
 
 } // namespace Aero
