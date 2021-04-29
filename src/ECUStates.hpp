@@ -87,8 +87,8 @@ static struct Button_State : State::State_t {
 static struct Driving_Mode_State : State::State_t {
 private:
     void sendMCCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit);
-    void torqueVector(int torques[2], int pedal0, int pedal1);
-    void carCooling(float temp);
+    void torqueVector(int torques[2], int pedal0, int pedal1, int brakeVal, int steerVal);
+    void carCooling(bool enable);
     void disableMCs();
     void clearFault();
     State::State_t *DrivingModeFault(void);

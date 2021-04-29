@@ -73,6 +73,8 @@ State::State_t *ECUStates::PreCharge_State::run(void) { // NOTE: Low = Closed, H
     getBuffers();
     Log.i(ID, "Precharge running");
 
+    delay(1000);
+
     if (FaultCheck()) {
         Log.e(ID, "Precharge Faulted before precharge");
         return &ECUStates::FaultState;
@@ -183,26 +185,20 @@ State::State_t *ECUStates::Button_State::run(void) {
 
 void ECUStates::Driving_Mode_State::sendMCCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit) {
     int percentTorque = constrain(map(torque, 0, 1024, 0, 400), 0, 400); // separate func for negative vals (regen)
-    // Log.d(ID, "Torque percent: ", percentTorque);
-    // Calculations value = (high_byte x 256) + low_byte
-    uint8_t low_byte = percentTorque % 256;
-    uint8_t high_byte = percentTorque / 256;
-    Canbus::sendData(MC_ADD, low_byte, high_byte, 0, 0, direction, 0b11000000 * enableBit); // TODO: check that low and high are in the right place
+    uint8_t *bytes = (uint8_t *)&percentTorque;
+    Canbus::sendData(MC_ADD, bytes[0], bytes[1], 0, 0, direction, 0b11000000 * enableBit);
 }
 
-void ECUStates::Driving_Mode_State::torqueVector(int torques[2], int pedal0, int pedal1) {
+void ECUStates::Driving_Mode_State::torqueVector(int torques[2], int pedal0, int pedal1, int brakeVal, int steerVal) {
     // TODO: Add Torque vectoring algorithms
     int pedalVal = (pedal0 + pedal1) / 2;
     torques[0] = pedalVal; // TODO: must be in percentage value?
     torques[1] = pedalVal;
 }
 
-void ECUStates::Driving_Mode_State::carCooling(float temp) { // TODO: map temp to voltages
-    // Pins::setPinValue(PINS_BACK_PUMP_DAC, (int)map(temp, 0, 100, PINS_ANALOG_HIGH * 2.0f / 5, PINS_ANALOG_HIGH * 2.5f / 5));
-    // int fanSet = (int)map(temp, 0, 100, 0, PINS_ANALOG_HIGH);
-    // Rashed says to just set them to high, shouldn't be capable of over-cooling
-    Pins::setPinValue(PINS_BACK_PUMP_DAC, 2470);
-    int fanSet = PINS_ANALOG_MAX / 2;
+void ECUStates::Driving_Mode_State::carCooling(bool enable) { // NOTE: Cooling values are all static
+    Pins::setPinValue(PINS_BACK_PUMP_DAC, enable * 2470);
+    int fanSet = enable * PINS_ANALOG_MAX / 2;
     Pins::setPinValue(PINS_BACK_FAN1_PWM, fanSet);
     Pins::setPinValue(PINS_BACK_FAN2_PWM, fanSet);
     Pins::setPinValue(PINS_BACK_FAN3_PWM, fanSet);
@@ -212,6 +208,7 @@ void ECUStates::Driving_Mode_State::carCooling(float temp) { // TODO: map temp t
 State::State_t *ECUStates::Driving_Mode_State::DrivingModeFault(void) {
     Log.i(ID, "Fault happened in driving state");
     disableMCs();
+    carCooling(false);
     return &ECUStates::FaultState;
 }
 
@@ -227,8 +224,9 @@ void ECUStates::Driving_Mode_State::clearFault(void) {
 
 State::State_t *ECUStates::Driving_Mode_State::run(void) {
     Log.i(ID, "Driving mode on");
+    Log.i(ID, "Cooling on");
 
-    carCooling(60); // TODO: what temp are we using for cooling?
+    carCooling(true);
 
     for (size_t i = 0; i < 4; i++) { // IMPROVE: Send only once? Check MC heartbeat fault is actually cleared
         clearFault();                // Clear heartbeat fault
@@ -257,23 +255,25 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             return DrivingModeFault();
         }
 
-        static int breakVal = Pins::getCanPinValue(PINS_FRONT_BRAKE);
+        int breakVal = Pins::getCanPinValue(PINS_FRONT_BRAKE);
+        int steerVal = Pins::getCanPinValue(PINS_FRONT_STEER);
+
         Pins::setPinValue(PINS_BACK_BRAKE_LIGHT, PINS_ANALOG_HIGH * ((breakVal / PINS_ANALOG_MAX) > 4));
 
         if (controlDelay > 10) {
             controlDelay = 0;
             int MotorTorques[2] = {0};
-            torqueVector(MotorTorques, pedal0, pedal1);
+            torqueVector(MotorTorques, pedal0, pedal1, breakVal, steerVal);
             sendMCCommand(ADD_MC0_CTRL, MotorTorques[0], 0, 1); // MC 1
             sendMCCommand(ADD_MC1_CTRL, MotorTorques[1], 1, 1); // MC 2
 
-            if (++counter > 10) {
+            if (++counter > 50) {
                 counter = 0;
                 Log.i(ID, "Aero servo position:", Aero::getServoValue());
             }
         }
 
-        Aero::run(breakVal, Pins::getCanPinValue(PINS_FRONT_STEER));
+        Aero::run(breakVal, steerVal);
 
         if (!Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT_OFF)) {
             Log.w(ID, "Going back to Idle state");
@@ -282,6 +282,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
     }
 
     disableMCs();
+    carCooling(false);
 
     Log.i(ID, "Driving mode off");
     return &ECUStates::Idle_State;
