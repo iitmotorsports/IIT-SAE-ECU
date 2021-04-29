@@ -225,8 +225,8 @@ void setInternalValue(uint8_t Internal_Pin, int value) {
     }
 
 #else
-    if (CAN_GPIO_MAP.find(Internal_Pin) != CAN_GPIO_MAP.end())
-        *CAN_GPIO_MAP[Internal_Pin] = value;
+    if (CAN_GPIO_MAP_OUT.find(Internal_Pin) != CAN_GPIO_MAP_OUT.end())
+        CAN_GPIO_MAP_OUT[Internal_Pin] = value;
 #endif
 }
 

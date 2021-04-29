@@ -234,7 +234,7 @@ void pushData(const uint32_t address) {
     }
     copyVolatileCanMsg(addressBuffers[pos], send.buf);
 #else
-    memcpy(send.buf, addressBuffers[_getAddressPos(address)], 8); // 8 Bytes
+    copyVolatileCanMsg(addressBuffers[_getAddressPos(address)], send.buf);
 #endif
     send.id = address;
     _pushSendMsg();
