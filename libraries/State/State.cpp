@@ -69,6 +69,7 @@ void State::begin(State_t &entry) {
         setNextState(currentState->run());
         currentState->notifyCode = currentNotifyCode;
         Log.d(TAG, "State returned code", currentNotifyCode);
+        delay(1000);
     }
 
     Log.f(TAG, "STATE MACHINE STOPPED");
