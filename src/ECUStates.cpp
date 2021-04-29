@@ -93,7 +93,7 @@ State::State_t *ECUStates::PreCharge_State::run(void) { // NOTE: Low = Closed, H
     elapsedMillis timeElapsed;
 
     while (timeElapsed <= 5000) {
-        if (voltageCheck()) {
+        if (voltageCheck()) { // NOTE: will always pass if submodules are disconnected from CAN net
             Log.w(ID, "Opening precharge relay");
             Pins::setPinValue(PINS_BACK_PRECHARGE_RELAY, LOW);
             Log.i(ID, "Precharge Finished, closing Air1");
