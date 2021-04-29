@@ -147,10 +147,6 @@ State::State_t *ECUStates::Charging_State::run(void) {
             Log.e(ID, "Charging faulted, turning off");
             return &ECUStates::FaultState;
         }
-        // if (voltLogNotify >= 1000) { // Notify every secondish
-        //     voltLogNotify = 0;
-        //     Log.i(ID, "Voltage", Pins::getPinValue(PINS_BACK_CHARGING_VOLTAGE)); // TODO: what voltage are we sending
-        // }
     }
 
     Pins::setPinValue(PINS_BACK_CHARGING_RELAY, LOW);
