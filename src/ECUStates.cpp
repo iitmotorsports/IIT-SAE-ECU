@@ -82,9 +82,9 @@ State::State_t *ECUStates::PreCharge_State::run(void) { // NOTE: Low = Closed, H
 
     delay(1000);
 
-    Log.w(ID, "Waiting for HVD fault to clear");
-    while (Pins::getPinValue(PINS_BACK_HVD_FAULT)) {
-    }
+    // Log.w(ID, "Waiting for HVD fault to clear");
+    // while (Pins::getPinValue(PINS_BACK_HVD_FAULT)) {
+    // }
 
     if (FaultCheck()) {
         Log.e(ID, "Precharge Faulted before precharge");
@@ -252,22 +252,20 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
     size_t counter = 0;
 
     Log.d(ID, "Entering drive loop");
-    while (true) {
+    while (true) { // TODO: Stop if any motor controller fault happens
         if (Pins::getPinValue(PINS_BACK_HVD_FAULT)) {
             Log.e(ID, "HVD Fault");
             return DrivingModeFault();
         }
+
         if (FaultCheck()) {
             return DrivingModeFault();
         }
 
-        // int minPed = 19;
-        // int maxPed = 1024;
-
         int pedal0 = Pins::getCanPinValue(PINS_FRONT_PEDAL0);
         int pedal1 = Pins::getCanPinValue(PINS_FRONT_PEDAL1);
-        // pedal0 = map(pedal0, minPed, maxPed, 0, PINS_ANALOG_MAX);
-        // pedal1 = map(pedal1, minPed, maxPed, 0, PINS_ANALOG_MAX);
+        // pedal0 = map(pedal0, 19, maxPed, 0, PINS_ANALOG_MAX);
+        // pedal1 = map(pedal1, 19, maxPed, 0, PINS_ANALOG_MAX);
         if (abs(pedal1 - pedal0) > (pedal0 * 5) / 100) {
             Log.e(ID, "Pedal value offset > 5%");
             Log.i(ID, "", pedal0);
