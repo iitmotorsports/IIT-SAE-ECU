@@ -35,7 +35,7 @@
 #define HARD_PIN_FAULTS                                                  \
     X(PINS_BACK_IMD_FAULT, >, 0, _LogPrebuildString("IMD Fault Signal")) \
     X(PINS_BACK_BMS_FAULT, >, 0, _LogPrebuildString("BMS Fault Signal")) \
-    // X(PINS_BACK_HVD_FAULT, >, 0, _LogPrebuildString("HVD Fault Signal"))
+    X(PINS_BACK_HVD_FAULT, >, 0, _LogPrebuildString("HVD Fault Signal"))
 #else
 #define HARD_PIN_FAULTS
 #endif
