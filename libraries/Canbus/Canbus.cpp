@@ -113,6 +113,9 @@ static uint _getAddressPos(const uint32_t address) {
             s = mid + 1;
         }
     }
+
+    // Log.d(ID, "Address OFR %u\n", address);
+
     return ADDRESS_COUNT; // Out of range index
 }
 
@@ -307,45 +310,69 @@ void Canbus::Buffer::init() {
 // IMPROVE: remove type-punning, maybe just use bitshifting?
 
 uint64_t Canbus::Buffer::getULong() {
+#ifdef CONF_LOGGING_ASCII_DEBUG
+    Serial.printf("%u : %u %u %u %u %u %u %u %u\n", address, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7]);
+#endif
     setSemaphore(address);
     uint64_t val = *(uint64_t *)(buffer);
     clearSemaphore();
     return val;
 }
 int64_t Canbus::Buffer::getLong() {
+#ifdef CONF_LOGGING_ASCII_DEBUG
+    Serial.printf("%u : %u %u %u %u %u %u %u %u\n", address, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7]);
+#endif
     setSemaphore(address);
     int64_t val = *(int64_t *)(buffer);
     clearSemaphore();
     return val;
 }
 uint32_t Canbus::Buffer::getUInt(size_t pos) {
+#ifdef CONF_LOGGING_ASCII_DEBUG
+    Serial.printf("%u : %u %u %u %u %u %u %u %u\n", address, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7]);
+#endif
     setSemaphore(address);
     uint32_t val = *(uint32_t *)(buffer + pos);
     clearSemaphore();
     return val;
 }
 int32_t Canbus::Buffer::getInt(size_t pos) {
+#ifdef CONF_LOGGING_ASCII_DEBUG
+    Serial.printf("%u : %u %u %u %u %u %u %u %u\n", address, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7]);
+#endif
     setSemaphore(address);
     int32_t val = *(int32_t *)(buffer + pos);
     clearSemaphore();
     return val;
 }
 uint16_t Canbus::Buffer::getUShort(size_t pos) {
+#ifdef CONF_LOGGING_ASCII_DEBUG
+    Serial.printf("%u : %u %u %u %u %u %u %u %u\n", address, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7]);
+#endif
     setSemaphore(address);
     uint16_t val = *(uint16_t *)(buffer + pos);
     clearSemaphore();
     return val;
 }
 int16_t Canbus::Buffer::getShort(size_t pos) {
+#ifdef CONF_LOGGING_ASCII_DEBUG
+    Serial.printf("%u : %u %u %u %u %u %u %u %u\n", address, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7]);
+#endif
     setSemaphore(address);
     int16_t val = *(int16_t *)(buffer + pos);
     clearSemaphore();
     return val;
 }
 uint8_t Canbus::Buffer::getUByte(size_t pos) {
+#ifdef CONF_LOGGING_ASCII_DEBUG
+    Serial.printf("%u : %u %u %u %u %u %u %u %u\n", address, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7]);
+#endif
     return buffer[pos];
 }
 int8_t Canbus::Buffer::getByte(size_t pos) {
+#ifdef CONF_LOGGING_ASCII_DEBUG
+    Serial.printf("%u : %u %u %u %u %u %u %u %u\n", address, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7]);
+#endif
     return (int8_t)buffer[pos];
 }
 

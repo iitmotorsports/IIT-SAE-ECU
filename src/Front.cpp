@@ -43,12 +43,12 @@ static struct State::State_t *states[] = {
 std::unordered_map<uint32_t, struct State::State_t *> stateMap;
 static struct State::State_t *currentState;
 
-static uint8_t BMSSOC() {
-    return BMS_DATA_Buffer.getByte(4); // Byte 4: BMS State of charge buffer
+static uint8_t BMSSOC() {                   // Percent
+    return BMS_DATA_Buffer.getUByte(4) / 2; // Byte 4: BMS State of charge buffer
 }
 
 static uint16_t BMSVOLT() {
-    return BMS_DATA_Buffer.getShort(2); // Byte 2-3: BMS Immediate voltage
+    return BMS_DATA_Buffer.getShort(2) / 10; // Byte 2-3: BMS Immediate voltage
 }
 
 static uint16_t BMSAMP() {
@@ -126,7 +126,14 @@ static void loadBuffers() {
     MC1_VOLT_Buffer.init();
     MC0_CURR_Buffer.init();
     MC1_CURR_Buffer.init();
+    MC0_TEMP2_Buffer.init();
+    MC1_TEMP2_Buffer.init();
+    MC0_TEMP3_Buffer.init();
+    MC1_TEMP3_Buffer.init();
+
     BMS_DATA_Buffer.init();
+    BMS_BATT_TEMP_Buffer.init();
+    BMS_CURR_LIMIT_Buffer.init();
 }
 
 static void updateCurrentState() {
@@ -185,8 +192,13 @@ static void sendEchoMessage() {
 
 void Front::run() {
     Log.i(ID, "Teensy 3.6 SAE FRONT ECU Initalizing");
+
     Log.i(ID, "Setting up Canbus");
     Canbus::setup(); // allocate and organize addresses
+    // Canbus::enableCanbusSniffer(true);
+    // while (true) {
+    //     delay(500);
+    // }
     Log.i(ID, "Initalizing Pins");
     Pins::initialize(); // setup predefined pins
     Log.i(ID, "Enabling Logging relay");
@@ -205,8 +217,18 @@ void Front::run() {
     Mirror::setup();
 #endif
 
-    static int testValue = 0;
+    // android make pack power, circular power gauge
+    // one line is pack: how much we are currently pulling, one is how much we can pull from batteries: current value on the app
+    // How much we want, how much it can deliever
+    // dial can go negative
+    // (calculated from DCL from BMS * current MCs avg voltage)
+
     static bool hasBeat = false;
+
+    Canbus::enableCanbusSniffer(true);
+    while (true) {
+        delay(500);
+    }
 
     while (true) {
         if (timeElapsed >= 20) { // High priority updates
@@ -214,9 +236,7 @@ void Front::run() {
 
             Command::receiveCommand();
 
-            testValue = Pins::getPinValue(PINS_FRONT_PEDAL1); // TODO: remove test pedal value
-
-            Log(ID, "Current Motor Speed:", motorSpeed() + testValue);
+            Log(ID, "Current Motor Speed:", motorSpeed());
         }
         if (timeElapsedMidHigh >= 200) { // MedHigh priority updates
             timeElapsedMidHigh = 0;

@@ -20,9 +20,12 @@ State::State_t *ECUStates::Initialize_State::run(void) {
 #ifdef CONF_ECU_DEBUG
     delay(2000); // prevent test faults to continuosly loop
 #endif
-    Canbus::setup();    // allocate and organize addresses
+    Log.i(ID, "Setup canbus");
+    Canbus::setup(); // allocate and organize addresses
+    Log.i(ID, "Initalize pins");
     Pins::initialize(); // setup predefined pins
-    Fault::setup();     // load all buffers
+    Log.i(ID, "setups faults");
+    Fault::setup(); // load all buffers
     Aero::setup();
     Heartbeat::beginBeating();
 #ifdef CONF_ECU_DEBUG
@@ -32,7 +35,10 @@ State::State_t *ECUStates::Initialize_State::run(void) {
 
     // Front teensy should know when to blink start light
 
-    if (FaultCheck()) {
+    Log.d(ID, "Checking for Inital fault");
+
+    // NOTE: IMD Fault does not matter in initalizing state
+    if (!Pins::getPinValue(PINS_BACK_IMD_FAULT) && FaultCheck()) {
         return &ECUStates::FaultState;
     }
 
@@ -59,6 +65,7 @@ bool ECUStates::PreCharge_State::voltageCheck() {
     int16_t BMSVolt = BMS_DATA_Buffer.getShort(2);      // Byte 2-3: Pack Instant Voltage
     int16_t MC0Volt = MC0_VOLT_Buffer.getShort(0) / 10; // Bytes 0-1: DC BUS MC Voltage
     int16_t MC1Volt = MC1_VOLT_Buffer.getShort(0) / 10; // Bytes 0-1: DC BUS MC Voltage
+
     return 0.9 * BMSVolt <= (MC0Volt + MC1Volt) / 2;
 }
 
@@ -74,6 +81,10 @@ State::State_t *ECUStates::PreCharge_State::run(void) { // NOTE: Low = Closed, H
     Log.i(ID, "Precharge running");
 
     delay(1000);
+
+    Log.w(ID, "Waiting for HVD fault to clear");
+    while (Pins::getPinValue(PINS_BACK_HVD_FAULT)) {
+    }
 
     if (FaultCheck()) {
         Log.e(ID, "Precharge Faulted before precharge");
@@ -92,8 +103,10 @@ State::State_t *ECUStates::PreCharge_State::run(void) { // NOTE: Low = Closed, H
 
     elapsedMillis timeElapsed;
 
-    while (timeElapsed <= 5000) {
-        if (voltageCheck()) { // NOTE: will always pass if submodules are disconnected from CAN net
+    Log.d(ID, "Running precharge loop");
+
+    while (timeElapsed <= 10000) {
+        if (timeElapsed >= 5000 && voltageCheck()) { // NOTE: will always pass if submodules are disconnected from CAN net
             Log.w(ID, "Opening precharge relay");
             Pins::setPinValue(PINS_BACK_PRECHARGE_RELAY, LOW);
             Log.i(ID, "Precharge Finished, closing Air1");
@@ -180,7 +193,7 @@ State::State_t *ECUStates::Button_State::run(void) {
 }
 
 void ECUStates::Driving_Mode_State::sendMCCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit) {
-    int percentTorque = constrain(map(torque, 0, 1024, 0, 400), 0, 400); // separate func for negative vals (regen)
+    int percentTorque = constrain(map(torque, 0, PINS_ANALOG_MAX, 0, 10), 0, 10); // separate func for negative vals (regen)
     uint8_t *bytes = (uint8_t *)&percentTorque;
     Canbus::sendData(MC_ADD, bytes[0], bytes[1], 0, 0, direction, 0b11000000 * enableBit);
 }
@@ -218,6 +231,8 @@ void ECUStates::Driving_Mode_State::clearFault(void) {
     Canbus::sendData(ADD_MC1_CLEAR, 20, 0, 1);
 }
 
+// BACK HVD PIN is only a true fault here
+// MCs weak faults also cause a true fault here
 State::State_t *ECUStates::Driving_Mode_State::run(void) {
     Log.i(ID, "Driving mode on");
     Log.i(ID, "Cooling on");
@@ -238,12 +253,21 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
 
     Log.d(ID, "Entering drive loop");
     while (true) {
+        if (Pins::getPinValue(PINS_BACK_HVD_FAULT)) {
+            Log.e(ID, "HVD Fault");
+            return DrivingModeFault();
+        }
         if (FaultCheck()) {
             return DrivingModeFault();
         }
 
+        // int minPed = 19;
+        // int maxPed = 1024;
+
         int pedal0 = Pins::getCanPinValue(PINS_FRONT_PEDAL0);
         int pedal1 = Pins::getCanPinValue(PINS_FRONT_PEDAL1);
+        // pedal0 = map(pedal0, minPed, maxPed, 0, PINS_ANALOG_MAX);
+        // pedal1 = map(pedal1, minPed, maxPed, 0, PINS_ANALOG_MAX);
         if (abs(pedal1 - pedal0) > (pedal0 * 5) / 100) {
             Log.e(ID, "Pedal value offset > 5%");
             Log.i(ID, "", pedal0);
