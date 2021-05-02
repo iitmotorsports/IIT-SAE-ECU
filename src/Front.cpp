@@ -227,6 +227,10 @@ void Front::run() {
     Pins::setInternalValue(PINS_INTERNAL_SYNC, 1);
     delay(1000);
     Serial.flush();
+    // while (true) {
+    //     Pins::setPinValue(PINS_FRONT_BMS_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_BMS_FAULT));
+    //     Pins::setPinValue(PINS_FRONT_IMD_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_IMD_FAULT));
+    // }
     while (true) {
         if (timeElapsed >= 20) { // High priority updates
             timeElapsed = 0;
