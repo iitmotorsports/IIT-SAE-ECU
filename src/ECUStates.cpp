@@ -17,24 +17,23 @@ static bool FaultCheck() { // NOTE: Will only return true if hardfault occurs
 
 State::State_t *ECUStates::Initialize_State::run(void) {
     Log.i(ID, "Teensy 3.6 SAE BACK ECU Initalizing");
-#ifdef CONF_ECU_DEBUG
-    delay(2000); // prevent test faults to continuosly loop
-#endif
     Log.i(ID, "Setup canbus");
     Canbus::setup(); // allocate and organize addresses
     Log.i(ID, "Initalize pins");
     Pins::initialize(); // setup predefined pins
-    Log.i(ID, "setups faults");
+    Log.i(ID, "Waiting for sync");
+    while (!Pins::getCanPinValue(PINS_INTERNAL_SYNC)) {
+    }
+    Log.i(ID, "Setup faults");
     Fault::setup(); // load all buffers
     Aero::setup();
     Heartbeat::beginBeating();
 #ifdef CONF_ECU_DEBUG
     Mirror::setup();
-    Echo::setup();
+    // Echo::setup();
 #endif
 
     // Front teensy should know when to blink start light
-
     Log.d(ID, "Checking for Inital fault");
 
     // NOTE: IMD Fault does not matter in initalizing state
@@ -330,7 +329,7 @@ State::State_t *ECUStates::FaultState::run(void) {
     } else {
         Log.e(ID, "FAULT STATE");
         Fault::logFault();
-        delay(1000);
+        delay(10000);
     }
     Pins::setInternalValue(PINS_INTERNAL_GEN_FAULT, 0);
     return &ECUStates::Initialize_State;

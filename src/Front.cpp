@@ -195,10 +195,6 @@ void Front::run() {
 
     Log.i(ID, "Setting up Canbus");
     Canbus::setup(); // allocate and organize addresses
-    // Canbus::enableCanbusSniffer(true);
-    // while (true) {
-    //     delay(500);
-    // }
     Log.i(ID, "Initalizing Pins");
     Pins::initialize(); // setup predefined pins
     Log.i(ID, "Enabling Logging relay");
@@ -225,11 +221,12 @@ void Front::run() {
 
     static bool hasBeat = false;
 
-    Canbus::enableCanbusSniffer(true);
-    while (true) {
-        delay(500);
-    }
-
+    Log.d(ID, "Delaying 2 sec");
+    Serial.flush();
+    delay(1000);
+    Pins::setInternalValue(PINS_INTERNAL_SYNC, 1);
+    delay(1000);
+    Serial.flush();
     while (true) {
         if (timeElapsed >= 20) { // High priority updates
             timeElapsed = 0;

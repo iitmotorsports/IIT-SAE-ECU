@@ -47,6 +47,7 @@
 #define PINS_INTERNAL_IMD_FAULT 103
 #define PINS_INTERNAL_GEN_FAULT 104
 #define PINS_INTERNAL_STATE 105
+#define PINS_INTERNAL_SYNC 106
 
 // Both ECUs
 #define PINS_BOTH_LED 13
@@ -75,15 +76,15 @@
 
 // Front ECU Only - ECU1
 #define PINS_FRONT_BUTTON_INPUT_OFF 2 // Digital Start Button
-#define PINS_FRONT_WHEEL1 21      // 0-5v R wheel speed
-#define PINS_FRONT_WHEEL0 20      // 0-5v L wheel speed
-#define PINS_FRONT_PEDAL1 18      // Pedal 2
-#define PINS_FRONT_PEDAL0 16      // Pedal 1
-#define PINS_FRONT_STEER 15       // -5-5v steering wheel
-#define PINS_FRONT_BRAKE 14       // 0-3.3v brake
-#define PINS_FRONT_IMD_LIGHT 38   // imd led
-#define PINS_FRONT_BMS_LIGHT 37   // bms led
-#define PINS_FRONT_START_LIGHT 36 // start led
+#define PINS_FRONT_WHEEL1 21          // 0-5v R wheel speed
+#define PINS_FRONT_WHEEL0 20          // 0-5v L wheel speed
+#define PINS_FRONT_PEDAL1 18          // Pedal 2
+#define PINS_FRONT_PEDAL0 16          // Pedal 1
+#define PINS_FRONT_STEER 15           // -5-5v steering wheel
+#define PINS_FRONT_BRAKE 14           // 0-3.3v brake
+#define PINS_FRONT_IMD_LIGHT 38       // imd led
+#define PINS_FRONT_BMS_LIGHT 37       // bms led
+#define PINS_FRONT_START_LIGHT 36     // start led
 // @endcond
 
 #if CONF_ECU_POSITION == BACK_ECU
@@ -163,6 +164,7 @@
  */
 #define PINS_CANBUS_DIGITAL_IN                          \
     X(ADD_CANPIN_DIGITAL1, PINS_INTERNAL_CHARGE_SIGNAL) \
+    X(ADD_CANPIN_DIGITAL1, PINS_INTERNAL_SYNC)          \
     X(ADD_CANPIN_DIGITAL1, PINS_FRONT_BUTTON_INPUT_OFF)
 
 /**
@@ -175,17 +177,17 @@
     X(ADD_CANPIN_DIGITAL0, PINS_INTERNAL_GEN_FAULT)
 
 #else
-#define ECU_PINS                                    \
-    X(PINS_BOTH_LED, DIGITAL, OUTPUT, NIL)          \
+#define ECU_PINS                                        \
+    X(PINS_BOTH_LED, DIGITAL, OUTPUT, NIL)              \
     X(PINS_FRONT_BUTTON_INPUT_OFF, DIGITAL, INPUT, NIL) \
-    X(PINS_FRONT_WHEEL1, ANALOG, INPUT, NIL)        \
-    X(PINS_FRONT_WHEEL0, ANALOG, INPUT, NIL)        \
-    X(PINS_FRONT_PEDAL1, ANALOG, INPUT, NIL)        \
-    X(PINS_FRONT_PEDAL0, ANALOG, INPUT, NIL)        \
-    X(PINS_FRONT_STEER, ANALOG, INPUT, NIL)         \
-    X(PINS_FRONT_BRAKE, ANALOG, INPUT, NIL)         \
-    X(PINS_FRONT_IMD_LIGHT, DIGITAL, OUTPUT, 0)     \
-    X(PINS_FRONT_BMS_LIGHT, DIGITAL, OUTPUT, 0)     \
+    X(PINS_FRONT_WHEEL1, ANALOG, INPUT, NIL)            \
+    X(PINS_FRONT_WHEEL0, ANALOG, INPUT, NIL)            \
+    X(PINS_FRONT_PEDAL1, ANALOG, INPUT, NIL)            \
+    X(PINS_FRONT_PEDAL0, ANALOG, INPUT, NIL)            \
+    X(PINS_FRONT_STEER, ANALOG, INPUT, NIL)             \
+    X(PINS_FRONT_BRAKE, ANALOG, INPUT, NIL)             \
+    X(PINS_FRONT_IMD_LIGHT, DIGITAL, OUTPUT, 0)         \
+    X(PINS_FRONT_BMS_LIGHT, DIGITAL, OUTPUT, 0)         \
     X(PINS_FRONT_START_LIGHT, DIGITAL, OUTPUT, 0)
 
 #define PINS_CANBUS_ANALOG_IN \
@@ -207,6 +209,7 @@
 
 #define PINS_CANBUS_DIGITAL_OUT                         \
     X(ADD_CANPIN_DIGITAL1, PINS_INTERNAL_CHARGE_SIGNAL) \
+    X(ADD_CANPIN_DIGITAL1, PINS_INTERNAL_SYNC)          \
     X(ADD_CANPIN_DIGITAL1, PINS_FRONT_BUTTON_INPUT_OFF)
 
 #endif
