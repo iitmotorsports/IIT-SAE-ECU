@@ -24,6 +24,7 @@ State::State_t *ECUStates::Initialize_State::run(void) {
     Log.i(ID, "Waiting for sync");
     while (!Pins::getCanPinValue(PINS_INTERNAL_SYNC)) {
     }
+    delay(1000);
     Log.i(ID, "Setup faults");
     Fault::setup(); // load all buffers
     Aero::setup();
