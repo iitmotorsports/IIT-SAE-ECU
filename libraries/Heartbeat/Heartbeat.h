@@ -23,8 +23,6 @@ namespace Heartbeat {
 
 typedef void (*beatFunc)(void);
 
-void enableMotorBeating(bool enable);
-
 void beginBeating();
 
 void beginReceiving();

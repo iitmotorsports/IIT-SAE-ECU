@@ -24,7 +24,6 @@ static uint lastTime = 0;
 
 static LOG_TAG ID = "HeartBeat";
 
-static bool beatMCs = true;
 static size_t funcCount = 0;
 static beatFunc *funcs = 0;
 
@@ -38,25 +37,13 @@ static void beat() {
     Canbus::sendData(ADD_HEART);
     toggleLED();
 
-    // for (size_t i = 0; i < funcCount; i++) {
-    //     funcs[i]();
-    // }
-
-    if (beatMCs) {
-        Canbus::sendData(ADD_MC0_CTRL);
-        Canbus::sendData(ADD_MC1_CTRL);
+    for (size_t i = 0; i < funcCount; i++) {
+        funcs[i]();
     }
-}
-
-void enableMotorBeating(bool enable) {
-    beatMCs = enable;
 }
 
 void beginBeating() {
     canbusPinUpdate.priority(10);
-    beatMCs = true;
-    Canbus::sendData(ADD_MC0_CLEAR, 20, 0, 1); // NOTE: based off documentation example, MCs are little endian
-    Canbus::sendData(ADD_MC1_CLEAR, 20, 0, 1);
     canbusPinUpdate.begin(beat, CONF_HEARTBEAT_INTERVAL_MICRO);
 }
 
@@ -85,6 +72,14 @@ void addCallback(beatFunc func) {
         funcs = (beatFunc *)malloc(sizeof(beatFunc));
         funcCount++;
     } else {
+
+        for (size_t i = 0; i < funcCount; i++) {
+            if (funcs[i] == func) {
+                Log.w(ID, "Function Pointer already exists", i);
+                return;
+            }
+        }
+
         funcs = (beatFunc *)reallocarray(funcs, funcCount + 1, sizeof(beatFunc));
         funcCount++;
     }
