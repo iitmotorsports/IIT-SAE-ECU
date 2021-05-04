@@ -68,7 +68,7 @@
  */
 // TODO: BMS Fault address
 #define HARD_FAULT_ADD                           \
-    X(ADD_MC0_FAULTS, 0x4000020120100080, "BMS") \
+    // X(ADD_MC0_FAULTS, 0x4000020120100080, "BMS") \
     // X(0x0, 0x0000000000000000, "RMS")
 
 /**

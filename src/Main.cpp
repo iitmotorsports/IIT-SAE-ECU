@@ -9,6 +9,11 @@
 int main(void) {
     Serial.begin(CONF_TEENSY_BAUD_RATE);
     delay(CONF_TEENSY_INITAL_DELAY);
+    // pinMode(PINS_BACK_SHUTDOWN_SIGNAL, INPUT);
+    // while(true){
+    //     Serial.printf("%u %u\n",digitalRead(PINS_BACK_SHUTDOWN_SIGNAL),digitalReadFast(PINS_BACK_SHUTDOWN_SIGNAL));
+    //     delay(50);
+    // }
     // analogReadResolution(12);
     // int minVal0 = 7348957;
     // int maxVal0 = 0;

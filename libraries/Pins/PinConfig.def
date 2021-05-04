@@ -29,7 +29,7 @@
 /**
  * @brief The interval in micros to update outgoing canPins
  */
-#define CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO 10000 // TODO: Find a good update interval
+#define CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO 100000 // TODO: Find a good update interval
 
 /**
  * @brief The write resolution for analog pins
@@ -99,8 +99,12 @@
  *
  * X(GPIO, ANALOG/DIGITAL, INPUT/OUTPUT, INITAL_STATE) \
  * 
+ * 
+ * 
+ * 
  * Only the last entry should NOT have a '\'
  */
+// TODO: turn on servos by default
 #define ECU_PINS                                      \
     X(PINS_BOTH_LED, DIGITAL, OUTPUT, NIL)            \
     X(PINS_BACK_SERVO_OFF, DIGITAL, OUTPUT, 1)        \
@@ -112,7 +116,7 @@
     X(PINS_BACK_SERVO1_PWM, ANALOG, OUTPUT, NIL)      \
     X(PINS_BACK_PRECHARGE_RELAY, ANALOG, OUTPUT, 0)   \
     X(PINS_BACK_AIR1, ANALOG, OUTPUT, 0)              \
-    X(PINS_BACK_FANS_ONOFF, ANALOG, OUTPUT, 1)        \
+    X(PINS_BACK_FANS_ONOFF, ANALOG, OUTPUT, 0)        \
     X(PINS_BACK_SHUTDOWN_SIGNAL, DIGITAL, INPUT, NIL) \
     X(PINS_BACK_HVD_FAULT, DIGITAL, INPUT, NIL)       \
     X(PINS_BACK_SERVO2_PWM, ANALOG, OUTPUT, NIL)      \
