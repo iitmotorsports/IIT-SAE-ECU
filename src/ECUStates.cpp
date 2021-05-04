@@ -6,6 +6,7 @@
 #include "Heartbeat.h"
 #include "Log.h"
 #include "Mirror.h"
+#include "MotorControl.h"
 
 static bool FaultCheck() { // NOTE: Will only return true if hardfault occurs
     if (Fault::softFault())
@@ -71,11 +72,12 @@ State::State_t *ECUStates::Initialize_State::run(void) {
     Log.i(ID, "Setup faults");
     Fault::setup(); // load all buffers
     Aero::setup();
-    Heartbeat::beginBeating();
+    MC::initialize();
 #ifdef CONF_ECU_DEBUG
     Mirror::setup();
     // Echo::setup();
 #endif
+    Heartbeat::beginBeating();
 
     // Front teensy should know when to blink start light
     Log.d(ID, "Checking for Inital fault");
@@ -288,20 +290,8 @@ State::State_t *ECUStates::Driving_Mode_State::DrivingModeFault(void) {
     Log.i(ID, "Fault happened in driving state");
     // carCooling(false);
     Log.i(ID, "Starting MC heartbeat");
-    Heartbeat::enableMotorBeating(true);
+    MC::enableMotorBeating(true);
     return &ECUStates::FaultState;
-}
-
-void ECUStates::Driving_Mode_State::disableMCs() {
-    sendMCCommand(ADD_MC0_CTRL, 0, 0, 0);
-    sendMCCommand(ADD_MC1_CTRL, 0, 1, 0);
-}
-
-void ECUStates::Driving_Mode_State::clearFault(void) {
-    Canbus::sendData(ADD_MC0_CLEAR, 20, 0, 1); // NOTE: based off documentation example, MCs are little endian
-    Canbus::sendData(ADD_MC1_CLEAR, 20, 0, 1);
-    Canbus::sendData(ADD_MC0_CTRL);
-    Canbus::sendData(ADD_MC1_CTRL);
 }
 
 // BACK HVD PIN is only a true fault here
@@ -319,10 +309,10 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
     // volatile uint8_t *mc1F = Canbus::getBuffer(ADD_MC1_FAULTS);
 
     Log.i(ID, "Stopping MC heartbeat");
-    Heartbeat::enableMotorBeating(false);
+    MC::enableMotorBeating(false);
 
     Log.d(ID, "Sending Fault reset to MCs complete");
-    clearFault(); // Clear fault if any
+    MC::clearFaults(); // Clear fault if any
 
     Log.d(ID, "Entering drive loop");
     while (true) { // TODO: Stop if any motor controller fault happens
@@ -379,7 +369,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
     }
 
     Log.i(ID, "Starting MC heartbeat");
-    Heartbeat::enableMotorBeating(true);
+    MC::enableMotorBeating(true);
 
     // carCooling(false);
 
