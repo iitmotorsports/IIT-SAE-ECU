@@ -14,6 +14,8 @@
 #include "ECUGlobalConfig.h"
 #include "Log.h"
 #include "Pins.h"
+#include "stdint.h"
+#include "stdlib.h"
 
 namespace Heartbeat {
 static IntervalTimer canbusPinUpdate;
@@ -23,6 +25,8 @@ static uint lastTime = 0;
 static LOG_TAG ID = "HeartBeat";
 
 static bool beatMCs = true;
+static size_t funcCount = 0;
+static beatFunc *funcs = 0;
 
 static void toggleLED() {
     static bool on = false;
@@ -33,9 +37,14 @@ static void toggleLED() {
 static void beat() {
     Canbus::sendData(ADD_HEART);
     toggleLED();
+
+    // for (size_t i = 0; i < funcCount; i++) {
+    //     funcs[i]();
+    // }
+
     if (beatMCs) {
-        Canbus::sendData(ADD_MC0_CTRL, 0, 0, 0, 0, 0, 0, 0, 0);
-        Canbus::sendData(ADD_MC1_CTRL, 0, 0, 0, 0, 1, 0, 0, 0);
+        Canbus::sendData(ADD_MC0_CTRL);
+        Canbus::sendData(ADD_MC1_CTRL);
     }
 }
 
@@ -44,14 +53,11 @@ void enableMotorBeating(bool enable) {
 }
 
 void beginBeating() {
-    canbusPinUpdate.priority(1);
+    canbusPinUpdate.priority(10);
     beatMCs = true;
+    Canbus::sendData(ADD_MC0_CLEAR, 20, 0, 1); // NOTE: based off documentation example, MCs are little endian
+    Canbus::sendData(ADD_MC1_CLEAR, 20, 0, 1);
     canbusPinUpdate.begin(beat, CONF_HEARTBEAT_INTERVAL_MICRO);
-    for (size_t i = 0; i < 4; i++) {
-        Canbus::sendData(ADD_MC0_CLEAR, 20, 0, 1); // NOTE: based off documentation example, MCs are little endian
-        Canbus::sendData(ADD_MC1_CLEAR, 20, 0, 1);
-        delay(50);
-    }
 }
 
 static void receiveBeat(uint32_t, volatile uint8_t *) {
@@ -71,6 +77,16 @@ int checkBeat() {
     } else {
         Log(ID, "Beat", lastTime);
         return 1;
+    }
+}
+
+void addCallback(beatFunc func) {
+    if (funcCount == 0) {
+        funcs = (beatFunc *)malloc(sizeof(beatFunc));
+        funcCount++;
+    } else {
+        funcs = (beatFunc *)reallocarray(funcs, funcCount + 1, sizeof(beatFunc));
+        funcCount++;
     }
 }
 

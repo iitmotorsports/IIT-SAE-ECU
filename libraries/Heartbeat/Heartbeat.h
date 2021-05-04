@@ -15,11 +15,13 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#define CONF_HEARTBEAT_INTERVAL_MICRO 100000 // Every half second
+#define CONF_HEARTBEAT_INTERVAL_MICRO 200000 // Every half second
 
 #define CONF_HEARTBEAT_TIMEOUT_MILLI 50 // Allowable Delay
 
 namespace Heartbeat {
+
+typedef void (*beatFunc)(void);
 
 void enableMotorBeating(bool enable);
 
@@ -28,6 +30,8 @@ void beginBeating();
 void beginReceiving();
 
 int checkBeat();
+
+void addCallback(beatFunc func);
 
 } // namespace Heartbeat
 

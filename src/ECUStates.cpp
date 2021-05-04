@@ -18,7 +18,6 @@ static bool FaultCheck() { // NOTE: Will only return true if hardfault occurs
 static LOG_TAG globalID = "BACK ECU";
 
 static void printMCFaults(uint32_t add, volatile uint8_t *buf) {
-
     if (add == ADD_MC0_FAULTS) {
         if (buf[0])
             Log.d(globalID, "mc 0 fault 0", buf[0]);
@@ -55,23 +54,18 @@ static void printMCFaults(uint32_t add, volatile uint8_t *buf) {
         if (buf[7])
             Log.d(globalID, "mc 1 fault 7", buf[7]);
     }
-    delay(1000);
 }
 
 State::State_t *ECUStates::Initialize_State::run(void) {
     Log.i(ID, "Teensy 3.6 SAE BACK ECU Initalizing");
     Log.i(ID, "Setup canbus");
     Canbus::setup(); // allocate and organize addresses
-    Canbus::sendData(ADD_MC0_CTRL, 0, 0, 0, 0, 0, 0, 0, 0);
-    Canbus::sendData(ADD_MC1_CTRL, 0, 0, 0, 0, 0, 0, 0, 0);
     Log.i(ID, "Initialize pins");
     Pins::initialize(); // setup predefined pins
-    Canbus::sendData(ADD_MC0_CTRL, 0, 0, 0, 0, 0, 0, 0, 0);
-    Canbus::sendData(ADD_MC1_CTRL, 0, 0, 0, 0, 0, 0, 0, 0);
     Log.i(ID, "Waiting for sync");
     while (!Pins::getCanPinValue(PINS_INTERNAL_SYNC)) {
-        Canbus::sendData(ADD_MC0_CTRL, 0, 0, 0, 0, 0, 0, 0, 0);
-        Canbus::sendData(ADD_MC1_CTRL, 0, 0, 0, 0, 0, 0, 0, 0);
+        Canbus::sendData(ADD_MC0_CTRL);
+        Canbus::sendData(ADD_MC1_CTRL);
         delay(100);
     }
     Log.i(ID, "Setup faults");
@@ -82,12 +76,6 @@ State::State_t *ECUStates::Initialize_State::run(void) {
     Mirror::setup();
     // Echo::setup();
 #endif
-
-    // while (true) {
-    //     Log.d(ID, "back Pedal0", Pins::getCanPinValue(PINS_FRONT_PEDAL0));
-    //     Log.d(ID, "back Pedal2", Pins::getCanPinValue(PINS_FRONT_PEDAL1));
-    //     delay(500);
-    // }
 
     // Front teensy should know when to blink start light
     Log.d(ID, "Checking for Inital fault");
@@ -115,23 +103,10 @@ State::State_t *ECUStates::Initialize_State::run(void) {
     //     }
     // }
 
-    while (Pins::getPinValue(PINS_BACK_IMD_FAULT) || Pins::getPinValue(PINS_BACK_BMS_FAULT)) {
-    }
-
     while (!Serial.available()) {
     }
 
     Log.i(ID, "Shutdown signal received");
-
-    // volatile uint8_t *mc0F = Canbus::getBuffer(ADD_MC0_FAULTS);
-    // volatile uint8_t *mc1F = Canbus::getBuffer(ADD_MC1_FAULTS);
-    // while (true) {
-    //     printMCFaults(ADD_MC0_FAULTS, mc0F);
-    //     printMCFaults(ADD_MC1_FAULTS, mc1F);
-    //     delay(1000);
-    // }
-
-    // delay(1000);
 
     Log.d(ID, "Finshed Setup");
     return &ECUStates::PreCharge_State;
@@ -311,8 +286,7 @@ void ECUStates::Driving_Mode_State::carCooling(bool enable) { // NOTE: Cooling v
 
 State::State_t *ECUStates::Driving_Mode_State::DrivingModeFault(void) {
     Log.i(ID, "Fault happened in driving state");
-    disableMCs();
-    carCooling(false);
+    // carCooling(false);
     Log.i(ID, "Starting MC heartbeat");
     Heartbeat::enableMotorBeating(true);
     return &ECUStates::FaultState;
@@ -326,6 +300,8 @@ void ECUStates::Driving_Mode_State::disableMCs() {
 void ECUStates::Driving_Mode_State::clearFault(void) {
     Canbus::sendData(ADD_MC0_CLEAR, 20, 0, 1); // NOTE: based off documentation example, MCs are little endian
     Canbus::sendData(ADD_MC1_CLEAR, 20, 0, 1);
+    Canbus::sendData(ADD_MC0_CTRL);
+    Canbus::sendData(ADD_MC1_CTRL);
 }
 
 // BACK HVD PIN is only a true fault here
@@ -336,97 +312,65 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
 
     // carCooling(true); // BROKEN: uncomment
 
-    // disableMCs();
-
     elapsedMillis controlDelay;
     size_t counter = 0;
 
-    volatile uint8_t *mc0F = Canbus::getBuffer(ADD_MC0_FAULTS);
-    volatile uint8_t *mc1F = Canbus::getBuffer(ADD_MC1_FAULTS);
+    // volatile uint8_t *mc0F = Canbus::getBuffer(ADD_MC0_FAULTS);
+    // volatile uint8_t *mc1F = Canbus::getBuffer(ADD_MC1_FAULTS);
 
-    // for (size_t i = 0; i < 4; i++) {
-    //     Canbus::sendData(ADD_MC0_CLEAR, 20, 0, 1); // NOTE: based off documentation example, MCs are little endian
-    //     Canbus::sendData(ADD_MC1_CLEAR, 20, 0, 1);
-    //     printMCFaults(ADD_MC0_FAULTS, mc0F);
-    //     printMCFaults(ADD_MC1_FAULTS, mc1F);
-    //     delay(20);
-    // }
-
-    // Log.i(ID, "Stopping MC heartbeat");
-
-    // for (size_t i = 0; i < 1; i++) { // IMPROVE: Send only once? Check MC heartbeat fault is actually cleared
-    clearFault(); // Clear heartbeat fault
-    // delay(50);
-    // }
-    Canbus::sendData(ADD_MC0_CTRL, 0, 0, 0, 0, 0, 0, 0, 0);
-    Canbus::sendData(ADD_MC1_CTRL, 0, 0, 0, 0, 0, 0, 0, 0);
-
-    // while (true) {
-    //     Canbus::sendData(ADD_MC0_CTRL, 0, 0, 0, 0, 0, 0);
-    //     Canbus::sendData(ADD_MC1_CTRL, 0, 0, 0, 0, 1, 0);
-    //     printMCFaults(ADD_MC0_FAULTS, mc0F);
-    //     printMCFaults(ADD_MC1_FAULTS, mc1F);
-    //     Log.i(ID, "rand", rand());
-    //     delay(100);
-    // }
-
-    Log.d(ID, "Sending Fault reset to MCs complete");
-
-    Log.d(ID, "Entering drive loop");
-
+    Log.i(ID, "Stopping MC heartbeat");
     Heartbeat::enableMotorBeating(false);
 
-    bool cleared = false;
+    Log.d(ID, "Sending Fault reset to MCs complete");
+    clearFault(); // Clear fault if any
+
+    Log.d(ID, "Entering drive loop");
     while (true) { // TODO: Stop if any motor controller fault happens
-        // if (Pins::getPinValue(PINS_BACK_HVD_FAULT)) {
-        //     Log.e(ID, "HVD Fault");
-        //     return DrivingModeFault();
-        // }
-
-        // if (FaultCheck()) {
-        //     return DrivingModeFault();
-        // }
-
-        // int pedal0 = Pins::getCanPinValue(PINS_FRONT_PEDAL0);
-        // int pedal1 = Pins::getCanPinValue(PINS_FRONT_PEDAL1);
-        // pedal0 = map(pedal0, 19, maxPed, 0, PINS_ANALOG_MAX);
-        // pedal1 = map(pedal1, 19, maxPed, 0, PINS_ANALOG_MAX);
-        // if (abs(pedal1 - pedal0 - 8) > abs((pedal1 * 10) / 100) && (abs(pedal0) + abs(pedal1)) > 50) {
-        //     Log.e(ID, "Pedal value offset > 10%");
-        //     Log.i(ID, "", pedal0);
-        //     Log.i(ID, "", pedal1);
-        //     return DrivingModeFault();
-        // }
-
-        // int breakVal = Pins::getCanPinValue(PINS_FRONT_BRAKE);
-        // int steerVal = Pins::getCanPinValue(PINS_FRONT_STEER);
-
-        // Pins::setPinValue(PINS_BACK_BRAKE_LIGHT, PINS_ANALOG_HIGH * ((breakVal / PINS_ANALOG_MAX) > 4));
-
-        if (controlDelay > 100) {
+        if (controlDelay > 20) {
             controlDelay = 0;
 
-            // int MotorTorques[2] = {1, 1};
-            // torqueVector(MotorTorques, pedal0, pedal1, breakVal, steerVal);
-            // sendMCCommand(ADD_MC0_CTRL, MotorTorques[0], 0, 1); // MC 1
-            // sendMCCommand(ADD_MC1_CTRL, MotorTorques[1], 1, 1); // MC 2F
-
-            Canbus::sendData(ADD_MC0_CTRL, 20, 0, 0, 0, 0, 1, 0, 0);
-            Canbus::sendData(ADD_MC1_CTRL, 20, 0, 0, 0, 1, 1, 0, 0);
-
-            // if (++counter > 5) {
-            //     counter = 0;
-            //     Log.i(ID, "Aero servo position:", Aero::getServoValue());
-            //     printMCFaults(ADD_MC0_FAULTS, mc0F);
-            //     printMCFaults(ADD_MC1_FAULTS, mc1F);
-            //     if (!cleared && mc1F[5] == 8 && mc0F[5] == 8) {
-            //         clearFault();
-            //         cleared = true;
-            //     }
+            // if (FaultCheck()) { // FIXME: should not be getting HVD fault? uncomment
+            //     return DrivingModeFault();
             // }
-        }
 
-        // Aero::run(breakVal, steerVal);
+            // pedal0 = map(pedal0, 19, maxPed, 0, PINS_ANALOG_MAX);
+            // pedal1 = map(pedal1, 19, maxPed, 0, PINS_ANALOG_MAX);
+
+            int breakVal = Pins::getCanPinValue(PINS_FRONT_BRAKE);
+            int steerVal = Pins::getCanPinValue(PINS_FRONT_STEER);
+
+            Pins::setPinValue(PINS_BACK_BRAKE_LIGHT, PINS_ANALOG_HIGH * ((breakVal / PINS_ANALOG_MAX) > 4));
+
+            int pedal0 = Pins::getCanPinValue(PINS_FRONT_PEDAL0);
+            int pedal1 = Pins::getCanPinValue(PINS_FRONT_PEDAL1);
+
+            if (abs(pedal1 - pedal0 - 8) > abs((pedal1 * 10) / 100) && (abs(pedal0) + abs(pedal1)) > 50) {
+                Log.e(ID, "Pedal value offset > 10%");
+                Log.i(ID, "", pedal0);
+                Log.i(ID, "", pedal1);
+                // return DrivingModeFault(); // FIXME: actually fault
+            }
+
+            int MotorTorques[2] = {1, 1};
+            torqueVector(MotorTorques, pedal0, pedal1, breakVal, steerVal);
+            sendMCCommand(ADD_MC0_CTRL, MotorTorques[0], 0, 1); // MC 1
+            sendMCCommand(ADD_MC1_CTRL, MotorTorques[1], 1, 1); // MC 2F
+
+            // Canbus::sendData(ADD_MC0_CTRL, 20, 0, 0, 0, 0, 1, 0, 0);
+            // Canbus::sendData(ADD_MC1_CTRL, 20, 0, 0, 0, 1, 1, 0, 0);
+
+            if (++counter > 5) {
+                counter = 0;
+                Log.i(ID, "Aero servo position:", Aero::getServoValue());
+                if (Fault::softFault()) {
+                    Fault::logFault();
+                }
+                // printMCFaults(ADD_MC0_FAULTS, mc0F);
+                // printMCFaults(ADD_MC1_FAULTS, mc1F);
+            }
+
+            Aero::run(breakVal, steerVal);
+        }
 
         if (!Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT_OFF)) {
             Log.w(ID, "Going back to Idle state");
@@ -437,8 +381,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
     Log.i(ID, "Starting MC heartbeat");
     Heartbeat::enableMotorBeating(true);
 
-    // disableMCs();
-    carCooling(false);
+    // carCooling(false);
 
     Log.i(ID, "Driving mode off");
     return &ECUStates::Idle_State;
