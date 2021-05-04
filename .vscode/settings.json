@@ -49,7 +49,9 @@
         "*.obj": "cpp",
         "string": "cpp",
         "queue": "cpp",
-        "atomic": "cpp"
+        "atomic": "cpp",
+        "memory": "cpp",
+        "optional": "cpp"
     },
     "doxygen_runner.configuration_file_override": "${workspaceFolder}\\docs\\Doxyfile",
     "python.linting.pylintEnabled": true,
