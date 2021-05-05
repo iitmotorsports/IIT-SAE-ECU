@@ -12,7 +12,6 @@
 // @cond
 
 #include "MotorControl.h"
-#include "MotorControl.def"
 #include "Pins.h"
 #include "log.h"
 #include "stdint.h"
@@ -31,7 +30,7 @@ static void beatFunc(void) {
     }
 }
 
-void initialize(void) {
+void setup(void) {
     if (!init)
         Heartbeat::addCallback(beatFunc);
     clearFaults();

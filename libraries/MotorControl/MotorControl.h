@@ -18,7 +18,7 @@
 
 namespace MC {
 
-void initialize(void);
+void setup(void);
 
 void clearFaults(void);
 
