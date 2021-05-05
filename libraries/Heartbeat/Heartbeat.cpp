@@ -16,6 +16,7 @@
 #include "Pins.h"
 #include "stdint.h"
 #include "stdlib.h"
+#include <set>
 
 namespace Heartbeat {
 static IntervalTimer canbusPinUpdate;
@@ -25,7 +26,7 @@ static uint lastTime = 0;
 static LOG_TAG ID = "HeartBeat";
 
 static size_t funcCount = 0;
-static beatFunc *funcs = 0;
+static std::set<beatFunc> funcs;
 
 static void toggleLED() {
     static bool on = false;
@@ -37,8 +38,8 @@ static void beat() {
     Canbus::sendData(ADD_HEART);
     toggleLED();
 
-    for (size_t i = 0; i < funcCount; i++) {
-        funcs[i]();
+    for (auto f : funcs) {
+        f();
     }
 }
 
@@ -68,21 +69,7 @@ int checkBeat() {
 }
 
 void addCallback(beatFunc func) {
-    if (funcCount == 0) {
-        funcs = (beatFunc *)malloc(sizeof(beatFunc));
-        funcCount++;
-    } else {
-
-        for (size_t i = 0; i < funcCount; i++) {
-            if (funcs[i] == func) {
-                Log.w(ID, "Function Pointer already exists", i);
-                return;
-            }
-        }
-
-        funcs = (beatFunc *)reallocarray(funcs, funcCount + 1, sizeof(beatFunc));
-        funcCount++;
-    }
+    funcs.insert(func);
 }
 
 } // namespace Heartbeat
