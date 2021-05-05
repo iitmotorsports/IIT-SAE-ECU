@@ -12,6 +12,7 @@
 #include "Mirror.h"
 #include "CanBus.h"
 #include "ECUGlobalConfig.h"
+#include "Heartbeat.h"
 #include "Log.h"
 #include "Pins.h"
 #include "SerialCommand.h"
@@ -21,8 +22,9 @@ namespace Mirror {
 #define TIMER_RECEIVE_MICROS 2000
 
 static LOG_TAG ID = "Mirror";
-static IntervalTimer serialCheckTimer;
 static bool cont = false;
+static bool init = false;
+static bool receive = true;
 
 static void toggleMirrorMode(void) {
     cont = !cont;
@@ -34,14 +36,19 @@ static void toggleMirrorMode(void) {
 }
 
 void timerReceive() {
-    Command::receiveCommand();
+    if (receive)
+        Command::receiveCommand();
 }
 
 void setup(void) {
+    if (!init) {
 #if CONF_ECU_POSITION == BACK_ECU
-    serialCheckTimer.begin(timerReceive, TIMER_RECEIVE_MICROS);
+        receive = true;
+        Heartbeat::addCallback(timerReceive);
 #endif
-    Command::setCommand(COMMAND_TOGGLE_MIRROR_MODE, toggleMirrorMode);
+        Command::setCommand(COMMAND_TOGGLE_MIRROR_MODE, toggleMirrorMode);
+    }
+    init = true;
 }
 
 static int getSerialByte() {
@@ -68,7 +75,7 @@ static int getSerialInt() {
 
 void enterMirrorMode(void) {
 #if CONF_ECU_POSITION == BACK_ECU
-    serialCheckTimer.end();
+    receive = false;
 #endif
     cont = true;
     Log(ID, "Mirror Mode Enabled");
@@ -92,7 +99,7 @@ void enterMirrorMode(void) {
     }
     Log(ID, "Mirror Mode Disabled");
 #if CONF_ECU_POSITION == BACK_ECU
-    serialCheckTimer.begin(timerReceive, TIMER_RECEIVE_MICROS);
+    receive = true;
 #endif
 }
 
