@@ -18,44 +18,44 @@ static bool FaultCheck() { // NOTE: Will only return true if hardfault occurs
 
 static LOG_TAG globalID = "BACK ECU";
 
-static void printMCFaults(uint32_t add, volatile uint8_t *buf) {
-    if (add == ADD_MC0_FAULTS) {
-        if (buf[0])
-            Log.d(globalID, "mc 0 fault 0", buf[0]);
-        if (buf[1])
-            Log.d(globalID, "mc 0 fault 1", buf[1]);
-        if (buf[2])
-            Log.d(globalID, "mc 0 fault 2", buf[2]);
-        if (buf[3])
-            Log.d(globalID, "mc 0 fault 3", buf[3]);
-        if (buf[4])
-            Log.d(globalID, "mc 0 fault 4", buf[4]);
-        if (buf[5])
-            Log.d(globalID, "mc 0 fault 5", buf[5]);
-        if (buf[6])
-            Log.d(globalID, "mc 0 fault 6 ", buf[6]);
-        if (buf[7])
-            Log.d(globalID, "mc 0 fault 7", buf[7]);
-    }
-    if (add == ADD_MC1_FAULTS) {
-        if (buf[0])
-            Log.d(globalID, "mc 1 fault 0", buf[0]);
-        if (buf[1])
-            Log.d(globalID, "mc 1 fault 1", buf[1]);
-        if (buf[2])
-            Log.d(globalID, "mc 1 fault 2", buf[2]);
-        if (buf[3])
-            Log.d(globalID, "mc 1 fault 3", buf[3]);
-        if (buf[4])
-            Log.d(globalID, "mc 1 fault 4", buf[4]);
-        if (buf[5])
-            Log.d(globalID, "mc 1 fault 5", buf[5]);
-        if (buf[6])
-            Log.d(globalID, "mc 1 fault 6 ", buf[6]);
-        if (buf[7])
-            Log.d(globalID, "mc 1 fault 7", buf[7]);
-    }
-}
+// static void printMCFaults(uint32_t add, volatile uint8_t *buf) {
+//     if (add == ADD_MC0_FAULTS) {
+//         if (buf[0])
+//             Log.d(globalID, "mc 0 fault 0", buf[0]);
+//         if (buf[1])
+//             Log.d(globalID, "mc 0 fault 1", buf[1]);
+//         if (buf[2])
+//             Log.d(globalID, "mc 0 fault 2", buf[2]);
+//         if (buf[3])
+//             Log.d(globalID, "mc 0 fault 3", buf[3]);
+//         if (buf[4])
+//             Log.d(globalID, "mc 0 fault 4", buf[4]);
+//         if (buf[5])
+//             Log.d(globalID, "mc 0 fault 5", buf[5]);
+//         if (buf[6])
+//             Log.d(globalID, "mc 0 fault 6 ", buf[6]);
+//         if (buf[7])
+//             Log.d(globalID, "mc 0 fault 7", buf[7]);
+//     }
+//     if (add == ADD_MC1_FAULTS) {
+//         if (buf[0])
+//             Log.d(globalID, "mc 1 fault 0", buf[0]);
+//         if (buf[1])
+//             Log.d(globalID, "mc 1 fault 1", buf[1]);
+//         if (buf[2])
+//             Log.d(globalID, "mc 1 fault 2", buf[2]);
+//         if (buf[3])
+//             Log.d(globalID, "mc 1 fault 3", buf[3]);
+//         if (buf[4])
+//             Log.d(globalID, "mc 1 fault 4", buf[4]);
+//         if (buf[5])
+//             Log.d(globalID, "mc 1 fault 5", buf[5]);
+//         if (buf[6])
+//             Log.d(globalID, "mc 1 fault 6 ", buf[6]);
+//         if (buf[7])
+//             Log.d(globalID, "mc 1 fault 7", buf[7]);
+//     }
+// }
 
 State::State_t *ECUStates::Initialize_State::run(void) {
     Log.i(ID, "Teensy 3.6 SAE BACK ECU Initalizing");
