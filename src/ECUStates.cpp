@@ -58,8 +58,13 @@ static LOG_TAG globalID = "BACK ECU";
 // }
 
 static void updateFaultLights() {
-    Pins::setInternalValue(PINS_INTERNAL_BMS_FAULT, Pins::getPinValue(PINS_BACK_BMS_FAULT));
-    Pins::setInternalValue(PINS_INTERNAL_IMD_FAULT, Pins::getPinValue(PINS_BACK_IMD_FAULT));
+    static int bms, imd, bms_l, imd_l = 0;
+    if ((bms = Pins::getPinValue(PINS_BACK_BMS_FAULT)) != bms_l || (imd = Pins::getPinValue(PINS_BACK_IMD_FAULT)) != imd_l) {
+        Pins::setInternalValue(PINS_INTERNAL_BMS_FAULT, bms);
+        Pins::setInternalValue(PINS_INTERNAL_IMD_FAULT, imd);
+        bms_l = bms;
+        imd_l = imd;
+    }
 }
 
 State::State_t *ECUStates::Initialize_State::run(void) {
