@@ -116,11 +116,11 @@ State::State_t *ECUStates::Initialize_State::run(void) {
     //     }
     // }
 
-    // while (!Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT_OFF)) {
-    // }
-
-    while (!Serial.available()) {
+    while (Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT_OFF)) {
     }
+
+    // while (!Serial.available()) {
+    // }
 
     Log.i(ID, "Shutdown signal received");
 
@@ -274,7 +274,7 @@ State::State_t *ECUStates::Button_State::run(void) {
 
 void ECUStates::Driving_Mode_State::sendMCCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit) {
     int percentTorque = 0;
-    if (torque != 0 ){
+    if (torque != 0) {
         percentTorque = constrain(map(torque, 200, PINS_ANALOG_MAX, 0, 300), 0, 300); // separate func for negative vals (regen)
     }
     uint8_t *bytes = (uint8_t *)&percentTorque;
@@ -353,13 +353,10 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             // pedal1 = map(pedal1, 19, maxPed, 0, PINS_ANALOG_MAX);
 
             // Min value for the pedal should push before a command should be sent to the motor
-            if ((abs(pedal0) + abs(pedal1)) < 200){
+            if ((abs(pedal0) + abs(pedal1)) < 200) {
                 pedal0 = 0;
                 pedal1 = 0;
             }
-
-            Log.i(ID, "", pedal0);
-                Log.i(ID, "", pedal1);
 
             if (abs(pedal1 - pedal0 - 36) > abs((pedal1 * 20) / 100) && (abs(pedal0) + abs(pedal1)) > 200) {
                 Log.e(ID, "Pedal value offset > 10%");
