@@ -15,7 +15,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#define CONF_HEARTBEAT_INTERVAL_MICRO 200000 // Every half second
+#define CONF_HEARTBEAT_INTERVAL_MICRO 150000
 
 #define CONF_HEARTBEAT_TIMEOUT_MILLI 50 // Allowable Delay
 
