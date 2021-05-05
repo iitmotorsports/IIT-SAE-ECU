@@ -67,14 +67,13 @@ void logFault(void) {
         // NOTE: only sending raw buffer for now, split in two as the buffer is a 64bit value and logging only supports 32bit
         Log.w(ID, "Buffer half 0", (uint32_t)faulted_buffer);
         Log.w(ID, "Buffer half 1", (uint32_t)(faulted_buffer << 32));
-        // TODO: map and log fault's appropriate identifying strings
-        // #define X(add, mask, id)
-        //     if (add == faulted_address && mask & faulted_buffer) {
-        //         Log.e(ID, id);
-        //     }
-        //         // Ignore Pre_Build error
-        //         ID_FAULT
-        // #undef X
+#define X(add, mask, id)                                   \
+    if (add == faulted_address && mask & faulted_buffer) { \
+        Log.e(ID, id);                                     \
+    }
+        // Ignore Pre_Build error
+        ID_FAULT
+#undef X
     }
 
 #define X(pin, comp, value, id) \
