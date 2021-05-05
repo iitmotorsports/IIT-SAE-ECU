@@ -255,7 +255,7 @@ State::State_t *ECUStates::Button_State::run(void) {
 
     elapsedMillis soundTimer;
 
-    while (soundTimer < 2000) {
+    while (soundTimer < 3000) {
         if (FaultCheck()) {
             Log.e(ID, "Failed to play sound");
             Pins::setPinValue(PINS_BACK_SOUND_DRIVER, LOW);
