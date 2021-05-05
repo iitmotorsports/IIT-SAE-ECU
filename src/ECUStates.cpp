@@ -57,6 +57,11 @@ static LOG_TAG globalID = "BACK ECU";
 //     }
 // }
 
+static void updateFaultLights() {
+    Pins::setInternalValue(PINS_INTERNAL_BMS_FAULT, Pins::getPinValue(PINS_BACK_BMS_FAULT));
+    Pins::setInternalValue(PINS_INTERNAL_IMD_FAULT, Pins::getPinValue(PINS_BACK_IMD_FAULT));
+}
+
 State::State_t *ECUStates::Initialize_State::run(void) {
     Log.i(ID, "Teensy 3.6 SAE BACK ECU Initalizing");
     Log.i(ID, "Setup canbus");
@@ -77,6 +82,7 @@ State::State_t *ECUStates::Initialize_State::run(void) {
     Mirror::setup();
     Echo::setup();
 #endif
+    Heartbeat::addCallback(updateFaultLights);
     Heartbeat::beginBeating();
 
     // Front teensy should know when to blink start light
@@ -389,10 +395,8 @@ State::State_t *ECUStates::FaultState::run(void) {
 
     if (getLastState() == &ECUStates::PreCharge_State) {
         Log.f(ID, "Precharge fault");
-        while (true) { // TODO: Back pin should directly map, to front pin. instant change
+        while (true) {
             Pins::setInternalValue(PINS_INTERNAL_GEN_FAULT, 1);
-            Pins::setInternalValue(PINS_INTERNAL_BMS_FAULT, Pins::getPinValue(PINS_BACK_BMS_FAULT));
-            Pins::setInternalValue(PINS_INTERNAL_IMD_FAULT, Pins::getPinValue(PINS_BACK_IMD_FAULT));
             Fault::logFault();
             delay(1000);
         }
