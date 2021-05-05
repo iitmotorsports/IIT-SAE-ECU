@@ -119,7 +119,7 @@ bool hardFault(void) {
 
 bool softFault(void) {
     // Log.d(ID, "Checking for Soft Fault");
-    for (size_t i = 0; i < SOFT_CAN_COUNT; i++) {
+    for (size_t i = 0; i < SOFT_CAN_COUNT; i++) { // FIXME: is this actually printing?
         Canbus::setSemaphore(soft_addresses[i]);
         if (*soft_buffers[i] & soft_masks[i]) {
             faulted_address = soft_addresses[i];
