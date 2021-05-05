@@ -72,10 +72,10 @@ State::State_t *ECUStates::Initialize_State::run(void) {
     Log.i(ID, "Setup faults");
     Fault::setup(); // load all buffers
     Aero::setup();
-    MC::initialize();
+    MC::setup();
 #ifdef CONF_ECU_DEBUG
     Mirror::setup();
-    // Echo::setup();
+    Echo::setup();
 #endif
     Heartbeat::beginBeating();
 
@@ -88,9 +88,9 @@ State::State_t *ECUStates::Initialize_State::run(void) {
         return &ECUStates::FaultState;
     }
 
-    Log.d(ID, "Setting MC fault callbacks");
-    Canbus::addCallback(ADD_MC0_CTRL, printMCFaults);
-    Canbus::addCallback(ADD_MC1_CTRL, printMCFaults);
+    // Log.d(ID, "Setting MC fault callbacks");
+    // Canbus::addCallback(ADD_MC0_CTRL, printMCFaults);
+    // Canbus::addCallback(ADD_MC1_CTRL, printMCFaults);
 
     // TSV
     Log.i(ID, "Waiting for shutdown signal");
@@ -141,12 +141,6 @@ State::State_t *ECUStates::PreCharge_State::run(void) { // NOTE: Low = Closed, H
     Log.i(ID, "Loading Buffers");
     getBuffers();
     Log.i(ID, "Precharge running");
-
-    // delay(1000);
-
-    // Log.w(ID, "Waiting for HVD fault to clear");
-    // while (Pins::getPinValue(PINS_BACK_HVD_FAULT)) {
-    // }
 
     if (FaultCheck()) {
         Log.e(ID, "Precharge Faulted before precharge");
@@ -294,12 +288,10 @@ State::State_t *ECUStates::Driving_Mode_State::DrivingModeFault(void) {
     return &ECUStates::FaultState;
 }
 
-// BACK HVD PIN is only a true fault here
-// MCs weak faults also cause a true fault here
+// NOTE: MCs weak faults also cause a true fault here
 State::State_t *ECUStates::Driving_Mode_State::run(void) {
     Log.i(ID, "Driving mode on");
     Log.i(ID, "Cooling on");
-
     // carCooling(true); // BROKEN: uncomment
 
     elapsedMillis controlDelay;
@@ -307,6 +299,10 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
 
     // volatile uint8_t *mc0F = Canbus::getBuffer(ADD_MC0_FAULTS);
     // volatile uint8_t *mc1F = Canbus::getBuffer(ADD_MC1_FAULTS);
+
+    Log.i(ID, "Loading Buffers");
+    MC0_VOLT_Buffer.init();
+    MC1_VOLT_Buffer.init();
 
     Log.i(ID, "Stopping MC heartbeat");
     MC::enableMotorBeating(false);
@@ -319,12 +315,14 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
         if (controlDelay > 20) {
             controlDelay = 0;
 
-            // if (FaultCheck()) { // FIXME: should not be getting HVD fault? uncomment
-            //     return DrivingModeFault();
-            // }
+            if (Fault::softFault() || Fault::hardFault()) {
+                return DrivingModeFault();
+            }
 
-            // pedal0 = map(pedal0, 19, maxPed, 0, PINS_ANALOG_MAX);
-            // pedal1 = map(pedal1, 19, maxPed, 0, PINS_ANALOG_MAX);
+            if (((MC0_VOLT_Buffer.getShort(0) / 10) + (MC1_VOLT_Buffer.getShort(0) / 10)) / 2 < 90) { // 'HVD Fault'
+                Log.e(ID, "'HVD Fault' MC voltage < 90");
+                return DrivingModeFault();
+            }
 
             int breakVal = Pins::getCanPinValue(PINS_FRONT_BRAKE);
             int steerVal = Pins::getCanPinValue(PINS_FRONT_STEER);
@@ -333,6 +331,9 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
 
             int pedal0 = Pins::getCanPinValue(PINS_FRONT_PEDAL0);
             int pedal1 = Pins::getCanPinValue(PINS_FRONT_PEDAL1);
+
+            // pedal0 = map(pedal0, 19, maxPed, 0, PINS_ANALOG_MAX);
+            // pedal1 = map(pedal1, 19, maxPed, 0, PINS_ANALOG_MAX);
 
             if (abs(pedal1 - pedal0 - 8) > abs((pedal1 * 10) / 100) && (abs(pedal0) + abs(pedal1)) > 50) {
                 Log.e(ID, "Pedal value offset > 10%");
@@ -345,9 +346,6 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             torqueVector(MotorTorques, pedal0, pedal1, breakVal, steerVal);
             sendMCCommand(ADD_MC0_CTRL, MotorTorques[0], 0, 1); // MC 1
             sendMCCommand(ADD_MC1_CTRL, MotorTorques[1], 1, 1); // MC 2F
-
-            // Canbus::sendData(ADD_MC0_CTRL, 20, 0, 0, 0, 0, 1, 0, 0);
-            // Canbus::sendData(ADD_MC1_CTRL, 20, 0, 0, 0, 1, 1, 0, 0);
 
             if (++counter > 5) {
                 counter = 0;
