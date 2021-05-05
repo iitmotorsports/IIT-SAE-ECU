@@ -78,8 +78,8 @@
 #define PINS_FRONT_BUTTON_INPUT_OFF 2 // Digital Start Button
 #define PINS_FRONT_WHEEL1 21          // 0-5v R wheel speed
 #define PINS_FRONT_WHEEL0 20          // 0-5v L wheel speed
-#define PINS_FRONT_PEDAL1 18          // Pedal 2
-#define PINS_FRONT_PEDAL0 16          // Pedal 1
+#define PINS_FRONT_PEDAL1 A4          // Pedal 2
+#define PINS_FRONT_PEDAL0 A2          // Pedal 1
 #define PINS_FRONT_STEER 15           // -5-5v steering wheel
 #define PINS_FRONT_BRAKE 14           // 0-3.3v brake
 #define PINS_FRONT_IMD_LIGHT 38       // imd led

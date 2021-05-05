@@ -116,6 +116,9 @@ State::State_t *ECUStates::Initialize_State::run(void) {
     //     }
     // }
 
+    // while (!Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT_OFF)) {
+    // }
+
     while (!Serial.available()) {
     }
 
@@ -270,7 +273,10 @@ State::State_t *ECUStates::Button_State::run(void) {
 }
 
 void ECUStates::Driving_Mode_State::sendMCCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit) {
-    int percentTorque = constrain(map(torque, 0, PINS_ANALOG_MAX, 0, 10), 0, 10); // separate func for negative vals (regen)
+    int percentTorque = 0;
+    if (torque != 0 ){
+        percentTorque = constrain(map(torque, 200, PINS_ANALOG_MAX, 0, 300), 0, 300); // separate func for negative vals (regen)
+    }
     uint8_t *bytes = (uint8_t *)&percentTorque;
     Canbus::sendData(MC_ADD, bytes[0], bytes[1], 0, 0, direction, enableBit);
 }
@@ -346,17 +352,26 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             // pedal0 = map(pedal0, 19, maxPed, 0, PINS_ANALOG_MAX);
             // pedal1 = map(pedal1, 19, maxPed, 0, PINS_ANALOG_MAX);
 
-            if (abs(pedal1 - pedal0 - 8) > abs((pedal1 * 10) / 100) && (abs(pedal0) + abs(pedal1)) > 50) {
+            // Min value for the pedal should push before a command should be sent to the motor
+            if ((abs(pedal0) + abs(pedal1)) < 200){
+                pedal0 = 0;
+                pedal1 = 0;
+            }
+
+            Log.i(ID, "", pedal0);
+                Log.i(ID, "", pedal1);
+
+            if (abs(pedal1 - pedal0 - 36) > abs((pedal1 * 20) / 100) && (abs(pedal0) + abs(pedal1)) > 200) {
                 Log.e(ID, "Pedal value offset > 10%");
                 Log.i(ID, "", pedal0);
                 Log.i(ID, "", pedal1);
-                // return DrivingModeFault(); // FIXME: actually fault
+                return DrivingModeFault(); // FIXME: actually fault
             }
 
             int MotorTorques[2] = {1, 1};
             torqueVector(MotorTorques, pedal0, pedal1, breakVal, steerVal);
             sendMCCommand(ADD_MC0_CTRL, MotorTorques[0], 0, 1); // MC 1
-            sendMCCommand(ADD_MC1_CTRL, MotorTorques[1], 1, 1); // MC 2F
+            sendMCCommand(ADD_MC1_CTRL, MotorTorques[1], 0, 1); // MC 2F
 
             if (++counter > 5) {
                 counter = 0;
