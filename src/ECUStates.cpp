@@ -63,6 +63,7 @@ State::State_t *ECUStates::Initialize_State::run(void) {
     // TSV
     Log.i(ID, "Waiting for shutdown signal");
 
+    // FIXME: Signal shutdown state on PCB not working
     // elapsedMillis shutdownBounce;
 
     // while (true) {
