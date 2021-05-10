@@ -102,7 +102,9 @@ def AvailableRam():
     global RamMemo
     if not RamMemo:
         out = subprocess.check_output("wmic OS get FreePhysicalMemory /Value", stderr=subprocess.STDOUT, shell=True)
-        RamMemo = round(int(str(out).strip("b").strip("'").replace("\\r", "").replace("\\n", "").replace("FreePhysicalMemory=", "")) / 1048576, 2)
+        RamMemo = round(
+            int(str(out).strip("b").strip("'").replace("\\r", "").replace("\\n", "").replace("FreePhysicalMemory=", "")) / 1048576, 2
+        )
     return RamMemo
 
 
@@ -268,7 +270,7 @@ FIND_SPECIAL_REGEX = (
 )
 FIND_CALL_REGEX_SS = r"Log(\.[diwef])?\s*\(\s*(\".*?\")\s*,\s*(\".*?\")\s*\)\s*;"  # -> Log("Str", "Str");
 FIND_CALL_REGEX_VS = r"Log(\.[diwef])?\s*\(\s*([^\"]+?)\s*,\s*(\".*?\")\s*\)\s*;"  # -> Log(Var, "Str");
-FIND_CALL_REGEX_SSV = r"Log(\.[diwef])?\s*\(\s*(\".*?\")\s*,\s*(\".*?\")\s*,\s*([^\"]+?)\s*\)\s*;"  # -> Log("Str", "Str", Var);
+FIND_CALL_REGEX_SSV = r"Log(\.[diwef])?\s*\(\s*(\".*?\")\s*,\s*(\".*?\")\s*,\s*([^\"]+?)\s*\)\s*;"  # -> Log("Str", "Str", Var); # FIXME: SSV does not seem to be working
 FIND_CALL_REGEX_VSV = r"Log(\.[diwef])?\s*\(\s*([^\"]+?)\s*,\s*(\".*?\")\s*,\s*([^\"]+?)\s*\)\s*;"  # -> Log(Var, "Str", Var);
 FIND_CALL_REGEX_BAD = r"(Log(?:\.[diwef])?\s*\(\s*(?:[^\"]+?|\"(?:[^\"]|\\\")*?\")\s*,\s*)([^\";]+?)(\s*(?:,\s*(?:[^\"]+?))?\s*\)\s*;)"  # Implicit string or number where it should not be | IDE will warn about numbers but will still compile
 
