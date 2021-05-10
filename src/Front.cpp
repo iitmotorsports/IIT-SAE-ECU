@@ -234,9 +234,7 @@ void Front::run() {
     while (true) {
         if (timeElapsed >= 20) { // High priority updates
             timeElapsed = 0;
-
             Command::receiveCommand();
-
             Log(ID, "Current Motor Speed:", motorSpeed());
         }
         if (timeElapsedMidHigh >= 200) { // MedHigh priority updates
@@ -250,7 +248,7 @@ void Front::run() {
             if (hasBeat && (currentState == &ECUStates::Idle_State)) {
                 on = !on;
             } else {
-                on = 0;
+                on = Pins::getCanPinValue(PINS_INTERNAL_START);
             }
             Log(ID, "Start Light", on);
             Pins::setPinValue(PINS_FRONT_START_LIGHT, on);

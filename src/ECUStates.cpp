@@ -62,7 +62,8 @@ State::State_t *ECUStates::Initialize_State::run(void) {
 
     // TSV
     Log.i(ID, "Waiting for shutdown signal");
-    elapsedMillis shutdownBounce;
+
+    // elapsedMillis shutdownBounce;
 
     // while (true) {
     //     if (Pins::getPinValue(PINS_BACK_SHUTDOWN_SIGNAL)) {
@@ -73,8 +74,11 @@ State::State_t *ECUStates::Initialize_State::run(void) {
     //     }
     // }
 
+    Log.w(ID, "Temporary fix needs front button to be pressed!");
+    Pins::setInternalValue(PINS_INTERNAL_START, HIGH);
     while (Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT_OFF)) {
     }
+    Pins::setInternalValue(PINS_INTERNAL_START, LOW);
 
     Log.i(ID, "Shutdown signal received");
 
