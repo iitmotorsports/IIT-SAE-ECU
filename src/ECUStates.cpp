@@ -274,11 +274,11 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
     MC::clearFaults(); // Clear fault if any
 
     Log.d(ID, "Entering drive loop");
-    while (true) { // TODO: Stop if any motor controller fault happens
+    while (true) {
         if (controlDelay > 20) {
             controlDelay = 0;
 
-            if (Fault::softFault() || Fault::hardFault()) {
+            if (Fault::softFault() || Fault::hardFault()) { // FIXME: are motor controller faults actually being picked up?
                 return DrivingModeFault();
             }
 
