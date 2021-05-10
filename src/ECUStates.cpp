@@ -233,7 +233,7 @@ void ECUStates::Driving_Mode_State::sendMCCommand(uint32_t MC_ADD, int torque, b
 void ECUStates::Driving_Mode_State::torqueVector(int torques[2], int pedal0, int pedal1, int brakeVal, int steerVal) {
     // TODO: Add Torque vectoring algorithms
     int pedalVal = (pedal0 + pedal1) / 2;
-    torques[0] = pedalVal; // TODO: must be in percentage value?
+    torques[0] = pedalVal;
     torques[1] = pedalVal;
 }
 
