@@ -18,45 +18,6 @@ static bool FaultCheck() { // NOTE: Will only return true if hardfault occurs
 
 static LOG_TAG globalID = "BACK ECU";
 
-// static void printMCFaults(uint32_t add, volatile uint8_t *buf) {
-//     if (add == ADD_MC0_FAULTS) {
-//         if (buf[0])
-//             Log.d(globalID, "mc 0 fault 0", buf[0]);
-//         if (buf[1])
-//             Log.d(globalID, "mc 0 fault 1", buf[1]);
-//         if (buf[2])
-//             Log.d(globalID, "mc 0 fault 2", buf[2]);
-//         if (buf[3])
-//             Log.d(globalID, "mc 0 fault 3", buf[3]);
-//         if (buf[4])
-//             Log.d(globalID, "mc 0 fault 4", buf[4]);
-//         if (buf[5])
-//             Log.d(globalID, "mc 0 fault 5", buf[5]);
-//         if (buf[6])
-//             Log.d(globalID, "mc 0 fault 6 ", buf[6]);
-//         if (buf[7])
-//             Log.d(globalID, "mc 0 fault 7", buf[7]);
-//     }
-//     if (add == ADD_MC1_FAULTS) {
-//         if (buf[0])
-//             Log.d(globalID, "mc 1 fault 0", buf[0]);
-//         if (buf[1])
-//             Log.d(globalID, "mc 1 fault 1", buf[1]);
-//         if (buf[2])
-//             Log.d(globalID, "mc 1 fault 2", buf[2]);
-//         if (buf[3])
-//             Log.d(globalID, "mc 1 fault 3", buf[3]);
-//         if (buf[4])
-//             Log.d(globalID, "mc 1 fault 4", buf[4]);
-//         if (buf[5])
-//             Log.d(globalID, "mc 1 fault 5", buf[5]);
-//         if (buf[6])
-//             Log.d(globalID, "mc 1 fault 6 ", buf[6]);
-//         if (buf[7])
-//             Log.d(globalID, "mc 1 fault 7", buf[7]);
-//     }
-// }
-
 static void updateFaultLights() {
     static int bms, imd, bms_l, imd_l = 0;
     if ((bms = Pins::getPinValue(PINS_BACK_BMS_FAULT)) != bms_l || (imd = Pins::getPinValue(PINS_BACK_IMD_FAULT)) != imd_l) {
@@ -99,10 +60,6 @@ State::State_t *ECUStates::Initialize_State::run(void) {
         return &ECUStates::FaultState;
     }
 
-    // Log.d(ID, "Setting MC fault callbacks");
-    // Canbus::addCallback(ADD_MC0_CTRL, printMCFaults);
-    // Canbus::addCallback(ADD_MC1_CTRL, printMCFaults);
-
     // TSV
     Log.i(ID, "Waiting for shutdown signal");
     elapsedMillis shutdownBounce;
@@ -118,9 +75,6 @@ State::State_t *ECUStates::Initialize_State::run(void) {
 
     while (Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT_OFF)) {
     }
-
-    // while (!Serial.available()) {
-    // }
 
     Log.i(ID, "Shutdown signal received");
 
@@ -174,16 +128,6 @@ State::State_t *ECUStates::PreCharge_State::run(void) { // NOTE: Low = Closed, H
     elapsedMillis timeElapsed;
 
     Log.d(ID, "Running precharge loop");
-
-    // while (true) {
-    //     int16_t BMSVolt = BMS_DATA_Buffer.getShort(2) / 10; // Byte 2-3: Pack Instant Voltage
-    //     int16_t MC0Volt = MC0_VOLT_Buffer.getShort(0) / 10; // Bytes 0-1: DC BUS MC Voltage
-    //     int16_t MC1Volt = MC1_VOLT_Buffer.getShort(0) / 10; // Bytes 0-1: DC BUS MC Voltage
-    //     Log.d(ID, "BMSVolt", BMSVolt);
-    //     Log.d(ID, "MC0Volt", MC0Volt);
-    //     Log.d(ID, "MC1Volt", MC1Volt);
-    //     delay(250);
-    // }
 
     while (timeElapsed <= 10000) {
         if (timeElapsed >= 1000 && voltageCheck()) { // NOTE: will always pass if submodules are disconnected from CAN net
@@ -309,13 +253,10 @@ State::State_t *ECUStates::Driving_Mode_State::DrivingModeFault(void) {
 State::State_t *ECUStates::Driving_Mode_State::run(void) {
     Log.i(ID, "Driving mode on");
     Log.i(ID, "Cooling on");
-    // carCooling(true); // BROKEN: uncomment
+    carCooling(true);
 
     elapsedMillis controlDelay;
     size_t counter = 0;
-
-    // volatile uint8_t *mc0F = Canbus::getBuffer(ADD_MC0_FAULTS);
-    // volatile uint8_t *mc1F = Canbus::getBuffer(ADD_MC1_FAULTS);
 
     Log.i(ID, "Loading Buffers");
     MC0_VOLT_Buffer.init();
@@ -349,9 +290,6 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             int pedal0 = Pins::getCanPinValue(PINS_FRONT_PEDAL0);
             int pedal1 = Pins::getCanPinValue(PINS_FRONT_PEDAL1);
 
-            // pedal0 = map(pedal0, 19, maxPed, 0, PINS_ANALOG_MAX);
-            // pedal1 = map(pedal1, 19, maxPed, 0, PINS_ANALOG_MAX);
-
             // Min value for the pedal should push before a command should be sent to the motor
             if ((abs(pedal0) + abs(pedal1)) < 200) {
                 pedal0 = 0;
@@ -362,7 +300,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
                 Log.e(ID, "Pedal value offset > 10%");
                 Log.i(ID, "", pedal0);
                 Log.i(ID, "", pedal1);
-                return DrivingModeFault(); // FIXME: actually fault
+                return DrivingModeFault();
             }
 
             int MotorTorques[2] = {1, 1};
@@ -376,8 +314,6 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
                 if (Fault::softFault()) {
                     Fault::logFault();
                 }
-                // printMCFaults(ADD_MC0_FAULTS, mc0F);
-                // printMCFaults(ADD_MC1_FAULTS, mc1F);
             }
 
             Aero::run(breakVal, steerVal);
@@ -392,7 +328,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
     Log.i(ID, "Starting MC heartbeat");
     MC::enableMotorBeating(true);
 
-    // carCooling(false);
+    carCooling(false);
 
     Log.i(ID, "Driving mode off");
     return &ECUStates::Idle_State;
