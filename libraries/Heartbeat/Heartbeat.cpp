@@ -25,7 +25,6 @@ static uint lastTime = 0;
 
 static LOG_TAG ID = "HeartBeat";
 
-static size_t funcCount = 0;
 static std::set<beatFunc> funcs;
 
 static void toggleLED() {
