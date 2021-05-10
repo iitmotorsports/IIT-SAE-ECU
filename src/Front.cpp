@@ -231,27 +231,6 @@ void Front::run() {
         delay(500);
     }
 
-    // while (true) {
-    //     Log.d(ID, "Front Pedal0", Pins::getPinValue(PINS_FRONT_PEDAL0));
-    //     Log.d(ID, "Front Pedal2", Pins::getPinValue(PINS_FRONT_PEDAL1));
-    //     delay(500);
-    // }
-
-    // while (true) {
-    //     Pins::setPinValue(PINS_FRONT_BMS_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_BMS_FAULT));
-    //     Pins::setPinValue(PINS_FRONT_IMD_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_IMD_FAULT));
-    //     uint32_t currState = Pins::getCanPinValue(PINS_INTERNAL_STATE);
-    //     currentState = stateMap[currState]; // returns NULL if not found
-    //     hasBeat = Heartbeat::checkBeat();
-    //     static bool on = false;
-    //     if (hasBeat && (currentState == &ECUStates::Idle_State)) {
-    //         on = !on;
-    //     } else {
-    //         on = 0;
-    //     }
-    //     Pins::setPinValue(PINS_FRONT_START_LIGHT, on);
-    //     delay(200);
-    // }
     while (true) {
         if (timeElapsed >= 20) { // High priority updates
             timeElapsed = 0;
