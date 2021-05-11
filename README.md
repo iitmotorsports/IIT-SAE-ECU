@@ -5,7 +5,7 @@ Hardware
 -------
 
 - [Teensy 3.6](https://www.pjrc.com/store/teensy36.html) x 2
-- [A Windoes machine](https://www.microsoft.com/en-us/windows) (Preferably Win 10)
+- [A Windows machine](https://www.microsoft.com/en-us/windows) (Preferably Win 10)
 - [A Formula Hybrid Car](https://bicyclewarehouse.com/collections/hybrid-bikes) (Not necessary for testing)
 - [A Compatible CAN transceiver](https://www.amazon.com/SN65HVD230-CAN-Board-Communication-Development/dp/B00KM6XMXO) x 2
 
@@ -14,7 +14,7 @@ Setup
 
 NOTE: This repo used [TeensyTemplate](https://github.com/LeHuman/TeensyTemplate) as a starting point
 
-Download [TeensyToolchain](https://github.com/LeHuman/TeensyToolchain), unzip, and put it next to this template folder
+Download [TeensyToolchain](https://github.com/LeHuman/TeensyToolchain), unzip, and put it next to this folder
 
 Rename the downloaded folder from `TeensyToolchain-master` to `TeensyToolchain`
 
