@@ -15,6 +15,9 @@
 #include "stdint.h"
 #include "stdlib.h"
 
+/**
+ * @brief This Module can be used to echo a CAN message over a network of two ECUs
+ */
 namespace Echo {
 
 /**

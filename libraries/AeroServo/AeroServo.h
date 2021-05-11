@@ -16,6 +16,9 @@
 
 #include "Pins.h"
 
+/**
+ * @brief Module used for aero calculations
+ */
 namespace Aero {
 
 /**
