@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2020
  * 
  */
+// @cond
 #include "State.h"
 #include "Log.h"
 #include "Pins.h"
@@ -24,9 +25,6 @@ static void setNextState(State::State_t *state) {
     currentState = state;
 }
 
-/**
- * @brief Internal state used for invalid states
- */
 static struct UnhandledState_t : State::State_t {
     LOG_TAG ID = "UNHANDLED STATE";
 
@@ -74,3 +72,4 @@ void State::begin(State_t &entry) {
 
     Log.f(TAG, "STATE MACHINE STOPPED");
 }
+// @endcond

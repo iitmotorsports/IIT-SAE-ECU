@@ -50,16 +50,16 @@ void enableMotorBeating(bool enable) {
 }
 
 void sendCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit) {
+    if (beating) {
+        Log.w(ID, "Unable to set torque, heartbeat is on");
+        return;
+    }
     int percentTorque = constrain(map(torque, 0, PINS_ANALOG_MAX, 0, 10), 0, 10); // separate func for negative vals (regen)
     uint8_t *bytes = (uint8_t *)&percentTorque;
     Canbus::sendData(MC_ADD, bytes[0], bytes[1], 0, 0, direction, enableBit);
 }
 
 void setTorque(int torque) {
-    if (beating) {
-        Log.w(ID, "Unable to set torque, heartbeat is on");
-        return;
-    }
     sendCommand(ADD_MC0_CTRL, torque, 0, 1);
     sendCommand(ADD_MC0_CTRL, torque, 1, 1);
 }

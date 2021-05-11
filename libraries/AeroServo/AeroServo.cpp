@@ -1,3 +1,15 @@
+/**
+ * @file AeroServo.cpp
+ * @author IR
+ * @brief AeroServo Source file
+ * @version 0.1
+ * @date 2021-03-03
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+//@cond
+
 #include "AeroServo.h"
 #include "Log.h"
 #include "PWMServo.h" // Servo.h is reliant on quick interrupts, switch (and test) if PWMServo is not good enough
@@ -26,7 +38,7 @@ void setup() {
     servo1.attach(PINS_BACK_SERVO1_PWM);
     servo2.attach(PINS_BACK_SERVO2_PWM);
     Log.i(ID, "Turning on servos");
-    // Pins::setPinValue(PINS_BACK_SERVO_OFF, 0); // BROKEN: uncomment
+    Pins::setPinValue(PINS_BACK_SERVO_OFF, 0);
     Log.i(ID, "Done");
 }
 
@@ -54,3 +66,4 @@ void run(int breakPressure, int steeringAngle) { // Add 10 millisec delay
 }
 
 } // namespace Aero
+//@endcond

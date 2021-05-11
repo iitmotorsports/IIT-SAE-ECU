@@ -1,3 +1,14 @@
+/**
+ * @file Echo.cpp
+ * @author IR
+ * @brief Echo Source File
+ * @version 0.1
+ * @date 2021-04-14
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+//@cond
 #include "Echo.h"
 #include "Canbus.h"
 
@@ -64,3 +75,4 @@ void setup() {
 }
 
 } // namespace Echo
+//@endcond

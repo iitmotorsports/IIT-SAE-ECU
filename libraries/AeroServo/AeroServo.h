@@ -1,3 +1,13 @@
+/**
+ * @file AeroServo.h
+ * @author IR
+ * @brief Interpretation of Aero subteam code
+ * @version 0.1
+ * @date 2021-03-03
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
 #ifndef __ECU_AEROSERVO_H__
 #define __ECU_AEROSERVO_H__
 

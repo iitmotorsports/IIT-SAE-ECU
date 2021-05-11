@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2021
  * 
  */
+//@cond
 
 #include "Heartbeat.h"
 #include "Canbus.h"
@@ -72,3 +73,4 @@ void addCallback(beatFunc func) {
 }
 
 } // namespace Heartbeat
+//@endcond

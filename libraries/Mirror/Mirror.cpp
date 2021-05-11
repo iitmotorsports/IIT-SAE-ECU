@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2021
  * 
  */
+//@cond
 
 #include "Mirror.h"
 #include "CanBus.h"
@@ -108,3 +109,4 @@ void exitMirrorMode(void) {
 }
 
 } // namespace Mirror
+//@endcond

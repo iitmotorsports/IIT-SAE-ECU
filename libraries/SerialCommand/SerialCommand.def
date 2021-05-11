@@ -1,3 +1,14 @@
+/**
+ * @file SerialCommand.def
+ * @author IR
+ * @brief SerialCommand config
+ * @version 0.1
+ * @date 2021-03-16
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
 #ifndef __ECU_SERIALCOMMAND_DEF__
 #define __ECU_SERIALCOMMAND_DEF__
 
