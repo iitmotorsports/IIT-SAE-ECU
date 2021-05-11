@@ -59,4 +59,10 @@
     "python.linting.enabled": true,
     "python.linting.flake8Enabled": false,
     "C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: LLVM, UseTab: Never, IndentWidth: 4, TabWidth: 4, BreakBeforeBraces: Attach, AllowShortIfStatementsOnASingleLine: false, IndentCaseLabels: false, ColumnLimit: 0, AccessModifierOffset: -4 }",
+    "search.exclude": {
+        "**/build": true
+    },
+    "files.watcherExclude": {
+        "**/build": true
+    },
 }
