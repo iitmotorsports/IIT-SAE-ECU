@@ -88,68 +88,83 @@ $(document).ready(function(){initNavTree('_aero_servo_8cpp_source.html',''); ini
 <div class="title">AeroServo.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &quot;AeroServo.h&quot;</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_log_8h.html">Log.h</a>&quot;</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;PWMServo.h&quot;</span> <span class="comment">// Servo.h is reliant on quick interrupts, switch (and test) if PWMServo is not good enough</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>Aero {</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a> ID = <span class="stringliteral">&quot;AeroServo&quot;</span>;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">// TODO: check that these values are okay</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> steerLMin = <a class="code" href="_pins_8h.html#ad054c97dc889d7e4d368c06a06655690">PINS_VOLT_TO_ANALOG</a>(1.5);</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> steerLMax = <a class="code" href="_pins_8h.html#ad054c97dc889d7e4d368c06a06655690">PINS_VOLT_TO_ANALOG</a>(0);</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> steerRMin = <a class="code" href="_pins_8h.html#ad054c97dc889d7e4d368c06a06655690">PINS_VOLT_TO_ANALOG</a>(3.5);</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> steerRMax = <a class="code" href="_pins_8h.html#ad054c97dc889d7e4d368c06a06655690">PINS_VOLT_TO_ANALOG</a>(5);</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> angleMin = 30; <span class="comment">// 30 is min possible servo angle, 180 is max</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> angleMax = 72; <span class="comment">// angle of attack is 42</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">static</span> <a class="code" href="class_p_w_m_servo.html">PWMServo</a> servo1;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">static</span> <a class="code" href="class_p_w_m_servo.html">PWMServo</a> servo2;</div>
+<a href="_aero_servo_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">//@cond</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_aero_servo_8h.html">AeroServo.h</a>&quot;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_log_8h.html">Log.h</a>&quot;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;PWMServo.h&quot;</span> <span class="comment">// Servo.h is reliant on quick interrupts, switch (and test) if PWMServo is not good enough</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_aero.html">Aero</a> {</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a> ID = <span class="stringliteral">&quot;AeroServo&quot;</span>;</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#ac87cf65470012914f1ae29c0eb987b87">setup</a>() {</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Initializing Aero servo pins&quot;</span>);</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    servo1.attach(PINS_BACK_SERVO1_PWM);</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    servo2.attach(PINS_BACK_SERVO2_PWM);</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Done&quot;</span>);</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;}</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keywordtype">void</span> run(<span class="keywordtype">int</span> breakPressure, <span class="keywordtype">int</span> steeringAngle) { <span class="comment">// Add 10 millisec delay</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="comment">// Brake pressure</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keywordtype">int</span> breakPos = map(breakPressure, PINS_ANALOG_MIN, PINS_ANALOG_MAX, angleMin, angleMax);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="comment">// Steering angle sensor</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">int</span> steerPos = 0;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordflow">if</span> (steeringAngle &lt;= steerLMin) {</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        steerPos = map(steeringAngle, steerLMax, steerLMin, angleMax, angleMin);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (steeringAngle &gt;= steerRMin) {</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        steerPos = map(steeringAngle, steerRMin, steerRMax, angleMin, angleMax);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    }</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> lastValue = angleMin;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordtype">int</span> servoVal = (max(breakPos, steerPos) + lastValue * 3) / 4;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    lastValue = servoVal;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">// TODO: check that these values are okay</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> steerLMin = <a class="code" href="_pins_8h.html#ad054c97dc889d7e4d368c06a06655690">PINS_VOLT_TO_ANALOG</a>(1.5);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> steerLMax = <a class="code" href="_pins_8h.html#ad054c97dc889d7e4d368c06a06655690">PINS_VOLT_TO_ANALOG</a>(0);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> steerRMin = <a class="code" href="_pins_8h.html#ad054c97dc889d7e4d368c06a06655690">PINS_VOLT_TO_ANALOG</a>(3.5);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> steerRMax = <a class="code" href="_pins_8h.html#ad054c97dc889d7e4d368c06a06655690">PINS_VOLT_TO_ANALOG</a>(5);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> angleMin = 30; <span class="comment">// 30 is min possible servo angle, 180 is max</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> angleMax = 72; <span class="comment">// angle of attack is 42</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> lerpConst = 50;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">static</span> PWMServo servo1;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">static</span> PWMServo servo2;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> servoVal = angleMin * lerpConst;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_aero.html#aaf24879c16df328a981323313c41f1ba">setup</a>() {</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Initializing Aero servo pins&quot;</span>);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    servo1.attach(PINS_BACK_SERVO1_PWM);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    servo2.attach(PINS_BACK_SERVO2_PWM);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Turning on servos&quot;</span>);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BACK_SERVO_OFF, 0);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Done&quot;</span>);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;}</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    servo1.write(servoVal);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    servo2.write(servoVal);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keywordtype">int</span> <a class="code" href="namespace_aero.html#ad0fc1966221e034a925ba218e951a30e">getServoValue</a>() {</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordflow">return</span> servoVal / lerpConst;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;} <span class="comment">// namespace Aero</span></div>
-<div class="ttc" id="a_log_8cpp_html_aa5fd43862d543e82b7775410573c9142"><div class="ttname"><a href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a></div><div class="ttdeci">Logging::Log_t Log</div><div class="ttdoc">Internal definition of static Log class.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00222">Log.cpp:222</a></div></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_aero.html#a9a0abe410b4d1e6475bd3349461f68db">run</a>(<span class="keywordtype">int</span> breakPressure, <span class="keywordtype">int</span> steeringAngle) { <span class="comment">// Add 10 millisec delay</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="comment">// Brake pressure</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">int</span> breakPos = map(breakPressure, PINS_ANALOG_MIN, PINS_ANALOG_MAX, angleMin, angleMax);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="comment">// Steering angle sensor</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordtype">int</span> steerPos = 0;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordflow">if</span> (steeringAngle &lt;= steerLMin) {</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        steerPos = map(steeringAngle, steerLMax, steerLMin, angleMax, angleMin);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (steeringAngle &gt;= steerRMin) {</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        steerPos = map(steeringAngle, steerRMin, steerRMax, angleMin, angleMax);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    }</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    servoVal += max(breakPos, steerPos) - (servoVal / lerpConst);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    servo1.write(servoVal / lerpConst);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    servo2.write(servoVal / lerpConst);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;}</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;} <span class="comment">// namespace Aero</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment">//@endcond</span></div>
+<div class="ttc" id="a_aero_servo_8h_html"><div class="ttname"><a href="_aero_servo_8h.html">AeroServo.h</a></div><div class="ttdoc">Interpretation of Aero subteam code.</div></div>
 <div class="ttc" id="a_log_8h_html"><div class="ttname"><a href="_log_8h.html">Log.h</a></div><div class="ttdoc">Special logging functionality.</div></div>
 <div class="ttc" id="a_log_8h_html_a746b6eae8886ab8bb40046729eed2983"><div class="ttname"><a href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a></div><div class="ttdeci">const char * LOG_TAG</div><div class="ttdoc">Type definition of logging tags This typedef is necessary to allow for easier manipulation of code by...</div><div class="ttdef"><b>Definition:</b> <a href="_log_8h_source.html#l00041">Log.h:41</a></div></div>
+<div class="ttc" id="a_log_8h_html_aa5fd43862d543e82b7775410573c9142"><div class="ttname"><a href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a></div><div class="ttdeci">Logging::Log_t Log</div><div class="ttdoc">Refer to Log_t.</div></div>
 <div class="ttc" id="a_pins_8h_html_ad054c97dc889d7e4d368c06a06655690"><div class="ttname"><a href="_pins_8h.html#ad054c97dc889d7e4d368c06a06655690">PINS_VOLT_TO_ANALOG</a></div><div class="ttdeci">#define PINS_VOLT_TO_ANALOG(x)</div><div class="ttdoc">Maps Voltages 0-5v to an appropriate analog value.</div><div class="ttdef"><b>Definition:</b> <a href="_pins_8h_source.html#l00032">Pins.h:32</a></div></div>
-<div class="ttc" id="aclass_p_w_m_servo_html"><div class="ttname"><a href="class_p_w_m_servo.html">PWMServo</a></div><div class="ttdef"><b>Definition:</b> <a href="_p_w_m_servo_8h_source.html#l00061">PWMServo.h:61</a></div></div>
-<div class="ttc" id="anamespace_canbus_html_ac87cf65470012914f1ae29c0eb987b87"><div class="ttname"><a href="namespace_canbus.html#ac87cf65470012914f1ae29c0eb987b87">Canbus::setup</a></div><div class="ttdeci">void setup(void)</div><div class="ttdoc">Setup the teensy Canbus line.</div></div>
-<div class="ttc" id="astruct_logging_1_1_log__t_html_a8a944d095d2eae2c7be964d887ebe613"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">Logging::Log_t::i</a></div><div class="ttdeci">void i(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using an info tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00149">Log.cpp:149</a></div></div>
+<div class="ttc" id="anamespace_aero_html"><div class="ttname"><a href="namespace_aero.html">Aero</a></div><div class="ttdoc">Module used for aero calculations.</div><div class="ttdef"><b>Definition:</b> <a href="_aero_servo_8h_source.html#l00022">AeroServo.h:22</a></div></div>
+<div class="ttc" id="anamespace_aero_html_a9a0abe410b4d1e6475bd3349461f68db"><div class="ttname"><a href="namespace_aero.html#a9a0abe410b4d1e6475bd3349461f68db">Aero::run</a></div><div class="ttdeci">void run(int breakPressure, int steeringAngle)</div><div class="ttdoc">Run Aero servo logic, given raw values.</div></div>
+<div class="ttc" id="anamespace_aero_html_aaf24879c16df328a981323313c41f1ba"><div class="ttname"><a href="namespace_aero.html#aaf24879c16df328a981323313c41f1ba">Aero::setup</a></div><div class="ttdeci">void setup(void)</div><div class="ttdoc">Attach analog pins to their servo objects.</div></div>
+<div class="ttc" id="anamespace_aero_html_ad0fc1966221e034a925ba218e951a30e"><div class="ttname"><a href="namespace_aero.html#ad0fc1966221e034a925ba218e951a30e">Aero::getServoValue</a></div><div class="ttdeci">int getServoValue()</div><div class="ttdoc">Get the current servo position value.</div></div>
+<div class="ttc" id="anamespace_pins_html_a2d60349cb2aec2c336856187093aea61"><div class="ttname"><a href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a></div><div class="ttdeci">void setPinValue(uint8_t GPIO_Pin, int value)</div><div class="ttdoc">Set the pin value of a predefined pin.</div></div>
+<div class="ttc" id="astruct_logging_1_1_log__t_html_a8a944d095d2eae2c7be964d887ebe613"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">Logging::Log_t::i</a></div><div class="ttdeci">void i(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using an info tag.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="dir_c4d11dbe7033c262a06989c088cca976.html">AeroServo</a></li><li class="navelem"><b>AeroServo.cpp</b></li>
+    <li class="navelem"><a class="el" href="dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="dir_c4d11dbe7033c262a06989c088cca976.html">AeroServo</a></li><li class="navelem"><a class="el" href="_aero_servo_8cpp.html">AeroServo.cpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>

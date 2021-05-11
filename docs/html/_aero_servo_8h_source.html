@@ -88,31 +88,37 @@ $(document).ready(function(){initNavTree('_aero_servo_8h_source.html',''); initR
 <div class="title">AeroServo.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef __ECU_AEROSERVO_H__</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define __ECU_AEROSERVO_H__</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_pins_8h.html">Pins.h</a>&quot;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">namespace </span>Aero {</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#ac87cf65470012914f1ae29c0eb987b87">setup</a>(<span class="keywordtype">void</span>);</div>
+<a href="_aero_servo_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#ifndef __ECU_AEROSERVO_H__</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#define __ECU_AEROSERVO_H__</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keywordtype">void</span> run(<span class="keywordtype">int</span> breakPressure, <span class="keywordtype">int</span> steeringAngle);</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;} <span class="comment">// namespace Aero</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __ECU_AEROSERVO_H__</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_pins_8h.html">Pins.h</a>&quot;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="namespace_aero.html">   22</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_aero.html">Aero</a> {</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="namespace_aero.html#aaf24879c16df328a981323313c41f1ba">   28</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_aero.html#aaf24879c16df328a981323313c41f1ba">setup</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="namespace_aero.html#a9a0abe410b4d1e6475bd3349461f68db">   36</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_aero.html#a9a0abe410b4d1e6475bd3349461f68db">run</a>(<span class="keywordtype">int</span> breakPressure, <span class="keywordtype">int</span> steeringAngle);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="namespace_aero.html#ad0fc1966221e034a925ba218e951a30e">   43</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="namespace_aero.html#ad0fc1966221e034a925ba218e951a30e">getServoValue</a>();</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;} <span class="comment">// namespace Aero</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __ECU_AEROSERVO_H__</span></div>
 <div class="ttc" id="a_pins_8h_html"><div class="ttname"><a href="_pins_8h.html">Pins.h</a></div><div class="ttdoc">Update, set, and get predefined pin values.</div></div>
-<div class="ttc" id="anamespace_canbus_html_ac87cf65470012914f1ae29c0eb987b87"><div class="ttname"><a href="namespace_canbus.html#ac87cf65470012914f1ae29c0eb987b87">Canbus::setup</a></div><div class="ttdeci">void setup(void)</div><div class="ttdoc">Setup the teensy Canbus line.</div></div>
+<div class="ttc" id="anamespace_aero_html"><div class="ttname"><a href="namespace_aero.html">Aero</a></div><div class="ttdoc">Module used for aero calculations.</div><div class="ttdef"><b>Definition:</b> <a href="_aero_servo_8h_source.html#l00022">AeroServo.h:22</a></div></div>
+<div class="ttc" id="anamespace_aero_html_a9a0abe410b4d1e6475bd3349461f68db"><div class="ttname"><a href="namespace_aero.html#a9a0abe410b4d1e6475bd3349461f68db">Aero::run</a></div><div class="ttdeci">void run(int breakPressure, int steeringAngle)</div><div class="ttdoc">Run Aero servo logic, given raw values.</div></div>
+<div class="ttc" id="anamespace_aero_html_aaf24879c16df328a981323313c41f1ba"><div class="ttname"><a href="namespace_aero.html#aaf24879c16df328a981323313c41f1ba">Aero::setup</a></div><div class="ttdeci">void setup(void)</div><div class="ttdoc">Attach analog pins to their servo objects.</div></div>
+<div class="ttc" id="anamespace_aero_html_ad0fc1966221e034a925ba218e951a30e"><div class="ttname"><a href="namespace_aero.html#ad0fc1966221e034a925ba218e951a30e">Aero::getServoValue</a></div><div class="ttdeci">int getServoValue()</div><div class="ttdoc">Get the current servo position value.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="dir_c4d11dbe7033c262a06989c088cca976.html">AeroServo</a></li><li class="navelem"><b>AeroServo.h</b></li>
+    <li class="navelem"><a class="el" href="dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="dir_c4d11dbe7033c262a06989c088cca976.html">AeroServo</a></li><li class="navelem"><a class="el" href="_aero_servo_8h.html">AeroServo.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>

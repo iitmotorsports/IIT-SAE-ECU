@@ -84,10 +84,6 @@ $(document).ready(function(){initNavTree('_mirror_8cpp.html',''); initResizable(
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Mirror.cpp File Reference</div>  </div>
 </div><!--header-->
@@ -95,44 +91,8 @@ $(document).ready(function(){initNavTree('_mirror_8cpp.html',''); initResizable(
 
 <p><a class="el" href="namespace_mirror.html" title="Check and modify pin values over USB serial How to use - connect with a terminal that can both send a...">Mirror</a> source code.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="_mirror_8h_source.html">Mirror.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_canbus_8h_source.html">CanBus.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_e_c_u_global_config_8h_source.html">ECUGlobalConfig.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_log_8h_source.html">Log.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_pins_8h_source.html">Pins.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_serial_command_8h_source.html">SerialCommand.h</a>&quot;</code><br />
-</div>
+
 <p><a href="_mirror_8cpp_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:namespace_mirror"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_mirror.html">Mirror</a></td></tr>
-<tr class="memdesc:namespace_mirror"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check and modify pin values over USB serial How to use - connect with a terminal that can both send and receive values compile and upload a binary with both debug and ascii mode enabled. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a38589ee11b0045be18e3f1bd3c1b835a"><td class="memItemLeft" align="right" valign="top"><a id="a38589ee11b0045be18e3f1bd3c1b835a"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TIMER_RECEIVE_MICROS</b>&#160;&#160;&#160;2000</td></tr>
-<tr class="separator:a38589ee11b0045be18e3f1bd3c1b835a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ade28c8d026e28e092e326f76a3093dc4"><td class="memItemLeft" align="right" valign="top"><a id="ade28c8d026e28e092e326f76a3093dc4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Mirror::timerReceive</b> ()</td></tr>
-<tr class="separator:ade28c8d026e28e092e326f76a3093dc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1163a1d753f2ea7a3150f06a015fbedb"><td class="memItemLeft" align="right" valign="top"><a id="a1163a1d753f2ea7a3150f06a015fbedb"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_mirror.html#a1163a1d753f2ea7a3150f06a015fbedb">Mirror::setup</a> (void)</td></tr>
-<tr class="memdesc:a1163a1d753f2ea7a3150f06a015fbedb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup a listener for going into mirror mode, dependent on which ECU is compiled. <br /></td></tr>
-<tr class="separator:a1163a1d753f2ea7a3150f06a015fbedb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89a62e4b2e374ef95291177d525dcf8e"><td class="memItemLeft" align="right" valign="top"><a id="a89a62e4b2e374ef95291177d525dcf8e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_mirror.html#a89a62e4b2e374ef95291177d525dcf8e">Mirror::enterMirrorMode</a> (void)</td></tr>
-<tr class="memdesc:a89a62e4b2e374ef95291177d525dcf8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manually enter mirror mode, only returning when a set command is received. <br /></td></tr>
-<tr class="separator:a89a62e4b2e374ef95291177d525dcf8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9cdbdcb79cef06a3b8b18151c440b262"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_mirror.html#a9cdbdcb79cef06a3b8b18151c440b262">Mirror::exitMirrorMode</a> (void)</td></tr>
-<tr class="memdesc:a9cdbdcb79cef06a3b8b18151c440b262"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manually exit mirror mode.  <a href="namespace_mirror.html#a9cdbdcb79cef06a3b8b18151c440b262">More...</a><br /></td></tr>
-<tr class="separator:a9cdbdcb79cef06a3b8b18151c440b262"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="namespace_mirror.html" title="Check and modify pin values over USB serial How to use - connect with a terminal that can both send a...">Mirror</a> source code. </p>
 <dl class="section author"><dt>Author</dt><dd>IR </dd></dl>

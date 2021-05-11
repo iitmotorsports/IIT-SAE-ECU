@@ -89,67 +89,90 @@ $(document).ready(function(){initNavTree('_heartbeat_8cpp_source.html',''); init
 </div><!--header-->
 <div class="contents">
 <a href="_heartbeat_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_heartbeat_8h.html">Heartbeat.h</a>&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_canbus_8h.html">Canbus.h</a>&quot;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_e_c_u_global_config_8h.html">ECUGlobalConfig.h</a>&quot;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_log_8h.html">Log.h</a>&quot;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_pins_8h.html">Pins.h</a>&quot;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">namespace </span>Heartbeat {</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">static</span> IntervalTimer canbusPinUpdate;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">static</span> elapsedMillis lastBeat;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">static</span> uint lastTime = 0;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">static</span> <a class="code" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a> ID = <span class="stringliteral">&quot;HeartBeat&quot;</span>;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> toggleLED() {</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">bool</span> on = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    on = !on;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BOTH_LED, on);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;}</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">//@cond</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_heartbeat_8h.html">Heartbeat.h</a>&quot;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_canbus_8h.html">Canbus.h</a>&quot;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_e_c_u_global_config_8h.html">ECUGlobalConfig.h</a>&quot;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_log_8h.html">Log.h</a>&quot;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_pins_8h.html">Pins.h</a>&quot;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;stdint.h&quot;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;stdlib.h&quot;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;set&gt;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_heartbeat.html">Heartbeat</a> {</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">static</span> IntervalTimer canbusPinUpdate;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">static</span> elapsedMillis lastBeat;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">static</span> uint lastTime = 0;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">static</span> <a class="code" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a> ID = <span class="stringliteral">&quot;HeartBeat&quot;</span>;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">static</span> std::set&lt;beatFunc&gt; funcs;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> beat() {</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <a class="code" href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">Canbus::sendData</a>(ADD_HEART);</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    toggleLED();</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;}</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keywordtype">void</span> beginBeating() {</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    canbusPinUpdate.priority(255);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    canbusPinUpdate.begin(beat, CONF_HEARTBEAT_INTERVAL_MICRO);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> toggleLED() {</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">bool</span> on = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    on = !on;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(PINS_BOTH_LED, on);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;}</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> beat() {</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <a class="code" href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">Canbus::sendData</a>(ADD_HEART);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    toggleLED();</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> receiveBeat(uint32_t, <span class="keyword">volatile</span> uint8_t *) {</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    lastTime = lastBeat;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    lastBeat = 0;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    toggleLED();</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;}</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keywordtype">void</span> beginReceiving() {</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <a class="code" href="namespace_canbus.html#a884781debf9732f3e4676830d294e6bc">Canbus::addCallback</a>(ADD_HEART, receiveBeat);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordflow">for</span> (<span class="keyword">auto</span> f : funcs) {</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        f();</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    }</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_heartbeat.html#aa0261c708b2a2636e941fb6969494556">beginBeating</a>() {</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    canbusPinUpdate.priority(10);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    canbusPinUpdate.begin(beat, <a class="code" href="_heartbeat_8h.html#a326e03f1932f84d63f56e8e852a71840">CONF_HEARTBEAT_INTERVAL_MICRO</a>);</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keywordtype">int</span> checkBeat() {</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordflow">if</span> (lastBeat &gt; (CONF_HEARTBEAT_INTERVAL_MICRO / 1000) + CONF_HEARTBEAT_TIMEOUT_MILLI) {</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Heartbeat is taking too long&quot;</span>, lastBeat);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>(ID, <span class="stringliteral">&quot;Beat&quot;</span>, lastTime);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    }</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> receiveBeat(uint32_t, <span class="keyword">volatile</span> uint8_t *) {</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    lastTime = lastBeat;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    lastBeat = 0;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    toggleLED();</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_heartbeat.html#a79e1c0291678d9bd08a4b418b6774159">beginReceiving</a>() {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <a class="code" href="namespace_canbus.html#a884781debf9732f3e4676830d294e6bc">Canbus::addCallback</a>(ADD_HEART, receiveBeat);</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;}</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;} <span class="comment">// namespace Heartbeat</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keywordtype">int</span> <a class="code" href="namespace_heartbeat.html#a85f5ba8b7ffd86ea82479c28a846f6ac">checkBeat</a>() {</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordflow">if</span> (lastBeat &gt; (<a class="code" href="_heartbeat_8h.html#a326e03f1932f84d63f56e8e852a71840">CONF_HEARTBEAT_INTERVAL_MICRO</a> / 1000) + <a class="code" href="_heartbeat_8h.html#ae3c7fcd9cab30e87b0fbc35404880137">CONF_HEARTBEAT_TIMEOUT_MILLI</a>) {</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Heartbeat is taking too long&quot;</span>, lastBeat);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>(ID, <span class="stringliteral">&quot;Beat&quot;</span>, lastTime);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    }</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;}</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_heartbeat.html#a243a1a7989df814269de816d2893d35b">addCallback</a>(beatFunc func) {</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    funcs.insert(func);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;}</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;} <span class="comment">// namespace Heartbeat</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="comment">//@endcond</span></div>
 <div class="ttc" id="a_canbus_8h_html"><div class="ttname"><a href="_canbus_8h.html">Canbus.h</a></div><div class="ttdoc">FlexCAN_T4 wrapper This library is made specifically for SAE.</div></div>
 <div class="ttc" id="a_e_c_u_global_config_8h_html"><div class="ttname"><a href="_e_c_u_global_config_8h.html">ECUGlobalConfig.h</a></div><div class="ttdoc">Configure global build properties.</div></div>
 <div class="ttc" id="a_heartbeat_8h_html"><div class="ttname"><a href="_heartbeat_8h.html">Heartbeat.h</a></div><div class="ttdoc">Make one ECU tell the other it is alive.</div></div>
-<div class="ttc" id="a_log_8cpp_html_aa5fd43862d543e82b7775410573c9142"><div class="ttname"><a href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a></div><div class="ttdeci">Logging::Log_t Log</div><div class="ttdoc">Internal definition of static Log class.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00222">Log.cpp:222</a></div></div>
+<div class="ttc" id="a_heartbeat_8h_html_a326e03f1932f84d63f56e8e852a71840"><div class="ttname"><a href="_heartbeat_8h.html#a326e03f1932f84d63f56e8e852a71840">CONF_HEARTBEAT_INTERVAL_MICRO</a></div><div class="ttdeci">#define CONF_HEARTBEAT_INTERVAL_MICRO</div><div class="ttdoc">The interval the beat should target.</div><div class="ttdef"><b>Definition:</b> <a href="_heartbeat_8h_source.html#l00021">Heartbeat.h:21</a></div></div>
+<div class="ttc" id="a_heartbeat_8h_html_ae3c7fcd9cab30e87b0fbc35404880137"><div class="ttname"><a href="_heartbeat_8h.html#ae3c7fcd9cab30e87b0fbc35404880137">CONF_HEARTBEAT_TIMEOUT_MILLI</a></div><div class="ttdeci">#define CONF_HEARTBEAT_TIMEOUT_MILLI</div><div class="ttdoc">The allowed delay between beats.</div><div class="ttdef"><b>Definition:</b> <a href="_heartbeat_8h_source.html#l00025">Heartbeat.h:25</a></div></div>
 <div class="ttc" id="a_log_8h_html"><div class="ttname"><a href="_log_8h.html">Log.h</a></div><div class="ttdoc">Special logging functionality.</div></div>
 <div class="ttc" id="a_log_8h_html_a746b6eae8886ab8bb40046729eed2983"><div class="ttname"><a href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a></div><div class="ttdeci">const char * LOG_TAG</div><div class="ttdoc">Type definition of logging tags This typedef is necessary to allow for easier manipulation of code by...</div><div class="ttdef"><b>Definition:</b> <a href="_log_8h_source.html#l00041">Log.h:41</a></div></div>
+<div class="ttc" id="a_log_8h_html_aa5fd43862d543e82b7775410573c9142"><div class="ttname"><a href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a></div><div class="ttdeci">Logging::Log_t Log</div><div class="ttdoc">Refer to Log_t.</div></div>
 <div class="ttc" id="a_pins_8h_html"><div class="ttname"><a href="_pins_8h.html">Pins.h</a></div><div class="ttdoc">Update, set, and get predefined pin values.</div></div>
 <div class="ttc" id="anamespace_canbus_html_a003195b12c68a25e85c1249630901f87"><div class="ttname"><a href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">Canbus::sendData</a></div><div class="ttdeci">void sendData(const uint32_t address, uint8_t buf[8])</div><div class="ttdoc">Send raw data over a given canbus address using a given array.</div></div>
 <div class="ttc" id="anamespace_canbus_html_a884781debf9732f3e4676830d294e6bc"><div class="ttname"><a href="namespace_canbus.html#a884781debf9732f3e4676830d294e6bc">Canbus::addCallback</a></div><div class="ttdeci">void addCallback(const uint32_t address, canCallback callback)</div><div class="ttdoc">Add a callback to an incoming address. If an incoming address buffer is updated it will call the give...</div></div>
+<div class="ttc" id="anamespace_heartbeat_html"><div class="ttname"><a href="namespace_heartbeat.html">Heartbeat</a></div><div class="ttdoc">A module used to both ensure a connection to both ECUs using CAN and to periodically run callbacks.</div><div class="ttdef"><b>Definition:</b> <a href="_heartbeat_8h_source.html#l00031">Heartbeat.h:31</a></div></div>
+<div class="ttc" id="anamespace_heartbeat_html_a243a1a7989df814269de816d2893d35b"><div class="ttname"><a href="namespace_heartbeat.html#a243a1a7989df814269de816d2893d35b">Heartbeat::addCallback</a></div><div class="ttdeci">void addCallback(beatFunc func)</div><div class="ttdoc">Add a callback to be run at each haertbeat.</div></div>
+<div class="ttc" id="anamespace_heartbeat_html_a79e1c0291678d9bd08a4b418b6774159"><div class="ttname"><a href="namespace_heartbeat.html#a79e1c0291678d9bd08a4b418b6774159">Heartbeat::beginReceiving</a></div><div class="ttdeci">void beginReceiving()</div><div class="ttdoc">Set callback to receive beats over CAN.</div></div>
+<div class="ttc" id="anamespace_heartbeat_html_a85f5ba8b7ffd86ea82479c28a846f6ac"><div class="ttname"><a href="namespace_heartbeat.html#a85f5ba8b7ffd86ea82479c28a846f6ac">Heartbeat::checkBeat</a></div><div class="ttdeci">int checkBeat()</div><div class="ttdoc">Poll if a beat has been received.</div></div>
+<div class="ttc" id="anamespace_heartbeat_html_aa0261c708b2a2636e941fb6969494556"><div class="ttname"><a href="namespace_heartbeat.html#aa0261c708b2a2636e941fb6969494556">Heartbeat::beginBeating</a></div><div class="ttdeci">void beginBeating()</div><div class="ttdoc">begin sending a beat signal at a set interval</div></div>
 <div class="ttc" id="anamespace_pins_html_a2d60349cb2aec2c336856187093aea61"><div class="ttname"><a href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a></div><div class="ttdeci">void setPinValue(uint8_t GPIO_Pin, int value)</div><div class="ttdoc">Set the pin value of a predefined pin.</div></div>
-<div class="ttc" id="astruct_logging_1_1_log__t_html_a6a07c7449c92c06a608cb8f6463ebd46"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">Logging::Log_t::w</a></div><div class="ttdeci">void w(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a warning tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00155">Log.cpp:155</a></div></div>
+<div class="ttc" id="astruct_logging_1_1_log__t_html_a6a07c7449c92c06a608cb8f6463ebd46"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">Logging::Log_t::w</a></div><div class="ttdeci">void w(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a warning tag.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

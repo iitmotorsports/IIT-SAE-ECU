@@ -1,27 +1,20 @@
 var namespaces_dup =
 [
-    [ "Aero", null, [
-      [ "run", "_aero_servo_8cpp.html#a9a0abe410b4d1e6475bd3349461f68db", null ],
-      [ "setup", "_aero_servo_8cpp.html#aaf24879c16df328a981323313c41f1ba", null ]
+    [ "Aero", "namespace_aero.html", [
+      [ "getServoValue", "namespace_aero.html#ad0fc1966221e034a925ba218e951a30e", null ],
+      [ "run", "namespace_aero.html#a9a0abe410b4d1e6475bd3349461f68db", null ],
+      [ "setup", "namespace_aero.html#aaf24879c16df328a981323313c41f1ba", null ]
     ] ],
     [ "Canbus", "namespace_canbus.html", "namespace_canbus" ],
-    [ "Command", null, [
-      [ "receiveCommand", "_serial_command_8h.html#a5447877dd694317bdf6cd897b8e93b1d", null ],
-      [ "setCommand", "_serial_command_8h.html#a4b4bc1adec84f61fabd7a7f6e71aed61", null ]
+    [ "Command", "namespace_command.html", [
+      [ "receiveCommand", "namespace_command.html#a5447877dd694317bdf6cd897b8e93b1d", null ],
+      [ "setCommand", "namespace_command.html#a4b4bc1adec84f61fabd7a7f6e71aed61", null ]
     ] ],
-    [ "Debug", null, [
-      [ "canBusSniffer", "_debug_panel_8h.html#a2ed5fd918912cdd1aab22a2fb69bdace", null ],
-      [ "printPinMap", "_debug_panel_8h.html#a604df45a2348af6423fdf03db5c5f720", null ],
-      [ "sendCanBusMessage", "_debug_panel_8h.html#a50e94cd6086ddfad5a99d8c848d1c3bb", null ]
+    [ "Echo", "namespace_echo.html", [
+      [ "echo", "namespace_echo.html#a0f3d048035f869638271d08ea736f97e", null ],
+      [ "echo", "namespace_echo.html#ac57e2ff216615be891ffabf232f14d37", null ],
+      [ "setup", "namespace_echo.html#a06d3c7f95ead843b9a10c61cb4ee8aee", null ]
     ] ],
-    [ "ECUBuildPick", null, [
-      [ "replace", "_e_c_u_build_pick_8py.html#a59165f434efcb61440a3af9f2158667e", null ],
-      [ "FILE_REPLACE", "_e_c_u_build_pick_8py.html#aef74bb030e382f8cecbbb7706685b2d3", null ],
-      [ "STR_BACK", "_e_c_u_build_pick_8py.html#afbfed78d498aac788b47bd513a691678", null ],
-      [ "STR_BASE", "_e_c_u_build_pick_8py.html#a631aa33fa4f34c7c973760795f498fdc", null ],
-      [ "STR_FRONT", "_e_c_u_build_pick_8py.html#a4e814e374515080502e0941c179bc4a1", null ]
-    ] ],
-    [ "ECUStates", "namespace_e_c_u_states.html", null ],
     [ "Fault", "namespace_fault.html", [
       [ "anyFault", "namespace_fault.html#a8d65de5d2b7a229e0d2c8d84ca9f64bd", null ],
       [ "hardFault", "namespace_fault.html#a575e9434178c423cac322ff491398e93", null ],
@@ -29,20 +22,25 @@ var namespaces_dup =
       [ "setup", "namespace_fault.html#a5d866df0efc11ff65ac5c22bf8f6569a", null ],
       [ "softFault", "namespace_fault.html#a4ffa144bc1e88734c7d7e95bb008aa67", null ]
     ] ],
-    [ "Front", "namespace_front.html", [
-      [ "run", "namespace_front.html#a2deb9201e361171c69d361ce69047a15", null ]
-    ] ],
-    [ "Heartbeat", null, [
-      [ "beginBeating", "_heartbeat_8cpp.html#aa0261c708b2a2636e941fb6969494556", null ],
-      [ "beginReceiving", "_heartbeat_8cpp.html#a79e1c0291678d9bd08a4b418b6774159", null ],
-      [ "checkBeat", "_heartbeat_8cpp.html#a85f5ba8b7ffd86ea82479c28a846f6ac", null ]
+    [ "Heartbeat", "namespace_heartbeat.html", [
+      [ "beatFunc", "namespace_heartbeat.html#a90dd9f85dfc6bf41682af19b8ecd0c8d", null ],
+      [ "addCallback", "namespace_heartbeat.html#a243a1a7989df814269de816d2893d35b", null ],
+      [ "beginBeating", "namespace_heartbeat.html#aa0261c708b2a2636e941fb6969494556", null ],
+      [ "beginReceiving", "namespace_heartbeat.html#a79e1c0291678d9bd08a4b418b6774159", null ],
+      [ "checkBeat", "namespace_heartbeat.html#a85f5ba8b7ffd86ea82479c28a846f6ac", null ]
     ] ],
     [ "Logging", "namespace_logging.html", "namespace_logging" ],
+    [ "MC", "namespace_m_c.html", [
+      [ "clearFaults", "namespace_m_c.html#add4fdfcad6990dec728c2eeadaca45e1", null ],
+      [ "enableMotorBeating", "namespace_m_c.html#ab35b9e9f20dc50d81b40d6d5c298c1ea", null ],
+      [ "sendCommand", "namespace_m_c.html#a7a12210dcd86df23c79ae5649a29498c", null ],
+      [ "setTorque", "namespace_m_c.html#ae2693d899098dca858a1bdbcdd539272", null ],
+      [ "setup", "namespace_m_c.html#aeb2b966841aa0fd6b2ac79478a648c84", null ]
+    ] ],
     [ "Mirror", "namespace_mirror.html", [
       [ "enterMirrorMode", "namespace_mirror.html#a89a62e4b2e374ef95291177d525dcf8e", null ],
       [ "exitMirrorMode", "namespace_mirror.html#a9cdbdcb79cef06a3b8b18151c440b262", null ],
-      [ "setup", "namespace_mirror.html#a1163a1d753f2ea7a3150f06a015fbedb", null ],
-      [ "timerReceive", "namespace_mirror.html#ade28c8d026e28e092e326f76a3093dc4", null ]
+      [ "setup", "namespace_mirror.html#a1163a1d753f2ea7a3150f06a015fbedb", null ]
     ] ],
     [ "Pins", "namespace_pins.html", [
       [ "PinHandler", "namespace_pins.html#a3e6834ba621655f97e8313f86a97c33b", null ],
@@ -57,14 +55,5 @@ var namespaces_dup =
       [ "stopCanPins", "namespace_pins.html#a12a6f448c7eea1740a38f0fbe73bbace", null ],
       [ "update", "namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35", null ]
     ] ],
-    [ "State", "namespace_state.html", "namespace_state" ],
-    [ "uploadPaste", null, [
-      [ "deletePaste", "upload_paste_8py.html#a0d0788fb9addba750c8f59282c41a00e", null ],
-      [ "listPastes", "upload_paste_8py.html#a49beef25b2f7cc4f60b143dc00a0589b", null ],
-      [ "main", "upload_paste_8py.html#a3eaf92a25a2a09731859e7ab813fe7d7", null ],
-      [ "uploadFile", "upload_paste_8py.html#a9ffdd998e42a67caedc4e2ab56cd92d1", null ],
-      [ "API", "upload_paste_8py.html#a4c72d9f6b162bf6d60b02f6d0fddf388", null ],
-      [ "DEV", "upload_paste_8py.html#a4a55fee11ba4422995e721050d70e255", null ],
-      [ "headers", "upload_paste_8py.html#a17b3bcfa7ffba2ca91da384d139d2d20", null ]
-    ] ]
+    [ "State", "namespace_state.html", "namespace_state" ]
 ];

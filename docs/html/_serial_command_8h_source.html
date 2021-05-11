@@ -92,22 +92,26 @@ $(document).ready(function(){initNavTree('_serial_command_8h_source.html',''); i
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#ifndef __ECU_SERIALCOMMAND_H__</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#define __ECU_SERIALCOMMAND_H__</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;SerialCommand.def&quot;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_serial_command_8def.html">SerialCommand.def</a>&quot;</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;usb_serial.h&quot;</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">typedef</span> void (*CommandCallback)(void);</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">namespace </span>Command {</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keywordtype">void</span> setCommand(uint8_t command, CommandCallback callback);</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keywordtype">int</span> receiveCommand(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;} <span class="comment">// namespace Command</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __ECU_SERIALCOMMAND_H__</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="namespace_command.html">   25</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_command.html">Command</a> {</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="namespace_command.html#a4b4bc1adec84f61fabd7a7f6e71aed61">   33</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_command.html#a4b4bc1adec84f61fabd7a7f6e71aed61">setCommand</a>(uint8_t command, CommandCallback callback);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="namespace_command.html#a5447877dd694317bdf6cd897b8e93b1d">   40</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="namespace_command.html#a5447877dd694317bdf6cd897b8e93b1d">receiveCommand</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;} <span class="comment">// namespace Command</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __ECU_SERIALCOMMAND_H__</span></div>
+<div class="ttc" id="a_serial_command_8def_html"><div class="ttname"><a href="_serial_command_8def.html">SerialCommand.def</a></div><div class="ttdoc">SerialCommand config.</div></div>
+<div class="ttc" id="anamespace_command_html"><div class="ttname"><a href="namespace_command.html">Command</a></div><div class="ttdoc">A simple way to run commands over serial.</div><div class="ttdef"><b>Definition:</b> <a href="_serial_command_8h_source.html#l00025">SerialCommand.h:25</a></div></div>
+<div class="ttc" id="anamespace_command_html_a4b4bc1adec84f61fabd7a7f6e71aed61"><div class="ttname"><a href="namespace_command.html#a4b4bc1adec84f61fabd7a7f6e71aed61">Command::setCommand</a></div><div class="ttdeci">void setCommand(uint8_t command, CommandCallback callback)</div><div class="ttdoc">attach a single callback to a byte value that will be received over serial</div></div>
+<div class="ttc" id="anamespace_command_html_a5447877dd694317bdf6cd897b8e93b1d"><div class="ttname"><a href="namespace_command.html#a5447877dd694317bdf6cd897b8e93b1d">Command::receiveCommand</a></div><div class="ttdeci">int receiveCommand(void)</div><div class="ttdoc">receive any command from serial by matching incoming bytes to a callback</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

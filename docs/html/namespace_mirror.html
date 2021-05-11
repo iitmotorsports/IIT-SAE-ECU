@@ -96,9 +96,6 @@ $(document).ready(function(){initNavTree('namespace_mirror.html',''); initResiza
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ade28c8d026e28e092e326f76a3093dc4"><td class="memItemLeft" align="right" valign="top"><a id="ade28c8d026e28e092e326f76a3093dc4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>timerReceive</b> ()</td></tr>
-<tr class="separator:ade28c8d026e28e092e326f76a3093dc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1163a1d753f2ea7a3150f06a015fbedb"><td class="memItemLeft" align="right" valign="top"><a id="a1163a1d753f2ea7a3150f06a015fbedb"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_mirror.html#a1163a1d753f2ea7a3150f06a015fbedb">setup</a> (void)</td></tr>
 <tr class="memdesc:a1163a1d753f2ea7a3150f06a015fbedb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup a listener for going into mirror mode, dependent on which ECU is compiled. <br /></td></tr>
@@ -114,7 +111,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Check and modify pin values over USB serial How to use - connect with a terminal that can both send and receive values compile and upload a binary with both debug and ascii mode enabled. </p>
 <p>Example Term <a href="https://www.der-hammer.info/pages/terminal.html">https://www.der-hammer.info/pages/terminal.html</a></p>
-<p>First send the decimal value '90' or whatever is defined in <a class="el" href="_serial_command_8def_source.html">SerialCommand.def</a> to enter <a class="el" href="namespace_mirror.html" title="Check and modify pin values over USB serial How to use - connect with a terminal that can both send a...">Mirror</a> mode.</p>
+<p>First send the decimal value '90' or whatever is defined in <a class="el" href="_serial_command_8def.html" title="SerialCommand config.">SerialCommand.def</a> to enter <a class="el" href="namespace_mirror.html" title="Check and modify pin values over USB serial How to use - connect with a terminal that can both send a...">Mirror</a> mode.</p>
 <p>Commands (all in decimal): byte != 255: print out this pin's value Sending a single number that is not 255 will return that corresponding pin's value if it exists</p>
 <p>byte == 255 : Enter set pin mode Wait for subsequent bytes to set a pin value. The next byte received is the pin to set. The next four bytes (little endian) is the integer to set that pin to. </p><dl class="section note"><dt>Note</dt><dd>If not all four bytes are received then those bytes are zeroed </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
@@ -136,8 +133,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 
 <p>Manually exit mirror mode. </p>
 <p>Should be called by an external interrupt </p>
-
-<p class="definition">Definition at line <a class="el" href="_mirror_8cpp_source.html#l00094">94</a> of file <a class="el" href="_mirror_8cpp_source.html">Mirror.cpp</a>.</p>
 
 </div>
 </div>

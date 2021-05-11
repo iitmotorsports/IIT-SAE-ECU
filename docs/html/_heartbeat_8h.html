@@ -85,7 +85,9 @@ $(document).ready(function(){initNavTree('_heartbeat_8h.html',''); initResizable
 
 <div class="header">
   <div class="summary">
+<a href="#namespaces">Namespaces</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Heartbeat.h File Reference</div>  </div>
@@ -99,26 +101,45 @@ $(document).ready(function(){initNavTree('_heartbeat_8h.html',''); initResizable
 </div>
 <p><a href="_heartbeat_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespace_heartbeat"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_heartbeat.html">Heartbeat</a></td></tr>
+<tr class="memdesc:namespace_heartbeat"><td class="mdescLeft">&#160;</td><td class="mdescRight">A module used to both ensure a connection to both ECUs using CAN and to periodically run callbacks. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a326e03f1932f84d63f56e8e852a71840"><td class="memItemLeft" align="right" valign="top"><a id="a326e03f1932f84d63f56e8e852a71840"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CONF_HEARTBEAT_INTERVAL_MICRO</b>&#160;&#160;&#160;500000</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_heartbeat_8h.html#a326e03f1932f84d63f56e8e852a71840">CONF_HEARTBEAT_INTERVAL_MICRO</a>&#160;&#160;&#160;150000</td></tr>
+<tr class="memdesc:a326e03f1932f84d63f56e8e852a71840"><td class="mdescLeft">&#160;</td><td class="mdescRight">The interval the beat should target. <br /></td></tr>
 <tr class="separator:a326e03f1932f84d63f56e8e852a71840"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae3c7fcd9cab30e87b0fbc35404880137"><td class="memItemLeft" align="right" valign="top"><a id="ae3c7fcd9cab30e87b0fbc35404880137"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CONF_HEARTBEAT_TIMEOUT_MILLI</b>&#160;&#160;&#160;50</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_heartbeat_8h.html#ae3c7fcd9cab30e87b0fbc35404880137">CONF_HEARTBEAT_TIMEOUT_MILLI</a>&#160;&#160;&#160;50</td></tr>
+<tr class="memdesc:ae3c7fcd9cab30e87b0fbc35404880137"><td class="mdescLeft">&#160;</td><td class="mdescRight">The allowed delay between beats. <br /></td></tr>
 <tr class="separator:ae3c7fcd9cab30e87b0fbc35404880137"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a90dd9f85dfc6bf41682af19b8ecd0c8d"><td class="memItemLeft" align="right" valign="top"><a id="a90dd9f85dfc6bf41682af19b8ecd0c8d"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><b>Heartbeat::beatFunc</b>) (void)</td></tr>
+<tr class="separator:a90dd9f85dfc6bf41682af19b8ecd0c8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:aa0261c708b2a2636e941fb6969494556"><td class="memItemLeft" align="right" valign="top"><a id="aa0261c708b2a2636e941fb6969494556"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Heartbeat::beginBeating</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_heartbeat.html#aa0261c708b2a2636e941fb6969494556">Heartbeat::beginBeating</a> ()</td></tr>
+<tr class="memdesc:aa0261c708b2a2636e941fb6969494556"><td class="mdescLeft">&#160;</td><td class="mdescRight">begin sending a beat signal at a set interval <br /></td></tr>
 <tr class="separator:aa0261c708b2a2636e941fb6969494556"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a79e1c0291678d9bd08a4b418b6774159"><td class="memItemLeft" align="right" valign="top"><a id="a79e1c0291678d9bd08a4b418b6774159"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Heartbeat::beginReceiving</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_heartbeat.html#a79e1c0291678d9bd08a4b418b6774159">Heartbeat::beginReceiving</a> ()</td></tr>
+<tr class="memdesc:a79e1c0291678d9bd08a4b418b6774159"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set callback to receive beats over CAN. <br /></td></tr>
 <tr class="separator:a79e1c0291678d9bd08a4b418b6774159"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85f5ba8b7ffd86ea82479c28a846f6ac"><td class="memItemLeft" align="right" valign="top"><a id="a85f5ba8b7ffd86ea82479c28a846f6ac"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>Heartbeat::checkBeat</b> ()</td></tr>
+<tr class="memitem:a85f5ba8b7ffd86ea82479c28a846f6ac"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_heartbeat.html#a85f5ba8b7ffd86ea82479c28a846f6ac">Heartbeat::checkBeat</a> ()</td></tr>
+<tr class="memdesc:a85f5ba8b7ffd86ea82479c28a846f6ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Poll if a beat has been received.  <a href="namespace_heartbeat.html#a85f5ba8b7ffd86ea82479c28a846f6ac">More...</a><br /></td></tr>
 <tr class="separator:a85f5ba8b7ffd86ea82479c28a846f6ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a243a1a7989df814269de816d2893d35b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_heartbeat.html#a243a1a7989df814269de816d2893d35b">Heartbeat::addCallback</a> (beatFunc func)</td></tr>
+<tr class="memdesc:a243a1a7989df814269de816d2893d35b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a callback to be run at each haertbeat.  <a href="namespace_heartbeat.html#a243a1a7989df814269de816d2893d35b">More...</a><br /></td></tr>
+<tr class="separator:a243a1a7989df814269de816d2893d35b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Make one ECU tell the other it is alive. </p>

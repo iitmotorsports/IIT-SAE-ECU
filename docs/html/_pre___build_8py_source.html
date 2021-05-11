@@ -144,57 +144,57 @@ $(document).ready(function(){initNavTree('_pre___build_8py_source.html',''); ini
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment"># @cond</span></div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment"># TODO: Keep same lookup table when compiling both back and front teensy</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keyword">import</span> shutil</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keyword">import</span> hashlib</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keyword">import</span> os</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keyword">import</span> asyncio</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keyword">import</span> threading</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keyword">import</span> time</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">import</span> errno</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keyword">import</span> re</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keyword">import</span> sys</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="keyword">import</span> json</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="keyword">import</span> pickle</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keyword">import</span> io</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">from</span> typing <span class="keyword">import</span> Optional, IO</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keyword">import</span> subprocess</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;SOURCE_NAME = <span class="stringliteral">&quot;src&quot;</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;LIBRARIES_NAME = <span class="stringliteral">&quot;libraries&quot;</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;LIB_PATH = <span class="stringliteral">&quot;libraries\\Log&quot;</span>  <span class="comment"># Path to the implementation of Log</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;LIB_FILE = <span class="stringliteral">&quot;LogConfig.def&quot;</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;LIB_DEFINE = (<span class="stringliteral">&quot;#define CONF_LOGGING_MAPPED_MODE 0&quot;</span>, <span class="stringliteral">&quot;#define CONF_LOGGING_MAPPED_MODE 1&quot;</span>)</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;WORKING_DIRECTORY_OFFSET = <span class="stringliteral">&quot;build\\Pre_Build\\&quot;</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="comment"># FILE_OUTPUT_PATH = &quot;build\\bin&quot;</span></div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;FILE_OUTPUT_PATH = <span class="stringliteral">&quot;&quot;</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keyword">import</span> shutil</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">import</span> hashlib</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keyword">import</span> os</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keyword">import</span> asyncio</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keyword">import</span> threading</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keyword">import</span> time</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keyword">import</span> errno</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keyword">import</span> re</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">import</span> sys</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keyword">import</span> json</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keyword">import</span> pickle</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="keyword">import</span> io</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="keyword">from</span> typing <span class="keyword">import</span> Optional, IO</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keyword">import</span> subprocess</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;SOURCE_NAME = <span class="stringliteral">&quot;src&quot;</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;LIBRARIES_NAME = <span class="stringliteral">&quot;libraries&quot;</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;LIB_PATH = <span class="stringliteral">&quot;libraries\\Log&quot;</span>  <span class="comment"># Path to the implementation of Log</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;LIB_FILE = <span class="stringliteral">&quot;LogConfig.def&quot;</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;LIB_DEFINE = (<span class="stringliteral">&quot;#define CONF_LOGGING_MAPPED_MODE 0&quot;</span>, <span class="stringliteral">&quot;#define CONF_LOGGING_MAPPED_MODE 1&quot;</span>)</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;WORKING_DIRECTORY_OFFSET = <span class="stringliteral">&quot;build\\Pre_Build\\&quot;</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="comment"># FILE_OUTPUT_PATH = &quot;build\\bin&quot;</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;FILE_OUTPUT_PATH = <span class="stringliteral">&quot;&quot;</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;BYPASS_SCRIPT = os.path.exists(<span class="stringliteral">&quot;script.disable&quot;</span>)  <span class="comment"># bypass script if this file is found</span></div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;BYPASS_SCRIPT = os.path.exists(<span class="stringliteral">&quot;script.disable&quot;</span>)  <span class="comment"># bypass script if this file is found</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;LIMIT_TAG = 254</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;LIMIT_ID = 65535</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;BLACKLIST_ADDRESSESS = (0, 5, 9)</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;SOURCE_DEST_NAME = <span class="stringliteral">&quot;{}{}&quot;</span>.format(WORKING_DIRECTORY_OFFSET, SOURCE_NAME)</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;LIBRARIES_DEST_NAME = <span class="stringliteral">&quot;{}{}&quot;</span>.format(WORKING_DIRECTORY_OFFSET, LIBRARIES_NAME)</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;DATA_FILE = <span class="stringliteral">&quot;{}.LogInfo&quot;</span>.format(WORKING_DIRECTORY_OFFSET)</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;LOW_RAM = 4</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;BUF_SIZE = 65536</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="comment"># PLACEHOLDER_TAG = &quot;__PYTHON__TAG__PLACEHOLDER__{}__&quot;</span></div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="comment"># PLACEHOLDER_ID = &quot;__PYTHON__ID__PLACEHOLDER__{}__&quot;</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;LIMIT_TAG = 254</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;LIMIT_ID = 65535</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;BLACKLIST_ADDRESSESS = (0, 5, 9)</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;SOURCE_DEST_NAME = <span class="stringliteral">&quot;{}{}&quot;</span>.format(WORKING_DIRECTORY_OFFSET, SOURCE_NAME)</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;LIBRARIES_DEST_NAME = <span class="stringliteral">&quot;{}{}&quot;</span>.format(WORKING_DIRECTORY_OFFSET, LIBRARIES_NAME)</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;DATA_FILE = <span class="stringliteral">&quot;{}.LogInfo&quot;</span>.format(WORKING_DIRECTORY_OFFSET)</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;LOW_RAM = 4</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;BUF_SIZE = 65536</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="comment"># PLACEHOLDER_TAG = &quot;__PYTHON__TAG__PLACEHOLDER__{}__&quot;</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="comment"># PLACEHOLDER_ID = &quot;__PYTHON__ID__PLACEHOLDER__{}__&quot;</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;RamMemo = <span class="keyword">False</span></div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;RamMemo = <span class="keyword">False</span></div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="keyword">def </span>AvailableRam():</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keyword">global</span> RamMemo</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keywordflow">if</span> <span class="keywordflow">not</span> RamMemo:</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        out = subprocess.check_output(<span class="stringliteral">&quot;wmic OS get FreePhysicalMemory /Value&quot;</span>, stderr=subprocess.STDOUT, shell=<span class="keyword">True</span>)</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        RamMemo = round(int(str(out).strip(<span class="stringliteral">&quot;b&quot;</span>).strip(<span class="stringliteral">&quot;&#39;&quot;</span>).replace(<span class="stringliteral">&quot;\\r&quot;</span>, <span class="stringliteral">&quot;&quot;</span>).replace(<span class="stringliteral">&quot;\\n&quot;</span>, <span class="stringliteral">&quot;&quot;</span>).replace(<span class="stringliteral">&quot;FreePhysicalMemory=&quot;</span>, <span class="stringliteral">&quot;&quot;</span>)) / 1048576, 2)</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="keyword">def </span>AvailableRam():</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keyword">global</span> RamMemo</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keywordflow">if</span> <span class="keywordflow">not</span> RamMemo:</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        out = subprocess.check_output(<span class="stringliteral">&quot;wmic OS get FreePhysicalMemory /Value&quot;</span>, stderr=subprocess.STDOUT, shell=<span class="keyword">True</span>)</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        RamMemo = round(</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;            int(str(out).strip(<span class="stringliteral">&quot;b&quot;</span>).strip(<span class="stringliteral">&quot;&#39;&quot;</span>).replace(<span class="stringliteral">&quot;\\r&quot;</span>, <span class="stringliteral">&quot;&quot;</span>).replace(<span class="stringliteral">&quot;\\n&quot;</span>, <span class="stringliteral">&quot;&quot;</span>).replace(<span class="stringliteral">&quot;FreePhysicalMemory=&quot;</span>, <span class="stringliteral">&quot;&quot;</span>)) / 1048576, 2</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        )</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keywordflow">return</span> RamMemo</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
@@ -360,7 +360,7 @@ $(document).ready(function(){initNavTree('_pre___build_8py_source.html',''); ini
 <div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;)</div>
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;FIND_CALL_REGEX_SS = <span class="stringliteral">r&quot;Log(\.[diwef])?\s*\&zwj;(\s*(\&quot;.*?\&quot;)\s*,\s*(\&quot;.*?\&quot;)\s*\&zwj;)\s*;&quot;</span>  <span class="comment"># -&gt; Log(&quot;Str&quot;, &quot;Str&quot;);</span></div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;FIND_CALL_REGEX_VS = <span class="stringliteral">r&quot;Log(\.[diwef])?\s*\&zwj;(\s*([^\&quot;]+?)\s*,\s*(\&quot;.*?\&quot;)\s*\&zwj;)\s*;&quot;</span>  <span class="comment"># -&gt; Log(Var, &quot;Str&quot;);</span></div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;FIND_CALL_REGEX_SSV = <span class="stringliteral">r&quot;Log(\.[diwef])?\s*\&zwj;(\s*(\&quot;.*?\&quot;)\s*,\s*(\&quot;.*?\&quot;)\s*,\s*([^\&quot;]+?)\s*\&zwj;)\s*;&quot;</span>  <span class="comment"># -&gt; Log(&quot;Str&quot;, &quot;Str&quot;, Var);</span></div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;FIND_CALL_REGEX_SSV = <span class="stringliteral">r&quot;Log(\.[diwef])?\s*\&zwj;(\s*(\&quot;.*?\&quot;)\s*,\s*(\&quot;.*?\&quot;)\s*,\s*([^\&quot;]+?)\s*\&zwj;)\s*;&quot;</span>  <span class="comment"># -&gt; Log(&quot;Str&quot;, &quot;Str&quot;, Var); # FIXME: SSV does not seem to be working</span></div>
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;FIND_CALL_REGEX_VSV = <span class="stringliteral">r&quot;Log(\.[diwef])?\s*\&zwj;(\s*([^\&quot;]+?)\s*,\s*(\&quot;.*?\&quot;)\s*,\s*([^\&quot;]+?)\s*\&zwj;)\s*;&quot;</span>  <span class="comment"># -&gt; Log(Var, &quot;Str&quot;, Var);</span></div>
 <div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;FIND_CALL_REGEX_BAD = <span class="stringliteral">r&quot;(Log(?:\.[diwef])?\s*\&zwj;(\s*(?:[^\&quot;]+?|\&quot;(?:[^\&quot;]|\\\&quot;)*?\&quot;)\s*,\s*)([^\&quot;;]+?)(\s*(?:,\s*(?:[^\&quot;]+?))?\s*\&zwj;)\s*;)&quot;</span>  <span class="comment"># Implicit string or number where it should not be | IDE will warn about numbers but will still compile</span></div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160; </div>

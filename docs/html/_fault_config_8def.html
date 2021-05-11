@@ -108,7 +108,7 @@ Macros</h2></td></tr>
 <tr class="memitem:a390419930292eef5516ad68b3b5e2af6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_fault_config_8def.html#a390419930292eef5516ad68b3b5e2af6">SOFT_PIN_FAULTS</a></td></tr>
 <tr class="memdesc:a390419930292eef5516ad68b3b5e2af6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines <a class="el" href="namespace_pins.html" title="Get and set values to predefined pins.">Pins</a> that should be checked for hard faults.  <a href="_fault_config_8def.html#a390419930292eef5516ad68b3b5e2af6">More...</a><br /></td></tr>
 <tr class="separator:a390419930292eef5516ad68b3b5e2af6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a725d76d669362031fe65a6c678180998"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_fault_config_8def.html#a725d76d669362031fe65a6c678180998">HARD_FAULT_ADD</a>&#160;&#160;&#160;    X(ADD_MC0_FAULTS, 0x4000020120100080, &quot;BMS&quot;) \</td></tr>
+<tr class="memitem:a725d76d669362031fe65a6c678180998"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_fault_config_8def.html#a725d76d669362031fe65a6c678180998">HARD_FAULT_ADD</a></td></tr>
 <tr class="memdesc:a725d76d669362031fe65a6c678180998"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines CAN addresses that should be checked for hard faults.  <a href="_fault_config_8def.html#a725d76d669362031fe65a6c678180998">More...</a><br /></td></tr>
 <tr class="separator:a725d76d669362031fe65a6c678180998"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64da401593bb14ccb3e214d872874078"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_fault_config_8def.html#a64da401593bb14ccb3e214d872874078">SOFT_FAULT_ADD</a></td></tr>
@@ -134,7 +134,7 @@ Macros</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define HARD_FAULT_ADD&#160;&#160;&#160;    X(ADD_MC0_FAULTS, 0x4000020120100080, &quot;BMS&quot;) \</td>
+          <td class="memname">#define HARD_FAULT_ADD</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -145,7 +145,7 @@ Macros</h2></td></tr>
 <p>X(CAN address, mask, tag) \</p>
 <p>Only the last entry should NOT have a '\' </p>
 
-<p class="definition">Definition at line <a class="el" href="_fault_config_8def_source.html#l00070">70</a> of file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_fault_config_8def_source.html#l00069">69</a> of file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
 
 </div>
 </div>
@@ -160,8 +160,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    X(PINS_BACK_HVD_FAULT, &gt;, 0, <a class="code" href="_log_8h.html#a9bec0c08edcafb8184fd41d631e708e9">_LogPrebuildString</a>(<span class="stringliteral">&quot;HVD Fault Signal&quot;</span>)) \</div>
-<div class="line">    X(PINS_BACK_IMD_FAULT, &gt;, 0, <a class="code" href="_log_8h.html#a9bec0c08edcafb8184fd41d631e708e9">_LogPrebuildString</a>(<span class="stringliteral">&quot;IMD Fault Signal&quot;</span>)) \</div>
+<b>Value:</b><div class="fragment"><div class="line">    X(PINS_BACK_IMD_FAULT, &gt;, 0, <a class="code" href="_log_8h.html#a9bec0c08edcafb8184fd41d631e708e9">_LogPrebuildString</a>(<span class="stringliteral">&quot;IMD Fault Signal&quot;</span>)) \</div>
 <div class="line">    X(PINS_BACK_BMS_FAULT, &gt;, 0, <a class="code" href="_log_8h.html#a9bec0c08edcafb8184fd41d631e708e9">_LogPrebuildString</a>(<span class="stringliteral">&quot;BMS Fault Signal&quot;</span>))</div>
 <div class="ttc" id="a_log_8h_html_a9bec0c08edcafb8184fd41d631e708e9"><div class="ttname"><a href="_log_8h.html#a9bec0c08edcafb8184fd41d631e708e9">_LogPrebuildString</a></div><div class="ttdeci">#define _LogPrebuildString(x)</div><div class="ttdoc">Refer to Pre_Build.py.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8h_source.html#l00019">Log.h:19</a></div></div>
 </div><!-- fragment -->
@@ -194,7 +193,7 @@ Macros</h2></td></tr>
 <p>X(CAN address, bitmask, _LogPrebuildString(identity)) \</p>
 <p>Only the last entry should NOT have a '\' </p>
 
-<p class="definition">Definition at line <a class="el" href="_fault_config_8def_source.html#l00104">104</a> of file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_fault_config_8def_source.html#l00102">102</a> of file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
 
 </div>
 </div>
@@ -218,7 +217,7 @@ Macros</h2></td></tr>
 <p>X(CAN address, mask, tag) \</p>
 <p>Only the last entry should NOT have a '\' </p>
 
-<p class="definition">Definition at line <a class="el" href="_fault_config_8def_source.html#l00086">86</a> of file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_fault_config_8def_source.html#l00084">84</a> of file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
 
 </div>
 </div>
@@ -240,7 +239,7 @@ Macros</h2></td></tr>
 <p>X(pin, comparator, value, identity) \</p>
 <p>Only the last entry should NOT have a '\' </p>
 
-<p class="definition">Definition at line <a class="el" href="_fault_config_8def_source.html#l00055">55</a> of file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_fault_config_8def_source.html#l00054">54</a> of file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
 
 </div>
 </div>

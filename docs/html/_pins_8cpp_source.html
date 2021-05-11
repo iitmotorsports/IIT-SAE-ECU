@@ -296,17 +296,17 @@ $(document).ready(function(){initNavTree('_pins_8cpp_source.html',''); initResiz
 <div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a9d8cba01aef10c12ca76fe5cb0bc67c6">setInternalValue</a>(uint8_t Internal_Pin, <span class="keywordtype">int</span> value) {</div>
 <div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;<span class="preprocessor">#ifdef CONF_ECU_DEBUG</span></div>
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    <span class="keywordflow">if</span> (CAN_GPIO_MAP_OUT.find(Internal_Pin) != CAN_GPIO_MAP_OUT.end()) {</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Setting Internal pin:&quot;</span>, Internal_Pin);</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Setting Internal pin to int:&quot;</span>, value);</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Setting Internal pin:&quot;</span>, Internal_Pin);</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Setting Internal pin to int:&quot;</span>, value);</div>
 <div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;        CAN_GPIO_MAP_OUT[Internal_Pin] = value;</div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Unable to set Internal pin to int:&quot;</span>, value);</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Pin:&quot;</span>, Internal_Pin);</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Unable to set Internal pin to int:&quot;</span>, value);</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Pin:&quot;</span>, Internal_Pin);</div>
 <div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    }</div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160; </div>
 <div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    <span class="keywordflow">if</span> (CAN_GPIO_MAP.find(Internal_Pin) != CAN_GPIO_MAP.end())</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        *CAN_GPIO_MAP[Internal_Pin] = value;</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    <span class="keywordflow">if</span> (CAN_GPIO_MAP_OUT.find(Internal_Pin) != CAN_GPIO_MAP_OUT.end())</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        CAN_GPIO_MAP_OUT[Internal_Pin] = value;</div>
 <div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;}</div>
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160; </div>
@@ -321,7 +321,7 @@ $(document).ready(function(){initNavTree('_pins_8cpp_source.html',''); initResiz
 <div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    <span class="keywordflow">if</span> (CAN_GPIO_MAP_IN.find(CAN_GPIO_Pin) != CAN_GPIO_MAP_IN.end()) {</div>
 <div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;        <span class="keywordflow">return</span> *CAN_GPIO_MAP_IN[CAN_GPIO_Pin];</div>
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">e</a>(ID, <span class="stringliteral">&quot;Canpin was not defined before hand:&quot;</span>, CAN_GPIO_Pin);</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">e</a>(ID, <span class="stringliteral">&quot;Canpin was not defined before hand:&quot;</span>, CAN_GPIO_Pin);</div>
 <div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;        <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    }</div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;<span class="preprocessor">#else</span></div>
@@ -337,7 +337,7 @@ $(document).ready(function(){initNavTree('_pins_8cpp_source.html',''); initResiz
 <div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;<span class="preprocessor">#undef X</span></div>
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    } <span class="keywordflow">else</span> {</div>
 <div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;<span class="preprocessor">#ifdef CONF_ECU_DEBUG</span></div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;No pin defined&quot;</span>, GPIO_Pin);</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;No pin defined&quot;</span>, GPIO_Pin);</div>
 <div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;        <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    }</div>
@@ -350,169 +350,172 @@ $(document).ready(function(){initNavTree('_pins_8cpp_source.html',''); initResiz
 <div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;        <a class="code" href="_pin_config_8def.html#a7603185bc328f16ab177087d225c6848">ECU_PINS</a></div>
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;<span class="preprocessor">#undef X</span></div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    }</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;}</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160; </div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35">update</a>(<span class="keywordtype">void</span>) {</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    <span class="comment">// #define X(pin, Type, IO) __INTERNAL_READ_##Type(pin);</span></div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    <span class="comment">//     ECU_PINS</span></div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    <span class="comment">// #undef X</span></div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;}</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160; </div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> populateCanbusMap(std::multimap&lt;uint32_t, std::tuple&lt;uint, uint8_t, bool&gt;&gt; pinMap, analogCanPinMsg_t *analogCanPinStructArray, uint maxAnalogMsg, digitalCanPinMsg_t *digitalCanPinStruct, uint activeDigitalCanPinCount) {</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    uint amsgc = 0;</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    uint dmsgc = 0;</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    decltype(pinMap.equal_range(0)) range;</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;    for (auto i = pinMap.<a class="code" href="namespace_state.html#a1c6e60c84c0fb7c572adaf678fb6a56a">begin</a>(); i != pinMap.end(); i = range.second) {</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;        range = pinMap.equal_range(i-&gt;first);</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160; </div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;        uint ac = 0;</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;        uint dc = 0;</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;        uint32_t address = i-&gt;first;</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160; </div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> d = range.first; d != range.second; ++d) {</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;            <span class="keywordflow">if</span> (std::get&lt;2&gt;(d-&gt;second)) { <span class="comment">// Analog</span></div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;                <span class="keywordflow">if</span> (amsgc == maxAnalogMsg) {</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;                    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">e</a>(ID, <span class="stringliteral">&quot;Exceeded number of allocated analog canbus buffers, maximize the number of analog pins per address&quot;</span>, amsgc);</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;                    <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;                }</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;                <span class="keywordflow">if</span> (ac == 2) {</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;                    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Address has too many analog pins allocated, ignoring additional pins&quot;</span>, address);</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;                    <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;                }</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;                analogCanPinStructArray[amsgc].address = address;</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;                analogCanPinStructArray[amsgc].analogPinPos[ac] = std::get&lt;0&gt;(d-&gt;second);</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;                analogCanPinStructArray[amsgc].analogPins[ac] = std::get&lt;1&gt;(d-&gt;second);</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;                <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;&quot;</span>, std::get&lt;1&gt;(d-&gt;second));</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;                ac++;</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;            } <span class="keywordflow">else</span> {              <span class="comment">// Digital</span></div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;                <span class="keywordflow">if</span> (dmsgc == 1) { <span class="comment">// NOTE: Hardcoded single digital message</span></div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;                    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">e</a>(ID, <span class="stringliteral">&quot;Exceeded number of allocated digital canbus buffers, currently only one digital buffer is supported&quot;</span>, dmsgc);</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;                    <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;                }</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;                <span class="keywordflow">if</span> (dc == activeDigitalCanPinCount) {</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;                    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Address has too many digital pins allocated, ignoring additional pins&quot;</span>, address);</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;                    <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;                }</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;                digitalCanPinStruct-&gt;address = address;</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;                digitalCanPinStruct-&gt;digitalPinPos[dc] = std::get&lt;0&gt;(d-&gt;second);</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;                digitalCanPinStruct-&gt;digitalPins[dc] = std::get&lt;1&gt;(d-&gt;second);</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;                dc++;</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;                digitalCanPinStruct-&gt;activedigitalCanPins = dc; <span class="comment">// Set number of active pins out of 8 on digital message</span></div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;            }</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;        }</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160; </div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;        <span class="keywordflow">if</span> (ac || dc) {</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;            <span class="keywordflow">if</span> (ac != 0) {</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;                amsgc++;</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;                <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Set analog canbus buffer:&quot;</span>, address);</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;            }</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;            <span class="keywordflow">if</span> (dc != 0) {</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;                dmsgc++;</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;                <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Set digital canbus buffer:&quot;</span>, address);</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;                <span class="keywordflow">for</span> (<span class="keyword">auto</span> d = range.first; d != range.second; ++d) {</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;                    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;&quot;</span>, std::get&lt;1&gt;(d-&gt;second));</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;                }</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;            }</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;            <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;No pins were set for address: &quot;</span>, address);</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;        }</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    }</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;}</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160; </div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#aeb44a1100800f7a1984d725a5d1255f2">resetPhysicalPins</a>() {</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;<span class="preprocessor">#define X(pin, Type, IO, init)   \</span></div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;<span class="preprocessor">    pinMode(pin, IO);            \</span></div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;<span class="preprocessor">    Log.d(ID, &quot;Reset pin&quot;</span>, pin); \</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    if (init != NIL) {           \</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;        setPinValue(pin, init);  \</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    }</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    <a class="code" href="_pin_config_8def.html#a7603185bc328f16ab177087d225c6848">ECU_PINS</a></div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;<span class="preprocessor">#undef X</span></div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;}</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160; </div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a12a6f448c7eea1740a38f0fbe73bbace">stopCanPins</a>(<span class="keywordtype">void</span>) {</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    canbusPinUpdate.end();</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;}</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160; </div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a968b2daecc25fcad3765ef350df3b887">startCanPins</a>(<span class="keywordtype">void</span>) {</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;    <span class="keywordflow">if</span> (digitalCanPinCount_OUT + analogCanPinCount_OUT != 0) {</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Starting outgoing canpin update timer&quot;</span>);</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;        canbusPinUpdate.begin(_pushCanbusPins, <a class="code" href="_pin_config_8def.html#a30388a88a1fdecdb193647dc80a97084">CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO</a>);</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    }</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;}</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160; </div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a50fdd17267e54bd2a3d4ed2a6884c5c1">initialize</a>(<span class="keywordtype">void</span>) {</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Setting up physical pins&quot;</span>);</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160; </div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    analogWriteResolution(PINS_ANALOG_RES);</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    analogReadResolution(PINS_ANALOG_RES);</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;    <a class="code" href="namespace_pins.html#aeb44a1100800f7a1984d725a5d1255f2">resetPhysicalPins</a>();</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160; </div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Setting up outgoing canbus pins&quot;</span>);</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    std::multimap&lt;uint32_t, std::tuple&lt;uint, uint8_t, bool&gt;&gt; pinMap;</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    <span class="keywordtype">bool</span> isAnalog = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    uint i = 0;</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;<span class="preprocessor">#ifdef CONF_ECU_DEBUG</span></div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;No pin defined&quot;</span>, GPIO_Pin);</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    }</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;}</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160; </div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35">update</a>(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    <span class="comment">// #define X(pin, Type, IO) __INTERNAL_READ_##Type(pin);</span></div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    <span class="comment">//     ECU_PINS</span></div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    <span class="comment">// #undef X</span></div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;}</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160; </div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> populateCanbusMap(std::multimap&lt;uint32_t, std::tuple&lt;uint, uint8_t, bool&gt;&gt; pinMap, analogCanPinMsg_t *analogCanPinStructArray, uint maxAnalogMsg, digitalCanPinMsg_t *digitalCanPinStruct, uint activeDigitalCanPinCount) {</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;    uint amsgc = 0;</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;    uint dmsgc = 0;</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    decltype(pinMap.equal_range(0)) range;</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    for (auto i = pinMap.<a class="code" href="namespace_state.html#a1c6e60c84c0fb7c572adaf678fb6a56a">begin</a>(); i != pinMap.end(); i = range.second) {</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;        range = pinMap.equal_range(i-&gt;first);</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160; </div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;        uint ac = 0;</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;        uint dc = 0;</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;        uint32_t address = i-&gt;first;</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160; </div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> d = range.first; d != range.second; ++d) {</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;            <span class="keywordflow">if</span> (std::get&lt;2&gt;(d-&gt;second)) { <span class="comment">// Analog</span></div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;                <span class="keywordflow">if</span> (amsgc == maxAnalogMsg) {</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;                    <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">e</a>(ID, <span class="stringliteral">&quot;Exceeded number of allocated analog canbus buffers, maximize the number of analog pins per address&quot;</span>, amsgc);</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;                    <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;                }</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;                <span class="keywordflow">if</span> (ac == 2) {</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;                    <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Address has too many analog pins allocated, ignoring additional pins&quot;</span>, address);</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;                    <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;                }</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;                analogCanPinStructArray[amsgc].address = address;</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;                analogCanPinStructArray[amsgc].analogPinPos[ac] = std::get&lt;0&gt;(d-&gt;second);</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;                analogCanPinStructArray[amsgc].analogPins[ac] = std::get&lt;1&gt;(d-&gt;second);</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;                <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;&quot;</span>, std::get&lt;1&gt;(d-&gt;second));</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;                ac++;</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;            } <span class="keywordflow">else</span> {              <span class="comment">// Digital</span></div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;                <span class="keywordflow">if</span> (dmsgc == 1) { <span class="comment">// NOTE: Hardcoded single digital message</span></div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;                    <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">e</a>(ID, <span class="stringliteral">&quot;Exceeded number of allocated digital canbus buffers, currently only one digital buffer is supported&quot;</span>, dmsgc);</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;                    <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;                }</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;                <span class="keywordflow">if</span> (dc == activeDigitalCanPinCount) {</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;                    <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Address has too many digital pins allocated, ignoring additional pins&quot;</span>, address);</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;                    <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;                }</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;                digitalCanPinStruct-&gt;address = address;</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;                digitalCanPinStruct-&gt;digitalPinPos[dc] = std::get&lt;0&gt;(d-&gt;second);</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;                digitalCanPinStruct-&gt;digitalPins[dc] = std::get&lt;1&gt;(d-&gt;second);</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;                dc++;</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;                digitalCanPinStruct-&gt;activedigitalCanPins = dc; <span class="comment">// Set number of active pins out of 8 on digital message</span></div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;            }</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;        }</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160; </div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;        <span class="keywordflow">if</span> (ac || dc) {</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;            <span class="keywordflow">if</span> (ac != 0) {</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;                amsgc++;</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;                <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Set analog canbus buffer:&quot;</span>, address);</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;            }</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;            <span class="keywordflow">if</span> (dc != 0) {</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;                dmsgc++;</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;                <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Set digital canbus buffer:&quot;</span>, address);</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;                <span class="keywordflow">for</span> (<span class="keyword">auto</span> d = range.first; d != range.second; ++d) {</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;                    <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;&quot;</span>, std::get&lt;1&gt;(d-&gt;second));</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;                }</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;            }</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;            <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;No pins were set for address: &quot;</span>, address);</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;        }</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    }</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;}</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160; </div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#aeb44a1100800f7a1984d725a5d1255f2">resetPhysicalPins</a>() {</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;<span class="preprocessor">#define X(pin, Type, IO, init)       \</span></div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;<span class="preprocessor">    pinMode(pin, IO);                \</span></div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;<span class="preprocessor">    if (init != NIL) {               \</span></div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;<span class="preprocessor">        Log.d(ID, &quot;Reset pin&quot;</span>, pin); \</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;        setPinValue(pin, init);      \</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    }</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    <a class="code" href="_pin_config_8def.html#a7603185bc328f16ab177087d225c6848">ECU_PINS</a></div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;<span class="preprocessor">#undef X</span></div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;}</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160; </div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a12a6f448c7eea1740a38f0fbe73bbace">stopCanPins</a>(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;    canbusPinUpdate.end();</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;}</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160; </div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a968b2daecc25fcad3765ef350df3b887">startCanPins</a>(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;    <span class="keywordflow">if</span> (digitalCanPinCount_OUT + analogCanPinCount_OUT != 0) {</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Starting outgoing canpin update timer&quot;</span>);</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;        canbusPinUpdate.begin(_pushCanbusPins, <a class="code" href="_pin_config_8def.html#a30388a88a1fdecdb193647dc80a97084">CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO</a>);</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    }</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;}</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160; </div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a50fdd17267e54bd2a3d4ed2a6884c5c1">initialize</a>(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Setting up physical pins&quot;</span>);</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160; </div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    analogWriteResolution(PINS_ANALOG_RES);</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    analogReadResolution(PINS_ANALOG_RES);</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    <a class="code" href="namespace_pins.html#aeb44a1100800f7a1984d725a5d1255f2">resetPhysicalPins</a>();</div>
 <div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160; </div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;<span class="preprocessor">#define X(address, pin)                                                        \</span></div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;<span class="preprocessor">    pinMap.insert(std::make_pair(address, std::make_tuple(i, pin, isAnalog))); \</span></div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;<span class="preprocessor">    CAN_GPIO_MAP_OUT[pin] = 0;                                                 \</span></div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;<span class="preprocessor">    i++;</span></div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;    <a class="code" href="_pin_config_8def.html#a7425d04658a4f1cc0d80df2c252cdfd6">PINS_CANBUS_ANALOG_OUT</a></div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;    isAnalog = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;    <a class="code" href="_pin_config_8def.html#a1c67d5e7fbb164aad1ba799b444f7a23">PINS_CANBUS_DIGITAL_OUT</a></div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;<span class="preprocessor">#undef X</span></div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160; </div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Populating outgoing messages&quot;</span>);</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;    populateCanbusMap(pinMap, analogCanPinMessages_OUT, analogCanMsgCount_OUT, &amp;digitalCanPinMessage_OUT, digitalCanPinCount_OUT);</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160; </div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Setting up incoming canbus pins&quot;</span>);</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;    pinMap.clear();</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;    isAnalog = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;    i = 0;</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Setting up outgoing canbus pins&quot;</span>);</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    std::multimap&lt;uint32_t, std::tuple&lt;uint, uint8_t, bool&gt;&gt; pinMap;</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    <span class="keywordtype">bool</span> isAnalog = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;    uint i = 0;</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160; </div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;<span class="preprocessor">#define X(address, pin)                                                        \</span></div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;<span class="preprocessor">    pinMap.insert(std::make_pair(address, std::make_tuple(i, pin, isAnalog))); \</span></div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;<span class="preprocessor">    CAN_GPIO_MAP_OUT[pin] = 0;                                                 \</span></div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;<span class="preprocessor">    i++;</span></div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;    <a class="code" href="_pin_config_8def.html#a7425d04658a4f1cc0d80df2c252cdfd6">PINS_CANBUS_ANALOG_OUT</a></div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;    isAnalog = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;    <a class="code" href="_pin_config_8def.html#a1c67d5e7fbb164aad1ba799b444f7a23">PINS_CANBUS_DIGITAL_OUT</a></div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;<span class="preprocessor">#undef X</span></div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160; </div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;    <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Populating outgoing messages&quot;</span>);</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;    populateCanbusMap(pinMap, analogCanPinMessages_OUT, analogCanMsgCount_OUT, &amp;digitalCanPinMessage_OUT, digitalCanPinCount_OUT);</div>
 <div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160; </div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;<span class="preprocessor">#define X(address, pin)                                                        \</span></div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;<span class="preprocessor">    pinMap.insert(std::make_pair(address, std::make_tuple(i, pin, isAnalog))); \</span></div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;<span class="preprocessor">    CAN_GPIO_MAP_IN[pin] = &amp;CAN_GPIO_IN[i];                                    \</span></div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;<span class="preprocessor">    i++;</span></div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;    <a class="code" href="_pin_config_8def.html#a3e53e34fe101af281d46c65263020503">PINS_CANBUS_ANALOG_IN</a></div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;    isAnalog = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;    <a class="code" href="_pin_config_8def.html#acae56fbcae983449c6f760dd4a501446">PINS_CANBUS_DIGITAL_IN</a></div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;<span class="preprocessor">#undef X</span></div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160; </div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Populating incoming messages&quot;</span>);</div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;    populateCanbusMap(pinMap, analogCanPinMessages_IN, analogCanMsgCount_IN, &amp;digitalCanPinMessage_IN, digitalCanPinCount_IN);</div>
-<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160; </div>
-<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Adding incoming canpin callbacks&quot;</span>);</div>
-<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;    <span class="keywordflow">if</span> (digitalCanPinCount_IN != 0)</div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;        <a class="code" href="namespace_canbus.html#a884781debf9732f3e4676830d294e6bc">Canbus::addCallback</a>(digitalCanPinMessage_IN.address, _receiveDigitalCanbusPin);</div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; analogCanMsgCount_IN; i++) {</div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;        <a class="code" href="namespace_canbus.html#a884781debf9732f3e4676830d294e6bc">Canbus::addCallback</a>(analogCanPinMessages_IN[i].address, _receiveAnalogCanbusPin);</div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;    }</div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160; </div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;    <a class="code" href="namespace_pins.html#a968b2daecc25fcad3765ef350df3b887">startCanPins</a>();</div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160; </div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;<span class="preprocessor">#ifdef CONF_ECU_DEBUG</span></div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;<span class="preprocessor">#if CONF_LOGGING_MAPPED_MODE == 0</span></div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;    <a class="code" href="namespace_pins.html#abdbd435bdc27963ed518740bf0761712">debugPrint</a>();</div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;}</div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160; </div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;} <span class="comment">// namespace Pins</span></div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160; </div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;<span class="comment">// @endcond</span></div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;    <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Setting up incoming canbus pins&quot;</span>);</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;    pinMap.clear();</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;    isAnalog = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;    i = 0;</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160; </div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;<span class="preprocessor">#define X(address, pin)                                                        \</span></div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;<span class="preprocessor">    pinMap.insert(std::make_pair(address, std::make_tuple(i, pin, isAnalog))); \</span></div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;<span class="preprocessor">    CAN_GPIO_MAP_IN[pin] = &amp;CAN_GPIO_IN[i];                                    \</span></div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;<span class="preprocessor">    i++;</span></div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;    <a class="code" href="_pin_config_8def.html#a3e53e34fe101af281d46c65263020503">PINS_CANBUS_ANALOG_IN</a></div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;    isAnalog = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;    <a class="code" href="_pin_config_8def.html#acae56fbcae983449c6f760dd4a501446">PINS_CANBUS_DIGITAL_IN</a></div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;<span class="preprocessor">#undef X</span></div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160; </div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;    <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Populating incoming messages&quot;</span>);</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;    populateCanbusMap(pinMap, analogCanPinMessages_IN, analogCanMsgCount_IN, &amp;digitalCanPinMessage_IN, digitalCanPinCount_IN);</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160; </div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;    <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(ID, <span class="stringliteral">&quot;Adding incoming canpin callbacks&quot;</span>);</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;    <span class="keywordflow">if</span> (digitalCanPinCount_IN != 0)</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;        <a class="code" href="namespace_canbus.html#a884781debf9732f3e4676830d294e6bc">Canbus::addCallback</a>(digitalCanPinMessage_IN.address, _receiveDigitalCanbusPin);</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; analogCanMsgCount_IN; i++) {</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;        <a class="code" href="namespace_canbus.html#a884781debf9732f3e4676830d294e6bc">Canbus::addCallback</a>(analogCanPinMessages_IN[i].address, _receiveAnalogCanbusPin);</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;    }</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160; </div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;    <a class="code" href="namespace_pins.html#a968b2daecc25fcad3765ef350df3b887">startCanPins</a>();</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160; </div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;<span class="preprocessor">#ifdef CONF_LOGGING_ASCII_DEBUG</span></div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;    <a class="code" href="namespace_pins.html#abdbd435bdc27963ed518740bf0761712">debugPrint</a>();</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;}</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160; </div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;} <span class="comment">// namespace Pins</span></div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160; </div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;<span class="comment">// @endcond</span></div>
 <div class="ttc" id="a_canbus_8h_html"><div class="ttname"><a href="_canbus_8h.html">Canbus.h</a></div><div class="ttdoc">FlexCAN_T4 wrapper This library is made specifically for SAE.</div></div>
 <div class="ttc" id="a_e_c_u_global_config_8h_html"><div class="ttname"><a href="_e_c_u_global_config_8h.html">ECUGlobalConfig.h</a></div><div class="ttdoc">Configure global build properties.</div></div>
-<div class="ttc" id="a_log_8cpp_html_aa5fd43862d543e82b7775410573c9142"><div class="ttname"><a href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a></div><div class="ttdeci">Logging::Log_t Log</div><div class="ttdoc">Internal definition of static Log class.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00222">Log.cpp:222</a></div></div>
 <div class="ttc" id="a_log_8h_html"><div class="ttname"><a href="_log_8h.html">Log.h</a></div><div class="ttdoc">Special logging functionality.</div></div>
 <div class="ttc" id="a_log_8h_html_a746b6eae8886ab8bb40046729eed2983"><div class="ttname"><a href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a></div><div class="ttdeci">const char * LOG_TAG</div><div class="ttdoc">Type definition of logging tags This typedef is necessary to allow for easier manipulation of code by...</div><div class="ttdef"><b>Definition:</b> <a href="_log_8h_source.html#l00041">Log.h:41</a></div></div>
-<div class="ttc" id="a_pin_config_8def_html"><div class="ttname"><a href="_pin_config_8def.html">PinConfig.def</a></div><div class="ttdoc">Pin Configuration for the ECU.</div></div>
-<div class="ttc" id="a_pin_config_8def_html_a1c67d5e7fbb164aad1ba799b444f7a23"><div class="ttname"><a href="_pin_config_8def.html#a1c67d5e7fbb164aad1ba799b444f7a23">PINS_CANBUS_DIGITAL_OUT</a></div><div class="ttdeci">#define PINS_CANBUS_DIGITAL_OUT</div><div class="ttdoc">Same as PINS_CANBUS_DIGITAL_IN only for the digital pins that are outgoing.</div><div class="ttdef"><b>Definition:</b> <a href="_pin_config_8def_source.html#l00171">PinConfig.def:171</a></div></div>
+<div class="ttc" id="a_log_8h_html_aa5fd43862d543e82b7775410573c9142"><div class="ttname"><a href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a></div><div class="ttdeci">Logging::Log_t Log</div><div class="ttdoc">Refer to Log_t.</div></div>
+<div class="ttc" id="a_pin_config_8def_html"><div class="ttname"><a href="_pin_config_8def.html">PinConfig.def</a></div><div class="ttdoc">Pin Configuration.</div></div>
+<div class="ttc" id="a_pin_config_8def_html_a1c67d5e7fbb164aad1ba799b444f7a23"><div class="ttname"><a href="_pin_config_8def.html#a1c67d5e7fbb164aad1ba799b444f7a23">PINS_CANBUS_DIGITAL_OUT</a></div><div class="ttdeci">#define PINS_CANBUS_DIGITAL_OUT</div><div class="ttdoc">Same as PINS_CANBUS_DIGITAL_IN only for the digital pins that are outgoing.</div><div class="ttdef"><b>Definition:</b> <a href="_pin_config_8def_source.html#l00177">PinConfig.def:177</a></div></div>
 <div class="ttc" id="a_pin_config_8def_html_a30388a88a1fdecdb193647dc80a97084"><div class="ttname"><a href="_pin_config_8def.html#a30388a88a1fdecdb193647dc80a97084">CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO</a></div><div class="ttdeci">#define CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO</div><div class="ttdoc">The interval in micros to update outgoing canPins.</div><div class="ttdef"><b>Definition:</b> <a href="_pin_config_8def_source.html#l00032">PinConfig.def:32</a></div></div>
-<div class="ttc" id="a_pin_config_8def_html_a3e53e34fe101af281d46c65263020503"><div class="ttname"><a href="_pin_config_8def.html#a3e53e34fe101af281d46c65263020503">PINS_CANBUS_ANALOG_IN</a></div><div class="ttdeci">#define PINS_CANBUS_ANALOG_IN</div><div class="ttdoc">The defintions of every analog pin to be received over canbus.</div><div class="ttdef"><b>Definition:</b> <a href="_pin_config_8def_source.html#l00138">PinConfig.def:138</a></div></div>
-<div class="ttc" id="a_pin_config_8def_html_a7425d04658a4f1cc0d80df2c252cdfd6"><div class="ttname"><a href="_pin_config_8def.html#a7425d04658a4f1cc0d80df2c252cdfd6">PINS_CANBUS_ANALOG_OUT</a></div><div class="ttdeci">#define PINS_CANBUS_ANALOG_OUT</div><div class="ttdoc">Same as PINS_CANBUS_ANALOG_IN only for the analog pins that are outgoing.</div><div class="ttdef"><b>Definition:</b> <a href="_pin_config_8def_source.html#l00149">PinConfig.def:149</a></div></div>
-<div class="ttc" id="a_pin_config_8def_html_a7603185bc328f16ab177087d225c6848"><div class="ttname"><a href="_pin_config_8def.html#a7603185bc328f16ab177087d225c6848">ECU_PINS</a></div><div class="ttdeci">#define ECU_PINS</div><div class="ttdoc">The defintions of every physical pin.</div><div class="ttdef"><b>Definition:</b> <a href="_pin_config_8def_source.html#l00103">PinConfig.def:103</a></div></div>
-<div class="ttc" id="a_pin_config_8def_html_acae56fbcae983449c6f760dd4a501446"><div class="ttname"><a href="_pin_config_8def.html#acae56fbcae983449c6f760dd4a501446">PINS_CANBUS_DIGITAL_IN</a></div><div class="ttdeci">#define PINS_CANBUS_DIGITAL_IN</div><div class="ttdoc">The defintions of every digital pin to be received over canbus.</div><div class="ttdef"><b>Definition:</b> <a href="_pin_config_8def_source.html#l00164">PinConfig.def:164</a></div></div>
+<div class="ttc" id="a_pin_config_8def_html_a3e53e34fe101af281d46c65263020503"><div class="ttname"><a href="_pin_config_8def.html#a3e53e34fe101af281d46c65263020503">PINS_CANBUS_ANALOG_IN</a></div><div class="ttdeci">#define PINS_CANBUS_ANALOG_IN</div><div class="ttdoc">The defintions of every analog pin to be received over canbus.</div><div class="ttdef"><b>Definition:</b> <a href="_pin_config_8def_source.html#l00143">PinConfig.def:143</a></div></div>
+<div class="ttc" id="a_pin_config_8def_html_a7425d04658a4f1cc0d80df2c252cdfd6"><div class="ttname"><a href="_pin_config_8def.html#a7425d04658a4f1cc0d80df2c252cdfd6">PINS_CANBUS_ANALOG_OUT</a></div><div class="ttdeci">#define PINS_CANBUS_ANALOG_OUT</div><div class="ttdoc">Same as PINS_CANBUS_ANALOG_IN only for the analog pins that are outgoing.</div><div class="ttdef"><b>Definition:</b> <a href="_pin_config_8def_source.html#l00154">PinConfig.def:154</a></div></div>
+<div class="ttc" id="a_pin_config_8def_html_a7603185bc328f16ab177087d225c6848"><div class="ttname"><a href="_pin_config_8def.html#a7603185bc328f16ab177087d225c6848">ECU_PINS</a></div><div class="ttdeci">#define ECU_PINS</div><div class="ttdoc">The defintions of every physical pin.</div><div class="ttdef"><b>Definition:</b> <a href="_pin_config_8def_source.html#l00108">PinConfig.def:108</a></div></div>
+<div class="ttc" id="a_pin_config_8def_html_acae56fbcae983449c6f760dd4a501446"><div class="ttname"><a href="_pin_config_8def.html#acae56fbcae983449c6f760dd4a501446">PINS_CANBUS_DIGITAL_IN</a></div><div class="ttdeci">#define PINS_CANBUS_DIGITAL_IN</div><div class="ttdoc">The defintions of every digital pin to be received over canbus.</div><div class="ttdef"><b>Definition:</b> <a href="_pin_config_8def_source.html#l00169">PinConfig.def:169</a></div></div>
 <div class="ttc" id="a_pins_8h_html"><div class="ttname"><a href="_pins_8h.html">Pins.h</a></div><div class="ttdoc">Update, set, and get predefined pin values.</div></div>
 <div class="ttc" id="anamespace_canbus_html_a003195b12c68a25e85c1249630901f87"><div class="ttname"><a href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">Canbus::sendData</a></div><div class="ttdeci">void sendData(const uint32_t address, uint8_t buf[8])</div><div class="ttdoc">Send raw data over a given canbus address using a given array.</div></div>
 <div class="ttc" id="anamespace_canbus_html_a77f67ab89d9f23f059f1e41123cc65a5"><div class="ttname"><a href="namespace_canbus.html#a77f67ab89d9f23f059f1e41123cc65a5">Canbus::copyVolatileCanMsg</a></div><div class="ttdeci">void copyVolatileCanMsg(volatile uint8_t src[8], uint8_t dest[8])</div><div class="ttdoc">Copy a volatile canMsg array to a non-volatile array.</div></div>
@@ -528,11 +531,11 @@ $(document).ready(function(){initNavTree('_pins_8cpp_source.html',''); initResiz
 <div class="ttc" id="anamespace_pins_html_a9d8cba01aef10c12ca76fe5cb0bc67c6"><div class="ttname"><a href="namespace_pins.html#a9d8cba01aef10c12ca76fe5cb0bc67c6">Pins::setInternalValue</a></div><div class="ttdeci">void setInternalValue(uint8_t Internal_Pin, int value)</div><div class="ttdoc">Set the value of an internal pin.</div></div>
 <div class="ttc" id="anamespace_pins_html_abdbd435bdc27963ed518740bf0761712"><div class="ttname"><a href="namespace_pins.html#abdbd435bdc27963ed518740bf0761712">Pins::debugPrint</a></div><div class="ttdeci">void debugPrint(void)</div><div class="ttdoc">Used for debugging.</div></div>
 <div class="ttc" id="anamespace_pins_html_aeb44a1100800f7a1984d725a5d1255f2"><div class="ttname"><a href="namespace_pins.html#aeb44a1100800f7a1984d725a5d1255f2">Pins::resetPhysicalPins</a></div><div class="ttdeci">void resetPhysicalPins()</div><div class="ttdoc">Resets physical pins to their inital state.</div></div>
-<div class="ttc" id="anamespace_state_html_a1c6e60c84c0fb7c572adaf678fb6a56a"><div class="ttname"><a href="namespace_state.html#a1c6e60c84c0fb7c572adaf678fb6a56a">State::begin</a></div><div class="ttdeci">void begin(State_t &amp;entry)</div><div class="ttdoc">Begin the state machine with a pointer to a state.</div><div class="ttdef"><b>Definition:</b> <a href="_state_8cpp_source.html#l00061">State.cpp:61</a></div></div>
-<div class="ttc" id="astruct_logging_1_1_log__t_html_a4b75f2065645b98fef1d6b4edea2b5a2"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">Logging::Log_t::d</a></div><div class="ttdeci">void d(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a debug tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00143">Log.cpp:143</a></div></div>
-<div class="ttc" id="astruct_logging_1_1_log__t_html_a6a07c7449c92c06a608cb8f6463ebd46"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">Logging::Log_t::w</a></div><div class="ttdeci">void w(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a warning tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00155">Log.cpp:155</a></div></div>
-<div class="ttc" id="astruct_logging_1_1_log__t_html_a6a390467c80768f38c116e26c6c35a39"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">Logging::Log_t::e</a></div><div class="ttdeci">void e(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using an error tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00161">Log.cpp:161</a></div></div>
-<div class="ttc" id="astruct_logging_1_1_log__t_html_a8a944d095d2eae2c7be964d887ebe613"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">Logging::Log_t::i</a></div><div class="ttdeci">void i(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using an info tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00149">Log.cpp:149</a></div></div>
+<div class="ttc" id="anamespace_state_html_a1c6e60c84c0fb7c572adaf678fb6a56a"><div class="ttname"><a href="namespace_state.html#a1c6e60c84c0fb7c572adaf678fb6a56a">State::begin</a></div><div class="ttdeci">void begin(State_t &amp;entry)</div><div class="ttdoc">Begin the state machine with a pointer to a state.</div></div>
+<div class="ttc" id="astruct_logging_1_1_log__t_html_a4b75f2065645b98fef1d6b4edea2b5a2"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">Logging::Log_t::d</a></div><div class="ttdeci">void d(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a debug tag.</div></div>
+<div class="ttc" id="astruct_logging_1_1_log__t_html_a6a07c7449c92c06a608cb8f6463ebd46"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">Logging::Log_t::w</a></div><div class="ttdeci">void w(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a warning tag.</div></div>
+<div class="ttc" id="astruct_logging_1_1_log__t_html_a6a390467c80768f38c116e26c6c35a39"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">Logging::Log_t::e</a></div><div class="ttdeci">void e(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using an error tag.</div></div>
+<div class="ttc" id="astruct_logging_1_1_log__t_html_a8a944d095d2eae2c7be964d887ebe613"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">Logging::Log_t::i</a></div><div class="ttdeci">void i(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using an info tag.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

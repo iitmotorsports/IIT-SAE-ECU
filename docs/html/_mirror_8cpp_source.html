@@ -89,109 +89,128 @@ $(document).ready(function(){initNavTree('_mirror_8cpp_source.html',''); initRes
 </div><!--header-->
 <div class="contents">
 <a href="_mirror_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_mirror_8h.html">Mirror.h</a>&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_canbus_8h.html">CanBus.h</a>&quot;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_e_c_u_global_config_8h.html">ECUGlobalConfig.h</a>&quot;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_log_8h.html">Log.h</a>&quot;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_pins_8h.html">Pins.h</a>&quot;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_serial_command_8h.html">SerialCommand.h</a>&quot;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="namespace_mirror.html">   19</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_mirror.html">Mirror</a> {</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">//@cond</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_mirror_8h.html">Mirror.h</a>&quot;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_canbus_8h.html">CanBus.h</a>&quot;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_e_c_u_global_config_8h.html">ECUGlobalConfig.h</a>&quot;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_heartbeat_8h.html">Heartbeat.h</a>&quot;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_log_8h.html">Log.h</a>&quot;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_pins_8h.html">Pins.h</a>&quot;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_serial_command_8h.html">SerialCommand.h</a>&quot;</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#define TIMER_RECEIVE_MICROS 2000</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_mirror.html">Mirror</a> {</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">static</span> <a class="code" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a> ID = <span class="stringliteral">&quot;Mirror&quot;</span>;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">static</span> IntervalTimer serialCheckTimer;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">static</span> <span class="keywordtype">bool</span> cont = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> toggleMirrorMode(<span class="keywordtype">void</span>) {</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    cont = !cont;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordflow">if</span> (cont) {</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <a class="code" href="namespace_mirror.html#a89a62e4b2e374ef95291177d525dcf8e">enterMirrorMode</a>();</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <a class="code" href="namespace_mirror.html#a9cdbdcb79cef06a3b8b18151c440b262">exitMirrorMode</a>();</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    }</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;}</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keywordtype">void</span> timerReceive() {</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    Command::receiveCommand();</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="namespace_mirror.html#a1163a1d753f2ea7a3150f06a015fbedb">   40</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_mirror.html#a1163a1d753f2ea7a3150f06a015fbedb">setup</a>(<span class="keywordtype">void</span>) { <span class="comment">// TODO: auto receive on back ECU using timer</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#if CONF_ECU_POSITION == BACK_ECU</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    serialCheckTimer.begin(timerReceive, TIMER_RECEIVE_MICROS);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    Command::setCommand(COMMAND_TOGGLE_MIRROR_MODE, toggleMirrorMode);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;}</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> getSerialByte() {</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">int</span> serialData = 0;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordflow">while</span> (!Serial.available()) {</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    }</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    serialData = Serial.read();</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Data received:&quot;</span>, serialData);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordflow">return</span> serialData;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;}</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> getSerialInt() {</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">int</span> serialData = 0;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordflow">while</span> (!Serial.available()) {</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    }</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordtype">size_t</span> count = Serial.readBytes((<span class="keywordtype">char</span> *)(&amp;serialData), 4);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordflow">if</span> (count != 4) {</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Did not receive 4 bytes for integer&quot;</span>, count);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    }</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Data received:&quot;</span>, serialData);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">return</span> serialData;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;}</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="namespace_mirror.html#a89a62e4b2e374ef95291177d525dcf8e">   69</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_mirror.html#a89a62e4b2e374ef95291177d525dcf8e">enterMirrorMode</a>(<span class="keywordtype">void</span>) {</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#if CONF_ECU_POSITION == BACK_ECU</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    serialCheckTimer.end();</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    cont = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordflow">while</span> (cont) {</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>(ID, <span class="stringliteral">&quot;Waiting for data&quot;</span>);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keywordtype">int</span> serialData = getSerialByte();</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keywordflow">if</span> (serialData == 255) {</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>(ID, <span class="stringliteral">&quot;Waiting for a pin to set&quot;</span>);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            <span class="keywordtype">int</span> pin = getSerialByte();</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>(ID, <span class="stringliteral">&quot;Waiting for the value to set it to&quot;</span>);</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            <span class="keywordtype">int</span> value = getSerialInt();</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>(ID, <span class="stringliteral">&quot;Setting pin:&quot;</span>, pin);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>(ID, <span class="stringliteral">&quot;To value:&quot;</span>, value);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(pin, value);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (serialData != -1) {</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            <a class="code" href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a>(ID, <span class="stringliteral">&quot;Requested pin&quot;</span>, <a class="code" href="namespace_pins.html#a5bb778c9151687c75d254d2fef4509fd">Pins::getPinValue</a>(serialData));</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        }</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    }</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor">#if CONF_ECU_POSITION == BACK_ECU</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    serialCheckTimer.begin(timerReceive, TIMER_RECEIVE_MICROS);</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;}</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="namespace_mirror.html#a9cdbdcb79cef06a3b8b18151c440b262">   94</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_mirror.html#a9cdbdcb79cef06a3b8b18151c440b262">exitMirrorMode</a>(<span class="keywordtype">void</span>) {</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    cont = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;}</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;} <span class="comment">// namespace Mirror</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#define TIMER_RECEIVE_MICROS 2000</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">static</span> <a class="code" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a> ID = <span class="stringliteral">&quot;Mirror&quot;</span>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">static</span> <span class="keywordtype">bool</span> cont = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">static</span> <span class="keywordtype">bool</span> init = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">static</span> <span class="keywordtype">bool</span> receive = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> toggleMirrorMode(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    cont = !cont;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordflow">if</span> (cont) {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <a class="code" href="namespace_mirror.html#a89a62e4b2e374ef95291177d525dcf8e">enterMirrorMode</a>();</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <a class="code" href="namespace_mirror.html#a9cdbdcb79cef06a3b8b18151c440b262">exitMirrorMode</a>();</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    }</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;}</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keywordtype">void</span> timerReceive() {</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordflow">if</span> (receive)</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <a class="code" href="namespace_command.html#a5447877dd694317bdf6cd897b8e93b1d">Command::receiveCommand</a>();</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;}</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_mirror.html#a1163a1d753f2ea7a3150f06a015fbedb">setup</a>(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">if</span> (!init) {</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#if CONF_ECU_POSITION == BACK_ECU</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        receive = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <a class="code" href="namespace_heartbeat.html#a243a1a7989df814269de816d2893d35b">Heartbeat::addCallback</a>(timerReceive);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <a class="code" href="namespace_command.html#a4b4bc1adec84f61fabd7a7f6e71aed61">Command::setCommand</a>(COMMAND_TOGGLE_MIRROR_MODE, toggleMirrorMode);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    }</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    init = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> getSerialByte() {</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">int</span> serialData = 0;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordflow">while</span> (!Serial.available()) {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    }</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    serialData = Serial.read();</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Data received:&quot;</span>, serialData);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordflow">return</span> serialData;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> getSerialInt() {</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordtype">int</span> serialData = 0;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">while</span> (!Serial.available()) {</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    }</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">size_t</span> count = Serial.readBytes((<span class="keywordtype">char</span> *)(&amp;serialData), 4);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordflow">if</span> (count != 4) {</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Did not receive 4 bytes for integer&quot;</span>, count);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    }</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Data received:&quot;</span>, serialData);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordflow">return</span> serialData;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;}</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_mirror.html#a89a62e4b2e374ef95291177d525dcf8e">enterMirrorMode</a>(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">#if CONF_ECU_POSITION == BACK_ECU</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    receive = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    cont = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>(ID, <span class="stringliteral">&quot;Mirror Mode Enabled&quot;</span>);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordflow">while</span> (cont) { <span class="comment">// NOTE: Low priority heartbeat will freeze because of this</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>(ID, <span class="stringliteral">&quot;Waiting for data&quot;</span>);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keywordtype">int</span> serialData = getSerialByte();</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <span class="keywordflow">if</span> (serialData == COMMAND_TOGGLE_MIRROR_MODE) {</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            toggleMirrorMode();</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (serialData == COMMAND_ENTER_MIRROR_SET) {</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>(ID, <span class="stringliteral">&quot;Waiting for a pin to set&quot;</span>);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            <span class="keywordtype">int</span> pin = getSerialByte();</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>(ID, <span class="stringliteral">&quot;Waiting for the value to set it to&quot;</span>);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;            <span class="keywordtype">int</span> value = getSerialInt();</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>(ID, <span class="stringliteral">&quot;Setting pin:&quot;</span>, pin);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>(ID, <span class="stringliteral">&quot;To value:&quot;</span>, value);</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a>(pin, value);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>(ID, <span class="stringliteral">&quot;Requested pin&quot;</span>, <a class="code" href="namespace_pins.html#a5bb778c9151687c75d254d2fef4509fd">Pins::getPinValue</a>(serialData));</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        }</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="comment">// delay(50);</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    }</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>(ID, <span class="stringliteral">&quot;Mirror Mode Disabled&quot;</span>);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor">#if CONF_ECU_POSITION == BACK_ECU</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    receive = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;}</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_mirror.html#a9cdbdcb79cef06a3b8b18151c440b262">exitMirrorMode</a>(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    cont = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;}</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;} <span class="comment">// namespace Mirror</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="comment">//@endcond</span></div>
 <div class="ttc" id="a_canbus_8h_html"><div class="ttname"><a href="_canbus_8h.html">Canbus.h</a></div><div class="ttdoc">FlexCAN_T4 wrapper This library is made specifically for SAE.</div></div>
 <div class="ttc" id="a_e_c_u_global_config_8h_html"><div class="ttname"><a href="_e_c_u_global_config_8h.html">ECUGlobalConfig.h</a></div><div class="ttdoc">Configure global build properties.</div></div>
-<div class="ttc" id="a_log_8cpp_html_aa5fd43862d543e82b7775410573c9142"><div class="ttname"><a href="_log_8cpp.html#aa5fd43862d543e82b7775410573c9142">Log</a></div><div class="ttdeci">Logging::Log_t Log</div><div class="ttdoc">Internal definition of static Log class.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00222">Log.cpp:222</a></div></div>
+<div class="ttc" id="a_heartbeat_8h_html"><div class="ttname"><a href="_heartbeat_8h.html">Heartbeat.h</a></div><div class="ttdoc">Make one ECU tell the other it is alive.</div></div>
 <div class="ttc" id="a_log_8h_html"><div class="ttname"><a href="_log_8h.html">Log.h</a></div><div class="ttdoc">Special logging functionality.</div></div>
 <div class="ttc" id="a_log_8h_html_a746b6eae8886ab8bb40046729eed2983"><div class="ttname"><a href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a></div><div class="ttdeci">const char * LOG_TAG</div><div class="ttdoc">Type definition of logging tags This typedef is necessary to allow for easier manipulation of code by...</div><div class="ttdef"><b>Definition:</b> <a href="_log_8h_source.html#l00041">Log.h:41</a></div></div>
+<div class="ttc" id="a_log_8h_html_aa5fd43862d543e82b7775410573c9142"><div class="ttname"><a href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a></div><div class="ttdeci">Logging::Log_t Log</div><div class="ttdoc">Refer to Log_t.</div></div>
 <div class="ttc" id="a_mirror_8h_html"><div class="ttname"><a href="_mirror_8h.html">Mirror.h</a></div><div class="ttdoc">This library allows for the monitoring and modification of each GPIO pin on an ECU.</div></div>
 <div class="ttc" id="a_pins_8h_html"><div class="ttname"><a href="_pins_8h.html">Pins.h</a></div><div class="ttdoc">Update, set, and get predefined pin values.</div></div>
-<div class="ttc" id="a_serial_command_8h_html"><div class="ttname"><a href="_serial_command_8h.html">SerialCommand.h</a></div><div class="ttdoc">Serial read functionality.</div></div>
-<div class="ttc" id="anamespace_mirror_html"><div class="ttname"><a href="namespace_mirror.html">Mirror</a></div><div class="ttdoc">Check and modify pin values over USB serial How to use - connect with a terminal that can both send a...</div><div class="ttdef"><b>Definition:</b> <a href="_mirror_8cpp_source.html#l00019">Mirror.cpp:19</a></div></div>
-<div class="ttc" id="anamespace_mirror_html_a1163a1d753f2ea7a3150f06a015fbedb"><div class="ttname"><a href="namespace_mirror.html#a1163a1d753f2ea7a3150f06a015fbedb">Mirror::setup</a></div><div class="ttdeci">void setup(void)</div><div class="ttdoc">Setup a listener for going into mirror mode, dependent on which ECU is compiled.</div><div class="ttdef"><b>Definition:</b> <a href="_mirror_8cpp_source.html#l00040">Mirror.cpp:40</a></div></div>
-<div class="ttc" id="anamespace_mirror_html_a89a62e4b2e374ef95291177d525dcf8e"><div class="ttname"><a href="namespace_mirror.html#a89a62e4b2e374ef95291177d525dcf8e">Mirror::enterMirrorMode</a></div><div class="ttdeci">void enterMirrorMode(void)</div><div class="ttdoc">Manually enter mirror mode, only returning when a set command is received.</div><div class="ttdef"><b>Definition:</b> <a href="_mirror_8cpp_source.html#l00069">Mirror.cpp:69</a></div></div>
-<div class="ttc" id="anamespace_mirror_html_a9cdbdcb79cef06a3b8b18151c440b262"><div class="ttname"><a href="namespace_mirror.html#a9cdbdcb79cef06a3b8b18151c440b262">Mirror::exitMirrorMode</a></div><div class="ttdeci">void exitMirrorMode(void)</div><div class="ttdoc">Manually exit mirror mode.</div><div class="ttdef"><b>Definition:</b> <a href="_mirror_8cpp_source.html#l00094">Mirror.cpp:94</a></div></div>
+<div class="ttc" id="a_serial_command_8h_html"><div class="ttname"><a href="_serial_command_8h.html">SerialCommand.h</a></div><div class="ttdoc">SerialCommand functionality.</div></div>
+<div class="ttc" id="anamespace_command_html_a4b4bc1adec84f61fabd7a7f6e71aed61"><div class="ttname"><a href="namespace_command.html#a4b4bc1adec84f61fabd7a7f6e71aed61">Command::setCommand</a></div><div class="ttdeci">void setCommand(uint8_t command, CommandCallback callback)</div><div class="ttdoc">attach a single callback to a byte value that will be received over serial</div></div>
+<div class="ttc" id="anamespace_command_html_a5447877dd694317bdf6cd897b8e93b1d"><div class="ttname"><a href="namespace_command.html#a5447877dd694317bdf6cd897b8e93b1d">Command::receiveCommand</a></div><div class="ttdeci">int receiveCommand(void)</div><div class="ttdoc">receive any command from serial by matching incoming bytes to a callback</div></div>
+<div class="ttc" id="anamespace_heartbeat_html_a243a1a7989df814269de816d2893d35b"><div class="ttname"><a href="namespace_heartbeat.html#a243a1a7989df814269de816d2893d35b">Heartbeat::addCallback</a></div><div class="ttdeci">void addCallback(beatFunc func)</div><div class="ttdoc">Add a callback to be run at each haertbeat.</div></div>
+<div class="ttc" id="anamespace_mirror_html"><div class="ttname"><a href="namespace_mirror.html">Mirror</a></div><div class="ttdoc">Check and modify pin values over USB serial How to use - connect with a terminal that can both send a...</div><div class="ttdef"><b>Definition:</b> <a href="_mirror_8h_source.html#l00038">Mirror.h:38</a></div></div>
+<div class="ttc" id="anamespace_mirror_html_a1163a1d753f2ea7a3150f06a015fbedb"><div class="ttname"><a href="namespace_mirror.html#a1163a1d753f2ea7a3150f06a015fbedb">Mirror::setup</a></div><div class="ttdeci">void setup(void)</div><div class="ttdoc">Setup a listener for going into mirror mode, dependent on which ECU is compiled.</div></div>
+<div class="ttc" id="anamespace_mirror_html_a89a62e4b2e374ef95291177d525dcf8e"><div class="ttname"><a href="namespace_mirror.html#a89a62e4b2e374ef95291177d525dcf8e">Mirror::enterMirrorMode</a></div><div class="ttdeci">void enterMirrorMode(void)</div><div class="ttdoc">Manually enter mirror mode, only returning when a set command is received.</div></div>
+<div class="ttc" id="anamespace_mirror_html_a9cdbdcb79cef06a3b8b18151c440b262"><div class="ttname"><a href="namespace_mirror.html#a9cdbdcb79cef06a3b8b18151c440b262">Mirror::exitMirrorMode</a></div><div class="ttdeci">void exitMirrorMode(void)</div><div class="ttdoc">Manually exit mirror mode.</div></div>
 <div class="ttc" id="anamespace_pins_html_a2d60349cb2aec2c336856187093aea61"><div class="ttname"><a href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a></div><div class="ttdeci">void setPinValue(uint8_t GPIO_Pin, int value)</div><div class="ttdoc">Set the pin value of a predefined pin.</div></div>
 <div class="ttc" id="anamespace_pins_html_a5bb778c9151687c75d254d2fef4509fd"><div class="ttname"><a href="namespace_pins.html#a5bb778c9151687c75d254d2fef4509fd">Pins::getPinValue</a></div><div class="ttdeci">int getPinValue(uint8_t GPIO_Pin)</div><div class="ttdoc">Get the pin value of a predefined pin.</div></div>
-<div class="ttc" id="astruct_logging_1_1_log__t_html_a4b75f2065645b98fef1d6b4edea2b5a2"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">Logging::Log_t::d</a></div><div class="ttdeci">void d(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a debug tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00143">Log.cpp:143</a></div></div>
-<div class="ttc" id="astruct_logging_1_1_log__t_html_a6a07c7449c92c06a608cb8f6463ebd46"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">Logging::Log_t::w</a></div><div class="ttdeci">void w(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a warning tag.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8cpp_source.html#l00155">Log.cpp:155</a></div></div>
+<div class="ttc" id="astruct_logging_1_1_log__t_html_a4b75f2065645b98fef1d6b4edea2b5a2"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">Logging::Log_t::d</a></div><div class="ttdeci">void d(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a debug tag.</div></div>
+<div class="ttc" id="astruct_logging_1_1_log__t_html_a6a07c7449c92c06a608cb8f6463ebd46"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">Logging::Log_t::w</a></div><div class="ttdeci">void w(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a warning tag.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

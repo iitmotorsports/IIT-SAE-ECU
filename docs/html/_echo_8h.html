@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SAE Teensy ECU: DebugPanel.h File Reference</title>
+<title>SAE Teensy ECU: Echo.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -65,7 +65,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-$(document).ready(function(){initNavTree('_debug_panel_8h.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('_echo_8h.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -85,48 +85,51 @@ $(document).ready(function(){initNavTree('_debug_panel_8h.html',''); initResizab
 
 <div class="header">
   <div class="summary">
+<a href="#namespaces">Namespaces</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">DebugPanel.h File Reference</div>  </div>
+<div class="title">Echo.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Debugging library, specific to our situation.  
+<p><a class="el" href="namespace_echo.html" title="This Module can be used to echo a CAN message over a network of two ECUs.">Echo</a> can messages with a delay.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="_canbus_8h_source.html">Canbus.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_log_8h_source.html">Log.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_pins_8h_source.html">Pins.h</a>&quot;</code><br />
-<code>#include &lt;stdint.h&gt;</code><br />
-<code>#include &lt;stdlib.h&gt;</code><br />
+<div class="textblock"><code>#include &quot;stdint.h&quot;</code><br />
+<code>#include &quot;stdlib.h&quot;</code><br />
 </div>
-<p><a href="_debug_panel_8h_source.html">Go to the source code of this file.</a></p>
+<p><a href="_echo_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespace_echo"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_echo.html">Echo</a></td></tr>
+<tr class="memdesc:namespace_echo"><td class="mdescLeft">&#160;</td><td class="mdescRight">This Module can be used to echo a CAN message over a network of two ECUs. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a604df45a2348af6423fdf03db5c5f720"><td class="memItemLeft" align="right" valign="top"><a id="a604df45a2348af6423fdf03db5c5f720"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Debug::printPinMap</b> ()</td></tr>
-<tr class="separator:a604df45a2348af6423fdf03db5c5f720"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ed5fd918912cdd1aab22a2fb69bdace"><td class="memItemLeft" align="right" valign="top"><a id="a2ed5fd918912cdd1aab22a2fb69bdace"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Debug::canBusSniffer</b> (bool enable)</td></tr>
-<tr class="separator:a2ed5fd918912cdd1aab22a2fb69bdace"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a50e94cd6086ddfad5a99d8c848d1c3bb"><td class="memItemLeft" align="right" valign="top"><a id="a50e94cd6086ddfad5a99d8c848d1c3bb"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Debug::sendCanBusMessage</b> ()</td></tr>
-<tr class="separator:a50e94cd6086ddfad5a99d8c848d1c3bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac57e2ff216615be891ffabf232f14d37"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_echo.html#ac57e2ff216615be891ffabf232f14d37">Echo::echo</a> (uint32_t delay, const uint32_t address, uint8_t buf[8])</td></tr>
+<tr class="separator:ac57e2ff216615be891ffabf232f14d37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f3d048035f869638271d08ea736f97e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_echo.html#a0f3d048035f869638271d08ea736f97e">Echo::echo</a> (uint32_t delay, const uint32_t address, const uint8_t buf_0=0, const uint8_t buf_1=0, const uint8_t buf_2=0, const uint8_t buf_3=0, const uint8_t buf_4=0, const uint8_t buf_5=0, const uint8_t buf_6=0, const uint8_t buf_7=0)</td></tr>
+<tr class="separator:a0f3d048035f869638271d08ea736f97e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06d3c7f95ead843b9a10c61cb4ee8aee"><td class="memItemLeft" align="right" valign="top"><a id="a06d3c7f95ead843b9a10c61cb4ee8aee"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_echo.html#a06d3c7f95ead843b9a10c61cb4ee8aee">Echo::setup</a> ()</td></tr>
+<tr class="memdesc:a06d3c7f95ead843b9a10c61cb4ee8aee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize on receiving ECU to echo messages. <br /></td></tr>
+<tr class="separator:a06d3c7f95ead843b9a10c61cb4ee8aee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Debugging library, specific to our situation. </p>
+<div class="textblock"><p><a class="el" href="namespace_echo.html" title="This Module can be used to echo a CAN message over a network of two ECUs.">Echo</a> can messages with a delay. </p>
 <dl class="section author"><dt>Author</dt><dd>IR </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>0.1 </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>2021-03-16</dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2021-04-14</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2021 </dd></dl>
 
-<p class="definition">Definition in file <a class="el" href="_debug_panel_8h_source.html">DebugPanel.h</a>.</p>
+<p class="definition">Definition in file <a class="el" href="_echo_8h_source.html">Echo.h</a>.</p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="dir_cfffada58fcb53ea7ec0b8fae4510dfe.html">DebugPanel</a></li><li class="navelem"><a class="el" href="_debug_panel_8h.html">DebugPanel.h</a></li>
+    <li class="navelem"><a class="el" href="dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="dir_8e84f7ace0b7efd447166264254d04f9.html">Echo</a></li><li class="navelem"><a class="el" href="_echo_8h.html">Echo.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>

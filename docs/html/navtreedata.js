@@ -46,7 +46,6 @@ var NAVTREE =
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
-      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", null ],
         [ "Functions", "functions_func.html", null ],
@@ -68,8 +67,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_aero_servo_8cpp.html#a9a0abe410b4d1e6475bd3349461f68db",
-"namespace_pins.html#abdbd435bdc27963ed518740bf0761712"
+"_aero_servo_8cpp.html",
+"namespace_pins.html#aeb44a1100800f7a1984d725a5d1255f2"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
