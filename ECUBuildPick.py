@@ -1,3 +1,14 @@
+"""
+@file ECUBuildPick.py
+@author IR
+@brief Simple Script used to make it easier to compile for two Teensies
+@version 0.1
+@date 2021-02-21
+
+@copyright Copyright (c) 2021
+"""
+
+# @cond
 import os
 import sys
 from tempfile import mkstemp
@@ -35,3 +46,5 @@ if os.path.exists(FILE_REPLACE):
         print("Invalid argument {}\n0 == Back\n1 == Front".format(sys.argv[1]))
 else:
     print("Config files does not exist!\nHas the project been built at least once?")
+
+# @endcond
