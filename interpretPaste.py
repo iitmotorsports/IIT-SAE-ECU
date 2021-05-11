@@ -8,6 +8,8 @@
 @copyright Copyright (c) 2021
 """
 
+# @cond
+
 import base64
 from pip._vendor import requests
 import json
@@ -205,7 +207,7 @@ def graph(string: str):
         # series.marker.size = 3
         # series.graphicalProperties.line.noFill = True
         series.smooth = True
-        series.graphicalProperties.line.width = 10000 # width in EMUs
+        series.graphicalProperties.line.width = 10000  # width in EMUs
         chart.series.append(series)
 
     ws.add_chart(chart, "A1")
@@ -238,3 +240,5 @@ def main():
 
 
 main()
+
+# @endcond

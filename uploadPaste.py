@@ -8,6 +8,8 @@
 @copyright Copyright (c) 2021
 """
 
+# @cond
+
 import base64
 from pip._vendor import requests
 import xml.etree.ElementTree as ET
@@ -81,3 +83,5 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
+# @endcond
