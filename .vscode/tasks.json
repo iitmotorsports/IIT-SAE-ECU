@@ -17,8 +17,9 @@
             "args": [
                 "/d",
                 "/c",
-                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
-                "build"
+                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py",
+                "build",
+                "${config:ADDITIONAL_CMAKE_VARS}"
             ],
             "options": {
                 "statusbar": {
@@ -51,9 +52,9 @@
             "args": [
                 "/d",
                 "/c",
-                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
+                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py",
                 "config",
-                "\"-DTOOLCHAIN_OFFSET:STRING=${config:TOOLCHAIN_OFFSET} ${config:ADDITIONAL_CMAKE_VARS}\""
+                "${config:ADDITIONAL_CMAKE_VARS}"
             ],
             "options": {
                 "statusbar": {
@@ -63,7 +64,7 @@
             "problemMatcher": []
         },
         {
-            "label": "Hard Clean",
+            "label": "Reset",
             "type": "process",
             "detail": "Clean up entire CMake project",
             "presentation": {
@@ -74,9 +75,9 @@
             "args": [
                 "/d",
                 "/c",
-                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
-                "hard_clean",
-                "\"-DTOOLCHAIN_OFFSET:STRING=${config:TOOLCHAIN_OFFSET} ${config:ADDITIONAL_CMAKE_VARS}\""
+                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py",
+                "reset",
+                "${config:ADDITIONAL_CMAKE_VARS}"
             ],
             "options": {
                 "statusbar": {
@@ -97,7 +98,7 @@
             "args": [
                 "/d",
                 "/c",
-                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
+                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py",
                 "upload",
                 "${input:TEENSY_USB_PORTNAME}"
             ],
@@ -121,7 +122,7 @@
             "args": [
                 "/d",
                 "/c",
-                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
+                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py",
                 "upload",
                 "${config:BACK_TEENSY_PORT}"
             ],
@@ -144,7 +145,7 @@
             "args": [
                 "/d",
                 "/c",
-                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
+                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py",
                 "upload",
                 "${config:FRONT_TEENSY_PORT}"
             ],
@@ -294,7 +295,7 @@
                 "ECUBuildPick.py",
                 "1",
                 "&&",
-                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
+                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py",
                 "build",
                 "-s"
             ],
@@ -333,7 +334,7 @@
                 "ECUBuildPick.py",
                 "0",
                 "&&",
-                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
+                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py",
                 "build",
                 "-s"
             ],
@@ -366,7 +367,7 @@
             "args": [
                 "/d",
                 "/c",
-                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.bat",
+                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py",
                 "clean"
             ],
             "options": {
