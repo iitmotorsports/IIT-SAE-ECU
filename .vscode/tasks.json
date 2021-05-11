@@ -255,11 +255,74 @@
             }
         },
         {
+            "label": "Disable Front",
+            "type": "process",
+            "detail": "Put front teensy in programming mode",
+            "presentation": {
+                "panel": "shared",
+                "showReuseMessage": false,
+                "reveal": "silent"
+            },
+            "command": "cmd.exe",
+            "args": [
+                "/d",
+                "/c",
+                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py",
+                "disable",
+                "${config:FRONT_TEENSY_PORT}"
+            ],
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Disable Back",
+            "type": "process",
+            "detail": "Put back teensy in programming mode",
+            "presentation": {
+                "panel": "shared",
+                "showReuseMessage": false,
+                "reveal": "silent"
+            },
+            "command": "cmd.exe",
+            "args": [
+                "/d",
+                "/c",
+                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py",
+                "disable",
+                "${config:BACK_TEENSY_PORT}"
+            ],
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Disable Both",
+            "detail": "Put both teensies in programming mode",
+            "dependsOn": [
+                "Disable Back",
+                "Disable Front"
+            ],
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "Shebang Both",
             "detail": "Run all tasks required to program both teensies",
             "dependsOrder": "sequence",
             "dependsOn": [
                 "Build",
+                "Disable Both",
                 "Upload Back",
                 "Build Front ECU",
                 "Upload Front",
