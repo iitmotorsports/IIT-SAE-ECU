@@ -238,6 +238,7 @@ void ECUStates::Driving_Mode_State::torqueVector(int torques[2], int pedal0, int
 }
 
 void ECUStates::Driving_Mode_State::carCooling(bool enable) { // NOTE: Cooling values are all static
+    // TODO: use FANS_ONOFF pin
     Pins::setPinValue(PINS_BACK_PUMP_DAC, enable * (0.60302734375f * PINS_ANALOG_MAX));
     int fanSet = enable * PINS_ANALOG_MAX / 2;
     Pins::setPinValue(PINS_BACK_FAN1_PWM, fanSet);
