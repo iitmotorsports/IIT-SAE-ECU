@@ -248,7 +248,7 @@ void ECUStates::Driving_Mode_State::carCooling(bool enable) { // NOTE: Cooling v
 
 State::State_t *ECUStates::Driving_Mode_State::DrivingModeFault(void) {
     Log.i(ID, "Fault happened in driving state");
-    // carCooling(false);
+    carCooling(false);
     Log.i(ID, "Starting MC heartbeat");
     MC::enableMotorBeating(true);
     return &ECUStates::FaultState;
