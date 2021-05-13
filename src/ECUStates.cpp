@@ -16,8 +16,6 @@ static bool FaultCheck() { // NOTE: Will only return true if hardfault occurs
     return false;
 }
 
-static LOG_TAG globalID = "BACK ECU";
-
 static void updateFaultLights() {
     static int bms, imd, bms_l, imd_l = 0;
     if ((bms = Pins::getPinValue(PINS_BACK_BMS_FAULT)) != bms_l || (imd = Pins::getPinValue(PINS_BACK_IMD_FAULT)) != imd_l) {
