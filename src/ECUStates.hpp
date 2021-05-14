@@ -88,8 +88,6 @@ static struct Driving_Mode_State : State::State_t {
 private:
     Canbus::Buffer MC0_VOLT_Buffer = ADD_MC0_VOLT;
     Canbus::Buffer MC1_VOLT_Buffer = ADD_MC1_VOLT;
-    void sendMCCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit);
-    void torqueVector(int torques[2], int pedal0, int pedal1, int brakeVal, int steerVal);
     void carCooling(bool enable);
     State::State_t *DrivingModeFault(void);
 

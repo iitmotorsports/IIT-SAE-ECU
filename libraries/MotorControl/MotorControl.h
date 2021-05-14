@@ -58,7 +58,17 @@ void sendCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit);
  * 
  * @param torque The torque to set the motors at
  */
-void setTorque(int torque);
+
+/**
+ * @brief Calculate and set the torque of both MCs
+ * 
+ * @note `enableMotorBeating` must have been set to false before calling this function
+ * 
+ * @param pedal The raw value of the pedal
+ * @param brake The raw value of the brake
+ * @param steer The raw value of the steering wheel
+ */
+void setTorque(int pedal, int brake, int steer);
 
 } // namespace MC
 

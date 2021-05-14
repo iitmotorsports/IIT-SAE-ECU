@@ -219,22 +219,6 @@ State::State_t *ECUStates::Button_State::run(void) {
     return &ECUStates::Driving_Mode_State;
 }
 
-void ECUStates::Driving_Mode_State::sendMCCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit) {
-    int percentTorque = 0;
-    if (torque != 0) {
-        percentTorque = constrain(map(torque, 200, PINS_ANALOG_MAX, 0, 300), 0, 300); // separate func for negative vals (regen)
-    }
-    uint8_t *bytes = (uint8_t *)&percentTorque;
-    Canbus::sendData(MC_ADD, bytes[0], bytes[1], 0, 0, direction, enableBit);
-}
-
-void ECUStates::Driving_Mode_State::torqueVector(int torques[2], int pedal0, int pedal1, int brakeVal, int steerVal) {
-    // TODO: Add Torque vectoring algorithms
-    int pedalVal = (pedal0 + pedal1) / 2;
-    torques[0] = pedalVal;
-    torques[1] = pedalVal;
-}
-
 void ECUStates::Driving_Mode_State::carCooling(bool enable) { // NOTE: Cooling values are all static
     // TODO: use FANS_ONOFF pin
     Pins::setPinValue(PINS_BACK_PUMP_DAC, enable * (0.60302734375f * PINS_ANALOG_MAX));
@@ -294,7 +278,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             int pedal0 = Pins::getCanPinValue(PINS_FRONT_PEDAL0);
             int pedal1 = Pins::getCanPinValue(PINS_FRONT_PEDAL1);
 
-            // Min value for the pedal should push before a command should be sent to the motor
+            // NOTE: pedal has a threshold value
             if ((abs(pedal0) + abs(pedal1)) < 200) {
                 pedal0 = 0;
                 pedal1 = 0;
@@ -307,10 +291,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
                 return DrivingModeFault();
             }
 
-            int MotorTorques[2] = {1, 1};
-            torqueVector(MotorTorques, pedal0, pedal1, breakVal, steerVal);
-            sendMCCommand(ADD_MC0_CTRL, MotorTorques[0], 0, 1); // MC 1
-            sendMCCommand(ADD_MC1_CTRL, MotorTorques[1], 0, 1); // MC 2F
+            MC::setTorque((pedal0 + pedal1) / 2, breakVal, steerVal);
 
             if (++counter > 15) {
                 counter = 0;
