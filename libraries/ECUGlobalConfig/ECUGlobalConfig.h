@@ -38,11 +38,16 @@
 /**
  * @brief Set serial baud rate
  */
-#define CONF_TEENSY_BAUD_RATE 115200
+#define CONF_ECU_BAUD_RATE 115200
 
 /**
- * @brief Set a delay on startup before a Teensy does anything
+ * @brief Set a delay on startup before any ECU does anything
  */
-#define CONF_TEENSY_INITAL_DELAY 2000
+#define CONF_ECU_INITAL_DELAY 2000
+
+/**
+ * @brief The radius of the car's wheels
+ */
+#define CONF_CAR_WHEEL_RADIUS 1.8  // TODO: Get car wheel radius
 
 #endif // __ECU_GLOBALCONFIG_H__
