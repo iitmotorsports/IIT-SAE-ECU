@@ -46,7 +46,7 @@ State::State_t *ECUStates::Initialize_State::run(void) {
     Mirror::setup();
     Echo::setup();
 #endif
-    Heartbeat::addCallback(updateFaultLights);
+    Heartbeat::addCallback(updateFaultLights); // IMPROVE: don't just periodically check if leds are on
     Heartbeat::beginBeating();
 
     // Front teensy should know when to blink start light
