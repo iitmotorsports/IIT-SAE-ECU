@@ -10,7 +10,7 @@
 
 # @cond
 import qrcode, zlib, base64
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 
 maxVersion = 1
 rawSize = -1
@@ -33,7 +33,7 @@ def makeChunk(data, num):
     qr = qrcode.QRCode(
         version=maxVersion,
         error_correction=qrcode.ERROR_CORRECT_H,
-        box_size=5,
+        box_size=10,
         border=10,
     )
     data = bytesPrepend(data, [count, num])
@@ -66,15 +66,25 @@ i = 0
 
 images = list()
 
+fnt = ImageFont.truetype("arial", 30)
+
 for d in data:
-    images.append(makeChunk(d, i).get_image().convert("P"))
+    img = makeChunk(d, i).get_image().convert("RGBA")
+    draw = ImageDraw.Draw(img)
+    draw.text((20, 20), str(len(images)).rjust(2, ' '), font=fnt, fill="black")
+    images.append(img)
     i += 1
+
+img = Image.new("P", (images[0].height, images[0].width), "black")
+draw = ImageDraw.Draw(img)
+draw.text((50, 50), "QR GIF\nQR VERSION: {}\nCOUNT: {}".format(maxVersion, count), font=ImageFont.truetype("arial", 40), fill="white")
+images.insert(0, img)
 
 images[0].save("log_lookup.gif", append_images=images[1:], save_all=True, duration=100, loop=0)
 
 print(
-    "Version {}\nBytes {} / {} : {}%\nWait for #{}".format(
-        maxVersion, compSize, rawSize, round((compSize / rawSize) * 100, 2), len(images) - 1
+    "QR Gif\nVersion {}\nBytes {} / {} : {}%\nWait for #{}".format(
+        maxVersion, compSize, rawSize, round((compSize / rawSize) * 100, 2), count
     )
 )
 # @endcond
