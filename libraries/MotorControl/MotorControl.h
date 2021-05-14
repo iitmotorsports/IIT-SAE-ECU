@@ -22,6 +22,8 @@
  */
 namespace MC {
 
+#define CONF_MAXIMUM_SWITCHING_SPEED 5
+
 /**
  * @brief Initialize MC heartbeat function and clear faults, if any
  */
@@ -52,12 +54,19 @@ void enableMotorBeating(bool enable);
 void sendCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit);
 
 /**
- * @brief Set the Torque of both MCs
+ * @brief Set the direction of the motors
  * 
- * @note `enableMotorBeating` must have been set to false before calling this function
- * 
- * @param torque The torque to set the motors at
+ * @param runForward whether the motors should spin forwards
  */
+void setDirection(bool runForward);
+
+/**
+ * @brief Get whether the motors will spin forward
+ * 
+ * @return true The motors will spin forward
+ * @return false The motors will spin in reverse
+ */
+bool isForward(void);
 
 /**
  * @brief Calculate and set the torque of both MCs
