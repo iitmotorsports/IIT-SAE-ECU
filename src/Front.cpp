@@ -28,7 +28,7 @@ static Canbus::Buffer BMS_DATA_Buffer(ADD_BMS_DATA);
 static Canbus::Buffer BMS_BATT_TEMP_Buffer(ADD_BMS_BATT_TEMP);
 static Canbus::Buffer BMS_CURR_LIMIT_Buffer(ADD_BMS_CURR_LIMIT);
 
-static constexpr float wheelRadius = 1.8; // TODO: Get car wheel radius
+static constexpr float wheelRadius = CONF_CAR_WHEEL_RADIUS;
 
 static struct State::State_t *states[] = {
     &ECUStates::Initialize_State,
