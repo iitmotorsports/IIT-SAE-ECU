@@ -220,12 +220,6 @@ void Front::run() {
     Mirror::setup();
 #endif
 
-    // android make pack power, circular power gauge
-    // one line is pack: how much we are currently pulling, one is how much we can pull from batteries: current value on the app
-    // How much we want, how much it can deliever
-    // dial can go negative
-    // (calculated from DCL from BMS * current MCs avg voltage)
-
     static bool hasBeat = false;
 
     Log.d(ID, "Delaying 2 sec");
