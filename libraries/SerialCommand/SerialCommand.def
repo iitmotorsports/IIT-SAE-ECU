@@ -20,6 +20,7 @@
 #define COMMAND_TOGGLE_MIRROR_MODE 90
 #define COMMAND_ENTER_MIRROR_SET 255
 #define COMMAND_SEND_ECHO 84
+#define COMMAND_TOGGLE_REVERSE 25
 
 /**
  * @brief Defines commands that the ECU must react to
