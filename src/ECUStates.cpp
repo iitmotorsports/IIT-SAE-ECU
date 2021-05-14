@@ -274,7 +274,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
 
     Log.d(ID, "Entering drive loop");
     while (true) {
-        if (controlDelay > 20) { // NOTE: Each data frame is 89 bits long thus at 250kbps the MC buses can handle a maximum of 2808 messages per second
+        if (controlDelay > 5) { // NOTE: Each data frame is 89 bits long thus at 250kbps the MC buses can handle a maximum of 2808 messages per second
             controlDelay = 0;
 
             if (Fault::softFault() || Fault::hardFault()) { // FIXME: are motor controller faults actually being picked up?
@@ -312,7 +312,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             sendMCCommand(ADD_MC0_CTRL, MotorTorques[0], 0, 1); // MC 1
             sendMCCommand(ADD_MC1_CTRL, MotorTorques[1], 0, 1); // MC 2F
 
-            if (++counter > 5) {
+            if (++counter > 15) {
                 counter = 0;
                 Log.i(ID, "Aero servo position:", Aero::getServoValue());
                 if (Fault::softFault()) {
