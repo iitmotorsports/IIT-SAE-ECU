@@ -11,13 +11,13 @@
 
 // @cond
 
-#include "ECUGlobalConfig.h"
 #include "MotorControl.h"
+#include "Canbus.h"
+#include "ECUGlobalConfig.h"
 #include "Pins.h"
 #include "log.h"
 #include "stdint.h"
 #include "stdlib.h"
-#include "Canbus.h"
 
 namespace MC {
 
@@ -87,15 +87,17 @@ void sendCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit) { 
     Canbus::sendData(MC_ADD, bytes[0], bytes[1], 0, 0, direction, enableBit);
 }
 
-bool isForward(void){
+bool isForward(void) {
     return forward;
 }
 
-void setDirection(bool runForward){
-    if (motorSpeed() <= CONF_MAXIMUM_SWITCHING_SPEED)
+void setDirection(bool runForward) {
+    if (motorSpeed() <= CONF_MAXIMUM_SWITCHING_SPEED) {
+        Log.w(ID, "Switching direction");
         forward = runForward;
-    else
+    } else {
         Log.e(ID, "Unable to switch direction, car is moving too much");
+    }
 }
 
 void setTorque(int pedal, int brake, int steer) {

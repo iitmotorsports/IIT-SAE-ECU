@@ -190,6 +190,12 @@ static void sendEchoMessage() {
     Echo::echo(delay, address, (uint8_t *)buffer);
 }
 
+static void toggleMotorDirection() {
+    static bool reverse = false;
+    reverse = !reverse;
+    Pins::setInternalValue(PINS_INTERNAL_REVERSE, reverse);
+}
+
 void Front::run() {
     Log.i(ID, "Teensy 3.6 SAE FRONT ECU Initalizing");
 
@@ -207,6 +213,7 @@ void Front::run() {
     Command::setCommand(COMMAND_SEND_CANBUS_MESSAGE, pushCanMessage);
     Command::setCommand(COMMAND_TOGGLE_CANBUS_SNIFF, toggleCanbusSniffer);
     Command::setCommand(COMMAND_SEND_ECHO, sendEchoMessage);
+    Command::setCommand(COMMAND_TOGGLE_REVERSE, toggleMotorDirection);
 
     Heartbeat::beginReceiving();
 #ifdef CONF_ECU_DEBUG
