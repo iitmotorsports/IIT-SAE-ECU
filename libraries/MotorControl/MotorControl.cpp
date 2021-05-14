@@ -22,7 +22,7 @@ namespace MC {
 static LOG_TAG ID = "MotorControl";
 static bool beating = true;
 static bool init = false;
-static int MotorTorques[2] = {0, 0};
+static int motorTorque[2] = {0, 0};
 
 static void beatFunc(void) {
     if (beating) {
@@ -65,14 +65,14 @@ void sendCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit) { 
 
 static void torqueVector(int pedal, int brake, int steer) {
     // TODO: Add Torque vectoring algorithms
-    MotorTorques[0] = pedal;
-    MotorTorques[1] = pedal;
+    motorTorque[0] = pedal;
+    motorTorque[1] = pedal;
 }
 
 void setTorque(int pedal, int brake, int steer) {
     torqueVector(pedal, brake, steer);
-    sendCommand(ADD_MC0_CTRL, MotorTorques[0], 0, 1);
-    sendCommand(ADD_MC1_CTRL, MotorTorques[1], 1, 1);
+    sendCommand(ADD_MC0_CTRL, motorTorque[0], 0, 1);
+    sendCommand(ADD_MC1_CTRL, motorTorque[1], 1, 1);
 }
 
 } // namespace MC
