@@ -23,7 +23,7 @@
             ],
             "options": {
                 "statusbar": {
-                    "label": "$(database)",
+                    "label": "$(file-binary)",
                     "color": "#1ba82e"
                 }
             },
@@ -104,7 +104,7 @@
             ],
             "options": {
                 "statusbar": {
-                    "label": "$(zap)",
+                    "label": "$(circuit-board)",
                     "color": "#e6d925"
                 }
             },
@@ -330,7 +330,7 @@
             ],
             "options": {
                 "statusbar": {
-                    "label": "$(flame)",
+                    "label": "$(rocket)",
                     "color": "#e67c25"
                 }
             },
@@ -455,7 +455,26 @@
             ],
             "options": {
                 "statusbar": {
-                    "label": "$(file)"
+                    "label": "$(cloud-upload)"
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "QRGif",
+            "type": "shell",
+            "detail": "Create a QRGif of lookup table",
+            "presentation": {
+                "panel": "shared",
+                "showReuseMessage": false
+            },
+            "command": "python",
+            "args": [
+                "qrJSON.py",
+            ],
+            "options": {
+                "statusbar": {
+                    "label": "$(symbol-numeric)"
                 }
             },
             "problemMatcher": []
