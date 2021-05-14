@@ -49,7 +49,7 @@ void enableMotorBeating(bool enable) {
     beating = enable;
 }
 
-void sendCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit) {
+void sendCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit) { // NOTE: 0 (Clockwise = Reverse) 1 (Anticlockwise = Forward)
     if (beating) {
         Log.w(ID, "Unable to set torque, heartbeat is on");
         return;
@@ -61,7 +61,7 @@ void sendCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit) {
 
 void setTorque(int torque) {
     sendCommand(ADD_MC0_CTRL, torque, 0, 1);
-    sendCommand(ADD_MC0_CTRL, torque, 1, 1);
+    sendCommand(ADD_MC1_CTRL, torque, 1, 1);
 }
 
 } // namespace MC
