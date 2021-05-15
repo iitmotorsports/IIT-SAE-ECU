@@ -75,12 +75,13 @@ for d in data:
     images.append(img)
     i += 1
 
-img = Image.new("P", (images[0].height, images[0].width), "black")
+img = Image.new("P", (images[0].height, images[0].width), "white")
 draw = ImageDraw.Draw(img)
-draw.text((50, 50), "QR GIF\nQR VERSION: {}\nCOUNT: {}".format(maxVersion, count), font=ImageFont.truetype("arial", 40), fill="white")
+draw.text((50, 50), "QR GIF\nQR VERSION: {}\nCOUNT: {}".format(maxVersion, count), font=ImageFont.truetype("arial", 40), fill="black")
 images.insert(0, img)
 
-images[0].save("log_lookup.gif", append_images=images[1:], save_all=True, duration=100, loop=0)
+images[0].save("log_lookup_fast.gif", append_images=images[1:], save_all=True, duration=100, loop=0)
+images[0].save("log_lookup_slow.gif", append_images=images[1:], save_all=True, duration=1400, loop=0)
 
 print(
     "QR Gif\nVersion {}\nBytes {} / {} : {}%\nWait for #{}".format(
