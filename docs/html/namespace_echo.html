@@ -97,8 +97,10 @@ $(document).ready(function(){initNavTree('namespace_echo.html',''); initResizabl
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ac57e2ff216615be891ffabf232f14d37"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_echo.html#ac57e2ff216615be891ffabf232f14d37">echo</a> (uint32_t delay, const uint32_t address, uint8_t buf[8])</td></tr>
+<tr class="memdesc:ac57e2ff216615be891ffabf232f14d37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a can message to the back ECU from the front to then echo the same message at a set delay.  <a href="namespace_echo.html#ac57e2ff216615be891ffabf232f14d37">More...</a><br /></td></tr>
 <tr class="separator:ac57e2ff216615be891ffabf232f14d37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f3d048035f869638271d08ea736f97e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_echo.html#a0f3d048035f869638271d08ea736f97e">echo</a> (uint32_t delay, const uint32_t address, const uint8_t buf_0=0, const uint8_t buf_1=0, const uint8_t buf_2=0, const uint8_t buf_3=0, const uint8_t buf_4=0, const uint8_t buf_5=0, const uint8_t buf_6=0, const uint8_t buf_7=0)</td></tr>
+<tr class="memdesc:a0f3d048035f869638271d08ea736f97e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a can message to the back ECU from the front to then echo the same message at a set delay.  <a href="namespace_echo.html#a0f3d048035f869638271d08ea736f97e">More...</a><br /></td></tr>
 <tr class="separator:a0f3d048035f869638271d08ea736f97e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a06d3c7f95ead843b9a10c61cb4ee8aee"><td class="memItemLeft" align="right" valign="top"><a id="a06d3c7f95ead843b9a10c61cb4ee8aee"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_echo.html#a06d3c7f95ead843b9a10c61cb4ee8aee">setup</a> ()</td></tr>
@@ -107,6 +109,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This Module can be used to echo a CAN message over a network of two ECUs. </p>
+<p><a class="el" href="namespace_echo.html#ac57e2ff216615be891ffabf232f14d37" title="Send a can message to the back ECU from the front to then echo the same message at a set delay.">Echo::echo</a> is called when a serial command from the companion app sends a valid canbus message to relay</p>
+<p>This modules is only used for testing</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="_serial_command_8h.html" title="SerialCommand functionality.">SerialCommand.h</a> for more info on how <a class="el" href="namespace_echo.html" title="This Module can be used to echo a CAN message over a network of two ECUs.">Echo</a> functions are called over serial </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="a0f3d048035f869638271d08ea736f97e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0f3d048035f869638271d08ea736f97e">&#9670;&nbsp;</a></span>echo() <span class="overload">[1/2]</span></h2>
@@ -181,6 +186,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Send a can message to the back ECU from the front to then echo the same message at a set delay. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">delay</td><td>The delay to echo the message back </td></tr>
@@ -230,6 +237,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Send a can message to the back ECU from the front to then echo the same message at a set delay. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">delay</td><td>The delay to echo the message back </td></tr>

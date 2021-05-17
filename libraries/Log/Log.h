@@ -7,9 +7,10 @@
  * 
  * @copyright Copyright (c) 2020
  * 
- * To modify how this library behaves, refer to the LogConfig.def
- * 
+ * @see Logging::Log_t for info on how logging works
+ * @see LogConfig.def for configuration of logging
  */
+
 #ifndef __ECU_LOGGING_H__
 #define __ECU_LOGGING_H__
 
@@ -48,7 +49,7 @@ typedef const char *LOG_MSG;
 
 /**
  * @brief Return the final numbervalue of a LOG_TAG
- * @note If mapped mode is not on, this will just return 0
+ * @warning If mapped mode is not on, this will just return 0
  * 
  * @param tagValue The LOG_TAG to convert
  * @return uint16_t the number representation of the tag
@@ -57,17 +58,95 @@ uint32_t TAG2NUM(LOG_TAG tagValue);
 
 /**
  * @brief Namespace to isolate Log_t struct.
- * Refer to Log.h for more info.
+ * @see Log.h for more info.
  */
 namespace Logging {
 
 /**
- * @brief Base class used to log things to serial \n
- * This class has the capability to modify all of it's functions to instead use integer IDs \n
- * Refer to the Pre_Build.py script for more information
- * @note If Pre_Build.py is run, **All** strings passed to parameter `message` must be an inline string \n
- *      Log("String goes here"); ✔️ \n
+ * @brief Base class used to log things over serial
+ * 
+ * Logging is centered around communicating with the companion app.
+ * 
+ * ### Default Mode
+ * 
+ * In its default mode, logging does not send ASCII strings but integer numbers which represent a set of defined strings.
+ * 
+ * The actual messages that are sent over serial are as follows.
+ * 
+ * ```
+ * Byte Number |0    |1   |2   |3   |4   |5   |6   |7   |
+ * What it is  |State Code|String ID|      uint32_t     |
+ * ```
+ * 
+ * Bytes 0-1 represent a State Code, or in other works, a unique number that is mapped to a unique string
+ * representing the name of what is making this log entry.
+ * 
+ * Bytes 2-3 represent a String ID, a unique number that is mapped to a unique string.
+ * 
+ * Bytes 4-7 represent a 32 bit value, by default it is zero, every log entry has this number sent.
+ * 
+ * Calls to the global `Log` can be done as follows.
+ * 
+ * ``` C
+ * Log(TAG, message, number);
+ * ```
+ * 
+ * `TAG` can be staticly defined using a `LOG_TAG`.
+ * 
+ * `message` must be a string literal as such.
+ * 
+ * ``` C
+ *      Log("String goes here"); ✔️
  *      Log(someStringReference); ❌
+ * ```
+ * 
+ * Unless TAG2NUM() is used.
+ * 
+ * And `number` can be any unsigned 32 bit integer.
+ * 
+ * The companion app received this messages as an 8 byte integer and decodes them by first splitting them into
+ * the structure shown, and then matching those number that Pre_Build.py generates in `log_lookup.json`
+ * 
+ * ### Debug ASCII Mode
+ * 
+ * When the prebuild script Pre_Build.py is skipped, calls to `Log` still function, however the message sent is
+ * instead a formatted ASCII string, no string mapping or anything else occurs.
+ * 
+ * This mode also has the option to prepend a time stamp
+ * 
+ * ### Logging Levels
+ * 
+ * Logging has different levels which can be logged to, this is used to differentiate between how important different
+ * log entries are.
+ * 
+ * The current types are as follows.
+ * 
+ * |Func Call   |Log Type       |
+ * |------------|---------------|
+ * |Log.d()     |Debug log      |
+ * |Log.i()     |Info log       |
+ * |Log()       |Normal log     |
+ * |Log.w()     |Warning log    |
+ * |Log.e()     |Error log      |
+ * |Log.f()     |Fatal Log      |
+ * 
+ * ### Logging over Can
+ * 
+ * The front ECU can easily communicate with the companion app as it is connected directly with USB serial.
+ * 
+ * However, the back ECU is only connected to the front ECU through CanBus.
+ * 
+ * To enable logging on the back ECU, it has to send messages over Canbus.
+ * This method is only supported when Logging is in it's default mode.
+ * 
+ * Running Logging::enableCanbusRelay() once on the front ECU ensure that it receives and relays messages from
+ * the back ECU to the companion app.
+ * 
+ * @warning Because of the nature of serial and its interaction with interrupts, which is how messages are relayed,
+ * it is recommended to instead use CanPins to communicate data from the back ECU to the front ECU.
+ * 
+ * @see Pins.h for more info on CanPins
+ * @see Pre_Build.py for more info on how calls to Logging related items are modified before compilation
  */
 struct Log_t {
     /**
@@ -171,7 +250,9 @@ void enableCanbusRelay();
 } // namespace Logging
 
 /**
- * @brief Refer to Log_t
+ * @brief The *global* logging object
+ * 
+ * @see Logging::Log_t for more info on logging
  */
 extern Logging::Log_t Log;
 

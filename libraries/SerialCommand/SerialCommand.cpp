@@ -13,7 +13,7 @@
 #include "SerialCommand.h"
 #include "Log.h"
 
-namespace Command {
+namespace Cmd {
 
 static LOG_TAG ID = "Serial Command";
 
@@ -58,5 +58,5 @@ void setCommand(uint8_t command, CommandCallback callback) {
     }
     Log.w(ID, "No Command found for command:", command);
 }
-} // namespace Command
+} // namespace Cmd
   // @endcond

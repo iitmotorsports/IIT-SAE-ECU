@@ -123,7 +123,8 @@ Macros</h2></td></tr>
 <dl class="section author"><dt>Author</dt><dd>IR </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>0.1 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2021-01-27</dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2021 </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2021</dd></dl>
+<p>This configuration defines all the faults to check for. </p>
 
 <p class="definition">Definition in file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
@@ -145,7 +146,7 @@ Macros</h2></td></tr>
 <p>X(CAN address, mask, tag) \</p>
 <p>Only the last entry should NOT have a '\' </p>
 
-<p class="definition">Definition at line <a class="el" href="_fault_config_8def_source.html#l00069">69</a> of file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_fault_config_8def_source.html#l00071">71</a> of file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
 
 </div>
 </div>
@@ -162,7 +163,7 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    X(PINS_BACK_IMD_FAULT, &gt;, 0, <a class="code" href="_log_8h.html#a9bec0c08edcafb8184fd41d631e708e9">_LogPrebuildString</a>(<span class="stringliteral">&quot;IMD Fault Signal&quot;</span>)) \</div>
 <div class="line">    X(PINS_BACK_BMS_FAULT, &gt;, 0, <a class="code" href="_log_8h.html#a9bec0c08edcafb8184fd41d631e708e9">_LogPrebuildString</a>(<span class="stringliteral">&quot;BMS Fault Signal&quot;</span>))</div>
-<div class="ttc" id="a_log_8h_html_a9bec0c08edcafb8184fd41d631e708e9"><div class="ttname"><a href="_log_8h.html#a9bec0c08edcafb8184fd41d631e708e9">_LogPrebuildString</a></div><div class="ttdeci">#define _LogPrebuildString(x)</div><div class="ttdoc">Refer to Pre_Build.py.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8h_source.html#l00019">Log.h:19</a></div></div>
+<div class="ttc" id="a_log_8h_html_a9bec0c08edcafb8184fd41d631e708e9"><div class="ttname"><a href="_log_8h.html#a9bec0c08edcafb8184fd41d631e708e9">_LogPrebuildString</a></div><div class="ttdeci">#define _LogPrebuildString(x)</div><div class="ttdoc">Refer to Pre_Build.py.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8h_source.html#l00020">Log.h:20</a></div></div>
 </div><!-- fragment -->
 <p>Defines <a class="el" href="namespace_pins.html" title="Get and set values to predefined pins.">Pins</a> that should be checked for hard faults. </p>
 <dl class="section note"><dt>Note</dt><dd>The identity calls the function _LogPrebuildString, this is used to notify <a class="el" href="_pre___build_8py.html" title="This script preprocesses source files for use with Log_t.">Pre_Build.py</a> of the string</dd></dl>
@@ -170,7 +171,7 @@ Macros</h2></td></tr>
 <p>X(pin, comparator, value, identity) \</p>
 <p>Only the last entry should NOT have a '\' </p>
 
-<p class="definition">Definition at line <a class="el" href="_fault_config_8def_source.html#l00035">35</a> of file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_fault_config_8def_source.html#l00037">37</a> of file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
 
 </div>
 </div>
@@ -193,7 +194,7 @@ Macros</h2></td></tr>
 <p>X(CAN address, bitmask, _LogPrebuildString(identity)) \</p>
 <p>Only the last entry should NOT have a '\' </p>
 
-<p class="definition">Definition at line <a class="el" href="_fault_config_8def_source.html#l00102">102</a> of file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_fault_config_8def_source.html#l00104">104</a> of file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
 
 </div>
 </div>
@@ -217,7 +218,7 @@ Macros</h2></td></tr>
 <p>X(CAN address, mask, tag) \</p>
 <p>Only the last entry should NOT have a '\' </p>
 
-<p class="definition">Definition at line <a class="el" href="_fault_config_8def_source.html#l00084">84</a> of file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_fault_config_8def_source.html#l00086">86</a> of file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
 
 </div>
 </div>
@@ -239,7 +240,7 @@ Macros</h2></td></tr>
 <p>X(pin, comparator, value, identity) \</p>
 <p>Only the last entry should NOT have a '\' </p>
 
-<p class="definition">Definition at line <a class="el" href="_fault_config_8def_source.html#l00054">54</a> of file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_fault_config_8def_source.html#l00056">56</a> of file <a class="el" href="_fault_config_8def_source.html">FaultConfig.def</a>.</p>
 
 </div>
 </div>

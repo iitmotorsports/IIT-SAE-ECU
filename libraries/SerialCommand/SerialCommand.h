@@ -7,6 +7,14 @@
  * 
  * @copyright Copyright (c) 2021
  * 
+ * This module is used to run commands on an ECU by sending specific byte codes over serial.
+ * 
+ * Commands can be defined by calling Cmd::setCommand(), where the `uint8_t command` argument is defined in SerialCommand.def
+ * 
+ * Cmd::receiveCommand() must be called to poll Serial and check for any available commands
+ * 
+ * @see SerialCommand.def to define new command numbers
+ * 
  */
 
 #ifndef __ECU_SERIALCOMMAND_H__
@@ -17,12 +25,15 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+/**
+ * @brief A function that will be called whenever its corresponding command byte is received
+ */
 typedef void (*CommandCallback)(void);
 
 /**
  * @brief A simple way to run commands over serial
  */
-namespace Command {
+namespace Cmd {
 
 /**
  * @brief attach a single callback to a byte value that will be received over serial
@@ -39,6 +50,6 @@ void setCommand(uint8_t command, CommandCallback callback);
  */
 int receiveCommand(void);
 
-} // namespace Command
+} // namespace Cmd
 
 #endif // __ECU_SERIALCOMMAND_H__

@@ -7,6 +7,8 @@
  * 
  * @copyright Copyright (c) 2021
  * 
+ * @see Heartbeat for more info
+ * @see Heartbeat.def for configuration of this module
  */
 
 #ifndef __ECU_HEARTBEAT_H__
@@ -16,20 +18,20 @@
 #include <stdlib.h>
 
 /**
- * @brief The interval the beat should target
- */
-#define CONF_HEARTBEAT_INTERVAL_MICRO 150000
-/**
- * @brief The allowed delay between beats
- */
-#define CONF_HEARTBEAT_TIMEOUT_MILLI 50 // Allowable Delay
-
-/**
  * @brief A module used to both ensure a connection to both ECUs using CAN
- * and to periodically run callbacks
+ * and to periodically run callbacks.
+ * 
+ * Currently, Heartbeat::beginBeating() is run on the back ECU and Heartbeat::beginReceiving() is run on the front ECU.
+ * 
+ * Heartbeat::checkBeat() must be polled on the front ECU to log whether or not a heart beat is being detected
+ * 
+ * @see Heartbeat.def for configuration of this module
  */
 namespace Heartbeat {
 
+/**
+ * @brief Function called each time the *heart* beats
+ */
 typedef void (*beatFunc)(void);
 
 /**
@@ -45,7 +47,7 @@ void beginReceiving();
 /**
  * @brief Poll if a beat has been received
  * 
- * @return int True if the last beat is within allowed delay
+ * @return 1 if the last beat is within allowed delay, 0 otherwise
  */
 int checkBeat();
 

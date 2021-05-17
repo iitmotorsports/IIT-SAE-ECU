@@ -26,12 +26,23 @@ var NAVTREE =
 [
   [ "SAE Teensy ECU", "index.html", [
     [ "SAE at IIT ECU 2020 Programming", "index.html", [
-      [ "Hardware", "index.html#autotoc_md0", null ],
-      [ "Setup", "index.html#autotoc_md1", null ],
-      [ "Using", "index.html#autotoc_md2", [
-        [ "VSCode Tasks", "index.html#autotoc_md3", null ]
+      [ "Hardware", "index.html#autotoc_md5", null ],
+      [ "Setup", "index.html#autotoc_md6", null ],
+      [ "Using", "index.html#autotoc_md7", [
+        [ "VSCode Tasks", "index.html#autotoc_md8", null ]
       ] ],
-      [ "Documentation", "index.html#autotoc_md4", null ]
+      [ "Documentation", "index.html#autotoc_md9", null ]
+    ] ],
+    [ "X Macros", "_x_macros.html", [
+      [ "X Macros", "_x_macros.html#autotoc_md0", null ],
+      [ "Creating an X Macro", "_x_macros.html#XMacros_Creating_an_X_Macro", [
+        [ "Defining", "_x_macros.html#XMacros_Defining", null ],
+        [ "Generating", "_x_macros.html#XMacros_Generating", null ]
+      ] ],
+      [ "Caveats", "_x_macros.html#XMacros_Caveats", [
+        [ "X Macro Counter", "_x_macros.html#XMacros_XMacro_Counter", null ],
+        [ "Concatenated Calls", "_x_macros.html#XMacros_Concatenated_Calls", null ]
+      ] ]
     ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
@@ -68,7 +79,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_aero_servo_8cpp.html",
-"namespace_pins.html#aeb44a1100800f7a1984d725a5d1255f2"
+"namespace_m_c.html#aeb2b966841aa0fd6b2ac79478a648c84"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

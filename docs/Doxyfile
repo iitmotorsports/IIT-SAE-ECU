@@ -924,7 +924,10 @@ RECURSIVE              = YES
 
 EXCLUDE                = ..\build                \
                          ..\src                  \
-                         ..\doc                  \
+                         ..\doc\darkTheme        \
+                         ..\doc\html             \
+                         ..\doc\html\Doxyfile    \
+                         ..\doc\index.html       \
                          ..\libraries\FlexCAN_T4 \
                          ..\libraries\Servo      \
                          ..\libraries\PWMServo

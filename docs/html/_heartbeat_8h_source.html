@@ -89,34 +89,32 @@ $(document).ready(function(){initNavTree('_heartbeat_8h_source.html',''); initRe
 </div><!--header-->
 <div class="contents">
 <a href="_heartbeat_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#ifndef __ECU_HEARTBEAT_H__</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#define __ECU_HEARTBEAT_H__</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="_heartbeat_8h.html#a326e03f1932f84d63f56e8e852a71840">   21</a></span>&#160;<span class="preprocessor">#define CONF_HEARTBEAT_INTERVAL_MICRO 150000</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="_heartbeat_8h.html#ae3c7fcd9cab30e87b0fbc35404880137">   25</a></span>&#160;<span class="preprocessor">#define CONF_HEARTBEAT_TIMEOUT_MILLI 50 </span><span class="comment">// Allowable Delay</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="namespace_heartbeat.html">   31</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_heartbeat.html">Heartbeat</a> {</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">typedef</span> void (*beatFunc)(void);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="namespace_heartbeat.html#aa0261c708b2a2636e941fb6969494556">   38</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_heartbeat.html#aa0261c708b2a2636e941fb6969494556">beginBeating</a>();</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="namespace_heartbeat.html#a79e1c0291678d9bd08a4b418b6774159">   43</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_heartbeat.html#a79e1c0291678d9bd08a4b418b6774159">beginReceiving</a>();</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="namespace_heartbeat.html#a85f5ba8b7ffd86ea82479c28a846f6ac">   50</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="namespace_heartbeat.html#a85f5ba8b7ffd86ea82479c28a846f6ac">checkBeat</a>();</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="namespace_heartbeat.html#a243a1a7989df814269de816d2893d35b">   57</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_heartbeat.html#a243a1a7989df814269de816d2893d35b">addCallback</a>(beatFunc func);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;} <span class="comment">// namespace Heartbeat</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#ifndef __ECU_HEARTBEAT_H__</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#define __ECU_HEARTBEAT_H__</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="namespace_heartbeat.html">   30</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_heartbeat.html">Heartbeat</a> {</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="namespace_heartbeat.html#a90dd9f85dfc6bf41682af19b8ecd0c8d">   35</a></span>&#160;<span class="keyword">typedef</span> void (*<a class="code" href="namespace_heartbeat.html#a90dd9f85dfc6bf41682af19b8ecd0c8d">beatFunc</a>)(void);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="namespace_heartbeat.html#aa0261c708b2a2636e941fb6969494556">   40</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_heartbeat.html#aa0261c708b2a2636e941fb6969494556">beginBeating</a>();</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="namespace_heartbeat.html#a79e1c0291678d9bd08a4b418b6774159">   45</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_heartbeat.html#a79e1c0291678d9bd08a4b418b6774159">beginReceiving</a>();</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="namespace_heartbeat.html#a85f5ba8b7ffd86ea82479c28a846f6ac">   52</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="namespace_heartbeat.html#a85f5ba8b7ffd86ea82479c28a846f6ac">checkBeat</a>();</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="namespace_heartbeat.html#a243a1a7989df814269de816d2893d35b">   59</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_heartbeat.html#a243a1a7989df814269de816d2893d35b">addCallback</a>(<a class="code" href="namespace_heartbeat.html#a90dd9f85dfc6bf41682af19b8ecd0c8d">beatFunc</a> func);</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __ECU_HEARTBEAT_H__</span></div>
-<div class="ttc" id="anamespace_heartbeat_html"><div class="ttname"><a href="namespace_heartbeat.html">Heartbeat</a></div><div class="ttdoc">A module used to both ensure a connection to both ECUs using CAN and to periodically run callbacks.</div><div class="ttdef"><b>Definition:</b> <a href="_heartbeat_8h_source.html#l00031">Heartbeat.h:31</a></div></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;} <span class="comment">// namespace Heartbeat</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __ECU_HEARTBEAT_H__</span></div>
+<div class="ttc" id="anamespace_heartbeat_html"><div class="ttname"><a href="namespace_heartbeat.html">Heartbeat</a></div><div class="ttdoc">A module used to both ensure a connection to both ECUs using CAN and to periodically run callbacks.</div><div class="ttdef"><b>Definition:</b> <a href="_heartbeat_8h_source.html#l00030">Heartbeat.h:30</a></div></div>
 <div class="ttc" id="anamespace_heartbeat_html_a243a1a7989df814269de816d2893d35b"><div class="ttname"><a href="namespace_heartbeat.html#a243a1a7989df814269de816d2893d35b">Heartbeat::addCallback</a></div><div class="ttdeci">void addCallback(beatFunc func)</div><div class="ttdoc">Add a callback to be run at each haertbeat.</div></div>
 <div class="ttc" id="anamespace_heartbeat_html_a79e1c0291678d9bd08a4b418b6774159"><div class="ttname"><a href="namespace_heartbeat.html#a79e1c0291678d9bd08a4b418b6774159">Heartbeat::beginReceiving</a></div><div class="ttdeci">void beginReceiving()</div><div class="ttdoc">Set callback to receive beats over CAN.</div></div>
 <div class="ttc" id="anamespace_heartbeat_html_a85f5ba8b7ffd86ea82479c28a846f6ac"><div class="ttname"><a href="namespace_heartbeat.html#a85f5ba8b7ffd86ea82479c28a846f6ac">Heartbeat::checkBeat</a></div><div class="ttdeci">int checkBeat()</div><div class="ttdoc">Poll if a beat has been received.</div></div>
+<div class="ttc" id="anamespace_heartbeat_html_a90dd9f85dfc6bf41682af19b8ecd0c8d"><div class="ttname"><a href="namespace_heartbeat.html#a90dd9f85dfc6bf41682af19b8ecd0c8d">Heartbeat::beatFunc</a></div><div class="ttdeci">void(* beatFunc)(void)</div><div class="ttdoc">Function called each time the heart beats.</div><div class="ttdef"><b>Definition:</b> <a href="_heartbeat_8h_source.html#l00035">Heartbeat.h:35</a></div></div>
 <div class="ttc" id="anamespace_heartbeat_html_aa0261c708b2a2636e941fb6969494556"><div class="ttname"><a href="namespace_heartbeat.html#aa0261c708b2a2636e941fb6969494556">Heartbeat::beginBeating</a></div><div class="ttdeci">void beginBeating()</div><div class="ttdoc">begin sending a beat signal at a set interval</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

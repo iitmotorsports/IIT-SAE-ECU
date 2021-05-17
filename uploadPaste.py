@@ -6,6 +6,15 @@
 @date 2021-03-23
 
 @copyright Copyright (c) 2021
+
+This script uploads the log_lookup.json file to api.paste.ee (a free text file hosting site).
+
+This is done to help with transfering the json to the companion app. However, this method only works if the app has an internet connection.
+
+The companion app automatically selects this method for updating it's json file if there is an internet connection.
+
+@see Logging::Log_t for more info on log_lookup.json and the companion app
+
 """
 
 # @cond

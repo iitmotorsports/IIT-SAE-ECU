@@ -89,84 +89,95 @@ $(document).ready(function(){initNavTree('_state_8cpp_source.html',''); initResi
 </div><!--header-->
 <div class="contents">
 <a href="_state_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">// @cond</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_state_8h.html">State.h</a>&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_log_8h.html">Log.h</a>&quot;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_pins_8h.html">Pins.h</a>&quot;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;WProgram.h&quot;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">static</span> <a class="code" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a> TAG = <span class="stringliteral">&quot;State Manager&quot;</span>;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">static</span> <a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *lastState;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">static</span> <a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *currentState;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> currentNotifyCode = 0;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> setNextState(<a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *state) {</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    lastState = currentState;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    currentState = state;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;}</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">static</span> <span class="keyword">struct </span>UnhandledState_t : <a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> {</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <a class="code" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a> ID = <span class="stringliteral">&quot;UNHANDLED STATE&quot;</span>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    State_t *<a class="code" href="struct_state_1_1_state__t.html#acf89e1d0c03a8d3adacdbe3bc74e85e3">run</a>(<span class="keywordtype">void</span>) {</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#ad171024fa0f93e6117cd7b0aaf76cb87">f</a>(ID, <span class="stringliteral">&quot;UNHANDLED STATE!&quot;</span>);</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <a class="code" href="struct_state_1_1_state__t.html#a5616e88bc624eeccc06e5b01b3a929d8">notify</a>(<a class="code" href="namespace_state.html#a0ef38e9cb909ddbc25ed4489b46be084ad89eff4ec7b3f723eb12f9b6b4323fba">State::E_FATAL</a>);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">this</span>;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    };</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;} UnhandledState;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">// @cond</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_state_8h.html">State.h</a>&quot;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_log_8h.html">Log.h</a>&quot;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_pins_8h.html">Pins.h</a>&quot;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;WProgram.h&quot;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">static</span> <a class="code" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a> TAG = <span class="stringliteral">&quot;State Manager&quot;</span>;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">static</span> <a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *lastState;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">static</span> <a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *currentState;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> currentNotifyCode = 0;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> setNextState(<a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *state) {</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    lastState = currentState;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    currentState = state;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    currentState-&gt;<a class="code" href="struct_state_1_1_state__t.html#a447eecb03b56de38b0b002696fdec881">notifyCode</a> = currentNotifyCode;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">static</span> <span class="keyword">struct </span>UnhandledState_t : <a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> {</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <a class="code" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a> ID = <span class="stringliteral">&quot;UNHANDLED STATE&quot;</span>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    State_t *<a class="code" href="struct_state_1_1_state__t.html#acf89e1d0c03a8d3adacdbe3bc74e85e3">run</a>(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#ad171024fa0f93e6117cd7b0aaf76cb87">f</a>(ID, <span class="stringliteral">&quot;UNHANDLED STATE!&quot;</span>);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <a class="code" href="struct_state_1_1_state__t.html#a5616e88bc624eeccc06e5b01b3a929d8">notify</a>(<a class="code" href="namespace_state.html#a0ef38e9cb909ddbc25ed4489b46be084ad89eff4ec7b3f723eb12f9b6b4323fba">State::E_FATAL</a>);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">this</span>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    };</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *<a class="code" href="struct_state_1_1_state__t.html#acf89e1d0c03a8d3adacdbe3bc74e85e3">State::State_t::run</a>() {</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordflow">return</span> &amp;UnhandledState;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keywordtype">void</span> <a class="code" href="struct_state_1_1_state__t.html#a5616e88bc624eeccc06e5b01b3a929d8">State::State_t::notify</a>(<span class="keywordtype">int</span> code) {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    currentNotifyCode = code;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;}</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keywordtype">int</span> <a class="code" href="struct_state_1_1_state__t.html#aeae12a5d68f5c0d84c8c85160de43fd7">State::State_t::getNotify</a>() {</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordflow">return</span> this-&gt;notifyCode;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *<a class="code" href="struct_state_1_1_state__t.html#af730abedf662a8e251b5839b2ad6e932">State::State_t::getLastState</a>() {</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordflow">return</span> lastState;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<a class="code" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a> <a class="code" href="struct_state_1_1_state__t.html#a8f84fb281b0a51886c28212906c15649">State::State_t::getID</a>() {</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordflow">return</span> (<a class="code" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a>)420;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_state.html#a1c6e60c84c0fb7c572adaf678fb6a56a">State::begin</a>(State_t &amp;entry) {</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    setNextState(&amp;entry);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(TAG, <span class="stringliteral">&quot;Starting State Machine&quot;</span>);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordflow">while</span> (currentNotifyCode != <a class="code" href="namespace_state.html#a0ef38e9cb909ddbc25ed4489b46be084ad89eff4ec7b3f723eb12f9b6b4323fba">State::E_FATAL</a>) {</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        currentNotifyCode = 0;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(TAG, <span class="stringliteral">&quot;Start&quot;</span>, <a class="code" href="_log_8h.html#a0acd70772d752e8468d733cbda6a1b31">TAG2NUM</a>(currentState-&gt;<a class="code" href="struct_state_1_1_state__t.html#a8f84fb281b0a51886c28212906c15649">getID</a>())); <span class="comment">// Cannot send initalizing state as pins are not defined yet</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <a class="code" href="namespace_pins.html#a9d8cba01aef10c12ca76fe5cb0bc67c6">Pins::setInternalValue</a>(PINS_INTERNAL_STATE, <a class="code" href="_log_8h.html#a0acd70772d752e8468d733cbda6a1b31">TAG2NUM</a>(currentState-&gt;<a class="code" href="struct_state_1_1_state__t.html#a8f84fb281b0a51886c28212906c15649">getID</a>()));</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        setNextState(currentState-&gt;<a class="code" href="struct_state_1_1_state__t.html#acf89e1d0c03a8d3adacdbe3bc74e85e3">run</a>());</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        currentState-&gt;<a class="code" href="struct_state_1_1_state__t.html#a447eecb03b56de38b0b002696fdec881">notifyCode</a> = currentNotifyCode;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(TAG, <span class="stringliteral">&quot;State returned code&quot;</span>, currentNotifyCode);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        delay(1000);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    }</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;} UnhandledState;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *<a class="code" href="struct_state_1_1_state__t.html#acf89e1d0c03a8d3adacdbe3bc74e85e3">State::State_t::run</a>() {</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordflow">return</span> &amp;UnhandledState;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;}</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keywordtype">void</span> <a class="code" href="struct_state_1_1_state__t.html#a5616e88bc624eeccc06e5b01b3a929d8">State::State_t::notify</a>(<span class="keywordtype">int</span> code) {</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    currentNotifyCode = code;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keywordtype">int</span> <a class="code" href="struct_state_1_1_state__t.html#aeae12a5d68f5c0d84c8c85160de43fd7">State::State_t::getNotify</a>() {</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordflow">return</span> this-&gt;notifyCode;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;}</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *<a class="code" href="struct_state_1_1_state__t.html#af730abedf662a8e251b5839b2ad6e932">State::State_t::getLastState</a>() {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordflow">return</span> lastState;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<a class="code" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a> <a class="code" href="struct_state_1_1_state__t.html#a8f84fb281b0a51886c28212906c15649">State::State_t::getID</a>() {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordflow">return</span> (<a class="code" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a>)420;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;}</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_state.html#a1c6e60c84c0fb7c572adaf678fb6a56a">State::begin</a>(State_t &amp;entry) {</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    State_t *startingState = &amp;entry;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    setNextState(&amp;entry);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(TAG, <span class="stringliteral">&quot;Starting State Machine&quot;</span>);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">while</span> (currentNotifyCode != <a class="code" href="namespace_state.html#a0ef38e9cb909ddbc25ed4489b46be084ad89eff4ec7b3f723eb12f9b6b4323fba">State::E_FATAL</a>) {</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        currentNotifyCode = 0;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(TAG, <span class="stringliteral">&quot;Start&quot;</span>, <a class="code" href="_log_8h.html#a0acd70772d752e8468d733cbda6a1b31">TAG2NUM</a>(currentState-&gt;<a class="code" href="struct_state_1_1_state__t.html#a8f84fb281b0a51886c28212906c15649">getID</a>())); <span class="comment">// Note: cannot send initalizing state as pins are not defined yet to transmit message</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <a class="code" href="namespace_pins.html#a9d8cba01aef10c12ca76fe5cb0bc67c6">Pins::setInternalValue</a>(PINS_INTERNAL_STATE, <a class="code" href="_log_8h.html#a0acd70772d752e8468d733cbda6a1b31">TAG2NUM</a>(currentState-&gt;<a class="code" href="struct_state_1_1_state__t.html#a8f84fb281b0a51886c28212906c15649">getID</a>()));</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        State_t *queuedState = currentState-&gt;<a class="code" href="struct_state_1_1_state__t.html#acf89e1d0c03a8d3adacdbe3bc74e85e3">run</a>();</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#ad171024fa0f93e6117cd7b0aaf76cb87">f</a>(TAG, <span class="stringliteral">&quot;STATE MACHINE STOPPED&quot;</span>);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;}</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="comment">// @endcond</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(TAG, <span class="stringliteral">&quot;State returned code&quot;</span>, currentNotifyCode);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keywordflow">if</span> (currentNotifyCode == <a class="code" href="namespace_state.html#a0ef38e9cb909ddbc25ed4489b46be084a52e0b67d3d115c4a746620fade6175f8">State::E_RESTART</a>) {</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            setNextState(startingState);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            setNextState(queuedState);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        }</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        delay(1000);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    }</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#ad171024fa0f93e6117cd7b0aaf76cb87">f</a>(TAG, <span class="stringliteral">&quot;STATE MACHINE STOPPED&quot;</span>);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;}</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="comment">// @endcond</span></div>
 <div class="ttc" id="a_log_8h_html"><div class="ttname"><a href="_log_8h.html">Log.h</a></div><div class="ttdoc">Special logging functionality.</div></div>
 <div class="ttc" id="a_log_8h_html_a0acd70772d752e8468d733cbda6a1b31"><div class="ttname"><a href="_log_8h.html#a0acd70772d752e8468d733cbda6a1b31">TAG2NUM</a></div><div class="ttdeci">uint32_t TAG2NUM(LOG_TAG tagValue)</div><div class="ttdoc">Return the final numbervalue of a LOG_TAG.</div></div>
-<div class="ttc" id="a_log_8h_html_a746b6eae8886ab8bb40046729eed2983"><div class="ttname"><a href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a></div><div class="ttdeci">const char * LOG_TAG</div><div class="ttdoc">Type definition of logging tags This typedef is necessary to allow for easier manipulation of code by...</div><div class="ttdef"><b>Definition:</b> <a href="_log_8h_source.html#l00041">Log.h:41</a></div></div>
-<div class="ttc" id="a_log_8h_html_aa5fd43862d543e82b7775410573c9142"><div class="ttname"><a href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a></div><div class="ttdeci">Logging::Log_t Log</div><div class="ttdoc">Refer to Log_t.</div></div>
+<div class="ttc" id="a_log_8h_html_a746b6eae8886ab8bb40046729eed2983"><div class="ttname"><a href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a></div><div class="ttdeci">const char * LOG_TAG</div><div class="ttdoc">Type definition of logging tags This typedef is necessary to allow for easier manipulation of code by...</div><div class="ttdef"><b>Definition:</b> <a href="_log_8h_source.html#l00042">Log.h:42</a></div></div>
+<div class="ttc" id="a_log_8h_html_aa5fd43862d543e82b7775410573c9142"><div class="ttname"><a href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a></div><div class="ttdeci">Logging::Log_t Log</div><div class="ttdoc">The global logging object.</div></div>
 <div class="ttc" id="a_pins_8h_html"><div class="ttname"><a href="_pins_8h.html">Pins.h</a></div><div class="ttdoc">Update, set, and get predefined pin values.</div></div>
 <div class="ttc" id="a_state_8h_html"><div class="ttname"><a href="_state_8h.html">State.h</a></div><div class="ttdoc">State library.</div></div>
 <div class="ttc" id="anamespace_pins_html_a9d8cba01aef10c12ca76fe5cb0bc67c6"><div class="ttname"><a href="namespace_pins.html#a9d8cba01aef10c12ca76fe5cb0bc67c6">Pins::setInternalValue</a></div><div class="ttdeci">void setInternalValue(uint8_t Internal_Pin, int value)</div><div class="ttdoc">Set the value of an internal pin.</div></div>
-<div class="ttc" id="anamespace_state_html_a0ef38e9cb909ddbc25ed4489b46be084ad89eff4ec7b3f723eb12f9b6b4323fba"><div class="ttname"><a href="namespace_state.html#a0ef38e9cb909ddbc25ed4489b46be084ad89eff4ec7b3f723eb12f9b6b4323fba">State::E_FATAL</a></div><div class="ttdeci">@ E_FATAL</div><div class="ttdoc">Special code that makes the state machine completely stop.</div><div class="ttdef"><b>Definition:</b> <a href="_state_8h_source.html#l00050">State.h:50</a></div></div>
+<div class="ttc" id="anamespace_state_html_a0ef38e9cb909ddbc25ed4489b46be084a52e0b67d3d115c4a746620fade6175f8"><div class="ttname"><a href="namespace_state.html#a0ef38e9cb909ddbc25ed4489b46be084a52e0b67d3d115c4a746620fade6175f8">State::E_RESTART</a></div><div class="ttdeci">@ E_RESTART</div><div class="ttdoc">Special code that makes the state machine start from the first state again.</div><div class="ttdef"><b>Definition:</b> <a href="_state_8h_source.html#l00064">State.h:64</a></div></div>
+<div class="ttc" id="anamespace_state_html_a0ef38e9cb909ddbc25ed4489b46be084ad89eff4ec7b3f723eb12f9b6b4323fba"><div class="ttname"><a href="namespace_state.html#a0ef38e9cb909ddbc25ed4489b46be084ad89eff4ec7b3f723eb12f9b6b4323fba">State::E_FATAL</a></div><div class="ttdeci">@ E_FATAL</div><div class="ttdoc">Special code that makes the state machine completely stop.</div><div class="ttdef"><b>Definition:</b> <a href="_state_8h_source.html#l00060">State.h:60</a></div></div>
 <div class="ttc" id="anamespace_state_html_a1c6e60c84c0fb7c572adaf678fb6a56a"><div class="ttname"><a href="namespace_state.html#a1c6e60c84c0fb7c572adaf678fb6a56a">State::begin</a></div><div class="ttdeci">void begin(State_t &amp;entry)</div><div class="ttdoc">Begin the state machine with a pointer to a state.</div></div>
 <div class="ttc" id="astruct_logging_1_1_log__t_html_a4b75f2065645b98fef1d6b4edea2b5a2"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">Logging::Log_t::d</a></div><div class="ttdeci">void d(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a debug tag.</div></div>
 <div class="ttc" id="astruct_logging_1_1_log__t_html_ad171024fa0f93e6117cd7b0aaf76cb87"><div class="ttname"><a href="struct_logging_1_1_log__t.html#ad171024fa0f93e6117cd7b0aaf76cb87">Logging::Log_t::f</a></div><div class="ttdeci">void f(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a fatal tag.</div></div>
-<div class="ttc" id="astruct_state_1_1_state__t_html"><div class="ttname"><a href="struct_state_1_1_state__t.html">State::State_t</a></div><div class="ttdoc">The parent state structure to extend from to create more states.</div><div class="ttdef"><b>Definition:</b> <a href="_state_8h_source.html#l00060">State.h:60</a></div></div>
-<div class="ttc" id="astruct_state_1_1_state__t_html_a447eecb03b56de38b0b002696fdec881"><div class="ttname"><a href="struct_state_1_1_state__t.html#a447eecb03b56de38b0b002696fdec881">State::State_t::notifyCode</a></div><div class="ttdeci">int notifyCode</div><div class="ttdoc">Used for receiving values from other states.</div><div class="ttdef"><b>Definition:</b> <a href="_state_8h_source.html#l00080">State.h:80</a></div></div>
+<div class="ttc" id="astruct_state_1_1_state__t_html"><div class="ttname"><a href="struct_state_1_1_state__t.html">State::State_t</a></div><div class="ttdoc">The parent state structure to extend from to create more states.</div><div class="ttdef"><b>Definition:</b> <a href="_state_8h_source.html#l00070">State.h:70</a></div></div>
+<div class="ttc" id="astruct_state_1_1_state__t_html_a447eecb03b56de38b0b002696fdec881"><div class="ttname"><a href="struct_state_1_1_state__t.html#a447eecb03b56de38b0b002696fdec881">State::State_t::notifyCode</a></div><div class="ttdeci">int notifyCode</div><div class="ttdoc">Used for receiving values from other states.</div><div class="ttdef"><b>Definition:</b> <a href="_state_8h_source.html#l00090">State.h:90</a></div></div>
 <div class="ttc" id="astruct_state_1_1_state__t_html_a5616e88bc624eeccc06e5b01b3a929d8"><div class="ttname"><a href="struct_state_1_1_state__t.html#a5616e88bc624eeccc06e5b01b3a929d8">State::State_t::notify</a></div><div class="ttdeci">void notify(int notify)</div><div class="ttdoc">Send a code to the next state.</div></div>
 <div class="ttc" id="astruct_state_1_1_state__t_html_a8f84fb281b0a51886c28212906c15649"><div class="ttname"><a href="struct_state_1_1_state__t.html#a8f84fb281b0a51886c28212906c15649">State::State_t::getID</a></div><div class="ttdeci">virtual LOG_TAG getID(void)</div><div class="ttdoc">Returns the LOG_TAG of the state.</div></div>
 <div class="ttc" id="astruct_state_1_1_state__t_html_acf89e1d0c03a8d3adacdbe3bc74e85e3"><div class="ttname"><a href="struct_state_1_1_state__t.html#acf89e1d0c03a8d3adacdbe3bc74e85e3">State::State_t::run</a></div><div class="ttdeci">virtual State_t * run(void)</div><div class="ttdoc">Runs the state.</div></div>

@@ -1,11 +1,15 @@
 """
 @file ECUBuildPick.py
 @author IR
-@brief Simple Script used to make it easier to compile for two Teensies
+@brief Simple Script used to make it easier to compile for two ECUs
 @version 0.1
 @date 2021-02-21
 
 @copyright Copyright (c) 2021
+
+This script is merely used to modify a global define inside a header file to change whether to compile for the front or back ECU.
+
+I am not sure whether this is the best way to do this, but oh well ¯\\_(ツ)_/¯.
 """
 
 # @cond

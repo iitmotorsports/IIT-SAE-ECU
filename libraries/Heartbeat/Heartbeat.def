@@ -1,0 +1,30 @@
+/**
+ * @file Heartbeat.def
+ * @author IR
+ * @brief 
+ * @version 0.1
+ * @date 2021-03-19
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ * This configuration file modifies the interval of the expected heartbeat and the allowable delay between expected beats
+ * 
+ */
+
+#ifndef __ECU_HEARTBEAT_DEF__
+// @cond
+#define __ECU_HEARTBEAT_DEF__
+// @endcond
+
+/**
+ * @brief The interval the beat should target
+ */
+#define CONF_HEARTBEAT_INTERVAL_MICRO 150000
+
+/**
+ * @brief The allowed delay between beats
+ */
+
+#define CONF_HEARTBEAT_TIMEOUT_MILLI 50 // Allowable Delay
+
+#endif // __ECU_HEARTBEAT_DEF__

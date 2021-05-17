@@ -7,6 +7,8 @@
  * 
  * @copyright Copyright (c) 2021
  * 
+ * This configuration defines all the faults to check for.
+ * 
  */
 
 #ifndef __ECU_FAULTCONFIG_DEF__

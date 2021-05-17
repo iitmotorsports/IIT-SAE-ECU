@@ -7,6 +7,7 @@
  * 
  * @copyright Copyright (c) 2021
  * 
+ * @see Echo for more info.
  */
 
 #ifndef __ECU_ECHO_H__
@@ -17,11 +18,17 @@
 
 /**
  * @brief This Module can be used to echo a CAN message over a network of two ECUs
+ * 
+ * Echo::echo is called when a serial command from the companion app sends a valid canbus message to relay
+ * 
+ * This modules is only used for testing
+ * 
+ * @see SerialCommand.h for more info on how Echo functions are called over serial
  */
 namespace Echo {
 
 /**
- * @brief 
+ * @brief Send a can message to the back ECU from the front to then echo the same message at a set delay
  * 
  * @param delay The delay to echo the message back
  * @param address The outgoing address
@@ -30,7 +37,7 @@ namespace Echo {
 void echo(uint32_t delay, const uint32_t address, uint8_t buf[8]);
 
 /**
- * @brief 
+ * @brief Send a can message to the back ECU from the front to then echo the same message at a set delay
  * 
  * @param delay The delay to echo the message back
  * @param address The outgoing address
@@ -47,7 +54,6 @@ void echo(uint32_t delay, const uint32_t address, const uint8_t buf_0 = 0, const
 
 /**
  * @brief Initialize on receiving ECU to echo messages
- * 
  */
 void setup();
 

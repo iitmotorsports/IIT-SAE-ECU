@@ -2,11 +2,14 @@
  * @file Canbus.h
  * @author IR
  * @brief FlexCAN_T4 wrapper
- * This library is made specifically for SAE
  * @version 0.1
  * @date 2020-11-11
  * 
  * @copyright Copyright (c) 2020
+ * 
+ * This module is a wrapper for the underlying library FlexCAN_T4.
+ * 
+ * This module helps with communication over the [Canbus](https://www.csselectronics.com/screen/page/simple-intro-to-can-bus/language/en) protocal
  * 
  */
 
@@ -36,20 +39,72 @@ namespace Canbus {
 typedef void (*canCallback)(uint32_t, volatile uint8_t *);
 
 /**
- * @brief An incoming canbus message, allows the message data to be interpreted
+ * @brief An incoming canbus message, allows the message data to be interpreted through a simple wrapper class
  */
 struct Buffer { // TODO: more rigorous testing on the get funcs
     // IMPROVE: Remove need to run init
+    /**
+     * @brief Address this buffer represents
+     */
     uint32_t address;
+    /**
+     * @brief Construct a new Buffer
+     * 
+     * @param address the address this buffer should represent
+     */
     Buffer(const uint32_t address);
+    /**
+     * @brief Initialize a buffer
+     * @warning Must be run during runtime after Canbus has setup
+     */
     void init();
+    /**
+     * @brief Interpret the buffer as an unsigned long
+     * 
+     * @return uint64_t The interpreted value
+     */
     uint64_t getULong();
+    /**
+     * @brief Interpret the buffer as a long
+     * 
+     * @return int64_t The interpreted value
+     */
     int64_t getLong();
+    /**
+     * @brief Interpret the buffer as an unsigned Integer at byte position `pos`
+     * 
+     * @return uint32_t The interpreted value
+     */
     uint32_t getUInt(size_t pos);
+    /**
+     * @brief Interpret the buffer as an Integer at byte position `pos`
+     * 
+     * @return int32_t The interpreted value
+     */
     int32_t getInt(size_t pos);
+    /**
+     * @brief Interpret the buffer as an unsigned Short at byte position `pos`
+     * 
+     * @return uint16_t The interpreted value
+     */
     uint16_t getUShort(size_t pos);
+    /**
+     * @brief Interpret the buffer as an Short at byte position `pos`
+     * 
+     * @return int16_t The interpreted value
+     */
     int16_t getShort(size_t pos);
+    /**
+     * @brief Interpret the buffer as an unsigned Byte at byte position `pos`
+     * 
+     * @return uint8_t The interpreted value
+     */
     uint8_t getUByte(size_t pos);
+    /**
+     * @brief Interpret the buffer as a Byte at byte position `pos`
+     * 
+     * @return int8_t The interpreted value
+     */
     int8_t getByte(size_t pos);
 
 private:

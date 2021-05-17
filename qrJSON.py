@@ -1,11 +1,32 @@
 """
-@file qrJSON
+@file qrJSON.py
 @author IR
 @brief Generate a QR Gif of log_lookup.json to upload to the android app with no connection
 @version 0.1
 @date 2021-05-14
 
 @copyright Copyright (c) 2021
+
+This script generates a QR code gif where the entire gif of QR codes represent a compressed log_lookup.json.
+
+This is done to help with transfering the json to the companion app. This method only works if the app has a working camera.
+
+There are two modes that can be used to transfer data onto the companion app when the QRGif option is selected, fast and slow.
+
+**Fast**
+
+This method only works on devices with Android 9+
+
+The app will only require a ~2 second video of the `log_lookup_fast.gif` playing and then will take a second to process the video.
+
+**Slow**
+
+The app will have to continuosly scan the `log_lookup_slow.gif` until it has scanned every QR.
+
+There is a text graphic which helps visualize which QR codes are left.
+
+@see Logging::Log_t for more info on log_lookup.json and the companion app
+
 """
 
 # @cond

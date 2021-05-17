@@ -6,6 +6,27 @@
 @date 2021-04-14
 
 @copyright Copyright (c) 2021
+
+**Usage**
+
+List available pastes:  `-l`
+
+This flag pulls the IDs of whatever logs the companion app has uploaded to api.paste.ee (a free text file hosting site).
+    
+Interpret paste:        `-p[PasteID]`
+
+This argument, when given a valid available ID, will download and interpret the log file.
+
+Where interpreting means to convert the raw numbers of the log file into readable text.
+
+Graph paste:            `-p[PasteID] -g`
+
+This argument, when given a valid available ID, will download and interpret the log file into an excel sheet, where each message is graphed.
+
+Graphing uses timestamps that the companion app embeds into each log message.
+
+@see Logging::Log_t for more info on log file interpretation and the companion app
+
 """
 
 # @cond
@@ -70,7 +91,7 @@ def getPaste(id):
 
 
 def usage():
-    print("List available pastes: \t-l\nInterpret paste: \t-p[PasteID]\Graph paste: \t-p[PasteID] -g[StringValue]")
+    print("List available pastes: \t-l\nInterpret paste: \t-p[PasteID]\nGraph paste: \t\t-p[PasteID] -g")
 
 
 def interpret(string: str):
@@ -148,7 +169,7 @@ def graph(string: str):
 
     rows = list()
 
-    def getRow():
+    def getRow():  # IMPROVE: better series generation
         row = list()
         for title in dataTitles:
             column = data.get(title)
@@ -214,7 +235,7 @@ def graph(string: str):
     wb.save("{}.xlsx".format(SaveName))
 
 
-def main():
+def main():  # IMPROVE: Better argument handling
     if len(sys.argv) == 1 or sys.argv[1][0:2] == "-h":
         usage()
         exit()

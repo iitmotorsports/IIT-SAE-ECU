@@ -7,6 +7,21 @@
  * 
  * @copyright Copyright (c) 2020
  * 
+ * This config file is used configure the Pin module.
+ * 
+ * It is mostly used to define pins and CanPins.
+ * 
+ * Because, at the moment, there are two ECUs on the car, the pin definitions are split in half by an if statement, one case is for the back ECU, the other for the front.
+ * 
+ * Only the back ECU has documentation, as the process for defining pins is the same on both ECUs.
+ * 
+ * @see Pins.h for more info on how pins work
+ * @see ECU_PINS for defining pins
+ * @see PINS_CANBUS_ANALOG_IN for incoming Analog CanPins
+ * @see PINS_CANBUS_ANALOG_OUT for outgoing Analog CanPins
+ * @see PINS_CANBUS_DIGITAL_IN for incoming Digital CanPins
+ * @see PINS_CANBUS_DIGITAL_OUT for outgoing Digital CanPins
+ * 
  */
 
 #ifndef __ECU_PINCONFIG_H__
@@ -89,6 +104,7 @@
 // @endcond
 
 #if CONF_ECU_POSITION == BACK_ECU
+
 /**
  * @brief The defintions of every physical pin
  *
@@ -98,14 +114,20 @@
  *
  * Unless it is the last entry, this is how to add a new pin
  *
+ * ``` C
  * X(GPIO, ANALOG/DIGITAL, INPUT/OUTPUT, INITAL_STATE) \
+ * ```
  * 
+ * `INITAL_STATE` is the value a pin should be set to on startup
  * 
+ * It can be a number or `NIL`, meaning that we do not care what it's starting output value is
  * 
+ * All `INPUT` pins should have this set to `NIL`
  * 
  * Only the last entry should NOT have a '\'
+ * 
+ * @see The warning under @ref XMacros_Defining in X Macros for more info on Defining X Macros
  */
-
 #define ECU_PINS                                      \
     X(PINS_BOTH_LED, DIGITAL, OUTPUT, NIL)            \
     X(PINS_BACK_SERVO_OFF, DIGITAL, OUTPUT, 0)        \
@@ -133,13 +155,18 @@
  * @brief The defintions of every analog pin to be received over canbus
  *
  * @note Only two analog pins can be allocated per address
- * @note The number of pins per address must be maximized
+ * @note The number of pins per address must be maximized, this means that there should be, at a maximum, only one address that only has one value to send
  *
  * Unless it is the last entry, this is how to add a new pin
  *
+ * ``` C
  * X(Address, Pin) \
+ * ```
  * 
  * Only the last entry should NOT have a '\'
+ * 
+ * @see The warning under @ref XMacros_Defining in X Macros for more info on Defining X Macros
+ * @see CanBusAddresses.def for more info on defining new addresses
  */
 #define PINS_CANBUS_ANALOG_IN                \
     X(ADD_CANPIN_ANALOG0, PINS_FRONT_PEDAL0) \
@@ -163,14 +190,19 @@
  *
  * Unless it is the last entry, this is how to add a new pin
  *
+ * ``` C
  * X(Address, Pin) \
+ * ```
  * 
  * Only the last entry should NOT have a '\'
+ * 
+ * @see The warning under @ref XMacros_Defining in X Macros for more info on Defining X Macros
+ * @see CanBusAddresses.def for more info on defining new addresses
  */
 #define PINS_CANBUS_DIGITAL_IN                          \
     X(ADD_CANPIN_DIGITAL1, PINS_INTERNAL_CHARGE_SIGNAL) \
     X(ADD_CANPIN_DIGITAL1, PINS_INTERNAL_SYNC)          \
-    X(ADD_CANPIN_DIGITAL1, PINS_INTERNAL_REVERSE)     \
+    X(ADD_CANPIN_DIGITAL1, PINS_INTERNAL_REVERSE)       \
     X(ADD_CANPIN_DIGITAL1, PINS_FRONT_BUTTON_INPUT_OFF)
 
 /**
@@ -216,7 +248,7 @@
 #define PINS_CANBUS_DIGITAL_OUT                         \
     X(ADD_CANPIN_DIGITAL1, PINS_INTERNAL_CHARGE_SIGNAL) \
     X(ADD_CANPIN_DIGITAL1, PINS_INTERNAL_SYNC)          \
-    X(ADD_CANPIN_DIGITAL1, PINS_INTERNAL_REVERSE)     \
+    X(ADD_CANPIN_DIGITAL1, PINS_INTERNAL_REVERSE)       \
     X(ADD_CANPIN_DIGITAL1, PINS_FRONT_BUTTON_INPUT_OFF)
 
 #endif

@@ -7,6 +7,8 @@
  * 
  * @copyright Copyright (c) 2021
  * 
+ * This configuration file is used to define values used through out the entire project.
+ * 
  */
 
 #ifndef __ECU_GLOBALCONFIG_H__

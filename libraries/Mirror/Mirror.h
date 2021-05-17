@@ -1,12 +1,13 @@
 /**
  * @file Mirror.h
  * @author IR
- * @brief This library allows for the monitoring and modification of each GPIO pin on an ECU
+ * @brief This module allows for the monitoring and modification of each GPIO pin on an ECU
  * @version 0.1
  * @date 2021-03-30
  * 
  * @copyright Copyright (c) 2021
  * 
+ * @see Mirror for more info
  */
 
 #ifndef __ECU_MIRROR_H__
@@ -32,7 +33,8 @@
  *      The next byte received is the pin to set.
  *      The next four bytes (little endian) is the integer to set that pin to.
  *      @note If not all four bytes are received then those bytes are zeroed
- *      
+ * 
+ * This modules is only used for testing
  *
  */
 namespace Mirror {

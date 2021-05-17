@@ -17,6 +17,7 @@
 #include "Pins.h"
 #include "stdint.h"
 #include "stdlib.h"
+#include "Heartbeat.def"
 #include <set>
 
 namespace Heartbeat {

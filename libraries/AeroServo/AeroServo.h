@@ -7,6 +7,12 @@
  * 
  * @copyright Copyright (c) 2021
  * 
+ * This Modules is only used on the back ECU to control the Aero subteam's servos.
+ * 
+ * The underlying source code was an interpretation of some 3 year old code that Aero said should work just fiiine.
+ * 
+ * It is currently untested.
+ * 
  */
 #ifndef __ECU_AEROSERVO_H__
 #define __ECU_AEROSERVO_H__

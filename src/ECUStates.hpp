@@ -105,7 +105,7 @@ public:
 
 /**
  * @brief Fault state
- * @details This state demonstrates the diffrent ways we can log things to serial
+ * @details This state demonstrates the different ways we can log things to serial
  */
 static struct FaultState : State::State_t {
     LOG_TAG ID = "Fault State";
@@ -115,7 +115,7 @@ static struct FaultState : State::State_t {
 
 /**
  * @brief Demonstrate Serial logging
- * This state demonstrates the diffrent ways we can log things to serial
+ * This state demonstrates the different ways we can log things to serial
  */
 static struct Logger_t : State::State_t {
     LOG_TAG ID = "Logger";

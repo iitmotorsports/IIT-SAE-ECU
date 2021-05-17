@@ -110,9 +110,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 <tr class="memitem:a7a12210dcd86df23c79ae5649a29498c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_m_c.html#a7a12210dcd86df23c79ae5649a29498c">sendCommand</a> (uint32_t MC_ADD, int torque, bool direction, bool enableBit)</td></tr>
 <tr class="memdesc:a7a12210dcd86df23c79ae5649a29498c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a raw control command to a <a class="el" href="namespace_m_c.html" title="Methods used to more easily interface with RMS Motor controllers over CAN bus.">MC</a>.  <a href="namespace_m_c.html#a7a12210dcd86df23c79ae5649a29498c">More...</a><br /></td></tr>
 <tr class="separator:a7a12210dcd86df23c79ae5649a29498c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2693d899098dca858a1bdbcdd539272"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_m_c.html#ae2693d899098dca858a1bdbcdd539272">setTorque</a> (int torque)</td></tr>
-<tr class="memdesc:ae2693d899098dca858a1bdbcdd539272"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Torque of both MCs.  <a href="namespace_m_c.html#ae2693d899098dca858a1bdbcdd539272">More...</a><br /></td></tr>
-<tr class="separator:ae2693d899098dca858a1bdbcdd539272"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fb464e85bca01fc06a2b5b59c83d9b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_m_c.html#a2fb464e85bca01fc06a2b5b59c83d9b3">setDirection</a> (bool runForward)</td></tr>
+<tr class="memdesc:a2fb464e85bca01fc06a2b5b59c83d9b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the direction of the motors.  <a href="namespace_m_c.html#a2fb464e85bca01fc06a2b5b59c83d9b3">More...</a><br /></td></tr>
+<tr class="separator:a2fb464e85bca01fc06a2b5b59c83d9b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72e26cfa1ee8fde45958f0df9d6e29f7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_m_c.html#a72e26cfa1ee8fde45958f0df9d6e29f7">isForward</a> (void)</td></tr>
+<tr class="memdesc:a72e26cfa1ee8fde45958f0df9d6e29f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get whether the motors will spin forward.  <a href="namespace_m_c.html#a72e26cfa1ee8fde45958f0df9d6e29f7">More...</a><br /></td></tr>
+<tr class="separator:a72e26cfa1ee8fde45958f0df9d6e29f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27fe6e9fc5d1906069d9e60a24226dd0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_m_c.html#a27fe6e9fc5d1906069d9e60a24226dd0">setTorque</a> (int pedal, int brake, int steer)</td></tr>
+<tr class="memdesc:a27fe6e9fc5d1906069d9e60a24226dd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate and set the torque of both MCs.  <a href="namespace_m_c.html#a27fe6e9fc5d1906069d9e60a24226dd0">More...</a><br /></td></tr>
+<tr class="separator:a27fe6e9fc5d1906069d9e60a24226dd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Methods used to more easily interface with RMS Motor controllers over CAN bus. </p>
@@ -140,6 +146,29 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a72e26cfa1ee8fde45958f0df9d6e29f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72e26cfa1ee8fde45958f0df9d6e29f7">&#9670;&nbsp;</a></span>isForward()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MC::isForward </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get whether the motors will spin forward. </p>
+<dl class="section return"><dt>Returns</dt><dd>true The motors will spin forward </dd>
+<dd>
+false The motors will spin in reverse </dd></dl>
 
 </div>
 </div>
@@ -195,8 +224,34 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 
 </div>
 </div>
-<a id="ae2693d899098dca858a1bdbcdd539272"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae2693d899098dca858a1bdbcdd539272">&#9670;&nbsp;</a></span>setTorque()</h2>
+<a id="a2fb464e85bca01fc06a2b5b59c83d9b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fb464e85bca01fc06a2b5b59c83d9b3">&#9670;&nbsp;</a></span>setDirection()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MC::setDirection </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>runForward</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the direction of the motors. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">runForward</td><td>whether the motors should spin forwards </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a27fe6e9fc5d1906069d9e60a24226dd0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27fe6e9fc5d1906069d9e60a24226dd0">&#9670;&nbsp;</a></span>setTorque()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -205,17 +260,35 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
           <td class="memname">void MC::setTorque </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>torque</em></td><td>)</td>
+          <td class="paramname"><em>pedal</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>brake</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>steer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set the Torque of both MCs. </p>
+<p>Calculate and set the torque of both MCs. </p>
 <dl class="section note"><dt>Note</dt><dd><code>enableMotorBeating</code> must have been set to false before calling this function</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">torque</td><td>The torque to set the motors at </td></tr>
+    <tr><td class="paramname">pedal</td><td>The raw value of the pedal </td></tr>
+    <tr><td class="paramname">brake</td><td>The raw value of the brake </td></tr>
+    <tr><td class="paramname">steer</td><td>The raw value of the steering wheel </td></tr>
   </table>
   </dd>
 </dl>

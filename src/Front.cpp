@@ -209,11 +209,11 @@ void Front::run() {
     loadStateMap();
 
     Log.i(ID, "Setting commands");
-    Command::setCommand(COMMAND_ENABLE_CHARGING, setChargeSignal);
-    Command::setCommand(COMMAND_SEND_CANBUS_MESSAGE, pushCanMessage);
-    Command::setCommand(COMMAND_TOGGLE_CANBUS_SNIFF, toggleCanbusSniffer);
-    Command::setCommand(COMMAND_SEND_ECHO, sendEchoMessage);
-    Command::setCommand(COMMAND_TOGGLE_REVERSE, toggleMotorDirection);
+    Cmd::setCommand(COMMAND_ENABLE_CHARGING, setChargeSignal);
+    Cmd::setCommand(COMMAND_SEND_CANBUS_MESSAGE, pushCanMessage);
+    Cmd::setCommand(COMMAND_TOGGLE_CANBUS_SNIFF, toggleCanbusSniffer);
+    Cmd::setCommand(COMMAND_SEND_ECHO, sendEchoMessage);
+    Cmd::setCommand(COMMAND_TOGGLE_REVERSE, toggleMotorDirection);
 
     Heartbeat::beginReceiving();
 #ifdef CONF_ECU_DEBUG
@@ -235,7 +235,7 @@ void Front::run() {
     while (true) {
         if (timeElapsed >= 20) { // High priority updates
             timeElapsed = 0;
-            Command::receiveCommand();
+            Cmd::receiveCommand();
             Log(ID, "Current Motor Speed:", motorSpeed());
         }
         if (timeElapsedMidHigh >= 200) { // MedHigh priority updates

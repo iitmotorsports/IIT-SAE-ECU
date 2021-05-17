@@ -7,7 +7,38 @@
  * 
  * @copyright Copyright (c) 2020
  * 
- * To define pin values refer to PinConfig.def
+ * This module is used to simplify the usage of an ECU's GPIO pins.
+ * 
+ * **Types**
+ * 
+ * Through this module, each pin is predefined to be of a certain type.
+ * 
+ * These types include
+ * * Analog or Digital
+ * * Input or Output
+ * 
+ * @note Pins with things like PWM or a DAC are used by default as the underlying gpio library does that.
+ * 
+ * **Canbus**
+ * 
+ * Every pin that is set as an input on one ECU can be received on another ECU over Canbus.
+ * 
+ * Sending pins over canbus is not limited to physical GPIO, virtual pins can also be created which are interacted with similarly to normal pins.
+ * 
+ * These pins, virtual or non virtual, that are sent over Canbus are referred to as CanPins.
+ * 
+ * **Usage**
+ * 
+ * Pins can either be read or set depending on whether they are input or output respectively.
+ * 
+ * Their actual values depend on whether they are pre-defined as an analog or digital pin, this is the same for CanPins.
+ * 
+ * Pins are normally interacted with by using Pins::getPinValue() and Pins::setPinValue().
+ * 
+ * CanPins can also be used through the same functions, however, it is recommend to explicitly call Pins::setInternalValue() and Pins::getCanPinValue()
+ * instead, as I have not actually tested the previous, and its just good practice I think.
+ * 
+ * @see PinConfig.def for more info on defining pin/canpin values and configuration of this module
  * 
  */
 
@@ -21,9 +52,21 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+/**
+ * @brief The current target bit resolution of the ECU, set by PinConfig.def
+ */
 #define PINS_ANALOG_RES CONF_PINS_ANALOG_WRITE_RESOLUTION
+/**
+ * @brief The maximum analog value, given the current PINS_ANALOG_RES
+ */
 #define PINS_ANALOG_MAX pwrtwo(PINS_ANALOG_RES)
+/**
+ * @brief The *high* analog value, will not force an analog output to lock onto a high state, as PINS_ANALOG_MAX does
+ */
 #define PINS_ANALOG_HIGH (PINS_ANALOG_MAX - 1)
+/**
+ * @brief The minimum analog value. Its zero, I think it will always be zero. Not sure why i needed this.
+ */
 #define PINS_ANALOG_MIN 0
 
 /**

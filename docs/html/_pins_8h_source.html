@@ -89,56 +89,56 @@ $(document).ready(function(){initNavTree('_pins_8h_source.html',''); initResizab
 </div><!--header-->
 <div class="contents">
 <a href="_pins_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#ifndef __ECU_PINS_H__</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#define __ECU_PINS_H__</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">// IMPROVE: pin priority</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_p_p_help_8h.html">PPHelp.h</a>&quot;</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_pin_config_8def.html">PinConfig.def</a>&quot;</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#define PINS_ANALOG_RES CONF_PINS_ANALOG_WRITE_RESOLUTION</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#define PINS_ANALOG_MAX pwrtwo(PINS_ANALOG_RES)</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#define PINS_ANALOG_HIGH (PINS_ANALOG_MAX - 1)</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#define PINS_ANALOG_MIN 0</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="_pins_8h.html#ad054c97dc889d7e4d368c06a06655690">   32</a></span>&#160;<span class="preprocessor">#define PINS_VOLT_TO_ANALOG(x) (int)min(max((x / 5) * PINS_ANALOG_HIGH, PINS_ANALOG_MIN), PINS_ANALOG_HIGH)</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="namespace_pins.html">   41</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_pins.html">Pins</a> {</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="namespace_pins.html#a3e6834ba621655f97e8313f86a97c33b">   46</a></span>&#160;<span class="keyword">typedef</span> void (*<a class="code" href="namespace_pins.html#a3e6834ba621655f97e8313f86a97c33b">PinHandler</a>)(uint8_t CAN_GPIO_Pin, <span class="keywordtype">int</span> &amp;value);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#ifndef __ECU_PINS_H__</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#define __ECU_PINS_H__</span></div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="namespace_pins.html#a499aec4c5df462d2e58fd797756a645f">   56</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="namespace_pins.html#a499aec4c5df462d2e58fd797756a645f">getCanPinValue</a>(uint8_t CAN_GPIO_Pin);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="namespace_pins.html#a5bb778c9151687c75d254d2fef4509fd">   64</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="namespace_pins.html#a5bb778c9151687c75d254d2fef4509fd">getPinValue</a>(uint8_t GPIO_Pin);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">   72</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">setPinValue</a>(uint8_t GPIO_Pin, <span class="keywordtype">int</span> value);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="namespace_pins.html#a9d8cba01aef10c12ca76fe5cb0bc67c6">   81</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a9d8cba01aef10c12ca76fe5cb0bc67c6">setInternalValue</a>(uint8_t Internal_Pin, <span class="keywordtype">int</span> value);</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
-<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="namespace_pins.html#aeb44a1100800f7a1984d725a5d1255f2">   88</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#aeb44a1100800f7a1984d725a5d1255f2">resetPhysicalPins</a>();</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35">   94</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35">update</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
-<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="namespace_pins.html#a12a6f448c7eea1740a38f0fbe73bbace">   99</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a12a6f448c7eea1740a38f0fbe73bbace">stopCanPins</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="comment">// IMPROVE: pin priority</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_p_p_help_8h.html">PPHelp.h</a>&quot;</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_pin_config_8def.html">PinConfig.def</a>&quot;</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="_pins_8h.html#a36007e1c76192d7c0ea99878095d7884">   58</a></span>&#160;<span class="preprocessor">#define PINS_ANALOG_RES CONF_PINS_ANALOG_WRITE_RESOLUTION</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="_pins_8h.html#a80aa2066cc911d8d548e00d117784d81">   62</a></span>&#160;<span class="preprocessor">#define PINS_ANALOG_MAX pwrtwo(PINS_ANALOG_RES)</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="_pins_8h.html#a51ea8eb0bb5904fe149dae61538a9be4">   66</a></span>&#160;<span class="preprocessor">#define PINS_ANALOG_HIGH (PINS_ANALOG_MAX - 1)</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="_pins_8h.html#a087401c0ac44e0da101cd07fa4580937">   70</a></span>&#160;<span class="preprocessor">#define PINS_ANALOG_MIN 0</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="_pins_8h.html#ad054c97dc889d7e4d368c06a06655690">   75</a></span>&#160;<span class="preprocessor">#define PINS_VOLT_TO_ANALOG(x) (int)min(max((x / 5) * PINS_ANALOG_HIGH, PINS_ANALOG_MIN), PINS_ANALOG_HIGH)</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="namespace_pins.html">   84</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_pins.html">Pins</a> {</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
+<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="namespace_pins.html#a3e6834ba621655f97e8313f86a97c33b">   89</a></span>&#160;<span class="keyword">typedef</span> void (*<a class="code" href="namespace_pins.html#a3e6834ba621655f97e8313f86a97c33b">PinHandler</a>)(uint8_t CAN_GPIO_Pin, <span class="keywordtype">int</span> &amp;value);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="namespace_pins.html#a499aec4c5df462d2e58fd797756a645f">   99</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="namespace_pins.html#a499aec4c5df462d2e58fd797756a645f">getCanPinValue</a>(uint8_t CAN_GPIO_Pin);</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="namespace_pins.html#a968b2daecc25fcad3765ef350df3b887">  104</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a968b2daecc25fcad3765ef350df3b887">startCanPins</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno"><a class="line" href="namespace_pins.html#a50fdd17267e54bd2a3d4ed2a6884c5c1">  109</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a50fdd17267e54bd2a3d4ed2a6884c5c1">initialize</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
-<div class="line"><a name="l00114"></a><span class="lineno"><a class="line" href="namespace_pins.html#abdbd435bdc27963ed518740bf0761712">  114</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#abdbd435bdc27963ed518740bf0761712">debugPrint</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;} <span class="comment">// namespace Pins</span></div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __ECU_PINS_H__</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno"><a class="line" href="namespace_pins.html#a5bb778c9151687c75d254d2fef4509fd">  107</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="namespace_pins.html#a5bb778c9151687c75d254d2fef4509fd">getPinValue</a>(uint8_t GPIO_Pin);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
+<div class="line"><a name="l00115"></a><span class="lineno"><a class="line" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">  115</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">setPinValue</a>(uint8_t GPIO_Pin, <span class="keywordtype">int</span> value);</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
+<div class="line"><a name="l00124"></a><span class="lineno"><a class="line" href="namespace_pins.html#a9d8cba01aef10c12ca76fe5cb0bc67c6">  124</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a9d8cba01aef10c12ca76fe5cb0bc67c6">setInternalValue</a>(uint8_t Internal_Pin, <span class="keywordtype">int</span> value);</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
+<div class="line"><a name="l00131"></a><span class="lineno"><a class="line" href="namespace_pins.html#aeb44a1100800f7a1984d725a5d1255f2">  131</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#aeb44a1100800f7a1984d725a5d1255f2">resetPhysicalPins</a>();</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
+<div class="line"><a name="l00137"></a><span class="lineno"><a class="line" href="namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35">  137</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35">update</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160; </div>
+<div class="line"><a name="l00142"></a><span class="lineno"><a class="line" href="namespace_pins.html#a12a6f448c7eea1740a38f0fbe73bbace">  142</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a12a6f448c7eea1740a38f0fbe73bbace">stopCanPins</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160; </div>
+<div class="line"><a name="l00147"></a><span class="lineno"><a class="line" href="namespace_pins.html#a968b2daecc25fcad3765ef350df3b887">  147</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a968b2daecc25fcad3765ef350df3b887">startCanPins</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160; </div>
+<div class="line"><a name="l00152"></a><span class="lineno"><a class="line" href="namespace_pins.html#a50fdd17267e54bd2a3d4ed2a6884c5c1">  152</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#a50fdd17267e54bd2a3d4ed2a6884c5c1">initialize</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160; </div>
+<div class="line"><a name="l00157"></a><span class="lineno"><a class="line" href="namespace_pins.html#abdbd435bdc27963ed518740bf0761712">  157</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_pins.html#abdbd435bdc27963ed518740bf0761712">debugPrint</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160; </div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;} <span class="comment">// namespace Pins</span></div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160; </div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __ECU_PINS_H__</span></div>
 <div class="ttc" id="a_p_p_help_8h_html"><div class="ttname"><a href="_p_p_help_8h.html">PPHelp.h</a></div><div class="ttdoc">Compilation of various helpful preprocessor macros.</div></div>
 <div class="ttc" id="a_pin_config_8def_html"><div class="ttname"><a href="_pin_config_8def.html">PinConfig.def</a></div><div class="ttdoc">Pin Configuration.</div></div>
-<div class="ttc" id="anamespace_pins_html"><div class="ttname"><a href="namespace_pins.html">Pins</a></div><div class="ttdoc">Get and set values to predefined pins.</div><div class="ttdef"><b>Definition:</b> <a href="_pins_8h_source.html#l00041">Pins.h:41</a></div></div>
+<div class="ttc" id="anamespace_pins_html"><div class="ttname"><a href="namespace_pins.html">Pins</a></div><div class="ttdoc">Get and set values to predefined pins.</div><div class="ttdef"><b>Definition:</b> <a href="_pins_8h_source.html#l00084">Pins.h:84</a></div></div>
 <div class="ttc" id="anamespace_pins_html_a12a6f448c7eea1740a38f0fbe73bbace"><div class="ttname"><a href="namespace_pins.html#a12a6f448c7eea1740a38f0fbe73bbace">Pins::stopCanPins</a></div><div class="ttdeci">void stopCanPins(void)</div><div class="ttdoc">Stops background interrupts from sending canPins.</div></div>
 <div class="ttc" id="anamespace_pins_html_a2d60349cb2aec2c336856187093aea61"><div class="ttname"><a href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61">Pins::setPinValue</a></div><div class="ttdeci">void setPinValue(uint8_t GPIO_Pin, int value)</div><div class="ttdoc">Set the pin value of a predefined pin.</div></div>
-<div class="ttc" id="anamespace_pins_html_a3e6834ba621655f97e8313f86a97c33b"><div class="ttname"><a href="namespace_pins.html#a3e6834ba621655f97e8313f86a97c33b">Pins::PinHandler</a></div><div class="ttdeci">void(* PinHandler)(uint8_t CAN_GPIO_Pin, int &amp;value)</div><div class="ttdoc">A typedef for pin handler functions.</div><div class="ttdef"><b>Definition:</b> <a href="_pins_8h_source.html#l00046">Pins.h:46</a></div></div>
+<div class="ttc" id="anamespace_pins_html_a3e6834ba621655f97e8313f86a97c33b"><div class="ttname"><a href="namespace_pins.html#a3e6834ba621655f97e8313f86a97c33b">Pins::PinHandler</a></div><div class="ttdeci">void(* PinHandler)(uint8_t CAN_GPIO_Pin, int &amp;value)</div><div class="ttdoc">A typedef for pin handler functions.</div><div class="ttdef"><b>Definition:</b> <a href="_pins_8h_source.html#l00089">Pins.h:89</a></div></div>
 <div class="ttc" id="anamespace_pins_html_a499aec4c5df462d2e58fd797756a645f"><div class="ttname"><a href="namespace_pins.html#a499aec4c5df462d2e58fd797756a645f">Pins::getCanPinValue</a></div><div class="ttdeci">int getCanPinValue(uint8_t CAN_GPIO_Pin)</div><div class="ttdoc">Get the pin value of a predefined canbus pin.</div></div>
 <div class="ttc" id="anamespace_pins_html_a50fdd17267e54bd2a3d4ed2a6884c5c1"><div class="ttname"><a href="namespace_pins.html#a50fdd17267e54bd2a3d4ed2a6884c5c1">Pins::initialize</a></div><div class="ttdeci">void initialize(void)</div><div class="ttdoc">Initialize all predefined pins.</div></div>
 <div class="ttc" id="anamespace_pins_html_a5bb778c9151687c75d254d2fef4509fd"><div class="ttname"><a href="namespace_pins.html#a5bb778c9151687c75d254d2fef4509fd">Pins::getPinValue</a></div><div class="ttdeci">int getPinValue(uint8_t GPIO_Pin)</div><div class="ttdoc">Get the pin value of a predefined pin.</div></div>

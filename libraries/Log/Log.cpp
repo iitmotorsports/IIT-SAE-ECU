@@ -1,14 +1,15 @@
 /**
  * @file Log.cpp
  * @author IR
- * @brief Log source
+ * @brief Log.h source file
  * @version 0.1
  * @date 2020-11-11
  * 
  * @copyright Copyright (c) 2020
  * 
  */
-//@cond
+
+// @cond
 
 #include <cstring>
 #include <stdarg.h>
@@ -231,4 +232,5 @@ uint32_t TAG2NUM(LOG_TAG tagValue) {
     return 0;
 }
 #endif
-//@endcond
+
+// @endcond 

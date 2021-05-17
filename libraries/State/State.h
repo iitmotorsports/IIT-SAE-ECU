@@ -7,6 +7,16 @@
  * 
  * @copyright Copyright (c) 2020
  * 
+ * This module is a very basic state machine implementation.
+ * 
+ * It works by continuously calling State::State_t.run() of each State::State_t child returned.
+ * 
+ * Starting with the State::State_t passed through State::begin(), when State::State_t.run() returns a valid State::State_t pointer, it will continue to run.
+ * 
+ * States can notify the next state with an integer by using State::State_t.notify(), where the receiving state calls State::State_t.getNotify(). This number is 0 by default.
+ * 
+ * When State::State_t.notify() is given NotifyValue::E_FATAL, the state machine will break out of its loop and the state machine will stop.
+ * 
  */
 
 #ifndef __ECU_STATE_H__

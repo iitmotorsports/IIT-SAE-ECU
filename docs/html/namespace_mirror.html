@@ -113,7 +113,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 <p>Example Term <a href="https://www.der-hammer.info/pages/terminal.html">https://www.der-hammer.info/pages/terminal.html</a></p>
 <p>First send the decimal value '90' or whatever is defined in <a class="el" href="_serial_command_8def.html" title="SerialCommand config.">SerialCommand.def</a> to enter <a class="el" href="namespace_mirror.html" title="Check and modify pin values over USB serial How to use - connect with a terminal that can both send a...">Mirror</a> mode.</p>
 <p>Commands (all in decimal): byte != 255: print out this pin's value Sending a single number that is not 255 will return that corresponding pin's value if it exists</p>
-<p>byte == 255 : Enter set pin mode Wait for subsequent bytes to set a pin value. The next byte received is the pin to set. The next four bytes (little endian) is the integer to set that pin to. </p><dl class="section note"><dt>Note</dt><dd>If not all four bytes are received then those bytes are zeroed </dd></dl>
+<p>byte == 255 : Enter set pin mode Wait for subsequent bytes to set a pin value. The next byte received is the pin to set. The next four bytes (little endian) is the integer to set that pin to. </p><dl class="section note"><dt>Note</dt><dd>If not all four bytes are received then those bytes are zeroed</dd></dl>
+<p>This modules is only used for testing </p>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="a9cdbdcb79cef06a3b8b18151c440b262"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9cdbdcb79cef06a3b8b18151c440b262">&#9670;&nbsp;</a></span>exitMirrorMode()</h2>

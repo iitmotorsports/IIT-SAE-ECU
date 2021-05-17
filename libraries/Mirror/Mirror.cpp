@@ -38,7 +38,7 @@ static void toggleMirrorMode(void) {
 
 void timerReceive() {
     if (receive)
-        Command::receiveCommand();
+        Cmd::receiveCommand();
 }
 
 void setup(void) {
@@ -47,7 +47,7 @@ void setup(void) {
         receive = true;
         Heartbeat::addCallback(timerReceive);
 #endif
-        Command::setCommand(COMMAND_TOGGLE_MIRROR_MODE, toggleMirrorMode);
+        Cmd::setCommand(COMMAND_TOGGLE_MIRROR_MODE, toggleMirrorMode);
     }
     init = true;
 }

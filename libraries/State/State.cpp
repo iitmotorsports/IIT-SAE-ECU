@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2020
  * 
  */
+
 // @cond
 #include "State.h"
 #include "Log.h"
@@ -23,6 +24,7 @@ static int currentNotifyCode = 0;
 static void setNextState(State::State_t *state) {
     lastState = currentState;
     currentState = state;
+    currentState->notifyCode = currentNotifyCode;
 }
 
 static struct UnhandledState_t : State::State_t {
@@ -57,16 +59,25 @@ LOG_TAG State::State_t::getID() {
 }
 
 void State::begin(State_t &entry) {
+    State_t *startingState = &entry;
     setNextState(&entry);
 
     Log.d(TAG, "Starting State Machine");
     while (currentNotifyCode != State::E_FATAL) {
         currentNotifyCode = 0;
-        Log.d(TAG, "Start", TAG2NUM(currentState->getID())); // Cannot send initalizing state as pins are not defined yet
+        Log.d(TAG, "Start", TAG2NUM(currentState->getID())); // Note: cannot send initalizing state as pins are not defined yet to transmit message
         Pins::setInternalValue(PINS_INTERNAL_STATE, TAG2NUM(currentState->getID()));
-        setNextState(currentState->run());
-        currentState->notifyCode = currentNotifyCode;
+
+        State_t *queuedState = currentState->run();
+
         Log.d(TAG, "State returned code", currentNotifyCode);
+
+        if (currentNotifyCode == State::E_RESTART) {
+            setNextState(startingState);
+        } else {
+            setNextState(queuedState);
+        }
+
         delay(1000);
     }
 

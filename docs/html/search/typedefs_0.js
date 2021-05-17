@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['cancallback_247',['canCallback',['../namespace_canbus.html#a2717aca0b434ab0e4ec3a6c33f007296',1,'Canbus']]]
+  ['beatfunc_292',['beatFunc',['../namespace_heartbeat.html#a90dd9f85dfc6bf41682af19b8ecd0c8d',1,'Heartbeat']]]
 ];

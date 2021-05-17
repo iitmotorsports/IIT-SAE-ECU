@@ -6,9 +6,9 @@ var namespaces_dup =
       [ "setup", "namespace_aero.html#aaf24879c16df328a981323313c41f1ba", null ]
     ] ],
     [ "Canbus", "namespace_canbus.html", "namespace_canbus" ],
-    [ "Command", "namespace_command.html", [
-      [ "receiveCommand", "namespace_command.html#a5447877dd694317bdf6cd897b8e93b1d", null ],
-      [ "setCommand", "namespace_command.html#a4b4bc1adec84f61fabd7a7f6e71aed61", null ]
+    [ "Cmd", "namespace_cmd.html", [
+      [ "receiveCommand", "namespace_cmd.html#ae4cdc8f8cdead5a5563c40cf7d1558fa", null ],
+      [ "setCommand", "namespace_cmd.html#aedaea62d3d1e614cf34ae87372087846", null ]
     ] ],
     [ "Echo", "namespace_echo.html", [
       [ "echo", "namespace_echo.html#a0f3d048035f869638271d08ea736f97e", null ],
@@ -33,8 +33,10 @@ var namespaces_dup =
     [ "MC", "namespace_m_c.html", [
       [ "clearFaults", "namespace_m_c.html#add4fdfcad6990dec728c2eeadaca45e1", null ],
       [ "enableMotorBeating", "namespace_m_c.html#ab35b9e9f20dc50d81b40d6d5c298c1ea", null ],
+      [ "isForward", "namespace_m_c.html#a72e26cfa1ee8fde45958f0df9d6e29f7", null ],
       [ "sendCommand", "namespace_m_c.html#a7a12210dcd86df23c79ae5649a29498c", null ],
-      [ "setTorque", "namespace_m_c.html#ae2693d899098dca858a1bdbcdd539272", null ],
+      [ "setDirection", "namespace_m_c.html#a2fb464e85bca01fc06a2b5b59c83d9b3", null ],
+      [ "setTorque", "namespace_m_c.html#a27fe6e9fc5d1906069d9e60a24226dd0", null ],
       [ "setup", "namespace_m_c.html#aeb2b966841aa0fd6b2ac79478a648c84", null ]
     ] ],
     [ "Mirror", "namespace_mirror.html", [

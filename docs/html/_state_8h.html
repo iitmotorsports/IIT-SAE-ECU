@@ -141,7 +141,12 @@ Functions</h2></td></tr>
 <dl class="section author"><dt>Author</dt><dd>IR </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>0.1 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2020-11-11</dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2020 </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2020</dd></dl>
+<p>This module is a very basic state machine implementation.</p>
+<p>It works by continuously calling <a class="el" href="struct_state_1_1_state__t.html#acf89e1d0c03a8d3adacdbe3bc74e85e3" title="Runs the state.">State::State_t.run()</a> of each <a class="el" href="struct_state_1_1_state__t.html" title="The parent state structure to extend from to create more states.">State::State_t</a> child returned.</p>
+<p>Starting with the <a class="el" href="struct_state_1_1_state__t.html" title="The parent state structure to extend from to create more states.">State::State_t</a> passed through <a class="el" href="namespace_state.html#a1c6e60c84c0fb7c572adaf678fb6a56a" title="Begin the state machine with a pointer to a state.">State::begin()</a>, when <a class="el" href="struct_state_1_1_state__t.html#acf89e1d0c03a8d3adacdbe3bc74e85e3" title="Runs the state.">State::State_t.run()</a> returns a valid <a class="el" href="struct_state_1_1_state__t.html" title="The parent state structure to extend from to create more states.">State::State_t</a> pointer, it will continue to run.</p>
+<p>States can notify the next state with an integer by using <a class="el" href="struct_state_1_1_state__t.html#a5616e88bc624eeccc06e5b01b3a929d8" title="Send a code to the next state.">State::State_t.notify()</a>, where the receiving state calls <a class="el" href="struct_state_1_1_state__t.html#aeae12a5d68f5c0d84c8c85160de43fd7" title="Get the code of the previous state.">State::State_t.getNotify()</a>. This number is 0 by default.</p>
+<p>When <a class="el" href="struct_state_1_1_state__t.html#a5616e88bc624eeccc06e5b01b3a929d8" title="Send a code to the next state.">State::State_t.notify()</a> is given NotifyValue::E_FATAL, the state machine will break out of its loop and the state machine will stop. </p>
 
 <p class="definition">Definition in file <a class="el" href="_state_8h_source.html">State.h</a>.</p>
 </div></div><!-- contents -->

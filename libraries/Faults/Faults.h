@@ -7,6 +7,11 @@
  * 
  * @copyright Copyright (c) 2021
  * 
+ * Faults are messages that indicate that somthing may be wrong in the general system.
+ * 
+ * Faults can come from either GPIO pins or CanBus, CanPins are not supported.
+ * 
+ * @see FaultConfig.def for defining faults to check for.
  */
 
 #include <stdint.h>
@@ -14,7 +19,7 @@
 
 /**
  * @brief Fault checking functionality.
- * Refer to Faults.h
+ * @see Faults.h for more info.
  */
 namespace Fault {
 

@@ -89,7 +89,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_C__GitHub_SAEGit_ECU2020_README"></a></p>
-<h1><a class="anchor" id="autotoc_md0"></a>
+<h1><a class="anchor" id="autotoc_md5"></a>
 Hardware</h1>
 <ul>
 <li><a href="https://www.pjrc.com/store/teensy36.html">Teensy 3.6</a> x 2</li>
@@ -97,7 +97,7 @@ Hardware</h1>
 <li><a href="https://bicyclewarehouse.com/collections/hybrid-bikes">A Formula Hybrid Car</a> (Not necessary for testing)</li>
 <li><a href="https://www.amazon.com/SN65HVD230-CAN-Board-Communication-Development/dp/B00KM6XMXO">A Compatible CAN transceiver</a> x 2</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1"></a>
+<h1><a class="anchor" id="autotoc_md6"></a>
 Setup</h1>
 <p>NOTE: This repo used <a href="https://github.com/LeHuman/TeensyTemplate">TeensyTemplate</a> as a starting point</p>
 <p>Download <a href="https://github.com/LeHuman/TeensyToolchain">TeensyToolchain</a>, unzip, and put it next to this folder</p>
@@ -107,11 +107,11 @@ Setup</h1>
 <p>As of today, that would be version 3.18.4</p>
 <p>Inside <code>.vscode/tasks.json</code>, modify the options for <code>TEENSY_USB_PORTNAME</code> for the ports that the project should use to connect to your teensy. ( Set to COM6 by default )</p>
 <p>You can also modify the defaults for other tasks.</p>
-<h1><a class="anchor" id="autotoc_md2"></a>
+<h1><a class="anchor" id="autotoc_md7"></a>
 Using</h1>
 <p>Put your code in <code>src/main.cpp</code> Put any libraries you need in <code>libraries</code></p>
 <p>You can also modify the set values and compile flags inside <code>CmakeLists.txt</code> if you know what you are doing. They are mostly under the function calls <code>add_compile_definitions</code> and <code>add_compile_options</code> towards the beginning.</p>
-<h2><a class="anchor" id="autotoc_md3"></a>
+<h2><a class="anchor" id="autotoc_md8"></a>
 VSCode Tasks</h2>
 <ul>
 <li><code>Clean</code>: Clean up build files</li>
@@ -122,7 +122,7 @@ VSCode Tasks</h2>
 </ul>
 <p>By default, <code>Ctrl + Shift + B</code> (Run Build Task) should run all of the above in order except for <code>Clean</code> and <code>Hard Clean</code></p>
 <p>Alternatively, install the <a href="https://marketplace.visualstudio.com/items?itemName=actboy168.tasks">Tasks</a> extension so that tasks can instead be on the status bar. Already configured.</p>
-<h1><a class="anchor" id="autotoc_md4"></a>
+<h1><a class="anchor" id="autotoc_md9"></a>
 Documentation</h1>
 <p>This project uses <a href="https://www.doxygen.nl/index.html">Doxygen</a> to auto generate documentation.</p>
 <p><a href="https://marketplace.visualstudio.com/items?itemName=Isaias.doxygen-pack">Doxygen Extensions</a> exist for VSCode, to easily compile and view inside VSCode.</p>

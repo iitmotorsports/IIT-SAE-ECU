@@ -91,7 +91,7 @@ $(document).ready(function(){initNavTree('_log_config_8def.html',''); initResiza
 </div><!--header-->
 <div class="contents">
 
-<p>Configuration file for the Log library.  
+<p>Configuration file for the Log Module.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="_e_c_u_global_config_8h_source.html">ECUGlobalConfig.h</a>&quot;</code><br />
 </div>
@@ -104,7 +104,7 @@ Macros</h2></td></tr>
 <tr class="separator:a27a7696c431a0cbee44a09587416cc4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a992fac40fec8bf5817acc0abe912dd83"><td class="memItemLeft" align="right" valign="top"><a id="a992fac40fec8bf5817acc0abe912dd83"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_log_config_8def.html#a992fac40fec8bf5817acc0abe912dd83">CONF_LOGGING_MAX_LEVEL</a>&#160;&#160;&#160;5</td></tr>
-<tr class="memdesc:a992fac40fec8bf5817acc0abe912dd83"><td class="mdescLeft">&#160;</td><td class="mdescRight">This define sets the global logging level, any level not included is not printed 0 No <a class="el" href="namespace_logging.html" title="Namespace to isolate Log_t struct. Refer to Log.h for more info.">Logging</a> - 1 Errors - 2 Warnings - 3 Normal - 4 Info - 5 Debug. <br /></td></tr>
+<tr class="memdesc:a992fac40fec8bf5817acc0abe912dd83"><td class="mdescLeft">&#160;</td><td class="mdescRight">This define sets the global logging level, any level not included is not printed 0 No <a class="el" href="namespace_logging.html" title="Namespace to isolate Log_t struct.">Logging</a> - 1 Errors - 2 Warnings - 3 Normal - 4 Info - 5 Debug. <br /></td></tr>
 <tr class="separator:a992fac40fec8bf5817acc0abe912dd83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a87790c77e6db5b826b023cd5e5887246"><td class="memItemLeft" align="right" valign="top"><a id="a87790c77e6db5b826b023cd5e5887246"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_log_config_8def.html#a87790c77e6db5b826b023cd5e5887246">CONF_LOGGING_MAPPED_MODE</a>&#160;&#160;&#160;0</td></tr>
@@ -112,11 +112,14 @@ Macros</h2></td></tr>
 <tr class="separator:a87790c77e6db5b826b023cd5e5887246"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Configuration file for the Log library. </p>
+<div class="textblock"><p>Configuration file for the Log Module. </p>
 <dl class="section author"><dt>Author</dt><dd>IR </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>0.1 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2020-11-11</dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2020 </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2020</dd></dl>
+<p>The only two options that should only really be modified are <code>CONF_LOGGING_ENABLE_TIMESTAMP</code> and <code>CONF_LOGGING_MAX_LEVEL</code>.</p>
+<p>Commenting out <code>CONF_LOGGING_ENABLE_TIMESTAMP</code> will disable time stamp printing when in ASCII mode.</p>
+<p>Changing the value of CONF_LOGGING_MAX_LEVEL changes which log levels are actually printed. </p>
 
 <p class="definition">Definition in file <a class="el" href="_log_config_8def_source.html">LogConfig.def</a>.</p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
@@ -135,7 +138,7 @@ Macros</h2></td></tr>
 <p>If this is defined, calls to log will include a millis timestamp. </p>
 <dl class="section note"><dt>Note</dt><dd>Timestamp will be disabled if the <a class="el" href="_pre___build_8py.html" title="This script preprocesses source files for use with Log_t.">Pre_Build.py</a> script is run </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_log_config_8def_source.html#l00025">25</a> of file <a class="el" href="_log_config_8def_source.html">LogConfig.def</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_log_config_8def_source.html#l00031">31</a> of file <a class="el" href="_log_config_8def_source.html">LogConfig.def</a>.</p>
 
 </div>
 </div>

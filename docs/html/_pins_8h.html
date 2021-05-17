@@ -112,19 +112,23 @@ Namespaces</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a36007e1c76192d7c0ea99878095d7884"><td class="memItemLeft" align="right" valign="top"><a id="a36007e1c76192d7c0ea99878095d7884"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PINS_ANALOG_RES</b>&#160;&#160;&#160;<a class="el" href="_pin_config_8def.html#a154bf0cb94eefac8b5069c4a282f1dda">CONF_PINS_ANALOG_WRITE_RESOLUTION</a></td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_pins_8h.html#a36007e1c76192d7c0ea99878095d7884">PINS_ANALOG_RES</a>&#160;&#160;&#160;<a class="el" href="_pin_config_8def.html#a154bf0cb94eefac8b5069c4a282f1dda">CONF_PINS_ANALOG_WRITE_RESOLUTION</a></td></tr>
+<tr class="memdesc:a36007e1c76192d7c0ea99878095d7884"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current target bit resolution of the ECU, set by <a class="el" href="_pin_config_8def.html" title="Pin Configuration.">PinConfig.def</a>. <br /></td></tr>
 <tr class="separator:a36007e1c76192d7c0ea99878095d7884"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a80aa2066cc911d8d548e00d117784d81"><td class="memItemLeft" align="right" valign="top"><a id="a80aa2066cc911d8d548e00d117784d81"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PINS_ANALOG_MAX</b>&#160;&#160;&#160;pwrtwo(PINS_ANALOG_RES)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_pins_8h.html#a80aa2066cc911d8d548e00d117784d81">PINS_ANALOG_MAX</a>&#160;&#160;&#160;pwrtwo(<a class="el" href="_pins_8h.html#a36007e1c76192d7c0ea99878095d7884">PINS_ANALOG_RES</a>)</td></tr>
+<tr class="memdesc:a80aa2066cc911d8d548e00d117784d81"><td class="mdescLeft">&#160;</td><td class="mdescRight">The maximum analog value, given the current PINS_ANALOG_RES. <br /></td></tr>
 <tr class="separator:a80aa2066cc911d8d548e00d117784d81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a51ea8eb0bb5904fe149dae61538a9be4"><td class="memItemLeft" align="right" valign="top"><a id="a51ea8eb0bb5904fe149dae61538a9be4"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PINS_ANALOG_HIGH</b>&#160;&#160;&#160;(PINS_ANALOG_MAX - 1)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_pins_8h.html#a51ea8eb0bb5904fe149dae61538a9be4">PINS_ANALOG_HIGH</a>&#160;&#160;&#160;(<a class="el" href="_pins_8h.html#a80aa2066cc911d8d548e00d117784d81">PINS_ANALOG_MAX</a> - 1)</td></tr>
+<tr class="memdesc:a51ea8eb0bb5904fe149dae61538a9be4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <em>high</em> analog value, will not force an analog output to lock onto a high state, as PINS_ANALOG_MAX does. <br /></td></tr>
 <tr class="separator:a51ea8eb0bb5904fe149dae61538a9be4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a087401c0ac44e0da101cd07fa4580937"><td class="memItemLeft" align="right" valign="top"><a id="a087401c0ac44e0da101cd07fa4580937"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PINS_ANALOG_MIN</b>&#160;&#160;&#160;0</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_pins_8h.html#a087401c0ac44e0da101cd07fa4580937">PINS_ANALOG_MIN</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memdesc:a087401c0ac44e0da101cd07fa4580937"><td class="mdescLeft">&#160;</td><td class="mdescRight">The minimum analog value. Its zero, I think it will always be zero. Not sure why i needed this. <br /></td></tr>
 <tr class="separator:a087401c0ac44e0da101cd07fa4580937"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad054c97dc889d7e4d368c06a06655690"><td class="memItemLeft" align="right" valign="top"><a id="ad054c97dc889d7e4d368c06a06655690"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_pins_8h.html#ad054c97dc889d7e4d368c06a06655690">PINS_VOLT_TO_ANALOG</a>(x)&#160;&#160;&#160;(int)min(max((x / 5) * PINS_ANALOG_HIGH, PINS_ANALOG_MIN), PINS_ANALOG_HIGH)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_pins_8h.html#ad054c97dc889d7e4d368c06a06655690">PINS_VOLT_TO_ANALOG</a>(x)&#160;&#160;&#160;(int)min(max((x / 5) * <a class="el" href="_pins_8h.html#a51ea8eb0bb5904fe149dae61538a9be4">PINS_ANALOG_HIGH</a>, <a class="el" href="_pins_8h.html#a087401c0ac44e0da101cd07fa4580937">PINS_ANALOG_MIN</a>), <a class="el" href="_pins_8h.html#a51ea8eb0bb5904fe149dae61538a9be4">PINS_ANALOG_HIGH</a>)</td></tr>
 <tr class="memdesc:ad054c97dc889d7e4d368c06a06655690"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps Voltages 0-5v to an appropriate analog value. <br /></td></tr>
 <tr class="separator:ad054c97dc889d7e4d368c06a06655690"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -178,7 +182,24 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 <dl class="section version"><dt>Version</dt><dd>0.1 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2020-11-11</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2020</dd></dl>
-<p>To define pin values refer to <a class="el" href="_pin_config_8def.html" title="Pin Configuration.">PinConfig.def</a> </p>
+<p>This module is used to simplify the usage of an ECU's GPIO pins.</p>
+<p><b>Types</b></p>
+<p>Through this module, each pin is predefined to be of a certain type.</p>
+<p>These types include</p><ul>
+<li>Analog or Digital</li>
+<li>Input or Output</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd><a class="el" href="namespace_pins.html" title="Get and set values to predefined pins.">Pins</a> with things like PWM or a DAC are used by default as the underlying gpio library does that.</dd></dl>
+<p><b><a class="el" href="namespace_canbus.html" title="Canbus functionality. Refer to Canbus.h for more info.">Canbus</a></b></p>
+<p>Every pin that is set as an input on one ECU can be received on another ECU over <a class="el" href="namespace_canbus.html" title="Canbus functionality. Refer to Canbus.h for more info.">Canbus</a>.</p>
+<p>Sending pins over canbus is not limited to physical GPIO, virtual pins can also be created which are interacted with similarly to normal pins.</p>
+<p>These pins, virtual or non virtual, that are sent over <a class="el" href="namespace_canbus.html" title="Canbus functionality. Refer to Canbus.h for more info.">Canbus</a> are referred to as CanPins.</p>
+<p><b>Usage</b></p>
+<p><a class="el" href="namespace_pins.html" title="Get and set values to predefined pins.">Pins</a> can either be read or set depending on whether they are input or output respectively.</p>
+<p>Their actual values depend on whether they are pre-defined as an analog or digital pin, this is the same for CanPins.</p>
+<p><a class="el" href="namespace_pins.html" title="Get and set values to predefined pins.">Pins</a> are normally interacted with by using <a class="el" href="namespace_pins.html#a5bb778c9151687c75d254d2fef4509fd" title="Get the pin value of a predefined pin.">Pins::getPinValue()</a> and <a class="el" href="namespace_pins.html#a2d60349cb2aec2c336856187093aea61" title="Set the pin value of a predefined pin.">Pins::setPinValue()</a>.</p>
+<p>CanPins can also be used through the same functions, however, it is recommend to explicitly call <a class="el" href="namespace_pins.html#a9d8cba01aef10c12ca76fe5cb0bc67c6" title="Set the value of an internal pin.">Pins::setInternalValue()</a> and <a class="el" href="namespace_pins.html#a499aec4c5df462d2e58fd797756a645f" title="Get the pin value of a predefined canbus pin.">Pins::getCanPinValue()</a> instead, as I have not actually tested the previous, and its just good practice I think.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="_pin_config_8def.html" title="Pin Configuration.">PinConfig.def</a> for more info on defining pin/canpin values and configuration of this module </dd></dl>
 
 <p class="definition">Definition in file <a class="el" href="_pins_8h_source.html">Pins.h</a>.</p>
 </div></div><!-- contents -->

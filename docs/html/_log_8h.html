@@ -107,15 +107,13 @@ $(document).ready(function(){initNavTree('_log_8h.html',''); initResizable(); })
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_logging_1_1_log__t.html">Logging::Log_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class used to log things to serial <br  />
-This class has the capability to modify all of it's functions to instead use integer IDs <br  />
-Refer to the <a class="el" href="_pre___build_8py.html" title="This script preprocesses source files for use with Log_t.">Pre_Build.py</a> script for more information.  <a href="struct_logging_1_1_log__t.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class used to log things over serial.  <a href="struct_logging_1_1_log__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespace_logging"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_logging.html">Logging</a></td></tr>
-<tr class="memdesc:namespace_logging"><td class="mdescLeft">&#160;</td><td class="mdescRight">Namespace to isolate <a class="el" href="struct_logging_1_1_log__t.html" title="Base class used to log things to serial  This class has the capability to modify all of it&#39;s function...">Log_t</a> struct. Refer to <a class="el" href="_log_8h.html" title="Special logging functionality.">Log.h</a> for more info. <br /></td></tr>
+<tr class="memdesc:namespace_logging"><td class="mdescLeft">&#160;</td><td class="mdescRight">Namespace to isolate <a class="el" href="struct_logging_1_1_log__t.html" title="Base class used to log things over serial.">Log_t</a> struct. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -146,9 +144,8 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:aa5fd43862d543e82b7775410573c9142"><td class="memItemLeft" align="right" valign="top"><a id="aa5fd43862d543e82b7775410573c9142"></a>
-<a class="el" href="struct_logging_1_1_log__t.html">Logging::Log_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a></td></tr>
-<tr class="memdesc:aa5fd43862d543e82b7775410573c9142"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refer to Log_t. <br /></td></tr>
+<tr class="memitem:aa5fd43862d543e82b7775410573c9142"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_logging_1_1_log__t.html">Logging::Log_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a></td></tr>
+<tr class="memdesc:aa5fd43862d543e82b7775410573c9142"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <em>global</em> logging object.  <a href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">More...</a><br /></td></tr>
 <tr class="separator:aa5fd43862d543e82b7775410573c9142"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -157,7 +154,9 @@ Variables</h2></td></tr>
 <dl class="section version"><dt>Version</dt><dd>0.1 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2020-11-12</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2020</dd></dl>
-<p>To modify how this library behaves, refer to the <a class="el" href="_log_config_8def.html" title="Configuration file for the Log library.">LogConfig.def</a> </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="struct_logging_1_1_log__t.html" title="Base class used to log things over serial.">Logging::Log_t</a> for info on how logging works </dd>
+<dd>
+<a class="el" href="_log_config_8def.html" title="Configuration file for the Log Module.">LogConfig.def</a> for configuration of logging </dd></dl>
 
 <p class="definition">Definition in file <a class="el" href="_log_8h_source.html">Log.h</a>.</p>
 </div><h2 class="groupheader">Typedef Documentation</h2>
@@ -178,7 +177,7 @@ Variables</h2></td></tr>
  Example usage ( Note that LOG_TAG_t should actually be LOG_TAG ) : LOG_TAG_t TAG = "Logging Tag"; ✔️ <br  />
  LOG_TAG_t TAG = someTagReference; ❌ </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_log_8h_source.html#l00041">41</a> of file <a class="el" href="_log_8h_source.html">Log.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_log_8h_source.html#l00042">42</a> of file <a class="el" href="_log_8h_source.html">Log.h</a>.</p>
 
 </div>
 </div>
@@ -200,7 +199,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Return the final numbervalue of a LOG_TAG. </p>
-<dl class="section note"><dt>Note</dt><dd>If mapped mode is not on, this will just return 0</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>If mapped mode is not on, this will just return 0</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tagValue</td><td>The LOG_TAG to convert </td></tr>
@@ -208,6 +207,32 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>uint16_t the number representation of the tag </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="aa5fd43862d543e82b7775410573c9142"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5fd43862d543e82b7775410573c9142">&#9670;&nbsp;</a></span>Log</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_logging_1_1_log__t.html">Logging::Log_t</a> Log</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The <em>global</em> logging object. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="struct_logging_1_1_log__t.html" title="Base class used to log things over serial.">Logging::Log_t</a> for more info on logging </dd></dl>
 
 </div>
 </div>

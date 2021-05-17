@@ -7,6 +7,17 @@
  * 
  * @copyright Copyright (c) 2021
  * 
+ * This module is a collection of functions that are used to ease the control of both Motor controllers over canbus.
+ * 
+ * The Motor controllers require a periodic message to be send when it is not being actively controlled,
+ * This is mainly controlled with MC::enableMotorBeating()
+ * 
+ * It is important to be aware of delays in code as if the Motors controllers do not receive a value in time, they will fault.
+ * 
+ * Faults can, however, be cleared by using MC::clearFaults()
+ * 
+ * @see Faults.h for more info on viewing faults
+ * 
  */
 
 #ifndef __ECU_MOTORCONTROL_H__
@@ -22,6 +33,9 @@
  */
 namespace MC {
 
+/**
+ * @brief The maximum speed value that the car can be moving before it switches between forwards and reverse
+ */
 #define CONF_MAXIMUM_SWITCHING_SPEED 5
 
 /**
