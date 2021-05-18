@@ -310,8 +310,11 @@ void Canbus::Buffer::init() {
 // IMPROVE: remove type-punning, maybe just use bitshifting?
 
 uint64_t Canbus::Buffer::getULong() {
-#ifdef CONF_LOGGING_ASCII_DEBUG
-    Serial.printf("%u : %u %u %u %u %u %u %u %u\n", address, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7]);
+#ifdef CONF_ECU_DEBUG
+    if (buffer == 0) {
+        Log.w(ID, "Buffer was not initalized before calling a get function", address);
+        init();
+    }
 #endif
     setSemaphore(address);
     uint64_t val = *(uint64_t *)(buffer);
@@ -319,8 +322,11 @@ uint64_t Canbus::Buffer::getULong() {
     return val;
 }
 int64_t Canbus::Buffer::getLong() {
-#ifdef CONF_LOGGING_ASCII_DEBUG
-    Serial.printf("%u : %u %u %u %u %u %u %u %u\n", address, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7]);
+#ifdef CONF_ECU_DEBUG
+    if (buffer == 0) {
+        Log.w(ID, "Buffer was not initalized before calling a get function", address);
+        init();
+    }
 #endif
     setSemaphore(address);
     int64_t val = *(int64_t *)(buffer);
@@ -328,8 +334,11 @@ int64_t Canbus::Buffer::getLong() {
     return val;
 }
 uint32_t Canbus::Buffer::getUInt(size_t pos) {
-#ifdef CONF_LOGGING_ASCII_DEBUG
-    Serial.printf("%u : %u %u %u %u %u %u %u %u\n", address, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7]);
+#ifdef CONF_ECU_DEBUG
+    if (buffer == 0) {
+        Log.w(ID, "Buffer was not initalized before calling a get function", address);
+        init();
+    }
 #endif
     setSemaphore(address);
     uint32_t val = *(uint32_t *)(buffer + pos);
@@ -337,8 +346,11 @@ uint32_t Canbus::Buffer::getUInt(size_t pos) {
     return val;
 }
 int32_t Canbus::Buffer::getInt(size_t pos) {
-#ifdef CONF_LOGGING_ASCII_DEBUG
-    Serial.printf("%u : %u %u %u %u %u %u %u %u\n", address, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7]);
+#ifdef CONF_ECU_DEBUG
+    if (buffer == 0) {
+        Log.w(ID, "Buffer was not initalized before calling a get function", address);
+        init();
+    }
 #endif
     setSemaphore(address);
     int32_t val = *(int32_t *)(buffer + pos);
@@ -346,8 +358,11 @@ int32_t Canbus::Buffer::getInt(size_t pos) {
     return val;
 }
 uint16_t Canbus::Buffer::getUShort(size_t pos) {
-#ifdef CONF_LOGGING_ASCII_DEBUG
-    Serial.printf("%u : %u %u %u %u %u %u %u %u\n", address, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7]);
+#ifdef CONF_ECU_DEBUG
+    if (buffer == 0) {
+        Log.w(ID, "Buffer was not initalized before calling a get function", address);
+        init();
+    }
 #endif
     setSemaphore(address);
     uint16_t val = *(uint16_t *)(buffer + pos);
@@ -355,8 +370,11 @@ uint16_t Canbus::Buffer::getUShort(size_t pos) {
     return val;
 }
 int16_t Canbus::Buffer::getShort(size_t pos) {
-#ifdef CONF_LOGGING_ASCII_DEBUG
-    Serial.printf("%u : %u %u %u %u %u %u %u %u\n", address, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7]);
+#ifdef CONF_ECU_DEBUG
+    if (buffer == 0) {
+        Log.w(ID, "Buffer was not initalized before calling a get function", address);
+        init();
+    }
 #endif
     setSemaphore(address);
     int16_t val = *(int16_t *)(buffer + pos);
@@ -364,14 +382,20 @@ int16_t Canbus::Buffer::getShort(size_t pos) {
     return val;
 }
 uint8_t Canbus::Buffer::getUByte(size_t pos) {
-#ifdef CONF_LOGGING_ASCII_DEBUG
-    Serial.printf("%u : %u %u %u %u %u %u %u %u\n", address, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7]);
+#ifdef CONF_ECU_DEBUG
+    if (buffer == 0) {
+        Log.w(ID, "Buffer was not initalized before calling a get function", address);
+        init();
+    }
 #endif
     return buffer[pos];
 }
 int8_t Canbus::Buffer::getByte(size_t pos) {
-#ifdef CONF_LOGGING_ASCII_DEBUG
-    Serial.printf("%u : %u %u %u %u %u %u %u %u\n", address, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7]);
+#ifdef CONF_ECU_DEBUG
+    if (buffer == 0) {
+        Log.w(ID, "Buffer was not initalized before calling a get function", address);
+        init();
+    }
 #endif
     return (int8_t)buffer[pos];
 }
