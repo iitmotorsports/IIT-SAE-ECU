@@ -168,17 +168,13 @@ static analogCanPinMsg_t analogCanPinMessages_OUT[analogCanMsgCount_OUT];
 // #define __INTERNAL_READ_DIGITAL(PIN)
 
 static void _receiveDigitalCanbusPin(uint32_t address, volatile uint8_t *buffer) {
-    uint8_t local_buffer[8];
-    Canbus::copyVolatileCanMsg(buffer, local_buffer);
-    digitalCanPinMessage_IN.receive(local_buffer);
+    digitalCanPinMessage_IN.receive((uint8_t *)buffer);
 }
 
-static void _receiveAnalogCanbusPin(uint32_t address, volatile uint8_t *buffer) { // IMPROVE: faster callback for analog pins
-    uint8_t local_buffer[8];
-    Canbus::copyVolatileCanMsg(buffer, local_buffer);
+static void _receiveAnalogCanbusPin(uint32_t address, volatile uint8_t *buffer) {
     for (size_t i = 0; i < analogCanMsgCount_IN; i++) {
         if (analogCanPinMessages_IN[i].address == address) {
-            analogCanPinMessages_IN[i].receive(local_buffer);
+            analogCanPinMessages_IN[i].receive((uint8_t *)buffer);
             break;
         }
     }
