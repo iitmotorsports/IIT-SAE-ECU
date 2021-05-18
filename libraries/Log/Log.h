@@ -23,7 +23,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-// IMPROVE: Add option to log to an sd card instead/aswell
+// IMPROVE: Add option to log to an sd card instead/as well
 
 #if CONF_LOGGING_MAPPED_MODE > 0
 typedef const uint16_t LOG_TAG;
