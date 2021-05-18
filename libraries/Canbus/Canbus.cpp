@@ -176,7 +176,7 @@ void enableInterrupts(bool enable) {
 #endif
 }
 
-void setup(void) {
+void setup(void) { // IMPROVE: filter only for addresses we care about
     Log.d(ID, "Starting");
     F_Can.begin(); // NOTE: canbus must first be started before it can be configured
     _setMailboxes();
