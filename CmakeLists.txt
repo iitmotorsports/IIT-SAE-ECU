@@ -1,4 +1,3 @@
-# set(TOOLCHAIN_OFFSET "../TeensyToolchain")
 include("${TOOLCHAIN_OFFSET}/tools/toolchain.cmake")
 #-DCUSTOM_BUILD_PATH_PREFIX:STRING= #Can be used for some sketchy pre-build Stuff if needed
 
