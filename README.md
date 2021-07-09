@@ -1,4 +1,4 @@
-SAE at IIT ECU 2020 Programming
+SAE at IIT ECU Programming
 ===========================
  
 Hardware
