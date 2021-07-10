@@ -34,13 +34,13 @@ Although you already should have from the [README](README.md) setup, make sure y
 
 1. By default, The top left icon in VSCode shows the open editors and then files in your workspace. The one below that is source control.
 
-    ![VS Icons](images/Contributing/VSIcons.png)
+    ![VS Icons](https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/VSIcons.png)
 
     We will not get into how [git](https://git-scm.com/) works, you should learn about that elsewhere. Assuming you understand Git, know that this is where you can commit changes to the repository without using a terminal.
    
-   On the bottom taskbar in VSCode, towards the far left, there is a similar smaller icon that which should look like ![VS Icons](images/Contributing/master.png) , this is your current branch.
+   On the bottom taskbar in VSCode, towards the far left, there is a similar smaller icon that which should look like ![master](https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/master.png) , this is your current branch.
    
-   For right now, it may be best that you work on a separate branch and create merge requests as you work on the repository. You can click on ![VS Icons](images/Contributing/master.png) which will show a popup to create a branch.
+   For right now, it may be best that you work on a separate branch and create merge requests as you work on the repository. You can click on ![master](https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/master.png) which will show a popup to create a branch.
 
 2. Run these [tasks](https://code.visualstudio.com/Docs/editor/tasks)* in VSCode
     * `Build`: Compile project
@@ -49,7 +49,7 @@ Although you already should have from the [README](README.md) setup, make sure y
       * Same result as the `Build` task
     * If you have access to two teensies** connected
       * Using the [settings.json](.vscode/settings.json) file, change the entires that are currently defined as `FRONT_TEENSY_PORT` and `BACK_TEENSY_PORT` to match the connect Teensy COM PORT. In windows, these COM PORTs show up in the [Device Manager](https://support.microsoft.com/en-us/windows/open-device-manager-a7f2db46-faaf-24f0-8b7b-9e4a6032fc8c). There should only be one port per Teensy. These ports should look like `COMx` where `x` is a number.
-      ![VS Icons](images/Contributing/COMPORTS.png)
+      ![COMPORTS](https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/COMPORTS.png)
       * `Shebang Both`***: Run all tasks required to program both connected Teensies ( for the prompts, select `FRONT_TEENSY_PORT`, and `HEX` )
         * You should see the terminal printing log information from the front Teensy
 3. Open the documentation file under the path `docs/index.html` on your computer, this should open up in your browser.
@@ -57,7 +57,7 @@ Although you already should have from the [README](README.md) setup, make sure y
 
 \* By default, pressing the combo `Ctrl + lShift + P` then typing and selecting `Tasks: Run Task` should give you a list of all the tasks listed in the [tasks.json](.vscode/tasks.json) file. Alternatively, installing the [Tasks](https://marketplace.visualstudio.com/items?itemName=actboy168.tasks) extension shows commonly used tasks on the bottom task bar in VSCode.
 
-![VS Icons](images/Contributing/Tasks.png)
+![Tasks](https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/Tasks.png)
 
 These tasks are used to help automate development.
 
