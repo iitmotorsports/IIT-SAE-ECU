@@ -1,7 +1,6 @@
 # How To Contribute
 
 ## **Before you begin**
-----
 
 This repository is for students that are part of the SAE club at Illinois Tech.
 
@@ -20,7 +19,6 @@ This project is best worked on when using [VSCode](https://code.visualstudio.com
 Before continuing, be sure to follow the steps for setting up for compilation and running VSCode tasks in the [README](README.md).
 
 ## **Familiarizing Yourself**
-----
 
 If you are having trouble with anything here, first double check you read it correctly, and if that doesn't work, ask whoever is leading software, or someone that you think might know, to help you.
 
@@ -175,11 +173,9 @@ If you wish to remove a part of code from documentation surround the code with t
 You do not have to compile and commit the documentation each time you add to it. However, to whomever ends up owning the repository next, make sure to update it every now and then.
 
 ## **Further Reading**
-----
 
 I encourage you to look through the documentation. The file under the path `docs/index.html` should help you understand the libraries that already exists in this project. It does not have all the answers, for that you will need to look at the source, but it does give some explanations on things like [how logging works](docs/html/struct_logging_1_1_log__t.html) and what an [X Macro](docs/html/_x_macros.html) is. The documentation attempts to explain a lot of how these underlying libraries work. Of course, as this project is, *hopefully*, expanded on, feel free to improve this documentation.
 
 ## **Moving Forward**
-----
 
 This repository was initially created with the intent that it would be used for multiple years after it's initial creation. Regardless, feel free to not use this repository and start something new. Use a new platform, use a new board, framework, whatever. Creating this repository from scratch taught us a lot as we are, after all, just students. In any case, this repository should work for the following years and its design should make it easy to add new functionality, so long as the teensy allows it.
