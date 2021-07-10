@@ -47,7 +47,8 @@ Although you already should have from the [README](README.md) setup, make sure y
       * Same result as the `Build` task
     * If you have access to two teensies** connected
       * Using the [settings.json](.vscode/settings.json) file, change the entires that are currently defined as `FRONT_TEENSY_PORT` and `BACK_TEENSY_PORT` to match the connect Teensy COM PORT. In windows, these COM PORTs show up in the [Device Manager](https://support.microsoft.com/en-us/windows/open-device-manager-a7f2db46-faaf-24f0-8b7b-9e4a6032fc8c). There should only be one port per Teensy. These ports should look like `COMx` where `x` is a number.
-      ![COMPORTS](https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/COMPORTS.png)
+
+        ![COMPORTS](https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/COMPORTS.png)
       * `Shebang Both`***: Run all tasks required to program both connected Teensies ( for the prompts, select `FRONT_TEENSY_PORT`, and `HEX` )
         * You should see the terminal printing log information from the front Teensy
 3. Open the documentation file under the path `docs/index.html` on your computer, this should open up in your browser.
