@@ -32,7 +32,7 @@ Although you already should have from the [README](README.md) setup, make sure y
 
 1. By default, The top left icon in VSCode shows the open editors and then files in your workspace. The one below that is source control.
 
-    ![VS Icons](https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/VSIcons.png)
+    ![The source control tab](https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/VSIcons.png)
 
     We will not get into how [git](https://git-scm.com/) works, you should learn about that elsewhere. Assuming you understand Git, know that this is where you can commit changes to the repository without using a terminal.
    
@@ -48,7 +48,7 @@ Although you already should have from the [README](README.md) setup, make sure y
     * If you have access to two teensies** connected
       * Using the [settings.json](.vscode/settings.json) file, change the entires that are currently defined as `FRONT_TEENSY_PORT` and `BACK_TEENSY_PORT` to match the connect Teensy COM PORT. In windows, these COM PORTs show up in the [Device Manager](https://support.microsoft.com/en-us/windows/open-device-manager-a7f2db46-faaf-24f0-8b7b-9e4a6032fc8c). There should only be one port per Teensy. These ports should look like `COMx` where `x` is a number.
 
-        ![COMPORTS](https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/COMPORTS.png)
+        ![What the COM PORTs might look like](https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/COMPORTS.png)
       * `Shebang Both`***: Run all tasks required to program both connected Teensies ( for the prompts, select `FRONT_TEENSY_PORT`, and `HEX` )
         * You should see the terminal printing log information from the front Teensy
 3. Open the documentation file under the path `docs/index.html` on your computer, this should open up in your browser.
@@ -56,7 +56,7 @@ Although you already should have from the [README](README.md) setup, make sure y
 
 \* By default, pressing the combo `Ctrl + lShift + P` then typing and selecting `Tasks: Run Task` should give you a list of all the tasks listed in the [tasks.json](.vscode/tasks.json) file. Alternatively, installing the [Tasks](https://marketplace.visualstudio.com/items?itemName=actboy168.tasks) extension shows commonly used tasks on the bottom task bar in VSCode.
 
-![Tasks](https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/Tasks.png)
+![How the bottom task bar should look like](https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/Tasks.png)
 
 These tasks are used to help automate development.
 
@@ -175,7 +175,29 @@ You do not have to compile and commit the documentation each time you add to it.
 
 ## **Further Reading**
 
-I encourage you to look through the documentation. The file under the path `docs/index.html` should help you understand the libraries that already exists in this project. It does not have all the answers, for that you will need to look at the source, but it does give some explanations on things like [how logging works](docs/html/struct_logging_1_1_log__t.html) and what an [X Macro](docs/html/_x_macros.html) is. The documentation attempts to explain a lot of how these underlying libraries work. Of course, as this project is, *hopefully*, expanded on, feel free to improve this documentation.
+You will need to look through the documentation to get a more detailed description of what all the libraries do, as you should not work on something that you do not understand. This documentation attempts to explain a lot of how these underlying libraries work. Of course, as this project is, *hopefully*, expanded on, feel free to improve this documentation.
+
+As a reminder, you can see the documentation by opening the file `docs/index.html`, which should open up in your browser.
+
+I strongly recommend at least learning how logging works, as logging is used basically throughout this entire project, this is under `Classes > Class List > Log_t > Detailed Description`. Also, take a look at the `Pre_Build.py` file under the `See also` part, this is also a major part of how logging works.
+
+Other commonly used libraries are the Canbus and Pins libs. These deal with communicating over Canbus and interacting the the GPIO pins respectively. Regardless, as you work on this project, hopefully you find this documentation to be helpful.
+
+At this point ( especially if you have access to an Teensy ), attempt to first make some basic changes with the libraries. like use the logging library in the [Front::run](src/Front.cpp) function and make it print something out, or use the pin library to turn the in-built led on and off. Of course, don't actually commit these changes to the repository.
+
+Actually, you can completely undo changes to a file in the source tab in VSCode before you commit. This is in the source control tab, in case you needed to know that.
+
+![Discard changes to a file](https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/discard.png)
+
+You can also look at all of the source files for examples on everything. But just as a quick example for logging.
+
+The statements
+```C++
+    LOG_TAG BruhID = "Bruh";
+    Log.w(BruhID, "Moment", 2);
+```
+Should print in the terminal ( while monitoring the teensy over serial )
+> [Bruh] [WARN]  Moment 2
 
 ## **Moving Forward**
 
