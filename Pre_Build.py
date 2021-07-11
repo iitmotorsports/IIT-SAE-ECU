@@ -336,7 +336,7 @@ class FileEntry:  # IMPROVE: Make IDs persistent
         return line.replace(reMatch[2], str(ID))
 
     async def SSX(self, line, reMatch):
-        TAG = await self.addNewTag(reMatch[2])
+        TAG = await self.addNewTag(reMatch[1])
         ID = await self.addNewID(reMatch[0], reMatch[2])
         return line.replace(reMatch[1], str(TAG)).replace(reMatch[2], str(ID))
 
