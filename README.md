@@ -24,7 +24,7 @@ Install the Latest Release version of [CMake](https://cmake.org/download/)
 
 As of today, that would be version 3.18.4
 
-Inside `.vscode/tasks.json`, modify the options for `TEENSY_USB_PORTNAME` for the ports that the project should use to connect to your teensy. ( Set to COM6 by default )
+Inside `.vscode/tasks.json`, modify the options for `FRONT_TEENSY_PORT` and `BACK_TEENSY_PORT` for the ports that the project should use to connect to your teensy.
 
 You can also modify the defaults for other tasks.
 
