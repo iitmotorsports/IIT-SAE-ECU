@@ -1,10 +1,10 @@
 {
     "TEENSY_ECU": "MK66FX1M0",
     "TOOLCHAIN_OFFSET": "../TeensyToolchain",
-    "ADDITIONAL_CMAKE_VARS": "-DCUSTOM_BUILD_PATH_PREFIX:STRING=build/Pre_Build/",
+    "TEENSY_BAUDRATE": "115200",
     "FRONT_TEENSY_PORT": "COM9",
     "BACK_TEENSY_PORT": "COM11",
-    "TEENSY_BAUDRATE": "115200",
+    "ADDITIONAL_CMAKE_VARS": "-DCUSTOM_BUILD_PATH_PREFIX:STRING=build/Pre_Build/",
     // "ADDITIONAL_CMAKE_VARS": "" ,
     "files.associations": {
         "*.def": "cpp",
