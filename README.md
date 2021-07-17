@@ -43,7 +43,7 @@ They are mostly under the function calls `add_compile_definitions` and `add_comp
 * `Hard Clean`: Clean up entire CMake project
 * `Build`: Compile project
 * `Upload`: Upload compiled binary to teensy
-* `Monitor`: Monitor teensy over a CLI, select the appropriate options when running
+* `Monitor`: Monitor teensy over a CLI, select the appropriate options when running, defaults to `HEX` mode
 
 By default, `Ctrl + Shift + B` (Run Build Task) should run all of the above in order except for `Clean` and `Hard Clean`
 
