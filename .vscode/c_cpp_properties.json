@@ -14,9 +14,9 @@
                 "limitSymbolsToIncludedHeaders": false
             },
             "defines": [
-                "__${config:TEENSY_ECU}__",
-                "F_CPU=180000000",
-                "USB_SERIAL",
+                "__${config:TEENSY_CORE_NAME}__",
+                "F_CPU=${config:CORE_SPEED}",
+                "${config:USB_SETTING}",
                 "LAYOUT_US_ENGLISH",
                 "TEENSYDUINO=144",
                 "_GNU_SOURCE",

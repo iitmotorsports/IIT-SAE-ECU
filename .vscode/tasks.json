@@ -19,7 +19,7 @@
                 "/c",
                 "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py",
                 "build",
-                "${config:ADDITIONAL_CMAKE_VARS}"
+                "${config:CMAKE_FINAL_VARS}"
             ],
             "options": {
                 "statusbar": {
@@ -54,7 +54,7 @@
                 "/c",
                 "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py",
                 "config",
-                "${config:ADDITIONAL_CMAKE_VARS}"
+                "${config:CMAKE_FINAL_VARS}"
             ],
             "options": {
                 "statusbar": {
@@ -77,7 +77,7 @@
                 "/c",
                 "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py",
                 "reset",
-                "${config:ADDITIONAL_CMAKE_VARS}"
+                "${config:CMAKE_FINAL_VARS}"
             ],
             "options": {
                 "statusbar": {
@@ -170,7 +170,7 @@
                 "/c",
                 "${workspaceFolder}\\${config:TOOLCHAIN_OFFSET}\\tools\\ComMonitor.exe",
                 "${input:TEENSY_USB_PORTNAME}",
-                "${config:TEENSY_BAUDRATE}",
+                "${config:BAUDRATE}",
                 "-t${input:TEENSY_COM_TYPE}",
                 "-m8",
                 "--jsonPath",
@@ -200,7 +200,7 @@
                 "/c",
                 "${workspaceFolder}\\${config:TOOLCHAIN_OFFSET}\\tools\\ComMonitor.exe",
                 "${input:TEENSY_USB_PORTNAME}",
-                "${config:TEENSY_BAUDRATE}",
+                "${config:BAUDRATE}",
                 "-tH",
                 "-m8",
                 "-r",

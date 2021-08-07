@@ -1,11 +1,21 @@
 {
-    "TEENSY_ECU": "MK66FX1M0",
-    "TOOLCHAIN_OFFSET": "../TeensyToolchain",
-    "TEENSY_BAUDRATE": "115200",
-    "FRONT_TEENSY_PORT": "COM9",
-    "BACK_TEENSY_PORT": "COM11",
-    "ADDITIONAL_CMAKE_VARS": "-DCUSTOM_BUILD_PATH_PREFIX:STRING=build/Pre_Build/",
-    // "ADDITIONAL_CMAKE_VARS": "" ,
+    /* 
+     * |-----[ CONFIGURATION ]-----|
+     */
+    "FRONT_TEENSY_PORT": "COM9", // Port representing the front teensy
+    "BACK_TEENSY_PORT": "COM11", // Port representing the back teensy
+    "BAUDRATE": "115200", // Baudrate to use with serial
+    "CORE_SPEED": "180000000", // Speed at which the CPU will run (Hz)
+    "USB_SETTING": "USB_SERIAL", // USB behavior of the core
+    "CORE_NAME": "MK66FX1M0", // Specific name of the core being compiled
+    "CORE": "teensy3", // The general name of the core being compiled
+    "CPU": "cortex-m4", // The CPU to compile for
+    "TOOLCHAIN_OFFSET": "../TeensyToolchain", // Offset to the toolchain
+    "ADDITIONAL_CMAKE_VARS": "-DCUSTOM_BUILD_PATH_PREFIX:STRING=build/Pre_Build/", // More defines passed to CMake
+    /*
+     * |---[ END CONFIGURATION ]---|
+     */
+    "CMAKE_FINAL_VARS": "-DENV_CORE_SPEED:STRING=${config:CORE_SPEED} -DENV_CORE_NAME:STRING=${config:CORE_NAME} -DENV_CORE:STRING=${config:CORE} -DENV_CPU:STRING=${config:CPU} -DENV_USB_SETTING:STRING=${config:USB_SETTING} ${config:ADDITIONAL_CMAKE_VARS} ",
     "files.associations": {
         "*.def": "cpp",
         "*.tcc": "cpp",
@@ -52,7 +62,7 @@
         "atomic": "cpp",
         "memory": "cpp",
         "optional": "cpp",
-        "set": "cpp"
+        "set": "cpp",
     },
     "doxygen_runner.configuration_file_override": "${workspaceFolder}\\docs\\Doxyfile",
     "python.linting.pylintEnabled": true,
