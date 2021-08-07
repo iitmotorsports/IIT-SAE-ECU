@@ -1,6 +1,8 @@
 SAE at IIT ECU Programming
 ===========================
- 
+
+This repository contains the source code that the SAE team at IIT uses for their microcontrollers.
+
 Hardware
 -------
 
