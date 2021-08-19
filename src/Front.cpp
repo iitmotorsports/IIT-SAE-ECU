@@ -6,6 +6,8 @@
 #include "SerialCommand.h"
 #include "unordered_map"
 
+#define TESTING
+
 static LOG_TAG ID = "Front Teensy";
 
 static elapsedMillis timeElapsed;
@@ -196,6 +198,43 @@ static void toggleMotorDirection() {
     Pins::setInternalValue(PINS_INTERNAL_REVERSE, reverse);
 }
 
+#ifdef TESTING
+static void testValues() {
+    static uint32_t rnd = 0;
+    rnd = random(300);
+    Log(ID, "Current Motor Speed:", rnd);
+
+    rnd = random(512);
+    // Motor controllers
+    Log(ID, "MC0 DC BUS Voltage:", rnd);
+    Log(ID, "MC1 DC BUS Voltage:", rnd);
+    Log(ID, "MC0 DC BUS Current:", rnd);
+    Log(ID, "MC1 DC BUS Current:", rnd);
+    rnd = random(512);
+    Log(ID, "MC0 Board Temp:", rnd);
+    Log(ID, "MC1 Board Temp:", rnd);
+    Log(ID, "MC0 Motor Temp:", rnd);
+    Log(ID, "MC1 Motor Temp:", rnd);
+    rnd = random(512);
+    Log(ID, "MC Current Power:", rnd);
+
+    // BMS
+    rnd = random(100);
+    Log(ID, "BMS State Of Charge:", rnd);
+    rnd = random(512);
+    Log(ID, "BMS Immediate Voltage:", rnd);
+    Log(ID, "BMS Pack Average Current:", rnd);
+    Log(ID, "BMS Pack Highest Temp:", rnd);
+    Log(ID, "BMS Pack Lowest Temp:", rnd);
+    Log(ID, "BMS Discharge current limit:", rnd);
+    Log(ID, "BMS Charge current limit:", rnd);
+
+    // General
+    Log(ID, "Start Light", rnd > 256);
+    Log(ID, "Fault State", rnd > 500);
+}
+#endif
+
 void Front::run() {
     Log.i(ID, "Teensy 3.6 SAE FRONT ECU Initalizing");
 
@@ -228,11 +267,19 @@ void Front::run() {
     Pins::setInternalValue(PINS_INTERNAL_SYNC, 1);
     delay(1000);
     Serial.flush();
+#ifndef TESTING
     while (!Heartbeat::checkBeat()) {
         delay(500);
     }
+#endif
 
     while (true) {
+#ifdef TESTING
+        if (timeElapsed >= 100) {
+            timeElapsed = 0;
+            testValues();
+        }
+#else
         if (timeElapsed >= 20) { // High priority updates
             timeElapsed = 0;
             Cmd::receiveCommand();
@@ -282,5 +329,6 @@ void Front::run() {
             // General
             Log(ID, "Fault State", Pins::getCanPinValue(PINS_INTERNAL_GEN_FAULT));
         }
+#endif
     }
 }
