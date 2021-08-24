@@ -200,38 +200,45 @@ static void toggleMotorDirection() {
 
 #ifdef TESTING
 static void testValues() {
-    static uint32_t rnd = 0;
-    rnd = random(300);
-    Log(ID, "Current Motor Speed:", rnd);
+    if (timeElapsed >= 20) { // High priority updates
+        timeElapsed = 0;
+        Log(ID, "Current Motor Speed:", random(300));
+    }
+    if (timeElapsedMidHigh >= 200) { // MedHigh priority updates
+        timeElapsedMidHigh = 0;
+        updateCurrentState();
+    }
+    if (timeElapsedMidLow >= 500) { // MedLow priority updates
+        timeElapsedMidLow = 0;
+        static bool on = random(100) > 50;
+        Log(ID, "Start Light", on);
+    }
+    if (timeElapsedLong >= 800) { // Low priority updates
+        timeElapsedLong = 0;
 
-    rnd = random(512);
-    // Motor controllers
-    Log(ID, "MC0 DC BUS Voltage:", rnd);
-    Log(ID, "MC1 DC BUS Voltage:", rnd);
-    Log(ID, "MC0 DC BUS Current:", rnd);
-    Log(ID, "MC1 DC BUS Current:", rnd);
-    rnd = random(512);
-    Log(ID, "MC0 Board Temp:", rnd);
-    Log(ID, "MC1 Board Temp:", rnd);
-    Log(ID, "MC0 Motor Temp:", rnd);
-    Log(ID, "MC1 Motor Temp:", rnd);
-    rnd = random(512);
-    Log(ID, "MC Current Power:", rnd);
+        // Motor controllers
+        Log(ID, "MC0 DC BUS Voltage:", random(200));
+        Log(ID, "MC1 DC BUS Voltage:", random(200));
+        Log(ID, "MC0 DC BUS Current:", random(200));
+        Log(ID, "MC1 DC BUS Current:", random(200));
+        Log(ID, "MC0 Board Temp:", random(200));
+        Log(ID, "MC1 Board Temp:", random(200));
+        Log(ID, "MC0 Motor Temp:", random(200));
+        Log(ID, "MC1 Motor Temp:", random(200));
+        Log(ID, "MC Current Power:", random(200));
 
-    // BMS
-    rnd = random(100);
-    Log(ID, "BMS State Of Charge:", rnd);
-    rnd = random(512);
-    Log(ID, "BMS Immediate Voltage:", rnd);
-    Log(ID, "BMS Pack Average Current:", rnd);
-    Log(ID, "BMS Pack Highest Temp:", rnd);
-    Log(ID, "BMS Pack Lowest Temp:", rnd);
-    Log(ID, "BMS Discharge current limit:", rnd);
-    Log(ID, "BMS Charge current limit:", rnd);
+        // BMS
+        Log(ID, "BMS State Of Charge:", random(100));
+        Log(ID, "BMS Immediate Voltage:", random(200));
+        Log(ID, "BMS Pack Average Current:", random(200));
+        Log(ID, "BMS Pack Highest Temp:", random(200));
+        Log(ID, "BMS Pack Lowest Temp:", random(200));
+        Log(ID, "BMS Discharge current limit:", random(200));
+        Log(ID, "BMS Charge current limit:", random(200));
 
-    // General
-    Log(ID, "Start Light", rnd > 256);
-    Log(ID, "Fault State", rnd > 500);
+        // General
+        Log(ID, "Fault State", random(100) > 50);
+    }
 }
 #endif
 
@@ -275,10 +282,7 @@ void Front::run() {
 
     while (true) {
 #ifdef TESTING
-        if (timeElapsed >= 100) {
-            timeElapsed = 0;
-            testValues();
-        }
+        testValues();
 #else
         if (timeElapsed >= 20) { // High priority updates
             timeElapsed = 0;
