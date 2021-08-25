@@ -202,7 +202,14 @@ static void toggleMotorDirection() {
 static void testValues() {
     if (timeElapsed >= 20) { // High priority updates
         timeElapsed = 0;
-        Log(ID, "Current Motor Speed:", random(300));
+        static uint32_t speed = 300;
+        static bool direction = true;
+        if (speed < 50)
+            direction = false;
+        else if (speed > 250)
+            direction = true;
+        speed += (direction ? -1 : 1) * random(10);
+        Log(ID, "Current Motor Speed:", speed);
     }
     if (timeElapsedMidHigh >= 200) { // MedHigh priority updates
         timeElapsedMidHigh = 0;
