@@ -6,7 +6,7 @@
 #include "SerialCommand.h"
 #include "unordered_map"
 
-#define TESTING
+// #define TESTING
 
 static LOG_TAG ID = "Front Teensy";
 
