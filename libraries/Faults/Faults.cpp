@@ -63,10 +63,10 @@ void setup(void) {
 
 void logFault(void) {
     if (faulted_address) {
-        Log.w(ID, "Faulted address:", faulted_address);
+        // Log.w(ID, "Faulted address:", faulted_address);
         // NOTE: only sending raw buffer for now, split in two as the buffer is a 64bit value and logging only supports 32bit
-        Log.w(ID, "Buffer half 0", (uint32_t)faulted_buffer);
-        Log.w(ID, "Buffer half 1", (uint32_t)(faulted_buffer << 32));
+        // Log.w(ID, "Buffer half 0", (uint32_t)faulted_buffer);
+        // Log.w(ID, "Buffer half 1", (uint32_t)(faulted_buffer << 32));
 #define X(add, mask, id)                                   \
     if (add == faulted_address && mask & faulted_buffer) { \
         Log.e(ID, id);                                     \
