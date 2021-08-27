@@ -14,7 +14,7 @@
                 "limitSymbolsToIncludedHeaders": false
             },
             "defines": [
-                "__${config:TEENSY_CORE_NAME}__",
+                "__${config:CORE_NAME}__",
                 "F_CPU=${config:CORE_SPEED}",
                 "${config:USB_SETTING}",
                 "LAYOUT_US_ENGLISH",
