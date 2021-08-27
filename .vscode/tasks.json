@@ -17,6 +17,7 @@
             "args": [
                 "/d",
                 "/c",
+                "python",
                 "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py",
                 "build",
                 "${config:CMAKE_FINAL_VARS}"
@@ -52,6 +53,7 @@
             "args": [
                 "/d",
                 "/c",
+                "python",
                 "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py",
                 "config",
                 "${config:CMAKE_FINAL_VARS}"
@@ -75,6 +77,7 @@
             "args": [
                 "/d",
                 "/c",
+                "python",
                 "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py",
                 "reset",
                 "${config:CMAKE_FINAL_VARS}"
@@ -98,6 +101,7 @@
             "args": [
                 "/d",
                 "/c",
+                "python",
                 "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py",
                 "upload",
                 "${input:TEENSY_USB_PORTNAME}"
@@ -122,6 +126,7 @@
             "args": [
                 "/d",
                 "/c",
+                "python",
                 "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py",
                 "upload",
                 "${config:BACK_TEENSY_PORT}"
@@ -145,6 +150,7 @@
             "args": [
                 "/d",
                 "/c",
+                "python",
                 "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py",
                 "upload",
                 "${config:FRONT_TEENSY_PORT}"
@@ -267,6 +273,7 @@
             "args": [
                 "/d",
                 "/c",
+                "python",
                 "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py",
                 "disable",
                 "${config:FRONT_TEENSY_PORT}"
@@ -291,6 +298,7 @@
             "args": [
                 "/d",
                 "/c",
+                "python",
                 "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py",
                 "disable",
                 "${config:BACK_TEENSY_PORT}"
@@ -358,6 +366,7 @@
                 "ECUBuildPick.py",
                 "1",
                 "&&",
+                "python",
                 "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py",
                 "build",
                 "-s"
@@ -397,6 +406,7 @@
                 "ECUBuildPick.py",
                 "0",
                 "&&",
+                "python",
                 "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py",
                 "build",
                 "-s"
@@ -430,6 +440,7 @@
             "args": [
                 "/d",
                 "/c",
+                "python",
                 "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py",
                 "clean"
             ],
