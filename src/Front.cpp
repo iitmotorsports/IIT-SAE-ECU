@@ -311,6 +311,10 @@ void Front::run() {
             }
             Log(ID, "Start Light", on);
             Pins::setPinValue(PINS_FRONT_START_LIGHT, on);
+
+            if (Fault::anyFault()) {
+                Fault::logFault();
+            }
         }
         if (timeElapsedLong >= 800) { // Low priority updates
             timeElapsedLong = 0;
