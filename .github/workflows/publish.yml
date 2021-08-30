@@ -2,7 +2,7 @@ name: publish
 on:
   push:
     paths:
-      - docs
+      - docs/*
 jobs:
   deploy:
     runs-on: ubuntu-latest
