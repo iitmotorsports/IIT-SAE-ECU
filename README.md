@@ -58,7 +58,7 @@ This project uses [Doxygen](https://www.doxygen.nl/index.html) to auto generate 
 
 [Doxygen Extensions](https://marketplace.visualstudio.com/items?itemName=Isaias.doxygen-pack) exist for VSCode, to easily compile and view inside VSCode.
 
-The documentation can be generated locally or you can view the auto generated Github Page for this repo.
+The documentation can be generated locally or you can view the auto generated [Github Page](https://illinois-tech-motorsports.github.io/IIT-SAE-ECU/) for this repo.
 
 New Members
 -----------
