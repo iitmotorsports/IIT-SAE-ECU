@@ -924,7 +924,7 @@ RECURSIVE              = YES
 
 EXCLUDE                = ..\build                \
                          ..\src                  \
-                         ..\doc\darkTheme        \
+                         ..\doc\doxyTheme        \
                          ..\doc\html             \
                          ..\doc\html\Doxyfile    \
                          ..\doc\index.html       \
@@ -1261,8 +1261,7 @@ HTML_STYLESHEET        =
 # list). For an example see the documentation.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_EXTRA_STYLESHEET  = darkTheme\custom.css \
-                         darkTheme\custom_dark_theme.css
+HTML_EXTRA_STYLESHEET  = doxyTheme\doxygen-awesome.css
 
 # The HTML_EXTRA_FILES tag can be used to specify one or more extra images or
 # other source files which should be copied to the HTML output directory. Note

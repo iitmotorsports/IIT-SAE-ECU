@@ -17,8 +17,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="custom.css" rel="stylesheet" type="text/css"/>
-<link href="custom_dark_theme.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -143,10 +142,10 @@ $(document).ready(function(){initNavTree('_faults_8cpp_source.html',''); initRes
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_fault.html#abf369f0092a0b44bb9546b3563417895">logFault</a>(<span class="keywordtype">void</span>) {</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordflow">if</span> (faulted_address) {</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Faulted address:&quot;</span>, faulted_address);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="comment">// Log.w(ID, &quot;Faulted address:&quot;, faulted_address);</span></div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="comment">// NOTE: only sending raw buffer for now, split in two as the buffer is a 64bit value and logging only supports 32bit</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Buffer half 0&quot;</span>, (uint32_t)faulted_buffer);</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Buffer half 1&quot;</span>, (uint32_t)(faulted_buffer &lt;&lt; 32));</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="comment">// Log.w(ID, &quot;Buffer half 0&quot;, (uint32_t)faulted_buffer);</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="comment">// Log.w(ID, &quot;Buffer half 1&quot;, (uint32_t)(faulted_buffer &lt;&lt; 32));</span></div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#define X(add, mask, id)                                   \</span></div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">    if (add == faulted_address &amp;&amp; mask &amp; faulted_buffer) { \</span></div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">        Log.e(ID, id);                                     \</span></div>
@@ -251,7 +250,6 @@ $(document).ready(function(){initNavTree('_faults_8cpp_source.html',''); initRes
 <div class="ttc" id="anamespace_fault_html_a8d65de5d2b7a229e0d2c8d84ca9f64bd"><div class="ttname"><a href="namespace_fault.html#a8d65de5d2b7a229e0d2c8d84ca9f64bd">Fault::anyFault</a></div><div class="ttdeci">bool anyFault(void)</div><div class="ttdoc">Checks both hardFault and softFault.</div></div>
 <div class="ttc" id="anamespace_fault_html_abf369f0092a0b44bb9546b3563417895"><div class="ttname"><a href="namespace_fault.html#abf369f0092a0b44bb9546b3563417895">Fault::logFault</a></div><div class="ttdeci">void logFault(void)</div><div class="ttdoc">Interprets and logs the last fault that was checked using the Log library.</div></div>
 <div class="ttc" id="astruct_logging_1_1_log__t_html_a4b75f2065645b98fef1d6b4edea2b5a2"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">Logging::Log_t::d</a></div><div class="ttdeci">void d(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a debug tag.</div></div>
-<div class="ttc" id="astruct_logging_1_1_log__t_html_a6a07c7449c92c06a608cb8f6463ebd46"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">Logging::Log_t::w</a></div><div class="ttdeci">void w(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a warning tag.</div></div>
 <div class="ttc" id="astruct_logging_1_1_log__t_html_a6a390467c80768f38c116e26c6c35a39"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">Logging::Log_t::e</a></div><div class="ttdeci">void e(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using an error tag.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

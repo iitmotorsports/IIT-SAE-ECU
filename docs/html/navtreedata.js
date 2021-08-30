@@ -25,16 +25,30 @@
 var NAVTREE =
 [
   [ "SAE Teensy ECU", "index.html", [
-    [ "SAE at IIT ECU 2020 Programming", "index.html", [
-      [ "Hardware", "index.html#autotoc_md5", null ],
-      [ "Setup", "index.html#autotoc_md6", null ],
-      [ "Using", "index.html#autotoc_md7", [
-        [ "VSCode Tasks", "index.html#autotoc_md8", null ]
+    [ "SAE at IIT ECU Programming", "index.html", [
+      [ "Hardware", "index.html#autotoc_md16", null ],
+      [ "Setup", "index.html#autotoc_md17", null ],
+      [ "Using", "index.html#autotoc_md18", [
+        [ "VSCode Tasks", "index.html#autotoc_md19", null ]
       ] ],
-      [ "Documentation", "index.html#autotoc_md9", null ]
+      [ "Documentation", "index.html#autotoc_md20", null ],
+      [ "New Members", "index.html#autotoc_md21", null ]
+    ] ],
+    [ "How To Contribute", "md__c___git_hub__s_a_e_git__i_i_t__s_a_e__e_c_u__c_o_n_t_r_i_b_u_t_i_n_g.html", [
+      [ "<strong>Before you begin</strong>", "md__c___git_hub__s_a_e_git__i_i_t__s_a_e__e_c_u__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md1", null ],
+      [ "<strong>Familiarizing Yourself</strong>", "md__c___git_hub__s_a_e_git__i_i_t__s_a_e__e_c_u__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md2", null ],
+      [ "<strong>The Environment</strong>", "md__c___git_hub__s_a_e_git__i_i_t__s_a_e__e_c_u__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md3", null ],
+      [ "<strong>The Code</strong>", "md__c___git_hub__s_a_e_git__i_i_t__s_a_e__e_c_u__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md4", [
+        [ "<strong>Coding Conventions</strong>", "md__c___git_hub__s_a_e_git__i_i_t__s_a_e__e_c_u__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md5", null ],
+        [ "<strong>Modularity</strong>", "md__c___git_hub__s_a_e_git__i_i_t__s_a_e__e_c_u__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md6", null ],
+        [ "<strong>Python Scripting</strong>", "md__c___git_hub__s_a_e_git__i_i_t__s_a_e__e_c_u__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md7", null ],
+        [ "<strong>Documentation</strong>", "md__c___git_hub__s_a_e_git__i_i_t__s_a_e__e_c_u__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md8", null ]
+      ] ],
+      [ "<strong>Further Reading</strong>", "md__c___git_hub__s_a_e_git__i_i_t__s_a_e__e_c_u__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md9", null ],
+      [ "<strong>Moving Forward</strong>", "md__c___git_hub__s_a_e_git__i_i_t__s_a_e__e_c_u__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md10", null ]
     ] ],
     [ "X Macros", "_x_macros.html", [
-      [ "X Macros", "_x_macros.html#autotoc_md0", null ],
+      [ "X Macros", "_x_macros.html#autotoc_md11", null ],
       [ "Creating an X Macro", "_x_macros.html#XMacros_Creating_an_X_Macro", [
         [ "Defining", "_x_macros.html#XMacros_Defining", null ],
         [ "Generating", "_x_macros.html#XMacros_Generating", null ]
@@ -79,7 +93,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_aero_servo_8cpp.html",
-"namespace_m_c.html#aeb2b966841aa0fd6b2ac79478a648c84"
+"namespace_heartbeat.html#a85f5ba8b7ffd86ea82479c28a846f6ac"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

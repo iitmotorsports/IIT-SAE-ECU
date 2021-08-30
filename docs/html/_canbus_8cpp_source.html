@@ -17,8 +17,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="custom.css" rel="stylesheet" type="text/css"/>
-<link href="custom_dark_theme.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -256,7 +255,7 @@ $(document).ready(function(){initNavTree('_canbus_8cpp_source.html',''); initRes
 <div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;}</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160; </div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#ac87cf65470012914f1ae29c0eb987b87">setup</a>(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_canbus.html#ac87cf65470012914f1ae29c0eb987b87">setup</a>(<span class="keywordtype">void</span>) { <span class="comment">// IMPROVE: filter only for addresses we care about</span></div>
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Starting&quot;</span>);</div>
 <div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    F_Can.begin(); <span class="comment">// NOTE: canbus must first be started before it can be configured</span></div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    _setMailboxes();</div>
@@ -390,73 +389,97 @@ $(document).ready(function(){initNavTree('_canbus_8cpp_source.html',''); initRes
 <div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;<span class="comment">// IMPROVE: remove type-punning, maybe just use bitshifting?</span></div>
 <div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160; </div>
 <div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;uint64_t <a class="code" href="struct_canbus_1_1_buffer.html#a858103df59fa907303585534396f0361">Canbus::Buffer::getULong</a>() {</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;<span class="preprocessor">#ifdef CONF_LOGGING_ASCII_DEBUG</span></div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;    Serial.printf(<span class="stringliteral">&quot;%u : %u %u %u %u %u %u %u %u\n&quot;</span>, address, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7]);</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">setSemaphore</a>(address);</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    uint64_t val = *(uint64_t *)(buffer);</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    <a class="code" href="namespace_canbus.html#a441c8b2dbc00d94dd9a6b8d252f09f20">clearSemaphore</a>();</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;    <span class="keywordflow">return</span> val;</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;}</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;int64_t <a class="code" href="struct_canbus_1_1_buffer.html#a5c145ddd48d008096abd9396d3139a93">Canbus::Buffer::getLong</a>() {</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;<span class="preprocessor">#ifdef CONF_LOGGING_ASCII_DEBUG</span></div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    Serial.printf(<span class="stringliteral">&quot;%u : %u %u %u %u %u %u %u %u\n&quot;</span>, address, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7]);</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">setSemaphore</a>(address);</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    int64_t val = *(int64_t *)(buffer);</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    <a class="code" href="namespace_canbus.html#a441c8b2dbc00d94dd9a6b8d252f09f20">clearSemaphore</a>();</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;    <span class="keywordflow">return</span> val;</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;}</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;uint32_t <a class="code" href="struct_canbus_1_1_buffer.html#ab7cf6a900fd4398946391cd9712cb597">Canbus::Buffer::getUInt</a>(<span class="keywordtype">size_t</span> pos) {</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;<span class="preprocessor">#ifdef CONF_LOGGING_ASCII_DEBUG</span></div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    Serial.printf(<span class="stringliteral">&quot;%u : %u %u %u %u %u %u %u %u\n&quot;</span>, address, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7]);</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">setSemaphore</a>(address);</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;    uint32_t val = *(uint32_t *)(buffer + pos);</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    <a class="code" href="namespace_canbus.html#a441c8b2dbc00d94dd9a6b8d252f09f20">clearSemaphore</a>();</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;    <span class="keywordflow">return</span> val;</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;}</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;int32_t <a class="code" href="struct_canbus_1_1_buffer.html#aac1531b43d12ac915008717beff3d997">Canbus::Buffer::getInt</a>(<span class="keywordtype">size_t</span> pos) {</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;<span class="preprocessor">#ifdef CONF_LOGGING_ASCII_DEBUG</span></div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    Serial.printf(<span class="stringliteral">&quot;%u : %u %u %u %u %u %u %u %u\n&quot;</span>, address, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7]);</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;<span class="preprocessor">#ifdef CONF_ECU_DEBUG</span></div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;    <span class="keywordflow">if</span> (buffer == 0) {</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Buffer was not initalized before calling a get function&quot;</span>, address);</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;        init();</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    }</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;    <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">setSemaphore</a>(address);</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;    uint64_t val = *(uint64_t *)(buffer);</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;    <a class="code" href="namespace_canbus.html#a441c8b2dbc00d94dd9a6b8d252f09f20">clearSemaphore</a>();</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;    <span class="keywordflow">return</span> val;</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;}</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;int64_t <a class="code" href="struct_canbus_1_1_buffer.html#a5c145ddd48d008096abd9396d3139a93">Canbus::Buffer::getLong</a>() {</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;<span class="preprocessor">#ifdef CONF_ECU_DEBUG</span></div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    <span class="keywordflow">if</span> (buffer == 0) {</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Buffer was not initalized before calling a get function&quot;</span>, address);</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;        init();</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;    }</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">setSemaphore</a>(address);</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    int64_t val = *(int64_t *)(buffer);</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    <a class="code" href="namespace_canbus.html#a441c8b2dbc00d94dd9a6b8d252f09f20">clearSemaphore</a>();</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    <span class="keywordflow">return</span> val;</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;}</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;uint32_t <a class="code" href="struct_canbus_1_1_buffer.html#ab7cf6a900fd4398946391cd9712cb597">Canbus::Buffer::getUInt</a>(<span class="keywordtype">size_t</span> pos) {</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;<span class="preprocessor">#ifdef CONF_ECU_DEBUG</span></div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    <span class="keywordflow">if</span> (buffer == 0) {</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Buffer was not initalized before calling a get function&quot;</span>, address);</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;        init();</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    }</div>
 <div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">setSemaphore</a>(address);</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    int32_t val = *(int32_t *)(buffer + pos);</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    uint32_t val = *(uint32_t *)(buffer + pos);</div>
 <div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    <a class="code" href="namespace_canbus.html#a441c8b2dbc00d94dd9a6b8d252f09f20">clearSemaphore</a>();</div>
 <div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    <span class="keywordflow">return</span> val;</div>
 <div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;}</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;uint16_t <a class="code" href="struct_canbus_1_1_buffer.html#a50282a77c227eae1bf4c0f03850d6f24">Canbus::Buffer::getUShort</a>(<span class="keywordtype">size_t</span> pos) {</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;<span class="preprocessor">#ifdef CONF_LOGGING_ASCII_DEBUG</span></div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    Serial.printf(<span class="stringliteral">&quot;%u : %u %u %u %u %u %u %u %u\n&quot;</span>, address, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7]);</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">setSemaphore</a>(address);</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    uint16_t val = *(uint16_t *)(buffer + pos);</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    <a class="code" href="namespace_canbus.html#a441c8b2dbc00d94dd9a6b8d252f09f20">clearSemaphore</a>();</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    <span class="keywordflow">return</span> val;</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;}</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;int16_t <a class="code" href="struct_canbus_1_1_buffer.html#ac541328498d5db347e8a9db14edaf29d">Canbus::Buffer::getShort</a>(<span class="keywordtype">size_t</span> pos) {</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;<span class="preprocessor">#ifdef CONF_LOGGING_ASCII_DEBUG</span></div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;    Serial.printf(<span class="stringliteral">&quot;%u : %u %u %u %u %u %u %u %u\n&quot;</span>, address, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7]);</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">setSemaphore</a>(address);</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    int16_t val = *(int16_t *)(buffer + pos);</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;    <a class="code" href="namespace_canbus.html#a441c8b2dbc00d94dd9a6b8d252f09f20">clearSemaphore</a>();</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;    <span class="keywordflow">return</span> val;</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;}</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;uint8_t <a class="code" href="struct_canbus_1_1_buffer.html#ac2371f036b66a5376844d2f4490a0c9e">Canbus::Buffer::getUByte</a>(<span class="keywordtype">size_t</span> pos) {</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;<span class="preprocessor">#ifdef CONF_LOGGING_ASCII_DEBUG</span></div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    Serial.printf(<span class="stringliteral">&quot;%u : %u %u %u %u %u %u %u %u\n&quot;</span>, address, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7]);</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    <span class="keywordflow">return</span> buffer[pos];</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;int32_t <a class="code" href="struct_canbus_1_1_buffer.html#aac1531b43d12ac915008717beff3d997">Canbus::Buffer::getInt</a>(<span class="keywordtype">size_t</span> pos) {</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;<span class="preprocessor">#ifdef CONF_ECU_DEBUG</span></div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    <span class="keywordflow">if</span> (buffer == 0) {</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Buffer was not initalized before calling a get function&quot;</span>, address);</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;        init();</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    }</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">setSemaphore</a>(address);</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;    int32_t val = *(int32_t *)(buffer + pos);</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;    <a class="code" href="namespace_canbus.html#a441c8b2dbc00d94dd9a6b8d252f09f20">clearSemaphore</a>();</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;    <span class="keywordflow">return</span> val;</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;}</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;uint16_t <a class="code" href="struct_canbus_1_1_buffer.html#a50282a77c227eae1bf4c0f03850d6f24">Canbus::Buffer::getUShort</a>(<span class="keywordtype">size_t</span> pos) {</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;<span class="preprocessor">#ifdef CONF_ECU_DEBUG</span></div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    <span class="keywordflow">if</span> (buffer == 0) {</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Buffer was not initalized before calling a get function&quot;</span>, address);</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;        init();</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    }</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">setSemaphore</a>(address);</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    uint16_t val = *(uint16_t *)(buffer + pos);</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;    <a class="code" href="namespace_canbus.html#a441c8b2dbc00d94dd9a6b8d252f09f20">clearSemaphore</a>();</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    <span class="keywordflow">return</span> val;</div>
 <div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;}</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;int8_t <a class="code" href="struct_canbus_1_1_buffer.html#a59d10eade9a764c9a4f86f5eb5cc7ea6">Canbus::Buffer::getByte</a>(<span class="keywordtype">size_t</span> pos) {</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;<span class="preprocessor">#ifdef CONF_LOGGING_ASCII_DEBUG</span></div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    Serial.printf(<span class="stringliteral">&quot;%u : %u %u %u %u %u %u %u %u\n&quot;</span>, address, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7]);</div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    <span class="keywordflow">return</span> (int8_t)buffer[pos];</div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;}</div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160; </div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;<span class="comment">// @endcond</span></div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;int16_t <a class="code" href="struct_canbus_1_1_buffer.html#ac541328498d5db347e8a9db14edaf29d">Canbus::Buffer::getShort</a>(<span class="keywordtype">size_t</span> pos) {</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;<span class="preprocessor">#ifdef CONF_ECU_DEBUG</span></div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    <span class="keywordflow">if</span> (buffer == 0) {</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Buffer was not initalized before calling a get function&quot;</span>, address);</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;        init();</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    }</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;    <a class="code" href="namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f">setSemaphore</a>(address);</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;    int16_t val = *(int16_t *)(buffer + pos);</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;    <a class="code" href="namespace_canbus.html#a441c8b2dbc00d94dd9a6b8d252f09f20">clearSemaphore</a>();</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;    <span class="keywordflow">return</span> val;</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;}</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;uint8_t <a class="code" href="struct_canbus_1_1_buffer.html#ac2371f036b66a5376844d2f4490a0c9e">Canbus::Buffer::getUByte</a>(<span class="keywordtype">size_t</span> pos) {</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;<span class="preprocessor">#ifdef CONF_ECU_DEBUG</span></div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;    <span class="keywordflow">if</span> (buffer == 0) {</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Buffer was not initalized before calling a get function&quot;</span>, address);</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;        init();</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;    }</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;    <span class="keywordflow">return</span> buffer[pos];</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;}</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;int8_t <a class="code" href="struct_canbus_1_1_buffer.html#a59d10eade9a764c9a4f86f5eb5cc7ea6">Canbus::Buffer::getByte</a>(<span class="keywordtype">size_t</span> pos) {</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;<span class="preprocessor">#ifdef CONF_ECU_DEBUG</span></div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;    <span class="keywordflow">if</span> (buffer == 0) {</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Buffer was not initalized before calling a get function&quot;</span>, address);</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;        init();</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;    }</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;    <span class="keywordflow">return</span> (int8_t)buffer[pos];</div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;}</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160; </div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;<span class="comment">// @endcond</span></div>
 <div class="ttc" id="a_can_bus_addresses_8def_html"><div class="ttname"><a href="_can_bus_addresses_8def.html">CanBusAddresses.def</a></div><div class="ttdoc">Define incoming CAN line addresses.</div></div>
 <div class="ttc" id="a_can_bus_addresses_8def_html_aa7a98234bac49a35b8868f32f0c98ce4"><div class="ttname"><a href="_can_bus_addresses_8def.html#aa7a98234bac49a35b8868f32f0c98ce4">CAN_ADDRESS</a></div><div class="ttdeci">#define CAN_ADDRESS</div><div class="ttdoc">Defines the Can bus addresses that will be used to receive and send data.</div><div class="ttdef"><b>Definition:</b> <a href="_can_bus_addresses_8def_source.html#l00080">CanBusAddresses.def:80</a></div></div>
 <div class="ttc" id="a_canbus_8h_html"><div class="ttname"><a href="_canbus_8h.html">Canbus.h</a></div><div class="ttdoc">FlexCAN_T4 wrapper.</div></div>

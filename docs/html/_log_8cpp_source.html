@@ -17,8 +17,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="custom.css" rel="stylesheet" type="text/css"/>
-<link href="custom_dark_theme.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -281,7 +280,7 @@ $(document).ready(function(){initNavTree('_log_8cpp_source.html',''); initResiza
 <div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;}</div>
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160; </div>
 <div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> _receiveLogBuffer(uint32_t address, <span class="keyword">volatile</span> uint8_t * buf) {</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    Serial.write((uint8_t *)buf, 8); <span class="comment">// TODO: does dropping the volatile cause any issues?</span></div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    Serial.write((uint8_t *)buf, 8); <span class="comment">// IMPROVE: does dropping the volatile cause any issues?</span></div>
 <div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;}</div>
 <div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160; </div>
 <div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_logging.html#a3402a2c8efbb932ddbe58e66b9cc550c">enableCanbusRelay</a>() {</div>

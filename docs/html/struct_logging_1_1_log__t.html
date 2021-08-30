@@ -17,8 +17,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="custom.css" rel="stylesheet" type="text/css"/>
-<link href="custom_dark_theme.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -139,7 +138,7 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base class used to log things over serial. </p>
 <p><a class="el" href="namespace_logging.html" title="Namespace to isolate Log_t struct.">Logging</a> is centered around communicating with the companion app.</p>
-<h3><a class="anchor" id="autotoc_md1"></a>
+<h3><a class="anchor" id="autotoc_md12"></a>
 Default Mode</h3>
 <p>In its default mode, logging does not send ASCII strings but integer numbers which represent a set of defined strings.</p>
 <p>The actual messages that are sent over serial are as follows.</p>
@@ -159,11 +158,11 @@ Default Mode</h3>
 </div><!-- fragment --><p>Unless <a class="el" href="_log_8h.html#a0acd70772d752e8468d733cbda6a1b31" title="Return the final numbervalue of a LOG_TAG.">TAG2NUM()</a> is used.</p>
 <p>And <code>number</code> can be any unsigned 32 bit integer.</p>
 <p>The companion app received this messages as an 8 byte integer and decodes them by first splitting them into the structure shown, and then matching those number that <a class="el" href="_pre___build_8py.html" title="This script preprocesses source files for use with Log_t.">Pre_Build.py</a> generates in <code>log_lookup.json</code></p>
-<h3><a class="anchor" id="autotoc_md2"></a>
+<h3><a class="anchor" id="autotoc_md13"></a>
 Debug ASCII Mode</h3>
 <p>When the prebuild script <a class="el" href="_pre___build_8py.html" title="This script preprocesses source files for use with Log_t.">Pre_Build.py</a> is skipped, calls to <code>Log</code> still function, however the message sent is instead a formatted ASCII string, no string mapping or anything else occurs.</p>
 <p>This mode also has the option to prepend a time stamp</p>
-<h3><a class="anchor" id="autotoc_md3"></a>
+<h3><a class="anchor" id="autotoc_md14"></a>
 Logging Levels</h3>
 <p><a class="el" href="namespace_logging.html" title="Namespace to isolate Log_t struct.">Logging</a> has different levels which can be logged to, this is used to differentiate between how important different log entries are.</p>
 <p>The current types are as follows.</p>
@@ -183,7 +182,7 @@ Logging Levels</h3>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Log.f()   </td><td class="markdownTableBodyNone">Fatal Log   </td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md4"></a>
+<h3><a class="anchor" id="autotoc_md15"></a>
 Logging over Can</h3>
 <p>The front ECU can easily communicate with the companion app as it is connected directly with USB serial.</p>
 <p>However, the back ECU is only connected to the front ECU through CanBus.</p>
