@@ -7,8 +7,8 @@ Hardware
 -------
 
 - [Teensy 3.6](https://www.pjrc.com/store/teensy36.html) x 2
-- [A Windows machine](https://www.microsoft.com/en-us/windows) (Preferably Win 10)
-- [A Formula Hybrid Car](https://bicyclewarehouse.com/collections/hybrid-bikes) (Not necessary for testing)
+- [A Windows machine](https://en.sdjmd.com/) (Preferably Win 10)
+- [A Formula Hybrid Car](https://www.f1authentics.com/f1-racing-cars-for-sale/) (Not necessary for testing)
 - [A Compatible CAN transceiver](https://www.amazon.com/SN65HVD230-CAN-Board-Communication-Development/dp/B00KM6XMXO) x 2
 
 Setup
