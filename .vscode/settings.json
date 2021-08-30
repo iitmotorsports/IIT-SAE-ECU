@@ -2,7 +2,7 @@
     /* 
      * |-----[ CONFIGURATION ]-----|
      */
-    "FRONT_TEENSY_PORT": "COM9", // Port representing the front teensy
+    "FRONT_TEENSY_PORT": "COM10", // Port representing the front teensy
     "BACK_TEENSY_PORT": "COM11", // Port representing the back teensy
     "BAUDRATE": "115200", // Baudrate to use with serial
     "CORE_SPEED": "180000000", // Speed at which the CPU will run (Hz)
@@ -63,6 +63,14 @@
         "memory": "cpp",
         "optional": "cpp",
         "set": "cpp",
+        "bit": "cpp",
+        "compare": "cpp",
+        "concepts": "cpp",
+        "cstddef": "cpp",
+        "iterator": "cpp",
+        "memory_resource": "cpp",
+        "string_view": "cpp",
+        "ranges": "cpp"
     },
     "doxygen_runner.configuration_file_override": "${workspaceFolder}\\docs\\Doxyfile",
     "python.linting.pylintEnabled": true,
