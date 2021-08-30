@@ -1,7 +1,8 @@
 name: publish
 on:
-  release:
-    types: [published]
+  push:
+    paths:
+      - docs
 jobs:
   deploy:
     runs-on: ubuntu-latest
