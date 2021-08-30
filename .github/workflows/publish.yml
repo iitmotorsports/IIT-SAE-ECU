@@ -10,10 +10,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: set version
-        run: echo "PROJECT_NUMBER = `git describe --tags`" >> Doxyfile
       - name: Generate Documentation
         uses: mattnotmitt/doxygen-action@v1
         with:
@@ -22,4 +18,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3.7.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
+          publish_dir: ./docs/html
