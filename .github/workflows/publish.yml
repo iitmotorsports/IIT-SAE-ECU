@@ -2,8 +2,8 @@ name: publish
 on:
   workflow_dispatch:
   push:
-    paths:
-      - docs/*
+    branches: 
+      master
 jobs:
   deploy:
     runs-on: ubuntu-latest
