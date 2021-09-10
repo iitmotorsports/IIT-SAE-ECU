@@ -161,34 +161,35 @@ $(document).ready(function(){initNavTree('_motor_control_8cpp_source.html',''); 
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    }</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keywordtype">int</span> percentTorque = 0;</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordflow">if</span> (torque != 0) {</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        percentTorque = constrain(map(torque, 200, <a class="code" href="_pins_8h.html#a80aa2066cc911d8d548e00d117784d81">PINS_ANALOG_MAX</a>, 0, 300), 0, 300); <span class="comment">// separate func for negative vals (regen)</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        percentTorque = constrain(map(torque, 200, <a class="code" href="_pins_8h.html#a80aa2066cc911d8d548e00d117784d81">PINS_ANALOG_MAX</a>, 0, 2000), 0, 2000); <span class="comment">// separate func for negative vals (regen)</span></div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    }</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    uint8_t *bytes = (uint8_t *)&amp;percentTorque;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <a class="code" href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">Canbus::sendData</a>(MC_ADD, bytes[0], bytes[1], 0, 0, direction, enableBit);</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;}</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="namespace_m_c.html#a72e26cfa1ee8fde45958f0df9d6e29f7">isForward</a>(<span class="keywordtype">void</span>) {</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keywordflow">return</span> forward;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;}</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_m_c.html#a2fb464e85bca01fc06a2b5b59c83d9b3">setDirection</a>(<span class="keywordtype">bool</span> runForward) {</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordflow">if</span> (motorSpeed() &lt;= <a class="code" href="_motor_control_8h.html#aabeca44be98eeaf70dd57e707e5ff85d">CONF_MAXIMUM_SWITCHING_SPEED</a>) {</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Switching direction&quot;</span>);</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        forward = runForward;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">e</a>(ID, <span class="stringliteral">&quot;Unable to switch direction, car is moving too much&quot;</span>);</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    }</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;}</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_m_c.html#a27fe6e9fc5d1906069d9e60a24226dd0">setTorque</a>(<span class="keywordtype">int</span> pedal, <span class="keywordtype">int</span> brake, <span class="keywordtype">int</span> steer) {</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    torqueVector(pedal, brake, steer);</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <a class="code" href="namespace_m_c.html#a7a12210dcd86df23c79ae5649a29498c">sendCommand</a>(ADD_MC0_CTRL, motorTorque[0], !forward, 1);</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <a class="code" href="namespace_m_c.html#a7a12210dcd86df23c79ae5649a29498c">sendCommand</a>(ADD_MC1_CTRL, motorTorque[1], forward, 1);</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;}</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;} <span class="comment">// namespace MC</span></div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="comment">// @endcond</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Torque&quot;</span>, percentTorque);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <a class="code" href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">Canbus::sendData</a>(MC_ADD, bytes[0], bytes[1], 0, 0, direction, enableBit);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="namespace_m_c.html#a72e26cfa1ee8fde45958f0df9d6e29f7">isForward</a>(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordflow">return</span> forward;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;}</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_m_c.html#a2fb464e85bca01fc06a2b5b59c83d9b3">setDirection</a>(<span class="keywordtype">bool</span> runForward) {</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keywordflow">if</span> (motorSpeed() &lt;= <a class="code" href="_motor_control_8h.html#aabeca44be98eeaf70dd57e707e5ff85d">CONF_MAXIMUM_SWITCHING_SPEED</a>) {</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Switching direction&quot;</span>);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        forward = runForward;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">e</a>(ID, <span class="stringliteral">&quot;Unable to switch direction, car is moving too much&quot;</span>);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    }</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;}</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_m_c.html#a27fe6e9fc5d1906069d9e60a24226dd0">setTorque</a>(<span class="keywordtype">int</span> pedal, <span class="keywordtype">int</span> brake, <span class="keywordtype">int</span> steer) {</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    torqueVector(pedal, brake, steer);</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <a class="code" href="namespace_m_c.html#a7a12210dcd86df23c79ae5649a29498c">sendCommand</a>(ADD_MC0_CTRL, motorTorque[0], !forward, 1);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <a class="code" href="namespace_m_c.html#a7a12210dcd86df23c79ae5649a29498c">sendCommand</a>(ADD_MC1_CTRL, motorTorque[1], forward, 1);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;}</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;} <span class="comment">// namespace MC</span></div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="comment">// @endcond</span></div>
 <div class="ttc" id="a_canbus_8h_html"><div class="ttname"><a href="_canbus_8h.html">Canbus.h</a></div><div class="ttdoc">FlexCAN_T4 wrapper.</div></div>
 <div class="ttc" id="a_e_c_u_global_config_8h_html"><div class="ttname"><a href="_e_c_u_global_config_8h.html">ECUGlobalConfig.h</a></div><div class="ttdoc">Configure global build properties.</div></div>
 <div class="ttc" id="a_e_c_u_global_config_8h_html_a26f1672eba68f921f77225f765c660ca"><div class="ttname"><a href="_e_c_u_global_config_8h.html#a26f1672eba68f921f77225f765c660ca">CONF_CAR_WHEEL_RADIUS</a></div><div class="ttdeci">#define CONF_CAR_WHEEL_RADIUS</div><div class="ttdoc">The radius of the car's wheels.</div><div class="ttdef"><b>Definition:</b> <a href="_e_c_u_global_config_8h_source.html#l00053">ECUGlobalConfig.h:53</a></div></div>
@@ -211,6 +212,7 @@ $(document).ready(function(){initNavTree('_motor_control_8cpp_source.html',''); 
 <div class="ttc" id="anamespace_m_c_html_add4fdfcad6990dec728c2eeadaca45e1"><div class="ttname"><a href="namespace_m_c.html#add4fdfcad6990dec728c2eeadaca45e1">MC::clearFaults</a></div><div class="ttdeci">void clearFaults(void)</div><div class="ttdoc">Clear MC faults by sending a clear fault command.</div></div>
 <div class="ttc" id="anamespace_m_c_html_aeb2b966841aa0fd6b2ac79478a648c84"><div class="ttname"><a href="namespace_m_c.html#aeb2b966841aa0fd6b2ac79478a648c84">MC::setup</a></div><div class="ttdeci">void setup(void)</div><div class="ttdoc">Initialize MC heartbeat function and clear faults, if any.</div></div>
 <div class="ttc" id="astruct_canbus_1_1_buffer_html"><div class="ttname"><a href="struct_canbus_1_1_buffer.html">Canbus::Buffer</a></div><div class="ttdoc">An incoming canbus message, allows the message data to be interpreted through a simple wrapper class.</div><div class="ttdef"><b>Definition:</b> <a href="_canbus_8h_source.html#l00044">Canbus.h:44</a></div></div>
+<div class="ttc" id="astruct_logging_1_1_log__t_html_a4b75f2065645b98fef1d6b4edea2b5a2"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">Logging::Log_t::d</a></div><div class="ttdeci">void d(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a debug tag.</div></div>
 <div class="ttc" id="astruct_logging_1_1_log__t_html_a6a07c7449c92c06a608cb8f6463ebd46"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">Logging::Log_t::w</a></div><div class="ttdeci">void w(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a warning tag.</div></div>
 <div class="ttc" id="astruct_logging_1_1_log__t_html_a6a390467c80768f38c116e26c6c35a39"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">Logging::Log_t::e</a></div><div class="ttdeci">void e(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using an error tag.</div></div>
 </div><!-- fragment --></div><!-- contents -->

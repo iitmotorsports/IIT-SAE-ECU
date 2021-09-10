@@ -159,9 +159,9 @@ $(document).ready(function(){initNavTree('_log_8cpp_source.html',''); initResiza
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        memcpy(log_buf + 2, &amp;MESSAGE, 2);</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        memcpy(log_buf + 4, &amp;NUMBER, 4);</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">#if CONF_ECU_POSITION == BACK_ECU</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="comment">// #ifdef CONF_ECU_DEBUG</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="comment">// Serial.write(log_buf, 8);</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="comment">// #endif</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">#ifdef CONF_ECU_DEBUG</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        Serial.write(log_buf, 8);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <a class="code" href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">Canbus::sendData</a>(ADD_AUX_LOGGING, log_buf);</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor">#else</span></div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        Serial.write(log_buf, 8);</div>
