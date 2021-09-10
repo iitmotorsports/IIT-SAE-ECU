@@ -61,23 +61,16 @@ State::State_t *ECUStates::Initialize_State::run(void) {
     // TSV
     Log.i(ID, "Waiting for shutdown signal");
 
-    // FIXME: Signal shutdown state on PCB not working
-    // elapsedMillis shutdownBounce;
+    elapsedMillis shutdownBounce;
 
-    // while (true) {
-    //     if (Pins::getPinValue(PINS_BACK_SHUTDOWN_SIGNAL)) {
-    //         if (shutdownBounce > 50)
-    //             break;
-    //     } else {
-    //         shutdownBounce = 0;
-    //     }
-    // }
-
-    Log.w(ID, "Temporary fix needs front button to be pressed!");
-    Pins::setInternalValue(PINS_INTERNAL_START, HIGH);
-    while (Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT_OFF)) {
+    while (true) {
+        if (Pins::getPinValue(PINS_BACK_SHUTDOWN_SIGNAL)) {
+            if (shutdownBounce > 50)
+                break;
+        } else {
+            shutdownBounce = 0;
+        }
     }
-    Pins::setInternalValue(PINS_INTERNAL_START, LOW);
 
     Log.i(ID, "Shutdown signal received");
 
@@ -294,7 +287,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
                 Log.e(ID, "Pedal value offset > 10%");
                 Log.i(ID, "", pedal0);
                 Log.i(ID, "", pedal1);
-                return DrivingModeFault();
+                // return DrivingModeFault();
             }
 
             MC::setTorque((pedal0 + pedal1) / 2, breakVal, steerVal);
