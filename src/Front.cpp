@@ -6,6 +6,7 @@
 #include "SerialCommand.h"
 #include "unordered_map"
 
+// #define SILENT
 // #define TESTING
 
 static LOG_TAG ID = "Front Teensy";
@@ -141,7 +142,6 @@ static void loadBuffers() {
 static void updateCurrentState() {
     uint32_t currState = Pins::getCanPinValue(PINS_INTERNAL_STATE);
     currentState = stateMap[currState]; // returns NULL if not found
-    Log(ID, "Current State", currState);
 }
 
 static void loadStateMap() {
@@ -214,6 +214,7 @@ static void testValues() {
     if (timeElapsedMidHigh >= 200) { // MedHigh priority updates
         timeElapsedMidHigh = 0;
         updateCurrentState();
+        Log(ID, "Current State", currState);
     }
     if (timeElapsedMidLow >= 500) { // MedLow priority updates
         timeElapsedMidLow = 0;
@@ -294,7 +295,9 @@ void Front::run() {
         if (timeElapsed >= 20) { // High priority updates
             timeElapsed = 0;
             Cmd::receiveCommand();
+#ifndef SILENT
             Log(ID, "Current Motor Speed:", motorSpeed());
+#endif
         }
         if (timeElapsedMidHigh >= 200) { // MedHigh priority updates
             timeElapsedMidHigh = 0;
@@ -309,7 +312,9 @@ void Front::run() {
             } else {
                 on = Pins::getCanPinValue(PINS_INTERNAL_START);
             }
+#ifndef SILENT
             Log(ID, "Start Light", on);
+#endif
             Pins::setPinValue(PINS_FRONT_START_LIGHT, on);
 
             if (Fault::anyFault()) {
@@ -321,6 +326,7 @@ void Front::run() {
             Pins::setPinValue(PINS_FRONT_BMS_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_BMS_FAULT));
             Pins::setPinValue(PINS_FRONT_IMD_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_IMD_FAULT));
 
+#ifndef SILENT
             // Motor controllers
             Log(ID, "MC0 DC BUS Voltage:", MC0Voltage());
             Log(ID, "MC1 DC BUS Voltage:", MC1Voltage());
@@ -343,6 +349,7 @@ void Front::run() {
 
             // General
             Log(ID, "Fault State", Pins::getCanPinValue(PINS_INTERNAL_GEN_FAULT));
+#endif
         }
 #endif
     }
