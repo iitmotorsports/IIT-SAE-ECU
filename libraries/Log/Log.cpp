@@ -83,9 +83,9 @@ static void __logger_print_num(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const u
         memcpy(log_buf + 2, &MESSAGE, 2);
         memcpy(log_buf + 4, &NUMBER, 4);
 #if CONF_ECU_POSITION == BACK_ECU
-// #ifdef CONF_ECU_DEBUG
-        // Serial.write(log_buf, 8);
-// #endif
+#ifdef CONF_ECU_DEBUG
+        Serial.write(log_buf, 8);
+#endif
         Canbus::sendData(ADD_AUX_LOGGING, log_buf);
 #else
         Serial.write(log_buf, 8);
