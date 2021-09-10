@@ -24,7 +24,7 @@ set(SOURCE_PATH ${CUSTOM_BUILD_PATH_PREFIX}src CACHE INTERNAL "")
 add_compile_definitions(${USB_SETTING} LAYOUT_US_ENGLISH __${TEENSY_CORE_NAME}__)
 add_compile_definitions(_GNU_SOURCE TEENSYDUINO=144 F_CPU=${TEENSY_CORE_SPEED} USING_MAKEFILE)
 
-add_compile_options(-Wall -g -mthumb -ffunction-sections -fdata-sections -nostdlib -MMD -O3)
+add_compile_options(-Wall -g -mthumb -ffunction-sections -fdata-sections -nostdlib -MMD -O3) # -E
 add_compile_options(-mcpu=${TEENSY_CPU} -mfloat-abi=hard -mfpu=fpv4-sp-d16) #Make teensy specific
 set(LINKER_LIBS "-lm -larm_cortexM4lf_math -lstdc++")
 set(LINKER_LIBS "-Wl,--gc-sections -mthumb -mcpu=${TEENSY_CPU} -mfloat-abi=hard -mfpu=fpv4-sp-d16")
