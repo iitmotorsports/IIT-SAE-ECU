@@ -363,13 +363,12 @@
                 "/d",
                 "/c",
                 "python",
-                "ECUBuildPick.py",
-                "1",
-                "&&",
-                "python",
                 "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py",
                 "build",
                 "-s"
+            ],
+            "dependsOn": [
+                "Build Pick Front"
             ],
             "options": {
                 "statusbar": {
@@ -403,13 +402,12 @@
                 "/d",
                 "/c",
                 "python",
-                "ECUBuildPick.py",
-                "0",
-                "&&",
-                "python",
                 "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py",
                 "build",
                 "-s"
+            ],
+            "dependsOn": [
+                "Build Pick Back"
             ],
             "options": {
                 "statusbar": {
@@ -427,6 +425,52 @@
                     "message": 5
                 }
             }
+        },
+        {
+            "label": "Build Pick Back",
+            "type": "shell",
+            "detail": "Select back ecu to be programmed",
+            "presentation": {
+                "panel": "shared",
+                "showReuseMessage": false
+            },
+            "command": "cmd.exe",
+            "args": [
+                "/d",
+                "/c",
+                "python",
+                "ECUBuildPick.py",
+                "0",
+            ],
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Build Pick Front",
+            "type": "shell",
+            "detail": "Select front ecu to be programmed",
+            "presentation": {
+                "panel": "shared",
+                "showReuseMessage": false
+            },
+            "command": "cmd.exe",
+            "args": [
+                "/d",
+                "/c",
+                "python",
+                "ECUBuildPick.py",
+                "1",
+            ],
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            },
+            "problemMatcher": []
         },
         {
             "label": "Clean",
