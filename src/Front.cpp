@@ -8,10 +8,15 @@
 
 static LOG_TAG ID = "Front Teensy";
 
-static elapsedMillis timeElapsed;
+#define INTERVAL_HIGH_PRIORITY 20
+#define INTERVAL_MED_HIGH_PRIORITY 400
+#define INTERVAL_MED_LOW_PRIORITY 800
+#define INTERVAL_LOW_PRIORITY 1200
+
+static elapsedMillis timeElapsedHigh;
 static elapsedMillis timeElapsedMidHigh;
 static elapsedMillis timeElapsedMidLow;
-static elapsedMillis timeElapsedLong;
+static elapsedMillis timeElapsedLow;
 
 static Canbus::Buffer MC0_RPM_Buffer(ADD_MC0_RPM);
 static Canbus::Buffer MC1_RPM_Buffer(ADD_MC1_RPM);
@@ -197,8 +202,8 @@ static void toggleMotorDirection() {
 
 #if TESTING == FRONT_ECU
 static void testValues() {
-    if (timeElapsed >= 20) { // High priority updates
-        timeElapsed = 0;
+    if (timeElapsedHigh >= 20) { // High priority updates
+        timeElapsedHigh = 0;
         static uint32_t speed = 300;
         static bool direction = true;
         if (speed < 50)
@@ -218,8 +223,8 @@ static void testValues() {
         static bool on = random(100) > 50;
         Log(ID, "Start Light", on);
     }
-    if (timeElapsedLong >= 800) { // Low priority updates
-        timeElapsedLong = 0;
+    if (timeElapsedLow >= 800) { // Low priority updates
+        timeElapsedLow = 0;
 
         // Motor controllers
         Log(ID, "MC0 DC BUS Voltage:", random(200));
@@ -298,19 +303,19 @@ void Front::run() {
 #if TESTING == FRONT_ECU
         testValues();
 #else
-        if (timeElapsed >= 20) { // High priority updates
-            timeElapsed = 0;
+        if (timeElapsedHigh >= INTERVAL_HIGH_PRIORITY) { // High priority updates
+            timeElapsedHigh = 0;
             Cmd::receiveCommand();
 #ifndef SILENT
             Log(ID, "Current Motor Speed:", motorSpeed());
 #endif
         }
-        if (timeElapsedMidHigh >= 200) { // MedHigh priority updates
+        if (timeElapsedMidHigh >= INTERVAL_MED_HIGH_PRIORITY) { // MedHigh priority updates
             timeElapsedMidHigh = 0;
             updateCurrentState();
             hasBeat = Heartbeat::checkBeat();
         }
-        if (timeElapsedMidLow >= 500) { // MedLow priority updates
+        if (timeElapsedMidLow >= INTERVAL_MED_LOW_PRIORITY) { // MedLow priority updates
             timeElapsedMidLow = 0;
             static bool on = false;
             if (hasBeat && (currentState == &ECUStates::Idle_State)) {
@@ -327,8 +332,8 @@ void Front::run() {
                 Fault::logFault();
             }
         }
-        if (timeElapsedLong >= 800) { // Low priority updates
-            timeElapsedLong = 0;
+        if (timeElapsedLow >= INTERVAL_LOW_PRIORITY) { // Low priority updates
+            timeElapsedLow = 0;
             Pins::setPinValue(PINS_FRONT_BMS_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_BMS_FAULT));
             Pins::setPinValue(PINS_FRONT_IMD_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_IMD_FAULT));
 
