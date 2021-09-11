@@ -165,7 +165,7 @@
         {
             "label": "Monitor",
             "type": "shell",
-            "detail": "Monitor teensy over a CLI",
+            "detail": "Monitor ecu over a CLI",
             "presentation": {
                 "panel": "shared",
                 "showReuseMessage": false
@@ -183,6 +183,32 @@
                 "${workspaceFolder}\\log_lookup.json",
                 "-r",
                 "-w",
+            ],
+            "options": {
+                "statusbar": {
+                    "label": "$(terminal)",
+                    "color": "#000000"
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "External Split Monitor",
+            "type": "shell",
+            "detail": "Monitor both ECUs over an external CLI",
+            "presentation": {
+                "panel": "shared",
+                "showReuseMessage": false
+            },
+            "command": "cmd.exe",
+            "args": [
+                "/d",
+                "/c",
+                "${workspaceFolder}\\comBoth.bat",
+                "${config:FRONT_TEENSY_PORT}",
+                "${config:BACK_TEENSY_PORT}",
+                "${config:BAUDRATE}",
+                "${input:TEENSY_COM_TYPE}",
             ],
             "options": {
                 "statusbar": {
