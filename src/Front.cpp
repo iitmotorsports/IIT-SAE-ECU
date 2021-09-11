@@ -195,7 +195,7 @@ static void toggleMotorDirection() {
     Pins::setInternalValue(PINS_INTERNAL_REVERSE, reverse);
 }
 
-#ifdef TESTING
+#if TESTING == FRONT_ECU
 static void testValues() {
     if (timeElapsed >= 20) { // High priority updates
         timeElapsed = 0;
@@ -288,14 +288,14 @@ void Front::run() {
     Pins::setInternalValue(PINS_INTERNAL_SYNC, 1);
     blinkStart();
     Serial.flush();
-#ifndef TESTING
+#if TESTING != FRONT_ECU
     while (!Heartbeat::checkBeat()) {
         delay(500);
     }
 #endif
 
     while (true) {
-#ifdef TESTING
+#if TESTING == FRONT_ECU
         testValues();
 #else
         if (timeElapsed >= 20) { // High priority updates

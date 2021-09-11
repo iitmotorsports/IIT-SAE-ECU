@@ -20,12 +20,6 @@
  * @brief Define to enable normal logging on back ECU and checks to be run throughout libaries
  */
 #define CONF_ECU_DEBUG 1
-
-#if CONF_ECU_DEBUG == 1
-// #define SILENT
-// #define TESTING
-#endif
-
 /**
  * @brief Front ECU value
  */
@@ -34,6 +28,12 @@
  * @brief Back ECU value
  */
 #define BACK_ECU 0
+
+#if CONF_ECU_DEBUG == 1
+// #define SILENT
+#define TESTING BACK_ECU
+#endif
+
 
 /**
  * @brief Defines build is for back ECU

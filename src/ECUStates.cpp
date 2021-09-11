@@ -261,14 +261,14 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             }
 
             if (Fault::softFault() || Fault::hardFault()) { // FIXME: are motor controller faults actually being picked up?
-#ifndef TESTING
+#if TESTING != BACK_ECU
                 return DrivingModeFault();
 #endif
             }
 
             if (((MC0_VOLT_Buffer.getShort(0) / 10) + (MC1_VOLT_Buffer.getShort(0) / 10)) / 2 < 90) { // 'HVD Fault'
                 Log.e(ID, "'HVD Fault' MC voltage < 90");
-#ifndef TESTING
+#if TESTING != BACK_ECU
                 return DrivingModeFault();
 #endif
             }
@@ -291,7 +291,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
                 Log.e(ID, "Pedal value offset > 10%");
                 Log.i(ID, "", pedal0);
                 Log.i(ID, "", pedal1);
-#ifndef TESTING
+#if TESTING != BACK_ECU
                 return DrivingModeFault();
 #endif
             }
