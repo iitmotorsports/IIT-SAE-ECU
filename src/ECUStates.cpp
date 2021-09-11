@@ -276,7 +276,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             int breakVal = Pins::getCanPinValue(PINS_FRONT_BRAKE);
             int steerVal = Pins::getCanPinValue(PINS_FRONT_STEER);
 
-            Pins::setPinValue(PINS_BACK_BRAKE_LIGHT, PINS_ANALOG_HIGH * ((breakVal / PINS_ANALOG_MAX) > 4));
+            Pins::setPinValue(PINS_BACK_BRAKE_LIGHT, PINS_ANALOG_HIGH * ((float)breakVal / PINS_ANALOG_MAX > 0.04f));
 
             int pedal0 = Pins::getCanPinValue(PINS_FRONT_PEDAL0);
             int pedal1 = Pins::getCanPinValue(PINS_FRONT_PEDAL1);
@@ -298,8 +298,10 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
 
             MC::setTorque((pedal0 + pedal1) / 2, breakVal, steerVal);
 
-            if (++counter > 64) {
+            if (++counter > 128) {
                 counter = 0;
+                Log.i(ID, "Brake value:", breakVal);
+                Log.i(ID, "Steer value:", steerVal);
                 Log.i(ID, "Aero servo position:", Aero::getServoValue());
                 Log.i(ID, "Last MC0 Torque Percent:", MC::getLastTorquePercent(true));
                 Log.i(ID, "Last MC1 Torque Percent:", MC::getLastTorquePercent(false));
