@@ -31,9 +31,8 @@
 
 #if CONF_ECU_DEBUG == 1
 // #define SILENT
-#define TESTING 2
+#define TESTING BACK_ECU
 #endif
-
 
 /**
  * @brief Defines build is for back ECU
