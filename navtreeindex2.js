@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"namespace_pins.html#a2d60349cb2aec2c336856187093aea61":[3,0,11,7],
 "namespace_pins.html#a3e6834ba621655f97e8313f86a97c33b":[3,0,11,0],
 "namespace_pins.html#a499aec4c5df462d2e58fd797756a645f":[3,0,11,2],
 "namespace_pins.html#a50fdd17267e54bd2a3d4ed2a6884c5c1":[3,0,11,4],
