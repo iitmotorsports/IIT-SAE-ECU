@@ -107,15 +107,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 <tr class="memitem:ab35b9e9f20dc50d81b40d6d5c298c1ea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_m_c.html#ab35b9e9f20dc50d81b40d6d5c298c1ea">enableMotorBeating</a> (bool enable)</td></tr>
 <tr class="memdesc:ab35b9e9f20dc50d81b40d6d5c298c1ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start <a class="el" href="namespace_m_c.html" title="Methods used to more easily interface with RMS Motor controllers over CAN bus.">MC</a> heartbeat function, establishing a connection with the MCs.  <a href="namespace_m_c.html#ab35b9e9f20dc50d81b40d6d5c298c1ea">More...</a><br /></td></tr>
 <tr class="separator:ab35b9e9f20dc50d81b40d6d5c298c1ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a12210dcd86df23c79ae5649a29498c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_m_c.html#a7a12210dcd86df23c79ae5649a29498c">sendCommand</a> (uint32_t MC_ADD, int torque, bool direction, bool enableBit)</td></tr>
-<tr class="memdesc:a7a12210dcd86df23c79ae5649a29498c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a raw control command to a <a class="el" href="namespace_m_c.html" title="Methods used to more easily interface with RMS Motor controllers over CAN bus.">MC</a>.  <a href="namespace_m_c.html#a7a12210dcd86df23c79ae5649a29498c">More...</a><br /></td></tr>
-<tr class="separator:a7a12210dcd86df23c79ae5649a29498c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36e99d57c679a637c2324913c92e9cc1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_m_c.html#a36e99d57c679a637c2324913c92e9cc1">sendCommand</a> (uint32_t MC_ADD, int torque, bool direction, bool enableBit)</td></tr>
+<tr class="memdesc:a36e99d57c679a637c2324913c92e9cc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a raw control command to a <a class="el" href="namespace_m_c.html" title="Methods used to more easily interface with RMS Motor controllers over CAN bus.">MC</a>.  <a href="namespace_m_c.html#a36e99d57c679a637c2324913c92e9cc1">More...</a><br /></td></tr>
+<tr class="separator:a36e99d57c679a637c2324913c92e9cc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2fb464e85bca01fc06a2b5b59c83d9b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_m_c.html#a2fb464e85bca01fc06a2b5b59c83d9b3">setDirection</a> (bool runForward)</td></tr>
 <tr class="memdesc:a2fb464e85bca01fc06a2b5b59c83d9b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the direction of the motors.  <a href="namespace_m_c.html#a2fb464e85bca01fc06a2b5b59c83d9b3">More...</a><br /></td></tr>
 <tr class="separator:a2fb464e85bca01fc06a2b5b59c83d9b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a72e26cfa1ee8fde45958f0df9d6e29f7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_m_c.html#a72e26cfa1ee8fde45958f0df9d6e29f7">isForward</a> (void)</td></tr>
 <tr class="memdesc:a72e26cfa1ee8fde45958f0df9d6e29f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get whether the motors will spin forward.  <a href="namespace_m_c.html#a72e26cfa1ee8fde45958f0df9d6e29f7">More...</a><br /></td></tr>
 <tr class="separator:a72e26cfa1ee8fde45958f0df9d6e29f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6534ef62a59d620ccb942fc8d42eb046"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_m_c.html#a6534ef62a59d620ccb942fc8d42eb046">getLastTorquePercent</a> (bool mc0)</td></tr>
+<tr class="memdesc:a6534ef62a59d620ccb942fc8d42eb046"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the last torque percent value sent to a <a class="el" href="namespace_m_c.html" title="Methods used to more easily interface with RMS Motor controllers over CAN bus.">MC</a>.  <a href="namespace_m_c.html#a6534ef62a59d620ccb942fc8d42eb046">More...</a><br /></td></tr>
+<tr class="separator:a6534ef62a59d620ccb942fc8d42eb046"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a27fe6e9fc5d1906069d9e60a24226dd0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_m_c.html#a27fe6e9fc5d1906069d9e60a24226dd0">setTorque</a> (int pedal, int brake, int steer)</td></tr>
 <tr class="memdesc:a27fe6e9fc5d1906069d9e60a24226dd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate and set the torque of both MCs.  <a href="namespace_m_c.html#a27fe6e9fc5d1906069d9e60a24226dd0">More...</a><br /></td></tr>
 <tr class="separator:a27fe6e9fc5d1906069d9e60a24226dd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -149,6 +152,33 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 
 </div>
 </div>
+<a id="a6534ef62a59d620ccb942fc8d42eb046"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6534ef62a59d620ccb942fc8d42eb046">&#9670;&nbsp;</a></span>getLastTorquePercent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int MC::getLastTorquePercent </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>mc0</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the last torque percent value sent to a <a class="el" href="namespace_m_c.html" title="Methods used to more easily interface with RMS Motor controllers over CAN bus.">MC</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mc0</td><td>return the value for MC0, otherwise MC1 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>int the last torque percent value that was sent </dd></dl>
+
+</div>
+</div>
 <a id="a72e26cfa1ee8fde45958f0df9d6e29f7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a72e26cfa1ee8fde45958f0df9d6e29f7">&#9670;&nbsp;</a></span>isForward()</h2>
 
@@ -172,14 +202,14 @@ false The motors will spin in reverse </dd></dl>
 
 </div>
 </div>
-<a id="a7a12210dcd86df23c79ae5649a29498c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7a12210dcd86df23c79ae5649a29498c">&#9670;&nbsp;</a></span>sendCommand()</h2>
+<a id="a36e99d57c679a637c2324913c92e9cc1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36e99d57c679a637c2324913c92e9cc1">&#9670;&nbsp;</a></span>sendCommand()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void MC::sendCommand </td>
+          <td class="memname">int MC::sendCommand </td>
           <td>(</td>
           <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>MC_ADD</em>, </td>
@@ -221,6 +251,7 @@ false The motors will spin in reverse </dd></dl>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>int the final torque percent being sent </dd></dl>
 
 </div>
 </div>

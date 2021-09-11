@@ -1,5 +1,7 @@
 var NAVTREEINDEX1 =
 {
+"class_circular___buffer.html#aec6589de1b52cd11dac150e1b6d94dcd":[4,0,7,33],
+"class_circular___buffer.html#aee0a17ffc70966eeded811f9b74fbf79":[4,0,7,16],
 "class_circular___buffer.html#af13d14fd6664009f00a91870cfea159c":[4,0,7,22],
 "class_flex_c_a_n___t4.html":[4,0,8],
 "class_flex_c_a_n___t4.html#a050b59c87dc3705600eefb2d7ddea653":[4,0,8,58],
@@ -234,20 +236,18 @@ var NAVTREEINDEX1 =
 "namespace_logging.html":[3,0,8],
 "namespace_logging.html#a3402a2c8efbb932ddbe58e66b9cc550c":[3,0,8,1],
 "namespace_m_c.html":[3,0,9],
-"namespace_m_c.html#a27fe6e9fc5d1906069d9e60a24226dd0":[3,0,9,5],
-"namespace_m_c.html#a2fb464e85bca01fc06a2b5b59c83d9b3":[3,0,9,4],
-"namespace_m_c.html#a72e26cfa1ee8fde45958f0df9d6e29f7":[3,0,9,2],
-"namespace_m_c.html#a7a12210dcd86df23c79ae5649a29498c":[3,0,9,3],
+"namespace_m_c.html#a27fe6e9fc5d1906069d9e60a24226dd0":[3,0,9,6],
+"namespace_m_c.html#a2fb464e85bca01fc06a2b5b59c83d9b3":[3,0,9,5],
+"namespace_m_c.html#a36e99d57c679a637c2324913c92e9cc1":[3,0,9,4],
+"namespace_m_c.html#a6534ef62a59d620ccb942fc8d42eb046":[3,0,9,2],
+"namespace_m_c.html#a72e26cfa1ee8fde45958f0df9d6e29f7":[3,0,9,3],
 "namespace_m_c.html#ab35b9e9f20dc50d81b40d6d5c298c1ea":[3,0,9,1],
 "namespace_m_c.html#add4fdfcad6990dec728c2eeadaca45e1":[3,0,9,0],
-"namespace_m_c.html#aeb2b966841aa0fd6b2ac79478a648c84":[3,0,9,6],
+"namespace_m_c.html#aeb2b966841aa0fd6b2ac79478a648c84":[3,0,9,7],
 "namespace_mirror.html":[3,0,10],
 "namespace_mirror.html#a1163a1d753f2ea7a3150f06a015fbedb":[3,0,10,2],
 "namespace_mirror.html#a89a62e4b2e374ef95291177d525dcf8e":[3,0,10,0],
 "namespace_mirror.html#a9cdbdcb79cef06a3b8b18151c440b262":[3,0,10,1],
 "namespace_pins.html":[3,0,11],
-"namespace_pins.html#a12a6f448c7eea1740a38f0fbe73bbace":[3,0,11,9],
-"namespace_pins.html#a2d60349cb2aec2c336856187093aea61":[3,0,11,7],
-"namespace_pins.html#a3e6834ba621655f97e8313f86a97c33b":[3,0,11,0],
-"namespace_pins.html#a499aec4c5df462d2e58fd797756a645f":[3,0,11,2]
+"namespace_pins.html#a12a6f448c7eea1740a38f0fbe73bbace":[3,0,11,9]
 };
