@@ -267,8 +267,8 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             }
 
             if (((MC0_VOLT_Buffer.getShort(0) / 10) + (MC1_VOLT_Buffer.getShort(0) / 10)) / 2 < 90) { // 'HVD Fault'
-                Log.e(ID, "'HVD Fault' MC voltage < 90");
 #if TESTING != BACK_ECU
+                Log.e(ID, "'HVD Fault' MC voltage < 90");
                 return DrivingModeFault();
 #endif
             }
@@ -298,9 +298,11 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
 
             MC::setTorque((pedal0 + pedal1) / 2, breakVal, steerVal);
 
-            if (++counter > 15) {
+            if (++counter > 64) {
                 counter = 0;
                 Log.i(ID, "Aero servo position:", Aero::getServoValue());
+                Log.i(ID, "Last MC0 Torque Percent:", MC::getLastTorquePercent(true));
+                Log.i(ID, "Last MC1 Torque Percent:", MC::getLastTorquePercent(false));
                 if (Fault::softFault()) {
                     Fault::logFault();
                 }

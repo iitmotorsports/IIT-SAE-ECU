@@ -64,8 +64,9 @@ void enableMotorBeating(bool enable);
  * @param torque The torque to set the motor at
  * @param direction direction of the motor
  * @param enableBit whether the motor should be enabled
+ * @return int the final torque percent being sent
  */
-void sendCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit);
+int sendCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit);
 
 /**
  * @brief Set the direction of the motors
@@ -81,6 +82,14 @@ void setDirection(bool runForward);
  * @return false The motors will spin in reverse
  */
 bool isForward(void);
+
+/**
+ * @brief Get the last torque percent value sent to a MC
+ * 
+ * @param mc0 return the value for MC0, otherwise MC1
+ * @return int the last torque percent value that was sent
+ */
+int getLastTorquePercent(bool mc0);
 
 /**
  * @brief Calculate and set the torque of both MCs

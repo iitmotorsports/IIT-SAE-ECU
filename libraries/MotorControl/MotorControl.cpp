@@ -29,6 +29,9 @@ static bool beating = true;
 static bool init = false;
 static bool forward = true;
 
+static int mc0T = 0;
+static int mc1T = 0;
+
 static Canbus::Buffer MC0_RPM_Buffer(ADD_MC0_RPM);
 static Canbus::Buffer MC1_RPM_Buffer(ADD_MC1_RPM);
 
@@ -74,18 +77,18 @@ void enableMotorBeating(bool enable) {
     beating = enable;
 }
 
-void sendCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit) { // NOTE: 0 (Clockwise = Reverse) 1 (Anticlockwise = Forward)
+int sendCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit) { // NOTE: 0 (Clockwise = Reverse) 1 (Anticlockwise = Forward)
     if (beating) {
         Log.w(ID, "Unable to set torque, heartbeat is on");
-        return;
+        return 0;
     }
     int percentTorque = 0;
     if (torque != 0) {
         percentTorque = constrain(map(torque, 200, PINS_ANALOG_MAX, 0, 2000), 0, 2000); // separate func for negative vals (regen)
     }
     uint8_t *bytes = (uint8_t *)&percentTorque;
-    Log.d(ID, "Torque", percentTorque);
     Canbus::sendData(MC_ADD, bytes[0], bytes[1], 0, 0, direction, enableBit);
+    return percentTorque;
 }
 
 bool isForward(void) {
@@ -101,10 +104,14 @@ void setDirection(bool runForward) {
     }
 }
 
+int getLastTorquePercent(bool mc0) {
+    return mc0 ? mc0T : mc1T;
+}
+
 void setTorque(int pedal, int brake, int steer) {
     torqueVector(pedal, brake, steer);
-    sendCommand(ADD_MC0_CTRL, motorTorque[0], !forward, 1);
-    sendCommand(ADD_MC1_CTRL, motorTorque[1], forward, 1);
+    mc0T = sendCommand(ADD_MC0_CTRL, motorTorque[0], forward, 1);
+    mc1T = sendCommand(ADD_MC1_CTRL, motorTorque[1], forward, 1);
 }
 
 } // namespace MC
