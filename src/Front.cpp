@@ -6,9 +6,6 @@
 #include "SerialCommand.h"
 #include "unordered_map"
 
-// #define SILENT
-// #define TESTING
-
 static LOG_TAG ID = "Front Teensy";
 
 static elapsedMillis timeElapsed;
@@ -250,12 +247,19 @@ static void testValues() {
 }
 #endif
 
+void blinkStart() {
+    Pins::setPinValue(PINS_FRONT_START_LIGHT, 1);
+    delay(500);
+    Pins::setPinValue(PINS_FRONT_START_LIGHT, 0);
+    delay(500);
+}
+
 void Front::run() {
     Log.i(ID, "Teensy 3.6 SAE FRONT ECU Initalizing");
 
     Log.i(ID, "Setting up Canbus");
     Canbus::setup(); // allocate and organize addresses
-    Log.i(ID, "Initalizing Pins"); 
+    Log.i(ID, "Initalizing Pins");
     Pins::initialize(); // setup predefined pins
 #ifndef CONF_LOGGING_ASCII_DEBUG
     Log.i(ID, "Enabling Logging relay");
@@ -280,9 +284,9 @@ void Front::run() {
 
     Log.d(ID, "Delaying 2 sec");
     Serial.flush();
-    delay(1000);
+    blinkStart();
     Pins::setInternalValue(PINS_INTERNAL_SYNC, 1);
-    delay(1000);
+    blinkStart();
     Serial.flush();
 #ifndef TESTING
     while (!Heartbeat::checkBeat()) {

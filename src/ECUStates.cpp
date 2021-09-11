@@ -261,12 +261,16 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             }
 
             if (Fault::softFault() || Fault::hardFault()) { // FIXME: are motor controller faults actually being picked up?
+#ifndef TESTING
                 return DrivingModeFault();
+#endif
             }
 
             if (((MC0_VOLT_Buffer.getShort(0) / 10) + (MC1_VOLT_Buffer.getShort(0) / 10)) / 2 < 90) { // 'HVD Fault'
                 Log.e(ID, "'HVD Fault' MC voltage < 90");
+#ifndef TESTING
                 return DrivingModeFault();
+#endif
             }
 
             int breakVal = Pins::getCanPinValue(PINS_FRONT_BRAKE);
@@ -287,7 +291,9 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
                 Log.e(ID, "Pedal value offset > 10%");
                 Log.i(ID, "", pedal0);
                 Log.i(ID, "", pedal1);
-                // return DrivingModeFault();
+#ifndef TESTING
+                return DrivingModeFault();
+#endif
             }
 
             MC::setTorque((pedal0 + pedal1) / 2, breakVal, steerVal);
