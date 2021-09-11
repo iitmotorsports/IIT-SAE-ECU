@@ -255,10 +255,12 @@ void Front::run() {
 
     Log.i(ID, "Setting up Canbus");
     Canbus::setup(); // allocate and organize addresses
-    Log.i(ID, "Initalizing Pins");
+    Log.i(ID, "Initalizing Pins"); 
     Pins::initialize(); // setup predefined pins
+#ifndef CONF_LOGGING_ASCII_DEBUG
     Log.i(ID, "Enabling Logging relay");
     Logging::enableCanbusRelay(); // Allow logging though canbus
+#endif
     loadBuffers();
     loadStateMap();
 
