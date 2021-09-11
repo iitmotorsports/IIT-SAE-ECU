@@ -212,8 +212,7 @@
             ],
             "options": {
                 "statusbar": {
-                    "label": "$(terminal)",
-                    "color": "#000000"
+                    "hide": true
                 }
             },
             "problemMatcher": []
