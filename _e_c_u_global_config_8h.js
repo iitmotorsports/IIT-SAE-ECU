@@ -6,6 +6,5 @@ var _e_c_u_global_config_8h =
     [ "CONF_ECU_DEBUG", "_e_c_u_global_config_8h.html#a0651c808bd53ef4c66b2b1dc49049cd1", null ],
     [ "CONF_ECU_INITAL_DELAY", "_e_c_u_global_config_8h.html#a060911c2dab5cf6b05212e34aed610cc", null ],
     [ "CONF_ECU_POSITION", "_e_c_u_global_config_8h.html#a830821e6c93b8185b3896b490755c43f", null ],
-    [ "FRONT_ECU", "_e_c_u_global_config_8h.html#a345c47b0f8469dac0da0d062c49bd336", null ],
-    [ "TESTING", "_e_c_u_global_config_8h.html#a68df6a1c0e7634ba32a66f9f01d4cb6f", null ]
+    [ "FRONT_ECU", "_e_c_u_global_config_8h.html#a345c47b0f8469dac0da0d062c49bd336", null ]
 ];
