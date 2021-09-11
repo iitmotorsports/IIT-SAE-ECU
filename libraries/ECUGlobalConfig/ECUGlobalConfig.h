@@ -31,7 +31,7 @@
 
 #if CONF_ECU_DEBUG == 1
 // #define SILENT
-// #define TESTING BACK_ECU
+#define TESTING 2
 #endif
 
 
