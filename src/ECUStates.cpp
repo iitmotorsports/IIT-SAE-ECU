@@ -289,8 +289,8 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
 
             if (abs(pedal1 - pedal0 - 36) > abs((pedal1 * 20) / 100) && (abs(pedal0) + abs(pedal1)) > 200) {
                 Log.e(ID, "Pedal value offset > 10%");
-                Log.i(ID, "", pedal0);
-                Log.i(ID, "", pedal1);
+                Log.i(ID, "Pedal 0", pedal0);
+                Log.i(ID, "Pedal 1", pedal1);
 #if TESTING != BACK_ECU
                 return DrivingModeFault();
 #endif
@@ -300,6 +300,8 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
 
             if (++counter > 128) {
                 counter = 0;
+                Log.i(ID, "Pedal 0", pedal0);
+                Log.i(ID, "Pedal 1", pedal1);
                 Log.i(ID, "Brake value:", breakVal);
                 Log.i(ID, "Steer value:", steerVal);
                 Log.i(ID, "Aero servo position:", Aero::getServoValue());
