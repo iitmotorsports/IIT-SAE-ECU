@@ -287,7 +287,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
                 pedal1 = 0;
             }
 
-            if (abs(pedal1 - pedal0 - 36) > abs((pedal1 * 20) / 100) && (abs(pedal0) + abs(pedal1)) > 200) {
+            if ((float)abs(pedal1 - pedal0) / PINS_ANALOG_HIGH > 0.1f) {
                 Log.e(ID, "Pedal value offset > 10%");
                 Log.i(ID, "Pedal 0", pedal0);
                 Log.i(ID, "Pedal 1", pedal1);
