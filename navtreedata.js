@@ -37,17 +37,17 @@ var NAVTREE =
       [ "New Members", "index.html#autotoc_md23", null ]
     ] ],
     [ "How To Contribute", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html", [
-      [ "<strong>Before you begin</strong>", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md1", null ],
-      [ "<strong>Familiarizing Yourself</strong>", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md2", null ],
-      [ "<strong>The Environment</strong>", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md3", null ],
-      [ "<strong>The Code</strong>", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md4", [
-        [ "<strong>Coding Conventions</strong>", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md5", null ],
-        [ "<strong>Modularity</strong>", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md6", null ],
-        [ "<strong>Python Scripting</strong>", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md7", null ],
-        [ "<strong>Documentation</strong>", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md8", null ]
+      [ "Before you begin", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md1", null ],
+      [ "Familiarizing Yourself", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md2", null ],
+      [ "The Environment", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md3", null ],
+      [ "The Code", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md4", [
+        [ "Coding Conventions", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md5", null ],
+        [ "Modularity", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md6", null ],
+        [ "Python Scripting", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md7", null ],
+        [ "Documentation", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md8", null ]
       ] ],
-      [ "<strong>Further Reading</strong>", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md9", null ],
-      [ "<strong>Moving Forward</strong>", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md10", null ]
+      [ "Further Reading", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md9", null ],
+      [ "Moving Forward", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md10", null ]
     ] ],
     [ "X Macros", "_x_macros.html", [
       [ "X Macros", "_x_macros.html#autotoc_md11", null ],
