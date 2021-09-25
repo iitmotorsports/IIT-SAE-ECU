@@ -11,45 +11,58 @@ Hardware
 - [A Formula Hybrid Car](https://www.f1authentics.com/f1-racing-cars-for-sale/) (Not necessary for testing)
 - [A Compatible CAN transceiver](https://www.amazon.com/SN65HVD230-CAN-Board-Communication-Development/dp/B00KM6XMXO) x 2
 
+Software
+-----
+
+This project assumes you installed the following.
+
+- [VSCode](https://code.visualstudio.com/)
+  - This template is based around VSCode
+- [Python](https://www.python.org/downloads/)
+  - At least python 3.9.x
+  - Ensure python files are executed by default when opening them in a CLI
+- [CMake](https://cmake.org/download/)
+  - Make sure to select the `add CMake to path` option when installing
+- [Git](https://git-scm.com/download)
+  - For version control of this repository
+
 Setup
 -----
 
-NOTE: This repo used [TeensyTemplate](https://github.com/LeHuman/TeensyTemplate) as a starting point
+Download [TeensyToolchain](https://github.com/LeHuman/TeensyToolchain), unzip, and put it next to this template folder.
 
-Download [TeensyToolchain](https://github.com/LeHuman/TeensyToolchain), unzip, and put it next to this folder
+If it is not named already, rename the downloaded folder from to `TeensyToolchain`  
+e.g. `TeensyToolchain-master` -> `TeensyToolchain`
 
-Rename the downloaded folder from `TeensyToolchain-master` to `TeensyToolchain`
+Alternatively, you can modify the `TOOLCHAIN_OFFSET` option inside `.vscode/settings.json` in order to tell the project where the toolchain is. This path is relative to this template folder.
 
-Alternatively, you can modify `TOOLCHAIN_OFFSET` inside `.vscode/settings.json` in order to tell the project where the toolchain is. The path must be relative.
-
-Install the Latest Release version of [CMake](https://cmake.org/download/)
-
-As of today, that would be version 3.18.4
-
-Inside `.vscode/tasks.json`, modify the options for `FRONT_TEENSY_PORT` and `BACK_TEENSY_PORT` for the ports that the project should use to connect to your teensy.
-
-You can also modify the defaults for other tasks.
+Inside `.vscode/settings.json`, modify the options for `FRONT_TEENSY_PORT` and `BACK_TEENSY_PORT` for the ports that the project should use to connect to your Teensies.  
+You can also modify the default values for other tasks in this file.
 
 Using
 -----
 
-Put your code in `src/main.cpp`
-Put any libraries you need in `libraries`
-
-You can also modify the set values and compile flags inside `CmakeLists.txt` if you know what you are doing.
-They are mostly under the function calls `add_compile_definitions` and `add_compile_options` towards the beginning.
+Main logic is either in `src/ECUStates.cpp` or `src/Front.cpp`  
+Put any libraries / modules in the `libraries` folder
 
 ### VSCode Tasks
 
 * `Clean`: Clean up build files
-* `Hard Clean`: Clean up entire CMake project
+* `Reset`: Clean up entire CMake project
 * `Build`: Compile project
-* `Upload`: Upload compiled binary to teensy
+* `Upload`: Upload compiled binary to either front or back teensy
 * `Monitor`: Monitor teensy over a CLI, select the appropriate options when running, defaults to `HEX` mode
 
-By default, `Ctrl + Shift + B` (Run Build Task) should run all of the above in order except for `Clean` and `Hard Clean`
+By default, `Ctrl + Shift + B` (Run Build Task) should run `Build` then `Upload` for both Teensies and then `Monitor`.
 
-Alternatively, install the [Tasks](https://marketplace.visualstudio.com/items?itemName=actboy168.tasks) extension so that tasks can instead be on the status bar. Already configured.
+Alternatively, install the [Tasks](https://marketplace.visualstudio.com/items?itemName=actboy168.tasks) extension so that the main tasks appear on the status bar.
+
+There are more tasks but these are the most important ones.
+
+### CMake
+
+You can modify the set values and compile flags inside `CmakeLists.txt` if you know what you are doing.  
+They are mostly under the function calls `add_compile_definitions` and `add_compile_options` towards the beginning.
 
 Documentation
 -------------
