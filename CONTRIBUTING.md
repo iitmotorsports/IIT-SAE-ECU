@@ -192,7 +192,7 @@ Actually, you can completely undo changes to a file in the source tab in VSCode 
 You can also look at all of the source files for examples on everything. But just as a quick example for logging.
 
 The statements
-```C++
+``` C++
     LOG_TAG BruhID = "Bruh";
     Log.w(BruhID, "Moment", 2);
 ```
