@@ -258,11 +258,7 @@
                     "hide": true
                 }
             },
-            "problemMatcher": [],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+            "problemMatcher": []
         },
         {
             "label": "Shebang Front",
@@ -279,11 +275,7 @@
                     "hide": true
                 }
             },
-            "problemMatcher": [],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+            "problemMatcher": []
         },
         {
             "label": "Disable Front",
