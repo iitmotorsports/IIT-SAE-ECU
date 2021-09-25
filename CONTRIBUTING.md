@@ -1,6 +1,6 @@
 # How To Contribute
 
-## **Before you begin**
+## Before you begin
 
 This repository is for students that are part of the SAE club at Illinois Tech.
 
@@ -18,11 +18,11 @@ This project is best worked on when using [VSCode](https://code.visualstudio.com
 
 Before continuing, be sure to follow the steps for setting up for compilation and running VSCode tasks in the [README](README.md).
 
-## **Familiarizing Yourself**
+## Familiarizing Yourself
 
 If you are having trouble with anything here, first double check you read it correctly, and if that doesn't work, ask whoever is leading software, or someone that you think might know, to help you.
 
-## **The Environment**
+## The Environment
 
 The following assumes you are using VSCode.
 
@@ -64,11 +64,11 @@ These tasks are used to help automate development.
 
 \*** If you only have one Teensy, only setup the front one and instead run `Shebang Front`.
 
-## **The Code**
+## The Code
 
 Now that you have taken a look at what you will be *using* to program, lets look at *how* you should program.
 
-### **Coding Conventions**
+### Coding Conventions
 
 As stated before, this project mainly uses C++ and Python.
 
@@ -99,7 +99,7 @@ Both languages can be auto formatted by running the default combo of `lShift + l
 
 Before committing changes, be sure you have at least auto formatted your file. You should, however, follow these guidelines as you are working on files.
 
-### **Modularity**
+### Modularity
 
 A big idea behind this project is modularity. This means that if we want to program some new functionality it should be in the form of a library.
 
@@ -108,11 +108,11 @@ This library folder also stores third party libraries, those that we have taken 
 
 One caveat, however, is that some of the libraries do break this rule somewhat. For example, some libraries have it hardcoded to behave one way if they are on the front teensy and different otherwise. The file [ECUGlobalConfig.h](libraries/ECUGlobalConfig/ECUGlobalConfig.h) denotes these *hardcoded* values, in the sense that the libraries are directly dependent on our situation. That situation being that we are currently using two Teensies which behave diffrently. This issue will, *hopefully*, be soon dealt with.
 
-### **Python Scripting**
+### Python Scripting
 
 The python portion of this project is somewhat neglected. As long as it seemed to work we just left it alone. This is especially true for the [Pre_Build.py](Pre_Build.py) script. Not much is to be said beyond this, feel free to look into the scripts and improve upon them as you see fit.
 
-### **Documentation**
+### Documentation
 
 [Doxygen](https://www.doxygen.nl/index.html) is a program that is used to help generate documentation for this project. All of it's settings are in the [Doxyfile](docs/Doxyfile), refer to the [Doxygen](https://www.doxygen.nl/index.html) website for more info.
 
@@ -173,7 +173,7 @@ If you wish to remove a part of code from documentation surround the code with t
 
 You do not have to compile and commit the documentation each time you add to it. However, to whomever ends up owning the repository next, make sure to update it every now and then.
 
-## **Further Reading**
+## Further Reading
 
 You will need to look through the documentation to get a more detailed description of what all the libraries do, as you should not work on something that you do not understand. This documentation attempts to explain a lot of how these underlying libraries work. Of course, as this project is, *hopefully*, expanded on, feel free to improve this documentation.
 
@@ -199,6 +199,6 @@ The statements
 Should print in the terminal ( while monitoring the teensy over serial )
 > [Bruh] [WARN]  Moment 2
 
-## **Moving Forward**
+## Moving Forward
 
 This repository was initially created with the intent that it would be used for multiple years after it's initial creation. Regardless, feel free to not use this repository and start something new. Use a new platform, use a new board, framework, whatever. Creating this repository from scratch taught us a lot as we are, after all, just students. In any case, this repository should work for the following years and its design should make it easy to add new functionality, so long as the teensy allows it.
