@@ -27,12 +27,14 @@ var NAVTREE =
   [ "SAE Teensy ECU", "index.html", [
     [ "SAE at IIT ECU Programming", "index.html", [
       [ "Hardware", "index.html#autotoc_md16", null ],
-      [ "Setup", "index.html#autotoc_md17", null ],
-      [ "Using", "index.html#autotoc_md18", [
-        [ "VSCode Tasks", "index.html#autotoc_md19", null ]
+      [ "Software", "index.html#autotoc_md17", null ],
+      [ "Setup", "index.html#autotoc_md18", null ],
+      [ "Using", "index.html#autotoc_md19", [
+        [ "VSCode Tasks", "index.html#autotoc_md20", null ],
+        [ "CMake", "index.html#autotoc_md21", null ]
       ] ],
-      [ "Documentation", "index.html#autotoc_md20", null ],
-      [ "New Members", "index.html#autotoc_md21", null ]
+      [ "Documentation", "index.html#autotoc_md22", null ],
+      [ "New Members", "index.html#autotoc_md23", null ]
     ] ],
     [ "How To Contribute", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html", [
       [ "<strong>Before you begin</strong>", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md1", null ],
@@ -95,7 +97,7 @@ var NAVTREEINDEX =
 [
 "_aero_servo_8cpp.html",
 "class_circular___buffer.html#aec6589de1b52cd11dac150e1b6d94dcd",
-"namespace_pins.html#a2d60349cb2aec2c336856187093aea61"
+"namespace_pins.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

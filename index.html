@@ -99,36 +99,61 @@ Hardware</h1>
 <li><a href="https://www.amazon.com/SN65HVD230-CAN-Board-Communication-Development/dp/B00KM6XMXO">A Compatible CAN transceiver</a> x 2</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md17"></a>
-Setup</h1>
-<p>NOTE: This repo used <a href="https://github.com/LeHuman/TeensyTemplate">TeensyTemplate</a> as a starting point</p>
-<p>Download <a href="https://github.com/LeHuman/TeensyToolchain">TeensyToolchain</a>, unzip, and put it next to this folder</p>
-<p>Rename the downloaded folder from <code>TeensyToolchain-master</code> to <code>TeensyToolchain</code></p>
-<p>Alternatively, you can modify <code>TOOLCHAIN_OFFSET</code> inside <code>.vscode/settings.json</code> in order to tell the project where the toolchain is. The path must be relative.</p>
-<p>Install the Latest Release version of <a href="https://cmake.org/download/">CMake</a></p>
-<p>As of today, that would be version 3.18.4</p>
-<p>Inside <code>.vscode/tasks.json</code>, modify the options for <code>FRONT_TEENSY_PORT</code> and <code>BACK_TEENSY_PORT</code> for the ports that the project should use to connect to your teensy.</p>
-<p>You can also modify the defaults for other tasks.</p>
+Software</h1>
+<p>This project assumes you installed the following.</p>
+<ul>
+<li><a href="https://code.visualstudio.com/">VSCode</a><ul>
+<li>This template is based around VSCode</li>
+</ul>
+</li>
+<li><a href="https://www.python.org/downloads/">Python</a><ul>
+<li>At least python 3.9.x</li>
+<li>Ensure python files are executed by default when opening them in a CLI</li>
+</ul>
+</li>
+<li><a href="https://cmake.org/download/">CMake</a><ul>
+<li>Make sure to select the <code>add CMake to path</code> option when installing</li>
+</ul>
+</li>
+<li><a href="https://git-scm.com/download">Git</a><ul>
+<li>For version control of this repository</li>
+</ul>
+</li>
+</ul>
 <h1><a class="anchor" id="autotoc_md18"></a>
+Setup</h1>
+<p>Download <a href="https://github.com/LeHuman/TeensyToolchain">TeensyToolchain</a>, unzip, and put it next to this template folder.</p>
+<p>If it is not named already, rename the downloaded folder from to <code>TeensyToolchain</code> <br  />
+ e.g. <code>TeensyToolchain-master</code> -&gt; <code>TeensyToolchain</code></p>
+<p>Alternatively, you can modify the <code>TOOLCHAIN_OFFSET</code> option inside <code>.vscode/settings.json</code> in order to tell the project where the toolchain is. This path is relative to this template folder.</p>
+<p>Inside <code>.vscode/settings.json</code>, modify the options for <code>FRONT_TEENSY_PORT</code> and <code>BACK_TEENSY_PORT</code> for the ports that the project should use to connect to your Teensies. <br  />
+ You can also modify the default values for other tasks in this file.</p>
+<h1><a class="anchor" id="autotoc_md19"></a>
 Using</h1>
-<p>Put your code in <code><a class="el" href="_main_8cpp_source.html">src/main.cpp</a></code> Put any libraries you need in <code>libraries</code></p>
-<p>You can also modify the set values and compile flags inside <code>CmakeLists.txt</code> if you know what you are doing. They are mostly under the function calls <code>add_compile_definitions</code> and <code>add_compile_options</code> towards the beginning.</p>
-<h2><a class="anchor" id="autotoc_md19"></a>
+<p>Main logic is either in <code><a class="el" href="_e_c_u_states_8cpp_source.html">src/ECUStates.cpp</a></code> or <code><a class="el" href="_front_8cpp_source.html">src/Front.cpp</a></code> <br  />
+ Put any libraries / modules in the <code>libraries</code> folder</p>
+<h2><a class="anchor" id="autotoc_md20"></a>
 VSCode Tasks</h2>
 <ul>
 <li><code>Clean</code>: Clean up build files</li>
-<li><code>Hard Clean</code>: Clean up entire CMake project</li>
+<li><code>Reset</code>: Clean up entire CMake project</li>
 <li><code>Build</code>: Compile project</li>
-<li><code>Upload</code>: Upload compiled binary to teensy</li>
+<li><code>Upload</code>: Upload compiled binary to either front or back teensy</li>
 <li><code>Monitor</code>: Monitor teensy over a CLI, select the appropriate options when running, defaults to <code>HEX</code> mode</li>
 </ul>
-<p>By default, <code>Ctrl + Shift + B</code> (Run Build Task) should run all of the above in order except for <code>Clean</code> and <code>Hard Clean</code></p>
-<p>Alternatively, install the <a href="https://marketplace.visualstudio.com/items?itemName=actboy168.tasks">Tasks</a> extension so that tasks can instead be on the status bar. Already configured.</p>
-<h1><a class="anchor" id="autotoc_md20"></a>
+<p>By default, <code>Ctrl + Shift + B</code> (Run Build Task) should run <code>Build</code> then <code>Upload</code> for both Teensies and then <code>Monitor</code>.</p>
+<p>Alternatively, install the <a href="https://marketplace.visualstudio.com/items?itemName=actboy168.tasks">Tasks</a> extension so that the main tasks appear on the status bar.</p>
+<p>There are more tasks but these are the most important ones.</p>
+<h2><a class="anchor" id="autotoc_md21"></a>
+CMake</h2>
+<p>You can modify the set values and compile flags inside <code>CmakeLists.txt</code> if you know what you are doing. <br  />
+ They are mostly under the function calls <code>add_compile_definitions</code> and <code>add_compile_options</code> towards the beginning.</p>
+<h1><a class="anchor" id="autotoc_md22"></a>
 Documentation</h1>
 <p>This project uses <a href="https://www.doxygen.nl/index.html">Doxygen</a> to auto generate documentation.</p>
 <p><a href="https://marketplace.visualstudio.com/items?itemName=Isaias.doxygen-pack">Doxygen Extensions</a> exist for VSCode, to easily compile and view inside VSCode.</p>
 <p>The documentation can be generated locally or you can view the auto generated <a href="https://illinois-tech-motorsports.github.io/IIT-SAE-ECU/">Github Page</a> for this repo.</p>
-<h1><a class="anchor" id="autotoc_md21"></a>
+<h1><a class="anchor" id="autotoc_md23"></a>
 New Members</h1>
 <p>For new members that are just joining, please refer to the <a class="el" href="md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html">CONTRIBUTING</a> file. </p>
 </div></div><!-- PageDoc -->
