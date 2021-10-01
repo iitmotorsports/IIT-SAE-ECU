@@ -2,8 +2,8 @@
     /* 
      * |-----[ CONFIGURATION ]-----|
      */
-    "FRONT_TEENSY_PORT": "COM3", // Port representing the front teensy
-    "BACK_TEENSY_PORT": "COM10", // Port representing the back teensy
+    "FRONT_TEENSY_PORT": "COM16", // Port representing the front teensy
+    "BACK_TEENSY_PORT": "COM22", // Port representing the back teensy
     "BAUDRATE": "115200", // Baudrate to use with serial
     "CORE_SPEED": "180000000", // Speed at which the CPU will run (Hz)
     "USB_SETTING": "USB_SERIAL", // USB behavior of the core
