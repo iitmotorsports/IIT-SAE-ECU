@@ -20,7 +20,6 @@ from shutil import move, copymode
 from os import fdopen, remove
 
 FILE_REPLACE = "build\\Pre_Build\\libraries\\ECUGlobalConfig\\ECUGlobalConfig.h"
-
 STR_BASE = "#define CONF_ECU_POSITION "
 STR_FRONT = "FRONT_ECU"
 STR_BACK = "BACK_ECU"
