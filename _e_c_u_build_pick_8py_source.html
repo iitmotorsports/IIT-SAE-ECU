@@ -110,40 +110,39 @@ $(document).ready(function(){initNavTree('_e_c_u_build_pick_8py_source.html','')
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">from</span> os <span class="keyword">import</span> fdopen, remove</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;FILE_REPLACE = <span class="stringliteral">&quot;build\\Pre_Build\\libraries\\ECUGlobalConfig\\ECUGlobalConfig.h&quot;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;STR_BASE = <span class="stringliteral">&quot;#define CONF_ECU_POSITION &quot;</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;STR_FRONT = <span class="stringliteral">&quot;FRONT_ECU&quot;</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;STR_BACK = <span class="stringliteral">&quot;BACK_ECU&quot;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;STR_BASE = <span class="stringliteral">&quot;#define CONF_ECU_POSITION &quot;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;STR_FRONT = <span class="stringliteral">&quot;FRONT_ECU&quot;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;STR_BACK = <span class="stringliteral">&quot;BACK_ECU&quot;</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">def </span>replace(file_path, pattern, subst):</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="comment"># Create temp file</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    fh, abs_path = mkstemp()</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">with</span> fdopen(fh, <span class="stringliteral">&quot;w&quot;</span>) <span class="keyword">as</span> new_file:</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keyword">with</span> open(file_path) <span class="keyword">as</span> old_file:</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            <span class="keywordflow">for</span> line <span class="keywordflow">in</span> old_file:</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                new_file.write(line.replace(pattern, subst))</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="comment"># Copy the file permissions from the old file to the new file</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    copymode(file_path, abs_path)</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="comment"># Remove original file</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    remove(file_path)</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="comment"># Move new file</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    move(abs_path, file_path)</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">def </span>replace(file_path, pattern, subst):</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="comment"># Create temp file</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    fh, abs_path = mkstemp()</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">with</span> fdopen(fh, <span class="stringliteral">&quot;w&quot;</span>) <span class="keyword">as</span> new_file:</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="keyword">with</span> open(file_path) <span class="keyword">as</span> old_file:</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            <span class="keywordflow">for</span> line <span class="keywordflow">in</span> old_file:</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                new_file.write(line.replace(pattern, subst))</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="comment"># Copy the file permissions from the old file to the new file</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    copymode(file_path, abs_path)</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="comment"># Remove original file</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    remove(file_path)</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="comment"># Move new file</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    move(abs_path, file_path)</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keywordflow">if</span> os.path.exists(FILE_REPLACE):</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">if</span> sys.argv[1] == <span class="stringliteral">&quot;1&quot;</span>:</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        print(<span class="stringliteral">&quot;Setting to build for \033[91m\033[4mFront ECU\033[0m&quot;</span>)</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        replace(FILE_REPLACE, STR_BASE + STR_BACK, STR_BASE + STR_FRONT)</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordflow">elif</span> sys.argv[1] == <span class="stringliteral">&quot;0&quot;</span>:</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        print(<span class="stringliteral">&quot;Setting to build for \033[92m\033[4mBack ECU\033[0m&quot;</span>)</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        replace(FILE_REPLACE, STR_BASE + STR_FRONT, STR_BASE + STR_BACK)</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordflow">else</span>:</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        print(<span class="stringliteral">&quot;Invalid argument {}\n0 == Back\n1 == Front&quot;</span>.format(sys.argv[1]))</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keywordflow">else</span>:</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    print(<span class="stringliteral">&quot;Config files does not exist!\nHas the project been built at least once?&quot;</span>)</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment"># @endcond</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keywordflow">if</span> os.path.exists(FILE_REPLACE):</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordflow">if</span> sys.argv[1] == <span class="stringliteral">&quot;1&quot;</span>:</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        print(<span class="stringliteral">&quot;Setting to build for \033[91m\033[4mFront ECU\033[0m&quot;</span>)</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        replace(FILE_REPLACE, STR_BASE + STR_BACK, STR_BASE + STR_FRONT)</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordflow">elif</span> sys.argv[1] == <span class="stringliteral">&quot;0&quot;</span>:</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        print(<span class="stringliteral">&quot;Setting to build for \033[92m\033[4mBack ECU\033[0m&quot;</span>)</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        replace(FILE_REPLACE, STR_BASE + STR_FRONT, STR_BASE + STR_BACK)</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        print(<span class="stringliteral">&quot;Invalid argument {}\n0 == Back\n1 == Front&quot;</span>.format(sys.argv[1]))</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    print(<span class="stringliteral">&quot;Config files does not exist!\nHas the project been built at least once?&quot;</span>)</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment"># @endcond</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
