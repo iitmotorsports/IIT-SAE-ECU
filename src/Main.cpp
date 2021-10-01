@@ -14,9 +14,9 @@ int main(void) {
     Serial.begin(CONF_ECU_BAUD_RATE);
     delay(CONF_ECU_INITAL_DELAY);
 #if CONF_ECU_POSITION == BACK_ECU
-    Log.("BACK TEENSY", "WASSUP 😎");
+    Log("BACK TEENSY", "WASSUP 😎");
 #else
-    Log.("FRONT TEENSY", "Oh Hi!");
+    Log("FRONT TEENSY", "Oh Hi!");
 #endif
     return 0;
 }
