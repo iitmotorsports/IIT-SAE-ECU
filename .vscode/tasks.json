@@ -202,6 +202,7 @@
                 "-r",
                 "-w",
                 "-l${workspaceFolder}\\logs",
+                "--logTime"
             ],
             "options": {
                 "statusbar": {
