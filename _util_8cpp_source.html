@@ -114,18 +114,17 @@ $(document).ready(function(){initNavTree('_util_8cpp_source.html',''); initResiz
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="comment">// return (f / 2) * pow(((t * 2) - d) / d, 4) + (i + f / 2);</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;}</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> A, <span class="keyword">class</span> B, <span class="keyword">class</span> C, <span class="keyword">class</span> D&gt;</div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="_util_8h.html#a4bed8992f080fb6157e663b1d339136f">   28</a></span>&#160;T <a class="code" href="_util_8h.html#a4bed8992f080fb6157e663b1d339136f">cMap</a>(T x, A inMin, B inMax, C outMin, D outMax) {</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    T mapped = map(x, inMin, inMax, outMin, outMax);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keywordflow">if</span> (mapped &lt; outMin)</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keywordflow">return</span> outMin;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordflow">if</span> (mapped &gt; outMax)</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keywordflow">return</span> outMax;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordflow">return</span> mapped;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;}</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">// template &lt;class T, class A, class B, class C, class D&gt;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">// T cMap(T x, A inMin, B inMax, C outMin, D outMax) {</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">//     T mapped = map(x, inMin, inMax, outMin, outMax);</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">//     if (mapped &lt; outMin)</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">//         return outMin;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">//     if (mapped &gt; outMax)</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">//         return outMax;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">//     return mapped;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">// }</span></div>
 <div class="ttc" id="a_util_8h_html"><div class="ttname"><a href="_util_8h.html">Util.h</a></div><div class="ttdoc">Various utility functions.</div></div>
 <div class="ttc" id="a_util_8h_html_a28b3724d9b092b7ac80dfa92181e9c17"><div class="ttname"><a href="_util_8h.html#a28b3724d9b092b7ac80dfa92181e9c17">interpolate</a></div><div class="ttdeci">float interpolate(float t, float i, float f, float d)</div><div class="ttdoc">Interpolate a value given the parameters.</div><div class="ttdef"><b>Definition:</b> <a href="_util_8cpp_source.html#l00004">Util.cpp:4</a></div></div>
-<div class="ttc" id="a_util_8h_html_a4bed8992f080fb6157e663b1d339136f"><div class="ttname"><a href="_util_8h.html#a4bed8992f080fb6157e663b1d339136f">cMap</a></div><div class="ttdeci">T cMap(T x, A inMin, B inMax, C outMin, D outMax)</div><div class="ttdoc">Map a value from one range to another while clamping the value to boundaries.</div><div class="ttdef"><b>Definition:</b> <a href="_util_8cpp_source.html#l00028">Util.cpp:28</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
