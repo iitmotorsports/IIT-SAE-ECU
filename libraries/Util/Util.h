@@ -13,14 +13,27 @@
 #define __ECU_UTIL_H__
 
 /**
- * @brief Lerp a value
+ * @brief Interpolate a value given the parameters
  * 
  * @param t 
  * @param i 
  * @param f 
  * @param d 
- * @return double 
+ * @return float Interpolated value 
  */
-double lerp(double t, double i, double f, double d);
+float interpolate(float t, float i, float f, float d);
+
+/**
+ * @brief Map a value from one range to another while clamping the value to boundaries
+ * 
+ * @param x The value to be mapped
+ * @param inMin The minimum input value
+ * @param inMax The maximum input value
+ * @param outMin The minimum output value
+ * @param outMax The maximum output value
+ * @return The mapped value for x
+ */
+template <class T, class A, class B, class C, class D>
+T cMap(T x, A inMin, B inMax, C outMin, D outMax);
 
 #endif // __ECU_UTIL_H__

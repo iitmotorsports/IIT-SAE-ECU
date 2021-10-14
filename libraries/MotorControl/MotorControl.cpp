@@ -15,6 +15,7 @@
 #include "Canbus.h"
 #include "ECUGlobalConfig.h"
 #include "Pins.h"
+#include "Util.h"
 #include "log.h"
 #include "stdint.h"
 #include "stdlib.h"
@@ -31,6 +32,8 @@ static bool forward = true;
 
 static int mc0T = 0;
 static int mc1T = 0;
+
+static int pAccum = 0;
 
 static Canbus::Buffer MC0_RPM_Buffer(ADD_MC0_RPM);
 static Canbus::Buffer MC1_RPM_Buffer(ADD_MC1_RPM);
@@ -51,9 +54,10 @@ static int32_t motorSpeed() {
 }
 
 static void torqueVector(int pedal, int brake, int steer) {
+    pAccum = interpolate(10, pedal, (pedal - pAccum) / PINS_ANALOG_MAX, 15);
     // TODO: Add Torque vectoring algorithms
-    motorTorque[0] = pedal;
-    motorTorque[1] = pedal;
+    motorTorque[0] = pAccum;
+    motorTorque[1] = pAccum;
 }
 
 void setup(void) {
@@ -83,8 +87,8 @@ int sendCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit) { /
         return 0;
     }
     int percentTorque = 0;
-    if (torque != 0) {                                                                  // max analog should be what the max pedal readout is
-        percentTorque = constrain(map(torque, 200, PINS_ANALOG_MAX, 0, 9000), 0, 9000); // separate func for negative vals (regen)
+    if (torque != 0) {                                               // max analog should be what the max pedal readout is
+        percentTorque = cMap(torque, 200, PINS_ANALOG_MAX, 0, 9000); // separate func for negative vals (regen)
     }
     uint8_t *bytes = (uint8_t *)&percentTorque;
     Canbus::sendData(MC_ADD, bytes[0], bytes[1], 0, 0, direction, enableBit);
@@ -104,8 +108,12 @@ void setDirection(bool runForward) {
     }
 }
 
-int getLastTorquePercent(bool mc0) {
+int getLastTorqueValue(bool mc0) {
     return mc0 ? mc0T : mc1T;
+}
+
+int getLastPedalValue() {
+    return pAccum;
 }
 
 void setTorque(int pedal, int brake, int steer) {

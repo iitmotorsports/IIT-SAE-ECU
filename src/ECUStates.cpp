@@ -282,27 +282,13 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
 
             Pins::setPinValue(PINS_BACK_BRAKE_LIGHT, PINS_ANALOG_HIGH * ((float)breakVal / PINS_ANALOG_MAX > 0.04f));
 
-            static int pedalAccum0 = 0, pedalAccum1 = 0;
-
             int pedal0 = Pins::getCanPinValue(PINS_FRONT_PEDAL0);
             int pedal1 = Pins::getCanPinValue(PINS_FRONT_PEDAL1);
 
-            pedalAccum0 = lerp(10, pedal0, (pedal0 - pedalAccum0) / PINS_ANALOG_MAX, 15);
-            pedalAccum1 = lerp(10, pedal1, (pedal1 - pedalAccum1) / PINS_ANALOG_MAX, 15);
+            int pAVG = (pedal0 + pedal1) / 2;
 
             // NOTE: pedal has a threshold value
-            if ((abs(pedal0) + abs(pedal1)) < 200) {
-                pedal0 = 0;
-                pedal1 = 0;
-            }
-
-            // Hardcoded offsets
-            // pedal0 = constrain(map(pedal0, 75, 1145, 0, PINS_ANALOG_MAX), 0, PINS_ANALOG_MAX);
-            // pedal1 = constrain(map(pedal0, 100, 1200, 0, PINS_ANALOG_MAX), 0, PINS_ANALOG_MAX);
-
-            // // NOTE: pedal has a threshold value
-            if ((float)abs(pedal1 - pedal0) / PINS_ANALOG_HIGH > 0.1f && abs(pedal1) + abs(pedal0) >= 200) {
-                // if ((float)abs(pedal1 - pedal0) / PINS_ANALOG_HIGH > 0.1f && (pedal1 + pedal0) / 2 > 200) {
+            if (pAVG >= 100 && (float)abs(pedal1 - pedal0) / PINS_ANALOG_HIGH > 0.1f) {
                 Log.e(ID, "Pedal value offset > 10%");
                 Log.i(ID, "Pedal 0", pedal0);
                 Log.i(ID, "Pedal 1", pedal1);
@@ -311,17 +297,19 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
 #endif
             }
 
-            MC::setTorque((pedal0 + pedal1) / 2, breakVal, steerVal);
+            MC::setTorque(pAVG, breakVal, steerVal);
 
             if (++counter > 128) {
                 counter = 0;
                 Log.i(ID, "Pedal 0", pedal0);
                 Log.i(ID, "Pedal 1", pedal1);
+                Log.d(ID, "Pedal AVG", pAVG);
+                Log.d(ID, "Pedal value", MC::getLastPedalValue());
                 Log.i(ID, "Brake value:", breakVal);
                 Log.i(ID, "Steer value:", steerVal);
                 Log.i(ID, "Aero servo position:", Aero::getServoValue());
-                Log.i(ID, "Last MC0 Torque Percent:", MC::getLastTorquePercent(true));
-                Log.i(ID, "Last MC1 Torque Percent:", MC::getLastTorquePercent(false));
+                Log.i(ID, "Last MC0 Torque Value:", MC::getLastTorqueValue(true));
+                Log.i(ID, "Last MC1 Torque Value:", MC::getLastTorqueValue(false));
                 if (Fault::softFault()) {
                     Fault::logFault();
                 }

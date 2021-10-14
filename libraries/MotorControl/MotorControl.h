@@ -89,7 +89,14 @@ bool isForward(void);
  * @param mc0 return the value for MC0, otherwise MC1
  * @return int the last torque percent value that was sent
  */
-int getLastTorquePercent(bool mc0);
+int getLastTorqueValue(bool mc0);
+
+/**
+ * @brief Get the last pedal value that was internally used
+ * 
+ * @return int the last pedal value that was internally used
+ */
+int getLastPedalValue(void);
 
 /**
  * @brief Calculate and set the torque of both MCs
