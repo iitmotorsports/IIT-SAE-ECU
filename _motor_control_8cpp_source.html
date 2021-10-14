@@ -163,8 +163,8 @@ $(document).ready(function(){initNavTree('_motor_control_8cpp_source.html',''); 
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    }</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordtype">int</span> percentTorque = 0;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordflow">if</span> (torque != 0) {</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        percentTorque = constrain(map(torque, 200, <a class="code" href="_pins_8h.html#a80aa2066cc911d8d548e00d117784d81">PINS_ANALOG_MAX</a>, 0, 2000), 0, 2000); <span class="comment">// separate func for negative vals (regen)</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordflow">if</span> (torque != 0) {                                                                  <span class="comment">// max analog should be what the max pedal readout is</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        percentTorque = constrain(map(torque, 200, <a class="code" href="_pins_8h.html#a80aa2066cc911d8d548e00d117784d81">PINS_ANALOG_MAX</a>, 0, 9000), 0, 9000); <span class="comment">// separate func for negative vals (regen)</span></div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    }</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    uint8_t *bytes = (uint8_t *)&amp;percentTorque;</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <a class="code" href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">Canbus::sendData</a>(MC_ADD, bytes[0], bytes[1], 0, 0, direction, enableBit);</div>

@@ -49,5 +49,7 @@ var files_dup =
     [ "SerialCommand.h", "_serial_command_8h.html", "_serial_command_8h" ],
     [ "State.cpp", "_state_8cpp.html", null ],
     [ "State.h", "_state_8h.html", "_state_8h" ],
-    [ "uploadPaste.py", "upload_paste_8py.html", null ]
+    [ "uploadPaste.py", "upload_paste_8py.html", null ],
+    [ "Util.cpp", "_util_8cpp_source.html", null ],
+    [ "Util.h", "_util_8h.html", "_util_8h" ]
 ];
