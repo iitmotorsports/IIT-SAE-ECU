@@ -34,6 +34,13 @@ float interpolate(float t, float i, float f, float d);
  * @return The mapped value for x
  */
 template <class T, class A, class B, class C, class D>
-T cMap(T x, A inMin, B inMax, C outMin, D outMax);
+T cMap(T x, A inMin, B inMax, C outMin, D outMax) {
+    T mapped = map(x, inMin, inMax, outMin, outMax);
+    if (mapped < outMin)
+        return outMin;
+    if (mapped > outMax)
+        return outMax;
+    return mapped;
+}
 
 #endif // __ECU_UTIL_H__
