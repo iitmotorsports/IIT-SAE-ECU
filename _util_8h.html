@@ -98,9 +98,13 @@ $(document).ready(function(){initNavTree('_util_8h.html',''); initResizable(); }
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ae899ebaeb06671abfeee40fff314758b"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_util_8h.html#ae899ebaeb06671abfeee40fff314758b">lerp</a> (double t, double i, double f, double d)</td></tr>
-<tr class="memdesc:ae899ebaeb06671abfeee40fff314758b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lerp a value.  <a href="_util_8h.html#ae899ebaeb06671abfeee40fff314758b">More...</a><br /></td></tr>
-<tr class="separator:ae899ebaeb06671abfeee40fff314758b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28b3724d9b092b7ac80dfa92181e9c17"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_util_8h.html#a28b3724d9b092b7ac80dfa92181e9c17">interpolate</a> (float t, float i, float f, float d)</td></tr>
+<tr class="memdesc:a28b3724d9b092b7ac80dfa92181e9c17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpolate a value given the parameters.  <a href="_util_8h.html#a28b3724d9b092b7ac80dfa92181e9c17">More...</a><br /></td></tr>
+<tr class="separator:a28b3724d9b092b7ac80dfa92181e9c17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4bed8992f080fb6157e663b1d339136f"><td class="memTemplParams" colspan="2">template&lt;class T , class A , class B , class C , class D &gt; </td></tr>
+<tr class="memitem:a4bed8992f080fb6157e663b1d339136f"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_util_8h.html#a4bed8992f080fb6157e663b1d339136f">cMap</a> (T x, A inMin, B inMax, C outMin, D outMax)</td></tr>
+<tr class="memdesc:a4bed8992f080fb6157e663b1d339136f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Map a value from one range to another while clamping the value to boundaries.  <a href="_util_8h.html#a4bed8992f080fb6157e663b1d339136f">More...</a><br /></td></tr>
+<tr class="separator:a4bed8992f080fb6157e663b1d339136f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Various utility functions. </p>
@@ -111,34 +115,97 @@ Functions</h2></td></tr>
 
 <p class="definition">Definition in file <a class="el" href="_util_8h_source.html">Util.h</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="ae899ebaeb06671abfeee40fff314758b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae899ebaeb06671abfeee40fff314758b">&#9670;&nbsp;</a></span>lerp()</h2>
+<a id="a4bed8992f080fb6157e663b1d339136f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4bed8992f080fb6157e663b1d339136f">&#9670;&nbsp;</a></span>cMap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class A , class B , class C , class D &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">T cMap </td>
+          <td>(</td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">A&#160;</td>
+          <td class="paramname"><em>inMin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">B&#160;</td>
+          <td class="paramname"><em>inMax</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">C&#160;</td>
+          <td class="paramname"><em>outMin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">D&#160;</td>
+          <td class="paramname"><em>outMax</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Map a value from one range to another while clamping the value to boundaries. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>The value to be mapped </td></tr>
+    <tr><td class="paramname">inMin</td><td>The minimum input value </td></tr>
+    <tr><td class="paramname">inMax</td><td>The maximum input value </td></tr>
+    <tr><td class="paramname">outMin</td><td>The minimum output value </td></tr>
+    <tr><td class="paramname">outMax</td><td>The maximum output value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The mapped value for x </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_util_8cpp_source.html#l00028">28</a> of file <a class="el" href="_util_8cpp_source.html">Util.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a28b3724d9b092b7ac80dfa92181e9c17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28b3724d9b092b7ac80dfa92181e9c17">&#9670;&nbsp;</a></span>interpolate()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double lerp </td>
+          <td class="memname">float interpolate </td>
           <td>(</td>
-          <td class="paramtype">double&#160;</td>
+          <td class="paramtype">float&#160;</td>
           <td class="paramname"><em>t</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double&#160;</td>
+          <td class="paramtype">float&#160;</td>
           <td class="paramname"><em>i</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double&#160;</td>
+          <td class="paramtype">float&#160;</td>
           <td class="paramname"><em>f</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double&#160;</td>
+          <td class="paramtype">float&#160;</td>
           <td class="paramname"><em>d</em>&#160;</td>
         </tr>
         <tr>
@@ -149,7 +216,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Lerp a value. </p>
+<p>Interpolate a value given the parameters. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">t</td><td></td></tr>
@@ -159,9 +226,9 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>double </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>float Interpolated value </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_util_8cpp_source.html#l00003">3</a> of file <a class="el" href="_util_8cpp_source.html">Util.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_util_8cpp_source.html#l00004">4</a> of file <a class="el" href="_util_8cpp_source.html">Util.cpp</a>.</p>
 
 </div>
 </div>
