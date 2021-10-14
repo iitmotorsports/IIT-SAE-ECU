@@ -201,6 +201,7 @@
                 "${workspaceFolder}\\log_lookup.json",
                 "-r",
                 "-w",
+                "-l${config:LOGGING_FILE}",
             ],
             "options": {
                 "statusbar": {
