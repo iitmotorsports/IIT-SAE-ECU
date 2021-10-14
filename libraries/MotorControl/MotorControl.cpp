@@ -83,8 +83,8 @@ int sendCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit) { /
         return 0;
     }
     int percentTorque = 0;
-    if (torque != 0) {
-        percentTorque = constrain(map(torque, 200, PINS_ANALOG_MAX, 0, 2000), 0, 2000); // separate func for negative vals (regen)
+    if (torque != 0) {                                                                  // max analog should be what the max pedal readout is
+        percentTorque = constrain(map(torque, 200, PINS_ANALOG_MAX, 0, 9000), 0, 9000); // separate func for negative vals (regen)
     }
     uint8_t *bytes = (uint8_t *)&percentTorque;
     Canbus::sendData(MC_ADD, bytes[0], bytes[1], 0, 0, direction, enableBit);

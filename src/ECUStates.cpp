@@ -7,6 +7,7 @@
 #include "Log.h"
 #include "Mirror.h"
 #include "MotorControl.h"
+#include "Util.h"
 
 static bool FaultCheck() { // NOTE: Will only return true if hardfault occurs
     if (Fault::softFault())
@@ -95,7 +96,7 @@ bool ECUStates::PreCharge_State::voltageCheck() {
     int16_t MC0Volt = MC0_VOLT_Buffer.getShort(0) / 10; // Bytes 0-1: DC BUS MC Voltage
     int16_t MC1Volt = MC1_VOLT_Buffer.getShort(0) / 10; // Bytes 0-1: DC BUS MC Voltage
 
-    return 0.9 * BMSVolt <= (MC0Volt + MC1Volt) / 2;
+    return 0.62 * BMSVolt <= (MC0Volt + MC1Volt) / 2;
 }
 
 void ECUStates::PreCharge_State::getBuffers() {
@@ -281,8 +282,13 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
 
             Pins::setPinValue(PINS_BACK_BRAKE_LIGHT, PINS_ANALOG_HIGH * ((float)breakVal / PINS_ANALOG_MAX > 0.04f));
 
+            static int pedalAccum0 = 0, pedalAccum1 = 0;
+
             int pedal0 = Pins::getCanPinValue(PINS_FRONT_PEDAL0);
             int pedal1 = Pins::getCanPinValue(PINS_FRONT_PEDAL1);
+
+            pedalAccum0 = lerp(10, pedal0, (pedal0 - pedalAccum0) / PINS_ANALOG_MAX, 15);
+            pedalAccum1 = lerp(10, pedal1, (pedal1 - pedalAccum1) / PINS_ANALOG_MAX, 15);
 
             // NOTE: pedal has a threshold value
             if ((abs(pedal0) + abs(pedal1)) < 200) {
@@ -290,7 +296,13 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
                 pedal1 = 0;
             }
 
+            // Hardcoded offsets
+            // pedal0 = constrain(map(pedal0, 75, 1145, 0, PINS_ANALOG_MAX), 0, PINS_ANALOG_MAX);
+            // pedal1 = constrain(map(pedal0, 100, 1200, 0, PINS_ANALOG_MAX), 0, PINS_ANALOG_MAX);
+
+            // // NOTE: pedal has a threshold value
             if ((float)abs(pedal1 - pedal0) / PINS_ANALOG_HIGH > 0.1f && abs(pedal1) + abs(pedal0) >= 200) {
+                // if ((float)abs(pedal1 - pedal0) / PINS_ANALOG_HIGH > 0.1f && (pedal1 + pedal0) / 2 > 200) {
                 Log.e(ID, "Pedal value offset > 10%");
                 Log.i(ID, "Pedal 0", pedal0);
                 Log.i(ID, "Pedal 1", pedal1);
