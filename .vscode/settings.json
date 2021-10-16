@@ -1,5 +1,5 @@
 {
-    /* 
+    /*
      * |-----[ CONFIGURATION ]-----|
      */
     "FRONT_TEENSY_PORT": "COM17", // Port representing the front teensy
