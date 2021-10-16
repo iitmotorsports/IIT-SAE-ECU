@@ -597,8 +597,9 @@
                 "Hex",
                 "Decimal",
                 "Binary",
+                "Mapped",
             ],
-            "default": "Hex"
+            "default": "Mapped"
         },
         {
             "id": "TEENSY_USB_PORTNAME",
