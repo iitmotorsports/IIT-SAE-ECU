@@ -125,86 +125,112 @@ $(document).ready(function(){initNavTree('_motor_control_8cpp_source.html',''); 
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    }</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keyword">static</span> int32_t motorSpeed() {</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    int16_t MC_Rpm_Val_0 = MC0_RPM_Buffer.getShort(2); <span class="comment">// Bytes 2-3 : Angular Velocity</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    int16_t MC_Rpm_Val_1 = MC1_RPM_Buffer.getShort(2); <span class="comment">// Bytes 2-3 : Angular Velocity</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">float</span> MC_Spd_Val_0 = <a class="code" href="_e_c_u_global_config_8h.html#a26f1672eba68f921f77225f765c660ca">CONF_CAR_WHEEL_RADIUS</a> * 2 * 3.1415926536 / 60 * MC_Rpm_Val_0;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordtype">float</span> MC_Spd_Val_1 = <a class="code" href="_e_c_u_global_config_8h.html#a26f1672eba68f921f77225f765c660ca">CONF_CAR_WHEEL_RADIUS</a> * 2 * 3.1415926536 / 60 * MC_Rpm_Val_1;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordflow">return</span> (MC_Spd_Val_0 + MC_Spd_Val_1) / 2;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;}</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> torqueVector(<span class="keywordtype">int</span> pedal, <span class="keywordtype">int</span> brake, <span class="keywordtype">int</span> steer) {</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    pAccum = <a class="code" href="_util_8h.html#a28b3724d9b092b7ac80dfa92181e9c17">interpolate</a>(10, pedal, (pedal - pAccum) / <a class="code" href="_pins_8h.html#a80aa2066cc911d8d548e00d117784d81">PINS_ANALOG_MAX</a>, 15);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="comment">// TODO: Add Torque vectoring algorithms</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    motorTorque[0] = pAccum;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    motorTorque[1] = pAccum;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keyword">static</span> int32_t motorSpeed(<span class="keywordtype">int</span> motor = -1) {</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    int16_t MC_Rpm_Val_0 = MC0_RPM_Buffer.getShort(2);                                 <span class="comment">// Bytes 2-3 : Angular Velocity</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    int16_t MC_Rpm_Val_1 = MC1_RPM_Buffer.getShort(2);                                 <span class="comment">// Bytes 2-3 : Angular Velocity</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">float</span> MC_Spd_Val_0 = MC_Rpm_Val_0 * 2 * 3.1415926536 / 60 * <a class="code" href="_e_c_u_global_config_8h.html#a26f1672eba68f921f77225f765c660ca">CONF_CAR_WHEEL_RADIUS</a>; <span class="comment">// (RPM -&gt; Rad/s) * Radius</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordtype">float</span> MC_Spd_Val_1 = MC_Rpm_Val_1 * 2 * 3.1415926536 / 60 * <a class="code" href="_e_c_u_global_config_8h.html#a26f1672eba68f921f77225f765c660ca">CONF_CAR_WHEEL_RADIUS</a>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordflow">switch</span> (motor) {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordflow">case</span> 0:</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keywordflow">return</span> MC_Spd_Val_0;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordflow">case</span> 1:</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keywordflow">return</span> MC_Spd_Val_1;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordflow">return</span> (MC_Spd_Val_0 + MC_Spd_Val_1) / 2;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    }</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;}</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_m_c.html#aeb2b966841aa0fd6b2ac79478a648c84">setup</a>(<span class="keywordtype">void</span>) {</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordflow">if</span> (!init)</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <a class="code" href="namespace_heartbeat.html#a243a1a7989df814269de816d2893d35b">Heartbeat::addCallback</a>(<a class="code" href="namespace_heartbeat.html#a90dd9f85dfc6bf41682af19b8ecd0c8d">beatFunc</a>);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    MC0_RPM_Buffer.init();</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    MC1_RPM_Buffer.init();</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <a class="code" href="namespace_m_c.html#add4fdfcad6990dec728c2eeadaca45e1">clearFaults</a>();</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    init = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    beating = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_m_c.html#add4fdfcad6990dec728c2eeadaca45e1">clearFaults</a>(<span class="keywordtype">void</span>) {</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <a class="code" href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">Canbus::sendData</a>(ADD_MC0_CLEAR, 20, 0, 1);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <a class="code" href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">Canbus::sendData</a>(ADD_MC1_CLEAR, 20, 0, 1);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <a class="code" href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">Canbus::sendData</a>(ADD_MC0_CTRL);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <a class="code" href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">Canbus::sendData</a>(ADD_MC1_CTRL);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> torqueVector(<span class="keywordtype">int</span> pedal, <span class="keywordtype">int</span> brake, <span class="keywordtype">int</span> steer) {</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    pAccum = <a class="code" href="_util_8h.html#a28b3724d9b092b7ac80dfa92181e9c17">interpolate</a>(10, pedal, (pedal - pAccum) / <a class="code" href="_pins_8h.html#a80aa2066cc911d8d548e00d117784d81">PINS_ANALOG_MAX</a>, 15);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="comment">// TODO: Add Torque vectoring algorithms</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    motorTorque[0] = pAccum;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    motorTorque[1] = pAccum;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;}</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_m_c.html#aeb2b966841aa0fd6b2ac79478a648c84">setup</a>(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordflow">if</span> (!init)</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <a class="code" href="namespace_heartbeat.html#a243a1a7989df814269de816d2893d35b">Heartbeat::addCallback</a>(<a class="code" href="namespace_heartbeat.html#a90dd9f85dfc6bf41682af19b8ecd0c8d">beatFunc</a>);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    MC0_RPM_Buffer.init();</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    MC1_RPM_Buffer.init();</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <a class="code" href="namespace_m_c.html#add4fdfcad6990dec728c2eeadaca45e1">clearFaults</a>();</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    init = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    beating = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;}</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_m_c.html#ab35b9e9f20dc50d81b40d6d5c298c1ea">enableMotorBeating</a>(<span class="keywordtype">bool</span> enable) {</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    beating = enable;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;}</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="keywordtype">int</span> <a class="code" href="namespace_m_c.html#a36e99d57c679a637c2324913c92e9cc1">sendCommand</a>(uint32_t MC_ADD, <span class="keywordtype">int</span> torque, <span class="keywordtype">bool</span> direction, <span class="keywordtype">bool</span> enableBit) { <span class="comment">// NOTE: 0 (Clockwise = Reverse) 1 (Anticlockwise = Forward)</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordflow">if</span> (beating) {</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Unable to set torque, heartbeat is on&quot;</span>);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    }</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordtype">int</span> percentTorque = 0;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordflow">if</span> (torque != 0) {                                               <span class="comment">// max analog should be what the max pedal readout is</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        percentTorque = <a class="code" href="_util_8h.html#a4bed8992f080fb6157e663b1d339136f">cMap</a>(torque, 200, <a class="code" href="_pins_8h.html#a80aa2066cc911d8d548e00d117784d81">PINS_ANALOG_MAX</a>, 0, 9000); <span class="comment">// separate func for negative vals (regen)</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    }</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    uint8_t *bytes = (uint8_t *)&amp;percentTorque;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <a class="code" href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">Canbus::sendData</a>(MC_ADD, bytes[0], bytes[1], 0, 0, direction, enableBit);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordflow">return</span> percentTorque;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;}</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="namespace_m_c.html#a72e26cfa1ee8fde45958f0df9d6e29f7">isForward</a>(<span class="keywordtype">void</span>) {</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordflow">return</span> forward;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;}</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_m_c.html#a2fb464e85bca01fc06a2b5b59c83d9b3">setDirection</a>(<span class="keywordtype">bool</span> runForward) {</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keywordflow">if</span> (motorSpeed() &lt;= <a class="code" href="_motor_control_8h.html#aabeca44be98eeaf70dd57e707e5ff85d">CONF_MAXIMUM_SWITCHING_SPEED</a>) {</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Switching direction&quot;</span>);</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        forward = runForward;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">e</a>(ID, <span class="stringliteral">&quot;Unable to switch direction, car is moving too much&quot;</span>);</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    }</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;}</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="keywordtype">int</span> <a class="code" href="namespace_m_c.html#a7eb7ad86c3e3b098534aefc013ae0741">getLastTorqueValue</a>(<span class="keywordtype">bool</span> mc0) {</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keywordflow">return</span> mc0 ? mc0T : mc1T;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;}</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="keywordtype">int</span> <a class="code" href="namespace_m_c.html#aa9da69c9779b67257edf09a369b5aa67">getLastPedalValue</a>() {</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keywordflow">return</span> pAccum;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;}</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_m_c.html#a27fe6e9fc5d1906069d9e60a24226dd0">setTorque</a>(<span class="keywordtype">int</span> pedal, <span class="keywordtype">int</span> brake, <span class="keywordtype">int</span> steer) {</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    torqueVector(pedal, brake, steer);</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    mc0T = <a class="code" href="namespace_m_c.html#a36e99d57c679a637c2324913c92e9cc1">sendCommand</a>(ADD_MC0_CTRL, motorTorque[0], forward, 1);</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    mc1T = <a class="code" href="namespace_m_c.html#a36e99d57c679a637c2324913c92e9cc1">sendCommand</a>(ADD_MC1_CTRL, motorTorque[1], forward, 1);</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;}</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;} <span class="comment">// namespace MC</span></div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="comment">// @endcond</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_m_c.html#add4fdfcad6990dec728c2eeadaca45e1">clearFaults</a>(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <a class="code" href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">Canbus::sendData</a>(ADD_MC0_CLEAR, 20, 0, 1);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <a class="code" href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">Canbus::sendData</a>(ADD_MC1_CLEAR, 20, 0, 1);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <a class="code" href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">Canbus::sendData</a>(ADD_MC0_CTRL);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <a class="code" href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">Canbus::sendData</a>(ADD_MC1_CTRL);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;}</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_m_c.html#ab35b9e9f20dc50d81b40d6d5c298c1ea">enableMotorBeating</a>(<span class="keywordtype">bool</span> enable) {</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    beating = enable;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keywordtype">int</span> sendSpeed(uint32_t MC_ADD, <span class="keywordtype">int</span> speed, <span class="keywordtype">bool</span> direction, <span class="keywordtype">bool</span> enableBit) {</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordflow">if</span> (beating) {</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Unable to set torque, heartbeat is on&quot;</span>);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    }</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keywordtype">int</span> setSpeed = 0, torqueLimit = 50;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keywordflow">if</span> (speed != 0) {                                        <span class="comment">// max analog should be what the max pedal readout is</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        setSpeed = <a class="code" href="_util_8h.html#a4bed8992f080fb6157e663b1d339136f">cMap</a>(speed, 200, <a class="code" href="_pins_8h.html#a80aa2066cc911d8d548e00d117784d81">PINS_ANALOG_MAX</a>, 0, 10); <span class="comment">// separate func for negative vals (regen)</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    }</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    uint8_t *bytes = (uint8_t *)&amp;setSpeed;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    uint8_t *limitBytes = (uint8_t *)&amp;torqueLimit;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <a class="code" href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">Canbus::sendData</a>(MC_ADD, 0, 0, bytes[0], bytes[1], direction, 0b101 * enableBit, limitBytes[0], limitBytes[1]);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keywordflow">return</span> setSpeed;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;}</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="keywordtype">int</span> <a class="code" href="namespace_m_c.html#a5647cc517fcc54806867d50c17038827">sendTorque</a>(uint32_t MC_ADD, <span class="keywordtype">int</span> torque, <span class="keywordtype">bool</span> direction, <span class="keywordtype">bool</span> enableBit) { <span class="comment">// NOTE: 0 (Clockwise = Reverse) 1 (Anticlockwise = Forward)</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keywordflow">if</span> (beating) {</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Unable to set torque, heartbeat is on&quot;</span>);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    }</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="namespace_m_c.html#a27fe6e9fc5d1906069d9e60a24226dd0">setTorque</a> = 0;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keywordflow">if</span> (torque != 0) {                                          <span class="comment">// max analog should be what the max pedal readout is</span></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <a class="code" href="namespace_m_c.html#a27fe6e9fc5d1906069d9e60a24226dd0">setTorque</a> = <a class="code" href="_util_8h.html#a4bed8992f080fb6157e663b1d339136f">cMap</a>(torque, 200, <a class="code" href="_pins_8h.html#a80aa2066cc911d8d548e00d117784d81">PINS_ANALOG_MAX</a>, 0, 150); <span class="comment">// separate func for negative vals (regen)</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    }</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    uint8_t *bytes = (uint8_t *)&amp;<a class="code" href="namespace_m_c.html#a27fe6e9fc5d1906069d9e60a24226dd0">setTorque</a>;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <a class="code" href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">Canbus::sendData</a>(MC_ADD, bytes[0], bytes[1], 0, 0, direction, enableBit);</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="namespace_m_c.html#a27fe6e9fc5d1906069d9e60a24226dd0">setTorque</a>;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;}</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="namespace_m_c.html#a72e26cfa1ee8fde45958f0df9d6e29f7">isForward</a>(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <span class="keywordflow">return</span> forward;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;}</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_m_c.html#a2fb464e85bca01fc06a2b5b59c83d9b3">setDirection</a>(<span class="keywordtype">bool</span> runForward) {</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="keywordflow">if</span> (motorSpeed() &lt;= <a class="code" href="_motor_control_8h.html#aabeca44be98eeaf70dd57e707e5ff85d">CONF_MAXIMUM_SWITCHING_SPEED</a>) {</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Switching direction&quot;</span>);</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        forward = runForward;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">e</a>(ID, <span class="stringliteral">&quot;Unable to switch direction, car is moving too much&quot;</span>);</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    }</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;}</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="keywordtype">int</span> <a class="code" href="namespace_m_c.html#a7eb7ad86c3e3b098534aefc013ae0741">getLastTorqueValue</a>(<span class="keywordtype">bool</span> mc0) {</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <span class="keywordflow">return</span> mc0 ? mc0T : mc1T;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;}</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160; </div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="keywordtype">int</span> <a class="code" href="namespace_m_c.html#aa9da69c9779b67257edf09a369b5aa67">getLastPedalValue</a>() {</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    <span class="keywordflow">return</span> pAccum;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;}</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160; </div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_m_c.html#a27fe6e9fc5d1906069d9e60a24226dd0">setTorque</a>(<span class="keywordtype">int</span> pedal, <span class="keywordtype">int</span> brake, <span class="keywordtype">int</span> steer) {</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    torqueVector(pedal, brake, steer);</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <span class="comment">// motorTorque[0] -= motorSpeed(0);</span></div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <span class="comment">// motorTorque[1] -= motorSpeed(1);</span></div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    mc0T = <a class="code" href="namespace_m_c.html#a5647cc517fcc54806867d50c17038827">sendTorque</a>(ADD_MC0_CTRL, motorTorque[0], forward, 1);</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    mc1T = <a class="code" href="namespace_m_c.html#a5647cc517fcc54806867d50c17038827">sendTorque</a>(ADD_MC1_CTRL, motorTorque[1], forward, 1);</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;}</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;} <span class="comment">// namespace MC</span></div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160; </div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="comment">// @endcond</span></div>
 <div class="ttc" id="a_canbus_8h_html"><div class="ttname"><a href="_canbus_8h.html">Canbus.h</a></div><div class="ttdoc">FlexCAN_T4 wrapper.</div></div>
 <div class="ttc" id="a_e_c_u_global_config_8h_html"><div class="ttname"><a href="_e_c_u_global_config_8h.html">ECUGlobalConfig.h</a></div><div class="ttdoc">Configure global build properties.</div></div>
 <div class="ttc" id="a_e_c_u_global_config_8h_html_a26f1672eba68f921f77225f765c660ca"><div class="ttname"><a href="_e_c_u_global_config_8h.html#a26f1672eba68f921f77225f765c660ca">CONF_CAR_WHEEL_RADIUS</a></div><div class="ttdeci">#define CONF_CAR_WHEEL_RADIUS</div><div class="ttdoc">The radius of the car's wheels.</div><div class="ttdef"><b>Definition:</b> <a href="_e_c_u_global_config_8h_source.html#l00057">ECUGlobalConfig.h:57</a></div></div>
@@ -224,7 +250,7 @@ $(document).ready(function(){initNavTree('_motor_control_8cpp_source.html',''); 
 <div class="ttc" id="anamespace_m_c_html"><div class="ttname"><a href="namespace_m_c.html">MC</a></div><div class="ttdoc">Methods used to more easily interface with RMS Motor controllers over CAN bus.</div><div class="ttdef"><b>Definition:</b> <a href="_motor_control_8h_source.html#l00034">MotorControl.h:34</a></div></div>
 <div class="ttc" id="anamespace_m_c_html_a27fe6e9fc5d1906069d9e60a24226dd0"><div class="ttname"><a href="namespace_m_c.html#a27fe6e9fc5d1906069d9e60a24226dd0">MC::setTorque</a></div><div class="ttdeci">void setTorque(int pedal, int brake, int steer)</div><div class="ttdoc">Calculate and set the torque of both MCs.</div></div>
 <div class="ttc" id="anamespace_m_c_html_a2fb464e85bca01fc06a2b5b59c83d9b3"><div class="ttname"><a href="namespace_m_c.html#a2fb464e85bca01fc06a2b5b59c83d9b3">MC::setDirection</a></div><div class="ttdeci">void setDirection(bool runForward)</div><div class="ttdoc">Set the direction of the motors.</div></div>
-<div class="ttc" id="anamespace_m_c_html_a36e99d57c679a637c2324913c92e9cc1"><div class="ttname"><a href="namespace_m_c.html#a36e99d57c679a637c2324913c92e9cc1">MC::sendCommand</a></div><div class="ttdeci">int sendCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit)</div><div class="ttdoc">Send a raw control command to a MC.</div></div>
+<div class="ttc" id="anamespace_m_c_html_a5647cc517fcc54806867d50c17038827"><div class="ttname"><a href="namespace_m_c.html#a5647cc517fcc54806867d50c17038827">MC::sendTorque</a></div><div class="ttdeci">int sendTorque(uint32_t MC_ADD, int torque, bool direction, bool enableBit)</div><div class="ttdoc">Send a raw torque command to a MC.</div></div>
 <div class="ttc" id="anamespace_m_c_html_a72e26cfa1ee8fde45958f0df9d6e29f7"><div class="ttname"><a href="namespace_m_c.html#a72e26cfa1ee8fde45958f0df9d6e29f7">MC::isForward</a></div><div class="ttdeci">bool isForward(void)</div><div class="ttdoc">Get whether the motors will spin forward.</div></div>
 <div class="ttc" id="anamespace_m_c_html_a7eb7ad86c3e3b098534aefc013ae0741"><div class="ttname"><a href="namespace_m_c.html#a7eb7ad86c3e3b098534aefc013ae0741">MC::getLastTorqueValue</a></div><div class="ttdeci">int getLastTorqueValue(bool mc0)</div><div class="ttdoc">Get the last torque percent value sent to a MC.</div></div>
 <div class="ttc" id="anamespace_m_c_html_aa9da69c9779b67257edf09a369b5aa67"><div class="ttname"><a href="namespace_m_c.html#aa9da69c9779b67257edf09a369b5aa67">MC::getLastPedalValue</a></div><div class="ttdeci">int getLastPedalValue(void)</div><div class="ttdoc">Get the last pedal value that was internally used.</div></div>

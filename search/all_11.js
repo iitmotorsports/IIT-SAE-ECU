@@ -1,8 +1,8 @@
 var searchData=
 [
   ['sae_20at_20iit_20ecu_20programming_172',['SAE at IIT ECU Programming',['../index.html',1,'']]],
-  ['sendcommand_173',['sendCommand',['../namespace_m_c.html#a36e99d57c679a637c2324913c92e9cc1',1,'MC']]],
-  ['senddata_174',['sendData',['../namespace_canbus.html#a003195b12c68a25e85c1249630901f87',1,'Canbus::sendData(const uint32_t address, uint8_t buf[8])'],['../namespace_canbus.html#a685569d6ee66f2c88962d158a5caf22c',1,'Canbus::sendData(const uint32_t address, const uint8_t buf_0=0, const uint8_t buf_1=0, const uint8_t buf_2=0, const uint8_t buf_3=0, const uint8_t buf_4=0, const uint8_t buf_5=0, const uint8_t buf_6=0, const uint8_t buf_7=0)']]],
+  ['senddata_173',['sendData',['../namespace_canbus.html#a003195b12c68a25e85c1249630901f87',1,'Canbus::sendData(const uint32_t address, uint8_t buf[8])'],['../namespace_canbus.html#a685569d6ee66f2c88962d158a5caf22c',1,'Canbus::sendData(const uint32_t address, const uint8_t buf_0=0, const uint8_t buf_1=0, const uint8_t buf_2=0, const uint8_t buf_3=0, const uint8_t buf_4=0, const uint8_t buf_5=0, const uint8_t buf_6=0, const uint8_t buf_7=0)']]],
+  ['sendtorque_174',['sendTorque',['../namespace_m_c.html#a5647cc517fcc54806867d50c17038827',1,'MC']]],
   ['serial_5fcommands_175',['SERIAL_COMMANDS',['../_serial_command_8def.html#a9feec64f8f82f23788b95b4db603bbdd',1,'SerialCommand.def']]],
   ['serialcommand_2ecpp_176',['SerialCommand.cpp',['../_serial_command_8cpp.html',1,'']]],
   ['serialcommand_2edef_177',['SerialCommand.def',['../_serial_command_8def.html',1,'']]],

@@ -115,7 +115,7 @@ var NAVTREEINDEX0 =
 "_motor_control_8h.html":[5,0,35],
 "_motor_control_8h.html#a27fe6e9fc5d1906069d9e60a24226dd0":[5,0,35,8],
 "_motor_control_8h.html#a2fb464e85bca01fc06a2b5b59c83d9b3":[5,0,35,7],
-"_motor_control_8h.html#a36e99d57c679a637c2324913c92e9cc1":[5,0,35,6],
+"_motor_control_8h.html#a5647cc517fcc54806867d50c17038827":[5,0,35,6],
 "_motor_control_8h.html#a72e26cfa1ee8fde45958f0df9d6e29f7":[5,0,35,5],
 "_motor_control_8h.html#a7eb7ad86c3e3b098534aefc013ae0741":[5,0,35,4],
 "_motor_control_8h.html#aa9da69c9779b67257edf09a369b5aa67":[5,0,35,3],

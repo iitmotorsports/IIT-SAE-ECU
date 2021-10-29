@@ -107,9 +107,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 <tr class="memitem:ab35b9e9f20dc50d81b40d6d5c298c1ea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_m_c.html#ab35b9e9f20dc50d81b40d6d5c298c1ea">enableMotorBeating</a> (bool enable)</td></tr>
 <tr class="memdesc:ab35b9e9f20dc50d81b40d6d5c298c1ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start <a class="el" href="namespace_m_c.html" title="Methods used to more easily interface with RMS Motor controllers over CAN bus.">MC</a> heartbeat function, establishing a connection with the MCs.  <a href="namespace_m_c.html#ab35b9e9f20dc50d81b40d6d5c298c1ea">More...</a><br /></td></tr>
 <tr class="separator:ab35b9e9f20dc50d81b40d6d5c298c1ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36e99d57c679a637c2324913c92e9cc1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_m_c.html#a36e99d57c679a637c2324913c92e9cc1">sendCommand</a> (uint32_t MC_ADD, int torque, bool direction, bool enableBit)</td></tr>
-<tr class="memdesc:a36e99d57c679a637c2324913c92e9cc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a raw control command to a <a class="el" href="namespace_m_c.html" title="Methods used to more easily interface with RMS Motor controllers over CAN bus.">MC</a>.  <a href="namespace_m_c.html#a36e99d57c679a637c2324913c92e9cc1">More...</a><br /></td></tr>
-<tr class="separator:a36e99d57c679a637c2324913c92e9cc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5647cc517fcc54806867d50c17038827"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_m_c.html#a5647cc517fcc54806867d50c17038827">sendTorque</a> (uint32_t MC_ADD, int torque, bool direction, bool enableBit)</td></tr>
+<tr class="memdesc:a5647cc517fcc54806867d50c17038827"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a raw torque command to a <a class="el" href="namespace_m_c.html" title="Methods used to more easily interface with RMS Motor controllers over CAN bus.">MC</a>.  <a href="namespace_m_c.html#a5647cc517fcc54806867d50c17038827">More...</a><br /></td></tr>
+<tr class="separator:a5647cc517fcc54806867d50c17038827"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2fb464e85bca01fc06a2b5b59c83d9b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_m_c.html#a2fb464e85bca01fc06a2b5b59c83d9b3">setDirection</a> (bool runForward)</td></tr>
 <tr class="memdesc:a2fb464e85bca01fc06a2b5b59c83d9b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the direction of the motors.  <a href="namespace_m_c.html#a2fb464e85bca01fc06a2b5b59c83d9b3">More...</a><br /></td></tr>
 <tr class="separator:a2fb464e85bca01fc06a2b5b59c83d9b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -226,14 +226,14 @@ false The motors will spin in reverse </dd></dl>
 
 </div>
 </div>
-<a id="a36e99d57c679a637c2324913c92e9cc1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a36e99d57c679a637c2324913c92e9cc1">&#9670;&nbsp;</a></span>sendCommand()</h2>
+<a id="a5647cc517fcc54806867d50c17038827"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5647cc517fcc54806867d50c17038827">&#9670;&nbsp;</a></span>sendTorque()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int MC::sendCommand </td>
+          <td class="memname">int MC::sendTorque </td>
           <td>(</td>
           <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>MC_ADD</em>, </td>
@@ -264,7 +264,7 @@ false The motors will spin in reverse </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Send a raw control command to a <a class="el" href="namespace_m_c.html" title="Methods used to more easily interface with RMS Motor controllers over CAN bus.">MC</a>. </p>
+<p>Send a raw torque command to a <a class="el" href="namespace_m_c.html" title="Methods used to more easily interface with RMS Motor controllers over CAN bus.">MC</a>. </p>
 <dl class="section note"><dt>Note</dt><dd><code>enableMotorBeating</code> must have been set to false before calling this function</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">

@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['sendcommand_326',['sendCommand',['../namespace_m_c.html#a36e99d57c679a637c2324913c92e9cc1',1,'MC']]],
-  ['senddata_327',['sendData',['../namespace_canbus.html#a003195b12c68a25e85c1249630901f87',1,'Canbus::sendData(const uint32_t address, uint8_t buf[8])'],['../namespace_canbus.html#a685569d6ee66f2c88962d158a5caf22c',1,'Canbus::sendData(const uint32_t address, const uint8_t buf_0=0, const uint8_t buf_1=0, const uint8_t buf_2=0, const uint8_t buf_3=0, const uint8_t buf_4=0, const uint8_t buf_5=0, const uint8_t buf_6=0, const uint8_t buf_7=0)']]],
+  ['senddata_326',['sendData',['../namespace_canbus.html#a685569d6ee66f2c88962d158a5caf22c',1,'Canbus::sendData(const uint32_t address, const uint8_t buf_0=0, const uint8_t buf_1=0, const uint8_t buf_2=0, const uint8_t buf_3=0, const uint8_t buf_4=0, const uint8_t buf_5=0, const uint8_t buf_6=0, const uint8_t buf_7=0)'],['../namespace_canbus.html#a003195b12c68a25e85c1249630901f87',1,'Canbus::sendData(const uint32_t address, uint8_t buf[8])']]],
+  ['sendtorque_327',['sendTorque',['../namespace_m_c.html#a5647cc517fcc54806867d50c17038827',1,'MC']]],
   ['setcommand_328',['setCommand',['../namespace_cmd.html#aedaea62d3d1e614cf34ae87372087846',1,'Cmd']]],
   ['setdirection_329',['setDirection',['../namespace_m_c.html#a2fb464e85bca01fc06a2b5b59c83d9b3',1,'MC']]],
   ['setinternalvalue_330',['setInternalValue',['../namespace_pins.html#a9d8cba01aef10c12ca76fe5cb0bc67c6',1,'Pins']]],
