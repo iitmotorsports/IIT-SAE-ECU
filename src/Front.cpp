@@ -115,11 +115,13 @@ static uint32_t MCPowerValue() { // IMPROVE: get power value using three phase v
 }
 
 // receive rpm of MCs, interpret, then send to from teensy for logging
-static int32_t motorSpeed() {
+static int32_t motorSpeed() {                          // TODO: replace with MotorControl Func
     int16_t MC_Rpm_Val_0 = MC0_RPM_Buffer.getShort(2); // Bytes 2-3 : Angular Velocity
     int16_t MC_Rpm_Val_1 = MC1_RPM_Buffer.getShort(2); // Bytes 2-3 : Angular Velocity
     float MC_Spd_Val_0 = wheelRadius * 2 * 3.1415926536 / 60 * MC_Rpm_Val_0;
     float MC_Spd_Val_1 = wheelRadius * 2 * 3.1415926536 / 60 * MC_Rpm_Val_1;
+    Log.d(ID, "Motor 0 Speed", MC_Spd_Val_0);
+    Log.d(ID, "Motor 1 Speed", MC_Spd_Val_1);
     return (MC_Spd_Val_0 + MC_Spd_Val_1) / 2;
 }
 
@@ -298,6 +300,9 @@ void Front::run() {
         delay(500);
     }
 #endif
+
+    // Log.d(ID, "Force Enabling Charging");
+    // Pins::setInternalValue(PINS_INTERNAL_CHARGE_SIGNAL, 1);
 
     while (true) {
 #if TESTING == FRONT_ECU
