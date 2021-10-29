@@ -16,7 +16,7 @@
 #include "PPhelp.h"
 
 // Address offsets
-#define ADD_MC0_OFFSET -0x00A0 
+#define ADD_MC0_OFFSET -0x00A0
 #define ADD_MC1_OFFSET 0x0000
 #define ADD_BMS_OFFSET 0x0000
 
