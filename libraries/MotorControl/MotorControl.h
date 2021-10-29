@@ -56,7 +56,7 @@ void clearFaults(void);
 void enableMotorBeating(bool enable);
 
 /**
- * @brief Send a raw control command to a MC
+ * @brief Send a raw torque command to a MC
  * 
  * @note `enableMotorBeating` must have been set to false before calling this function
  * 
@@ -66,7 +66,7 @@ void enableMotorBeating(bool enable);
  * @param enableBit whether the motor should be enabled
  * @return int the final torque percent being sent
  */
-int sendCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit);
+int sendTorque(uint32_t MC_ADD, int torque, bool direction, bool enableBit);
 
 /**
  * @brief Set the direction of the motors

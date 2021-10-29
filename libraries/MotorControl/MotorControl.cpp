@@ -45,12 +45,19 @@ static void beatFunc(void) {
     }
 }
 
-static int32_t motorSpeed() {
-    int16_t MC_Rpm_Val_0 = MC0_RPM_Buffer.getShort(2); // Bytes 2-3 : Angular Velocity
-    int16_t MC_Rpm_Val_1 = MC1_RPM_Buffer.getShort(2); // Bytes 2-3 : Angular Velocity
-    float MC_Spd_Val_0 = CONF_CAR_WHEEL_RADIUS * 2 * 3.1415926536 / 60 * MC_Rpm_Val_0;
-    float MC_Spd_Val_1 = CONF_CAR_WHEEL_RADIUS * 2 * 3.1415926536 / 60 * MC_Rpm_Val_1;
-    return (MC_Spd_Val_0 + MC_Spd_Val_1) / 2;
+static int32_t motorSpeed(int motor = -1) {
+    int16_t MC_Rpm_Val_0 = MC0_RPM_Buffer.getShort(2);                                 // Bytes 2-3 : Angular Velocity
+    int16_t MC_Rpm_Val_1 = MC1_RPM_Buffer.getShort(2);                                 // Bytes 2-3 : Angular Velocity
+    float MC_Spd_Val_0 = MC_Rpm_Val_0 * 2 * 3.1415926536 / 60 * CONF_CAR_WHEEL_RADIUS; // (RPM -> Rad/s) * Radius
+    float MC_Spd_Val_1 = MC_Rpm_Val_1 * 2 * 3.1415926536 / 60 * CONF_CAR_WHEEL_RADIUS;
+    switch (motor) {
+    case 0:
+        return MC_Spd_Val_0;
+    case 1:
+        return MC_Spd_Val_1;
+    default:
+        return (MC_Spd_Val_0 + MC_Spd_Val_1) / 2;
+    }
 }
 
 static void torqueVector(int pedal, int brake, int steer) {
@@ -81,18 +88,35 @@ void enableMotorBeating(bool enable) {
     beating = enable;
 }
 
-int sendCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit) { // NOTE: 0 (Clockwise = Reverse) 1 (Anticlockwise = Forward)
+int sendSpeed(uint32_t MC_ADD, int speed, bool direction, bool enableBit) {
     if (beating) {
         Log.w(ID, "Unable to set torque, heartbeat is on");
         return 0;
     }
-    int percentTorque = 0;
-    if (torque != 0) {                                               // max analog should be what the max pedal readout is
-        percentTorque = cMap(torque, 200, PINS_ANALOG_MAX, 0, 9000); // separate func for negative vals (regen)
+    int setSpeed = 0, torqueLimit = 50;
+    if (speed != 0) {                                        // max analog should be what the max pedal readout is
+        setSpeed = cMap(speed, 200, PINS_ANALOG_MAX, 0, 10); // separate func for negative vals (regen)
     }
-    uint8_t *bytes = (uint8_t *)&percentTorque;
+
+    uint8_t *bytes = (uint8_t *)&setSpeed;
+    uint8_t *limitBytes = (uint8_t *)&torqueLimit;
+    Canbus::sendData(MC_ADD, 0, 0, bytes[0], bytes[1], direction, 0b101 * enableBit, limitBytes[0], limitBytes[1]);
+    return setSpeed;
+}
+
+int sendTorque(uint32_t MC_ADD, int torque, bool direction, bool enableBit) { // NOTE: 0 (Clockwise = Reverse) 1 (Anticlockwise = Forward)
+    if (beating) {
+        Log.w(ID, "Unable to set torque, heartbeat is on");
+        return 0;
+    }
+    int setTorque = 0;
+    if (torque != 0) {                                          // max analog should be what the max pedal readout is
+        setTorque = cMap(torque, 200, PINS_ANALOG_MAX, 0, 150); // separate func for negative vals (regen)
+    }
+
+    uint8_t *bytes = (uint8_t *)&setTorque;
     Canbus::sendData(MC_ADD, bytes[0], bytes[1], 0, 0, direction, enableBit);
-    return percentTorque;
+    return setTorque;
 }
 
 bool isForward(void) {
@@ -118,8 +142,10 @@ int getLastPedalValue() {
 
 void setTorque(int pedal, int brake, int steer) {
     torqueVector(pedal, brake, steer);
-    mc0T = sendCommand(ADD_MC0_CTRL, motorTorque[0], forward, 1);
-    mc1T = sendCommand(ADD_MC1_CTRL, motorTorque[1], forward, 1);
+    // motorTorque[0] -= motorSpeed(0);
+    // motorTorque[1] -= motorSpeed(1);
+    mc0T = sendTorque(ADD_MC0_CTRL, motorTorque[0], forward, 1);
+    mc1T = sendTorque(ADD_MC1_CTRL, motorTorque[1], forward, 1);
 }
 
 } // namespace MC
