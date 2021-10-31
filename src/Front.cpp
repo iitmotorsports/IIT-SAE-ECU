@@ -281,6 +281,7 @@ void Front::run() {
     Cmd::setCommand(COMMAND_TOGGLE_CANBUS_SNIFF, toggleCanbusSniffer);
     Cmd::setCommand(COMMAND_SEND_ECHO, sendEchoMessage);
     Cmd::setCommand(COMMAND_TOGGLE_REVERSE, toggleMotorDirection);
+    Cmd::setCommand(COMMAND_PRINT_LOOKUP, Logging::printLookup);
 
     Heartbeat::beginReceiving();
 #ifdef CONF_ECU_DEBUG

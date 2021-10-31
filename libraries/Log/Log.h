@@ -247,6 +247,11 @@ struct Log_t {
  */
 void enableCanbusRelay();
 
+/**
+ * @brief Print the ZLib compressed string of the current lookup table to serial
+ */
+void printLookup();
+
 } // namespace Logging
 
 /**
@@ -255,15 +260,5 @@ void enableCanbusRelay();
  * @see Logging::Log_t for more info on logging
  */
 extern Logging::Log_t Log;
-
-/**
- * @brief The ZLib compressed lookup table
- */
-extern unsigned char log_lookup[];
-
-/**
- * @brief The length of log_lookup
- */
-extern unsigned int log_lookup_len;
 
 #endif // __ECU_LOGGING_H__

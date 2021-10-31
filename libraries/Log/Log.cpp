@@ -22,6 +22,17 @@
 #include "WProgram.h"
 
 namespace Logging {
+
+/**
+ * @brief The ZLib compressed lookup table
+ */
+extern unsigned char log_lookup[];
+
+/**
+ * @brief The length of log_lookup
+ */
+extern unsigned int log_lookup_len;
+
 #ifndef CONF_LOGGING_MAX_LEVEL
 #define CONF_LOGGING_MAX_LEVEL 4
 #endif
@@ -208,12 +219,16 @@ void Log_t::f(LOG_TAG TAG, LOG_MSG message, const uint32_t number) {
 #endif
 }
 
-static void _receiveLogBuffer(uint32_t address, volatile uint8_t * buf) {
+static void _receiveLogBuffer(uint32_t address, volatile uint8_t *buf) {
     Serial.write((uint8_t *)buf, 8); // IMPROVE: does dropping the volatile cause any issues?
 }
 
 void enableCanbusRelay() {
     Canbus::addCallback(ADD_AUX_LOGGING, _receiveLogBuffer);
+}
+
+void printLookup() {
+    Serial.write(log_lookup, log_lookup_len);
 }
 
 } // namespace Logging
@@ -233,4 +248,4 @@ uint32_t TAG2NUM(LOG_TAG tagValue) {
 }
 #endif
 
-// @endcond 
+// @endcond
