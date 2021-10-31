@@ -14,6 +14,8 @@ import sys
 import zlib
 import argparse
 
+LINE_LEN = 8
+
 
 def bin2c(data: bytes, var_name: str) -> str:
     """Generate a C char array from bytes
@@ -29,13 +31,19 @@ def bin2c(data: bytes, var_name: str) -> str:
     out: list[str] = []
     out.append(f"unsigned char {var_name}[] = {{")
 
-    chunks = [data[i : i + 12] for i in range(0, len(data), 12)]
+    chunks = [data[i : i + LINE_LEN] for i in range(0, len(data), LINE_LEN)]
 
-    for i, char in enumerate(chunks):
-        line = ", ".join([f"0x{c}" for c in char])
+    padding_len = 0
+
+    for i, nums in enumerate(chunks):
+        line = ", ".join([f"0x{c}" for c in nums])
         comma = "," if (i < len(chunks) - 1) else ""
+        padding_len = LINE_LEN - len(nums)
         out.append(f"    {line}{comma}")
 
+    if padding_len > 0:
+        out[len(out) - 1] += ", 0x00" * padding_len
+    # out[len(out) - 1] += ","
     out.append("};")
     out.append(f"unsigned int {var_name}_len = {len(data)};")
 
@@ -65,6 +73,7 @@ def main():
         file.write(out)
 
     return 0
+
 
 if __name__ == "__main__":
     sys.exit(main())
