@@ -256,4 +256,14 @@ void enableCanbusRelay();
  */
 extern Logging::Log_t Log;
 
+/**
+ * @brief The ZLib compressed lookup table
+ */
+extern unsigned char log_lookup[];
+
+/**
+ * @brief The length of log_lookup
+ */
+extern unsigned int log_lookup_len;
+
 #endif // __ECU_LOGGING_H__
