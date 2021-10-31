@@ -2,6 +2,7 @@ var files_dup =
 [
     [ "AeroServo.cpp", "_aero_servo_8cpp.html", null ],
     [ "AeroServo.h", "_aero_servo_8h.html", "_aero_servo_8h" ],
+    [ "bin2cc.py", "bin2cc_8py_source.html", null ],
     [ "Canbus.cpp", "_canbus_8cpp.html", null ],
     [ "Canbus.h", "_canbus_8h.html", "_canbus_8h" ],
     [ "CanBusAddresses.def", "_can_bus_addresses_8def.html", "_can_bus_addresses_8def" ],

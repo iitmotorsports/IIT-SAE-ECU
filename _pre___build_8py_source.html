@@ -773,17 +773,31 @@ $(document).ready(function(){initNavTree('_pre___build_8py_source.html',''); ini
 <div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;        <span class="keywordflow">if</span> newhash != prehash:</div>
 <div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;            print(Text.reallyImportant(<span class="stringliteral">&quot;\nNote: Output file values have changed&quot;</span>))</div>
 <div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160; </div>
-<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;    <span class="comment"># try:</span></div>
-<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;    <span class="comment">#     shutil.rmtree(SOURCE_DEST_NAME)</span></div>
-<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;    <span class="comment">#     shutil.rmtree(LIBRARIES_DEST_NAME)</span></div>
-<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;    <span class="comment"># except FileNotFoundError:</span></div>
-<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;    <span class="comment">#     pass</span></div>
-<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160; </div>
-<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160; </div>
-<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;<span class="keywordflow">if</span> __name__ == <span class="stringliteral">&quot;__main__&quot;</span>:</div>
-<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;    main()</div>
-<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160; </div>
-<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;<span class="comment"># @endcond</span></div>
+<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;    print(<span class="stringliteral">&quot;Converting LogMap 📃&quot;</span>)</div>
+<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;    subprocess.run(</div>
+<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;        [</div>
+<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;            <span class="stringliteral">&quot;python&quot;</span>,</div>
+<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;            <span class="stringliteral">&quot;bin2cc.py&quot;</span>,</div>
+<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;            <span class="stringliteral">&quot;-i&quot;</span>,</div>
+<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;            <span class="stringliteral">&quot;log_lookup.json&quot;</span>,</div>
+<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;            <span class="stringliteral">&quot;-o&quot;</span>,</div>
+<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;            <span class="stringliteral">&quot;C:\\GitHub\\SAEGit\\IIT-SAE-ECU\\build\\Pre_Build\\libraries\\Log\\log_lookup.cpp&quot;</span>,</div>
+<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;            <span class="stringliteral">&quot;-v&quot;</span>,</div>
+<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;            <span class="stringliteral">&quot;log_lookup&quot;</span>,</div>
+<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;        ]</div>
+<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;    )</div>
+<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160; </div>
+<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;    <span class="comment"># try:</span></div>
+<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;    <span class="comment">#     shutil.rmtree(SOURCE_DEST_NAME)</span></div>
+<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;    <span class="comment">#     shutil.rmtree(LIBRARIES_DEST_NAME)</span></div>
+<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;    <span class="comment"># except FileNotFoundError:</span></div>
+<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;    <span class="comment">#     pass</span></div>
+<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160; </div>
+<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160; </div>
+<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;<span class="keywordflow">if</span> __name__ == <span class="stringliteral">&quot;__main__&quot;</span>:</div>
+<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;    main()</div>
+<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160; </div>
+<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;<span class="comment"># @endcond</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
