@@ -2,14 +2,16 @@
     /*
      * |-----[ CONFIGURATION ]-----|
      */
-    "FRONT_TEENSY_PORT": "COM3", // Port representing the front teensy
-    "BACK_TEENSY_PORT": "COM10", // Port representing the back teensy
+    "FRONT_TEENSY_PORT": "COM16", // Port representing the front teensy
+    "BACK_TEENSY_PORT": "COM22", // Port representing the back teensy
     "BAUDRATE": "115200", // Baudrate to use with serial
     "CORE_SPEED": "180000000", // Speed at which the CPU will run (Hz)
     "USB_SETTING": "USB_SERIAL", // USB behavior of the core
     "CORE_NAME": "MK66FX1M0", // Specific name of the core being compiled
     "CORE": "teensy3", // The general name of the core being compiled
     "CPU": "cortex-m4", // The CPU to compile for
+    "GRAPH_ARG": "-g", // Uncomment to enable plotting of data
+    // "GRAPH_ARG": "", // Uncomment to disable plotting of data
     "TOOLCHAIN_OFFSET": "../TeensyToolchain", // Offset to the toolchain
     "ADDITIONAL_CMAKE_VARS": "-DCUSTOM_BUILD_PATH_PREFIX:STRING=build/Pre_Build/", // More defines passed to CMake
     /*

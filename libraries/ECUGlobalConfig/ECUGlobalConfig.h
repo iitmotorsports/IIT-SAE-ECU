@@ -54,6 +54,6 @@
 /**
  * @brief The radius of the car's wheels
  */
-#define CONF_CAR_WHEEL_RADIUS 1.8 // TODO: Get car wheel radius
+#define CONF_CAR_WHEEL_RADIUS 1.8 // 0.22f // TODO: Get car wheel radius
 
 #endif // __ECU_GLOBALCONFIG_H__
