@@ -1,5 +1,6 @@
 var namespace_logging =
 [
     [ "Log_t", "struct_logging_1_1_log__t.html", "struct_logging_1_1_log__t" ],
-    [ "enableCanbusRelay", "namespace_logging.html#a3402a2c8efbb932ddbe58e66b9cc550c", null ]
+    [ "enableCanbusRelay", "namespace_logging.html#a3402a2c8efbb932ddbe58e66b9cc550c", null ],
+    [ "printLookup", "namespace_logging.html#a92c0f46c8be76298719b50a39e9d8dfa", null ]
 ];

@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"class_circular___buffer.html#ab64048424075ff353179bf14b7fdfd7a":[4,0,7,35],
 "class_circular___buffer.html#ab66581802a8a842b047fb10bcab66c6c":[4,0,7,45],
 "class_circular___buffer.html#ac31f2612b3b2399ec25b16403886dd2c":[4,0,7,19],
 "class_circular___buffer.html#ac9d7b982e5ab8589f3d48a72b144c146":[4,0,7,25],
@@ -248,6 +249,5 @@ var NAVTREEINDEX1 =
 "namespace_heartbeat.html#aa0261c708b2a2636e941fb6969494556":[3,0,8,2],
 "namespace_logging.html":[3,0,9],
 "namespace_logging.html#a3402a2c8efbb932ddbe58e66b9cc550c":[3,0,9,1],
-"namespace_m_c.html":[3,0,10],
-"namespace_m_c.html#a27fe6e9fc5d1906069d9e60a24226dd0":[3,0,10,7]
+"namespace_logging.html#a92c0f46c8be76298719b50a39e9d8dfa":[3,0,9,2]
 };

@@ -106,6 +106,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a3402a2c8efbb932ddbe58e66b9cc550c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_logging.html#a3402a2c8efbb932ddbe58e66b9cc550c">enableCanbusRelay</a> ()</td></tr>
 <tr class="memdesc:a3402a2c8efbb932ddbe58e66b9cc550c"><td class="mdescLeft">&#160;</td><td class="mdescRight">If a set address is received through canbus, the data will be pushed to a buffer to be printed.  <a href="namespace_logging.html#a3402a2c8efbb932ddbe58e66b9cc550c">More...</a><br /></td></tr>
 <tr class="separator:a3402a2c8efbb932ddbe58e66b9cc550c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92c0f46c8be76298719b50a39e9d8dfa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_logging.html#a92c0f46c8be76298719b50a39e9d8dfa">printLookup</a> ()</td></tr>
+<tr class="memdesc:a92c0f46c8be76298719b50a39e9d8dfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print the ZLib compressed string of the current lookup table to serial.  <a href="namespace_logging.html#a92c0f46c8be76298719b50a39e9d8dfa">More...</a><br /></td></tr>
+<tr class="separator:a92c0f46c8be76298719b50a39e9d8dfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Namespace to isolate <a class="el" href="struct_logging_1_1_log__t.html" title="Base class used to log things over serial.">Log_t</a> struct. </p>
@@ -128,6 +131,26 @@ Functions</h2></td></tr>
 
 <p>If a set address is received through canbus, the data will be pushed to a buffer to be printed. </p>
 <dl class="section note"><dt>Note</dt><dd>The address is set in <a class="el" href="_can_bus_addresses_8def.html" title="Define incoming CAN line addresses.">CanBusAddresses.def</a> </dd></dl>
+
+</div>
+</div>
+<a id="a92c0f46c8be76298719b50a39e9d8dfa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92c0f46c8be76298719b50a39e9d8dfa">&#9670;&nbsp;</a></span>printLookup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Logging::printLookup </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Print the ZLib compressed string of the current lookup table to serial. </p>
+<dl class="section note"><dt>Note</dt><dd>First prints the length of the array as a ulong, then the actual map </dd></dl>
 
 </div>
 </div>

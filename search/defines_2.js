@@ -1,8 +1,9 @@
 var searchData=
 [
-  ['can_5faddress_363',['CAN_ADDRESS',['../_can_bus_addresses_8def.html#aa7a98234bac49a35b8868f32f0c98ce4',1,'CanBusAddresses.def']]],
-  ['command_5fenable_5fcharging_364',['COMMAND_ENABLE_CHARGING',['../_serial_command_8def.html#acd2377dc7760f61e114dca288ef00a01',1,'SerialCommand.def']]],
-  ['command_5fenter_5fmirror_5fset_365',['COMMAND_ENTER_MIRROR_SET',['../_serial_command_8def.html#ad23a35c56791edbbd2d76ab6322eb9b6',1,'SerialCommand.def']]],
+  ['can_5faddress_362',['CAN_ADDRESS',['../_can_bus_addresses_8def.html#aa7a98234bac49a35b8868f32f0c98ce4',1,'CanBusAddresses.def']]],
+  ['command_5fenable_5fcharging_363',['COMMAND_ENABLE_CHARGING',['../_serial_command_8def.html#acd2377dc7760f61e114dca288ef00a01',1,'SerialCommand.def']]],
+  ['command_5fenter_5fmirror_5fset_364',['COMMAND_ENTER_MIRROR_SET',['../_serial_command_8def.html#ad23a35c56791edbbd2d76ab6322eb9b6',1,'SerialCommand.def']]],
+  ['command_5fprint_5flookup_365',['COMMAND_PRINT_LOOKUP',['../_serial_command_8def.html#abc56a8a4f697dd773a75f29a1ceee4c8',1,'SerialCommand.def']]],
   ['command_5fsend_5fcanbus_5fmessage_366',['COMMAND_SEND_CANBUS_MESSAGE',['../_serial_command_8def.html#aa5b6e153c31053e2f3b20056d756846a',1,'SerialCommand.def']]],
   ['command_5fsend_5fecho_367',['COMMAND_SEND_ECHO',['../_serial_command_8def.html#a00d568f9eb66310630208237712d6db8',1,'SerialCommand.def']]],
   ['command_5ftoggle_5fcanbus_5fsniff_368',['COMMAND_TOGGLE_CANBUS_SNIFF',['../_serial_command_8def.html#a6ed8b34c57b2f9604d98871c44570c17',1,'SerialCommand.def']]],

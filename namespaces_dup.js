@@ -7,7 +7,8 @@ var namespaces_dup =
     ] ],
     [ "bin2cc", null, [
       [ "bin2c", "bin2cc_8py.html#a16c91f14778813d170676288e21f7482", null ],
-      [ "main", "bin2cc_8py.html#a41019d674d290ce4138c2c3734166477", null ]
+      [ "main", "bin2cc_8py.html#a41019d674d290ce4138c2c3734166477", null ],
+      [ "LINE_LEN", "bin2cc_8py.html#ab58e6eecfb75f7c01f2bba259f2589b1", null ]
     ] ],
     [ "Canbus", "namespace_canbus.html", "namespace_canbus" ],
     [ "Cmd", "namespace_cmd.html", [
