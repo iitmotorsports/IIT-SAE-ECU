@@ -21,8 +21,6 @@
 #include "LogConfig.def"
 #include "WProgram.h"
 
-namespace Logging {
-
 /**
  * @brief The ZLib compressed lookup table
  */
@@ -32,6 +30,8 @@ extern unsigned char log_lookup[];
  * @brief The length of log_lookup
  */
 extern unsigned int log_lookup_len;
+
+namespace Logging {
 
 #ifndef CONF_LOGGING_MAX_LEVEL
 #define CONF_LOGGING_MAX_LEVEL 4
@@ -228,6 +228,7 @@ void enableCanbusRelay() {
 }
 
 void printLookup() {
+    Serial.write(log_lookup_len);
     Serial.write(log_lookup, log_lookup_len);
 }
 

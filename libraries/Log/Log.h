@@ -249,6 +249,7 @@ void enableCanbusRelay();
 
 /**
  * @brief Print the ZLib compressed string of the current lookup table to serial
+ * @note First prints the length of the array with a uint, then the actual map
  */
 void printLookup();
 
