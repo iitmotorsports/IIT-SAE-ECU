@@ -298,8 +298,11 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             }
 
             MC::setTorque(pAVG, breakVal, steerVal);
-
+#if TESTING != BACK_ECU
             if (++counter > 128) {
+#else
+            if (++counter > 10) {
+#endif
                 counter = 0;
                 Log.i(ID, "Pedal 0", pedal0);
                 Log.i(ID, "Pedal 1", pedal1);
