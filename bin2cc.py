@@ -45,6 +45,7 @@ def bin2c(data: bytes, var_name: str) -> str:
         out[len(out) - 1] += ", 0x00" * padding_len
     # out[len(out) - 1] += ","
     out.append("};")
+    out.append(f"unsigned int {var_name}_pad_len = {len(data)+padding_len};")
     out.append(f"unsigned int {var_name}_len = {len(data)};")
 
     return "\n".join(out)

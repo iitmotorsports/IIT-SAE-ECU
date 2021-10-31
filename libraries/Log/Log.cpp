@@ -27,9 +27,14 @@
 extern unsigned char log_lookup[];
 
 /**
- * @brief The length of log_lookup
+ * @brief The length of log_lookup's data
  */
 extern unsigned int log_lookup_len;
+
+/**
+ * @brief The length of log_lookup's data with padding
+ */
+extern unsigned int log_lookup_pad_len;
 
 namespace Logging {
 
@@ -228,8 +233,12 @@ void enableCanbusRelay() {
 }
 
 void printLookup() {
-    Serial.write(log_lookup_len);
-    Serial.write(log_lookup, log_lookup_len);
+    noInterrupts();
+    uint64_t ullen = log_lookup_len;
+    uint8_t *bytes = (uint8_t *)&(ullen);
+    Serial.write(bytes, 8);
+    Serial.write(log_lookup, log_lookup_pad_len);
+    interrupts();
 }
 
 } // namespace Logging
