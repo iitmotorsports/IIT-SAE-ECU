@@ -684,18 +684,18 @@ def main():
             print(Text.reallyImportant("\nNote: Output file values have changed"))
 
     print("Converting LogMap 📃")
-    subprocess.run(
+    subprocess.Popen(
         [
             "python",
             "bin2cc.py",
             "-i",
             "log_lookup.json",
             "-o",
-            "C:\\GitHub\\SAEGit\\IIT-SAE-ECU\\build\\Pre_Build\\libraries\\Log\\log_lookup.cpp",
+            f"{WORKING_DIRECTORY_OFFSET}{LIB_PATH}\\log_lookup.cpp",
             "-v",
             "log_lookup",
         ]
-    )
+    ).wait()
 
     # try:
     #     shutil.rmtree(SOURCE_DEST_NAME)
