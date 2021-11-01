@@ -234,8 +234,10 @@ void enableCanbusRelay() {
 
 void printLookup() {
     noInterrupts();
-    uint64_t ullen = log_lookup_len;
+    uint64_t ullen = 0;
     uint8_t *bytes = (uint8_t *)&(ullen);
+    Serial.write(bytes, 8);
+    ullen = log_lookup_len;
     Serial.write(bytes, 8);
     Serial.write(log_lookup, log_lookup_pad_len);
     interrupts();

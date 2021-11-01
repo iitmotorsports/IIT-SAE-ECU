@@ -299,6 +299,7 @@ void Front::run() {
 #if TESTING != FRONT_ECU
     while (!Heartbeat::checkBeat()) {
         delay(500);
+        Cmd::receiveCommand();
     }
 #endif
 
