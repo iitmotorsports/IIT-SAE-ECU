@@ -315,18 +315,18 @@ void Front::run() {
             Cmd::receiveCommand();
 #ifndef SILENT
             Log(ID, "Current Motor Speed:", motorSpeed(), true);
-#endif
-        }
-        if (timeElapsedMidHigh >= INTERVAL_MED_HIGH_PRIORITY) { // MedHigh priority updates
-            timeElapsedMidHigh = 0;
-            updateCurrentState();
-            hasBeat = Heartbeat::checkBeat();
             int pedal0, pedal1;
             Log.i(ID, "Brake", Pins::getPinValue(PINS_FRONT_BRAKE), true);
             Log.i(ID, "Steering", Pins::getPinValue(PINS_FRONT_STEER), true);
             Log.i(ID, "Pedal 0", (pedal0 = Pins::getPinValue(PINS_FRONT_PEDAL0)), true);
             Log.i(ID, "Pedal 1", (pedal1 = Pins::getPinValue(PINS_FRONT_PEDAL1)), true);
             Log.d(ID, "Pedal AVG", (pedal0 + pedal1) / 2, true);
+#endif
+        }
+        if (timeElapsedMidHigh >= INTERVAL_MED_HIGH_PRIORITY) { // MedHigh priority updates
+            timeElapsedMidHigh = 0;
+            updateCurrentState();
+            hasBeat = Heartbeat::checkBeat();
         }
         if (timeElapsedMidLow >= INTERVAL_MED_LOW_PRIORITY) { // MedLow priority updates
             timeElapsedMidLow = 0;
