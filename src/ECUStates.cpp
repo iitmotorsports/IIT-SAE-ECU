@@ -290,8 +290,6 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             // NOTE: pedal has a threshold value
             if (pAVG >= 100 && (float)abs(pedal1 - pedal0) / PINS_ANALOG_HIGH > 0.1f) {
                 Log.e(ID, "Pedal value offset > 10%");
-                Log.i(ID, "Pedal 0", pedal0);
-                Log.i(ID, "Pedal 1", pedal1);
 #if TESTING != BACK_ECU
                 return DrivingModeFault();
 #endif
@@ -304,15 +302,9 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             if (++counter > 10) {
 #endif
                 counter = 0;
-                Log.i(ID, "Pedal 0", pedal0);
-                Log.i(ID, "Pedal 1", pedal1);
-                Log.d(ID, "Pedal AVG", pAVG);
-                Log.d(ID, "Pedal value", MC::getLastPedalValue());
-                Log.i(ID, "Brake value:", breakVal);
-                Log.i(ID, "Steer value:", steerVal);
-                Log.i(ID, "Aero servo position:", Aero::getServoValue());
-                Log.i(ID, "Last MC0 Torque Value:", MC::getLastTorqueValue(true));
-                Log.i(ID, "Last MC1 Torque Value:", MC::getLastTorqueValue(false));
+                Log.i(ID, "Aero servo position:", Aero::getServoValue(), true);
+                Log.i(ID, "Last MC0 Torque Value:", MC::getLastTorqueValue(true), true);
+                Log.i(ID, "Last MC1 Torque Value:", MC::getLastTorqueValue(false), true);
                 if (Fault::softFault()) {
                     Fault::logFault();
                 }

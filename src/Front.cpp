@@ -120,8 +120,8 @@ static int32_t motorSpeed() {                          // TODO: replace with Mot
     int16_t MC_Rpm_Val_1 = MC1_RPM_Buffer.getShort(2); // Bytes 2-3 : Angular Velocity
     float MC_Spd_Val_0 = wheelRadius * 2 * 3.1415926536 / 60 * MC_Rpm_Val_0;
     float MC_Spd_Val_1 = wheelRadius * 2 * 3.1415926536 / 60 * MC_Rpm_Val_1;
-    Log.d(ID, "Motor 0 Speed", MC_Spd_Val_0);
-    Log.d(ID, "Motor 1 Speed", MC_Spd_Val_1);
+    Log.d(ID, "Motor 0 Speed", MC_Spd_Val_0, true);
+    Log.d(ID, "Motor 1 Speed", MC_Spd_Val_1, true);
     return (MC_Spd_Val_0 + MC_Spd_Val_1) / 2;
 }
 
@@ -314,13 +314,19 @@ void Front::run() {
             timeElapsedHigh = 0;
             Cmd::receiveCommand();
 #ifndef SILENT
-            Log(ID, "Current Motor Speed:", motorSpeed());
+            Log(ID, "Current Motor Speed:", motorSpeed(), true);
 #endif
         }
         if (timeElapsedMidHigh >= INTERVAL_MED_HIGH_PRIORITY) { // MedHigh priority updates
             timeElapsedMidHigh = 0;
             updateCurrentState();
             hasBeat = Heartbeat::checkBeat();
+            int pedal0, pedal1;
+            Log.i(ID, "Brake", Pins::getPinValue(PINS_FRONT_BRAKE), true);
+            Log.i(ID, "Steering", Pins::getPinValue(PINS_FRONT_STEER), true);
+            Log.i(ID, "Pedal 0", (pedal0 = Pins::getPinValue(PINS_FRONT_PEDAL0)), true);
+            Log.i(ID, "Pedal 1", (pedal1 = Pins::getPinValue(PINS_FRONT_PEDAL1)), true);
+            Log.d(ID, "Pedal AVG", (pedal0 + pedal1) / 2, true);
         }
         if (timeElapsedMidLow >= INTERVAL_MED_LOW_PRIORITY) { // MedLow priority updates
             timeElapsedMidLow = 0;
@@ -331,7 +337,7 @@ void Front::run() {
                 on = Pins::getCanPinValue(PINS_INTERNAL_START);
             }
 #ifndef SILENT
-            Log(ID, "Start Light", on);
+            Log(ID, "Start Light", on, true);
 #endif
             Pins::setPinValue(PINS_FRONT_START_LIGHT, on);
 
@@ -346,27 +352,27 @@ void Front::run() {
 
 #ifndef SILENT
             // Motor controllers
-            Log(ID, "MC0 DC BUS Voltage:", MC0Voltage());
-            Log(ID, "MC1 DC BUS Voltage:", MC1Voltage());
-            Log(ID, "MC0 DC BUS Current:", MC0Current());
-            Log(ID, "MC1 DC BUS Current:", MC1Current());
-            Log(ID, "MC0 Board Temp:", MC0BoardTemp());
-            Log(ID, "MC1 Board Temp:", MC1BoardTemp());
-            Log(ID, "MC0 Motor Temp:", MC0MotorTemp());
-            Log(ID, "MC1 Motor Temp:", MC1MotorTemp());
-            Log(ID, "MC Current Power:", MCPowerValue());
+            Log(ID, "MC0 DC BUS Voltage:", MC0Voltage(), true);
+            Log(ID, "MC1 DC BUS Voltage:", MC1Voltage(), true);
+            Log(ID, "MC0 DC BUS Current:", MC0Current(), true);
+            Log(ID, "MC1 DC BUS Current:", MC1Current(), true);
+            Log(ID, "MC0 Board Temp:", MC0BoardTemp(), true);
+            Log(ID, "MC1 Board Temp:", MC1BoardTemp(), true);
+            Log(ID, "MC0 Motor Temp:", MC0MotorTemp(), true);
+            Log(ID, "MC1 Motor Temp:", MC1MotorTemp(), true);
+            Log(ID, "MC Current Power:", MCPowerValue(), true);
 
             // BMS
-            Log(ID, "BMS State Of Charge:", BMSSOC());
-            Log(ID, "BMS Immediate Voltage:", BMSVOLT());
-            Log(ID, "BMS Pack Average Current:", BMSAMP());
-            Log(ID, "BMS Pack Highest Temp:", BMSTempHigh());
-            Log(ID, "BMS Pack Lowest Temp:", BMSTempLow());
-            Log(ID, "BMS Discharge current limit:", BMSDischargeCurrentLimit());
-            Log(ID, "BMS Charge current limit:", BMSChargeCurrentLimit());
+            Log(ID, "BMS State Of Charge:", BMSSOC(), true);
+            Log(ID, "BMS Immediate Voltage:", BMSVOLT(), true);
+            Log(ID, "BMS Pack Average Current:", BMSAMP(), true);
+            Log(ID, "BMS Pack Highest Temp:", BMSTempHigh(), true);
+            Log(ID, "BMS Pack Lowest Temp:", BMSTempLow(), true);
+            Log(ID, "BMS Discharge current limit:", BMSDischargeCurrentLimit(), true);
+            Log(ID, "BMS Charge current limit:", BMSChargeCurrentLimit(), true);
 
             // General
-            Log(ID, "Fault State", Pins::getCanPinValue(PINS_INTERNAL_GEN_FAULT));
+            Log(ID, "Fault State", Pins::getCanPinValue(PINS_INTERNAL_GEN_FAULT), true);
 #endif
         }
 #endif

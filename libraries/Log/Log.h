@@ -197,48 +197,54 @@ struct Log_t {
      * @param TAG Variable of type `LOG_TAG`
      * @param message Inline string that should be printed
      * @param number Any number that should be printed next to the string
+     * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
      */
-    void operator()(LOG_TAG TAG, LOG_MSG message, const uint32_t number);
+    void operator()(LOG_TAG TAG, LOG_MSG message, const uint32_t number, bool mediate = false);
     /**
      * @brief Log a string and a variable number using a debug tag
      * 
      * @param TAG Variable of type `LOG_TAG`
      * @param message Inline string that should be printed
      * @param number Any number that should be printed next to the string
+     * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
      */
-    void d(LOG_TAG TAG, LOG_MSG message, const uint32_t number);
+    void d(LOG_TAG TAG, LOG_MSG message, const uint32_t number, bool mediate = false);
     /**
      * @brief Log a string and a variable number using an info tag
      * 
      * @param TAG Variable of type `LOG_TAG`
      * @param message Inline string that should be printed
      * @param number Any number that should be printed next to the string
+     * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
      */
-    void i(LOG_TAG TAG, LOG_MSG message, const uint32_t number);
+    void i(LOG_TAG TAG, LOG_MSG message, const uint32_t number, bool mediate = false);
     /**
      * @brief Log a string and a variable number using a warning tag
      * 
      * @param TAG Variable of type `LOG_TAG`
      * @param message Inline string that should be printed
      * @param number Any number that should be printed next to the string
+     * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
      */
-    void w(LOG_TAG TAG, LOG_MSG message, const uint32_t number);
+    void w(LOG_TAG TAG, LOG_MSG message, const uint32_t number, bool mediate = false);
     /**
      * @brief Log a string and a variable number using an error tag
      * 
      * @param TAG Variable of type `LOG_TAG`
      * @param message Inline string that should be printed
      * @param number Any number that should be printed next to the string
+     * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
      */
-    void e(LOG_TAG TAG, LOG_MSG message, const uint32_t number);
+    void e(LOG_TAG TAG, LOG_MSG message, const uint32_t number, bool mediate = false);
     /**
      * @brief Log a string and a variable number using a fatal tag
      * 
      * @param TAG Variable of type `LOG_TAG`
      * @param message Inline string that should be printed
      * @param number Any number that should be printed next to the string
+     * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
      */
-    void f(LOG_TAG TAG, LOG_MSG message, const uint32_t number);
+    void f(LOG_TAG TAG, LOG_MSG message, const uint32_t number, bool mediate = false);
 };
 
 /**
