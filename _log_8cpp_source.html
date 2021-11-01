@@ -297,28 +297,30 @@ $(document).ready(function(){initNavTree('_log_8cpp_source.html',''); initResiza
 <div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160; </div>
 <div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_logging.html#a92c0f46c8be76298719b50a39e9d8dfa">printLookup</a>() {</div>
 <div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    noInterrupts();</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    uint64_t ullen = log_lookup_len;</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    uint64_t ullen = 0;</div>
 <div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    uint8_t *bytes = (uint8_t *)&amp;(ullen);</div>
 <div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    Serial.write(bytes, 8);</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    Serial.write(log_lookup, log_lookup_pad_len);</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    interrupts();</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;}</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160; </div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;} <span class="comment">// namespace Logging</span></div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    ullen = log_lookup_len;</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    Serial.write(bytes, 8);</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    Serial.write(log_lookup, log_lookup_pad_len);</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    interrupts();</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;}</div>
 <div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160; </div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;<a class="code" href="struct_logging_1_1_log__t.html">Logging::Log_t</a> <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>;</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160; </div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;<span class="preprocessor">#if CONF_LOGGING_MAPPED_MODE &gt; 0</span></div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;uint32_t <a class="code" href="_log_8h.html#a0acd70772d752e8468d733cbda6a1b31">TAG2NUM</a>(<a class="code" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a> tagValue) {</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    <span class="keywordflow">return</span> tagValue;</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;}</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;uint32_t <a class="code" href="_log_8h.html#a0acd70772d752e8468d733cbda6a1b31">TAG2NUM</a>(<a class="code" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a> tagValue) {</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;}</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160; </div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;<span class="comment">// @endcond</span></div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;} <span class="comment">// namespace Logging</span></div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160; </div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;<a class="code" href="struct_logging_1_1_log__t.html">Logging::Log_t</a> <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>;</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160; </div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;<span class="preprocessor">#if CONF_LOGGING_MAPPED_MODE &gt; 0</span></div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;uint32_t <a class="code" href="_log_8h.html#a0acd70772d752e8468d733cbda6a1b31">TAG2NUM</a>(<a class="code" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a> tagValue) {</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    <span class="keywordflow">return</span> tagValue;</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;}</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;uint32_t <a class="code" href="_log_8h.html#a0acd70772d752e8468d733cbda6a1b31">TAG2NUM</a>(<a class="code" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a> tagValue) {</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;}</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160; </div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;<span class="comment">// @endcond</span></div>
 <div class="ttc" id="a_canbus_8h_html"><div class="ttname"><a href="_canbus_8h.html">Canbus.h</a></div><div class="ttdoc">FlexCAN_T4 wrapper.</div></div>
 <div class="ttc" id="a_e_c_u_global_config_8h_html"><div class="ttname"><a href="_e_c_u_global_config_8h.html">ECUGlobalConfig.h</a></div><div class="ttdoc">Configure global build properties.</div></div>
 <div class="ttc" id="a_log_8h_html"><div class="ttname"><a href="_log_8h.html">Log.h</a></div><div class="ttdoc">Special logging functionality.</div></div>
