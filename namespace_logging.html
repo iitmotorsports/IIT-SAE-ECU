@@ -150,7 +150,8 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Print the ZLib compressed string of the current lookup table to serial. </p>
-<dl class="section note"><dt>Note</dt><dd>First prints 8 zero bytes, then the length of the array as a ulong, then the actual map </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>First prints 8 zero bytes, then the length of the array as a ulong, then the actual map. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd><b>A byte of serial data must be sent back after 8 bytes of the map is received, this is to help mediate the amount of data sent</b> </dd></dl>
 
 </div>
 </div>

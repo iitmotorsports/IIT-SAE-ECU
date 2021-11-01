@@ -6,7 +6,7 @@ var namespaces_dup =
       [ "setup", "namespace_aero.html#aaf24879c16df328a981323313c41f1ba", null ]
     ] ],
     [ "bin2cc", null, [
-      [ "bin2c", "bin2cc_8py.html#a16c91f14778813d170676288e21f7482", null ],
+      [ "bin2cc", "bin2cc_8py.html#a41cce3a3bd01b4b00004bb16c6ee26c2", null ],
       [ "main", "bin2cc_8py.html#a41019d674d290ce4138c2c3734166477", null ],
       [ "LINE_LEN", "bin2cc_8py.html#ab58e6eecfb75f7c01f2bba259f2589b1", null ]
     ] ],
