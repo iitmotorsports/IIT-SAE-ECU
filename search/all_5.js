@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['e_63',['e',['../struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39',1,'Logging::Log_t::e(LOG_TAG TAG, LOG_MSG message)'],['../struct_logging_1_1_log__t.html#a427dd69f8de7d072ef4ff631abbf1d89',1,'Logging::Log_t::e(LOG_TAG TAG, LOG_MSG message, const uint32_t number)']]],
+  ['e_63',['e',['../struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39',1,'Logging::Log_t::e(LOG_TAG TAG, LOG_MSG message)'],['../struct_logging_1_1_log__t.html#ae24341ba6e630491b560838ab7c430d6',1,'Logging::Log_t::e(LOG_TAG TAG, LOG_MSG message, const uint32_t number, bool mediate=false)']]],
   ['e_5fcontinue_64',['E_CONTINUE',['../namespace_state.html#a0ef38e9cb909ddbc25ed4489b46be084aa7e59f744dfadff783b5b70960bc8db4',1,'State']]],
   ['e_5ferror_65',['E_ERROR',['../namespace_state.html#a0ef38e9cb909ddbc25ed4489b46be084aa40927f939fb1f3a187007608cc2aa8c',1,'State']]],
   ['e_5ffatal_66',['E_FATAL',['../namespace_state.html#a0ef38e9cb909ddbc25ed4489b46be084ad89eff4ec7b3f723eb12f9b6b4323fba',1,'State']]],

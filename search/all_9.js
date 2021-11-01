@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['i_119',['i',['../struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613',1,'Logging::Log_t::i(LOG_TAG TAG, LOG_MSG message)'],['../struct_logging_1_1_log__t.html#a0f7f7bdbb037817df0539fe49e59bce7',1,'Logging::Log_t::i(LOG_TAG TAG, LOG_MSG message, const uint32_t number)']]],
+  ['i_119',['i',['../struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613',1,'Logging::Log_t::i(LOG_TAG TAG, LOG_MSG message)'],['../struct_logging_1_1_log__t.html#af5e4a9dbfed92335aa0fe7b31b016b01',1,'Logging::Log_t::i(LOG_TAG TAG, LOG_MSG message, const uint32_t number, bool mediate=false)']]],
   ['id_120',['ID',['../struct_state_1_1_state__t.html#a70bcb88c1c3ae44d32f5624a683164e9',1,'State::State_t']]],
   ['id_5ffault_121',['ID_FAULT',['../_fault_config_8def.html#a65134624a3ade585cbb1be89af77e5b3',1,'FaultConfig.def']]],
   ['init_122',['init',['../struct_canbus_1_1_buffer.html#abe363f6d20b365f1ecfe819597107742',1,'Canbus::Buffer']]],

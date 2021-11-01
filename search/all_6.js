@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['f_83',['f',['../struct_logging_1_1_log__t.html#ad171024fa0f93e6117cd7b0aaf76cb87',1,'Logging::Log_t::f(LOG_TAG TAG, LOG_MSG message)'],['../struct_logging_1_1_log__t.html#aab688543874065f44288c639fa762569',1,'Logging::Log_t::f(LOG_TAG TAG, LOG_MSG message, const uint32_t number)']]],
+  ['f_83',['f',['../struct_logging_1_1_log__t.html#ad171024fa0f93e6117cd7b0aaf76cb87',1,'Logging::Log_t::f(LOG_TAG TAG, LOG_MSG message)'],['../struct_logging_1_1_log__t.html#aa7f63fa896058c95531dc8dd46590c4b',1,'Logging::Log_t::f(LOG_TAG TAG, LOG_MSG message, const uint32_t number, bool mediate=false)']]],
   ['fault_84',['Fault',['../namespace_fault.html',1,'']]],
   ['faultconfig_2edef_85',['FaultConfig.def',['../_fault_config_8def.html',1,'']]],
   ['faults_2ecpp_86',['Faults.cpp',['../_faults_8cpp.html',1,'']]],
