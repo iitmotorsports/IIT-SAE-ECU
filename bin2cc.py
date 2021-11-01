@@ -17,7 +17,7 @@ import argparse
 LINE_LEN = 8
 
 
-def bin2c(data: bytes, var_name: str) -> str:
+def bin2cc(data: bytes, var_name: str) -> str:
     """Generate a C char array from bytes
     Args:
         data (bytes): The bytes
@@ -26,6 +26,12 @@ def bin2c(data: bytes, var_name: str) -> str:
     Returns:
         str: The string of C code
     """
+
+    # zlib compress data
+    ulen = len(data)
+    data = bytes(data, "UTF-8")
+    data = zlib.compress(data, 9)
+
     data = data.hex(" ", 1).split(" ")
 
     out: list[str] = []
@@ -46,6 +52,7 @@ def bin2c(data: bytes, var_name: str) -> str:
     # out[len(out) - 1] += ","
     out.append("};")
     out.append(f"unsigned int {var_name}_pad_len = {len(data)+padding_len};")
+    out.append(f"unsigned int {var_name}_uncmp_len = {ulen};")
     out.append(f"unsigned int {var_name}_len = {len(data)};")
 
     return "\n".join(out)
@@ -65,11 +72,7 @@ def main():
     with open(args.input, "r", encoding="UTF-8") as file:
         data = file.read()
 
-    # Compress Data
-    data = bytes(data, "UTF-8")
-    data = zlib.compress(data, 9)
-
-    out = bin2c(data, args.var)
+    out = bin2cc(data, args.var)
     with open(args.out, "w", encoding="UTF-8") as file:
         file.write(out)
 

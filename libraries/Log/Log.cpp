@@ -36,6 +36,11 @@ extern unsigned int log_lookup_len;
  */
 extern unsigned int log_lookup_pad_len;
 
+/**
+ * @brief The length of log_lookup's data when uncompressed
+ */
+extern unsigned int log_lookup_uncmp_len;
+
 namespace Logging {
 
 #ifndef CONF_LOGGING_MAX_LEVEL
@@ -233,13 +238,28 @@ void enableCanbusRelay() {
 }
 
 void printLookup() {
+    static elapsedMillis timeElapsed;
     noInterrupts();
+    Serial.flush();
     uint64_t ullen = 0;
     uint8_t *bytes = (uint8_t *)&(ullen);
     Serial.write(bytes, 8);
     ullen = log_lookup_len;
     Serial.write(bytes, 8);
-    Serial.write(log_lookup, log_lookup_pad_len);
+    ullen = log_lookup_uncmp_len;
+    Serial.write(bytes, 8);
+    timeElapsed = 0;
+    for (size_t i = 0; i < log_lookup_pad_len; i += 8) {
+        Serial.write(log_lookup + i, 8);
+        Serial.flush();
+        while (!Serial.available()) {
+            if (timeElapsed > 31000) { // Entire process should take less than 30s
+                interrupts();
+                return;
+            }
+        }
+        Serial.read();
+    }
     interrupts();
 }
 

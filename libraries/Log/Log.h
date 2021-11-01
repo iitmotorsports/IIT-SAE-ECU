@@ -249,7 +249,8 @@ void enableCanbusRelay();
 
 /**
  * @brief Print the ZLib compressed string of the current lookup table to serial
- * @note First prints 8 zero bytes, then the length of the array as a ulong, then the actual map
+ * @note First prints 8 zero bytes, then the length of the array as a ulong, then the actual map.
+ * @warning **A byte of serial data must be sent back after 8 bytes of the map is received, this is to help mediate the amount of data sent**
  */
 void printLookup();
 
