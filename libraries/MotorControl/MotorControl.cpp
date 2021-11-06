@@ -15,6 +15,7 @@
 #include "Canbus.h"
 #include "ECUGlobalConfig.h"
 #include "Pins.h"
+#include "SerialVar.h"
 #include "Util.h"
 #include "log.h"
 #include "stdint.h"
@@ -48,7 +49,10 @@ static bool init = false;
 static bool forward = true;
 
 static double pAccum = 0, bAccum = 0, sAccum = 0;
+
 float TVAggression = 0.8f;
+
+// SerialVar::SerialVarObj TVAggressiona = SerialVar::variables[SERIALVAR_TORQUE_VECTORING_AGGRESSION];
 
 static Canbus::Buffer MC0_RPM_Buffer(ADD_MC0_RPM);
 static Canbus::Buffer MC1_RPM_Buffer(ADD_MC1_RPM);
@@ -89,8 +93,6 @@ static void torqueVector(int pedal, int brake, int steer) {
     double _pedal = pedal, _brake = brake, _steer = steer;
 
     normalizeInput(&_pedal, &_brake, &_steer);
-
-    // clamp(pow(cos(TVAggression * (_steer / (Euler - abs(_steer)))), 5), 0, 1); pi/2 steer map
 
     // TV V1
     if (_steer < 0) {

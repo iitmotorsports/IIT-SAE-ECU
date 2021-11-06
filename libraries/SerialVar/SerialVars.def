@@ -1,0 +1,20 @@
+/**
+ * @file SerialVars.def
+ * @author IR
+ * @brief Serial Variable definitions
+ * @version 0.1
+ * @date 2021-11-06
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
+#ifndef __ECU_SERIALVARS_DEF__
+#define __ECU_SERIALVARS_DEF__
+
+#define SERIALVAR_TORQUE_VECTORING_AGGRESSION 0
+
+#define SERIALVARS \
+    X(float, SERIALVAR_TORQUE_VECTORING_AGGRESSION)
+
+#endif // __ECU_SERIALVARS_DEF__
