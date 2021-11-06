@@ -303,12 +303,13 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
 #endif
                 counter = 0;
                 Log.i(ID, "Aero servo position:", Aero::getServoValue(), true);
-                Log.i(ID, "Last MC0 Torque Value:", MC::getLastTorqueValue(true), true);
-                Log.i(ID, "Last MC1 Torque Value:", MC::getLastTorqueValue(false), true);
                 if (Fault::softFault()) {
                     Fault::logFault();
                 }
             }
+
+            Log.i(ID, "Last MC0 Torque Value:", MC::getLastTorqueValue(true), true);
+            Log.i(ID, "Last MC1 Torque Value:", MC::getLastTorqueValue(false), true);
 
             Aero::run(breakVal, steerVal);
         }

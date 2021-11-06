@@ -13,17 +13,6 @@
 #define __ECU_UTIL_H__
 
 /**
- * @brief Interpolate a value given the parameters
- * 
- * @param t 
- * @param i 
- * @param f 
- * @param d 
- * @return float Interpolated value 
- */
-float interpolate(float t, float i, float f, float d);
-
-/**
  * @brief Map a value from one range to another while clamping the value to boundaries
  * 
  * @param x The value to be mapped

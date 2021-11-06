@@ -64,9 +64,8 @@ void enableMotorBeating(bool enable);
  * @param torque The torque to set the motor at
  * @param direction direction of the motor
  * @param enableBit whether the motor should be enabled
- * @return int the final torque percent being sent
  */
-int sendTorque(uint32_t MC_ADD, int torque, bool direction, bool enableBit);
+void sendTorque(uint32_t MC_ADD, int torque, bool direction, bool enableBit);
 
 /**
  * @brief Set the direction of the motors
