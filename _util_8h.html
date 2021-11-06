@@ -85,6 +85,7 @@ $(document).ready(function(){initNavTree('_util_8h.html',''); initResizable(); }
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Util.h File Reference</div>  </div>
@@ -96,8 +97,20 @@ $(document).ready(function(){initNavTree('_util_8h.html',''); initResizable(); }
 
 <p><a href="_util_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a6c49ba1c50c86cfbf5661fa23db457b7"><td class="memItemLeft" align="right" valign="top"><a id="a6c49ba1c50c86cfbf5661fa23db457b7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>Euler</b>&#160;&#160;&#160;exp(1.0)</td></tr>
+<tr class="separator:a6c49ba1c50c86cfbf5661fa23db457b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c834e8c33ee4b3eed8802b969723760"><td class="memItemLeft" align="right" valign="top"><a id="a0c834e8c33ee4b3eed8802b969723760"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>clamp</b>(v,  m,  x)&#160;&#160;&#160;min(max(v, m), x)</td></tr>
+<tr class="separator:a0c834e8c33ee4b3eed8802b969723760"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:aae1798680f5232f66c8c5a14b5aa17a7"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_util_8h.html#aae1798680f5232f66c8c5a14b5aa17a7">EMAvg</a> (double lastVal, double newVal, int memCount)</td></tr>
+<tr class="memdesc:aae1798680f5232f66c8c5a14b5aa17a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exponential moving average.  <a href="_util_8h.html#aae1798680f5232f66c8c5a14b5aa17a7">More...</a><br /></td></tr>
+<tr class="separator:aae1798680f5232f66c8c5a14b5aa17a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4bed8992f080fb6157e663b1d339136f"><td class="memTemplParams" colspan="2">template&lt;class T , class A , class B , class C , class D &gt; </td></tr>
 <tr class="memitem:a4bed8992f080fb6157e663b1d339136f"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_util_8h.html#a4bed8992f080fb6157e663b1d339136f">cMap</a> (T x, A inMin, B inMax, C outMin, D outMax)</td></tr>
 <tr class="memdesc:a4bed8992f080fb6157e663b1d339136f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Map a value from one range to another while clamping the value to boundaries.  <a href="_util_8h.html#a4bed8992f080fb6157e663b1d339136f">More...</a><br /></td></tr>
@@ -171,7 +184,54 @@ template&lt;class T , class A , class B , class C , class D &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The mapped value for x </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_util_8h_source.html#l00026">26</a> of file <a class="el" href="_util_8h_source.html">Util.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_util_8h_source.html#l00039">39</a> of file <a class="el" href="_util_8h_source.html">Util.h</a>.</p>
+
+</div>
+</div>
+<a id="aae1798680f5232f66c8c5a14b5aa17a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae1798680f5232f66c8c5a14b5aa17a7">&#9670;&nbsp;</a></span>EMAvg()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double EMAvg </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>lastVal</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>newVal</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>memCount</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Exponential moving average. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">lastVal</td><td>The last value that was returned </td></tr>
+    <tr><td class="paramname">newVal</td><td>The new value that should be added to the average </td></tr>
+    <tr><td class="paramname">memCount</td><td>The total number of <em>samples</em> to be averaged </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>double The EMA of the last memCount values </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_util_8cpp_source.html#l00003">3</a> of file <a class="el" href="_util_8cpp_source.html">Util.cpp</a>.</p>
 
 </div>
 </div>

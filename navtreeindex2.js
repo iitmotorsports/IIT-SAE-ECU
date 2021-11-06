@@ -1,5 +1,9 @@
 var NAVTREEINDEX2 =
 {
+"namespace_logging.html":[3,0,9],
+"namespace_logging.html#a3402a2c8efbb932ddbe58e66b9cc550c":[3,0,9,1],
+"namespace_logging.html#a92c0f46c8be76298719b50a39e9d8dfa":[3,0,9,2],
+"namespace_m_c.html":[3,0,10],
 "namespace_m_c.html#a043a760e6f9eaefc9d13ab2f7f1b342c":[3,0,10,5],
 "namespace_m_c.html#a27fe6e9fc5d1906069d9e60a24226dd0":[3,0,10,7],
 "namespace_m_c.html#a2fb464e85bca01fc06a2b5b59c83d9b3":[3,0,10,6],
@@ -123,6 +127,5 @@ var NAVTREEINDEX2 =
 "struct_state_1_1_state__t.html#aeae12a5d68f5c0d84c8c85160de43fd7":[4,0,2,0,2],
 "struct_state_1_1_state__t.html#af730abedf662a8e251b5839b2ad6e932":[4,0,2,0,1],
 "upload_paste_8py.html":[5,0,50],
-"upload_paste_8py_source.html":[5,0,50],
-"":[3,0,1]
+"upload_paste_8py_source.html":[5,0,50]
 };

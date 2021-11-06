@@ -14,10 +14,11 @@ var searchData=
   ['ecubuildpick_2epy_74',['ECUBuildPick.py',['../_e_c_u_build_pick_8py.html',1,'']]],
   ['ecuglobalconfig_2eh_75',['ECUGlobalConfig.h',['../_e_c_u_global_config_8h.html',1,'']]],
   ['ecustates_76',['ECUStates',['../namespace_e_c_u_states.html',1,'']]],
-  ['enablecanbusrelay_77',['enableCanbusRelay',['../namespace_logging.html#a3402a2c8efbb932ddbe58e66b9cc550c',1,'Logging']]],
-  ['enablecanbussniffer_78',['enableCanbusSniffer',['../namespace_canbus.html#a6cc917014cdbf17f5f950ae802c03a8e',1,'Canbus']]],
-  ['enableinterrupts_79',['enableInterrupts',['../namespace_canbus.html#ae66521cf8ac5e63c2e89d6b2f009b38a',1,'Canbus']]],
-  ['enablemotorbeating_80',['enableMotorBeating',['../namespace_m_c.html#ab35b9e9f20dc50d81b40d6d5c298c1ea',1,'MC']]],
-  ['entermirrormode_81',['enterMirrorMode',['../namespace_mirror.html#a89a62e4b2e374ef95291177d525dcf8e',1,'Mirror']]],
-  ['exitmirrormode_82',['exitMirrorMode',['../namespace_mirror.html#a9cdbdcb79cef06a3b8b18151c440b262',1,'Mirror']]]
+  ['emavg_77',['EMAvg',['../_util_8h.html#aae1798680f5232f66c8c5a14b5aa17a7',1,'Util.cpp']]],
+  ['enablecanbusrelay_78',['enableCanbusRelay',['../namespace_logging.html#a3402a2c8efbb932ddbe58e66b9cc550c',1,'Logging']]],
+  ['enablecanbussniffer_79',['enableCanbusSniffer',['../namespace_canbus.html#a6cc917014cdbf17f5f950ae802c03a8e',1,'Canbus']]],
+  ['enableinterrupts_80',['enableInterrupts',['../namespace_canbus.html#ae66521cf8ac5e63c2e89d6b2f009b38a',1,'Canbus']]],
+  ['enablemotorbeating_81',['enableMotorBeating',['../namespace_m_c.html#ab35b9e9f20dc50d81b40d6d5c298c1ea',1,'MC']]],
+  ['entermirrormode_82',['enterMirrorMode',['../namespace_mirror.html#a89a62e4b2e374ef95291177d525dcf8e',1,'Mirror']]],
+  ['exitmirrormode_83',['exitMirrorMode',['../namespace_mirror.html#a9cdbdcb79cef06a3b8b18151c440b262',1,'Mirror']]]
 ];
