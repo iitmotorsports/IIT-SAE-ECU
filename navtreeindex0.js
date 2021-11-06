@@ -1,6 +1,5 @@
 var NAVTREEINDEX0 =
 {
-"":[3,0,1],
 "_aero_servo_8cpp.html":[5,0,0],
 "_aero_servo_8cpp_source.html":[5,0,0],
 "_aero_servo_8h.html":[5,0,1],
@@ -115,9 +114,9 @@ var NAVTREEINDEX0 =
 "_motor_control_8cpp.html":[5,0,35],
 "_motor_control_8cpp_source.html":[5,0,35],
 "_motor_control_8h.html":[5,0,36],
+"_motor_control_8h.html#a043a760e6f9eaefc9d13ab2f7f1b342c":[5,0,36,6],
 "_motor_control_8h.html#a27fe6e9fc5d1906069d9e60a24226dd0":[5,0,36,8],
 "_motor_control_8h.html#a2fb464e85bca01fc06a2b5b59c83d9b3":[5,0,36,7],
-"_motor_control_8h.html#a5647cc517fcc54806867d50c17038827":[5,0,36,6],
 "_motor_control_8h.html#a72e26cfa1ee8fde45958f0df9d6e29f7":[5,0,36,5],
 "_motor_control_8h.html#a7eb7ad86c3e3b098534aefc013ae0741":[5,0,36,4],
 "_motor_control_8h.html#aa9da69c9779b67257edf09a369b5aa67":[5,0,36,3],
@@ -192,7 +191,6 @@ var NAVTREEINDEX0 =
 "_state_8h_source.html":[5,0,49],
 "_util_8cpp_source.html":[5,0,51],
 "_util_8h.html":[5,0,52],
-"_util_8h.html#a28b3724d9b092b7ac80dfa92181e9c17":[5,0,52,1],
 "_util_8h.html#a4bed8992f080fb6157e663b1d339136f":[5,0,52,0],
 "_util_8h_source.html":[5,0,52],
 "_x_macros.html":[2],
@@ -249,5 +247,7 @@ var NAVTREEINDEX0 =
 "class_circular___buffer.html#a963ec042286bed7ec7bcb6cb46761b49":[4,0,7,41],
 "class_circular___buffer.html#aa063b92c055edb4fe1bffd07fcc2a60c":[4,0,7,29],
 "class_circular___buffer.html#aa5e7261f80df80ca09bc016d6230dd7c":[4,0,7,12],
-"class_circular___buffer.html#aaaf9d3fe5d10c71e9e065bcc2001227e":[4,0,7,31]
+"class_circular___buffer.html#aaaf9d3fe5d10c71e9e065bcc2001227e":[4,0,7,31],
+"class_circular___buffer.html#aad651d9a9ec0a8653c419d035be941ba":[4,0,7,37],
+"class_circular___buffer.html#ab64048424075ff353179bf14b7fdfd7a":[4,0,7,35]
 };

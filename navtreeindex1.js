@@ -1,7 +1,5 @@
 var NAVTREEINDEX1 =
 {
-"class_circular___buffer.html#aad651d9a9ec0a8653c419d035be941ba":[4,0,7,37],
-"class_circular___buffer.html#ab64048424075ff353179bf14b7fdfd7a":[4,0,7,35],
 "class_circular___buffer.html#ab66581802a8a842b047fb10bcab66c6c":[4,0,7,45],
 "class_circular___buffer.html#ac31f2612b3b2399ec25b16403886dd2c":[4,0,7,19],
 "class_circular___buffer.html#ac9d7b982e5ab8589f3d48a72b144c146":[4,0,7,25],
@@ -181,8 +179,8 @@ var NAVTREEINDEX1 =
 "globals_vars.html":[5,1,2],
 "hierarchy.html":[4,2],
 "imxrt__flexcan_8h_source.html":[5,0,24],
-"index.html":[0],
 "index.html":[],
+"index.html":[0],
 "index.html#autotoc_md16":[0,0],
 "index.html#autotoc_md17":[0,1],
 "index.html#autotoc_md18":[0,2],
@@ -249,5 +247,7 @@ var NAVTREEINDEX1 =
 "namespace_heartbeat.html#a90dd9f85dfc6bf41682af19b8ecd0c8d":[3,0,8,0],
 "namespace_heartbeat.html#aa0261c708b2a2636e941fb6969494556":[3,0,8,2],
 "namespace_logging.html":[3,0,9],
-"namespace_logging.html#a3402a2c8efbb932ddbe58e66b9cc550c":[3,0,9,1]
+"namespace_logging.html#a3402a2c8efbb932ddbe58e66b9cc550c":[3,0,9,1],
+"namespace_logging.html#a92c0f46c8be76298719b50a39e9d8dfa":[3,0,9,2],
+"namespace_m_c.html":[3,0,10]
 };
