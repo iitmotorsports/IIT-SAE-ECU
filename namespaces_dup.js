@@ -68,5 +68,6 @@ var namespaces_dup =
       [ "stopCanPins", "namespace_pins.html#a12a6f448c7eea1740a38f0fbe73bbace", null ],
       [ "update", "namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35", null ]
     ] ],
+    [ "SerialVar", "namespace_serial_var.html", "namespace_serial_var" ],
     [ "State", "namespace_state.html", "namespace_state" ]
 ];
