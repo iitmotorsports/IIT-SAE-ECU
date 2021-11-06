@@ -22,6 +22,23 @@
 
 namespace MC {
 
+#define MAX_TORQUE 500.0
+#define NORM_VAL (double)PINS_ANALOG_MAX
+
+#define PEDAL_MIN 200.0
+#define PEDAL_MAX 1300.0
+
+// #define PEDAL_MIN 0.0
+// #define PEDAL_MAX (double)PINS_ANALOG_HIGH
+
+// TODO: get input value ranges
+
+#define BRAKE_MIN 0.0
+#define BRAKE_MAX (double)PINS_ANALOG_HIGH
+
+#define STEER_MIN 0.0
+#define STEER_MAX (double)PINS_ANALOG_HIGH
+
 static LOG_TAG ID = "MotorControl";
 
 static int motorTorque[2] = {0, 0};
@@ -30,7 +47,8 @@ static bool beating = true;
 static bool init = false;
 static bool forward = true;
 
-static double pAccum = 0;
+static double pAccum = 0, bAccum = 0, sAccum = 0;
+float TVAggression = 0.8f;
 
 static Canbus::Buffer MC0_RPM_Buffer(ADD_MC0_RPM);
 static Canbus::Buffer MC1_RPM_Buffer(ADD_MC1_RPM);
@@ -57,30 +75,31 @@ static int32_t motorSpeed(int motor = -1) {                                     
     }
 }
 
-#define MAX_TORQUE 500
-#define PEDAL_MIN 200
-#define PEDAL_MAX 1300
-// #define PEDAL_MIN 0
-// #define PEDAL_MAX PINS_ANALOG_HIGH
+static void normalizeInput(double *pedal, double *brake, double *steer) { // TODO: GET THIS OUT OF HERE! Does not belong here
+    pAccum = EMAvg(pAccum, cMap(*pedal, PEDAL_MIN, PEDAL_MAX, 0.0, NORM_VAL), 32);
+    bAccum = EMAvg(bAccum, cMap(*brake, BRAKE_MIN, BRAKE_MAX, 0.0, NORM_VAL), 16);
+    sAccum = EMAvg(sAccum, cMap(*steer, STEER_MIN, STEER_MAX, 0.0, NORM_VAL), 8);
 
-static const double keep = 1.0 - (1.0 / 32.0);
-static const double receive = 1.0 / 32.0;
+    *pedal = pAccum;
+    *brake = bAccum;
+    *steer = cMap(sAccum, 0.0, NORM_VAL, -PI / 9, PI / 9); // ~20 DEG
+}
 
 static void torqueVector(int pedal, int brake, int steer) {
-    // static elapsedMicros lastTime;
-    // float dt = (float)lastTime / 1000000.0f;
+    double _pedal = pedal, _brake = brake, _steer = steer;
 
-    if (pedal != 0) {                                                  // max analog should be what the max pedal readout is
-        pedal = cMap(pedal, PEDAL_MIN, PEDAL_MAX, 0, PINS_ANALOG_MAX); // separate func for negative vals (regen)
+    normalizeInput(&_pedal, &_brake, &_steer);
+
+    // clamp(pow(cos(TVAggression * (_steer / (Euler - abs(_steer)))), 5), 0, 1); pi/2 steer map
+
+    // TV V1
+    if (_steer < 0) {
+        motorTorque[0] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
+        motorTorque[1] = motorTorque[0] * clamp(pow(cos(TVAggression * _steer), 5), 0, 1);
+    } else {
+        motorTorque[1] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
+        motorTorque[0] = motorTorque[1] * clamp(pow(cos(TVAggression * _steer), 5), 0, 1);
     }
-
-    pAccum = keep * pAccum + receive * pedal;
-    double pedalVal = pAccum / PINS_ANALOG_MAX;
-
-    // TODO: Add Torque vectoring algorithms
-
-    motorTorque[0] = cMap(pedalVal, 0.0, 1.0, 0.0, MAX_TORQUE);
-    motorTorque[1] = cMap(pedalVal, 0.0, 1.0, 0.0, MAX_TORQUE);
 }
 
 void setup(void) {
