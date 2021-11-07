@@ -1,5 +1,9 @@
 var NAVTREEINDEX2 =
 {
+"namespace_cmd.html":[3,0,3],
+"namespace_cmd.html#ae4cdc8f8cdead5a5563c40cf7d1558fa":[3,0,3,0],
+"namespace_cmd.html#aedaea62d3d1e614cf34ae87372087846":[3,0,3,1],
+"namespace_e_c_u_states.html":[3,0,5],
 "namespace_echo.html":[3,0,4],
 "namespace_echo.html#a06d3c7f95ead843b9a10c61cb4ee8aee":[3,0,4,2],
 "namespace_echo.html#a0f3d048035f869638271d08ea736f97e":[3,0,4,0],
@@ -49,7 +53,9 @@ var NAVTREEINDEX2 =
 "namespace_pins.html#abdbd435bdc27963ed518740bf0761712":[3,0,12,1],
 "namespace_pins.html#aeb44a1100800f7a1984d725a5d1255f2":[3,0,12,5],
 "namespace_serial_var.html":[3,0,13],
-"namespace_serial_var.html#a6b5b103a12c5c51c349456736be315ce":[3,0,13,2],
+"namespace_serial_var.html#a59fcdba091d522086ab9a0fc5128374d":[3,0,13,2],
+"namespace_serial_var.html#a99b93dddc7326c4084b3b6ce0c1740a1":[3,0,13,3],
+"namespace_serial_var.html#ae7b439d8884defa36e1033f045fdb0ec":[3,0,13,4],
 "namespace_state.html":[3,0,14],
 "namespace_state.html#a0ef38e9cb909ddbc25ed4489b46be084":[3,0,14,1],
 "namespace_state.html#a0ef38e9cb909ddbc25ed4489b46be084a52e0b67d3d115c4a746620fade6175f8":[3,0,14,1,4],

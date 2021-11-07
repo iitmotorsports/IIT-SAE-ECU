@@ -131,6 +131,10 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_serial_command_8def.html#abc56a8a4f697dd773a75f29a1ceee4c8">COMMAND_PRINT_LOOKUP</a>&#160;&#160;&#160;101</td></tr>
 <tr class="memdesc:abc56a8a4f697dd773a75f29a1ceee4c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Command to send the compressed lookup table over serial. <br /></td></tr>
 <tr class="separator:abc56a8a4f697dd773a75f29a1ceee4c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59aa551a2076cb4ead6ae2061e794a55"><td class="memItemLeft" align="right" valign="top"><a id="a59aa551a2076cb4ead6ae2061e794a55"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_serial_command_8def.html#a59aa551a2076cb4ead6ae2061e794a55">COMMAND_UPDATE_SERIALVAR</a>&#160;&#160;&#160;61</td></tr>
+<tr class="memdesc:a59aa551a2076cb4ead6ae2061e794a55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Command to update a serial variable. <br /></td></tr>
+<tr class="separator:a59aa551a2076cb4ead6ae2061e794a55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9feec64f8f82f23788b95b4db603bbdd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_serial_command_8def.html#a9feec64f8f82f23788b95b4db603bbdd">SERIAL_COMMANDS</a></td></tr>
 <tr class="memdesc:a9feec64f8f82f23788b95b4db603bbdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines commands that the ECU must react to.  <a href="_serial_command_8def.html#a9feec64f8f82f23788b95b4db603bbdd">More...</a><br /></td></tr>
 <tr class="separator:a9feec64f8f82f23788b95b4db603bbdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -164,8 +168,10 @@ Macros</h2></td></tr>
 <div class="line">    X(<a class="code" href="_serial_command_8def.html#ad23a35c56791edbbd2d76ab6322eb9b6">COMMAND_ENTER_MIRROR_SET</a>)    \</div>
 <div class="line">    X(<a class="code" href="_serial_command_8def.html#a00d568f9eb66310630208237712d6db8">COMMAND_SEND_ECHO</a>)           \</div>
 <div class="line">    X(<a class="code" href="_serial_command_8def.html#a666ae4998068027c649adfa45e482a1e">COMMAND_TOGGLE_REVERSE</a>)      \</div>
-<div class="line">    X(<a class="code" href="_serial_command_8def.html#abc56a8a4f697dd773a75f29a1ceee4c8">COMMAND_PRINT_LOOKUP</a>)</div>
+<div class="line">    X(<a class="code" href="_serial_command_8def.html#abc56a8a4f697dd773a75f29a1ceee4c8">COMMAND_PRINT_LOOKUP</a>)        \</div>
+<div class="line">    X(<a class="code" href="_serial_command_8def.html#a59aa551a2076cb4ead6ae2061e794a55">COMMAND_UPDATE_SERIALVAR</a>)</div>
 <div class="ttc" id="a_serial_command_8def_html_a00d568f9eb66310630208237712d6db8"><div class="ttname"><a href="_serial_command_8def.html#a00d568f9eb66310630208237712d6db8">COMMAND_SEND_ECHO</a></div><div class="ttdeci">#define COMMAND_SEND_ECHO</div><div class="ttdoc">Command to listen for a can message to echo, for Echo.h.</div><div class="ttdef"><b>Definition:</b> <a href="_serial_command_8def_source.html#l00046">SerialCommand.def:46</a></div></div>
+<div class="ttc" id="a_serial_command_8def_html_a59aa551a2076cb4ead6ae2061e794a55"><div class="ttname"><a href="_serial_command_8def.html#a59aa551a2076cb4ead6ae2061e794a55">COMMAND_UPDATE_SERIALVAR</a></div><div class="ttdeci">#define COMMAND_UPDATE_SERIALVAR</div><div class="ttdoc">Command to update a serial variable.</div><div class="ttdef"><b>Definition:</b> <a href="_serial_command_8def_source.html#l00058">SerialCommand.def:58</a></div></div>
 <div class="ttc" id="a_serial_command_8def_html_a666ae4998068027c649adfa45e482a1e"><div class="ttname"><a href="_serial_command_8def.html#a666ae4998068027c649adfa45e482a1e">COMMAND_TOGGLE_REVERSE</a></div><div class="ttdeci">#define COMMAND_TOGGLE_REVERSE</div><div class="ttdoc">Command to enable reverse motors, for MotorControl.h.</div><div class="ttdef"><b>Definition:</b> <a href="_serial_command_8def_source.html#l00050">SerialCommand.def:50</a></div></div>
 <div class="ttc" id="a_serial_command_8def_html_a69dc30e2f00c9808ebe75dd4f438bc42"><div class="ttname"><a href="_serial_command_8def.html#a69dc30e2f00c9808ebe75dd4f438bc42">COMMAND_TOGGLE_MIRROR_MODE</a></div><div class="ttdeci">#define COMMAND_TOGGLE_MIRROR_MODE</div><div class="ttdoc">Command to enable mirror mode, for Mirror.h.</div><div class="ttdef"><b>Definition:</b> <a href="_serial_command_8def_source.html#l00038">SerialCommand.def:38</a></div></div>
 <div class="ttc" id="a_serial_command_8def_html_a6ed8b34c57b2f9604d98871c44570c17"><div class="ttname"><a href="_serial_command_8def.html#a6ed8b34c57b2f9604d98871c44570c17">COMMAND_TOGGLE_CANBUS_SNIFF</a></div><div class="ttdeci">#define COMMAND_TOGGLE_CANBUS_SNIFF</div><div class="ttdoc">Command used to enable the ASCII canbus sniffer.</div><div class="ttdef"><b>Definition:</b> <a href="_serial_command_8def_source.html#l00034">SerialCommand.def:34</a></div></div>
@@ -180,7 +186,7 @@ Macros</h2></td></tr>
 <p>X(Value) \</p>
 <p>Only the last entry should NOT have a '\' </p>
 
-<p class="definition">Definition at line <a class="el" href="_serial_command_8def_source.html#l00068">68</a> of file <a class="el" href="_serial_command_8def_source.html">SerialCommand.def</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_serial_command_8def_source.html#l00072">72</a> of file <a class="el" href="_serial_command_8def_source.html">SerialCommand.def</a>.</p>
 
 </div>
 </div>

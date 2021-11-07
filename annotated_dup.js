@@ -7,7 +7,7 @@ var annotated_dup =
       [ "Log_t", "struct_logging_1_1_log__t.html", "struct_logging_1_1_log__t" ]
     ] ],
     [ "SerialVar", "namespace_serial_var.html", [
-      [ "SerialVarObj", "class_serial_var_1_1_serial_var_obj.html", "class_serial_var_1_1_serial_var_obj" ],
+      [ "SerialVarObj_t", "class_serial_var_1_1_serial_var_obj__t.html", "class_serial_var_1_1_serial_var_obj__t" ],
       [ "SerialVar", "class_serial_var_1_1_serial_var.html", "class_serial_var_1_1_serial_var" ]
     ] ],
     [ "State", "namespace_state.html", [

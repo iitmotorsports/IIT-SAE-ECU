@@ -8,5 +8,6 @@ var _serial_command_8def =
     [ "COMMAND_TOGGLE_CANBUS_SNIFF", "_serial_command_8def.html#a6ed8b34c57b2f9604d98871c44570c17", null ],
     [ "COMMAND_TOGGLE_MIRROR_MODE", "_serial_command_8def.html#a69dc30e2f00c9808ebe75dd4f438bc42", null ],
     [ "COMMAND_TOGGLE_REVERSE", "_serial_command_8def.html#a666ae4998068027c649adfa45e482a1e", null ],
+    [ "COMMAND_UPDATE_SERIALVAR", "_serial_command_8def.html#a59aa551a2076cb4ead6ae2061e794a55", null ],
     [ "SERIAL_COMMANDS", "_serial_command_8def.html#a9feec64f8f82f23788b95b4db603bbdd", null ]
 ];

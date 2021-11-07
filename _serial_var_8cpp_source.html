@@ -93,24 +93,81 @@ $(document).ready(function(){initNavTree('_serial_var_8cpp_source.html',''); ini
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_serial_var_8h.html">SerialVar.h</a>&quot;</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_p_p_help_8h.html">PPHelp.h</a>&quot;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;wiring.h&quot;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_serial_var.html">SerialVar</a> {</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;SerialVarObj <a class="code" href="namespace_serial_var.html#a6b5b103a12c5c51c349456736be315ce">getVariable</a>(<span class="keywordtype">size_t</span> ID) {</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keywordflow">return</span> variables[ID];</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;}</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keywordtype">void</span> updateVariable(<span class="keywordtype">size_t</span> ID, <span class="keywordtype">byte</span> *dataArr) {</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    variables[ID].update(dataArr);</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;}</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;} <span class="comment">// namespace SerialVar</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <span class="comment">// @endcond</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_serial_var.html">SerialVar</a> {</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">// The largest ID number defined</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> MAX_ID = (</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#define X(type, ID) max(ID,</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    SERIALVARS</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#undef X</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    - 1</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#define X(type, ID) )</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    SERIALVARS</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#undef X</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> varIndex[MAX_ID + 1] = {</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define X(type, ID) ID,</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    SERIALVARS</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#undef X</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;};</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">static</span> SerialVarObj_t variables[MAX_ID + 1] = {</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#define X(type, ID) SerialVar&lt;type&gt;(),</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    SERIALVARS</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#undef X</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;};</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;SerialVarObj_t <a class="code" href="namespace_serial_var.html#a59fcdba091d522086ab9a0fc5128374d">getVariable</a>(<span class="keywordtype">size_t</span> ID) {</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordflow">return</span> variables[varIndex[ID]];</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keywordtype">void</span> updateVariable(<span class="keywordtype">size_t</span> varID, <span class="keywordtype">byte</span> *dataArr, <span class="keywordtype">int</span> count) {</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordflow">if</span> (varID &gt; MAX_ID) {</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(LOGID, <span class="stringliteral">&quot;Invalid varID:&quot;</span>, varID);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    }</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="comment">// getVariable(varID).update(dataArr, count);</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;}</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_serial_var.html#a99b93dddc7326c4084b3b6ce0c1740a1">receiveSerialVar</a>() {</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keyword">static</span> elapsedMillis timeElapsed;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">byte</span> buffer[32];</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    timeElapsed = 0;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">int</span> c = 0;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(LOGID, <span class="stringliteral">&quot;Waiting for data&quot;</span>);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordflow">while</span> (c &lt; 32) {</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keywordflow">if</span> (Serial.available() &amp;&amp; (buffer[c++] = Serial.read()) == SERIALVAR_STOP_RECEIVE) {</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            c--;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (timeElapsed &gt; 8000) { <span class="comment">// This process should be quick</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(LOGID, <span class="stringliteral">&quot;Timedout waiting for data&quot;</span>);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        }</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    }</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordtype">byte</span> varID = buffer[0];</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordtype">byte</span> size = buffer[1];</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">i</a>(LOGID, <span class="stringliteral">&quot;Data Received for varID:&quot;</span>, varID);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    updateVariable(varID, buffer + 2, size);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;}</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;} <span class="comment">// namespace SerialVar</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <span class="comment">// @endcond</span></div>
+<div class="ttc" id="a_log_8h_html_aa5fd43862d543e82b7775410573c9142"><div class="ttname"><a href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a></div><div class="ttdeci">Logging::Log_t Log</div><div class="ttdoc">The global logging object.</div></div>
 <div class="ttc" id="a_p_p_help_8h_html"><div class="ttname"><a href="_p_p_help_8h.html">PPHelp.h</a></div><div class="ttdoc">Compilation of various helpful preprocessor macros.</div></div>
 <div class="ttc" id="a_serial_var_8h_html"><div class="ttname"><a href="_serial_var_8h.html">SerialVar.h</a></div><div class="ttdoc">Serial Variable Module.</div></div>
-<div class="ttc" id="anamespace_serial_var_html"><div class="ttname"><a href="namespace_serial_var.html">SerialVar</a></div><div class="ttdoc">SerialVar is used for variables that can be modified over usb serial while still being used during ru...</div><div class="ttdef"><b>Definition:</b> <a href="_serial_var_8h_source.html#l00021">SerialVar.h:21</a></div></div>
-<div class="ttc" id="anamespace_serial_var_html_a6b5b103a12c5c51c349456736be315ce"><div class="ttname"><a href="namespace_serial_var.html#a6b5b103a12c5c51c349456736be315ce">SerialVar::getVariable</a></div><div class="ttdeci">SerialVarObj getVariable(size_t ID)</div><div class="ttdoc">Get the Serial Variable for a given ID.</div></div>
+<div class="ttc" id="anamespace_serial_var_html"><div class="ttname"><a href="namespace_serial_var.html">SerialVar</a></div><div class="ttdoc">SerialVar is used for variables that can be modified over usb serial while still being used during ru...</div><div class="ttdef"><b>Definition:</b> <a href="_serial_var_8h_source.html#l00022">SerialVar.h:22</a></div></div>
+<div class="ttc" id="anamespace_serial_var_html_a59fcdba091d522086ab9a0fc5128374d"><div class="ttname"><a href="namespace_serial_var.html#a59fcdba091d522086ab9a0fc5128374d">SerialVar::getVariable</a></div><div class="ttdeci">SerialVarObj_t getVariable(size_t ID)</div><div class="ttdoc">Get the Serial Variable for a given ID.</div></div>
+<div class="ttc" id="anamespace_serial_var_html_a99b93dddc7326c4084b3b6ce0c1740a1"><div class="ttname"><a href="namespace_serial_var.html#a99b93dddc7326c4084b3b6ce0c1740a1">SerialVar::receiveSerialVar</a></div><div class="ttdeci">void receiveSerialVar()</div><div class="ttdoc">Receive a variable over serial.</div></div>
+<div class="ttc" id="astruct_logging_1_1_log__t_html_a6a07c7449c92c06a608cb8f6463ebd46"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">Logging::Log_t::w</a></div><div class="ttdeci">void w(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a warning tag.</div></div>
+<div class="ttc" id="astruct_logging_1_1_log__t_html_a8a944d095d2eae2c7be964d887ebe613"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a8a944d095d2eae2c7be964d887ebe613">Logging::Log_t::i</a></div><div class="ttdeci">void i(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using an info tag.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
