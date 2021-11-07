@@ -5,6 +5,7 @@
 #include "Mirror.h"
 #include "MotorControl.h"
 #include "SerialCommand.h"
+#include "SerialVar.h"
 #include "unordered_map"
 
 static LOG_TAG ID = "Front Teensy";
@@ -31,6 +32,8 @@ static Canbus::Buffer MC1_TEMP3_Buffer(ADD_MC1_TEMP3);
 static Canbus::Buffer BMS_DATA_Buffer(ADD_BMS_DATA);
 static Canbus::Buffer BMS_BATT_TEMP_Buffer(ADD_BMS_BATT_TEMP);
 static Canbus::Buffer BMS_CURR_LIMIT_Buffer(ADD_BMS_CURR_LIMIT);
+
+SerialVar::SerialVar<float> TVAggression = SerialVar::getVariable(SERIALVAR_TORQUE_VECTORING_AGGRESSION);
 
 static struct State::State_t *states[] = {
     &ECUStates::Initialize_State,
@@ -267,6 +270,7 @@ void Front::run() {
     Cmd::setCommand(COMMAND_SEND_ECHO, sendEchoMessage);
     Cmd::setCommand(COMMAND_TOGGLE_REVERSE, toggleMotorDirection);
     Cmd::setCommand(COMMAND_PRINT_LOOKUP, Logging::printLookup);
+    Cmd::setCommand(COMMAND_UPDATE_SERIALVAR, SerialVar::receiveSerialVar);
 
     Heartbeat::beginReceiving();
 #ifdef CONF_ECU_DEBUG
@@ -331,6 +335,9 @@ void Front::run() {
             if (Fault::anyFault()) {
                 Fault::logFault();
             }
+
+            float _TVAgg = TVAggression;
+            Pins::setInternalValue(PINS_INTERNAL_TVAGG, *((int *)&_TVAgg));
         }
         if (timeElapsedLow >= INTERVAL_LOW_PRIORITY) { // Low priority updates
             timeElapsedLow = 0;

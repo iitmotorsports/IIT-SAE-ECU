@@ -12,20 +12,29 @@
 #ifndef __ECU_SERIALVAR_H__
 #define __ECU_SERIALVAR_H__
 
+#include "Log.h"
 #include "SerialVars.def"
-#include "wiring.h"
+#include "WProgram.h"
 
 /**
  * @brief SerialVar is used for variables that can be modified over usb serial while still being used during runtime like a normal variable
  */
 namespace SerialVar {
 
+LOG_TAG LOGID = "SerialVar";
+
 /**
  * @brief Generalization of all serial variable types
  */
-class SerialVarObj {
+class SerialVarObj_t {
 public:
-    virtual void update(byte *dataArr);
+    /**
+     * @brief Header for a SerialVar's update function
+     * 
+     * @param dataArr The data array to be interpreted
+     * @param count The size of this array to ensure it matches the data type size
+     */
+    void update(byte *dataArr, int count);
 };
 
 /**
@@ -35,46 +44,54 @@ public:
  * @tparam ID The unique ID of this variable, used to update it in the background
  * @note Each instance of a SerialVar **must** be defined in SerialVars.def, where you can then declare in instance of SerialVar as so.
  * ``` c++
- * SerialVar<SERIALVAR_TORQUE_VECTORING_AGGRESSION> TVA;
+ * SerialVar::SerialVar<float> TVAggression = SerialVar::getVariable(SERIALVAR_TORQUE_VECTORING_AGGRESSION);
  * ```
  */
 template <typename T>
-class SerialVar : public SerialVarObj {
+class SerialVar : public SerialVarObj_t {
 private:
-    volatile T val = 0;
+    volatile T val;
 
 public:
-    virtual void update(byte *dataArr) {
+    static const int byteCount = sizeof(T);
+    SerialVar() {}
+    SerialVar(SerialVarObj_t obj) {}
+
+    /**
+     * @brief Update function which is used internally. Ensures the data array size to be interpreted is the correct length
+     * 
+     * @param dataArr The data array to be interpreted
+     * @param count The size of this array to ensure it matches the data type size
+     */
+    void update(byte *dataArr, int count) {
+        if (count < byteCount) {
+            Log.w(LOGID, "The given data chunk is not big enough for this data type, variable not updated", byteCount);
+            return;
+        }
         SerialVar s(*this);
         s.val = *((T *)dataArr);
     }
 
     operator T() const { return this->val; }
+
+    SerialVar &operator=(T val) {
+        this->val = val;
+        return *this;
+    }
 };
-
-// The largest ID number defined
-static const size_t MAX_ID = (
-#define X(type, ID) max(ID,
-    SERIALVARS
-#undef X
-    - 1
-#define X(type, ID) )
-    SERIALVARS
-#undef X
-);
-
-static SerialVarObj variables[MAX_ID + 1] = {
-#define X(type, ID) SerialVar<type>(),
-    SERIALVARS};
-#undef X
 
 /**
  * @brief Get the Serial Variable for a given ID
  * 
  * @param ID the ID of the variable
- * @return SerialVarObj 
+ * @return SerialVarObj_t 
  */
-SerialVarObj getVariable(size_t ID);
+SerialVarObj_t getVariable(size_t ID);
+
+/**
+ * @brief Receive a variable over serial
+ */
+void receiveSerialVar();
 
 } // namespace SerialVar
 #endif // __ECU_SERIALVAR_H__

@@ -15,7 +15,6 @@
 #include "Canbus.h"
 #include "ECUGlobalConfig.h"
 #include "Pins.h"
-#include "SerialVar.h"
 #include "Util.h"
 #include "log.h"
 #include "stdint.h"
@@ -50,10 +49,6 @@ static bool forward = true;
 
 static double pAccum = 0, bAccum = 0, sAccum = 0;
 
-float TVAggression = 0.8f;
-
-// SerialVar::SerialVarObj TVAggressiona = SerialVar::variables[SERIALVAR_TORQUE_VECTORING_AGGRESSION];
-
 static Canbus::Buffer MC0_RPM_Buffer(ADD_MC0_RPM);
 static Canbus::Buffer MC1_RPM_Buffer(ADD_MC1_RPM);
 
@@ -64,7 +59,7 @@ static void beatFunc(void) {
     }
 }
 
-int32_t motorSpeed(int motor = -1) {                                                   // FIXME: Motor might be sending negative speed?
+int32_t motorSpeed(int motor) {                                                        // FIXME: Motor might be sending negative speed?
     int16_t MC_Rpm_Val_0 = abs(MC0_RPM_Buffer.getShort(2));                            // Bytes 2-3 : Angular Velocity
     int16_t MC_Rpm_Val_1 = abs(MC1_RPM_Buffer.getShort(2));                            // Bytes 2-3 : Angular Velocity
     float MC_Spd_Val_0 = MC_Rpm_Val_0 * 2 * 3.1415926536 / 60 * CONF_CAR_WHEEL_RADIUS; // (RPM -> Rad/s) * Radius
@@ -94,6 +89,11 @@ static void torqueVector(int pedal, int brake, int steer) {
 
     normalizeInput(&_pedal, &_brake, &_steer);
 
+    int _TVAgg = Pins::getCanPinValue(PINS_INTERNAL_TVAGG);
+    float TVAggression = *((float *)&_TVAgg);
+
+    // Log.d(ID, "Aggression Val:", TVAggression);
+
     // TV V1
     // if (_steer <= 0) {
     //     motorTorque[0] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
@@ -113,9 +113,9 @@ void setup(void) {
     if (!init)
         Heartbeat::addCallback(beatFunc);
     clearFaults();
+#endif
     init = true;
     beating = true;
-#endif
 }
 
 void clearFaults(void) {
