@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['printlookup_337',['printLookup',['../namespace_logging.html#a92c0f46c8be76298719b50a39e9d8dfa',1,'Logging']]],
-  ['pushdata_338',['pushData',['../namespace_canbus.html#a2c59e4ee5bcc1d66fee1c1d91af4731b',1,'Canbus']]]
+  ['operator_28_29_338',['operator()',['../struct_logging_1_1_log__t.html#a1d83b81ba90246ade2c4fda62d8e5324',1,'Logging::Log_t::operator()(LOG_TAG TAG, LOG_MSG message)'],['../struct_logging_1_1_log__t.html#a4b39ac90d664640ddb4adba8af2a48ee',1,'Logging::Log_t::operator()(LOG_TAG TAG, LOG_MSG message, const uint32_t number, bool mediate=false)']]]
 ];

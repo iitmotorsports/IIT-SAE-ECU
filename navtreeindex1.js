@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"class_circular___buffer.html#a4de031da7c711d2956dd7767ff531c16":[4,0,8,1],
 "class_circular___buffer.html#a4e1eb269848cda479828de4012f6e8ee":[4,0,8,43],
 "class_circular___buffer.html#a5100b3c9a1098c5e513e0602edf9be0c":[4,0,8,26],
 "class_circular___buffer.html#a5b3ecbc7aa06df8162c2224abd49fca4":[4,0,8,15],
@@ -248,6 +249,5 @@ var NAVTREEINDEX1 =
 "namespace_cmd.html":[3,0,3],
 "namespace_cmd.html#ae4cdc8f8cdead5a5563c40cf7d1558fa":[3,0,3,0],
 "namespace_cmd.html#aedaea62d3d1e614cf34ae87372087846":[3,0,3,1],
-"namespace_e_c_u_states.html":[3,0,5],
-"namespace_echo.html":[3,0,4]
+"namespace_e_c_u_states.html":[3,0,5]
 };

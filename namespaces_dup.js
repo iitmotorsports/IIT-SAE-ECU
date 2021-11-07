@@ -45,6 +45,7 @@ var namespaces_dup =
       [ "getLastPedalValue", "namespace_m_c.html#aa9da69c9779b67257edf09a369b5aa67", null ],
       [ "getLastTorqueValue", "namespace_m_c.html#a7eb7ad86c3e3b098534aefc013ae0741", null ],
       [ "isForward", "namespace_m_c.html#a72e26cfa1ee8fde45958f0df9d6e29f7", null ],
+      [ "motorSpeed", "namespace_m_c.html#aae42b2e326588775e5a817d7dfc2b55e", null ],
       [ "sendTorque", "namespace_m_c.html#a043a760e6f9eaefc9d13ab2f7f1b342c", null ],
       [ "setDirection", "namespace_m_c.html#a2fb464e85bca01fc06a2b5b59c83d9b3", null ],
       [ "setTorque", "namespace_m_c.html#a27fe6e9fc5d1906069d9e60a24226dd0", null ],
