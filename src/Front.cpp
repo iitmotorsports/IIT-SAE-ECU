@@ -3,6 +3,7 @@
 #include "Echo.h"
 #include "Heartbeat.h"
 #include "Mirror.h"
+#include "MotorControl.h"
 #include "SerialCommand.h"
 #include "unordered_map"
 
@@ -18,8 +19,6 @@ static elapsedMillis timeElapsedMidHigh;
 static elapsedMillis timeElapsedMidLow;
 static elapsedMillis timeElapsedLow;
 
-static Canbus::Buffer MC0_RPM_Buffer(ADD_MC0_RPM);
-static Canbus::Buffer MC1_RPM_Buffer(ADD_MC1_RPM);
 static Canbus::Buffer MC0_VOLT_Buffer(ADD_MC0_VOLT);
 static Canbus::Buffer MC1_VOLT_Buffer(ADD_MC1_VOLT);
 static Canbus::Buffer MC0_CURR_Buffer(ADD_MC0_CURR);
@@ -32,8 +31,6 @@ static Canbus::Buffer MC1_TEMP3_Buffer(ADD_MC1_TEMP3);
 static Canbus::Buffer BMS_DATA_Buffer(ADD_BMS_DATA);
 static Canbus::Buffer BMS_BATT_TEMP_Buffer(ADD_BMS_BATT_TEMP);
 static Canbus::Buffer BMS_CURR_LIMIT_Buffer(ADD_BMS_CURR_LIMIT);
-
-static constexpr float wheelRadius = CONF_CAR_WHEEL_RADIUS;
 
 static struct State::State_t *states[] = {
     &ECUStates::Initialize_State,
@@ -114,21 +111,9 @@ static uint32_t MCPowerValue() { // IMPROVE: get power value using three phase v
     return (MC0_PWR + MC1_PWR) / 1000; // Sending kilowatts
 }
 
-// receive rpm of MCs, interpret, then send to from teensy for logging
-static int32_t motorSpeed() {                          // TODO: replace with MotorControl Func
-    int16_t MC_Rpm_Val_0 = MC0_RPM_Buffer.getShort(2); // Bytes 2-3 : Angular Velocity
-    int16_t MC_Rpm_Val_1 = MC1_RPM_Buffer.getShort(2); // Bytes 2-3 : Angular Velocity
-    float MC_Spd_Val_0 = wheelRadius * 2 * 3.1415926536 / 60 * MC_Rpm_Val_0;
-    float MC_Spd_Val_1 = wheelRadius * 2 * 3.1415926536 / 60 * MC_Rpm_Val_1;
-    Log.d(ID, "Motor 0 Speed", MC_Spd_Val_0, true);
-    Log.d(ID, "Motor 1 Speed", MC_Spd_Val_1, true);
-    return (MC_Spd_Val_0 + MC_Spd_Val_1) / 2;
-}
-
 static void loadBuffers() {
     Log.i(ID, "Loading Buffers");
-    MC0_RPM_Buffer.init();
-    MC1_RPM_Buffer.init();
+    MC::setup();
     MC0_VOLT_Buffer.init();
     MC1_VOLT_Buffer.init();
     MC0_CURR_Buffer.init();
@@ -314,7 +299,9 @@ void Front::run() {
             timeElapsedHigh = 0;
             Cmd::receiveCommand();
 #ifndef SILENT
-            Log(ID, "Current Motor Speed:", motorSpeed(), true);
+            Log(ID, "Current Motor Speed:", MC::motorSpeed(), true);
+            Log.d(ID, "Motor 0 Speed", MC::motorSpeed(0), true);
+            Log.d(ID, "Motor 1 Speed", MC::motorSpeed(1), true);
             int pedal0, pedal1;
             Log.i(ID, "Brake", Pins::getPinValue(PINS_FRONT_BRAKE), true);
             Log.i(ID, "Steering", Pins::getPinValue(PINS_FRONT_STEER), true);

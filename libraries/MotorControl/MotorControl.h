@@ -98,6 +98,14 @@ int getLastTorqueValue(bool mc0);
 int getLastPedalValue(void);
 
 /**
+ * @brief Get the avg motorspeed
+ * 
+ * @param motor 0 or 1 for either motor or nothing for 
+ * @return int32_t 
+ */
+int32_t motorSpeed(int motor = -1);
+
+/**
  * @brief Calculate and set the torque of both MCs
  * 
  * @note `enableMotorBeating` must have been set to false before calling this function

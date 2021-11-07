@@ -64,9 +64,9 @@ static void beatFunc(void) {
     }
 }
 
-static int32_t motorSpeed(int motor = -1) {                                            // Motor might be sending negative speed?
-    int16_t MC_Rpm_Val_0 = MC0_RPM_Buffer.getShort(2);                                 // Bytes 2-3 : Angular Velocity
-    int16_t MC_Rpm_Val_1 = MC1_RPM_Buffer.getShort(2);                                 // Bytes 2-3 : Angular Velocity
+int32_t motorSpeed(int motor = -1) {                                                   // FIXME: Motor might be sending negative speed?
+    int16_t MC_Rpm_Val_0 = abs(MC0_RPM_Buffer.getShort(2));                            // Bytes 2-3 : Angular Velocity
+    int16_t MC_Rpm_Val_1 = abs(MC1_RPM_Buffer.getShort(2));                            // Bytes 2-3 : Angular Velocity
     float MC_Spd_Val_0 = MC_Rpm_Val_0 * 2 * 3.1415926536 / 60 * CONF_CAR_WHEEL_RADIUS; // (RPM -> Rad/s) * Radius
     float MC_Spd_Val_1 = MC_Rpm_Val_1 * 2 * 3.1415926536 / 60 * CONF_CAR_WHEEL_RADIUS;
     switch (motor) {
@@ -86,7 +86,7 @@ static void normalizeInput(double *pedal, double *brake, double *steer) { // TOD
 
     *pedal = pAccum;
     *brake = bAccum;
-    *steer = cMap(sAccum, 0.0, NORM_VAL, -PI / 9, PI / 9); // ~20 DEG
+    *steer = cMap(sAccum, 0.0, NORM_VAL, -PI / 2, PI / 2);
 }
 
 static void torqueVector(int pedal, int brake, int steer) {
@@ -95,23 +95,27 @@ static void torqueVector(int pedal, int brake, int steer) {
     normalizeInput(&_pedal, &_brake, &_steer);
 
     // TV V1
-    if (_steer < 0) {
-        motorTorque[0] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
-        motorTorque[1] = motorTorque[0] * clamp(pow(cos(TVAggression * _steer), 5), 0, 1);
-    } else {
-        motorTorque[1] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
-        motorTorque[0] = motorTorque[1] * clamp(pow(cos(TVAggression * _steer), 5), 0, 1);
-    }
+    // if (_steer <= 0) {
+    //     motorTorque[0] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
+    //     motorTorque[1] = motorTorque[0] * clamp(pow(cos(TVAggression * _steer), 5), 0, 1);
+    // } else {
+    //     motorTorque[1] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
+    //     motorTorque[0] = motorTorque[1] * clamp(pow(cos(TVAggression * _steer), 5), 0, 1);
+    // }
+    motorTorque[0] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
+    motorTorque[1] = motorTorque[0];
 }
 
 void setup(void) {
-    if (!init)
-        Heartbeat::addCallback(beatFunc);
     MC0_RPM_Buffer.init();
     MC1_RPM_Buffer.init();
+#if CONF_ECU_POSITION == BACK_ECU
+    if (!init)
+        Heartbeat::addCallback(beatFunc);
     clearFaults();
     init = true;
     beating = true;
+#endif
 }
 
 void clearFaults(void) {
@@ -172,7 +176,8 @@ int getLastPedalValue() {
 }
 
 void setTorque(int pedal, int brake, int steer) {
-    torqueVector(pedal, brake, steer);
+    if (pedal >= 0)
+        torqueVector(pedal, brake, steer);
     sendTorque(ADD_MC1_CTRL, motorTorque[1], forward, 1);
     sendTorque(ADD_MC0_CTRL, motorTorque[0], forward, 1);
 }
