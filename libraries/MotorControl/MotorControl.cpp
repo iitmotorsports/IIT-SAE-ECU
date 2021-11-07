@@ -176,7 +176,7 @@ int getLastPedalValue() {
 }
 
 void setTorque(int pedal, int brake, int steer) {
-    if (pedal >= 0)
+    if (forward && pedal >= 0) // Regen brake
         torqueVector(pedal, brake, steer);
     sendTorque(ADD_MC1_CTRL, motorTorque[1], forward, 1);
     sendTorque(ADD_MC0_CTRL, motorTorque[0], forward, 1);
