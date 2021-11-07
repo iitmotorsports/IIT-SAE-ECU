@@ -113,9 +113,9 @@ void setup(void) {
     if (!init)
         Heartbeat::addCallback(beatFunc);
     clearFaults();
-#endif
     init = true;
     beating = true;
+#endif
 }
 
 void clearFaults(void) {
