@@ -87,8 +87,7 @@ static void torqueVector(int pedal, int brake, int steer) {
 
     normalizeInput(&_pedal, &_brake, &_steer);
 
-    int _TVAgg = Pins::getCanPinValue(PINS_INTERNAL_TVAGG);
-    float TVAggression = *((float *)&_TVAgg);
+    float TVAggression = (float)Pins::getCanPinValue(PINS_INTERNAL_TVAGG) / 8192.0f;
 
     Log.d(ID, "Aggression Val:", TVAggression, true);
 

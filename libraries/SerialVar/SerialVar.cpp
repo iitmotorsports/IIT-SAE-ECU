@@ -12,9 +12,12 @@
 // @cond
 
 #include "SerialVar.h"
+#include "ECUGlobalConfig.h"
 #include "PPHelp.h"
 
 namespace SerialVar {
+
+LOG_TAG LOG_ID = "SerialVar";
 
 // The largest ID number defined
 static const size_t MAX_ID = (
@@ -27,55 +30,47 @@ static const size_t MAX_ID = (
 #undef X
 );
 
-static int varIndex[MAX_ID + 1] = {
-#define X(type, ID) ID,
-    SERIALVARS
-#undef X
-};
+static uint8_t variables[MAX_ID + 1][8];
 
-static SerialVarObj_t variables[MAX_ID + 1] = {
-#define X(type, ID) SerialVar<type>(),
-    SERIALVARS
-#undef X
-};
-
-SerialVarObj_t getVariable(size_t ID) {
-    return variables[varIndex[ID]];
+uint8_t *getVariable(size_t ID) {
+    return variables[ID];
 }
 
-void updateVariable(size_t varID, byte *dataArr, int count) {
-    if (varID > MAX_ID) {
-        Log.i(LOGID, "Invalid varID:", varID);
-        return;
+void updateVariable(size_t varID, const uint8_t *dataArr) {
+    switch (varID) {
+#define X(type, ID)                                    \
+    case ID:                                           \
+        memcpy(variables[ID], dataArr, 8);             \
+        Log.i(LOG_ID, "Data Received for varID:", ID); \
+        break;
+        SERIALVARS
+#undef X
+    default:
+        Log.i(LOG_ID, "Invalid varID:", varID);
     }
-    // getVariable(varID).update(dataArr, count);
 }
 
 void receiveSerialVar() {
     static elapsedMillis timeElapsed;
-    static byte buffer[32];
+    static uint8_t buffer[9];
 
     timeElapsed = 0;
-    int c = 0;
+    int c = -1;
 
-    Log.i(LOGID, "Waiting for data");
+    Log.i(LOG_ID, "Waiting for data");
 
-    while (c < 32) {
-        if (Serial.available() && (buffer[c++] = Serial.read()) == SERIALVAR_STOP_RECEIVE) {
-            c--;
-            break;
-        } else if (timeElapsed > 8000) { // This process should be quick
-            Log.w(LOGID, "Timedout waiting for data");
+    while (c < 8) {
+        if (Serial.available()) {
+            buffer[++c] = Serial.read();
+        } else if (timeElapsed > 1500) { // This process should be quick
+            Log.w(LOG_ID, "Timeout waiting for data");
             return;
         }
     }
 
-    byte varID = buffer[0];
-    byte size = buffer[1];
+    uint8_t varID = buffer[0];
 
-    Log.i(LOGID, "Data Received for varID:", varID);
-
-    updateVariable(varID, buffer + 2, size);
+    updateVariable(varID, buffer + 1);
 }
 
 } // namespace SerialVar

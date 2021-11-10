@@ -21,21 +21,18 @@
  */
 namespace SerialVar {
 
-LOG_TAG LOGID = "SerialVar";
+/**
+ * @brief Get the Serial Variable for a given ID
+ * 
+ * @param ID the ID of the variable
+ * @return SerialVarObj_t 
+ */
+uint8_t *getVariable(size_t ID);
 
 /**
- * @brief Generalization of all serial variable types
+ * @brief Receive a variable over serial
  */
-class SerialVarObj_t {
-public:
-    /**
-     * @brief Header for a SerialVar's update function
-     * 
-     * @param dataArr The data array to be interpreted
-     * @param count The size of this array to ensure it matches the data type size
-     */
-    void update(byte *dataArr, int count);
-};
+void receiveSerialVar();
 
 /**
  * @brief Template of a Serial Variable
@@ -48,50 +45,26 @@ public:
  * ```
  */
 template <typename T>
-class SerialVar : public SerialVarObj_t {
+class SerialVar {
 private:
-    volatile T val;
+    uint8_t *buffer;
 
 public:
-    static const int byteCount = sizeof(T);
-    SerialVar() {}
-    SerialVar(SerialVarObj_t obj) {}
-
-    /**
-     * @brief Update function which is used internally. Ensures the data array size to be interpreted is the correct length
-     * 
-     * @param dataArr The data array to be interpreted
-     * @param count The size of this array to ensure it matches the data type size
-     */
-    void update(byte *dataArr, int count) {
-        if (count < byteCount) {
-            Log.w(LOGID, "The given data chunk is not big enough for this data type, variable not updated", byteCount);
-            return;
-        }
-        SerialVar s(*this);
-        s.val = *((T *)dataArr);
+    SerialVar(int ID) {
+        buffer = getVariable(ID);
     }
 
-    operator T() const { return this->val; }
+    operator T() const { return *((T *)(buffer)); }
 
     SerialVar &operator=(T val) {
-        this->val = val;
+        *((T *)(buffer)) = val;
         return *this;
     }
 };
 
-/**
- * @brief Get the Serial Variable for a given ID
- * 
- * @param ID the ID of the variable
- * @return SerialVarObj_t 
- */
-SerialVarObj_t getVariable(size_t ID);
-
-/**
- * @brief Receive a variable over serial
- */
-void receiveSerialVar();
+typedef SerialVar<float> SerialFloat;
+typedef SerialVar<int> SerialInt;
+typedef SerialVar<unsigned int> SerialUInt;
 
 } // namespace SerialVar
 #endif // __ECU_SERIALVAR_H__

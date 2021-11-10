@@ -75,7 +75,7 @@ namespace Logging {
 #define __LOGGER_FATAL_PRINT
 #endif
 
-#if CONF_LOGGING_MAPPED_MODE> 0
+#if CONF_LOGGING_MAPPED_MODE > 0
 
 struct uMsg {
     uint32_t LAST_NUMBER = 0;

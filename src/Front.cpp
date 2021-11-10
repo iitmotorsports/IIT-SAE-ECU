@@ -33,7 +33,7 @@ static Canbus::Buffer BMS_DATA_Buffer(ADD_BMS_DATA);
 static Canbus::Buffer BMS_BATT_TEMP_Buffer(ADD_BMS_BATT_TEMP);
 static Canbus::Buffer BMS_CURR_LIMIT_Buffer(ADD_BMS_CURR_LIMIT);
 
-SerialVar::SerialVar<float> TVAggression = SerialVar::getVariable(SERIALVAR_TORQUE_VECTORING_AGGRESSION);
+SerialVar::SerialFloat TVAggression = SERIALVAR_TORQUE_VECTORING_AGGRESSION;
 
 static struct State::State_t *states[] = {
     &ECUStates::Initialize_State,
@@ -292,8 +292,7 @@ void Front::run() {
     }
 #endif
 
-    // Log.d(ID, "Force Enabling Charging");
-    // Pins::setInternalValue(PINS_INTERNAL_CHARGE_SIGNAL, 1);
+    TVAggression = 0.8f;
 
     while (true) {
 #if TESTING == FRONT_ECU
@@ -336,8 +335,7 @@ void Front::run() {
                 Fault::logFault();
             }
 
-            float _TVAgg = TVAggression;
-            Pins::setInternalValue(PINS_INTERNAL_TVAGG, *((int *)&_TVAgg));
+            Pins::setInternalValue(PINS_INTERNAL_TVAGG, TVAggression * 8192);
         }
         if (timeElapsedLow >= INTERVAL_LOW_PRIORITY) { // Low priority updates
             timeElapsedLow = 0;
@@ -367,6 +365,7 @@ void Front::run() {
 
             // General
             Log(ID, "Fault State", Pins::getCanPinValue(PINS_INTERNAL_GEN_FAULT), true);
+
 #endif
         }
 #endif
