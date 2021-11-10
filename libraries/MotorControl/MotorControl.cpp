@@ -28,9 +28,6 @@ namespace MC {
 #define PEDAL_MIN 200.0
 #define PEDAL_MAX 1300.0
 
-// #define PEDAL_MIN 0.0
-// #define PEDAL_MAX (double)PINS_ANALOG_HIGH
-
 // TODO: get input value ranges
 
 #define BRAKE_MIN 0.0
@@ -59,8 +56,8 @@ static void beatFunc(void) {
     }
 }
 
-int32_t motorSpeed(int motor) {                                                        // FIXME: Motor might be sending negative speed?
-    int16_t MC_Rpm_Val_0 = -MC0_RPM_Buffer.getShort(2);                                // Bytes 2-3 : Angular Velocity
+int32_t motorSpeed(int motor) {
+    int16_t MC_Rpm_Val_0 = -MC0_RPM_Buffer.getShort(2);                                // Bytes 2-3 : Angular Velocity // NOTE: motor is negative?
     int16_t MC_Rpm_Val_1 = MC1_RPM_Buffer.getShort(2);                                 // Bytes 2-3 : Angular Velocity
     float MC_Spd_Val_0 = MC_Rpm_Val_0 * 2 * 3.1415926536 / 60 * CONF_CAR_WHEEL_RADIUS; // (RPM -> Rad/s) * Radius
     float MC_Spd_Val_1 = MC_Rpm_Val_1 * 2 * 3.1415926536 / 60 * CONF_CAR_WHEEL_RADIUS;
@@ -93,7 +90,7 @@ static void torqueVector(int pedal, int brake, int steer) {
     int _TVAgg = Pins::getCanPinValue(PINS_INTERNAL_TVAGG);
     float TVAggression = *((float *)&_TVAgg);
 
-    // Log.d(ID, "Aggression Val:", TVAggression);
+    Log.d(ID, "Aggression Val:", TVAggression, true);
 
     // TV V1
     // if (_steer <= 0) {
@@ -108,16 +105,18 @@ static void torqueVector(int pedal, int brake, int steer) {
     motorTorque[1] = motorTorque[0];
 }
 
-void setup(void) {
+void setupBuffers() {
     MC0_RPM_Buffer.init();
     MC1_RPM_Buffer.init();
-#if CONF_ECU_POSITION == BACK_ECU
+}
+
+void setup(void) {
+    setupBuffers();
     if (!init)
         Heartbeat::addCallback(beatFunc);
     clearFaults();
     init = true;
     beating = true;
-#endif
 }
 
 void clearFaults(void) {

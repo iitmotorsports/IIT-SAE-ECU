@@ -241,7 +241,6 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
     carCooling(true);
 
     elapsedMillis controlDelay;
-    size_t counter = 0;
 
     Log.i(ID, "Loading Buffers");
     MC0_VOLT_Buffer.init();
@@ -259,15 +258,14 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             controlDelay = 0;
 
             static bool runReverse = false;
-            if (counter % 5 == 0 && Pins::getCanPinValue(PINS_INTERNAL_REVERSE) != runReverse) {
+
+            if (Pins::getCanPinValue(PINS_INTERNAL_REVERSE) != runReverse) {
                 runReverse = Pins::getCanPinValue(PINS_INTERNAL_REVERSE);
                 MC::setDirection(!runReverse);
             }
 
             if (Fault::softFault() || Fault::hardFault()) { // FIXME: are motor controller faults actually being picked up?
-#if TESTING != BACK_ECU
                 return DrivingModeFault();
-#endif
             }
 
             if (((MC0_VOLT_Buffer.getShort(0) / 10) + (MC1_VOLT_Buffer.getShort(0) / 10)) / 2 < 90) { // 'HVD Fault'
@@ -295,23 +293,18 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
 #endif
             }
 
-            // if (pAVG >= 200)
-            MC::setTorque(pAVG, breakVal, steerVal);
-            // else if (MC::motorSpeed() > 25)
-            // MC::setTorque(-160, breakVal, steerVal);
-
-#if TESTING != BACK_ECU
-            if (++counter > 128) {
-#else
-            if (++counter > 10) {
-#endif
-                counter = 0;
-                Log.i(ID, "Aero servo position:", Aero::getServoValue(), true);
-                if (Fault::softFault()) {
-                    Fault::logFault();
-                }
+            if (pAVG >= 200) {
+                MC::setTorque(pAVG, breakVal, steerVal);
+            } else if (MC::motorSpeed() > 25) { // FIXME: Seems to just disable motors?
+                MC::sendTorque(ADD_MC0_CTRL, -160, 1, 1);
+                MC::sendTorque(ADD_MC1_CTRL, -160, 1, 1);
             }
 
+            if (Fault::softFault()) {
+                Fault::logFault();
+            }
+
+            Log.i(ID, "Aero servo position:", Aero::getServoValue(), true);
             Log.i(ID, "Last MC0 Torque Value:", MC::getLastTorqueValue(true), true);
             Log.i(ID, "Last MC1 Torque Value:", MC::getLastTorqueValue(false), true);
 
@@ -355,7 +348,7 @@ State::State_t *ECUStates::FaultState::run(void) {
     } else {
         Log.e(ID, "FAULT STATE");
         Fault::logFault();
-        delay(10000);
+        delay(500);
     }
     Pins::setInternalValue(PINS_INTERNAL_GEN_FAULT, 0);
     return &ECUStates::Initialize_State;

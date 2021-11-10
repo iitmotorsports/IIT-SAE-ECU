@@ -44,6 +44,11 @@ namespace MC {
 void setup(void);
 
 /**
+ * @brief Only initialize MC buffers, called by MC::setup
+ */
+void setupBuffers(void);
+
+/**
  * @brief Clear MC faults by sending a clear fault command
  */
 void clearFaults(void);

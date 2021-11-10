@@ -116,7 +116,7 @@ static uint32_t MCPowerValue() { // IMPROVE: get power value using three phase v
 
 static void loadBuffers() {
     Log.i(ID, "Loading Buffers");
-    MC::setup();
+    MC::setupBuffers();
     MC0_VOLT_Buffer.init();
     MC1_VOLT_Buffer.init();
     MC0_CURR_Buffer.init();
@@ -336,8 +336,8 @@ void Front::run() {
                 Fault::logFault();
             }
 
-            // float _TVAgg = TVAggression;
-            // Pins::setInternalValue(PINS_INTERNAL_TVAGG, *((int *)&_TVAgg));
+            float _TVAgg = TVAggression;
+            Pins::setInternalValue(PINS_INTERNAL_TVAGG, *((int *)&_TVAgg));
         }
         if (timeElapsedLow >= INTERVAL_LOW_PRIORITY) { // Low priority updates
             timeElapsedLow = 0;
