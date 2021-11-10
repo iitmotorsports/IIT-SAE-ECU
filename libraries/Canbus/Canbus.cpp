@@ -27,12 +27,28 @@ static const int ADDRESS_COUNT = PP_NARG_MO(CAN_ADDRESS);
 static const int TX_MAILBOXES = CONF_FLEXCAN_TX_MAILBOXES;
 #undef X
 
+typedef struct CanAddress_t {
+    volatile canCallback callback;
+    uint32_t address;
+    volatile uint8_t buffer[8];
+    bool flow;
+
+    CanAddress_t(int address, bool flow) {
+        this->address = address;
+        this->flow = flow;
+    }
+
+} CanAddress_t;
+
 FlexCAN_T4<CONF_FLEXCAN_CAN_SELECT, RX_SIZE_256, TX_SIZE_16> F_Can;
-// static IntervalTimer updateTimer;
-static uint32_t addressList[ADDRESS_COUNT];                   // Sorted list of all the addresses
-static volatile uint8_t addressBuffers[ADDRESS_COUNT + 1][8]; // Store buffers for every address, last entry used as failsafe
-static bool addressFlow[ADDRESS_COUNT];                       // Denote whether an address is incoming or outgoing, mapped to addressList
-static volatile canCallback callbacks[ADDRESS_COUNT] = {0};   // Store any and all callbacks
+
+static CanAddress_t addresses[ADDRESS_COUNT + 1] = {
+#define X(address, direction) CanAddress_t(address, direction),
+    CAN_ADDRESS
+#undef X
+        CanAddress_t(0xFFFFFFFF, 0), // last entry used as failsafe
+};
+
 // NOTE: From what I can tell, a semaphore is needed whenever Can.events is not used, as canMsg handlers will automaticaly run without it.
 static volatile uint32_t addressSemaphore = 0xFFFFFFFF; // Address buffer semaphore, // NOTE: address 0xFFFFFFFF cannot be used
 
@@ -42,60 +58,41 @@ static CAN_message_t send;
 
 static bool started = false; // used to prevent sending messages when canbus has not been started
 
-static void _swap(uint32_t &a, uint32_t &b) {
-    uint32_t temp = a;
+static void _swap(CanAddress_t &a, CanAddress_t &b) {
+    CanAddress_t temp = a;
     a = b;
     b = temp;
 }
 
-static void _swap(bool &a, bool &b) {
-    bool temp = a;
-    a = b;
-    b = temp;
-}
-
-static void _selectionSort(uint32_t *array, bool *aux_array, int size) {
+static void _selectionSort(CanAddress_t *array, int size) {
     int i, j, imin;
     for (i = 0; i < size - 1; i++) {
         imin = i;
         for (j = i + 1; j < size; j++) {
-            if (array[j] < array[imin])
+            if (array[j].address < array[imin].address)
                 imin = j;
         }
         _swap(array[i], array[imin]);
-        _swap(aux_array[i], aux_array[imin]);
     }
 }
 
 static void _setMailboxes() {
     F_Can.setMaxMB(16); // set number of possible TX & RX MBs // NOTE: Teensy 3.6 only has max 16 MBs
     Log.d(ID, "Setting MB RX");
-    for (int i = CONF_FLEXCAN_TX_MAILBOXES; i < 16; i++) {
+    for (int i = TX_MAILBOXES; i < 16; i++) {
         F_Can.setMB((FLEXCAN_MAILBOX)i, RX, NONE);
     }
     Log.d(ID, "Setting MB TX");
-    for (int i = 0; i < CONF_FLEXCAN_TX_MAILBOXES; i++) {
+    for (int i = 0; i < TX_MAILBOXES; i++) {
         F_Can.setMB((FLEXCAN_MAILBOX)i, TX, NONE);
     }
 
-    Log.d(ID, "Allocating addresses");
-    int c = 0;
-// Auto setup TX & RX MBs
-#define X(address, direction)            \
-    addressList[c] = address;            \
-    addressFlow[c] = direction;          \
-    Log.i(ID, "New address:", address);  \
-    Log.i(ID, "Address IO:", direction); \
-    c++;
-    CAN_ADDRESS
-#undef X
-
     Log.d(ID, "Sorting addresses", ADDRESS_COUNT);
-    _selectionSort(addressList, addressFlow, ADDRESS_COUNT);
+    _selectionSort(addresses, ADDRESS_COUNT);
     Log.d(ID, "Done");
     for (size_t i = 0; i < ADDRESS_COUNT; i++) {
-        Log.d(ID, "Sorted address:", addressList[i]);
-        Log.d(ID, "Address IO:", addressFlow[i]);
+        Log.d(ID, "Sorted address:", addresses[i].address);
+        Log.d(ID, "Address IO:", addresses[i].flow);
     }
 }
 
@@ -105,9 +102,9 @@ static uint _getAddressPos(const uint32_t address) {
     int e = ADDRESS_COUNT;
     while (s <= e) {
         int mid = (s + e) / 2;
-        if (addressList[mid] == address) {
+        if (addresses[mid].address == address) {
             return mid;
-        } else if (addressList[mid] > address) {
+        } else if (addresses[mid].address > address) {
             e = mid - 1;
         } else {
             s = mid + 1;
@@ -141,7 +138,7 @@ static void _receiveCan(const CAN_message_t &msg) { // FIXME: potential issue wh
 
     uint pos = _getAddressPos(msg.id);
 
-    volatile uint8_t *arr = addressBuffers[pos];
+    volatile uint8_t *arr = addresses[pos].buffer;
     arr[0] = msg.buf[0];
     arr[1] = msg.buf[1];
     arr[2] = msg.buf[2];
@@ -150,8 +147,8 @@ static void _receiveCan(const CAN_message_t &msg) { // FIXME: potential issue wh
     arr[5] = msg.buf[5];
     arr[6] = msg.buf[6];
     arr[7] = msg.buf[7];
-    if (callbacks[pos])
-        callbacks[pos](msg.id, addressBuffers[pos]);
+    if (addresses[pos].callback)
+        addresses[pos].callback(msg.id, addresses[pos].buffer);
 }
 
 void addCallback(const uint32_t address, canCallback callback) {
@@ -161,7 +158,7 @@ void addCallback(const uint32_t address, canCallback callback) {
         return;
     }
 
-    callbacks[pos] = callback;
+    addresses[pos].callback = callback;
 }
 
 void enableInterrupts(bool enable) {
@@ -198,9 +195,9 @@ void update(void) {
 
 void getData(const uint32_t address, uint8_t buf[8]) {
     uint pos = _getAddressPos(address);
-    if (pos != ADDRESS_COUNT && !addressFlow[pos]) { // 0 == incoming
-        setSemaphore(address);                       // Semaphore needed to ensure interrupt does not replace data mid transfer
-        copyVolatileCanMsg(addressBuffers[pos], buf);
+    if (pos != ADDRESS_COUNT && !addresses[pos].flow) { // 0 == incoming
+        setSemaphore(address);                          // Semaphore needed to ensure interrupt does not replace data mid transfer
+        copyVolatileCanMsg(addresses[pos].buffer, buf);
         clearSemaphore();
         return;
     }
@@ -212,7 +209,7 @@ volatile uint8_t *getBuffer(const uint32_t address) {
     if (pos == ADDRESS_COUNT) {
         Log.e(ID, "Address has not been allocated: ", address);
     }
-    return addressBuffers[pos];
+    return addresses[pos].buffer;
 }
 
 void setSemaphore(const uint32_t address) {
@@ -235,7 +232,7 @@ void pushData(const uint32_t address) {
         Log.e(ID, "Address has not been allocated: ", address);
         return;
     }
-    copyVolatileCanMsg(addressBuffers[pos], send.buf);
+    copyVolatileCanMsg(addresses[pos].buffer, send.buf);
 #else
     copyVolatileCanMsg(addressBuffers[_getAddressPos(address)], send.buf);
 #endif
