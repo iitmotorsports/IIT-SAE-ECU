@@ -335,7 +335,7 @@ void Front::run() {
                 Fault::logFault();
             }
 
-            Pins::setInternalValue(PINS_INTERNAL_TVAGG, TVAggression * 8192);
+            Pins::setInternalValue(PINS_INTERNAL_TVAGG, TVAggression * 10000);
         }
         if (timeElapsedLow >= INTERVAL_LOW_PRIORITY) { // Low priority updates
             timeElapsedLow = 0;
