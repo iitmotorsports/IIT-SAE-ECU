@@ -114,23 +114,6 @@ static uint32_t MCPowerValue() { // IMPROVE: get power value using three phase v
     return (MC0_PWR + MC1_PWR) / 1000; // Sending kilowatts
 }
 
-static void loadBuffers() {
-    Log.i(ID, "Loading Buffers");
-    MC::setupBuffers();
-    MC0_VOLT_Buffer.init();
-    MC1_VOLT_Buffer.init();
-    MC0_CURR_Buffer.init();
-    MC1_CURR_Buffer.init();
-    MC0_TEMP2_Buffer.init();
-    MC1_TEMP2_Buffer.init();
-    MC0_TEMP3_Buffer.init();
-    MC1_TEMP3_Buffer.init();
-
-    BMS_DATA_Buffer.init();
-    BMS_BATT_TEMP_Buffer.init();
-    BMS_CURR_LIMIT_Buffer.init();
-}
-
 static void updateCurrentState() {
     uint32_t currState = Pins::getCanPinValue(PINS_INTERNAL_STATE);
     currentState = stateMap[currState]; // returns NULL if not found
@@ -260,7 +243,6 @@ void Front::run() {
     Log.i(ID, "Enabling Logging relay");
     Logging::enableCanbusRelay(); // Allow logging though canbus
 #endif
-    loadBuffers();
     loadStateMap();
 
     Log.i(ID, "Setting commands");

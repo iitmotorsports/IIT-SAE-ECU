@@ -107,6 +107,10 @@ static void _receiveCan(const CAN_message_t &msg) { // FIXME: potential issue wh
 
     CanAddress_t *addr = _getAddress(msg.id);
 
+    if (addr == invalidAddress) {
+        return;
+    }
+
     volatile uint8_t *arr = addr->buffer;
     arr[0] = msg.buf[0];
     arr[1] = msg.buf[1];
@@ -267,6 +271,7 @@ void enableCanbusSniffer(bool enable) {
 
 Canbus::Buffer::Buffer(const uint32_t address) {
     this->address = address;
+    this->buffer = _getAddress(address)->buffer;
 }
 
 void Canbus::Buffer::init() {

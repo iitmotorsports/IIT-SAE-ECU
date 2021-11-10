@@ -58,7 +58,7 @@ void setup(void) {
     i++;
     SOFT_FAULT_ADD
 #undef X
-    Log.d(ID, "Finished setup of buffers");
+    Log.d(ID, "Finished setup of fault buffers");
 }
 
 void logFault(void) {

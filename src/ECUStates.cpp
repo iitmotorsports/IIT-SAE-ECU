@@ -43,7 +43,7 @@ State::State_t *ECUStates::Initialize_State::run(void) {
         delay(100);
     }
     Log.i(ID, "Setup faults");
-    Fault::setup(); // load all buffers
+    Fault::setup(); // load all fault buffers
     Aero::setup();
     MC::setup();
 #ifdef CONF_ECU_DEBUG
@@ -99,15 +99,7 @@ bool ECUStates::PreCharge_State::voltageCheck() {
     return 0.62 * BMSVolt <= (MC0Volt + MC1Volt) / 2;
 }
 
-void ECUStates::PreCharge_State::getBuffers() {
-    BMS_DATA_Buffer.init();
-    MC1_VOLT_Buffer.init();
-    MC0_VOLT_Buffer.init();
-};
-
 State::State_t *ECUStates::PreCharge_State::run(void) { // NOTE: Low = Closed, High = Open
-    Log.i(ID, "Loading Buffers");
-    getBuffers();
     Log.i(ID, "Precharge running");
 
     if (FaultCheck()) {
@@ -241,10 +233,6 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
     carCooling(true);
 
     elapsedMillis controlDelay;
-
-    Log.i(ID, "Loading Buffers");
-    MC0_VOLT_Buffer.init();
-    MC1_VOLT_Buffer.init();
 
     Log.i(ID, "Stopping MC heartbeat");
     MC::enableMotorBeating(false);

@@ -32,7 +32,6 @@ private: // NOTE: defining as a number runs Buffer constructor to 'convert' it t
     Canbus::Buffer BMS_DATA_Buffer = ADD_BMS_DATA;
     Canbus::Buffer MC0_VOLT_Buffer = ADD_MC0_VOLT;
     Canbus::Buffer MC1_VOLT_Buffer = ADD_MC1_VOLT;
-    void getBuffers();
     State::State_t *PreCharFault();
     bool voltageCheck();
 

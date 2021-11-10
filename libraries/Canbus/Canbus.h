@@ -42,7 +42,6 @@ typedef void (*canCallback)(uint32_t, volatile uint8_t *);
  * @brief An incoming canbus message, allows the message data to be interpreted through a simple wrapper class
  */
 struct Buffer { // IMPROVE: more rigorous testing on the get funcs
-    // IMPROVE: Remove need to run init
     /**
      * @brief Address this buffer represents
      */
@@ -54,8 +53,7 @@ struct Buffer { // IMPROVE: more rigorous testing on the get funcs
      */
     Buffer(const uint32_t address);
     /**
-     * @brief Initialize a buffer
-     * @warning Must be run during runtime after Canbus has setup
+     * @brief Initialize a buffer if not done so already by constructor
      */
     void init();
     /**

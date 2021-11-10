@@ -104,13 +104,7 @@ static void torqueVector(int pedal, int brake, int steer) {
     // motorTorque[1] = motorTorque[0];
 }
 
-void setupBuffers() {
-    MC0_RPM_Buffer.init();
-    MC1_RPM_Buffer.init();
-}
-
 void setup(void) {
-    setupBuffers();
     if (!init)
         Heartbeat::addCallback(beatFunc);
     clearFaults();
