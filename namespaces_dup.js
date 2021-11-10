@@ -49,7 +49,8 @@ var namespaces_dup =
       [ "sendTorque", "namespace_m_c.html#a043a760e6f9eaefc9d13ab2f7f1b342c", null ],
       [ "setDirection", "namespace_m_c.html#a2fb464e85bca01fc06a2b5b59c83d9b3", null ],
       [ "setTorque", "namespace_m_c.html#a27fe6e9fc5d1906069d9e60a24226dd0", null ],
-      [ "setup", "namespace_m_c.html#aeb2b966841aa0fd6b2ac79478a648c84", null ]
+      [ "setup", "namespace_m_c.html#aeb2b966841aa0fd6b2ac79478a648c84", null ],
+      [ "setupBuffers", "namespace_m_c.html#a5f9dca43e756b4aa50f914b3f14b1f88", null ]
     ] ],
     [ "Mirror", "namespace_mirror.html", [
       [ "enterMirrorMode", "namespace_mirror.html#a89a62e4b2e374ef95291177d525dcf8e", null ],
