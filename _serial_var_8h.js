@@ -1,8 +1,9 @@
 var _serial_var_8h =
 [
-    [ "SerialVarObj_t", "class_serial_var_1_1_serial_var_obj__t.html", "class_serial_var_1_1_serial_var_obj__t" ],
     [ "SerialVar", "class_serial_var_1_1_serial_var.html", "class_serial_var_1_1_serial_var" ],
-    [ "getVariable", "_serial_var_8h.html#a59fcdba091d522086ab9a0fc5128374d", null ],
-    [ "receiveSerialVar", "_serial_var_8h.html#a99b93dddc7326c4084b3b6ce0c1740a1", null ],
-    [ "LOGID", "_serial_var_8h.html#ae7b439d8884defa36e1033f045fdb0ec", null ]
+    [ "SerialFloat", "_serial_var_8h.html#a5da32db0aa61e4f49916fba6eb7c2eff", null ],
+    [ "SerialInt", "_serial_var_8h.html#af40d2a8aa1f1175e4de61900bbb188c8", null ],
+    [ "SerialUInt", "_serial_var_8h.html#abb98bb3993749d09e2254ed68caaf3fd", null ],
+    [ "getVariable", "_serial_var_8h.html#adbfe0625d096f298b80779ea277eb5f8", null ],
+    [ "receiveSerialVar", "_serial_var_8h.html#a99b93dddc7326c4084b3b6ce0c1740a1", null ]
 ];

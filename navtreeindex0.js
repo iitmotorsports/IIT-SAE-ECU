@@ -1,5 +1,6 @@
 var NAVTREEINDEX0 =
 {
+"":[3,0,1],
 "_aero_servo_8cpp.html":[5,0,0],
 "_aero_servo_8cpp_source.html":[5,0,0],
 "_aero_servo_8h.html":[5,0,1],
@@ -184,15 +185,16 @@ var NAVTREEINDEX0 =
 "_serial_var_8cpp.html":[5,0,48],
 "_serial_var_8cpp_source.html":[5,0,48],
 "_serial_var_8h.html":[5,0,49],
-"_serial_var_8h.html#a59fcdba091d522086ab9a0fc5128374d":[5,0,49,2],
-"_serial_var_8h.html#a99b93dddc7326c4084b3b6ce0c1740a1":[5,0,49,3],
-"_serial_var_8h.html#ae7b439d8884defa36e1033f045fdb0ec":[5,0,49,4],
+"_serial_var_8h.html#a5da32db0aa61e4f49916fba6eb7c2eff":[5,0,49,1],
+"_serial_var_8h.html#a99b93dddc7326c4084b3b6ce0c1740a1":[5,0,49,5],
+"_serial_var_8h.html#abb98bb3993749d09e2254ed68caaf3fd":[5,0,49,3],
+"_serial_var_8h.html#adbfe0625d096f298b80779ea277eb5f8":[5,0,49,4],
+"_serial_var_8h.html#af40d2a8aa1f1175e4de61900bbb188c8":[5,0,49,2],
 "_serial_var_8h_source.html":[5,0,49],
 "_serial_vars_8def.html":[5,0,50],
-"_serial_vars_8def.html#a01191bf1c91bc525ea0166eba1a9996d":[5,0,50,3],
-"_serial_vars_8def.html#a38a9d98226132eef62a4c4f07891d73f":[5,0,50,1],
+"_serial_vars_8def.html#a01191bf1c91bc525ea0166eba1a9996d":[5,0,50,2],
 "_serial_vars_8def.html#a71fb8e979e89d8cbc35de6134191e1c7":[5,0,50,0],
-"_serial_vars_8def.html#aae1dd855bda1c593c0ac6fface58bd29":[5,0,50,2],
+"_serial_vars_8def.html#aae1dd855bda1c593c0ac6fface58bd29":[5,0,50,1],
 "_serial_vars_8def_source.html":[5,0,50],
 "_state_8cpp.html":[5,0,51],
 "_state_8cpp_source.html":[5,0,51],
@@ -247,7 +249,5 @@ var NAVTREEINDEX0 =
 "class_circular___buffer.html#a20bbb7556fce76a2e3d7097ba3713d67":[4,0,8,2],
 "class_circular___buffer.html#a2191444434c68629d9be9774713e5a4a":[4,0,8,24],
 "class_circular___buffer.html#a28267c92b7fb6884d5c707df3cf7e738":[4,0,8,42],
-"class_circular___buffer.html#a29a3997d6a4cd719cc91065b7ef605c2":[4,0,8,17],
-"class_circular___buffer.html#a38773b3b1467a16bfcfda1b13b47d797":[4,0,8,40],
-"class_circular___buffer.html#a39d74c16a6451385313d2aa6dbb08738":[4,0,8,14]
+"class_circular___buffer.html#a29a3997d6a4cd719cc91065b7ef605c2":[4,0,8,17]
 };

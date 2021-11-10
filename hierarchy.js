@@ -24,8 +24,6 @@ var hierarchy =
     ] ],
     [ "Logging::Log_t", "struct_logging_1_1_log__t.html", null ],
     [ "PWMServo", "class_p_w_m_servo.html", null ],
-    [ "SerialVar::SerialVarObj_t", "class_serial_var_1_1_serial_var_obj__t.html", [
-      [ "SerialVar::SerialVar< T >", "class_serial_var_1_1_serial_var.html", null ]
-    ] ],
+    [ "SerialVar::SerialVar< T >", "class_serial_var_1_1_serial_var.html", null ],
     [ "State::State_t", "struct_state_1_1_state__t.html", null ]
 ];

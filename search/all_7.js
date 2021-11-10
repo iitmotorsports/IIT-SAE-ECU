@@ -18,5 +18,5 @@ var searchData=
   ['getuint_110',['getUInt',['../struct_canbus_1_1_buffer.html#ab7cf6a900fd4398946391cd9712cb597',1,'Canbus::Buffer']]],
   ['getulong_111',['getULong',['../struct_canbus_1_1_buffer.html#a858103df59fa907303585534396f0361',1,'Canbus::Buffer']]],
   ['getushort_112',['getUShort',['../struct_canbus_1_1_buffer.html#a50282a77c227eae1bf4c0f03850d6f24',1,'Canbus::Buffer']]],
-  ['getvariable_113',['getVariable',['../namespace_serial_var.html#a59fcdba091d522086ab9a0fc5128374d',1,'SerialVar']]]
+  ['getvariable_113',['getVariable',['../namespace_serial_var.html#adbfe0625d096f298b80779ea277eb5f8',1,'SerialVar']]]
 ];

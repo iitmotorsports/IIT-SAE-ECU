@@ -98,57 +98,40 @@ $(document).ready(function(){initNavTree('_serial_var_8h_source.html',''); initR
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
 <div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="namespace_serial_var.html">   22</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_serial_var.html">SerialVar</a> {</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<a class="code" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a> LOGID = <span class="stringliteral">&quot;SerialVar&quot;</span>;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="class_serial_var_1_1_serial_var_obj__t.html">   29</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_serial_var_1_1_serial_var_obj__t.html">SerialVarObj_t</a> {</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="class_serial_var_1_1_serial_var_obj__t.html#a46fcb6dc8407cb1049c218eecdc77384">   37</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_serial_var_1_1_serial_var_obj__t.html#a46fcb6dc8407cb1049c218eecdc77384">update</a>(<span class="keywordtype">byte</span> *dataArr, <span class="keywordtype">int</span> count);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;};</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="class_serial_var_1_1_serial_var.html">   51</a></span>&#160;<span class="keyword">class </span><a class="code" href="namespace_serial_var.html">SerialVar</a> : <span class="keyword">public</span> <a class="code" href="class_serial_var_1_1_serial_var_obj__t.html">SerialVarObj_t</a> {</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keyword">volatile</span> T val;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> byteCount = <span class="keyword">sizeof</span>(T);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <a class="code" href="namespace_serial_var.html">SerialVar</a>() {}</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <a class="code" href="namespace_serial_var.html">SerialVar</a>(<a class="code" href="class_serial_var_1_1_serial_var_obj__t.html">SerialVarObj_t</a> obj) {}</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="class_serial_var_1_1_serial_var.html#a02fe06341a92685cbdbac37ca3809d03">   66</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_serial_var_1_1_serial_var.html#a02fe06341a92685cbdbac37ca3809d03">update</a>(<span class="keywordtype">byte</span> *dataArr, <span class="keywordtype">int</span> count) {</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordflow">if</span> (count &lt; byteCount) {</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(LOGID, <span class="stringliteral">&quot;The given data chunk is not big enough for this data type, variable not updated&quot;</span>, byteCount);</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        }</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <a class="code" href="namespace_serial_var.html">SerialVar</a> s(*<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        s.val = *((T *)dataArr);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    }</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keyword">operator</span> T()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> this-&gt;val; }</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <a class="code" href="namespace_serial_var.html">SerialVar</a> &amp;operator=(T val) {</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        this-&gt;val = val;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    }</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;};</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="namespace_serial_var.html#a59fcdba091d522086ab9a0fc5128374d">   89</a></span>&#160;<a class="code" href="class_serial_var_1_1_serial_var_obj__t.html">SerialVarObj_t</a> <a class="code" href="namespace_serial_var.html#a59fcdba091d522086ab9a0fc5128374d">getVariable</a>(<span class="keywordtype">size_t</span> ID);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="namespace_serial_var.html#a99b93dddc7326c4084b3b6ce0c1740a1">   94</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_serial_var.html#a99b93dddc7326c4084b3b6ce0c1740a1">receiveSerialVar</a>();</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;} <span class="comment">// namespace SerialVar</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __ECU_SERIALVAR_H__</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="namespace_serial_var.html#adbfe0625d096f298b80779ea277eb5f8">   30</a></span>&#160;uint8_t *<a class="code" href="namespace_serial_var.html#adbfe0625d096f298b80779ea277eb5f8">getVariable</a>(<span class="keywordtype">size_t</span> ID);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="namespace_serial_var.html#a99b93dddc7326c4084b3b6ce0c1740a1">   35</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_serial_var.html#a99b93dddc7326c4084b3b6ce0c1740a1">receiveSerialVar</a>();</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="class_serial_var_1_1_serial_var.html">   48</a></span>&#160;<span class="keyword">class </span><a class="code" href="namespace_serial_var.html">SerialVar</a> {</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    uint8_t *buffer;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <a class="code" href="namespace_serial_var.html">SerialVar</a>(<span class="keywordtype">int</span> ID) {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        buffer = <a class="code" href="namespace_serial_var.html#adbfe0625d096f298b80779ea277eb5f8">getVariable</a>(ID);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    }</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keyword">operator</span> T()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> *((T *)(buffer)); }</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <a class="code" href="namespace_serial_var.html">SerialVar</a> &amp;operator=(T val) {</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        *((T *)(buffer)) = val;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    }</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;};</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">typedef</span> <a class="code" href="class_serial_var_1_1_serial_var.html">SerialVar&lt;float&gt;</a> <a class="code" href="class_serial_var_1_1_serial_var.html">SerialFloat</a>;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keyword">typedef</span> <a class="code" href="class_serial_var_1_1_serial_var.html">SerialVar&lt;int&gt;</a> <a class="code" href="class_serial_var_1_1_serial_var.html">SerialInt</a>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keyword">typedef</span> <a class="code" href="class_serial_var_1_1_serial_var.html">SerialVar&lt;unsigned int&gt;</a> <a class="code" href="class_serial_var_1_1_serial_var.html">SerialUInt</a>;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;} <span class="comment">// namespace SerialVar</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __ECU_SERIALVAR_H__</span></div>
 <div class="ttc" id="a_log_8h_html"><div class="ttname"><a href="_log_8h.html">Log.h</a></div><div class="ttdoc">Special logging functionality.</div></div>
-<div class="ttc" id="a_log_8h_html_a746b6eae8886ab8bb40046729eed2983"><div class="ttname"><a href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a></div><div class="ttdeci">const char * LOG_TAG</div><div class="ttdoc">Type definition of logging tags This typedef is necessary to allow for easier manipulation of code by...</div><div class="ttdef"><b>Definition:</b> <a href="_log_8h_source.html#l00042">Log.h:42</a></div></div>
-<div class="ttc" id="a_log_8h_html_aa5fd43862d543e82b7775410573c9142"><div class="ttname"><a href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a></div><div class="ttdeci">Logging::Log_t Log</div><div class="ttdoc">The global logging object.</div></div>
 <div class="ttc" id="a_serial_vars_8def_html"><div class="ttname"><a href="_serial_vars_8def.html">SerialVars.def</a></div><div class="ttdoc">Serial Variable definitions.</div></div>
-<div class="ttc" id="aclass_serial_var_1_1_serial_var_html_a02fe06341a92685cbdbac37ca3809d03"><div class="ttname"><a href="class_serial_var_1_1_serial_var.html#a02fe06341a92685cbdbac37ca3809d03">SerialVar::SerialVar::update</a></div><div class="ttdeci">void update(byte *dataArr, int count)</div><div class="ttdoc">Update function which is used internally. Ensures the data array size to be interpreted is the correc...</div><div class="ttdef"><b>Definition:</b> <a href="_serial_var_8h_source.html#l00066">SerialVar.h:66</a></div></div>
-<div class="ttc" id="aclass_serial_var_1_1_serial_var_obj__t_html"><div class="ttname"><a href="class_serial_var_1_1_serial_var_obj__t.html">SerialVar::SerialVarObj_t</a></div><div class="ttdoc">Generalization of all serial variable types.</div><div class="ttdef"><b>Definition:</b> <a href="_serial_var_8h_source.html#l00029">SerialVar.h:29</a></div></div>
-<div class="ttc" id="aclass_serial_var_1_1_serial_var_obj__t_html_a46fcb6dc8407cb1049c218eecdc77384"><div class="ttname"><a href="class_serial_var_1_1_serial_var_obj__t.html#a46fcb6dc8407cb1049c218eecdc77384">SerialVar::SerialVarObj_t::update</a></div><div class="ttdeci">void update(byte *dataArr, int count)</div><div class="ttdoc">Header for a SerialVar's update function.</div></div>
+<div class="ttc" id="aclass_serial_var_1_1_serial_var_html"><div class="ttname"><a href="class_serial_var_1_1_serial_var.html">SerialVar::SerialVar</a></div><div class="ttdoc">Template of a Serial Variable.</div><div class="ttdef"><b>Definition:</b> <a href="_serial_var_8h_source.html#l00048">SerialVar.h:48</a></div></div>
 <div class="ttc" id="anamespace_serial_var_html"><div class="ttname"><a href="namespace_serial_var.html">SerialVar</a></div><div class="ttdoc">SerialVar is used for variables that can be modified over usb serial while still being used during ru...</div><div class="ttdef"><b>Definition:</b> <a href="_serial_var_8h_source.html#l00022">SerialVar.h:22</a></div></div>
-<div class="ttc" id="anamespace_serial_var_html_a59fcdba091d522086ab9a0fc5128374d"><div class="ttname"><a href="namespace_serial_var.html#a59fcdba091d522086ab9a0fc5128374d">SerialVar::getVariable</a></div><div class="ttdeci">SerialVarObj_t getVariable(size_t ID)</div><div class="ttdoc">Get the Serial Variable for a given ID.</div></div>
 <div class="ttc" id="anamespace_serial_var_html_a99b93dddc7326c4084b3b6ce0c1740a1"><div class="ttname"><a href="namespace_serial_var.html#a99b93dddc7326c4084b3b6ce0c1740a1">SerialVar::receiveSerialVar</a></div><div class="ttdeci">void receiveSerialVar()</div><div class="ttdoc">Receive a variable over serial.</div></div>
-<div class="ttc" id="astruct_logging_1_1_log__t_html_a6a07c7449c92c06a608cb8f6463ebd46"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">Logging::Log_t::w</a></div><div class="ttdeci">void w(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a warning tag.</div></div>
+<div class="ttc" id="anamespace_serial_var_html_adbfe0625d096f298b80779ea277eb5f8"><div class="ttname"><a href="namespace_serial_var.html#adbfe0625d096f298b80779ea277eb5f8">SerialVar::getVariable</a></div><div class="ttdeci">uint8_t * getVariable(size_t ID)</div><div class="ttdoc">Get the Serial Variable for a given ID.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

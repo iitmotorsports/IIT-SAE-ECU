@@ -87,8 +87,8 @@ $(document).ready(function(){initNavTree('_serial_var_8h.html',''); initResizabl
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">SerialVar.h File Reference</div>  </div>
 </div><!--header-->
@@ -104,9 +104,6 @@ $(document).ready(function(){initNavTree('_serial_var_8h.html',''); initResizabl
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_serial_var_1_1_serial_var_obj__t.html">SerialVar::SerialVarObj_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generalization of all serial variable types.  <a href="class_serial_var_1_1_serial_var_obj__t.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_serial_var_1_1_serial_var.html">SerialVar::SerialVar&lt; T &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Template of a Serial Variable.  <a href="class_serial_var_1_1_serial_var.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -117,21 +114,27 @@ Namespaces</h2></td></tr>
 <tr class="memdesc:namespace_serial_var"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="namespace_serial_var.html" title="SerialVar is used for variables that can be modified over usb serial while still being used during ru...">SerialVar</a> is used for variables that can be modified over usb serial while still being used during runtime like a normal variable. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a5da32db0aa61e4f49916fba6eb7c2eff"><td class="memItemLeft" align="right" valign="top"><a id="a5da32db0aa61e4f49916fba6eb7c2eff"></a>
+typedef SerialVar&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>SerialVar::SerialFloat</b></td></tr>
+<tr class="separator:a5da32db0aa61e4f49916fba6eb7c2eff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af40d2a8aa1f1175e4de61900bbb188c8"><td class="memItemLeft" align="right" valign="top"><a id="af40d2a8aa1f1175e4de61900bbb188c8"></a>
+typedef SerialVar&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>SerialVar::SerialInt</b></td></tr>
+<tr class="separator:af40d2a8aa1f1175e4de61900bbb188c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb98bb3993749d09e2254ed68caaf3fd"><td class="memItemLeft" align="right" valign="top"><a id="abb98bb3993749d09e2254ed68caaf3fd"></a>
+typedef SerialVar&lt; unsigned int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>SerialVar::SerialUInt</b></td></tr>
+<tr class="separator:abb98bb3993749d09e2254ed68caaf3fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a59fcdba091d522086ab9a0fc5128374d"><td class="memItemLeft" align="right" valign="top">SerialVarObj_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_serial_var.html#a59fcdba091d522086ab9a0fc5128374d">SerialVar::getVariable</a> (size_t ID)</td></tr>
-<tr class="memdesc:a59fcdba091d522086ab9a0fc5128374d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Serial Variable for a given ID.  <a href="namespace_serial_var.html#a59fcdba091d522086ab9a0fc5128374d">More...</a><br /></td></tr>
-<tr class="separator:a59fcdba091d522086ab9a0fc5128374d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbfe0625d096f298b80779ea277eb5f8"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_serial_var.html#adbfe0625d096f298b80779ea277eb5f8">SerialVar::getVariable</a> (size_t ID)</td></tr>
+<tr class="memdesc:adbfe0625d096f298b80779ea277eb5f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Serial Variable for a given ID.  <a href="namespace_serial_var.html#adbfe0625d096f298b80779ea277eb5f8">More...</a><br /></td></tr>
+<tr class="separator:adbfe0625d096f298b80779ea277eb5f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99b93dddc7326c4084b3b6ce0c1740a1"><td class="memItemLeft" align="right" valign="top"><a id="a99b93dddc7326c4084b3b6ce0c1740a1"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_serial_var.html#a99b93dddc7326c4084b3b6ce0c1740a1">SerialVar::receiveSerialVar</a> ()</td></tr>
 <tr class="memdesc:a99b93dddc7326c4084b3b6ce0c1740a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive a variable over serial. <br /></td></tr>
 <tr class="separator:a99b93dddc7326c4084b3b6ce0c1740a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:ae7b439d8884defa36e1033f045fdb0ec"><td class="memItemLeft" align="right" valign="top"><a id="ae7b439d8884defa36e1033f045fdb0ec"></a>
-<a class="el" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a>&#160;</td><td class="memItemRight" valign="bottom"><b>SerialVar::LOGID</b> = &quot;SerialVar&quot;</td></tr>
-<tr class="separator:ae7b439d8884defa36e1033f045fdb0ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Serial Variable Module. </p>
