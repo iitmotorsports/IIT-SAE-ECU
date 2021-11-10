@@ -60,8 +60,8 @@ static void beatFunc(void) {
 }
 
 int32_t motorSpeed(int motor) {                                                        // FIXME: Motor might be sending negative speed?
-    int16_t MC_Rpm_Val_0 = abs(MC0_RPM_Buffer.getShort(2));                            // Bytes 2-3 : Angular Velocity
-    int16_t MC_Rpm_Val_1 = abs(MC1_RPM_Buffer.getShort(2));                            // Bytes 2-3 : Angular Velocity
+    int16_t MC_Rpm_Val_0 = -MC0_RPM_Buffer.getShort(2);                                // Bytes 2-3 : Angular Velocity
+    int16_t MC_Rpm_Val_1 = MC1_RPM_Buffer.getShort(2);                                 // Bytes 2-3 : Angular Velocity
     float MC_Spd_Val_0 = MC_Rpm_Val_0 * 2 * 3.1415926536 / 60 * CONF_CAR_WHEEL_RADIUS; // (RPM -> Rad/s) * Radius
     float MC_Spd_Val_1 = MC_Rpm_Val_1 * 2 * 3.1415926536 / 60 * CONF_CAR_WHEEL_RADIUS;
     switch (motor) {
@@ -85,6 +85,7 @@ static void normalizeInput(double *pedal, double *brake, double *steer) { // TOD
 }
 
 static void torqueVector(int pedal, int brake, int steer) {
+
     double _pedal = pedal, _brake = brake, _steer = steer;
 
     normalizeInput(&_pedal, &_brake, &_steer);
@@ -102,6 +103,7 @@ static void torqueVector(int pedal, int brake, int steer) {
     //     motorTorque[1] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
     //     motorTorque[0] = motorTorque[1] * clamp(pow(cos(TVAggression * _steer), 5), 0, 1);
     // }
+
     motorTorque[0] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
     motorTorque[1] = motorTorque[0];
 }
@@ -176,8 +178,7 @@ int getLastPedalValue() {
 }
 
 void setTorque(int pedal, int brake, int steer) {
-    if (forward && pedal >= 0) // Regen brake
-        torqueVector(pedal, brake, steer);
+    torqueVector(pedal, brake, steer);
     sendTorque(ADD_MC1_CTRL, motorTorque[1], forward, 1);
     sendTorque(ADD_MC0_CTRL, motorTorque[0], forward, 1);
 }

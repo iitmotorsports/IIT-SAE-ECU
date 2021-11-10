@@ -295,10 +295,10 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
 #endif
             }
 
-            if (pAVG >= 200 && MC::motorSpeed() > 25)
-                MC::setTorque(pAVG, breakVal, steerVal);
-            else
-                MC::setTorque(-160, breakVal, steerVal);
+            // if (pAVG >= 200)
+            MC::setTorque(pAVG, breakVal, steerVal);
+            // else if (MC::motorSpeed() > 25)
+            // MC::setTorque(-160, breakVal, steerVal);
 
 #if TESTING != BACK_ECU
             if (++counter > 128) {

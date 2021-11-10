@@ -336,8 +336,8 @@ void Front::run() {
                 Fault::logFault();
             }
 
-            float _TVAgg = TVAggression;
-            Pins::setInternalValue(PINS_INTERNAL_TVAGG, *((int *)&_TVAgg));
+            // float _TVAgg = TVAggression;
+            // Pins::setInternalValue(PINS_INTERNAL_TVAGG, *((int *)&_TVAgg));
         }
         if (timeElapsedLow >= INTERVAL_LOW_PRIORITY) { // Low priority updates
             timeElapsedLow = 0;
