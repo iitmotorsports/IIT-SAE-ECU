@@ -103,8 +103,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad65cb31e2dd5930d3278241c96e67db5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_canbus_1_1_buffer.html#ad65cb31e2dd5930d3278241c96e67db5">Buffer</a> (const uint32_t <a class="el" href="struct_canbus_1_1_buffer.html#a7072a6fcf3ebcd1d434f12ee8f4537c7">address</a>)</td></tr>
 <tr class="memdesc:ad65cb31e2dd5930d3278241c96e67db5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="struct_canbus_1_1_buffer.html" title="An incoming canbus message, allows the message data to be interpreted through a simple wrapper class.">Buffer</a>.  <a href="struct_canbus_1_1_buffer.html#ad65cb31e2dd5930d3278241c96e67db5">More...</a><br /></td></tr>
 <tr class="separator:ad65cb31e2dd5930d3278241c96e67db5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe363f6d20b365f1ecfe819597107742"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_canbus_1_1_buffer.html#abe363f6d20b365f1ecfe819597107742">init</a> ()</td></tr>
-<tr class="memdesc:abe363f6d20b365f1ecfe819597107742"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a buffer.  <a href="struct_canbus_1_1_buffer.html#abe363f6d20b365f1ecfe819597107742">More...</a><br /></td></tr>
+<tr class="memitem:abe363f6d20b365f1ecfe819597107742"><td class="memItemLeft" align="right" valign="top"><a id="abe363f6d20b365f1ecfe819597107742"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_canbus_1_1_buffer.html#abe363f6d20b365f1ecfe819597107742">init</a> ()</td></tr>
+<tr class="memdesc:abe363f6d20b365f1ecfe819597107742"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a buffer if not done so already by constructor. <br /></td></tr>
 <tr class="separator:abe363f6d20b365f1ecfe819597107742"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a858103df59fa907303585534396f0361"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_canbus_1_1_buffer.html#a858103df59fa907303585534396f0361">getULong</a> ()</td></tr>
 <tr class="memdesc:a858103df59fa907303585534396f0361"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpret the buffer as an unsigned long.  <a href="struct_canbus_1_1_buffer.html#a858103df59fa907303585534396f0361">More...</a><br /></td></tr>
@@ -333,26 +334,6 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 <p>Interpret the buffer as an unsigned Short at byte position <code>pos</code> </p>
 <dl class="section return"><dt>Returns</dt><dd>uint16_t The interpreted value </dd></dl>
-
-</div>
-</div>
-<a id="abe363f6d20b365f1ecfe819597107742"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe363f6d20b365f1ecfe819597107742">&#9670;&nbsp;</a></span>init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Canbus::Buffer::init </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Initialize a buffer. </p>
-<dl class="section warning"><dt>Warning</dt><dd>Must be run during runtime after <a class="el" href="namespace_canbus.html" title="Canbus functionality. Refer to Canbus.h for more info.">Canbus</a> has setup </dd></dl>
 
 </div>
 </div>
