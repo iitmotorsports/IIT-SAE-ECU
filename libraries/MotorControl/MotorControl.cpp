@@ -89,7 +89,7 @@ static void torqueVector(int pedal, int brake, int steer) {
 
     float TVAggression = (float)Pins::getCanPinValue(PINS_INTERNAL_TVAGG) / 8192.0f;
 
-    Log.d(ID, "Aggression Val:", TVAggression, true);
+    Log.d(ID, "Aggression Val x1000:", TVAggression * 1000, true);
 
     // TV V1
     // if (_steer <= 0) {
