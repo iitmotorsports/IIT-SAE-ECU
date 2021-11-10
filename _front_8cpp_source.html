@@ -426,8 +426,8 @@ $(document).ready(function(){initNavTree('_front_8cpp_source.html',''); initResi
 <div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;                <a class="code" href="namespace_fault.html#abf369f0092a0b44bb9546b3563417895">Fault::logFault</a>();</div>
 <div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;            }</div>
 <div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160; </div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;            <span class="keywordtype">float</span> _TVAgg = TVAggression;</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;            <a class="code" href="namespace_pins.html#a9d8cba01aef10c12ca76fe5cb0bc67c6">Pins::setInternalValue</a>(PINS_INTERNAL_TVAGG, *((<span class="keywordtype">int</span> *)&amp;_TVAgg));</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;            <span class="comment">// float _TVAgg = TVAggression;</span></div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;            <span class="comment">// Pins::setInternalValue(PINS_INTERNAL_TVAGG, *((int *)&amp;_TVAgg));</span></div>
 <div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;        }</div>
 <div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;        <span class="keywordflow">if</span> (timeElapsedLow &gt;= INTERVAL_LOW_PRIORITY) { <span class="comment">// Low priority updates</span></div>
 <div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;            timeElapsedLow = 0;</div>

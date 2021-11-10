@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"class_circular___buffer.html#a402e6ae69dfd3cc9432b198858d11dfd":[4,0,8,39],
 "class_circular___buffer.html#a4297d0a6273e0390e8b67715035fa267":[4,0,8,11],
 "class_circular___buffer.html#a4de031da7c711d2956dd7767ff531c16":[4,0,8,1],
 "class_circular___buffer.html#a4e1eb269848cda479828de4012f6e8ee":[4,0,8,43],
@@ -248,6 +249,5 @@ var NAVTREEINDEX1 =
 "namespace_canbus.html#a77f67ab89d9f23f059f1e41123cc65a5":[3,0,2,4],
 "namespace_canbus.html#a884781debf9732f3e4676830d294e6bc":[3,0,2,2],
 "namespace_canbus.html#ac87cf65470012914f1ae29c0eb987b87":[3,0,2,13],
-"namespace_canbus.html#ae66521cf8ac5e63c2e89d6b2f009b38a":[3,0,2,6],
-"namespace_canbus.html#aed796b6196e7d80b59dd205de7a8edfd":[3,0,2,8]
+"namespace_canbus.html#ae66521cf8ac5e63c2e89d6b2f009b38a":[3,0,2,6]
 };

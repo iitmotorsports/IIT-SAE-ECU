@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"namespace_canbus.html#aed796b6196e7d80b59dd205de7a8edfd":[3,0,2,8],
 "namespace_cmd.html":[3,0,3],
 "namespace_cmd.html#ae4cdc8f8cdead5a5563c40cf7d1558fa":[3,0,3,0],
 "namespace_cmd.html#aedaea62d3d1e614cf34ae87372087846":[3,0,3,1],
@@ -154,6 +155,5 @@ var NAVTREEINDEX2 =
 "struct_state_1_1_state__t.html#aeae12a5d68f5c0d84c8c85160de43fd7":[4,0,3,0,2],
 "struct_state_1_1_state__t.html#af730abedf662a8e251b5839b2ad6e932":[4,0,3,0,1],
 "upload_paste_8py.html":[5,0,53],
-"upload_paste_8py_source.html":[5,0,53],
-"":[3,0,1]
+"upload_paste_8py_source.html":[5,0,53]
 };
