@@ -281,12 +281,12 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
 #endif
             }
 
-            if (pAVG >= 200) {
-                MC::setTorque(pAVG, breakVal, steerVal);
-            } else if (MC::motorSpeed() > 25) { // FIXME: Seems to just disable motors?
-                MC::sendTorque(ADD_MC0_CTRL, -160, 1, 1);
-                MC::sendTorque(ADD_MC1_CTRL, -160, 1, 1);
-            }
+            // if (pAVG >= 200) {
+            MC::setTorque(pAVG, breakVal, steerVal);
+            // } else if (MC::motorSpeed() > 25) { // FIXME: Seems to just disable motors?
+            //     MC::sendTorque(ADD_MC0_CTRL, -160, 1, 1);
+            //     MC::sendTorque(ADD_MC1_CTRL, -160, 1, 1);
+            // }
 
             if (Fault::softFault()) {
                 Fault::logFault();
