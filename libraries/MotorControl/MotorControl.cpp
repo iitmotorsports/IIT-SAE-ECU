@@ -33,8 +33,8 @@ namespace MC {
 #define BRAKE_MIN 0.0
 #define BRAKE_MAX (double)PINS_ANALOG_HIGH
 
-#define STEER_MIN 0.0
-#define STEER_MAX (double)PINS_ANALOG_HIGH
+#define STEER_MIN 2500.0
+#define STEER_MAX 3500.0
 
 static LOG_TAG ID = "MotorControl";
 
@@ -78,7 +78,7 @@ static void normalizeInput(double *pedal, double *brake, double *steer) { // TOD
 
     *pedal = pAccum;
     *brake = bAccum;
-    *steer = cMap(sAccum, 0.0, NORM_VAL, -PI / 2, PI / 2);
+    *steer = cMap(sAccum, 0.0, NORM_VAL, -PI / 9, PI / 9);
 }
 
 static void torqueVector(int pedal, int brake, int steer) {
