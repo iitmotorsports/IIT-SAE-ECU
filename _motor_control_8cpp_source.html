@@ -113,8 +113,8 @@ $(document).ready(function(){initNavTree('_motor_control_8cpp_source.html',''); 
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#define BRAKE_MIN 0.0</span></div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#define BRAKE_MAX (double)PINS_ANALOG_HIGH</span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#define STEER_MIN 0.0</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#define STEER_MAX (double)PINS_ANALOG_HIGH</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#define STEER_MIN 2500.0</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#define STEER_MAX 3500.0</span></div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">static</span> <a class="code" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a> ID = <span class="stringliteral">&quot;MotorControl&quot;</span>;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
@@ -158,7 +158,7 @@ $(document).ready(function(){initNavTree('_motor_control_8cpp_source.html',''); 
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    *pedal = pAccum;</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    *brake = bAccum;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    *steer = <a class="code" href="_util_8h.html#a4bed8992f080fb6157e663b1d339136f">cMap</a>(sAccum, 0.0, NORM_VAL, -PI / 2, PI / 2);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    *steer = <a class="code" href="_util_8h.html#a4bed8992f080fb6157e663b1d339136f">cMap</a>(sAccum, 0.0, NORM_VAL, -PI / 9, PI / 9);</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;}</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> torqueVector(<span class="keywordtype">int</span> pedal, <span class="keywordtype">int</span> brake, <span class="keywordtype">int</span> steer) {</div>
