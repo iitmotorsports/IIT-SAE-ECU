@@ -683,6 +683,20 @@ def main():
         if newhash != prehash:
             print(Text.reallyImportant("\nNote: Output file values have changed"))
 
+    print("Converting LogMap 📃")
+    subprocess.Popen(
+        [
+            "python",
+            "bin2cc.py",
+            "-i",
+            "log_lookup.json",
+            "-o",
+            f"{WORKING_DIRECTORY_OFFSET}{LIB_PATH}\\log_lookup.cpp",
+            "-v",
+            "log_lookup",
+        ]
+    ).wait()
+
     # try:
     #     shutil.rmtree(SOURCE_DEST_NAME)
     #     shutil.rmtree(LIBRARIES_DEST_NAME)

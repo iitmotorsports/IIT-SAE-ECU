@@ -200,9 +200,12 @@
                 "--jsonPath",
                 "${workspaceFolder}\\log_lookup.json",
                 "-r",
+                "${config:GRAPH_ARG}",
                 "-w",
                 "-l${workspaceFolder}\\logs",
-                "--logTime"
+                "--logTime",
+                "--input",
+                "D"
             ],
             "options": {
                 "statusbar": {

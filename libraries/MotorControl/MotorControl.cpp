@@ -22,6 +22,20 @@
 
 namespace MC {
 
+#define MAX_TORQUE 500.0
+#define NORM_VAL (double)PINS_ANALOG_MAX
+
+#define PEDAL_MIN 200.0
+#define PEDAL_MAX 1300.0
+
+// TODO: get input value ranges
+
+#define BRAKE_MIN 0.0
+#define BRAKE_MAX (double)PINS_ANALOG_HIGH
+
+#define STEER_MIN 2500.0
+#define STEER_MAX 3500.0
+
 static LOG_TAG ID = "MotorControl";
 
 static int motorTorque[2] = {0, 0};
@@ -30,10 +44,7 @@ static bool beating = true;
 static bool init = false;
 static bool forward = true;
 
-static int mc0T = 0;
-static int mc1T = 0;
-
-static int pAccum = 0;
+static double pAccum = 0, bAccum = 0, sAccum = 0;
 
 static Canbus::Buffer MC0_RPM_Buffer(ADD_MC0_RPM);
 static Canbus::Buffer MC1_RPM_Buffer(ADD_MC1_RPM);
@@ -45,8 +56,8 @@ static void beatFunc(void) {
     }
 }
 
-static int32_t motorSpeed(int motor = -1) {
-    int16_t MC_Rpm_Val_0 = MC0_RPM_Buffer.getShort(2);                                 // Bytes 2-3 : Angular Velocity
+int32_t motorSpeed(int motor) {
+    int16_t MC_Rpm_Val_0 = -MC0_RPM_Buffer.getShort(2);                                // Bytes 2-3 : Angular Velocity // NOTE: motor is negative?
     int16_t MC_Rpm_Val_1 = MC1_RPM_Buffer.getShort(2);                                 // Bytes 2-3 : Angular Velocity
     float MC_Spd_Val_0 = MC_Rpm_Val_0 * 2 * 3.1415926536 / 60 * CONF_CAR_WHEEL_RADIUS; // (RPM -> Rad/s) * Radius
     float MC_Spd_Val_1 = MC_Rpm_Val_1 * 2 * 3.1415926536 / 60 * CONF_CAR_WHEEL_RADIUS;
@@ -60,18 +71,42 @@ static int32_t motorSpeed(int motor = -1) {
     }
 }
 
+static void normalizeInput(double *pedal, double *brake, double *steer) { // TODO: GET THIS OUT OF HERE! Does not belong here
+    pAccum = EMAvg(pAccum, cMap(*pedal, PEDAL_MIN, PEDAL_MAX, 0.0, NORM_VAL), 32);
+    bAccum = EMAvg(bAccum, cMap(*brake, BRAKE_MIN, BRAKE_MAX, 0.0, NORM_VAL), 16);
+    sAccum = EMAvg(sAccum, cMap(*steer, STEER_MIN, STEER_MAX, 0.0, NORM_VAL), 8);
+
+    *pedal = pAccum;
+    *brake = bAccum;
+    *steer = cMap(sAccum, 0.0, NORM_VAL, -PI / 9, PI / 9);
+}
+
 static void torqueVector(int pedal, int brake, int steer) {
-    pAccum = interpolate(10, pedal, (pedal - pAccum) / PINS_ANALOG_MAX, 15);
-    // TODO: Add Torque vectoring algorithms
-    motorTorque[0] = pAccum;
-    motorTorque[1] = pAccum;
+
+    double _pedal = pedal, _brake = brake, _steer = steer;
+
+    normalizeInput(&_pedal, &_brake, &_steer);
+
+    float TVAggression = (float)Pins::getCanPinValue(PINS_INTERNAL_TVAGG) / 10000.0f;
+
+    Log.d(ID, "Aggression Val x1000:", TVAggression * 1000, true);
+
+    // TV V1
+    if (_steer <= 0) {
+        motorTorque[0] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
+        motorTorque[1] = motorTorque[0] * clamp(pow(cos(TVAggression * _steer), 5), 0, 1);
+    } else {
+        motorTorque[1] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
+        motorTorque[0] = motorTorque[1] * clamp(pow(cos(TVAggression * _steer), 5), 0, 1);
+    }
+
+    // motorTorque[0] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
+    // motorTorque[1] = motorTorque[0];
 }
 
 void setup(void) {
     if (!init)
         Heartbeat::addCallback(beatFunc);
-    MC0_RPM_Buffer.init();
-    MC1_RPM_Buffer.init();
     clearFaults();
     init = true;
     beating = true;
@@ -104,19 +139,13 @@ int sendSpeed(uint32_t MC_ADD, int speed, bool direction, bool enableBit) {
     return setSpeed;
 }
 
-int sendTorque(uint32_t MC_ADD, int torque, bool direction, bool enableBit) { // NOTE: 0 (Clockwise = Reverse) 1 (Anticlockwise = Forward)
+void sendTorque(uint32_t MC_ADD, int torque, bool direction, bool enableBit) { // NOTE: 0 (Clockwise = Reverse) 1 (Anticlockwise = Forward)
     if (beating) {
         Log.w(ID, "Unable to set torque, heartbeat is on");
-        return 0;
+        return;
     }
-    int setTorque = 0;
-    if (torque != 0) {                                          // max analog should be what the max pedal readout is
-        setTorque = cMap(torque, 200, PINS_ANALOG_MAX, 0, 150); // separate func for negative vals (regen)
-    }
-
-    uint8_t *bytes = (uint8_t *)&setTorque;
+    uint8_t *bytes = (uint8_t *)&torque;
     Canbus::sendData(MC_ADD, bytes[0], bytes[1], 0, 0, direction, enableBit);
-    return setTorque;
 }
 
 bool isForward(void) {
@@ -133,7 +162,7 @@ void setDirection(bool runForward) {
 }
 
 int getLastTorqueValue(bool mc0) {
-    return mc0 ? mc0T : mc1T;
+    return mc0 ? motorTorque[0] : motorTorque[1];
 }
 
 int getLastPedalValue() {
@@ -142,10 +171,8 @@ int getLastPedalValue() {
 
 void setTorque(int pedal, int brake, int steer) {
     torqueVector(pedal, brake, steer);
-    // motorTorque[0] -= motorSpeed(0);
-    // motorTorque[1] -= motorSpeed(1);
-    mc0T = sendTorque(ADD_MC0_CTRL, motorTorque[0], forward, 1);
-    mc1T = sendTorque(ADD_MC1_CTRL, motorTorque[1], forward, 1);
+    sendTorque(ADD_MC1_CTRL, motorTorque[1], forward, 1);
+    sendTorque(ADD_MC0_CTRL, motorTorque[0], forward, 1);
 }
 
 } // namespace MC
