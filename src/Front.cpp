@@ -274,7 +274,7 @@ void Front::run() {
     }
 #endif
 
-    TVAggression = 0.8f;
+    TVAggression = 1.8f;
 
     while (true) {
 #if TESTING == FRONT_ECU
