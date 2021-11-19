@@ -117,6 +117,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stru
 <tr class="memitem:a346e76948bb3526504e771dbbc53b2b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_canbus_1_1_buffer.html#a346e76948bb3526504e771dbbc53b2b6">dump</a> (uint8_t *extBuffer)</td></tr>
 <tr class="memdesc:a346e76948bb3526504e771dbbc53b2b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dump the current buffer onto an external one.  <a href="struct_canbus_1_1_buffer.html#a346e76948bb3526504e771dbbc53b2b6">More...</a><br /></td></tr>
 <tr class="separator:a346e76948bb3526504e771dbbc53b2b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35ab944e04444e8ad15f087c8b1f0b57"><td class="memItemLeft" align="right" valign="top"><a id="a35ab944e04444e8ad15f087c8b1f0b57"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_canbus_1_1_buffer.html#a35ab944e04444e8ad15f087c8b1f0b57">clear</a> (void)</td></tr>
+<tr class="memdesc:a35ab944e04444e8ad15f087c8b1f0b57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the buffer. <br /></td></tr>
+<tr class="separator:a35ab944e04444e8ad15f087c8b1f0b57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a858103df59fa907303585534396f0361"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_canbus_1_1_buffer.html#a858103df59fa907303585534396f0361">getULong</a> ()</td></tr>
 <tr class="memdesc:a858103df59fa907303585534396f0361"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpret the buffer as an unsigned long.  <a href="struct_canbus_1_1_buffer.html#a858103df59fa907303585534396f0361">More...</a><br /></td></tr>
 <tr class="separator:a858103df59fa907303585534396f0361"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -154,8 +158,9 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>An incoming canbus message, allows the message data to be interpreted through a simple wrapper class. </p>
+<dl class="section note"><dt>Note</dt><dd>Buffers are persistent, when a message is received it stays in the buffer unless cleared </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_canbus_8h_source.html#l00044">44</a> of file <a class="el" href="_canbus_8h_source.html">Canbus.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_canbus_8h_source.html#l00045">45</a> of file <a class="el" href="_canbus_8h_source.html">Canbus.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a55b601f63747077e60190568ee364e8d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a55b601f63747077e60190568ee364e8d">&#9670;&nbsp;</a></span>Buffer() <span class="overload">[1/2]</span></h2>
