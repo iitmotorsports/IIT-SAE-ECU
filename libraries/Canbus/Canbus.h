@@ -47,6 +47,12 @@ struct Buffer { // IMPROVE: more rigorous testing on the get funcs
      */
     uint32_t address;
     /**
+     * @brief Construct a new Buffer as a wrapper
+     * 
+     * @param buffer the array to wrap around
+     */
+    Buffer(uint8_t *buffer);
+    /**
      * @brief Construct a new Buffer
      * 
      * @param address the address this buffer should represent
@@ -57,53 +63,74 @@ struct Buffer { // IMPROVE: more rigorous testing on the get funcs
      */
     void init();
     /**
+     * @brief Dump the current buffer onto an external one
+     * 
+     * @param buffer 
+     */
+    void dump(uint8_t *extBuffer);
+    /**
      * @brief Interpret the buffer as an unsigned long
      * 
+     * @param pos the byte to start interpreting at
      * @return uint64_t The interpreted value
      */
     uint64_t getULong();
     /**
      * @brief Interpret the buffer as a long
      * 
+     * @param pos the byte to start interpreting at
      * @return int64_t The interpreted value
      */
     int64_t getLong();
     /**
      * @brief Interpret the buffer as an unsigned Integer at byte position `pos`
      * 
+     * @param pos the byte to start interpreting at
      * @return uint32_t The interpreted value
      */
     uint32_t getUInt(size_t pos);
     /**
      * @brief Interpret the buffer as an Integer at byte position `pos`
      * 
+     * @param pos the byte to start interpreting at
      * @return int32_t The interpreted value
      */
     int32_t getInt(size_t pos);
     /**
      * @brief Interpret the buffer as an unsigned Short at byte position `pos`
      * 
+     * @param pos the byte to start interpreting at
      * @return uint16_t The interpreted value
      */
     uint16_t getUShort(size_t pos);
     /**
      * @brief Interpret the buffer as an Short at byte position `pos`
      * 
+     * @param pos the byte to start interpreting at
      * @return int16_t The interpreted value
      */
     int16_t getShort(size_t pos);
     /**
      * @brief Interpret the buffer as an unsigned Byte at byte position `pos`
      * 
+     * @param pos the byte to start interpreting at
      * @return uint8_t The interpreted value
      */
     uint8_t getUByte(size_t pos);
     /**
      * @brief Interpret the buffer as a Byte at byte position `pos`
      * 
+     * @param pos the byte to start interpreting at
      * @return int8_t The interpreted value
      */
     int8_t getByte(size_t pos);
+    /**
+     * @brief Get the bit at position `pos` of this buffer
+     * 
+     * @param pos the bit to check on the buffer
+     * @return bit as boolean
+     */
+    bool getBit(size_t pos);
 
 private:
     volatile uint8_t *buffer = 0;

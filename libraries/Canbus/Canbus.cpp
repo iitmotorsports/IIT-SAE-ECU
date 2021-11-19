@@ -269,6 +269,10 @@ void enableCanbusSniffer(bool enable) {
 
 } // namespace Canbus
 
+Canbus::Buffer::Buffer(uint8_t *buffer) {
+    this->buffer = buffer;
+}
+
 Canbus::Buffer::Buffer(const uint32_t address) {
     this->address = address;
     this->buffer = _getAddress(address)->buffer;
@@ -278,14 +282,24 @@ void Canbus::Buffer::init() {
     buffer = Canbus::getBuffer(address);
 }
 
+void Canbus::Buffer::dump(uint8_t *extBuffer) {
+    copyVolatileCanMsg(buffer, extBuffer);
+}
+
 // IMPROVE: remove type-punning, maybe just use bitshifting?
+
+#ifdef CONF_ECU_DEBUG
+static void checkInit(Canbus::Buffer *buffer, bool init) {
+    if (init) {
+        Log.w(Canbus::ID, "Buffer was not initalized before calling a get function", buffer->address);
+        buffer->init();
+    }
+}
+#endif
 
 uint64_t Canbus::Buffer::getULong() {
 #ifdef CONF_ECU_DEBUG
-    if (buffer == 0) {
-        Log.w(ID, "Buffer was not initalized before calling a get function", address);
-        init();
-    }
+    checkInit(this, buffer == 0);
 #endif
     setSemaphore(address);
     uint64_t val = *(uint64_t *)(buffer);
@@ -294,10 +308,7 @@ uint64_t Canbus::Buffer::getULong() {
 }
 int64_t Canbus::Buffer::getLong() {
 #ifdef CONF_ECU_DEBUG
-    if (buffer == 0) {
-        Log.w(ID, "Buffer was not initalized before calling a get function", address);
-        init();
-    }
+    checkInit(this, buffer == 0);
 #endif
     setSemaphore(address);
     int64_t val = *(int64_t *)(buffer);
@@ -306,10 +317,7 @@ int64_t Canbus::Buffer::getLong() {
 }
 uint32_t Canbus::Buffer::getUInt(size_t pos) {
 #ifdef CONF_ECU_DEBUG
-    if (buffer == 0) {
-        Log.w(ID, "Buffer was not initalized before calling a get function", address);
-        init();
-    }
+    checkInit(this, buffer == 0);
 #endif
     setSemaphore(address);
     uint32_t val = *(uint32_t *)(buffer + pos);
@@ -318,10 +326,7 @@ uint32_t Canbus::Buffer::getUInt(size_t pos) {
 }
 int32_t Canbus::Buffer::getInt(size_t pos) {
 #ifdef CONF_ECU_DEBUG
-    if (buffer == 0) {
-        Log.w(ID, "Buffer was not initalized before calling a get function", address);
-        init();
-    }
+    checkInit(this, buffer == 0);
 #endif
     setSemaphore(address);
     int32_t val = *(int32_t *)(buffer + pos);
@@ -330,10 +335,7 @@ int32_t Canbus::Buffer::getInt(size_t pos) {
 }
 uint16_t Canbus::Buffer::getUShort(size_t pos) {
 #ifdef CONF_ECU_DEBUG
-    if (buffer == 0) {
-        Log.w(ID, "Buffer was not initalized before calling a get function", address);
-        init();
-    }
+    checkInit(this, buffer == 0);
 #endif
     setSemaphore(address);
     uint16_t val = *(uint16_t *)(buffer + pos);
@@ -342,10 +344,7 @@ uint16_t Canbus::Buffer::getUShort(size_t pos) {
 }
 int16_t Canbus::Buffer::getShort(size_t pos) {
 #ifdef CONF_ECU_DEBUG
-    if (buffer == 0) {
-        Log.w(ID, "Buffer was not initalized before calling a get function", address);
-        init();
-    }
+    checkInit(this, buffer == 0);
 #endif
     setSemaphore(address);
     int16_t val = *(int16_t *)(buffer + pos);
@@ -354,21 +353,21 @@ int16_t Canbus::Buffer::getShort(size_t pos) {
 }
 uint8_t Canbus::Buffer::getUByte(size_t pos) {
 #ifdef CONF_ECU_DEBUG
-    if (buffer == 0) {
-        Log.w(ID, "Buffer was not initalized before calling a get function", address);
-        init();
-    }
+    checkInit(this, buffer == 0);
 #endif
     return buffer[pos];
 }
 int8_t Canbus::Buffer::getByte(size_t pos) {
 #ifdef CONF_ECU_DEBUG
-    if (buffer == 0) {
-        Log.w(ID, "Buffer was not initalized before calling a get function", address);
-        init();
-    }
+    checkInit(this, buffer == 0);
 #endif
     return (int8_t)buffer[pos];
+}
+bool Canbus::Buffer::getBit(size_t pos) {
+#ifdef CONF_ECU_DEBUG
+    checkInit(this, buffer == 0);
+#endif
+    return ((bool *)buffer)[pos];
 }
 
 // @endcond
