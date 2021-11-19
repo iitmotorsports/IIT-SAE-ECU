@@ -42,8 +42,6 @@ State::State_t *ECUStates::Initialize_State::run(void) {
         Canbus::sendData(ADD_MC1_CTRL);
         delay(100);
     }
-    Log.i(ID, "Setup faults");
-    Fault::setup(); // load all fault buffers
     Aero::setup();
     MC::setup();
 #ifdef CONF_ECU_DEBUG
@@ -155,7 +153,7 @@ State::State_t *ECUStates::Idle_State::run(void) {
             Log.i(ID, "Charging Pressed");
             // Front teensy will continue blinking start light in charge state
             return &ECUStates::Charging_State;
-        } else if (FaultCheck()) {
+        } else if (FaultCheck()) { // TODO: rate limit logging
             Log.w(ID, "Fault in idle state");
             break;
         }
@@ -327,10 +325,11 @@ State::State_t *ECUStates::FaultState::run(void) {
     Pins::resetPhysicalPins();
 
     if (getLastState() == &ECUStates::PreCharge_State) {
-        Log.f(ID, "Precharge fault");
         while (true) {
+            Log.e(ID, "Precharge fault");
             Pins::setInternalValue(PINS_INTERNAL_GEN_FAULT, 1);
             Fault::logFault();
+            Fault::anyFault();
             delay(1000);
         }
     } else {

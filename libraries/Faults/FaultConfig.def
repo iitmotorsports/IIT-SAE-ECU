@@ -101,7 +101,7 @@
  * Only the last entry should NOT have a '\'
  * 
  */
-#define ID_FAULT                                                                                                                                                       \
+#define CAN_FAULT_IDS                                                                                                                                                  \
     X(ADD_MC0_FAULTS, 0b1000000000000000000000000000000000000000000000000000000000000000, _LogPrebuildString("MC0 Fault: Hardware Gate/Desaturation Fault"))           \
     X(ADD_MC0_FAULTS, 0b0100000000000000000000000000000000000000000000000000000000000000, _LogPrebuildString("MC0 Fault: HW over-current Fault"))                      \
     X(ADD_MC0_FAULTS, 0b0010000000000000000000000000000000000000000000000000000000000000, _LogPrebuildString("MC0 Fault: Accelerator shorted"))                        \

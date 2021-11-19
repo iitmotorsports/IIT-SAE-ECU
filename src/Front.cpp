@@ -347,7 +347,6 @@ void Front::run() {
 
             // General
             Log(ID, "Fault State", Pins::getCanPinValue(PINS_INTERNAL_GEN_FAULT), true);
-
 #endif
         }
 #endif

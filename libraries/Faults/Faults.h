@@ -24,12 +24,6 @@
 namespace Fault {
 
 /**
- * @brief Setups canbus addresses to be used for fault checking
- * 
- */
-void setup(void);
-
-/**
  * @brief Checks if any serious fault has occurred
  * 
  * @return true A serious fault has been tripped
