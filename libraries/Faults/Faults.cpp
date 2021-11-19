@@ -31,7 +31,7 @@ static const int SOFT_PIN_COUNT = PP_NARG_MO(SOFT_PIN_FAULTS);
 static const int PIN_COUNT = PP_NARG_MO(HARD_PIN_FAULTS) + PP_NARG_MO(SOFT_PIN_FAULTS); // Number of Pins we need to account for
 #undef X
 
-typedef struct CanFault {
+typedef struct CanFault { // FIXME: Fault not clearing?
     uint32_t address;
     Canbus::Buffer buffer;
     uint64_t faultMask;
@@ -63,6 +63,11 @@ typedef struct CanFault {
         return faulted = false;
     }
 
+    void clear() {
+        buffer.clear();
+        faulted = false;
+    }
+
     void log() {
 #define X(add, mask, id)                         \
     if (address == add && *lastValue64 & mask) { \
@@ -71,7 +76,6 @@ typedef struct CanFault {
         // Ignore Pre_Build error
         CAN_FAULT_IDS
 #undef X
-        faulted = false;
     }
 } CanFault;
 
@@ -82,6 +86,11 @@ typedef struct PinFault {
 
     PinFault(const uint8_t GPIO_Pin) {
         this->GPIO_Pin = GPIO_Pin;
+    }
+
+    void clear() {
+        lastValue = 0;
+        faulted = false;
     }
 
     bool check() {
@@ -104,7 +113,6 @@ typedef struct PinFault {
         HARD_PIN_FAULTS
         SOFT_PIN_FAULTS
 #undef X
-        faulted = false;
     }
 } PinFault;
 
@@ -163,15 +171,19 @@ bool softFault(void) {
 void logFault(void) {
     for (size_t i = 0; i < HARD_CAN_COUNT; i++) {
         hardCanFaults[i].log();
+        hardCanFaults[i].clear();
     }
     for (size_t i = 0; i < SOFT_CAN_COUNT; i++) {
         softCanFaults[i].log();
+        softCanFaults[i].clear();
     }
     for (size_t i = 0; i < HARD_PIN_COUNT; i++) {
         hardPinFaults[i].log();
+        hardPinFaults[i].clear();
     }
     for (size_t i = 0; i < SOFT_PIN_COUNT; i++) {
         softPinFaults[i].log();
+        softPinFaults[i].clear();
     }
 }
 

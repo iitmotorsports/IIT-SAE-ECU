@@ -40,6 +40,7 @@ typedef void (*canCallback)(uint32_t, volatile uint8_t *);
 
 /**
  * @brief An incoming canbus message, allows the message data to be interpreted through a simple wrapper class
+ * @note Buffers are persistent, when a message is received it stays in the buffer unless cleared
  */
 struct Buffer { // IMPROVE: more rigorous testing on the get funcs
     /**
@@ -72,6 +73,10 @@ struct Buffer { // IMPROVE: more rigorous testing on the get funcs
      * @param buffer 
      */
     void dump(uint8_t *extBuffer);
+    /**
+     * @brief Clear the buffer
+     */
+    void clear(void);
     /**
      * @brief Interpret the buffer as an unsigned long
      * 

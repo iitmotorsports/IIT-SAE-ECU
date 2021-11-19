@@ -286,6 +286,19 @@ void Canbus::Buffer::dump(uint8_t *extBuffer) {
     copyVolatileCanMsg(buffer, extBuffer);
 }
 
+void Canbus::Buffer::clear() {
+    setSemaphore(address);
+    buffer[0] = 0;
+    buffer[1] = 0;
+    buffer[2] = 0;
+    buffer[3] = 0;
+    buffer[4] = 0;
+    buffer[5] = 0;
+    buffer[6] = 0;
+    buffer[7] = 0;
+    clearSemaphore();
+}
+
 // IMPROVE: remove type-punning, maybe just use bitshifting?
 
 #ifdef CONF_ECU_DEBUG
