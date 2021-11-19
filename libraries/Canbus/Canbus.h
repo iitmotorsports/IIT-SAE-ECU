@@ -47,6 +47,10 @@ struct Buffer { // IMPROVE: more rigorous testing on the get funcs
      */
     uint32_t address;
     /**
+     * @brief Construct a new uninitalized Buffer
+     */
+    Buffer(){};
+    /**
      * @brief Construct a new Buffer as a wrapper
      * 
      * @param buffer the array to wrap around
