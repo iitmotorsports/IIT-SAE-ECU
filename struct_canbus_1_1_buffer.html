@@ -100,6 +100,13 @@ $(document).ready(function(){initNavTree('struct_canbus_1_1_buffer.html',''); in
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:aaf9e2c98af9cdee3e5c12643458a4156"><td class="memItemLeft" align="right" valign="top"><a id="aaf9e2c98af9cdee3e5c12643458a4156"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_canbus_1_1_buffer.html#aaf9e2c98af9cdee3e5c12643458a4156">Buffer</a> ()</td></tr>
+<tr class="memdesc:aaf9e2c98af9cdee3e5c12643458a4156"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new uninitalized <a class="el" href="struct_canbus_1_1_buffer.html" title="An incoming canbus message, allows the message data to be interpreted through a simple wrapper class.">Buffer</a>. <br /></td></tr>
+<tr class="separator:aaf9e2c98af9cdee3e5c12643458a4156"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55b601f63747077e60190568ee364e8d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_canbus_1_1_buffer.html#a55b601f63747077e60190568ee364e8d">Buffer</a> (uint8_t *buffer)</td></tr>
+<tr class="memdesc:a55b601f63747077e60190568ee364e8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="struct_canbus_1_1_buffer.html" title="An incoming canbus message, allows the message data to be interpreted through a simple wrapper class.">Buffer</a> as a wrapper.  <a href="struct_canbus_1_1_buffer.html#a55b601f63747077e60190568ee364e8d">More...</a><br /></td></tr>
+<tr class="separator:a55b601f63747077e60190568ee364e8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad65cb31e2dd5930d3278241c96e67db5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_canbus_1_1_buffer.html#ad65cb31e2dd5930d3278241c96e67db5">Buffer</a> (const uint32_t <a class="el" href="struct_canbus_1_1_buffer.html#a7072a6fcf3ebcd1d434f12ee8f4537c7">address</a>)</td></tr>
 <tr class="memdesc:ad65cb31e2dd5930d3278241c96e67db5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="struct_canbus_1_1_buffer.html" title="An incoming canbus message, allows the message data to be interpreted through a simple wrapper class.">Buffer</a>.  <a href="struct_canbus_1_1_buffer.html#ad65cb31e2dd5930d3278241c96e67db5">More...</a><br /></td></tr>
 <tr class="separator:ad65cb31e2dd5930d3278241c96e67db5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -107,6 +114,9 @@ Public Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_canbus_1_1_buffer.html#abe363f6d20b365f1ecfe819597107742">init</a> ()</td></tr>
 <tr class="memdesc:abe363f6d20b365f1ecfe819597107742"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a buffer if not done so already by constructor. <br /></td></tr>
 <tr class="separator:abe363f6d20b365f1ecfe819597107742"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a346e76948bb3526504e771dbbc53b2b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_canbus_1_1_buffer.html#a346e76948bb3526504e771dbbc53b2b6">dump</a> (uint8_t *extBuffer)</td></tr>
+<tr class="memdesc:a346e76948bb3526504e771dbbc53b2b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dump the current buffer onto an external one.  <a href="struct_canbus_1_1_buffer.html#a346e76948bb3526504e771dbbc53b2b6">More...</a><br /></td></tr>
+<tr class="separator:a346e76948bb3526504e771dbbc53b2b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a858103df59fa907303585534396f0361"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_canbus_1_1_buffer.html#a858103df59fa907303585534396f0361">getULong</a> ()</td></tr>
 <tr class="memdesc:a858103df59fa907303585534396f0361"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpret the buffer as an unsigned long.  <a href="struct_canbus_1_1_buffer.html#a858103df59fa907303585534396f0361">More...</a><br /></td></tr>
 <tr class="separator:a858103df59fa907303585534396f0361"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -131,6 +141,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stru
 <tr class="memitem:a59d10eade9a764c9a4f86f5eb5cc7ea6"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_canbus_1_1_buffer.html#a59d10eade9a764c9a4f86f5eb5cc7ea6">getByte</a> (size_t pos)</td></tr>
 <tr class="memdesc:a59d10eade9a764c9a4f86f5eb5cc7ea6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpret the buffer as a Byte at byte position <code>pos</code>  <a href="struct_canbus_1_1_buffer.html#a59d10eade9a764c9a4f86f5eb5cc7ea6">More...</a><br /></td></tr>
 <tr class="separator:a59d10eade9a764c9a4f86f5eb5cc7ea6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63827b1af6c9491c3a8ca4a973c41fa7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_canbus_1_1_buffer.html#a63827b1af6c9491c3a8ca4a973c41fa7">getBit</a> (size_t pos)</td></tr>
+<tr class="memdesc:a63827b1af6c9491c3a8ca4a973c41fa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the bit at position <code>pos</code> of this buffer.  <a href="struct_canbus_1_1_buffer.html#a63827b1af6c9491c3a8ca4a973c41fa7">More...</a><br /></td></tr>
+<tr class="separator:a63827b1af6c9491c3a8ca4a973c41fa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -144,8 +157,34 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 <p class="definition">Definition at line <a class="el" href="_canbus_8h_source.html#l00044">44</a> of file <a class="el" href="_canbus_8h_source.html">Canbus.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a55b601f63747077e60190568ee364e8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55b601f63747077e60190568ee364e8d">&#9670;&nbsp;</a></span>Buffer() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Canbus::Buffer::Buffer </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>buffer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Construct a new <a class="el" href="struct_canbus_1_1_buffer.html" title="An incoming canbus message, allows the message data to be interpreted through a simple wrapper class.">Buffer</a> as a wrapper. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>the array to wrap around </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ad65cb31e2dd5930d3278241c96e67db5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad65cb31e2dd5930d3278241c96e67db5">&#9670;&nbsp;</a></span>Buffer()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad65cb31e2dd5930d3278241c96e67db5">&#9670;&nbsp;</a></span>Buffer() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -171,6 +210,59 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a346e76948bb3526504e771dbbc53b2b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a346e76948bb3526504e771dbbc53b2b6">&#9670;&nbsp;</a></span>dump()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Canbus::Buffer::dump </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>extBuffer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Dump the current buffer onto an external one. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a63827b1af6c9491c3a8ca4a973c41fa7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63827b1af6c9491c3a8ca4a973c41fa7">&#9670;&nbsp;</a></span>getBit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Canbus::Buffer::getBit </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>pos</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the bit at position <code>pos</code> of this buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos</td><td>the bit to check on the buffer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bit as boolean </dd></dl>
+
+</div>
+</div>
 <a id="a59d10eade9a764c9a4f86f5eb5cc7ea6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a59d10eade9a764c9a4f86f5eb5cc7ea6">&#9670;&nbsp;</a></span>getByte()</h2>
 
@@ -188,6 +280,12 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </div><div class="memdoc">
 
 <p>Interpret the buffer as a Byte at byte position <code>pos</code> </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos</td><td>the byte to start interpreting at </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>int8_t The interpreted value </dd></dl>
 
 </div>
@@ -209,6 +307,12 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </div><div class="memdoc">
 
 <p>Interpret the buffer as an Integer at byte position <code>pos</code> </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos</td><td>the byte to start interpreting at </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>int32_t The interpreted value </dd></dl>
 
 </div>
@@ -229,6 +333,12 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </div><div class="memdoc">
 
 <p>Interpret the buffer as a long. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos</td><td>the byte to start interpreting at </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>int64_t The interpreted value </dd></dl>
 
 </div>
@@ -250,6 +360,12 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </div><div class="memdoc">
 
 <p>Interpret the buffer as an Short at byte position <code>pos</code> </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos</td><td>the byte to start interpreting at </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>int16_t The interpreted value </dd></dl>
 
 </div>
@@ -271,6 +387,12 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </div><div class="memdoc">
 
 <p>Interpret the buffer as an unsigned Byte at byte position <code>pos</code> </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos</td><td>the byte to start interpreting at </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>uint8_t The interpreted value </dd></dl>
 
 </div>
@@ -292,6 +414,12 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </div><div class="memdoc">
 
 <p>Interpret the buffer as an unsigned Integer at byte position <code>pos</code> </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos</td><td>the byte to start interpreting at </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>uint32_t The interpreted value </dd></dl>
 
 </div>
@@ -312,6 +440,12 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </div><div class="memdoc">
 
 <p>Interpret the buffer as an unsigned long. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos</td><td>the byte to start interpreting at </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>uint64_t The interpreted value </dd></dl>
 
 </div>
@@ -333,6 +467,12 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </div><div class="memdoc">
 
 <p>Interpret the buffer as an unsigned Short at byte position <code>pos</code> </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos</td><td>the byte to start interpreting at </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>uint16_t The interpreted value </dd></dl>
 
 </div>
