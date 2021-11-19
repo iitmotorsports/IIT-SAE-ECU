@@ -84,8 +84,8 @@
  * 
  */
 #define SOFT_FAULT_ADD                                                 \
-    X(ADD_MC0_FAULTS, 0x1111111111111111, "Motor Controller 0 Faults") \
-    X(ADD_MC1_FAULTS, 0x1111111111111111, "Motor Controller 1 Faults")
+    X(ADD_MC0_FAULTS, 0xffffffffffffffff, "Motor Controller 0 Faults") \
+    X(ADD_MC1_FAULTS, 0xffffffffffffffff, "Motor Controller 1 Faults")
 
 /**
  * @brief Defines address bit field identifiers
@@ -108,8 +108,8 @@
     X(ADD_MC0_FAULTS, 0b0001000000000000000000000000000000000000000000000000000000000000, _LogPrebuildString("MC0 Fault: Accelerator Open"))                           \
     X(ADD_MC0_FAULTS, 0b0000100000000000000000000000000000000000000000000000000000000000, _LogPrebuildString("MC0 Fault: Current sensor Low"))                         \
     X(ADD_MC0_FAULTS, 0b0000010000000000000000000000000000000000000000000000000000000000, _LogPrebuildString("MC0 Fault: Current sensor High"))                        \
-    X(ADD_MC0_FAULTS, 0b0000001000000000000000000000000000000000000000000000000000000000, _LogPrebuildString("MC0 Fault: Module Temperature Low"))                       \
-    X(ADD_MC0_FAULTS, 0b0000000100000000000000000000000000000000000000000000000000000000, _LogPrebuildString("MC0 Fault: Module Temperature High"))                      \
+    X(ADD_MC0_FAULTS, 0b0000001000000000000000000000000000000000000000000000000000000000, _LogPrebuildString("MC0 Fault: Module Temperature Low"))                     \
+    X(ADD_MC0_FAULTS, 0b0000000100000000000000000000000000000000000000000000000000000000, _LogPrebuildString("MC0 Fault: Module Temperature High"))                    \
     X(ADD_MC0_FAULTS, 0b0000000010000000000000000000000000000000000000000000000000000000, _LogPrebuildString("MC0 Fault: Control PCB Temperature Low"))                \
     X(ADD_MC0_FAULTS, 0b0000000001000000000000000000000000000000000000000000000000000000, _LogPrebuildString("MC0 Fault: Control PCB Temperature High"))               \
     X(ADD_MC0_FAULTS, 0b0000000000100000000000000000000000000000000000000000000000000000, _LogPrebuildString("MC0 Fault: Gate Dive PCB Temperature Low"))              \
@@ -172,8 +172,8 @@
     X(ADD_MC1_FAULTS, 0b0001000000000000000000000000000000000000000000000000000000000000, _LogPrebuildString("MC1 Fault: Accelerator Open"))                           \
     X(ADD_MC1_FAULTS, 0b0000100000000000000000000000000000000000000000000000000000000000, _LogPrebuildString("MC1 Fault: Current sensor Low"))                         \
     X(ADD_MC1_FAULTS, 0b0000010000000000000000000000000000000000000000000000000000000000, _LogPrebuildString("MC1 Fault: Current sensor High"))                        \
-    X(ADD_MC1_FAULTS, 0b0000001000000000000000000000000000000000000000000000000000000000, _LogPrebuildString("MC1 Fault: Module Temperature Low"))                       \
-    X(ADD_MC1_FAULTS, 0b0000000100000000000000000000000000000000000000000000000000000000, _LogPrebuildString("MC1 Fault: Module Temperature High"))                      \
+    X(ADD_MC1_FAULTS, 0b0000001000000000000000000000000000000000000000000000000000000000, _LogPrebuildString("MC1 Fault: Module Temperature Low"))                     \
+    X(ADD_MC1_FAULTS, 0b0000000100000000000000000000000000000000000000000000000000000000, _LogPrebuildString("MC1 Fault: Module Temperature High"))                    \
     X(ADD_MC1_FAULTS, 0b0000000010000000000000000000000000000000000000000000000000000000, _LogPrebuildString("MC1 Fault: Control PCB Temperature Low"))                \
     X(ADD_MC1_FAULTS, 0b0000000001000000000000000000000000000000000000000000000000000000, _LogPrebuildString("MC1 Fault: Control PCB Temperature High"))               \
     X(ADD_MC1_FAULTS, 0b0000000000100000000000000000000000000000000000000000000000000000, _LogPrebuildString("MC1 Fault: Gate Dive PCB Temperature Low"))              \
