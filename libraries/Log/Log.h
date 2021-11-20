@@ -199,7 +199,7 @@ struct Log_t {
      * @param number Any number that should be printed next to the string
      * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
      */
-    void operator()(LOG_TAG TAG, LOG_MSG message, const uint32_t number, bool mediate = false);
+    void operator()(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate = false);
     /**
      * @brief Log a string and a variable number using a debug tag
      * 
@@ -208,7 +208,7 @@ struct Log_t {
      * @param number Any number that should be printed next to the string
      * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
      */
-    void d(LOG_TAG TAG, LOG_MSG message, const uint32_t number, bool mediate = false);
+    void d(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate = false);
     /**
      * @brief Log a string and a variable number using an info tag
      * 
@@ -217,7 +217,7 @@ struct Log_t {
      * @param number Any number that should be printed next to the string
      * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
      */
-    void i(LOG_TAG TAG, LOG_MSG message, const uint32_t number, bool mediate = false);
+    void i(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate = false);
     /**
      * @brief Log a string and a variable number using a warning tag
      * 
@@ -226,7 +226,7 @@ struct Log_t {
      * @param number Any number that should be printed next to the string
      * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
      */
-    void w(LOG_TAG TAG, LOG_MSG message, const uint32_t number, bool mediate = false);
+    void w(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate = false);
     /**
      * @brief Log a string and a variable number using an error tag
      * 
@@ -235,7 +235,7 @@ struct Log_t {
      * @param number Any number that should be printed next to the string
      * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
      */
-    void e(LOG_TAG TAG, LOG_MSG message, const uint32_t number, bool mediate = false);
+    void e(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate = false);
     /**
      * @brief Log a string and a variable number using a fatal tag
      * 
@@ -244,7 +244,7 @@ struct Log_t {
      * @param number Any number that should be printed next to the string
      * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
      */
-    void f(LOG_TAG TAG, LOG_MSG message, const uint32_t number, bool mediate = false);
+    void f(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate = false);
 };
 
 /**

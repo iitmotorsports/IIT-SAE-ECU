@@ -326,27 +326,27 @@ void Front::run() {
 
 #ifndef SILENT
             // Motor controllers
-            Log(ID, "MC0 DC BUS Voltage:", MC0Voltage(), true);
-            Log(ID, "MC1 DC BUS Voltage:", MC1Voltage(), true);
-            Log(ID, "MC0 DC BUS Current:", MC0Current(), true);
-            Log(ID, "MC1 DC BUS Current:", MC1Current(), true);
-            Log(ID, "MC0 Board Temp:", MC0BoardTemp(), true);
-            Log(ID, "MC1 Board Temp:", MC1BoardTemp(), true);
-            Log(ID, "MC0 Motor Temp:", MC0MotorTemp(), true);
-            Log(ID, "MC1 Motor Temp:", MC1MotorTemp(), true);
-            Log(ID, "MC Current Power:", MCPowerValue(), true);
+            Log(ID, "MC0 DC BUS Voltage:", MC0Voltage(), INTERVAL_LOW_PRIORITY);
+            Log(ID, "MC1 DC BUS Voltage:", MC1Voltage(), INTERVAL_LOW_PRIORITY);
+            Log(ID, "MC0 DC BUS Current:", MC0Current(), INTERVAL_LOW_PRIORITY);
+            Log(ID, "MC1 DC BUS Current:", MC1Current(), INTERVAL_LOW_PRIORITY);
+            Log(ID, "MC0 Board Temp:", MC0BoardTemp(), INTERVAL_LOW_PRIORITY);
+            Log(ID, "MC1 Board Temp:", MC1BoardTemp(), INTERVAL_LOW_PRIORITY);
+            Log(ID, "MC0 Motor Temp:", MC0MotorTemp(), INTERVAL_LOW_PRIORITY);
+            Log(ID, "MC1 Motor Temp:", MC1MotorTemp(), INTERVAL_LOW_PRIORITY);
+            Log(ID, "MC Current Power:", MCPowerValue(), INTERVAL_LOW_PRIORITY);
 
             // BMS
-            Log(ID, "BMS State Of Charge:", BMSSOC(), true);
-            Log(ID, "BMS Immediate Voltage:", BMSVOLT(), true);
-            Log(ID, "BMS Pack Average Current:", BMSAMP(), true);
-            Log(ID, "BMS Pack Highest Temp:", BMSTempHigh(), true);
-            Log(ID, "BMS Pack Lowest Temp:", BMSTempLow(), true);
-            Log(ID, "BMS Discharge current limit:", BMSDischargeCurrentLimit(), true);
-            Log(ID, "BMS Charge current limit:", BMSChargeCurrentLimit(), true);
+            Log(ID, "BMS State Of Charge:", BMSSOC(), INTERVAL_LOW_PRIORITY);
+            Log(ID, "BMS Immediate Voltage:", BMSVOLT(), INTERVAL_LOW_PRIORITY);
+            Log(ID, "BMS Pack Average Current:", BMSAMP(), INTERVAL_LOW_PRIORITY);
+            Log(ID, "BMS Pack Highest Temp:", BMSTempHigh(), INTERVAL_LOW_PRIORITY);
+            Log(ID, "BMS Pack Lowest Temp:", BMSTempLow(), INTERVAL_LOW_PRIORITY);
+            Log(ID, "BMS Discharge current limit:", BMSDischargeCurrentLimit(), INTERVAL_LOW_PRIORITY);
+            Log(ID, "BMS Charge current limit:", BMSChargeCurrentLimit(), INTERVAL_LOW_PRIORITY);
 
             // General
-            Log(ID, "Fault State", Pins::getCanPinValue(PINS_INTERNAL_GEN_FAULT), true);
+            Log(ID, "Fault State", Pins::getCanPinValue(PINS_INTERNAL_GEN_FAULT), INTERVAL_LOW_PRIORITY);
 #endif
         }
 #endif

@@ -79,8 +79,17 @@ namespace Logging {
 
 struct uMsg {
     uint32_t LAST_NUMBER = 0;
-    bool update(uint32_t newNum) {
-        if (newNum != LAST_NUMBER) {
+    elapsedMillis last;
+    bool update(uint32_t newNum, int mediate) {
+        /**
+         * Mediate Value
+         * 0 :   Log instantly
+         * 1 :   Log only when value changes
+         * >1:   Log after set delay or when value changes
+         * <0:   Log only if value has changed after set -delay
+         */
+        if ((mediate >= 1 && newNum != LAST_NUMBER) || (mediate > 1 && (int)last > mediate) || (mediate < 0 && ((int)last > -mediate && newNum != LAST_NUMBER))) {
+            last = 0;
             LAST_NUMBER = newNum;
             return true;
         }
@@ -90,8 +99,8 @@ struct uMsg {
 
 struct uTag {
     std::unordered_map<uint32_t, uMsg> uniqueMessages;
-    bool update(uint32_t msg, uint32_t num) {
-        return uniqueMessages[msg].update(num);
+    bool update(uint32_t msg, uint32_t num, int mediate) {
+        return uniqueMessages[msg].update(num, mediate);
     }
 };
 
@@ -113,8 +122,8 @@ static uint8_t log_buf[8] = {0};
  * |0    |1   |2   |3   |4   |5   |6   |7   |
  * |State Code|String ID|      uint32_t     |
  */
-static void __logger_print_num(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const uint32_t NUMBER, bool mediate) {
-    if (!mediate || uniqueTags[TAG].update(MESSAGE, NUMBER)) {
+static void __logger_print_num(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const uint32_t NUMBER, int mediate) {
+    if (!mediate || uniqueTags[TAG].update(MESSAGE, NUMBER, mediate)) {
         memcpy(log_buf, &TAG, 2);
         memcpy(log_buf + 2, &MESSAGE, 2);
         memcpy(log_buf + 4, &NUMBER, 4);
@@ -161,12 +170,12 @@ static const char *FATAL = "[FATAL]";
 static const char *FORMAT = "%s @ %u [%s]: %s\n";
 static const char *FORMAT_NUM = "%s @ %u [%s]: %s %u\n";
 static void __logger_print(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE) { Serial.printf(FORMAT, TYPE, millis(), TAG, MESSAGE); }
-static void __logger_print_num(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const uint32_t NUMBER, bool mediate = false) { Serial.printf(FORMAT_NUM, TYPE, millis(), TAG, MESSAGE, NUMBER); }
+static void __logger_print_num(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const uint32_t NUMBER, int mediate = false) { Serial.printf(FORMAT_NUM, TYPE, millis(), TAG, MESSAGE, NUMBER); }
 #else
 static const char *FORMAT = "%s [%s]: %s\n";
 static const char *FORMAT_NUM = "%s [%s]: %s %u\n";
 static void __logger_print(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE) { Serial.printf(FORMAT, TYPE, TAG, MESSAGE); }
-static void __logger_print_num(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const uint32_t NUMBER, bool mediate = false) { Serial.printf(FORMAT_NUM, TYPE, TAG, MESSAGE, NUMBER); }
+static void __logger_print_num(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const uint32_t NUMBER, int mediate = false) { Serial.printf(FORMAT_NUM, TYPE, TAG, MESSAGE, NUMBER); }
 #endif
 #endif
 
@@ -208,37 +217,37 @@ void Log_t::f(LOG_TAG TAG, LOG_MSG message) {
 #endif
 }
 
-void Log_t::operator()(LOG_TAG TAG, LOG_MSG message, const uint32_t number, bool mediate) {
+void Log_t::operator()(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate) {
 #ifdef __LOGGER_NONE_PRINT
     __logger_print_num(NONE, TAG, message, number, mediate);
 #endif
 }
 
-void Log_t::d(LOG_TAG TAG, LOG_MSG message, const uint32_t number, bool mediate) {
+void Log_t::d(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate) {
 #ifdef __LOGGER_DEBUG_PRINT
     __logger_print_num(DEBUG, TAG, message, number, mediate);
 #endif
 }
 
-void Log_t::i(LOG_TAG TAG, LOG_MSG message, const uint32_t number, bool mediate) {
+void Log_t::i(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate) {
 #ifdef __LOGGER_INFO_PRINT
     __logger_print_num(INFO, TAG, message, number, mediate);
 #endif
 }
 
-void Log_t::w(LOG_TAG TAG, LOG_MSG message, const uint32_t number, bool mediate) {
+void Log_t::w(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate) {
 #ifdef __LOGGER_WARN_PRINT
     __logger_print_num(WARN, TAG, message, number, mediate);
 #endif
 }
 
-void Log_t::e(LOG_TAG TAG, LOG_MSG message, const uint32_t number, bool mediate) {
+void Log_t::e(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate) {
 #ifdef __LOGGER_ERROR_PRINT
     __logger_print_num(ERROR, TAG, message, number, mediate);
 #endif
 }
 
-void Log_t::f(LOG_TAG TAG, LOG_MSG message, const uint32_t number, bool mediate) {
+void Log_t::f(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate) {
 #ifdef __LOGGER_FATAL_PRINT
     __logger_print_num(FATAL, TAG, message, number, mediate);
 #endif
