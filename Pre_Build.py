@@ -366,7 +366,7 @@ class FileEntry:  # IMPROVE: Make IDs persistent
                         f2.buffer.write(line.encode("utf-8"))
                     finally:
                         line_no += 1
-        self.modified = not syncFile(temp_path, "", self.rawpath, self.workingPath)
+        self.modified = not syncFile(temp_path, self.offset, self.rawpath, self.workingPath)
         os.remove(temp_path)
 
     async def findLogMatch(self, line: str):
@@ -445,7 +445,7 @@ def syncFile(filePath, offset, rawpath, workingFilePath=None, suppress=False):
         touch(f"{offset}{rawpath}")
         shutil.copyfile(filePath, workingFilePath)
         if not suppress:
-            print(f"Sync File: {filePath} -> {offset}")
+            print(f"Sync File: {workingFilePath}")
         return False
     return True
 
@@ -549,8 +549,8 @@ class ThreadedProgressBar:
                 self.stdout.write(" " * (os.get_terminal_size().columns - 1))
                 self.stdout.write("\033[F")
                 printString = printString.strip(" \n")
-                self.stdout.write(printString)
-                self.stdout.write(" " * (os.get_terminal_size().columns - 1 - len(printString)))
+                spacer = " " * (os.get_terminal_size().columns - 1 - len(printString))
+                self.stdout.write(f"{printString}{spacer}"[:os.get_terminal_size().columns - 1])
                 self.stdout.write("\n")
             self.stdout.write(proStr)
             self.stdout.flush()
@@ -675,8 +675,6 @@ def main():
     allocate_files(LIBRARIES_NAME, WORKING_DIRECTORY_OFFSET)
 
     if not BYPASS_SCRIPT:
-        print()
-
         time.sleep(0.5)  # Let terminal settle
 
         print(Text.warning(f"Available Ram: {available_ram()} GBs\n"))
@@ -703,7 +701,9 @@ def main():
         if newhash != prehash:
             print(Text.reallyImportant("\nNote: Output file values have changed"))
 
-    print("Converting LogMap 📃")
+        print()
+
+    print("Converting LogMap 📃\n")
     subprocess.Popen(
         [
             "python",
