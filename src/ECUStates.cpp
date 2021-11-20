@@ -250,16 +250,16 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
                 MC::setDirection(!runReverse);
             }
 
-            if (Fault::softFault() || Fault::hardFault()) { // FIXME: are motor controller faults actually being picked up?
+            if (Fault::anyFault()) { // FIXME: are motor controller faults actually being picked up?
                 return DrivingModeFault();
             }
 
-            if (((MC0_VOLT_Buffer.getShort(0) / 10) + (MC1_VOLT_Buffer.getShort(0) / 10)) / 2 < 90) { // 'HVD Fault'
 #if TESTING != BACK_ECU
+            if (((MC0_VOLT_Buffer.getShort(0) / 10) + (MC1_VOLT_Buffer.getShort(0) / 10)) / 2 < 90) { // 'HVD Fault'
                 Log.e(ID, "'HVD Fault' MC voltage < 90");
                 return DrivingModeFault();
-#endif
             }
+#endif
 
             int breakVal = Pins::getCanPinValue(PINS_FRONT_BRAKE);
             int steerVal = Pins::getCanPinValue(PINS_FRONT_STEER);
