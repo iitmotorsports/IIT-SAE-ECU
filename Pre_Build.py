@@ -298,7 +298,7 @@ class FileEntry:  # IMPROVE: Make IDs persistent
     workingPath = ""
     offset = ""
     modified = False
-    error = ""
+    errors: list[str]
 
     def __init__(self, RawPath, FilePath, FileName, Offset):
         if not os.path.exists(FilePath):
@@ -307,13 +307,14 @@ class FileEntry:  # IMPROVE: Make IDs persistent
         self.name = FileName
         self.path = FilePath
         self.rawpath = RawPath
-        self.workingPath = "{}{}".format(Offset, FilePath)
+        self.workingPath = f"{Offset}{FilePath}"
         self.offset = Offset
+        self.errors = list()
 
         # if O_Files.get(self.workingPath):
         # print("Records show {} exists".format(FileName))
 
-        touch("{}{}".format(Offset, RawPath))
+        touch(f"{Offset}{RawPath}")
 
     async def addNewTag(self, raw_str):
         string = "[{}]".format(raw_str.strip('"'))
@@ -361,11 +362,7 @@ class FileEntry:  # IMPROVE: Make IDs persistent
                         newline = await function(line)
                         f2.buffer.write(newline.encode("utf-8"))
                     except Exception as e:  # If prev exception was about IO then oh well
-                        self.error = "{}{}{}\n".format(
-                            self.error,
-                            Text.warning("  {}:{}\n".format(self.path, line_no)),
-                            "   {}\n    > {}".format(Text.red(type(e).__name__), splitErrorString(e)),
-                        )
+                        self.errors.append(f"  {self.path}:{line_no}\n   {Text.red(type(e).__name__)}\n    > {splitErrorString(e)}\n")
                         f2.buffer.write(line.encode("utf-8"))
                     finally:
                         line_no += 1
@@ -427,7 +424,7 @@ def run_ingest_files(finishFunc, *FilesEntries):
     asyncio.run(ingest_files(finishFunc, FilesEntries))
 
 
-Files = set()
+Files: set[FileEntry] = set()
 FileRefs = set()
 Threads = set()
 
@@ -435,7 +432,7 @@ FILE_CHANGE = False
 
 
 def syncFile(filePath, offset, rawpath, workingFilePath=None, suppress=False):
-    workingFilePath = workingFilePath or "{}{}".format(offset, filePath)
+    workingFilePath = workingFilePath or f"{offset}{filePath}"
     global FILE_CHANGE
 
     new = hashFile(filePath)
@@ -445,10 +442,10 @@ def syncFile(filePath, offset, rawpath, workingFilePath=None, suppress=False):
     FILE_CHANGE = FILE_CHANGE and (new == old)
 
     if not os.path.exists(workingFilePath) or new != old:
-        touch("{}{}".format(offset, rawpath))
+        touch(f"{offset}{rawpath}")
         shutil.copyfile(filePath, workingFilePath)
         if not suppress:
-            print("Sync File: {} -> {}".format(filePath, offset))
+            print(f"Sync File: {filePath} -> {offset}")
         return False
     return True
 
@@ -609,46 +606,53 @@ def begin_scan():
 
 
 def printResults():
-    print(Text.header("\nModified Files:"))
     c = 0
     m = 0
+
+    extStr: str = ""
+
     for f in FileRefs:
         if f.modified:
             if c < MAX_RESULT:
-                print("  {}".format(Text.green(f.name)))
+                extStr += f"  {f.name}\n"
                 c += 1
             else:
                 m += 1
-        if f.error != "":
+        if len(f.errors) > 0:
             Files.add(f)
-    if m > 1:
-        print("  {}".format(Text.underline(Text.green("{} more file{}".format(m, "s" if m > 1 else "")))))
+
+    if c > 0:
+        print(Text.header("\nModified Files:"))
+        print(Text.green(extStr.strip("\n")))
+        if m > 0:
+            print(Text.underline(Text.green("  {} more file{}".format(m, "s" if m > 1 else ""))))
 
     sys.stdout.flush()
 
     c = 0
     m = 0
 
-    errStr: str = ""
+    extStr: str = ""
 
     for f in Files:
-        if c < MAX_RESULT:
-            errStr += f.error.strip("\n")
-            c += 1
-        else:
-            m += 1
+        for e in f.errors:
+            if c < MAX_RESULT:
+                extStr += e
+                c += 1
+            else:
+                m += 1
 
     if c > 0:
         print(Text.header("\nFile Errors:"))
-        print(errStr)
+        print(extStr.strip("\n"))
 
         if m > 0:
-            print("  {}".format(Text.underline(Text.red("{} more error{}".format(m, "s" if m > 1 else "")))))
+            print(Text.underline(Text.red("  {} more error{}".format(m, "s" if m > 1 else ""))))
 
 
 def getOutputFile(path):
     output_name = "log_lookup.json"
-    savePath = "{}\\{}".format(path, output_name)
+    savePath = f"{path}\\{output_name}"
     if savePath.startswith("\\"):
         savePath = output_name
     return savePath
@@ -674,17 +678,17 @@ def main():
 
         time.sleep(0.5)  # Let terminal settle
 
-        print(Text.warning("Available Ram: {} GBs\n".format(available_ram())))
+        print(Text.warning(f"Available Ram: {available_ram()} GBs\n"))
 
         prehash = hashFile(getOutputFile(FILE_OUTPUT_PATH))
 
-        print("Files to search: {}".format(len(FileRefs)))
+        print(f"Files to search: {len(FileRefs)}")
 
         tb = ThreadedProgressBar(len(Files), Text.important("Completed Files:"))
 
         dole_files(8, tb.progress)
 
-        print("Threads to run: {}\n".format(len(Threads)))
+        print(f"Threads to run: {len(Threads)}\n")
 
         tb.start()
         begin_scan()
