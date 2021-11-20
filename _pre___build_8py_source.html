@@ -535,7 +535,7 @@ $(document).ready(function(){initNavTree('_pre___build_8py_source.html',''); ini
 <div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;        touch(f<span class="stringliteral">&quot;{offset}{rawpath}&quot;</span>)</div>
 <div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;        shutil.copyfile(filePath, workingFilePath)</div>
 <div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;        <span class="keywordflow">if</span> <span class="keywordflow">not</span> suppress:</div>
-<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;            print(f<span class="stringliteral">&quot;Sync File: {workingFilePath}&quot;</span>)</div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;            print(f<span class="stringliteral">&quot;Sync File: {os.path.basename(workingFilePath)}&quot;</span>)</div>
 <div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">False</span></div>
 <div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">True</span></div>
 <div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160; </div>
