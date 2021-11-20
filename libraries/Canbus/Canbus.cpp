@@ -283,7 +283,9 @@ void Canbus::Buffer::init() {
 }
 
 void Canbus::Buffer::dump(uint8_t *extBuffer) {
+    setSemaphore(address);
     copyVolatileCanMsg(buffer, extBuffer);
+    clearSemaphore();
 }
 
 void Canbus::Buffer::clear() {
@@ -310,23 +312,45 @@ static void checkInit(Canbus::Buffer *buffer, bool init) {
 }
 #endif
 
+typedef union {
+    volatile uint8_t buf[8];
+    volatile uint64_t Ulonglong;
+    volatile int64_t longlong;
+} UBuffer;
+
 uint64_t Canbus::Buffer::getULong() {
 #ifdef CONF_ECU_DEBUG
     checkInit(this, buffer == 0);
 #endif
     setSemaphore(address);
-    uint64_t val = *(uint64_t *)(buffer);
+    UBuffer buf;
+    buf.buf[0] = buffer[0];
+    buf.buf[1] = buffer[1];
+    buf.buf[2] = buffer[2];
+    buf.buf[3] = buffer[3];
+    buf.buf[4] = buffer[4];
+    buf.buf[5] = buffer[5];
+    buf.buf[6] = buffer[6];
+    buf.buf[7] = buffer[7];
     clearSemaphore();
-    return val;
+    return buf.Ulonglong;
 }
 int64_t Canbus::Buffer::getLong() {
 #ifdef CONF_ECU_DEBUG
     checkInit(this, buffer == 0);
 #endif
     setSemaphore(address);
-    int64_t val = *(int64_t *)(buffer);
+    UBuffer buf;
+    buf.buf[0] = buffer[0];
+    buf.buf[1] = buffer[1];
+    buf.buf[2] = buffer[2];
+    buf.buf[3] = buffer[3];
+    buf.buf[4] = buffer[4];
+    buf.buf[5] = buffer[5];
+    buf.buf[6] = buffer[6];
+    buf.buf[7] = buffer[7];
     clearSemaphore();
-    return val;
+    return buf.longlong;
 }
 uint32_t Canbus::Buffer::getUInt(size_t pos) {
 #ifdef CONF_ECU_DEBUG
