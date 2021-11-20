@@ -1,5 +1,6 @@
 var NAVTREEINDEX0 =
 {
+"":[3,0,1],
 "_aero_servo_8cpp.html":[5,0,0],
 "_aero_servo_8cpp_source.html":[5,0,0],
 "_aero_servo_8h.html":[5,0,1],
@@ -248,6 +249,5 @@ var NAVTREEINDEX0 =
 "class_circular___buffer.html#a2191444434c68629d9be9774713e5a4a":[4,0,8,24],
 "class_circular___buffer.html#a28267c92b7fb6884d5c707df3cf7e738":[4,0,8,42],
 "class_circular___buffer.html#a29a3997d6a4cd719cc91065b7ef605c2":[4,0,8,17],
-"class_circular___buffer.html#a38773b3b1467a16bfcfda1b13b47d797":[4,0,8,40],
-"class_circular___buffer.html#a39d74c16a6451385313d2aa6dbb08738":[4,0,8,14]
+"class_circular___buffer.html#a38773b3b1467a16bfcfda1b13b47d797":[4,0,8,40]
 };
