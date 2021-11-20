@@ -521,16 +521,6 @@ class ThreadedProgressBar:
     def __init__(self, maxcount, prefix):
         self.maxcount = maxcount
         self.stdout = sys.stdout
-        self.wrapper = ThreadedProgressBar.TextIO(
-            self._newLine,
-            sys.stdout.buffer,
-            sys.stdout.encoding,
-            sys.stdout.errors,
-            sys.stdout.newlines,
-            sys.stdout.line_buffering,
-            sys.stdout.write_through,
-        )
-        sys.stdout = self.wrapper
         self.rename(prefix)
 
     def rename(self, prefix):
@@ -547,7 +537,7 @@ class ThreadedProgressBar:
     def _newLine(self, String):
         self.Lines.add(String)
 
-    def _progress(self, count, total, prefix="", printString=""):
+    def _progress(self, count, total, prefix="", printString: str = ""):
         if total > 0:
             filled_len = int(round(self.bar_len * count / float(total)))
 
@@ -557,8 +547,10 @@ class ThreadedProgressBar:
             proStr = self.formatStr.format(prefix, bar, percents, "%")
             if len(printString) > 0:
                 self.stdout.write(" " * (os.get_terminal_size().columns - 1))
-                self.stdout.write("\r")
+                self.stdout.write("\033[F")
+                printString = printString.strip(" \n")
                 self.stdout.write(printString)
+                self.stdout.write(" " * (os.get_terminal_size().columns - 1 - len(printString)))
                 self.stdout.write("\n")
             self.stdout.write(proStr)
             self.stdout.flush()
@@ -571,6 +563,16 @@ class ThreadedProgressBar:
                 self._progress(self.counter, self.maxcount, self.prefix)
 
     def start(self):
+        self.wrapper = ThreadedProgressBar.TextIO(
+            self._newLine,
+            sys.stdout.buffer,
+            sys.stdout.encoding,
+            sys.stdout.errors,
+            sys.stdout.newlines,
+            sys.stdout.line_buffering,
+            sys.stdout.write_through,
+        )
+        sys.stdout = self.wrapper
         self.printer = threading.Thread(target=self._printThread)
         self.printer.start()
 
