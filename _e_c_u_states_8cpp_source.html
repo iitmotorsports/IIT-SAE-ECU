@@ -340,16 +340,16 @@ $(document).ready(function(){initNavTree('_e_c_u_states_8cpp_source.html',''); i
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;                <a class="code" href="namespace_m_c.html#a2fb464e85bca01fc06a2b5b59c83d9b3">MC::setDirection</a>(!runReverse);</div>
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;            }</div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160; </div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="namespace_fault.html#a4ffa144bc1e88734c7d7e95bb008aa67">Fault::softFault</a>() || <a class="code" href="namespace_fault.html#a575e9434178c423cac322ff491398e93">Fault::hardFault</a>()) { <span class="comment">// FIXME: are motor controller faults actually being picked up?</span></div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="namespace_fault.html#a8d65de5d2b7a229e0d2c8d84ca9f64bd">Fault::anyFault</a>()) { <span class="comment">// FIXME: are motor controller faults actually being picked up?</span></div>
 <div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;                <span class="keywordflow">return</span> DrivingModeFault();</div>
 <div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;            }</div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160; </div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;            <span class="keywordflow">if</span> (((MC0_VOLT_Buffer.getShort(0) / 10) + (MC1_VOLT_Buffer.getShort(0) / 10)) / 2 &lt; 90) { <span class="comment">// &#39;HVD Fault&#39;</span></div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;<span class="preprocessor">#if TESTING != BACK_ECU</span></div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;<span class="preprocessor">#if TESTING != BACK_ECU</span></div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;            <span class="keywordflow">if</span> (((MC0_VOLT_Buffer.getShort(0) / 10) + (MC1_VOLT_Buffer.getShort(0) / 10)) / 2 &lt; 90) { <span class="comment">// &#39;HVD Fault&#39;</span></div>
 <div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;                <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39">e</a>(ID, <span class="stringliteral">&quot;&#39;HVD Fault&#39; MC voltage &lt; 90&quot;</span>);</div>
 <div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;                <span class="keywordflow">return</span> DrivingModeFault();</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;            }</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;            }</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160; </div>
 <div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;            <span class="keywordtype">int</span> breakVal = <a class="code" href="namespace_pins.html#a499aec4c5df462d2e58fd797756a645f">Pins::getCanPinValue</a>(PINS_FRONT_BRAKE);</div>
 <div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;            <span class="keywordtype">int</span> steerVal = <a class="code" href="namespace_pins.html#a499aec4c5df462d2e58fd797756a645f">Pins::getCanPinValue</a>(PINS_FRONT_STEER);</div>
