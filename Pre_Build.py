@@ -445,7 +445,7 @@ def syncFile(filePath, offset, rawpath, workingFilePath=None, suppress=False):
         touch(f"{offset}{rawpath}")
         shutil.copyfile(filePath, workingFilePath)
         if not suppress:
-            print(f"Sync File: {workingFilePath}")
+            print(f"Sync File: {os.path.basename(workingFilePath)}")
         return False
     return True
 
