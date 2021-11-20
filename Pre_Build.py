@@ -580,7 +580,6 @@ class ThreadedProgressBar:
         self.counter += 1
 
     def finish(self):
-        print("\0")  # Eh
         self.run = False
         self.printer.join()
         self._progress(self.counter, self.maxcount, self.prefix)
