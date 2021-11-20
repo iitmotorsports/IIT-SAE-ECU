@@ -149,7 +149,7 @@ $(document).ready(function(){initNavTree('_faults_8cpp_source.html',''); initRes
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">void</span> log() {</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#define X(add, mask, id)                               \</span></div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">    if (address == add &amp;&amp; lastValue.longlong &amp; mask) { \</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">        Log.e(ID, id);                                 \</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">        </span><span class="comment">/*PRE_BUILD_IGNORE*/</span><span class="preprocessor"> Log.e(ID, id);            \</span></div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">    }</span></div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="comment">// Ignore Pre_Build error</span></div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <a class="code" href="_fault_config_8def.html#afdc8e6cf3a093f257833370074ec2efe">CAN_FAULT_IDS</a></div>
@@ -187,7 +187,7 @@ $(document).ready(function(){initNavTree('_faults_8cpp_source.html',''); initRes
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keywordtype">void</span> log() {</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="preprocessor">#define X(pin, comp, value, id)             \</span></div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="preprocessor">    if (GPIO_Pin == pin &amp;&amp; this-&gt;faulted) { \</span></div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="preprocessor">        Log.e(ID, id);                      \</span></div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="preprocessor">        </span><span class="comment">/*PRE_BUILD_IGNORE*/</span><span class="preprocessor"> Log.e(ID, id); \</span></div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor">    }</span></div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        <a class="code" href="_fault_config_8def.html#ad16cea3900e240c28be81e1fae70174a">HARD_PIN_FAULTS</a></div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <a class="code" href="_fault_config_8def.html#a390419930292eef5516ad68b3b5e2af6">SOFT_PIN_FAULTS</a></div>
