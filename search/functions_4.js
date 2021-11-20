@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['e_307',['e',['../struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39',1,'Logging::Log_t::e(LOG_TAG TAG, LOG_MSG message)'],['../struct_logging_1_1_log__t.html#ae24341ba6e630491b560838ab7c430d6',1,'Logging::Log_t::e(LOG_TAG TAG, LOG_MSG message, const uint32_t number, bool mediate=false)']]],
+  ['e_307',['e',['../struct_logging_1_1_log__t.html#a6a390467c80768f38c116e26c6c35a39',1,'Logging::Log_t::e(LOG_TAG TAG, LOG_MSG message)'],['../struct_logging_1_1_log__t.html#a9d396c4c82361a68afeaad78042bec0e',1,'Logging::Log_t::e(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate=false)']]],
   ['echo_308',['echo',['../namespace_echo.html#ac57e2ff216615be891ffabf232f14d37',1,'Echo::echo(uint32_t delay, const uint32_t address, uint8_t buf[8])'],['../namespace_echo.html#a0f3d048035f869638271d08ea736f97e',1,'Echo::echo(uint32_t delay, const uint32_t address, const uint8_t buf_0=0, const uint8_t buf_1=0, const uint8_t buf_2=0, const uint8_t buf_3=0, const uint8_t buf_4=0, const uint8_t buf_5=0, const uint8_t buf_6=0, const uint8_t buf_7=0)']]],
   ['emavg_309',['EMAvg',['../_util_8h.html#aae1798680f5232f66c8c5a14b5aa17a7',1,'Util.cpp']]],
   ['enablecanbusrelay_310',['enableCanbusRelay',['../namespace_logging.html#a3402a2c8efbb932ddbe58e66b9cc550c',1,'Logging']]],
