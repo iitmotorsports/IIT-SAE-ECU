@@ -79,15 +79,19 @@ WORKING_DIRECTORY_OFFSET = "build\\Pre_Build\\"
 # FILE_OUTPUT_PATH = "build\\bin"
 FILE_OUTPUT_PATH = ""
 
+IGNORE_KEYWORD = "PRE_BUILD_IGNORE"  # Keyword that makes this script ignore a line
+
 BYPASS_SCRIPT = os.path.exists("script.disable")  # bypass script if this file is found
+
+MAX_RESULT = 8  # The maximum number of results to print out for errors and modified files
 
 LIMIT_TAG = 254
 LIMIT_ID = 65535
 BLACKLIST_ADDRESSESS = (0, 5, 9)
 
-SOURCE_DEST_NAME = "{}{}".format(WORKING_DIRECTORY_OFFSET, SOURCE_NAME)
-LIBRARIES_DEST_NAME = "{}{}".format(WORKING_DIRECTORY_OFFSET, LIBRARIES_NAME)
-DATA_FILE = "{}.LogInfo".format(WORKING_DIRECTORY_OFFSET)
+SOURCE_DEST_NAME = f"{WORKING_DIRECTORY_OFFSET}{SOURCE_NAME}"
+LIBRARIES_DEST_NAME = f"{WORKING_DIRECTORY_OFFSET}{LIBRARIES_NAME}"
+DATA_FILE = f"{WORKING_DIRECTORY_OFFSET}.LogInfo"
 
 LOW_RAM = 4
 BUF_SIZE = 65536
@@ -95,22 +99,22 @@ BUF_SIZE = 65536
 # PLACEHOLDER_TAG = "__PYTHON__TAG__PLACEHOLDER__{}__"
 # PLACEHOLDER_ID = "__PYTHON__ID__PLACEHOLDER__{}__"
 
-RamMemo = False
+RAM_MEMO = False
 
 
-def AvailableRam():
-    global RamMemo
-    if not RamMemo:
+def available_ram():
+    global RAM_MEMO
+    if not RAM_MEMO:
         out = subprocess.check_output("wmic OS get FreePhysicalMemory /Value", stderr=subprocess.STDOUT, shell=True)
-        RamMemo = round(
+        RAM_MEMO = round(
             int(str(out).strip("b").strip("'").replace("\\r", "").replace("\\n", "").replace("FreePhysicalMemory=", "")) / 1048576, 2
         )
-    return RamMemo
+    return RAM_MEMO
 
 
 def hashFile(filePath):
     if os.path.exists(filePath):
-        if AvailableRam() <= LOW_RAM:
+        if available_ram() <= LOW_RAM:
             sha256 = hashlib.sha256()
             with open(filePath, "rb") as f:
                 while True:
@@ -345,28 +349,34 @@ class FileEntry:  # IMPROVE: Make IDs persistent
         return line.replace(reMatch, str(TAG))
 
     async def walkLines(self, function):
-        tempPath = self.workingPath + ".__Lock"
-        lineNo = 1
+        temp_path = self.workingPath + ".__Lock"
+        line_no = 1
         newline = ""
-        with open(self.path, "r", encoding="utf-8") as f1, open(tempPath, "w", encoding="utf-8") as f2:
-            for line in f1:
-                try:
-                    newline = await function(line)
-                    f2.buffer.write(newline.encode("utf-8"))
-                except Exception as e:  # If prev exception was about IO then oh well
-                    self.error = "{}{}{}\n".format(
-                        self.error,
-                        Text.warning("  {}:{}\n".format(self.path, lineNo)),
-                        "   {}\n    > {}".format(Text.red(type(e).__name__), splitErrorString(e)),
-                    )
-                    f2.buffer.write(line.encode("utf-8"))
-                finally:
-                    lineNo += 1
-        self.modified = not syncFile(tempPath, "", self.rawpath, self.workingPath)
-        os.remove(tempPath)
+        with open(self.path, "r", encoding="utf-8") as f1, open(temp_path, "w", encoding="utf-8") as f2:
+            if self.rawpath.startswith(LIB_PATH) and self.name != LIB_FILE:  # Ignore log library source files
+                f2.writelines(f1.readlines())
+            else:
+                for line in f1:
+                    try:
+                        newline = await function(line)
+                        f2.buffer.write(newline.encode("utf-8"))
+                    except Exception as e:  # If prev exception was about IO then oh well
+                        self.error = "{}{}{}\n".format(
+                            self.error,
+                            Text.warning("  {}:{}\n".format(self.path, line_no)),
+                            "   {}\n    > {}".format(Text.red(type(e).__name__), splitErrorString(e)),
+                        )
+                        f2.buffer.write(line.encode("utf-8"))
+                    finally:
+                        line_no += 1
+        self.modified = not syncFile(temp_path, "", self.rawpath, self.workingPath)
+        os.remove(temp_path)
 
-    async def findLogMatch(self, line):
-        newline = line
+    async def findLogMatch(self, line: str):
+        newline: str = line
+
+        if IGNORE_KEYWORD in newline:  # Return if this line has the ignore keyword
+            return newline
 
         SPECIAL = re.findall(FIND_SPECIAL_REGEX, line)
         if SPECIAL:
@@ -445,7 +455,7 @@ def syncFile(filePath, offset, rawpath, workingFilePath=None, suppress=False):
 
 def allocate_files(Path, Offset):
     async def lib_flag(line):
-        return line.replace(LIB_DEFINE[0], LIB_DEFINE[1])
+        return line.replace(*LIB_DEFINE)
 
     for subdir, _, files in os.walk(Path):
         for filename in files:
@@ -599,13 +609,12 @@ def begin_scan():
 
 
 def printResults():
-    maxPrinted = 8
     print(Text.header("\nModified Files:"))
     c = 0
     m = 0
     for f in FileRefs:
         if f.modified:
-            if c < maxPrinted:
+            if c < MAX_RESULT:
                 print("  {}".format(Text.green(f.name)))
                 c += 1
             else:
@@ -619,16 +628,22 @@ def printResults():
 
     c = 0
     m = 0
-    print(Text.header("\nFile Errors:"))
+
+    errStr: str = ""
+
     for f in Files:
-        if c < maxPrinted:
-            print(f.error.strip("\n"))
+        if c < MAX_RESULT:
+            errStr += f.error.strip("\n")
             c += 1
         else:
             m += 1
 
-    if m > 1:
-        print("  {}".format(Text.underline(Text.red("{} more error{}".format(m, "s" if m > 1 else "")))))
+    if c > 0:
+        print(Text.header("\nFile Errors:"))
+        print(errStr)
+
+        if m > 0:
+            print("  {}".format(Text.underline(Text.red("{} more error{}".format(m, "s" if m > 1 else "")))))
 
 
 def getOutputFile(path):
@@ -659,7 +674,7 @@ def main():
 
         time.sleep(0.5)  # Let terminal settle
 
-        print(Text.warning("Available Ram: {} GBs\n".format(AvailableRam())))
+        print(Text.warning("Available Ram: {} GBs\n".format(available_ram())))
 
         prehash = hashFile(getOutputFile(FILE_OUTPUT_PATH))
 

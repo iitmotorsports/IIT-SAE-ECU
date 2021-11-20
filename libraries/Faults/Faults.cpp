@@ -69,7 +69,7 @@ typedef struct CanFault {
     void log() {
 #define X(add, mask, id)                               \
     if (address == add && lastValue.longlong & mask) { \
-        Log.e(ID, id);                                 \
+        /*PRE_BUILD_IGNORE*/ Log.e(ID, id);            \
     }
         // Ignore Pre_Build error
         CAN_FAULT_IDS
@@ -107,7 +107,7 @@ typedef struct PinFault {
     void log() {
 #define X(pin, comp, value, id)             \
     if (GPIO_Pin == pin && this->faulted) { \
-        Log.e(ID, id);                      \
+        /*PRE_BUILD_IGNORE*/ Log.e(ID, id); \
     }
         HARD_PIN_FAULTS
         SOFT_PIN_FAULTS
