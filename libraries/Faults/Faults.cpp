@@ -116,40 +116,62 @@ typedef struct PinFault {
     }
 } PinFault;
 
+#define X(...) ,
+#if PP_NARG_MO(HARD_FAULT_ADD) > 0
+#undef X
 static CanFault hardCanFaults[HARD_CAN_COUNT] = {
 #define X(add, mask, tag) CanFault(add, mask),
     HARD_FAULT_ADD
 #undef X
 };
+#endif
 
+#define X(...) ,
+#if PP_NARG_MO(SOFT_FAULT_ADD) > 0
+#undef X
 static CanFault softCanFaults[SOFT_CAN_COUNT] = {
 #define X(add, mask, tag) CanFault(add, mask),
     SOFT_FAULT_ADD
 #undef X
 };
+#endif
 
+#define X(...) ,
+#if PP_NARG_MO(HARD_PIN_FAULTS) > 0
+#undef X
 static PinFault hardPinFaults[HARD_PIN_COUNT] = {
 #define X(pin, comp, value, id) PinFault(pin),
     HARD_PIN_FAULTS
 #undef X
 };
+#endif
 
+#define X(...) ,
+#if PP_NARG_MO(SOFT_PIN_FAULTS) > 0
+#undef X
 static PinFault softPinFaults[SOFT_PIN_COUNT] = {
 #define X(pin, comp, value, id) PinFault(pin),
     SOFT_PIN_FAULTS
 #undef X
 };
+#endif
 
+#define X(...) ,
+ 
 bool hardFault(void) {
     bool faulted = false;
 
+#if PP_NARG_MO(HARD_FAULT_ADD) > 0
     for (size_t i = 0; i < HARD_CAN_COUNT; i++) {
         faulted |= hardCanFaults[i].check();
     }
+#endif
 
+#if PP_NARG_MO(HARD_PIN_FAULTS) > 0
     for (size_t i = 0; i < HARD_PIN_COUNT; i++) {
         faulted |= hardPinFaults[i].check();
     }
+#endif
 
     return faulted;
 }
@@ -157,31 +179,45 @@ bool hardFault(void) {
 bool softFault(void) {
     bool faulted = false;
 
+#if PP_NARG_MO(SOFT_FAULT_ADD) > 0
     for (size_t i = 0; i < SOFT_CAN_COUNT; i++) {
         faulted |= softCanFaults[i].check();
     }
+#endif
 
+#if PP_NARG_MO(SOFT_PIN_FAULTS) > 0
     for (size_t i = 0; i < SOFT_PIN_COUNT; i++) {
         faulted |= softPinFaults[i].check();
     }
+#endif
 
     return faulted;
 }
 
 void logFault(void) {
+#if PP_NARG_MO(HARD_FAULT_ADD) > 0
     for (size_t i = 0; i < HARD_CAN_COUNT; i++) {
         hardCanFaults[i].log();
     }
+#endif
+#if PP_NARG_MO(SOFT_FAULT_ADD) > 0
     for (size_t i = 0; i < SOFT_CAN_COUNT; i++) {
         softCanFaults[i].log();
     }
+#endif
+#if PP_NARG_MO(HARD_PIN_FAULTS) > 0
     for (size_t i = 0; i < HARD_PIN_COUNT; i++) {
         hardPinFaults[i].log();
     }
+#endif
+#if PP_NARG_MO(SOFT_PIN_FAULTS) > 0
     for (size_t i = 0; i < SOFT_PIN_COUNT; i++) {
         softPinFaults[i].log();
     }
+#endif
 }
+
+#undef X
 
 bool anyFault(void) {
     return hardFault() || softFault();
