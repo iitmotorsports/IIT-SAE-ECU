@@ -31,19 +31,16 @@ static const int SOFT_PIN_COUNT = PP_NARG_MO(SOFT_PIN_FAULTS);
 static const int PIN_COUNT = PP_NARG_MO(HARD_PIN_FAULTS) + PP_NARG_MO(SOFT_PIN_FAULTS); // Number of Pins we need to account for
 #undef X
 
-typedef struct CanFault { // FIXME: Fault not clearing?
+typedef struct CanFault {
     uint32_t address;
     Canbus::Buffer buffer;
     uint64_t faultMask;
     LOG_MSG *tags;
     bool faulted = false;
-    union {
-        uint8_t lastValue[8];
-        uint64_t *lastValue64;
-    };
-
-    // Canbus::Buffer lastBuffer = lastValue;
-    // uint64_t *lastValue64 = (uint64_t *)lastValue;
+    union lastValue {
+        uint8_t arr[8];
+        uint64_t longlong;
+    } lastValue;
 
     CanFault(const uint32_t address, const uint64_t faultMask) {
         this->address = address;
@@ -54,7 +51,7 @@ typedef struct CanFault { // FIXME: Fault not clearing?
     bool check() {
         uint64_t curr = buffer.getULong();
         if (curr & faultMask) {
-            buffer.dump(lastValue);
+            buffer.dump(lastValue.arr);
 #ifdef CONF_ECU_DEBUG
             Log.w(ID, "Faulted CAN Address:", address);
 #endif
@@ -65,17 +62,19 @@ typedef struct CanFault { // FIXME: Fault not clearing?
 
     void clear() {
         buffer.clear();
+        lastValue.longlong = 0;
         faulted = false;
     }
 
     void log() {
-#define X(add, mask, id)                         \
-    if (address == add && *lastValue64 & mask) { \
-        Log.e(ID, id);                           \
+#define X(add, mask, id)                               \
+    if (address == add && lastValue.longlong & mask) { \
+        Log.e(ID, id);                                 \
     }
         // Ignore Pre_Build error
         CAN_FAULT_IDS
 #undef X
+        clear();
     }
 } CanFault;
 
@@ -113,6 +112,7 @@ typedef struct PinFault {
         HARD_PIN_FAULTS
         SOFT_PIN_FAULTS
 #undef X
+        clear();
     }
 } PinFault;
 
@@ -171,19 +171,15 @@ bool softFault(void) {
 void logFault(void) {
     for (size_t i = 0; i < HARD_CAN_COUNT; i++) {
         hardCanFaults[i].log();
-        hardCanFaults[i].clear();
     }
     for (size_t i = 0; i < SOFT_CAN_COUNT; i++) {
         softCanFaults[i].log();
-        softCanFaults[i].clear();
     }
     for (size_t i = 0; i < HARD_PIN_COUNT; i++) {
         hardPinFaults[i].log();
-        hardPinFaults[i].clear();
     }
     for (size_t i = 0; i < SOFT_PIN_COUNT; i++) {
         softPinFaults[i].log();
-        softPinFaults[i].clear();
     }
 }
 
