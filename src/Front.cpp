@@ -276,8 +276,6 @@ void Front::run() {
 
     TVAggression = 1.8f;
 
-    // Canbus::sendData(ADD_MC0_FAULTS, 128, 0, 0, 0, 0, 0, 0, 1);
-
     while (true) {
 #if TESTING == FRONT_ECU
         testValues();
