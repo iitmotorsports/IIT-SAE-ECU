@@ -689,7 +689,7 @@ def main():
 
         dole_files(8, tb.progress)
 
-        print(f"Threads to run: {len(Threads)}\n")
+        print(f"Threads to run: {len(Threads)}\n\n")
 
         tb.start()
         begin_scan()
