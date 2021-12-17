@@ -116,6 +116,7 @@ static uint32_t MCPowerValue() { // IMPROVE: get power value using three phase v
 
 static void updateCurrentState() {
     uint32_t currState = Pins::getCanPinValue(PINS_INTERNAL_STATE);
+    Log(ID, "Current State", currState, INTERVAL_MED_LOW_PRIORITY);
     currentState = stateMap[currState]; // returns NULL if not found
 }
 
@@ -176,6 +177,7 @@ static void toggleMotorDirection() {
 #if TESTING == FRONT_ECU
 static void testValues() {
     if (timeElapsedHigh >= 20) { // High priority updates
+        Cmd::receiveCommand();
         timeElapsedHigh = 0;
         static uint32_t speed = 300;
         static bool direction = true;
@@ -189,7 +191,6 @@ static void testValues() {
     if (timeElapsedMidHigh >= 200) { // MedHigh priority updates
         timeElapsedMidHigh = 0;
         updateCurrentState();
-        Log(ID, "Current State", currState);
     }
     if (timeElapsedMidLow >= 500) { // MedLow priority updates
         timeElapsedMidLow = 0;
