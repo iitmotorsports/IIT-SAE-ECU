@@ -38,10 +38,12 @@ uint8_t *getVariable(size_t ID) {
 
 void updateVariable(size_t varID, const uint8_t *dataArr) {
     switch (varID) {
-#define X(type, ID)                                    \
-    case ID:                                           \
-        memcpy(variables[ID], dataArr, 8);             \
-        Log.i(LOG_ID, "Data Received for varID:", ID); \
+#define X(type, ID)                                                                 \
+    case ID:                                                                        \
+        memcpy(variables[ID], dataArr, 8);                                          \
+        Log.i(LOG_ID, "Data received for varID:", ID);                              \
+        Log.i(LOG_ID, "Int value:", *(int *)(variables + ID));                      \
+        Log.i(LOG_ID, "Approximate Float value:", (int)*(float *)(variables + ID)); \
         break;
         SERIALVARS
 #undef X
