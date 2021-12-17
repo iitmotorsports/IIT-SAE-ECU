@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"namespace_cmd.html#aedaea62d3d1e614cf34ae87372087846":[3,0,3,1],
 "namespace_e_c_u_states.html":[3,0,5],
 "namespace_echo.html":[3,0,4],
 "namespace_echo.html#a06d3c7f95ead843b9a10c61cb4ee8aee":[3,0,4,2],
@@ -158,6 +159,5 @@ var NAVTREEINDEX2 =
 "struct_state_1_1_state__t.html#aeae12a5d68f5c0d84c8c85160de43fd7":[4,0,3,0,2],
 "struct_state_1_1_state__t.html#af730abedf662a8e251b5839b2ad6e932":[4,0,3,0,1],
 "upload_paste_8py.html":[5,0,53],
-"upload_paste_8py_source.html":[5,0,53],
-"":[3,0,1]
+"upload_paste_8py_source.html":[5,0,53]
 };
