@@ -33,10 +33,12 @@ Graphing uses timestamps that the companion app embeds into each log message.
 
 # @cond
 
+import argparse
 import base64
 import json
-import sys
 import os
+import re
+import sys
 
 from pip._vendor import requests
 
@@ -116,11 +118,6 @@ def get_log(log_id: str) -> str:
         with open(log_id, "r") as file:
             return file.read()
     return get_paste(log_id)
-
-
-def usage():
-    """Print the usage of this script"""
-    print("List available pastes: \t-l\nInterpret paste: \t-p[PasteID]\nGraph paste: \t\t-p[PasteID] -g")
 
 
 def interpret(string: str) -> None:
@@ -270,23 +267,25 @@ def graph(string: str) -> None:
 
 def main():  # IMPROVE: Better argument handling
     """Main Function"""
-    if len(sys.argv) == 1 or sys.argv[1][0:2] == "-h" or not sys.argv[1][2:]:
-        usage()
-        exit()
 
-    if sys.argv[1][0:2] == "-l":
+    parser = argparse.ArgumentParser(description="Interpret a log file obtained locally or from paste.ee")
+    parser.add_argument("-l", "--list", action="store_true", required=False, help="List all the available paste IDs")
+    parser.add_argument("-g", "--graph", action="store_true", required=False, help="Interpret and graph a log file to an excel file, given paste ID")
+    parser.add_argument("-p", "--paste", required=False, help="Paste ID to download and interpret")
+
+    args = parser.parse_args()
+
+    if args.list:
         p_list = list_pastes()
-        exit(p_list[1] if p_list[0] else "Failed to get pastes")
+        sys.exit(p_list[1] if p_list[0] else "Failed to get pastes")
 
-    if len(sys.argv) > 2 and sys.argv[2][0:2] == "-g":
-        graph(get_log(sys.argv[1][2:]))
-        exit()
-
-    if sys.argv[1][0:2] == "-p":
-        interpret(get_log(sys.argv[1][2:]))
-        exit()
-
-    usage()
+    if args.paste:
+        if args.graph:
+            graph(get_log(args.paste))
+            return
+        interpret(get_log(args.paste))
+    else:
+        parser.print_help()
 
 
 main()
