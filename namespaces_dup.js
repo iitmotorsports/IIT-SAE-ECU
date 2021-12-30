@@ -28,7 +28,16 @@ var namespaces_dup =
       [ "softFault", "namespace_fault.html#a4ffa144bc1e88734c7d7e95bb008aa67", null ]
     ] ],
     [ "Front", "namespace_front.html", [
-      [ "run", "namespace_front.html#a2deb9201e361171c69d361ce69047a15", null ]
+      [ "blinkStart", "namespace_front.html#a41fb69497e62973d94d3411344138bbd", null ],
+      [ "loadStateMap", "namespace_front.html#ae7b8a1fc786836542066a007e48e3bc1", null ],
+      [ "logValues", "namespace_front.html#ad4b29be5b1da617c264977b7dbd9059d", null ],
+      [ "run", "namespace_front.html#a2deb9201e361171c69d361ce69047a15", null ],
+      [ "setChargeSignal", "namespace_front.html#a08cef7e1e54e13a82a0a2aa6e8ce126d", null ],
+      [ "updateCurrentState", "namespace_front.html#af9fc069abc6cef27915cdee9bbe08acb", null ],
+      [ "currentState", "namespace_front.html#a1255b36d3dfbeed606d0c745f00e0849", null ],
+      [ "ID", "namespace_front.html#a08b20fc93a7adcf58df4d7d9b8c61f37", null ],
+      [ "stateMap", "namespace_front.html#af493c5df981bdd91a1a0f2c06245a9ea", null ],
+      [ "TVAggression", "namespace_front.html#aacd143ed54fd860fba625990f6811aa5", null ]
     ] ],
     [ "Heartbeat", "namespace_heartbeat.html", [
       [ "beatFunc", "namespace_heartbeat.html#a90dd9f85dfc6bf41682af19b8ecd0c8d", null ],

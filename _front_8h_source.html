@@ -93,14 +93,38 @@ $(document).ready(function(){initNavTree('_front_8h_source.html',''); initResiza
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_faults_8h.html">Faults.h</a>&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_log_8h.html">Log.h</a>&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="namespace_front.html">   10</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_front.html">Front</a> {</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_front.html#a2deb9201e361171c69d361ce69047a15">run</a>();</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;}</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define INTERVAL_HIGH_PRIORITY 20</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define INTERVAL_MED_HIGH_PRIORITY 400</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define INTERVAL_MED_LOW_PRIORITY 800</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define INTERVAL_LOW_PRIORITY 1200</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_front.html">Front</a> {</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<a class="code" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a> ID = <span class="stringliteral">&quot;Front Teensy&quot;</span>;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">extern</span> <span class="keyword">struct </span><a class="code" href="struct_state_1_1_state__t.html">State::State_t</a> *currentState;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_front.html#a2deb9201e361171c69d361ce69047a15">run</a>();</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_front.html#ae7b8a1fc786836542066a007e48e3bc1">loadStateMap</a>();</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_front.html#af9fc069abc6cef27915cdee9bbe08acb">updateCurrentState</a>();</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_front.html#a08cef7e1e54e13a82a0a2aa6e8ce126d">setChargeSignal</a>();</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_front.html#ad4b29be5b1da617c264977b7dbd9059d">logValues</a>();</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}</div>
 <div class="ttc" id="a_e_c_u_global_config_8h_html"><div class="ttname"><a href="_e_c_u_global_config_8h.html">ECUGlobalConfig.h</a></div><div class="ttdoc">Configure global build properties.</div></div>
 <div class="ttc" id="a_faults_8h_html"><div class="ttname"><a href="_faults_8h.html">Faults.h</a></div><div class="ttdoc">Checks for defined faults from canbus addresses or pins.</div></div>
 <div class="ttc" id="a_log_8h_html"><div class="ttname"><a href="_log_8h.html">Log.h</a></div><div class="ttdoc">Special logging functionality.</div></div>
-<div class="ttc" id="anamespace_front_html"><div class="ttname"><a href="namespace_front.html">Front</a></div><div class="ttdoc">Name space used solely for front Teensy logic.</div><div class="ttdef"><b>Definition:</b> <a href="_front_8h_source.html#l00010">Front.h:10</a></div></div>
-<div class="ttc" id="anamespace_front_html_a2deb9201e361171c69d361ce69047a15"><div class="ttname"><a href="namespace_front.html#a2deb9201e361171c69d361ce69047a15">Front::run</a></div><div class="ttdeci">void run()</div><div class="ttdoc">Runs front Teensy code.</div><div class="ttdef"><b>Definition:</b> <a href="_front_8cpp_source.html#l00236">Front.cpp:236</a></div></div>
+<div class="ttc" id="a_log_8h_html_a746b6eae8886ab8bb40046729eed2983"><div class="ttname"><a href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a></div><div class="ttdeci">const char * LOG_TAG</div><div class="ttdoc">Type definition of logging tags This typedef is necessary to allow for easier manipulation of code by...</div><div class="ttdef"><b>Definition:</b> <a href="_log_8h_source.html#l00042">Log.h:42</a></div></div>
+<div class="ttc" id="anamespace_front_html"><div class="ttname"><a href="namespace_front.html">Front</a></div><div class="ttdoc">Name space used solely for front ECU logic.</div><div class="ttdef"><b>Definition:</b> <a href="src_2front_8cpp_source.html#l00014">src/front.cpp:14</a></div></div>
+<div class="ttc" id="anamespace_front_html_a08cef7e1e54e13a82a0a2aa6e8ce126d"><div class="ttname"><a href="namespace_front.html#a08cef7e1e54e13a82a0a2aa6e8ce126d">Front::setChargeSignal</a></div><div class="ttdeci">void setChargeSignal()</div><div class="ttdoc">Enables the charging signal dependent on the current state.</div><div class="ttdef"><b>Definition:</b> <a href="_front_values_8cpp_source.html#l00112">FrontValues.cpp:112</a></div></div>
+<div class="ttc" id="anamespace_front_html_a2deb9201e361171c69d361ce69047a15"><div class="ttname"><a href="namespace_front.html#a2deb9201e361171c69d361ce69047a15">Front::run</a></div><div class="ttdeci">void run()</div><div class="ttdoc">Runs front ECU code.</div><div class="ttdef"><b>Definition:</b> <a href="src_2front_8cpp_source.html#l00071">src/front.cpp:71</a></div></div>
+<div class="ttc" id="anamespace_front_html_ad4b29be5b1da617c264977b7dbd9059d"><div class="ttname"><a href="namespace_front.html#ad4b29be5b1da617c264977b7dbd9059d">Front::logValues</a></div><div class="ttdeci">void logValues()</div><div class="ttdoc">Outputs the bulk of values.</div><div class="ttdef"><b>Definition:</b> <a href="_front_values_8cpp_source.html#l00116">FrontValues.cpp:116</a></div></div>
+<div class="ttc" id="anamespace_front_html_ae7b8a1fc786836542066a007e48e3bc1"><div class="ttname"><a href="namespace_front.html#ae7b8a1fc786836542066a007e48e3bc1">Front::loadStateMap</a></div><div class="ttdeci">void loadStateMap()</div><div class="ttdoc">Load values that ID each unique state.</div><div class="ttdef"><b>Definition:</b> <a href="_front_values_8cpp_source.html#l00097">FrontValues.cpp:97</a></div></div>
+<div class="ttc" id="anamespace_front_html_af9fc069abc6cef27915cdee9bbe08acb"><div class="ttname"><a href="namespace_front.html#af9fc069abc6cef27915cdee9bbe08acb">Front::updateCurrentState</a></div><div class="ttdeci">void updateCurrentState()</div><div class="ttdoc">Update and outputs the current state.</div><div class="ttdef"><b>Definition:</b> <a href="_front_values_8cpp_source.html#l00106">FrontValues.cpp:106</a></div></div>
+<div class="ttc" id="astruct_state_1_1_state__t_html"><div class="ttname"><a href="struct_state_1_1_state__t.html">State::State_t</a></div><div class="ttdoc">The parent state structure to extend from to create more states.</div><div class="ttdef"><b>Definition:</b> <a href="_state_8h_source.html#l00070">State.h:70</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

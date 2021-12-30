@@ -85,24 +85,59 @@ $(document).ready(function(){initNavTree('namespace_front.html',''); initResizab
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">Front Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Name space used solely for front Teensy logic.  
+<p>Name space used solely for front ECU logic.  
 <a href="namespace_front.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a41fb69497e62973d94d3411344138bbd"><td class="memItemLeft" align="right" valign="top"><a id="a41fb69497e62973d94d3411344138bbd"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>blinkStart</b> ()</td></tr>
+<tr class="separator:a41fb69497e62973d94d3411344138bbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2deb9201e361171c69d361ce69047a15"><td class="memItemLeft" align="right" valign="top"><a id="a2deb9201e361171c69d361ce69047a15"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_front.html#a2deb9201e361171c69d361ce69047a15">run</a> ()</td></tr>
-<tr class="memdesc:a2deb9201e361171c69d361ce69047a15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs front Teensy code. <br /></td></tr>
+<tr class="memdesc:a2deb9201e361171c69d361ce69047a15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs front ECU code. <br /></td></tr>
 <tr class="separator:a2deb9201e361171c69d361ce69047a15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7b8a1fc786836542066a007e48e3bc1"><td class="memItemLeft" align="right" valign="top"><a id="ae7b8a1fc786836542066a007e48e3bc1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_front.html#ae7b8a1fc786836542066a007e48e3bc1">loadStateMap</a> ()</td></tr>
+<tr class="memdesc:ae7b8a1fc786836542066a007e48e3bc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load values that ID each unique state. <br /></td></tr>
+<tr class="separator:ae7b8a1fc786836542066a007e48e3bc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9fc069abc6cef27915cdee9bbe08acb"><td class="memItemLeft" align="right" valign="top"><a id="af9fc069abc6cef27915cdee9bbe08acb"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_front.html#af9fc069abc6cef27915cdee9bbe08acb">updateCurrentState</a> ()</td></tr>
+<tr class="memdesc:af9fc069abc6cef27915cdee9bbe08acb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update and outputs the current state. <br /></td></tr>
+<tr class="separator:af9fc069abc6cef27915cdee9bbe08acb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08cef7e1e54e13a82a0a2aa6e8ce126d"><td class="memItemLeft" align="right" valign="top"><a id="a08cef7e1e54e13a82a0a2aa6e8ce126d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_front.html#a08cef7e1e54e13a82a0a2aa6e8ce126d">setChargeSignal</a> ()</td></tr>
+<tr class="memdesc:a08cef7e1e54e13a82a0a2aa6e8ce126d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the charging signal dependent on the current state. <br /></td></tr>
+<tr class="separator:a08cef7e1e54e13a82a0a2aa6e8ce126d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4b29be5b1da617c264977b7dbd9059d"><td class="memItemLeft" align="right" valign="top"><a id="ad4b29be5b1da617c264977b7dbd9059d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_front.html#ad4b29be5b1da617c264977b7dbd9059d">logValues</a> ()</td></tr>
+<tr class="memdesc:ad4b29be5b1da617c264977b7dbd9059d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Outputs the bulk of values. <br /></td></tr>
+<tr class="separator:ad4b29be5b1da617c264977b7dbd9059d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:aacd143ed54fd860fba625990f6811aa5"><td class="memItemLeft" align="right" valign="top"><a id="aacd143ed54fd860fba625990f6811aa5"></a>
+<a class="el" href="class_serial_var_1_1_serial_var.html">SerialVar::SerialFloat</a>&#160;</td><td class="memItemRight" valign="bottom"><b>TVAggression</b> = SERIALVAR_TORQUE_VECTORING_AGGRESSION</td></tr>
+<tr class="separator:aacd143ed54fd860fba625990f6811aa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08b20fc93a7adcf58df4d7d9b8c61f37"><td class="memItemLeft" align="right" valign="top"><a id="a08b20fc93a7adcf58df4d7d9b8c61f37"></a>
+<a class="el" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ID</b> = &quot;Front Teensy&quot;</td></tr>
+<tr class="separator:a08b20fc93a7adcf58df4d7d9b8c61f37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1255b36d3dfbeed606d0c745f00e0849"><td class="memItemLeft" align="right" valign="top"><a id="a1255b36d3dfbeed606d0c745f00e0849"></a>
+struct <a class="el" href="struct_state_1_1_state__t.html">State::State_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>currentState</b></td></tr>
+<tr class="separator:a1255b36d3dfbeed606d0c745f00e0849"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af493c5df981bdd91a1a0f2c06245a9ea"><td class="memItemLeft" align="right" valign="top"><a id="af493c5df981bdd91a1a0f2c06245a9ea"></a>
+std::unordered_map&lt; uint32_t, struct <a class="el" href="struct_state_1_1_state__t.html">State::State_t</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>stateMap</b></td></tr>
+<tr class="separator:af493c5df981bdd91a1a0f2c06245a9ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Name space used solely for front Teensy logic. </p>
+<div class="textblock"><p>Name space used solely for front ECU logic. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

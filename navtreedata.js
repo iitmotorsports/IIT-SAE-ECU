@@ -95,8 +95,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"",
-"index.html#autotoc_md16"
+"_aero_servo_8cpp.html",
+"index.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
