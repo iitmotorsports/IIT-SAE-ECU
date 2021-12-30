@@ -73,7 +73,7 @@ var NAVTREEINDEX0 =
 "_heartbeat_8cpp.html":[5,0,21],
 "_heartbeat_8cpp_source.html":[5,0,21],
 "_heartbeat_8def.html":[5,0,22],
-"_heartbeat_8def.html#a326e03f1932f84d63f56e8e852a71840":[5,0,22,0],
+"_heartbeat_8def.html#a563ac8570f78a50b3628ee7f2a61a67b":[5,0,22,0],
 "_heartbeat_8def.html#ae3c7fcd9cab30e87b0fbc35404880137":[5,0,22,1],
 "_heartbeat_8def_source.html":[5,0,22],
 "_heartbeat_8h.html":[5,0,23],

@@ -29,8 +29,9 @@ var namespaces_dup =
     ] ],
     [ "Front", "namespace_front.html", [
       [ "blinkStart", "namespace_front.html#a41fb69497e62973d94d3411344138bbd", null ],
+      [ "highPriorityValues", "namespace_front.html#a3c2c1a457a591d9e98d8cb4fd00f2d76", null ],
       [ "loadStateMap", "namespace_front.html#ae7b8a1fc786836542066a007e48e3bc1", null ],
-      [ "logValues", "namespace_front.html#ad4b29be5b1da617c264977b7dbd9059d", null ],
+      [ "lowPriorityValues", "namespace_front.html#a395b037caf51687bebe41b2b7f88a64a", null ],
       [ "run", "namespace_front.html#a2deb9201e361171c69d361ce69047a15", null ],
       [ "setChargeSignal", "namespace_front.html#a08cef7e1e54e13a82a0a2aa6e8ce126d", null ],
       [ "updateCurrentState", "namespace_front.html#af9fc069abc6cef27915cdee9bbe08acb", null ],

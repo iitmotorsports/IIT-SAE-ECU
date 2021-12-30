@@ -94,17 +94,17 @@ $(document).ready(function(){initNavTree('_heartbeat_8cpp_source.html',''); init
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_heartbeat_8h.html">Heartbeat.h</a>&quot;</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_canbus_8h.html">Canbus.h</a>&quot;</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_e_c_u_global_config_8h.html">ECUGlobalConfig.h</a>&quot;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_log_8h.html">Log.h</a>&quot;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_pins_8h.html">Pins.h</a>&quot;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;stdint.h&quot;</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;stdlib.h&quot;</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_heartbeat_8def.html">Heartbeat.def</a>&quot;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_heartbeat_8def.html">Heartbeat.def</a>&quot;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_log_8h.html">Log.h</a>&quot;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_pins_8h.html">Pins.h</a>&quot;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;stdint.h&quot;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;stdlib.h&quot;</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;set&gt;</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_heartbeat.html">Heartbeat</a> {</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">static</span> IntervalTimer canbusPinUpdate;</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">static</span> elapsedMillis lastBeat;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">static</span> uint lastTime = 0;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">static</span> <span class="keyword">volatile</span> <span class="keywordtype">int</span> lastTime = 0;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">static</span> <a class="code" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a> ID = <span class="stringliteral">&quot;HeartBeat&quot;</span>;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
@@ -127,7 +127,7 @@ $(document).ready(function(){initNavTree('_heartbeat_8cpp_source.html',''); init
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_heartbeat.html#aa0261c708b2a2636e941fb6969494556">beginBeating</a>() {</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    canbusPinUpdate.priority(10);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    canbusPinUpdate.begin(beat, <a class="code" href="_heartbeat_8def.html#a326e03f1932f84d63f56e8e852a71840">CONF_HEARTBEAT_INTERVAL_MICRO</a>);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    canbusPinUpdate.begin(beat, <a class="code" href="_heartbeat_8def.html#a563ac8570f78a50b3628ee7f2a61a67b">CONF_HEARTBEAT_INTERVAL_MILLIS</a> * 1000);</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;}</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> receiveBeat(uint32_t, <span class="keyword">volatile</span> uint8_t *) {</div>
@@ -141,25 +141,23 @@ $(document).ready(function(){initNavTree('_heartbeat_8cpp_source.html',''); init
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;}</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keywordtype">int</span> <a class="code" href="namespace_heartbeat.html#a85f5ba8b7ffd86ea82479c28a846f6ac">checkBeat</a>() {</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordflow">if</span> (lastBeat &gt; (<a class="code" href="_heartbeat_8def.html#a326e03f1932f84d63f56e8e852a71840">CONF_HEARTBEAT_INTERVAL_MICRO</a> / 1000) + <a class="code" href="_heartbeat_8def.html#ae3c7fcd9cab30e87b0fbc35404880137">CONF_HEARTBEAT_TIMEOUT_MILLI</a>) {</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordflow">if</span> (lastBeat &gt; (<a class="code" href="_heartbeat_8def.html#a563ac8570f78a50b3628ee7f2a61a67b">CONF_HEARTBEAT_INTERVAL_MILLIS</a>) + <a class="code" href="_heartbeat_8def.html#ae3c7fcd9cab30e87b0fbc35404880137">CONF_HEARTBEAT_TIMEOUT_MILLI</a>) {</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Heartbeat is taking too long&quot;</span>, lastBeat);</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <a class="code" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>(ID, <span class="stringliteral">&quot;Beat&quot;</span>, lastTime);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    }</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_heartbeat.html#a243a1a7989df814269de816d2893d35b">addCallback</a>(<a class="code" href="namespace_heartbeat.html#a90dd9f85dfc6bf41682af19b8ecd0c8d">beatFunc</a> func) {</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    funcs.insert(func);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;}</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;} <span class="comment">// namespace Heartbeat</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="comment">//@endcond</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    }</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;}</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_heartbeat.html#a243a1a7989df814269de816d2893d35b">addCallback</a>(<a class="code" href="namespace_heartbeat.html#a90dd9f85dfc6bf41682af19b8ecd0c8d">beatFunc</a> func) {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    funcs.insert(func);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;} <span class="comment">// namespace Heartbeat</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="comment">//@endcond</span></div>
 <div class="ttc" id="a_canbus_8h_html"><div class="ttname"><a href="_canbus_8h.html">Canbus.h</a></div><div class="ttdoc">FlexCAN_T4 wrapper.</div></div>
 <div class="ttc" id="a_e_c_u_global_config_8h_html"><div class="ttname"><a href="_e_c_u_global_config_8h.html">ECUGlobalConfig.h</a></div><div class="ttdoc">Configure global build properties.</div></div>
 <div class="ttc" id="a_heartbeat_8def_html"><div class="ttname"><a href="_heartbeat_8def.html">Heartbeat.def</a></div></div>
-<div class="ttc" id="a_heartbeat_8def_html_a326e03f1932f84d63f56e8e852a71840"><div class="ttname"><a href="_heartbeat_8def.html#a326e03f1932f84d63f56e8e852a71840">CONF_HEARTBEAT_INTERVAL_MICRO</a></div><div class="ttdeci">#define CONF_HEARTBEAT_INTERVAL_MICRO</div><div class="ttdoc">The interval the beat should target.</div><div class="ttdef"><b>Definition:</b> <a href="_heartbeat_8def_source.html#l00022">Heartbeat.def:22</a></div></div>
+<div class="ttc" id="a_heartbeat_8def_html_a563ac8570f78a50b3628ee7f2a61a67b"><div class="ttname"><a href="_heartbeat_8def.html#a563ac8570f78a50b3628ee7f2a61a67b">CONF_HEARTBEAT_INTERVAL_MILLIS</a></div><div class="ttdeci">#define CONF_HEARTBEAT_INTERVAL_MILLIS</div><div class="ttdoc">The interval the beat should target.</div><div class="ttdef"><b>Definition:</b> <a href="_heartbeat_8def_source.html#l00022">Heartbeat.def:22</a></div></div>
 <div class="ttc" id="a_heartbeat_8def_html_ae3c7fcd9cab30e87b0fbc35404880137"><div class="ttname"><a href="_heartbeat_8def.html#ae3c7fcd9cab30e87b0fbc35404880137">CONF_HEARTBEAT_TIMEOUT_MILLI</a></div><div class="ttdeci">#define CONF_HEARTBEAT_TIMEOUT_MILLI</div><div class="ttdoc">The allowed delay between beats.</div><div class="ttdef"><b>Definition:</b> <a href="_heartbeat_8def_source.html#l00028">Heartbeat.def:28</a></div></div>
 <div class="ttc" id="a_heartbeat_8h_html"><div class="ttname"><a href="_heartbeat_8h.html">Heartbeat.h</a></div><div class="ttdoc">Make one ECU tell the other it is alive.</div></div>
 <div class="ttc" id="a_log_8h_html"><div class="ttname"><a href="_log_8h.html">Log.h</a></div><div class="ttdoc">Special logging functionality.</div></div>
