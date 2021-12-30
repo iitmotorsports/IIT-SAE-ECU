@@ -3,7 +3,6 @@
 #include "Echo.h"
 #include "Heartbeat.h"
 #include "Mirror.h"
-#include "MotorControl.h"
 #include "SerialCommand.h"
 #include "SerialVar.h"
 #include "unordered_map"
@@ -118,15 +117,9 @@ void run() {
         if (timeElapsedHigh >= INTERVAL_HIGH_PRIORITY) { // High priority updates
             timeElapsedHigh = 0;
             Cmd::receiveCommand();
-            Log(ID, "Current Motor Speed:", MC::motorSpeed(), true);
-            Log.d(ID, "Motor 0 Speed", MC::motorSpeed(0), true);
-            Log.d(ID, "Motor 1 Speed", MC::motorSpeed(1), true);
-            int pedal0, pedal1;
-            Log.i(ID, "Brake", Pins::getPinValue(PINS_FRONT_BRAKE), true);
-            Log.i(ID, "Steering", Pins::getPinValue(PINS_FRONT_STEER), true);
-            Log.i(ID, "Pedal 0", (pedal0 = Pins::getPinValue(PINS_FRONT_PEDAL0)), true);
-            Log.i(ID, "Pedal 1", (pedal1 = Pins::getPinValue(PINS_FRONT_PEDAL1)), true);
-            Log.d(ID, "Pedal AVG", (pedal0 + pedal1) / 2, true);
+
+            highPriorityValues();
+
             updateCurrentState();
             hasBeat = Heartbeat::checkBeat();
         }
@@ -151,7 +144,7 @@ void run() {
             Pins::setPinValue(PINS_FRONT_BMS_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_BMS_FAULT));
             Pins::setPinValue(PINS_FRONT_IMD_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_IMD_FAULT));
 
-            logValues();
+            lowPriorityValues();
         }
     }
 }

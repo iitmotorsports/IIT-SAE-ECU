@@ -38,7 +38,12 @@ void updateCurrentState();
 void setChargeSignal();
 
 /**
- * @brief Outputs the bulk of values
+ * @brief Outputs values that are of lower priority
  */
-void logValues();
+void lowPriorityValues();
+
+/**
+ * @brief Outputs values that are of higher priority
+ */
+void highPriorityValues();
 }
