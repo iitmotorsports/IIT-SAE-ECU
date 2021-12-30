@@ -1,4 +1,6 @@
 #include "Front.h"
+#include "Util.h"
+#include "MotorControl.h"
 
 namespace Front {
 
@@ -113,7 +115,7 @@ void setChargeSignal() {
     Pins::setInternalValue(PINS_INTERNAL_CHARGE_SIGNAL, currentState == &ECUStates::Idle_State);
 }
 
-void logValues() {
+void lowPriorityValues() {
     // Motor controllers
     Log(ID, "MC0 DC BUS Voltage:", MC0Voltage(), INTERVAL_LOW_PRIORITY);
     Log(ID, "MC1 DC BUS Voltage:", MC1Voltage(), INTERVAL_LOW_PRIORITY);
@@ -136,6 +138,21 @@ void logValues() {
 
     // General
     Log(ID, "Fault State", Pins::getCanPinValue(PINS_INTERNAL_GEN_FAULT), INTERVAL_LOW_PRIORITY);
+}
+
+static double lastBrake = 0.0, lastSteer = 0.0, lastPedal0 = 0.0, lastPedal1 = 0.0;
+
+void highPriorityValues() {
+    Log(ID, "Current Motor Speed:", MC::motorSpeed(), true);
+    Log.d(ID, "Motor 0 Speed", MC::motorSpeed(0), true);
+    Log.d(ID, "Motor 1 Speed", MC::motorSpeed(1), true);
+
+    int pedal0, pedal1;
+    Log.i(ID, "Brake", lastBrake = EMAvg(lastBrake, Pins::getPinValue(PINS_FRONT_BRAKE), 4), true);
+    Log.i(ID, "Steering", lastSteer = EMAvg(lastSteer, Pins::getPinValue(PINS_FRONT_STEER), 4), true);
+    Log.i(ID, "Pedal 0", (pedal0 = (lastPedal0 = EMAvg(lastPedal0, Pins::getPinValue(PINS_FRONT_PEDAL0), 4))), true);
+    Log.i(ID, "Pedal 1", (pedal1 = (lastPedal1 = EMAvg(lastPedal1, Pins::getPinValue(PINS_FRONT_PEDAL1), 4))), true);
+    Log.d(ID, "Pedal AVG", (pedal0 + pedal1) / 2, true);
 }
 
 } // namespace Front
