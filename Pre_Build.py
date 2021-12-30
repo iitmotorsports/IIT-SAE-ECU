@@ -54,6 +54,7 @@ Note, however, if this script is not run the macro should still allow everything
 
 # @cond
 
+import pathlib
 import shutil
 import hashlib
 import os
@@ -96,10 +97,18 @@ DATA_FILE = f"{WORKING_DIRECTORY_OFFSET}.LogInfo"
 LOW_RAM = 4
 BUF_SIZE = 65536
 
-# PLACEHOLDER_TAG = "__PYTHON__TAG__PLACEHOLDER__{}__"
-# PLACEHOLDER_ID = "__PYTHON__ID__PLACEHOLDER__{}__"
-
 RAM_MEMO = False
+
+INCLUDED_FILE_TYPES = (
+    ".c",
+    ".cpp",
+    ".h",
+    ".hpp",
+    ".t",
+    ".tpp",
+    ".s",
+    ".def"
+)
 
 
 def available_ram():
@@ -316,6 +325,9 @@ class FileEntry:  # IMPROVE: Make IDs persistent
 
         touch(f"{Offset}{RawPath}")
 
+    def newError(self, exception: Exception, name: str, tag: str):
+        self.errors.append(f"  {name}:{tag}\n   {Text.red(type(exception).__name__)}\n    > {splitErrorString(exception)}\n")
+
     async def addNewTag(self, raw_str):
         string = "[{}]".format(raw_str.strip('"'))
         numberID = await getUniqueTAG(string)
@@ -362,7 +374,7 @@ class FileEntry:  # IMPROVE: Make IDs persistent
                         newline = await function(line)
                         f2.buffer.write(newline.encode("utf-8"))
                     except Exception as e:  # If prev exception was about IO then oh well
-                        self.errors.append(f"  {self.path}:{line_no}\n   {Text.red(type(e).__name__)}\n    > {splitErrorString(e)}\n")
+                        self.newError(e, self.path, line_no)
                         f2.buffer.write(line.encode("utf-8"))
                     finally:
                         line_no += 1
@@ -417,7 +429,10 @@ class FileEntry:  # IMPROVE: Make IDs persistent
 async def ingest_files(finishFunc, FilesEntries):
     for File in FilesEntries[0]:
         finishFunc()
-        await File.scan()
+        try:
+            await File.scan()
+        except Exception as e:
+            File.newError(e, "Thread Error", File.name)
 
 
 def run_ingest_files(finishFunc, *FilesEntries):
@@ -449,13 +464,14 @@ def syncFile(filePath, offset, rawpath, workingFilePath=None, suppress=False):
         return False
     return True
 
-
 def allocate_files(Path, Offset):
     async def lib_flag(line):
         return line.replace(*LIB_DEFINE)
 
     for subdir, _, files in os.walk(Path):
         for filename in files:
+            if pathlib.Path(filename).suffix.lower() not in INCLUDED_FILE_TYPES:
+                continue
             filepath = subdir + os.sep + filename
             rawpath = subdir + os.sep
             if BYPASS_SCRIPT:
@@ -473,7 +489,7 @@ def allocate_files(Path, Offset):
 
 def dole_files(count, finishFunc):
     while True:
-        file_set = set()
+        file_set: set[FileEntry] = set()
 
         i = 0
 
@@ -550,7 +566,7 @@ class ThreadedProgressBar:
                 self.stdout.write("\033[F")
                 printString = printString.strip(" \n")
                 spacer = " " * (os.get_terminal_size().columns - 1 - len(printString))
-                self.stdout.write(f"{printString}{spacer}"[:os.get_terminal_size().columns - 1])
+                self.stdout.write(f"{printString}{spacer}"[: os.get_terminal_size().columns - 1])
                 self.stdout.write("\n")
             self.stdout.write(proStr)
             self.stdout.flush()
