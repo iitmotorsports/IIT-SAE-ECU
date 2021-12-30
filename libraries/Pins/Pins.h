@@ -47,10 +47,11 @@
 
 // IMPROVE: pin priority
 
-#include "PPHelp.h"
-#include "PinConfig.def"
 #include <stdint.h>
 #include <stdlib.h>
+
+#include "PPHelp.h"
+#include "PinConfig.def"
 
 /**
  * @brief The current target bit resolution of the ECU, set by PinConfig.def

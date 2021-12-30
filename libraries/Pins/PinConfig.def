@@ -30,10 +30,10 @@
 
 #define __ECU_PINCONFIG_H__
 
-#include "Canbus.h"
 #include "ECUGlobalConfig.h"
-#include "PPHelp.h"
 #include "WProgram.h"
+#include "PPHelp.h"
+#include "Canbus.h"
 
 #define ANALOG
 #define DIGITAL
