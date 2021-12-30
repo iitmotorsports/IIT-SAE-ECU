@@ -9,7 +9,7 @@
 #define INTERVAL_LOW_PRIORITY 1200
 
 /**
- * @brief Name space used solely for front Teensy logic
+ * @brief Name space used solely for front ECU logic
  */
 namespace Front {
 
@@ -18,11 +18,27 @@ LOG_TAG ID = "Front Teensy";
 extern struct State::State_t *currentState;
 
 /**
- * @brief Runs front Teensy code
+ * @brief Runs front ECU code
  */
 void run();
+
+/**
+ * @brief Load values that ID each unique state
+ */
 void loadStateMap();
+
+/**
+ * @brief Update and outputs the current state
+ */
 void updateCurrentState();
+
+/**
+ * @brief Enables the charging signal dependent on the current state
+ */
 void setChargeSignal();
+
+/**
+ * @brief Outputs the bulk of values
+ */
 void logValues();
 }
