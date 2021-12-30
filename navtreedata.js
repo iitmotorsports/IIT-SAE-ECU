@@ -95,9 +95,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_aero_servo_8cpp.html",
-"class_circular___buffer.html#a402e6ae69dfd3cc9432b198858d11dfd",
-"namespace_e_c_u_states.html"
+"",
+"index.html#autotoc_md16"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
