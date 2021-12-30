@@ -19,7 +19,7 @@
 /**
  * @brief The interval the beat should target
  */
-#define CONF_HEARTBEAT_INTERVAL_MICRO 150000
+#define CONF_HEARTBEAT_INTERVAL_MILLIS 150
 
 /**
  * @brief The allowed delay between beats

@@ -13,17 +13,17 @@
 #include "Heartbeat.h"
 #include "Canbus.h"
 #include "ECUGlobalConfig.h"
+#include "Heartbeat.def"
 #include "Log.h"
 #include "Pins.h"
 #include "stdint.h"
 #include "stdlib.h"
-#include "Heartbeat.def"
 #include <set>
 
 namespace Heartbeat {
 static IntervalTimer canbusPinUpdate;
 static elapsedMillis lastBeat;
-static uint lastTime = 0;
+static volatile int lastTime = 0;
 
 static LOG_TAG ID = "HeartBeat";
 
@@ -46,7 +46,7 @@ static void beat() {
 
 void beginBeating() {
     canbusPinUpdate.priority(10);
-    canbusPinUpdate.begin(beat, CONF_HEARTBEAT_INTERVAL_MICRO);
+    canbusPinUpdate.begin(beat, CONF_HEARTBEAT_INTERVAL_MILLIS * 1000);
 }
 
 static void receiveBeat(uint32_t, volatile uint8_t *) {
@@ -60,13 +60,11 @@ void beginReceiving() {
 }
 
 int checkBeat() {
-    if (lastBeat > (CONF_HEARTBEAT_INTERVAL_MICRO / 1000) + CONF_HEARTBEAT_TIMEOUT_MILLI) {
+    if (lastBeat > (CONF_HEARTBEAT_INTERVAL_MILLIS) + CONF_HEARTBEAT_TIMEOUT_MILLI) {
         Log.w(ID, "Heartbeat is taking too long", lastBeat);
         return 0;
-    } else {
-        Log(ID, "Beat", lastTime);
-        return 1;
     }
+    return 1;
 }
 
 void addCallback(beatFunc func) {
@@ -74,4 +72,4 @@ void addCallback(beatFunc func) {
 }
 
 } // namespace Heartbeat
-//@endcond
+  //@endcond
