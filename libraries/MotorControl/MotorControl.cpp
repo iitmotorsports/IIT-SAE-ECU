@@ -11,30 +11,30 @@
 
 // @cond
 
+#include <stdint.h>
+#include <stdlib.h>
+
+#include "MotorControl.def"
 #include "MotorControl.h"
 #include "Canbus.h"
 #include "ECUGlobalConfig.h"
 #include "Pins.h"
 #include "Util.h"
 #include "log.h"
-#include "stdint.h"
-#include "stdlib.h"
 
 namespace MC {
 
-#define MAX_TORQUE 500.0
 #define NORM_VAL (double)PINS_ANALOG_MAX
+#define MAX_TORQUE CONF_MAX_TORQUE
 
-#define PEDAL_MIN 200.0
-#define PEDAL_MAX 1300.0
+#define PEDAL_MIN CONF_PEDAL_MIN
+#define PEDAL_MAX CONF_PEDAL_MAX
 
-// TODO: get input value ranges
+#define BRAKE_MIN CONF_BRAKE_MIN
+#define BRAKE_MAX CONF_BRAKE_MAX
 
-#define BRAKE_MIN 0.0
-#define BRAKE_MAX (double)PINS_ANALOG_HIGH
-
-#define STEER_MIN 2500.0
-#define STEER_MAX 3500.0
+#define STEER_MIN CONF_STEER_MIN
+#define STEER_MAX CONF_STEER_MAX
 
 static LOG_TAG ID = "MotorControl";
 
@@ -152,7 +152,7 @@ bool isForward(void) {
     return forward;
 }
 
-void setDirection(bool runForward) {
+void setDirection(bool runForward) { // FIXME: Inverter must be switched off before switching direction, else fault must be cleared and inverter started again
     if (motorSpeed() <= CONF_MAXIMUM_SWITCHING_SPEED) {
         Log.w(ID, "Switching direction");
         forward = runForward;

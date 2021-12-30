@@ -1,0 +1,31 @@
+#include "Pins.h"
+
+/**
+ * @brief The radius of the car's wheels as a float
+ */
+#define CONF_CAR_WHEEL_RADIUS 0.22f // TODO: Get car wheel radius
+
+/**
+ * @brief The maximum torque (Nm) as a double
+ */
+#define CONF_MAX_TORQUE 500.0
+
+// TODO: get input value ranges
+
+/**
+ * @brief The pedal input range to map as doubles
+ */
+#define CONF_PEDAL_MIN 200.0
+#define CONF_PEDAL_MAX 1300.0
+
+/**
+ * @brief The brake input range to map as doubles
+ */
+#define CONF_BRAKE_MIN 0.0
+#define CONF_BRAKE_MAX (double)PINS_ANALOG_HIGH
+
+/**
+ * @brief The steering input range to map as doubles
+ */
+#define CONF_STEER_MIN 2500.0
+#define CONF_STEER_MAX 3500.0

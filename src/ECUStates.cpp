@@ -254,7 +254,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
                 return DrivingModeFault();
             }
 
-#if TESTING != BACK_ECU
+#if ECU_TESTING != BACK_ECU
             if (((MC0_VOLT_Buffer.getShort(0) / 10) + (MC1_VOLT_Buffer.getShort(0) / 10)) / 2 < 90) { // 'HVD Fault'
                 Log.e(ID, "'HVD Fault' MC voltage < 90");
                 return DrivingModeFault();
@@ -274,7 +274,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             // NOTE: pedal has a threshold value
             if (pAVG >= 100 && (float)abs(pedal1 - pedal0) / PINS_ANALOG_HIGH > 0.1f) {
                 Log.e(ID, "Pedal value offset > 10%");
-#if TESTING != BACK_ECU
+#if ECU_TESTING != BACK_ECU
                 return DrivingModeFault();
 #endif
             }

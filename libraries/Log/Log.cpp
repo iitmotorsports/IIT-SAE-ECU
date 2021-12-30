@@ -44,6 +44,13 @@ extern unsigned int log_lookup_uncmp_len;
 
 namespace Logging {
 
+#ifdef SILENT
+#ifdef CONF_LOGGING_MAX_LEVEL
+#undef CONF_LOGGING_MAX_LEVEL
+#endif
+#define CONF_LOGGING_MAX_LEVEL 0
+#endif
+
 #ifndef CONF_LOGGING_MAX_LEVEL
 #define CONF_LOGGING_MAX_LEVEL 4
 #endif
