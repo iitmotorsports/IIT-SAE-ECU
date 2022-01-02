@@ -157,7 +157,7 @@ static PinFault softPinFaults[SOFT_PIN_COUNT] = {
 #endif
 
 #define X(...) ,
- 
+
 bool hardFault(void) {
     bool faulted = false;
 

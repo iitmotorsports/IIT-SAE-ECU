@@ -1,6 +1,6 @@
 #include "Front.h"
-#include "Util.h"
 #include "MotorControl.h"
+#include "Util.h"
 
 namespace Front {
 

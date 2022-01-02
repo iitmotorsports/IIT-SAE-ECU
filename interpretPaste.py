@@ -265,12 +265,14 @@ def graph(string: str) -> None:
     wb.save("{}.xlsx".format(SAVE_NAME))
 
 
-def main():  # IMPROVE: Better argument handling
+def main():
     """Main Function"""
 
     parser = argparse.ArgumentParser(description="Interpret a log file obtained locally or from paste.ee")
     parser.add_argument("-l", "--list", action="store_true", required=False, help="List all the available paste IDs")
-    parser.add_argument("-g", "--graph", action="store_true", required=False, help="Interpret and graph a log file to an excel file, given paste ID")
+    parser.add_argument(
+        "-g", "--graph", action="store_true", required=False, help="Interpret and graph a log file to an excel file, given paste ID"
+    )
     parser.add_argument("-p", "--paste", required=False, help="Paste ID to download and interpret")
 
     args = parser.parse_args()

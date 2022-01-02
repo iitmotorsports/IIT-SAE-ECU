@@ -14,10 +14,10 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#include "MotorControl.def"
-#include "MotorControl.h"
 #include "Canbus.h"
 #include "ECUGlobalConfig.h"
+#include "MotorControl.def"
+#include "MotorControl.h"
 #include "Pins.h"
 #include "Util.h"
 #include "log.h"
