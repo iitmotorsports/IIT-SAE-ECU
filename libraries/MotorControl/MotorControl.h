@@ -44,6 +44,11 @@ namespace MC {
 void setup(void);
 
 /**
+ * @brief Only initialize MC buffers, called by MC::setup
+ */
+void setupBuffers(void);
+
+/**
  * @brief Clear MC faults by sending a clear fault command
  */
 void clearFaults(void);
@@ -56,7 +61,7 @@ void clearFaults(void);
 void enableMotorBeating(bool enable);
 
 /**
- * @brief Send a raw control command to a MC
+ * @brief Send a raw torque command to a MC
  * 
  * @note `enableMotorBeating` must have been set to false before calling this function
  * 
@@ -64,9 +69,8 @@ void enableMotorBeating(bool enable);
  * @param torque The torque to set the motor at
  * @param direction direction of the motor
  * @param enableBit whether the motor should be enabled
- * @return int the final torque percent being sent
  */
-int sendCommand(uint32_t MC_ADD, int torque, bool direction, bool enableBit);
+void sendTorque(uint32_t MC_ADD, int torque, bool direction, bool enableBit);
 
 /**
  * @brief Set the direction of the motors
@@ -97,6 +101,14 @@ int getLastTorqueValue(bool mc0);
  * @return int the last pedal value that was internally used
  */
 int getLastPedalValue(void);
+
+/**
+ * @brief Get the avg motorspeed
+ * 
+ * @param motor 0 or 1 for either motor or nothing for 
+ * @return int32_t 
+ */
+int32_t motorSpeed(int motor = -1);
 
 /**
  * @brief Calculate and set the torque of both MCs

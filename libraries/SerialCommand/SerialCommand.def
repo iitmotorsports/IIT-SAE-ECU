@@ -48,6 +48,14 @@
  * @brief Command to enable reverse motors, for MotorControl.h
  */
 #define COMMAND_TOGGLE_REVERSE 25
+/**
+ * @brief Command to send the compressed lookup table over serial
+ */
+#define COMMAND_PRINT_LOOKUP 101
+/**
+ * @brief Command to update a serial variable
+ */
+#define COMMAND_UPDATE_SERIALVAR 61
 
 /**
  * @brief Defines commands that the ECU must react to
@@ -68,6 +76,8 @@
     X(COMMAND_TOGGLE_MIRROR_MODE)  \
     X(COMMAND_ENTER_MIRROR_SET)    \
     X(COMMAND_SEND_ECHO)           \
-    X(COMMAND_TOGGLE_REVERSE)
+    X(COMMAND_TOGGLE_REVERSE)      \
+    X(COMMAND_PRINT_LOOKUP)        \
+    X(COMMAND_UPDATE_SERIALVAR)
 
 #endif // __ECU_SERIALCOMMAND_DEF__

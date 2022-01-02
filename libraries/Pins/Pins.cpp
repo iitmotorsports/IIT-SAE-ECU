@@ -212,6 +212,8 @@ static void _pushCanbusPins(void) {
 void setInternalValue(uint8_t Internal_Pin, int value) {
 #ifdef CONF_ECU_DEBUG
     if (CAN_GPIO_MAP_OUT.find(Internal_Pin) != CAN_GPIO_MAP_OUT.end()) {
+        if (CAN_GPIO_MAP_OUT[Internal_Pin] == value)
+            return;
         Log.d(ID, "Setting Internal pin:", Internal_Pin);
         Log.d(ID, "Setting Internal pin to int:", value);
         CAN_GPIO_MAP_OUT[Internal_Pin] = value;

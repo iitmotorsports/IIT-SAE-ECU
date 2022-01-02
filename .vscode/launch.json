@@ -1,0 +1,18 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Pre_Build",
+            "type": "python",
+            "request": "launch",
+            "program": "Pre_Build.py",
+            "args": [
+                "reset -DENV_CORE_SPEED:STRING=180000000 -DENV_CORE_NAME:STRING=MK66FX1M0 -DENV_CORE:STRING=teensy3 -DENV_CPU:STRING=cortex-m4 -DENV_USB_SETTING:STRING=USB_SERIAL -DCUSTOM_BUILD_PATH_PREFIX:STRING=build/Pre_Build/"
+            ],
+            "console": "integratedTerminal"
+        }
+    ]
+}

@@ -54,6 +54,7 @@ Note, however, if this script is not run the macro should still allow everything
 
 # @cond
 
+import pathlib
 import shutil
 import hashlib
 import os
@@ -79,38 +80,50 @@ WORKING_DIRECTORY_OFFSET = "build\\Pre_Build\\"
 # FILE_OUTPUT_PATH = "build\\bin"
 FILE_OUTPUT_PATH = ""
 
+IGNORE_KEYWORD = "PRE_BUILD_IGNORE"  # Keyword that makes this script ignore a line
+
 BYPASS_SCRIPT = os.path.exists("script.disable")  # bypass script if this file is found
+
+MAX_RESULT = 8  # The maximum number of results to print out for errors and modified files
 
 LIMIT_TAG = 254
 LIMIT_ID = 65535
 BLACKLIST_ADDRESSESS = (0, 5, 9)
 
-SOURCE_DEST_NAME = "{}{}".format(WORKING_DIRECTORY_OFFSET, SOURCE_NAME)
-LIBRARIES_DEST_NAME = "{}{}".format(WORKING_DIRECTORY_OFFSET, LIBRARIES_NAME)
-DATA_FILE = "{}.LogInfo".format(WORKING_DIRECTORY_OFFSET)
+SOURCE_DEST_NAME = f"{WORKING_DIRECTORY_OFFSET}{SOURCE_NAME}"
+LIBRARIES_DEST_NAME = f"{WORKING_DIRECTORY_OFFSET}{LIBRARIES_NAME}"
+DATA_FILE = f"{WORKING_DIRECTORY_OFFSET}.LogInfo"
 
 LOW_RAM = 4
 BUF_SIZE = 65536
 
-# PLACEHOLDER_TAG = "__PYTHON__TAG__PLACEHOLDER__{}__"
-# PLACEHOLDER_ID = "__PYTHON__ID__PLACEHOLDER__{}__"
+RAM_MEMO = False
 
-RamMemo = False
+INCLUDED_FILE_TYPES = (
+    ".c",
+    ".cpp",
+    ".h",
+    ".hpp",
+    ".t",
+    ".tpp",
+    ".s",
+    ".def"
+)
 
 
-def AvailableRam():
-    global RamMemo
-    if not RamMemo:
+def available_ram():
+    global RAM_MEMO
+    if not RAM_MEMO:
         out = subprocess.check_output("wmic OS get FreePhysicalMemory /Value", stderr=subprocess.STDOUT, shell=True)
-        RamMemo = round(
+        RAM_MEMO = round(
             int(str(out).strip("b").strip("'").replace("\\r", "").replace("\\n", "").replace("FreePhysicalMemory=", "")) / 1048576, 2
         )
-    return RamMemo
+    return RAM_MEMO
 
 
 def hashFile(filePath):
     if os.path.exists(filePath):
-        if AvailableRam() <= LOW_RAM:
+        if available_ram() <= LOW_RAM:
             sha256 = hashlib.sha256()
             with open(filePath, "rb") as f:
                 while True:
@@ -294,7 +307,7 @@ class FileEntry:  # IMPROVE: Make IDs persistent
     workingPath = ""
     offset = ""
     modified = False
-    error = ""
+    errors: list[str]
 
     def __init__(self, RawPath, FilePath, FileName, Offset):
         if not os.path.exists(FilePath):
@@ -303,13 +316,17 @@ class FileEntry:  # IMPROVE: Make IDs persistent
         self.name = FileName
         self.path = FilePath
         self.rawpath = RawPath
-        self.workingPath = "{}{}".format(Offset, FilePath)
+        self.workingPath = f"{Offset}{FilePath}"
         self.offset = Offset
+        self.errors = list()
 
         # if O_Files.get(self.workingPath):
         # print("Records show {} exists".format(FileName))
 
-        touch("{}{}".format(Offset, RawPath))
+        touch(f"{Offset}{RawPath}")
+
+    def newError(self, exception: Exception, name: str, tag: str):
+        self.errors.append(f"  {name}:{tag}\n   {Text.red(type(exception).__name__)}\n    > {splitErrorString(exception)}\n")
 
     async def addNewTag(self, raw_str):
         string = "[{}]".format(raw_str.strip('"'))
@@ -345,28 +362,30 @@ class FileEntry:  # IMPROVE: Make IDs persistent
         return line.replace(reMatch, str(TAG))
 
     async def walkLines(self, function):
-        tempPath = self.workingPath + ".__Lock"
-        lineNo = 1
+        temp_path = self.workingPath + ".__Lock"
+        line_no = 1
         newline = ""
-        with open(self.path, "r", encoding="utf-8") as f1, open(tempPath, "w", encoding="utf-8") as f2:
-            for line in f1:
-                try:
-                    newline = await function(line)
-                    f2.buffer.write(newline.encode("utf-8"))
-                except Exception as e:  # If prev exception was about IO then oh well
-                    self.error = "{}{}{}\n".format(
-                        self.error,
-                        Text.warning("  {}:{}\n".format(self.path, lineNo)),
-                        "   {}\n    > {}".format(Text.red(type(e).__name__), splitErrorString(e)),
-                    )
-                    f2.buffer.write(line.encode("utf-8"))
-                finally:
-                    lineNo += 1
-        self.modified = not syncFile(tempPath, "", self.rawpath, self.workingPath)
-        os.remove(tempPath)
+        with open(self.path, "r", encoding="utf-8") as f1, open(temp_path, "w", encoding="utf-8") as f2:
+            if self.rawpath.startswith(LIB_PATH) and self.name != LIB_FILE:  # Ignore log library source files
+                f2.writelines(f1.readlines())
+            else:
+                for line in f1:
+                    try:
+                        newline = await function(line)
+                        f2.buffer.write(newline.encode("utf-8"))
+                    except Exception as e:  # If prev exception was about IO then oh well
+                        self.newError(e, self.path, line_no)
+                        f2.buffer.write(line.encode("utf-8"))
+                    finally:
+                        line_no += 1
+        self.modified = not syncFile(temp_path, self.offset, self.rawpath, self.workingPath)
+        os.remove(temp_path)
 
-    async def findLogMatch(self, line):
-        newline = line
+    async def findLogMatch(self, line: str):
+        newline: str = line
+
+        if IGNORE_KEYWORD in newline:  # Return if this line has the ignore keyword
+            return newline
 
         SPECIAL = re.findall(FIND_SPECIAL_REGEX, line)
         if SPECIAL:
@@ -410,14 +429,17 @@ class FileEntry:  # IMPROVE: Make IDs persistent
 async def ingest_files(finishFunc, FilesEntries):
     for File in FilesEntries[0]:
         finishFunc()
-        await File.scan()
+        try:
+            await File.scan()
+        except Exception as e:
+            File.newError(e, "Thread Error", File.name)
 
 
 def run_ingest_files(finishFunc, *FilesEntries):
     asyncio.run(ingest_files(finishFunc, FilesEntries))
 
 
-Files = set()
+Files: set[FileEntry] = set()
 FileRefs = set()
 Threads = set()
 
@@ -425,7 +447,7 @@ FILE_CHANGE = False
 
 
 def syncFile(filePath, offset, rawpath, workingFilePath=None, suppress=False):
-    workingFilePath = workingFilePath or "{}{}".format(offset, filePath)
+    workingFilePath = workingFilePath or f"{offset}{filePath}"
     global FILE_CHANGE
 
     new = hashFile(filePath)
@@ -435,20 +457,21 @@ def syncFile(filePath, offset, rawpath, workingFilePath=None, suppress=False):
     FILE_CHANGE = FILE_CHANGE and (new == old)
 
     if not os.path.exists(workingFilePath) or new != old:
-        touch("{}{}".format(offset, rawpath))
+        touch(f"{offset}{rawpath}")
         shutil.copyfile(filePath, workingFilePath)
         if not suppress:
-            print("Sync File: {} -> {}".format(filePath, offset))
+            print(f"Sync File: {os.path.basename(workingFilePath)}")
         return False
     return True
 
-
 def allocate_files(Path, Offset):
     async def lib_flag(line):
-        return line.replace(LIB_DEFINE[0], LIB_DEFINE[1])
+        return line.replace(*LIB_DEFINE)
 
     for subdir, _, files in os.walk(Path):
         for filename in files:
+            if pathlib.Path(filename).suffix.lower() not in INCLUDED_FILE_TYPES:
+                continue
             filepath = subdir + os.sep + filename
             rawpath = subdir + os.sep
             if BYPASS_SCRIPT:
@@ -466,7 +489,7 @@ def allocate_files(Path, Offset):
 
 def dole_files(count, finishFunc):
     while True:
-        file_set = set()
+        file_set: set[FileEntry] = set()
 
         i = 0
 
@@ -514,16 +537,6 @@ class ThreadedProgressBar:
     def __init__(self, maxcount, prefix):
         self.maxcount = maxcount
         self.stdout = sys.stdout
-        self.wrapper = ThreadedProgressBar.TextIO(
-            self._newLine,
-            sys.stdout.buffer,
-            sys.stdout.encoding,
-            sys.stdout.errors,
-            sys.stdout.newlines,
-            sys.stdout.line_buffering,
-            sys.stdout.write_through,
-        )
-        sys.stdout = self.wrapper
         self.rename(prefix)
 
     def rename(self, prefix):
@@ -540,7 +553,7 @@ class ThreadedProgressBar:
     def _newLine(self, String):
         self.Lines.add(String)
 
-    def _progress(self, count, total, prefix="", printString=""):
+    def _progress(self, count, total, prefix="", printString: str = ""):
         if total > 0:
             filled_len = int(round(self.bar_len * count / float(total)))
 
@@ -550,8 +563,10 @@ class ThreadedProgressBar:
             proStr = self.formatStr.format(prefix, bar, percents, "%")
             if len(printString) > 0:
                 self.stdout.write(" " * (os.get_terminal_size().columns - 1))
-                self.stdout.write("\r")
-                self.stdout.write(printString)
+                self.stdout.write("\033[F")
+                printString = printString.strip(" \n")
+                spacer = " " * (os.get_terminal_size().columns - 1 - len(printString))
+                self.stdout.write(f"{printString}{spacer}"[: os.get_terminal_size().columns - 1])
                 self.stdout.write("\n")
             self.stdout.write(proStr)
             self.stdout.flush()
@@ -564,6 +579,16 @@ class ThreadedProgressBar:
                 self._progress(self.counter, self.maxcount, self.prefix)
 
     def start(self):
+        self.wrapper = ThreadedProgressBar.TextIO(
+            self._newLine,
+            sys.stdout.buffer,
+            sys.stdout.encoding,
+            sys.stdout.errors,
+            sys.stdout.newlines,
+            sys.stdout.line_buffering,
+            sys.stdout.write_through,
+        )
+        sys.stdout = self.wrapper
         self.printer = threading.Thread(target=self._printThread)
         self.printer.start()
 
@@ -571,7 +596,6 @@ class ThreadedProgressBar:
         self.counter += 1
 
     def finish(self):
-        print("\0")  # Eh
         self.run = False
         self.printer.join()
         self._progress(self.counter, self.maxcount, self.prefix)
@@ -599,41 +623,53 @@ def begin_scan():
 
 
 def printResults():
-    maxPrinted = 8
-    print(Text.header("\nModified Files:"))
     c = 0
     m = 0
+
+    extStr: str = ""
+
     for f in FileRefs:
         if f.modified:
-            if c < maxPrinted:
-                print("  {}".format(Text.green(f.name)))
+            if c < MAX_RESULT:
+                extStr += f"  {f.name}\n"
                 c += 1
             else:
                 m += 1
-        if f.error != "":
+        if len(f.errors) > 0:
             Files.add(f)
-    if m > 1:
-        print("  {}".format(Text.underline(Text.green("{} more file{}".format(m, "s" if m > 1 else "")))))
+
+    if c > 0:
+        print(Text.header("\nModified Files:"))
+        print(Text.green(extStr.strip("\n")))
+        if m > 0:
+            print(Text.underline(Text.green("  {} more file{}".format(m, "s" if m > 1 else ""))))
 
     sys.stdout.flush()
 
     c = 0
     m = 0
-    print(Text.header("\nFile Errors:"))
-    for f in Files:
-        if c < maxPrinted:
-            print(f.error.strip("\n"))
-            c += 1
-        else:
-            m += 1
 
-    if m > 1:
-        print("  {}".format(Text.underline(Text.red("{} more error{}".format(m, "s" if m > 1 else "")))))
+    extStr: str = ""
+
+    for f in Files:
+        for e in f.errors:
+            if c < MAX_RESULT:
+                extStr += e
+                c += 1
+            else:
+                m += 1
+
+    if c > 0:
+        print(Text.header("\nFile Errors:"))
+        print(extStr.strip("\n"))
+
+        if m > 0:
+            print(Text.underline(Text.red("  {} more error{}".format(m, "s" if m > 1 else ""))))
 
 
 def getOutputFile(path):
     output_name = "log_lookup.json"
-    savePath = "{}\\{}".format(path, output_name)
+    savePath = f"{path}\\{output_name}"
     if savePath.startswith("\\"):
         savePath = output_name
     return savePath
@@ -655,21 +691,19 @@ def main():
     allocate_files(LIBRARIES_NAME, WORKING_DIRECTORY_OFFSET)
 
     if not BYPASS_SCRIPT:
-        print()
-
         time.sleep(0.5)  # Let terminal settle
 
-        print(Text.warning("Available Ram: {} GBs\n".format(AvailableRam())))
+        print(Text.warning(f"Available Ram: {available_ram()} GBs\n"))
 
         prehash = hashFile(getOutputFile(FILE_OUTPUT_PATH))
 
-        print("Files to search: {}".format(len(FileRefs)))
+        print(f"Files to search: {len(FileRefs)}")
 
         tb = ThreadedProgressBar(len(Files), Text.important("Completed Files:"))
 
         dole_files(8, tb.progress)
 
-        print("Threads to run: {}\n".format(len(Threads)))
+        print(f"Threads to run: {len(Threads)}\n\n")
 
         tb.start()
         begin_scan()
@@ -682,6 +716,22 @@ def main():
             print(Text.important("\nNote: Files have changed, rebuild inbound"))
         if newhash != prehash:
             print(Text.reallyImportant("\nNote: Output file values have changed"))
+
+        print()
+
+    print("Converting LogMap 📃\n")
+    subprocess.Popen(
+        [
+            "python",
+            "bin2cc.py",
+            "-i",
+            "log_lookup.json",
+            "-o",
+            f"{WORKING_DIRECTORY_OFFSET}{LIB_PATH}\\log_lookup.cpp",
+            "-v",
+            "log_lookup",
+        ]
+    ).wait()
 
     # try:
     #     shutil.rmtree(SOURCE_DEST_NAME)

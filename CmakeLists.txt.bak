@@ -1,19 +1,17 @@
 include("${TOOLCHAIN_OFFSET}/tools/toolchain.cmake")
 #-DCUSTOM_BUILD_PATH_PREFIX:STRING= #Can be used for some sketchy pre-build Stuff if needed
 
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.18)
 
 project(Teensy36_Bin)
 
-set(TEENSY_CORE teensy4)
-set(TEENSY_CORE_NAME IMXRT1062 CACHE INTERNAL "")
-set(TEENSY_CPU cortex-m7)
+set(TEENSY_CORE ${ENV_CORE})
+set(TEENSY_CORE_NAME ${ENV_CORE_NAME} CACHE INTERNAL "")
+set(TEENSY_CPU ${ENV_CPU})
 set(TEENSY_ARCH "native")
-set(TEENSY_CORE_SPEED 600000000)
-set(USB_SETTING USB_SERIAL)
+set(TEENSY_CORE_SPEED ${ENV_CORE_SPEED})
+set(USB_SETTING ${ENV_USB_SETTING})
 set(CMAKE_BUILD_TYPE "Release")
-set(TEENSY_ARDUINO ARDUINO_TEENSY41)
-set(LINKER_EXTENSION "_t41")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib")
@@ -23,20 +21,20 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 set(LIBRARY_PATH ${CUSTOM_BUILD_PATH_PREFIX}libraries CACHE INTERNAL "")
 set(SOURCE_PATH ${CUSTOM_BUILD_PATH_PREFIX}src CACHE INTERNAL "")
 
-add_compile_definitions(${TEENSY_ARDUINO} ${USB_SETTING} LAYOUT_US_ENGLISH __${TEENSY_CORE_NAME}__)
-add_compile_definitions(_GNU_SOURCE ARDUINO=10813 TEENSYDUINO=156 F_CPU=${TEENSY_CORE_SPEED} ${TEENSY_CORE} USING_MAKEFILE)
+add_compile_definitions(${USB_SETTING} LAYOUT_US_ENGLISH __${TEENSY_CORE_NAME}__)
+add_compile_definitions(_GNU_SOURCE TEENSYDUINO=156 F_CPU=${TEENSY_CORE_SPEED} USING_MAKEFILE)
 
-add_compile_options(-Wall -g -O2 -MMD -I. -ffunction-sections -fdata-sections) # -E
-add_compile_options(-mcpu=${TEENSY_CPU} -mfloat-abi=hard -mfpu=fpv5-d16 -mthumb)
-set(LINKER_LIBS "-larm_cortexM7lfsp_math -lm -lstdc++")
-set(LINKER_LIBS "-Os -Wl,--gc-sections,--relax -mcpu=${TEENSY_CPU} -mfloat-abi=hard -mfpu=fpv5-d16 -mthumb")
-string(APPEND CMAKE_CXX_FLAGS "-std=gnu++17 -felide-constructors -fno-exceptions -fno-rtti -fpermissive -Wno-error=narrowing")
+add_compile_options(-Wall -g -mthumb -ffunction-sections -fdata-sections -nostdlib -MMD -O3) # -E
+add_compile_options(-mcpu=${TEENSY_CPU} -mfloat-abi=hard -mfpu=fpv4-sp-d16) #Make teensy specific
+set(LINKER_LIBS "-lm -larm_cortexM4lf_math -lstdc++")
+set(LINKER_LIBS "-Wl,--gc-sections -mthumb -mcpu=${TEENSY_CPU} -mfloat-abi=hard -mfpu=fpv4-sp-d16")
+string(APPEND CMAKE_CXX_FLAGS "-std=gnu++17 -felide-constructors -fno-rtti -fno-exceptions")
 string(APPEND CMAKE_C_FLAGS "")
 string(APPEND CMAKE_ASM_FLAGS "-x assembler-with-cpp")
 
 set(CORE_PATH "${TOOLCHAIN_ROOT_PATH}/teensy/avr/cores/${TEENSY_CORE}")
 string(TOLOWER ${TEENSY_CORE_NAME} TEENSY_CORE_NAME_LOWER)
-set(TEENSY_CORE_LD_SCRIPT "${CORE_PATH}/${TEENSY_CORE_NAME_LOWER}${LINKER_EXTENSION}.ld")
+set(TEENSY_CORE_LD_SCRIPT "${CORE_PATH}/${TEENSY_CORE_NAME_LOWER}.ld")
 
 MACRO(HEADER_DIRECTORIES return_list path_prefix)
     FILE(GLOB_RECURSE new_list ${path_prefix}/*.h | ${path_prefix}/*.hpp)

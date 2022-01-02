@@ -12,16 +12,18 @@
 #ifndef __ECU_UTIL_H__
 #define __ECU_UTIL_H__
 
+#define Euler exp(1.0)
+#define clamp(v, m, x) min(max(v, m), x)
+
 /**
- * @brief Interpolate a value given the parameters
+ * @brief Exponential moving average
  * 
- * @param t 
- * @param i 
- * @param f 
- * @param d 
- * @return float Interpolated value 
+ * @param lastVal The last value that was returned
+ * @param newVal The new value that should be added to the average
+ * @param memCount The total number of *samples* to be averaged
+ * @return double The EMA of the last memCount values
  */
-float interpolate(float t, float i, float f, float d);
+double EMAvg(double lastVal, double newVal, int memCount);
 
 /**
  * @brief Map a value from one range to another while clamping the value to boundaries
