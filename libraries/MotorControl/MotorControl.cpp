@@ -46,8 +46,6 @@ static bool forward = true;
 
 static double pAccum = 0, bAccum = 0, sAccum = 0;
 
-static int pAccum = 0;
-
 static Canbus::Buffer MC0_RPM_Buffer(ADD_MC0_RPM);
 static Canbus::Buffer MC1_RPM_Buffer(ADD_MC1_RPM);
 
@@ -130,15 +128,11 @@ int sendSpeed(uint32_t MC_ADD, int speed, bool direction, bool enableBit) {
         Log.w(ID, "Unable to set torque, heartbeat is on");
         return 0;
     }
-<<<<<<< HEAD
-    int percentTorque = 0;
-    if (torque != 0) {                                               // max analog should be what the max pedal readout is
-        percentTorque = cMap(torque, 200, PINS_ANALOG_MAX, 0, 9000); // separate func for negative vals (regen)
-=======
-    int setSpeed = 0, torqueLimit = 50;
+
+    int setSpeed = 0,
+        torqueLimit = 50;
     if (speed != 0) {                                        // max analog should be what the max pedal readout is
         setSpeed = cMap(speed, 200, PINS_ANALOG_MAX, 0, 10); // separate func for negative vals (regen)
->>>>>>> master
     }
 
     uint8_t *bytes = (uint8_t *)&setSpeed;
@@ -170,15 +164,7 @@ void setDirection(bool runForward) { // FIXME: Inverter must be switched off bef
 }
 
 int getLastTorqueValue(bool mc0) {
-<<<<<<< HEAD
-    return mc0 ? mc0T : mc1T;
-=======
     return mc0 ? motorTorque[0] : motorTorque[1];
-}
-
-int getLastPedalValue() {
-    return pAccum;
->>>>>>> master
 }
 
 int getLastPedalValue() {
