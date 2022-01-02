@@ -1,6 +1,5 @@
 var NAVTREEINDEX1 =
 {
-"index.html":[],
 "index.html":[0],
 "index.html#autotoc_md16":[0,0],
 "index.html#autotoc_md17":[0,1],
@@ -168,5 +167,6 @@ var NAVTREEINDEX1 =
 "struct_state_1_1_state__t.html#aeae12a5d68f5c0d84c8c85160de43fd7":[4,0,3,0,2],
 "struct_state_1_1_state__t.html#af730abedf662a8e251b5839b2ad6e932":[4,0,3,0,1],
 "upload_paste_8py.html":[5,0,51],
-"upload_paste_8py_source.html":[5,0,51]
+"upload_paste_8py_source.html":[5,0,51],
+"":[3,0,1]
 };

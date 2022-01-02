@@ -314,7 +314,7 @@ $(document).ready(function(){initNavTree('_log_8cpp_source.html',''); initResiza
 <div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;}</div>
 <div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160; </div>
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> _receiveLogBuffer(uint32_t address, <span class="keyword">volatile</span> uint8_t *buf) {</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    Serial.write((uint8_t *)buf, 8); <span class="comment">// IMPROVE: does dropping the volatile cause any issues?</span></div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    Serial.write((uint8_t *)buf, 8); <span class="comment">// FIXME: does dropping the volatile cause any issues?</span></div>
 <div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;}</div>
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160; </div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_logging.html#a3402a2c8efbb932ddbe58e66b9cc550c">enableCanbusRelay</a>() {</div>
