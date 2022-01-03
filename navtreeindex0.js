@@ -1,6 +1,5 @@
 var NAVTREEINDEX0 =
 {
-"":[3,0,1],
 "_aero_servo_8cpp.html":[5,0,0],
 "_aero_servo_8cpp_source.html":[5,0,0],
 "_aero_servo_8h.html":[5,0,1],
@@ -249,5 +248,6 @@ var NAVTREEINDEX0 =
 "globals_func.html":[5,1,1],
 "globals_type.html":[5,1,3],
 "globals_vars.html":[5,1,2],
-"hierarchy.html":[4,2]
+"hierarchy.html":[4,2],
+"index.html":[]
 };
