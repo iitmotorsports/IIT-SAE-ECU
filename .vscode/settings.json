@@ -20,6 +20,7 @@
      */
     "CMAKE_FINAL_VARS": "-DENV_CORE_SPEED:STRING=${config:CORE_SPEED} -DENV_CORE_MODEL:STRING=${config:CORE_MODEL} -DENV_USB_SETTING:STRING=${config:USB_SETTING} ${config:ADDITIONAL_CMAKE_VARS}",
     "files.associations": {
+        "*.html": "html",
         "*.def": "cpp",
         "*.tcc": "cpp",
         "*.tpp": "cpp",
@@ -73,7 +74,8 @@
         "iterator": "cpp",
         "memory_resource": "cpp",
         "string_view": "cpp",
-        "ranges": "cpp"
+        "ranges": "cpp",
+        "usb_desc.h": "c"
     },
     "doxygen_runner.configuration_file_override": "${workspaceFolder}\\docs\\Doxyfile",
     "python.linting.pylintEnabled": true,
