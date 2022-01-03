@@ -1,7 +1,7 @@
 #include "Front.h"
 #include "MotorControl.h"
 #include "Util.h"
-#include "unordered_map"
+#include "map"
 
 namespace Front {
 
@@ -94,7 +94,7 @@ static struct State::State_t *states[] = {
     &ECUStates::FaultState,
 };
 
-std::unordered_map<uint32_t, struct State::State_t *> stateMap;
+std::map<uint32_t, struct State::State_t *> stateMap;
 struct State::State_t *currentState;
 
 void loadStateMap() {

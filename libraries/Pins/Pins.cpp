@@ -14,8 +14,7 @@
 #include "Pins.h"
 #include "IntervalTimer.h"
 #include "core_pins.h"
-#include "map"
-#include "unordered_map"
+#include "map" // FIXME: Linker error when using unordered_map, something to do with allocation? compilation may not be correct
 
 #include "Canbus.h"
 #include "ECUGlobalConfig.h"
@@ -46,9 +45,9 @@ static const uint digitalCanPinCount_IN = PP_NARG_MO(PINS_CANBUS_DIGITAL_IN);
 #endif
 #undef X
 
-static std::unordered_map<uint8_t, int *> CAN_GPIO_MAP_IN;
+static std::map<uint8_t, int *> CAN_GPIO_MAP_IN;
 static int CAN_GPIO_IN[analogCanPinCount_IN + digitalCanPinCount_IN] = {0}; // Store incoming canpin values
-static std::unordered_map<uint8_t, int> CAN_GPIO_MAP_OUT;                   // Store outgoing canpin values
+static std::map<uint8_t, int> CAN_GPIO_MAP_OUT;                   // Store outgoing canpin values
 static const int maxActiveDigitalPins = 8;                                  // NOTE: MAX 8 Digital pins per msg for now
 
 static IntervalTimer canbusPinUpdate;

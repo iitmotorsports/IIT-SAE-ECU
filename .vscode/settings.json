@@ -3,12 +3,12 @@
      * |-----[ CONFIGURATION ]-----|
      */
     // Serial Monitor
-    "FRONT_TEENSY_PORT": "COM16", // Port representing the front teensy
-    "BACK_TEENSY_PORT": "COM22", // Port representing the back teensy
+    "FRONT_TEENSY_PORT": "COM3", // Port representing the front teensy
+    "BACK_TEENSY_PORT": "COM16", // Port representing the back teensy
     "BAUDRATE": "115200", // Baudrate to use with serial
     "GRAPH_ARG": "-g", // "-g" to enable plotting of data, else ""
     // Teensy
-    "CORE_MODEL": "36", // Model number of the teensy to compile for (36, 40, 41)
+    "CORE_MODEL": "41", // Model number of the teensy to compile for (36, 40, 41)
     "CORE_NAME": "MK66FX1M0", // Model of the cpu (only used for IDE)
     "CORE_SPEED": "180000000", // Speed at which the CPU will run (Hz)
     "USB_SETTING": "USB_SERIAL", // USB behavior of the core

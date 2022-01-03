@@ -20,7 +20,7 @@
 #include "Log.h"
 #include "LogConfig.def"
 #include "WProgram.h"
-#include "unordered_map"
+#include "map"
 
 /**
  * @brief The ZLib compressed lookup table
@@ -105,13 +105,13 @@ struct uMsg {
 };
 
 struct uTag {
-    std::unordered_map<uint32_t, uMsg> uniqueMessages;
+    std::map<uint32_t, uMsg> uniqueMessages;
     bool update(uint32_t msg, uint32_t num, int mediate) {
         return uniqueMessages[msg].update(num, mediate);
     }
 };
 
-static std::unordered_map<uint16_t, uTag> uniqueTags;
+static std::map<uint16_t, uTag> uniqueTags;
 
 // No Timestamping for this mode
 
