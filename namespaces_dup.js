@@ -37,7 +37,7 @@ var namespaces_dup =
       [ "updateCurrentState", "namespace_front.html#af9fc069abc6cef27915cdee9bbe08acb", null ],
       [ "currentState", "namespace_front.html#a1255b36d3dfbeed606d0c745f00e0849", null ],
       [ "ID", "namespace_front.html#a08b20fc93a7adcf58df4d7d9b8c61f37", null ],
-      [ "stateMap", "namespace_front.html#af493c5df981bdd91a1a0f2c06245a9ea", null ],
+      [ "stateMap", "namespace_front.html#aca0445588e2426dc58b046805ec14140", null ],
       [ "TVAggression", "namespace_front.html#aacd143ed54fd860fba625990f6811aa5", null ]
     ] ],
     [ "Heartbeat", "namespace_heartbeat.html", [
