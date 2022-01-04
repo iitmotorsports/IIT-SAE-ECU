@@ -90,16 +90,14 @@ file(GLOB_RECURSE C_C_BUILD_FILES ${CORE_PATH}/*.c)
 file(GLOB_RECURSE C_CXX_BUILD_FILES ${CORE_PATH}/*.cpp)
 
 add_library(core ${C_ASM_BUILD_FILES} ${C_C_BUILD_FILES} ${C_CXX_BUILD_FILES})
-target_include_directories(core PUBLIC ${CORE_INCLUDE})
+target_include_directories(core PUBLIC ${CORE_PATH} ${CORE_INCLUDE})
 
-add_library(libraries INTERFACE)
-target_sources(libraries INTERFACE ${L_ASM_BUILD_FILES} ${L_C_BUILD_FILES} ${L_CXX_BUILD_FILES})
-target_link_libraries(libraries INTERFACE core)
+add_library(libraries ${L_ASM_BUILD_FILES} ${L_C_BUILD_FILES} ${L_CXX_BUILD_FILES})
+target_include_directories(libraries PUBLIC ${LIBRARY_PATH} ${LIBRARY_INCLUDE})
+target_link_libraries(libraries core)
 
-set(SOURCES ${S_ASM_BUILD_FILES} ${S_C_BUILD_FILES} ${S_CXX_BUILD_FILES} CACHE INTERNAL "")
-add_executable(${PROJECT_NAME} ${SOURCES})
-target_include_directories(${PROJECT_NAME} PUBLIC ${CORE_INCLUDE} ${LIBRARY_INCLUDE})
-target_link_libraries(${PROJECT_NAME} core libraries)
+add_executable(${PROJECT_NAME} ${S_ASM_BUILD_FILES} ${S_C_BUILD_FILES} ${S_CXX_BUILD_FILES})
+target_link_libraries(${PROJECT_NAME} libraries core)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES LINK_DEPENDS ${TEENSY_CORE_LD_SCRIPT})
 set_target_properties(${PROJECT_NAME} PROPERTIES
