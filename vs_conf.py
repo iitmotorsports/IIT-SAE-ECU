@@ -8,16 +8,22 @@ import json
 import re
 from typing import Any, Callable, Sequence
 
-try:
-    import serial
-except ImportError:
-    print("Attempting to install optional modules")
-    os.system("python -m pip install serial")
+OPTIONAL_LOADED = False
 
 try:
     import serial
 except ImportError:
+    print("Attempting to install optional modules")
+    os.system("python -m pip install pyserial")
+    print()
+
+try:
+    import serial
+
+    OPTIONAL_LOADED = True
+except ImportError:
     print("Unable to install optional modules")
+    print()
 
 SETTINGS_PATH = ".vscode/settings.json"
 
@@ -309,7 +315,7 @@ def main():
                 break
             adv_mode = True
         print(option)
-        if option is settings.FRONT_TEENSY_PORT or option is settings.BACK_TEENSY_PORT:
+        if OPTIONAL_LOADED and (option is settings.FRONT_TEENSY_PORT or option is settings.BACK_TEENSY_PORT):
             print("    Open serial ports:", listify(serial_ports()))
         if not option.set_value(input("Input option, blank for default: ")):
             while not option.set_value(input("Invalid option: ")):
@@ -319,4 +325,5 @@ def main():
         settings.unload(sett)
 
 
-main()
+if __name__ == "__main__":
+    main()
