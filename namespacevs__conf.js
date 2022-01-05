@@ -7,5 +7,6 @@ var namespacevs__conf =
     [ "main", "namespacevs__conf.html#a59bd943f036ed3f2e69be23ea2bd97de", null ],
     [ "serial_ports", "namespacevs__conf.html#a75e9e112029aad603942e76f725977b6", null ],
     [ "BACKUP_SET", "namespacevs__conf.html#aa369a1c2ab76949023cb9a726487fddf", null ],
+    [ "OPTIONAL_LOADED", "namespacevs__conf.html#a261fd7e68d1588bfbbb5117079be82bd", null ],
     [ "SETTINGS_PATH", "namespacevs__conf.html#a6904bc4ea89e8724a9a708d292f99c4f", null ]
 ];

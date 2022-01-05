@@ -1,6 +1,5 @@
 var NAVTREEINDEX1 =
 {
-"classvs__conf_1_1_settings_1_1_option.html#a23b8cbc934ba6e906cf5d7ec3c3e07c1":[4,0,4,0,0,6],
 "classvs__conf_1_1_settings_1_1_option.html#a98aec0ab2afac4cc49715f67c7f90720":[4,0,4,0,0,10],
 "classvs__conf_1_1_settings_1_1_option.html#aa28cad5a9cd56ea5ba09fc13b63415a1":[4,0,4,0,0,3],
 "classvs__conf_1_1_settings_1_1_option.html#aa8d59296264f1341342bd95b428fc75b":[4,0,4,0,0,2],
@@ -145,8 +144,9 @@ var NAVTREEINDEX1 =
 "namespaces.html":[3,0],
 "namespacevs__conf.html":[3,0,15],
 "namespacevs__conf.html#a1f1c6513670f3863a1b019fa8eaba30d":[3,0,15,1],
+"namespacevs__conf.html#a261fd7e68d1588bfbbb5117079be82bd":[3,0,15,7],
 "namespacevs__conf.html#a59bd943f036ed3f2e69be23ea2bd97de":[3,0,15,4],
-"namespacevs__conf.html#a6904bc4ea89e8724a9a708d292f99c4f":[3,0,15,7],
+"namespacevs__conf.html#a6904bc4ea89e8724a9a708d292f99c4f":[3,0,15,8],
 "namespacevs__conf.html#a75e9e112029aad603942e76f725977b6":[3,0,15,5],
 "namespacevs__conf.html#a9be55bf2bd083f42ee69af1a396dd648":[3,0,15,3],
 "namespacevs__conf.html#aa369a1c2ab76949023cb9a726487fddf":[3,0,15,6],
@@ -195,5 +195,6 @@ var NAVTREEINDEX1 =
 "struct_state_1_1_state__t.html#af730abedf662a8e251b5839b2ad6e932":[4,0,3,0,1],
 "upload_paste_8py.html":[5,0,51],
 "upload_paste_8py_source.html":[5,0,51],
-"vs__conf_8py_source.html":[5,0,54]
+"vs__conf_8py_source.html":[5,0,54],
+"":[3,0,1]
 };
