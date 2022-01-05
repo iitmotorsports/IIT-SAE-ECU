@@ -376,16 +376,16 @@ $(document).ready(function(){initNavTree('vs__conf_8py_source.html',''); initRes
 <div class="line"><a name="l00286"></a><span class="lineno"><a class="line" href="namespacevs__conf.html#a59bd943f036ed3f2e69be23ea2bd97de">  286</a></span>&#160;<span class="keyword">def </span><a class="code" href="namespacevs__conf.html#a59bd943f036ed3f2e69be23ea2bd97de">main</a>():</div>
 <div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;Main function&quot;&quot;&quot;</span></div>
 <div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160; </div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    <span class="comment"># TODO: setup c_cpp_properties.json as well</span></div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    vs_code_startup = len(sys.argv) == 2 <span class="keywordflow">and</span> sys.argv[1] == <span class="stringliteral">&quot;thisisbeingrunonstartup&quot;</span></div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;    adv_mode = <span class="keyword">False</span></div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;    first_time = <span class="keywordflow">not</span> os.path.exists(SETTINGS_PATH)</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160; </div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    <span class="keywordflow">if</span> first_time:</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;        <span class="keyword">with</span> open(SETTINGS_PATH, <span class="stringliteral">&quot;w&quot;</span>, encoding=<span class="stringliteral">&quot;UTF-8&quot;</span>) <span class="keyword">as</span> sett:</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;            sett.write(BACKUP_SET)</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    <span class="keywordflow">elif</span> vs_code_startup:</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;        settings = <a class="code" href="classvs__conf_1_1_settings.html">Settings</a>(<a class="code" href="namespacevs__conf.html#a9be55bf2bd083f42ee69af1a396dd648">load_json</a>())</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    vs_code_startup = len(sys.argv) == 2 <span class="keywordflow">and</span> sys.argv[1] == <span class="stringliteral">&quot;thisisbeingrunonstartup&quot;</span></div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    adv_mode = <span class="keyword">False</span></div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;    first_time = <span class="keywordflow">not</span> os.path.exists(SETTINGS_PATH)</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160; </div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    <span class="keywordflow">if</span> first_time:</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;        <span class="keyword">with</span> open(SETTINGS_PATH, <span class="stringliteral">&quot;w&quot;</span>, encoding=<span class="stringliteral">&quot;UTF-8&quot;</span>) <span class="keyword">as</span> sett:</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;            sett.write(BACKUP_SET)</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    <span class="keywordflow">elif</span> vs_code_startup:</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;        settings = <a class="code" href="classvs__conf_1_1_settings.html">Settings</a>(<a class="code" href="namespacevs__conf.html#a9be55bf2bd083f42ee69af1a396dd648">load_json</a>())</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;        print(f<span class="stringliteral">&quot;Configured for Teensy{settings.CORE_MODEL.get_value()} @ {int(int(settings.CORE_SPEED.get_value())/1000000)} Mhz&quot;</span>)</div>
 <div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;        print(f<span class="stringliteral">&quot;Current ports:\n Front:\t{settings.FRONT_TEENSY_PORT.get_value()}\n Back:\t{settings.BACK_TEENSY_PORT.get_value()}&quot;</span>)</div>
 <div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;        sys.exit(0)</div>
 <div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160; </div>
