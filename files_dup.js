@@ -53,5 +53,6 @@ var files_dup =
     [ "Test.h", "_test_8h.html", "_test_8h" ],
     [ "uploadPaste.py", "upload_paste_8py.html", null ],
     [ "Util.cpp", "_util_8cpp_source.html", null ],
-    [ "Util.h", "_util_8h.html", "_util_8h" ]
+    [ "Util.h", "_util_8h.html", "_util_8h" ],
+    [ "vs_conf.py", "vs__conf_8py_source.html", null ]
 ];

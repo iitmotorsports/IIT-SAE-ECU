@@ -12,5 +12,8 @@ var annotated_dup =
     [ "State", "namespace_state.html", [
       [ "State_t", "struct_state_1_1_state__t.html", "struct_state_1_1_state__t" ]
     ] ],
+    [ "vs_conf", "namespacevs__conf.html", [
+      [ "Settings", "classvs__conf_1_1_settings.html", "classvs__conf_1_1_settings" ]
+    ] ],
     [ "PWMServo", "class_p_w_m_servo.html", "class_p_w_m_servo" ]
 ];

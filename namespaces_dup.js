@@ -80,5 +80,6 @@ var namespaces_dup =
       [ "update", "namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35", null ]
     ] ],
     [ "SerialVar", "namespace_serial_var.html", "namespace_serial_var" ],
-    [ "State", "namespace_state.html", "namespace_state" ]
+    [ "State", "namespace_state.html", "namespace_state" ],
+    [ "vs_conf", "namespacevs__conf.html", "namespacevs__conf" ]
 ];
