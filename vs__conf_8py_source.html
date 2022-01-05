@@ -381,36 +381,35 @@ $(document).ready(function(){initNavTree('vs__conf_8py_source.html',''); initRes
 <div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;    adv_mode = <span class="keyword">False</span></div>
 <div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;    first_time = <span class="keywordflow">not</span> os.path.exists(SETTINGS_PATH)</div>
 <div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160; </div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    <span class="comment"># if vs_code_startup and first_time:</span></div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;    <span class="comment">#     exit(1)</span></div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160; </div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    <span class="keywordflow">if</span> first_time:</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;        <span class="keyword">with</span> open(SETTINGS_PATH, <span class="stringliteral">&quot;w&quot;</span>, encoding=<span class="stringliteral">&quot;UTF-8&quot;</span>) <span class="keyword">as</span> sett:</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;            sett.write(BACKUP_SET)</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;    <span class="keywordflow">elif</span> vs_code_startup:</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;        sys.exit(0)</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160; </div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;    settings = <a class="code" href="classvs__conf_1_1_settings.html">Settings</a>(<a class="code" href="namespacevs__conf.html#a9be55bf2bd083f42ee69af1a396dd648">load_json</a>())</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160; </div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    <span class="keywordflow">for</span> option <span class="keywordflow">in</span> settings.options:</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;        <span class="keywordflow">if</span> option.advanced <span class="keywordflow">and</span> <span class="keywordflow">not</span> adv_mode:</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;            <span class="keywordflow">if</span> first_time:</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;                <span class="keywordflow">break</span></div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;            <span class="keywordflow">if</span> input(<span class="stringliteral">&quot;Enter &#39;Yes&#39; to edit advanced options: &quot;</span>) != <span class="stringliteral">&quot;Yes&quot;</span>:</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;                <span class="keywordflow">break</span></div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;            adv_mode = <span class="keyword">True</span></div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;        print(option)</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;        <span class="keywordflow">if</span> option <span class="keywordflow">is</span> settings.FRONT_TEENSY_PORT <span class="keywordflow">or</span> option <span class="keywordflow">is</span> settings.BACK_TEENSY_PORT:</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;            print(<span class="stringliteral">&quot;    Open serial ports:&quot;</span>, <a class="code" href="namespacevs__conf.html#afc28be17acddac838c2f46460d7fba5c">listify</a>(<a class="code" href="namespacevs__conf.html#a75e9e112029aad603942e76f725977b6">serial_ports</a>()))</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;        <span class="keywordflow">if</span> <span class="keywordflow">not</span> option.set_value(input(<span class="stringliteral">&quot;Input option, blank for default: &quot;</span>)):</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;            <span class="keywordflow">while</span> <span class="keywordflow">not</span> option.set_value(input(<span class="stringliteral">&quot;Invalid option: &quot;</span>)):</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;                <span class="keywordflow">pass</span></div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160; </div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;    <span class="keyword">with</span> open(SETTINGS_PATH, <span class="stringliteral">&quot;w&quot;</span>, encoding=<span class="stringliteral">&quot;UTF-8&quot;</span>) <span class="keyword">as</span> sett:</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;        settings.unload(sett)</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    <span class="keywordflow">if</span> first_time:</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;        <span class="keyword">with</span> open(SETTINGS_PATH, <span class="stringliteral">&quot;w&quot;</span>, encoding=<span class="stringliteral">&quot;UTF-8&quot;</span>) <span class="keyword">as</span> sett:</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;            sett.write(BACKUP_SET)</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    <span class="keywordflow">elif</span> vs_code_startup:</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;        settings = <a class="code" href="classvs__conf_1_1_settings.html">Settings</a>(<a class="code" href="namespacevs__conf.html#a9be55bf2bd083f42ee69af1a396dd648">load_json</a>())</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;        print(f<span class="stringliteral">&quot;Current ports:\n Front:\t{settings.FRONT_TEENSY_PORT.get_value()}\n Back:\t{settings.BACK_TEENSY_PORT.get_value()}&quot;</span>)</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;        sys.exit(0)</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160; </div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;    settings = <a class="code" href="classvs__conf_1_1_settings.html">Settings</a>(<a class="code" href="namespacevs__conf.html#a9be55bf2bd083f42ee69af1a396dd648">load_json</a>())</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160; </div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;    <span class="keywordflow">for</span> option <span class="keywordflow">in</span> settings.options:</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;        <span class="keywordflow">if</span> option.advanced <span class="keywordflow">and</span> <span class="keywordflow">not</span> adv_mode:</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;            <span class="keywordflow">if</span> first_time:</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;                <span class="keywordflow">break</span></div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;            <span class="keywordflow">if</span> input(<span class="stringliteral">&quot;Enter &#39;Yes&#39; to edit advanced options: &quot;</span>) != <span class="stringliteral">&quot;Yes&quot;</span>:</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;                <span class="keywordflow">break</span></div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;            adv_mode = <span class="keyword">True</span></div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;        print(option)</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;        <span class="keywordflow">if</span> option <span class="keywordflow">is</span> settings.FRONT_TEENSY_PORT <span class="keywordflow">or</span> option <span class="keywordflow">is</span> settings.BACK_TEENSY_PORT:</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;            print(<span class="stringliteral">&quot;    Open serial ports:&quot;</span>, <a class="code" href="namespacevs__conf.html#afc28be17acddac838c2f46460d7fba5c">listify</a>(<a class="code" href="namespacevs__conf.html#a75e9e112029aad603942e76f725977b6">serial_ports</a>()))</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;        <span class="keywordflow">if</span> <span class="keywordflow">not</span> option.set_value(input(<span class="stringliteral">&quot;Input option, blank for default: &quot;</span>)):</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;            <span class="keywordflow">while</span> <span class="keywordflow">not</span> option.set_value(input(<span class="stringliteral">&quot;Invalid option: &quot;</span>)):</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;                <span class="keywordflow">pass</span></div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160; </div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    <span class="keyword">with</span> open(SETTINGS_PATH, <span class="stringliteral">&quot;w&quot;</span>, encoding=<span class="stringliteral">&quot;UTF-8&quot;</span>) <span class="keyword">as</span> sett:</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;        settings.unload(sett)</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160; </div>
 <div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160; </div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160; </div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;<a class="code" href="namespacevs__conf.html#a59bd943f036ed3f2e69be23ea2bd97de">main</a>()</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;<a class="code" href="namespacevs__conf.html#a59bd943f036ed3f2e69be23ea2bd97de">main</a>()</div>
 <div class="ttc" id="aclassvs__conf_1_1_settings_1_1_option_html"><div class="ttname"><a href="classvs__conf_1_1_settings_1_1_option.html">vs_conf.Settings.Option</a></div><div class="ttdoc">Key wrapper class.</div><div class="ttdef"><b>Definition:</b> <a href="vs__conf_8py_source.html#l00131">vs_conf.py:131</a></div></div>
 <div class="ttc" id="aclassvs__conf_1_1_settings_1_1_option_html_a041912ec2af4751cf87b1f5d16873a7c"><div class="ttname"><a href="classvs__conf_1_1_settings_1_1_option.html#a041912ec2af4751cf87b1f5d16873a7c">vs_conf.Settings.Option.desc</a></div><div class="ttdeci">desc</div><div class="ttdef"><b>Definition:</b> <a href="vs__conf_8py_source.html#l00154">vs_conf.py:154</a></div></div>
 <div class="ttc" id="aclassvs__conf_1_1_settings_1_1_option_html_a1dcc64b37f2a39c9fb0140933ed6d5ac"><div class="ttname"><a href="classvs__conf_1_1_settings_1_1_option.html#a1dcc64b37f2a39c9fb0140933ed6d5ac">vs_conf.Settings.Option.key</a></div><div class="ttdeci">key</div><div class="ttdef"><b>Definition:</b> <a href="vs__conf_8py_source.html#l00153">vs_conf.py:153</a></div></div>
