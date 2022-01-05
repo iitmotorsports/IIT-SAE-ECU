@@ -286,7 +286,6 @@ class Settings:
 def main():
     """Main function"""
 
-    # TODO: setup c_cpp_properties.json as well
     vs_code_startup = len(sys.argv) == 2 and sys.argv[1] == "thisisbeingrunonstartup"
     adv_mode = False
     first_time = not os.path.exists(SETTINGS_PATH)
@@ -296,6 +295,7 @@ def main():
             sett.write(BACKUP_SET)
     elif vs_code_startup:
         settings = Settings(load_json())
+        print(f"Configured for Teensy{settings.CORE_MODEL.get_value()} @ {int(int(settings.CORE_SPEED.get_value())/1000000)} Mhz")
         print(f"Current ports:\n Front:\t{settings.FRONT_TEENSY_PORT.get_value()}\n Back:\t{settings.BACK_TEENSY_PORT.get_value()}")
         sys.exit(0)
 
