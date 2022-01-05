@@ -291,13 +291,12 @@ def main():
     adv_mode = False
     first_time = not os.path.exists(SETTINGS_PATH)
 
-    # if vs_code_startup and first_time:
-    #     exit(1)
-
     if first_time:
         with open(SETTINGS_PATH, "w", encoding="UTF-8") as sett:
             sett.write(BACKUP_SET)
     elif vs_code_startup:
+        settings = Settings(load_json())
+        print(f"Current ports:\n Front:\t{settings.FRONT_TEENSY_PORT.get_value()}\n Back:\t{settings.BACK_TEENSY_PORT.get_value()}")
         sys.exit(0)
 
     settings = Settings(load_json())
