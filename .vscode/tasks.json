@@ -4,6 +4,53 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "VS setup",
+            "detail": "Setup VScode configuation",
+            "type": "shell",
+            "command": "python3",
+            "windows": {
+                "command": "py",
+            },
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "statusbar": {
+                    "label": "$(tools)",
+                    "color": "#1f26f0"
+                }
+            },
+            "args": [
+                "vs_conf.py"
+            ],
+            "presentation": {
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "ZZZZ",
+            "detail": "Don't run this, this is run on startup",
+            "type": "shell",
+            "command": "python3",
+            "windows": {
+                "command": "py",
+            },
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "statusbar": {
+                    "hide": true
+                }
+            },
+            "args": [
+                "vs_conf.py",
+                "thisisbeingrunonstartup"
+            ],
+            "presentation": {
+                "panel": "shared"
+            },
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
+        },
+        {
             "label": "Build",
             "type": "process",
             "detail": "Compile project",
@@ -34,8 +81,7 @@
             "problemMatcher": {
                 "base": "$gcc",
                 "pattern": {
-                    // "regexp": "^(?:Pre_Build\/)?(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
-                    "regexp": "^Pre_Build\/(.*?):(\\d+):(\\d*):?\\s+(?:fatal\\s+)?(warning|error):\\s+(.*)$",
+                    "regexp": "Pre_Build\/(.*?):(\\d+):(\\d*):?\\s+(?:fatal\\s+)?(note|warning|error):\\s+(.*)$",
                     "file": 1,
                     "line": 2,
                     "column": 3,
@@ -427,7 +473,7 @@
             "problemMatcher": {
                 "base": "$gcc",
                 "pattern": {
-                    "regexp": "^(?:Pre_Build\/)?(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "regexp": "Pre_Build\/(.*?):(\\d+):(\\d*):?\\s+(?:fatal\\s+)?(note|warning|error):\\s+(.*)$",
                     "file": 1,
                     "line": 2,
                     "column": 3,
@@ -469,7 +515,7 @@
             "problemMatcher": {
                 "base": "$gcc",
                 "pattern": {
-                    "regexp": "^(?:Pre_Build\/)?(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "regexp": "Pre_Build\/(.*?):(\\d+):(\\d*):?\\s+(?:fatal\\s+)?(note|warning|error):\\s+(.*)$",
                     "file": 1,
                     "line": 2,
                     "column": 3,

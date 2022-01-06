@@ -18,7 +18,8 @@
                 "F_CPU=${config:CORE_SPEED}",
                 "${config:USB_SETTING}",
                 "LAYOUT_US_ENGLISH",
-                "TEENSYDUINO=144",
+                "TEENSYDUINO=156",
+                "ARDUINO=10813",
                 "_GNU_SOURCE",
                 "USING_MAKEFILE"
             ],
