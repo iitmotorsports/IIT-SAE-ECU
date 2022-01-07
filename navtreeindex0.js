@@ -1,5 +1,7 @@
 var NAVTREEINDEX0 =
 {
+"":[3,0,1],
+"":[3,0,15],
 "_aero_servo_8cpp.html":[5,0,0],
 "_aero_servo_8cpp_source.html":[5,0,0],
 "_aero_servo_8h.html":[5,0,1],
@@ -247,7 +249,5 @@ var NAVTREEINDEX0 =
 "classvs__conf_1_1_settings_1_1_option.html#a035fcb80e01013cd7d9f5ddd0a76eaa6":[4,0,4,0,0,1],
 "classvs__conf_1_1_settings_1_1_option.html#a041912ec2af4751cf87b1f5d16873a7c":[4,0,4,0,0,5],
 "classvs__conf_1_1_settings_1_1_option.html#a1dcc64b37f2a39c9fb0140933ed6d5ac":[4,0,4,0,0,7],
-"classvs__conf_1_1_settings_1_1_option.html#a23b8cbc934ba6e906cf5d7ec3c3e07c1":[4,0,4,0,0,6],
-"classvs__conf_1_1_settings_1_1_option.html#a98aec0ab2afac4cc49715f67c7f90720":[4,0,4,0,0,10],
-"classvs__conf_1_1_settings_1_1_option.html#aa28cad5a9cd56ea5ba09fc13b63415a1":[4,0,4,0,0,3]
+"classvs__conf_1_1_settings_1_1_option.html#a23b8cbc934ba6e906cf5d7ec3c3e07c1":[4,0,4,0,0,6]
 };

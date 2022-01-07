@@ -116,7 +116,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:a9be55bf2bd083f42ee69af1a396dd648"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load the settings JSON.  <a href="vs__conf_8py.html#a9be55bf2bd083f42ee69af1a396dd648">More...</a><br /></td></tr>
 <tr class="separator:a9be55bf2bd083f42ee69af1a396dd648"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a75e9e112029aad603942e76f725977b6"><td class="memItemLeft" align="right" valign="top">list[str]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vs__conf_8py.html#a75e9e112029aad603942e76f725977b6">vs_conf.serial_ports</a> ()</td></tr>
-<tr class="memdesc:a75e9e112029aad603942e76f725977b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lists serial port names.  <a href="vs__conf_8py.html#a75e9e112029aad603942e76f725977b6">More...</a><br /></td></tr>
+<tr class="memdesc:a75e9e112029aad603942e76f725977b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lists serial port names when on windows.  <a href="vs__conf_8py.html#a75e9e112029aad603942e76f725977b6">More...</a><br /></td></tr>
 <tr class="separator:a75e9e112029aad603942e76f725977b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc28be17acddac838c2f46460d7fba5c"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vs__conf_8py.html#afc28be17acddac838c2f46460d7fba5c">vs_conf.listify</a> (Sequence seq)</td></tr>
 <tr class="memdesc:afc28be17acddac838c2f46460d7fba5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert sequence to a conventional string list.  <a href="vs__conf_8py.html#afc28be17acddac838c2f46460d7fba5c">More...</a><br /></td></tr>
@@ -128,9 +128,6 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vs__c
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a261fd7e68d1588bfbbb5117079be82bd"><td class="memItemLeft" align="right" valign="top"><a id="a261fd7e68d1588bfbbb5117079be82bd"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>vs_conf.OPTIONAL_LOADED</b> = False</td></tr>
-<tr class="separator:a261fd7e68d1588bfbbb5117079be82bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6904bc4ea89e8724a9a708d292f99c4f"><td class="memItemLeft" align="right" valign="top"><a id="a6904bc4ea89e8724a9a708d292f99c4f"></a>
 string&#160;</td><td class="memItemRight" valign="bottom"><b>vs_conf.SETTINGS_PATH</b> = &quot;.vscode/settings.json&quot;</td></tr>
 <tr class="separator:a6904bc4ea89e8724a9a708d292f99c4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -169,7 +166,7 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>vs_conf.SETTINGS_PA
 Returns:
     str: text with removed comments
 </pre> 
-<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00066">66</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00049">49</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
 
 </div>
 </div>
@@ -196,7 +193,7 @@ Returns:
 Returns:
     str: the conventional string list
 </pre> 
-<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00129">129</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00101">101</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
 
 </div>
 </div>
@@ -219,7 +216,7 @@ Returns:
 <pre class="fragment">Returns:
     dict[str, str]: the JSON as a dict
 </pre> 
-<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00088">88</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00071">71</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
 
 </div>
 </div>
@@ -238,14 +235,11 @@ Returns:
       </table>
 </div><div class="memdoc">
 
-<p>Lists serial port names. </p>
-<pre class="fragment">Raises:
-    EnvironmentError: On unsupported or unknown platforms
-
-Returns:
-    list[str]: A list of the serial ports available on the system
+<p>Lists serial port names when on windows. </p>
+<pre class="fragment">Returns:
+    list[str]: A list of the serial ports available on a win system
 </pre> 
-<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00099">99</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00082">82</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
 
 </div>
 </div>
@@ -287,7 +281,7 @@ Returns:
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="stringliteral">    }</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="stringliteral">}&quot;&quot;&quot;</span></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00039">39</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00022">22</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
 
 </div>
 </div>
