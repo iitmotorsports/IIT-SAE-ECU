@@ -4,3 +4,15 @@
 [submodule "libraries/TeensyThreads"]
 	path = libraries/TeensyThreads
 	url = https://github.com/ftrias/TeensyThreads
+[submodule "libraries/BNO055"]
+	path = libraries/BNO055
+	url = https://github.com/arduino-libraries/BNO055
+[submodule "libraries/i2c_t3"]
+	path = libraries/i2c_t3
+	url = https://github.com/nox771/i2c_t3
+[submodule "libraries/vl53l0x-arduino"]
+	path = libraries/vl53l0x-arduino
+	url = https://github.com/pololu/vl53l0x-arduino
+[submodule "libraries/teensy4_i2c"]
+	path = libraries/teensy4_i2c
+	url = https://github.com/Richard-Gemmell/teensy4_i2c
