@@ -45,6 +45,13 @@ T cMap(T x, A inMin, B inMax, C outMin, D outMax) {
     return mapped;
 }
 
+/**
+ * @brief Variable that automaticaly averages itself out when it is set to a value
+ * 
+ * @note The underlying implementation converts everything to a double to maximize precision when averaging
+ * 
+ * @tparam T The primitive data type of this variable
+ */
 template <typename T>
 class AvgVar {
 private:
@@ -64,6 +71,13 @@ public:
     }
 };
 
+/**
+ * @brief Variable that automaticaly averages itself out when it is called, that is, it only updates it's average when the variable is used
+ * 
+ * @note The underlying implementation converts everything to a double to maximize precision when averaging
+ * 
+ * @tparam T The primitive data type of this variable
+ */
 template <typename T>
 class AvgVarRef {
 private:
