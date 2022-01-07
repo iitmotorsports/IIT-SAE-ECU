@@ -53,5 +53,5 @@ var files_dup =
     [ "Util.cpp", "_util_8cpp.html", "_util_8cpp" ],
     [ "Util.h", "_util_8h.html", "_util_8h" ],
     [ "vs_conf.py", "vs__conf_8py.html", "vs__conf_8py" ],
-    [ "Wire.h", "_wire_8h_source.html", null ]
+    [ "Wire.h", "_wire_8h.html", null ]
 ];
