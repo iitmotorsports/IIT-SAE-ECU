@@ -12,7 +12,14 @@
 #ifndef __ECU_UTIL_H__
 #define __ECU_UTIL_H__
 
+/**
+ * @brief Euler's constant
+ */
 #define Euler exp(1.0)
+
+/**
+ * @brief Clamp function
+ */
 #define clamp(v, m, x) min(max(v, m), x)
 
 /**
@@ -59,12 +66,28 @@ private:
     int samples;
 
 public:
+    /**
+     * @brief Construct a new AvgVar given the number of samples to average the value over
+     * 
+     * @param samples The number of samples
+     */
     AvgVar(int samples) {
         this->samples = samples;
     }
 
+    /**
+     * @brief Cast to the internal average to type T
+     * 
+     * @return T The internal average interpreted as type T
+     */
     operator T() const { return (T)avg; }
 
+    /**
+     * @brief Update the internal average value given the next value
+     * 
+     * @param val The value to update the average with
+     * @return T The internal average interpreted as type T
+     */
     T operator=(T val) {
         avg = EMAvg(avg, val, samples);
         return (T)avg;
@@ -86,11 +109,22 @@ private:
     int samples;
 
 public:
+    /**
+     * @brief Construct a new AvgVar Ref given the number of samples to average the value over and the pointer to the variable it should reference
+     * 
+     * @param pointer The variable to reference
+     * @param samples The number of samples
+     */
     AvgVarRef(T *pointer, int samples) {
         this->pointer = pointer;
         this->samples = samples;
     }
 
+    /**
+     * @brief Update the internal average
+     * 
+     * @return T The internal average interpreted as type T
+     */
     operator T() {
         avg = EMAvg(avg, *pointer, samples);
         return (T)avg;

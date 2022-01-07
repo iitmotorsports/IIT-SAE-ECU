@@ -10,10 +10,18 @@
  */
 
 #ifndef __ECU_SERIALVARS_DEF__
+// @cond
 #define __ECU_SERIALVARS_DEF__
+// @endcond
 
+/**
+ * @brief ID for Torque vectoring aggression serial var
+ */
 #define SERIALVAR_TORQUE_VECTORING_AGGRESSION 0
 
+/**
+ * @brief X Macro of all the serial vars and their data type
+ */
 #define SERIALVARS \
     X(float, SERIALVAR_TORQUE_VECTORING_AGGRESSION)
 
