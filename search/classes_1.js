@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['buffer_219',['Buffer',['../struct_canbus_1_1_buffer.html',1,'Canbus']]]
+  ['buffer_231',['Buffer',['../struct_canbus_1_1_buffer.html',1,'Canbus']]]
 ];

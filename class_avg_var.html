@@ -99,14 +99,14 @@ $(document).ready(function(){initNavTree('class_avg_var.html',''); initResizable
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9af3304eb07f4a2fff88947086b5e002"><td class="memItemLeft" align="right" valign="top"><a id="a9af3304eb07f4a2fff88947086b5e002"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>AvgVar</b> (int samples)</td></tr>
+<tr class="memitem:a9af3304eb07f4a2fff88947086b5e002"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_avg_var.html#a9af3304eb07f4a2fff88947086b5e002">AvgVar</a> (int samples)</td></tr>
+<tr class="memdesc:a9af3304eb07f4a2fff88947086b5e002"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="class_avg_var.html" title="Variable that automaticaly averages itself out when it is set to a value.">AvgVar</a> given the number of samples to average the value over.  <a href="class_avg_var.html#a9af3304eb07f4a2fff88947086b5e002">More...</a><br /></td></tr>
 <tr class="separator:a9af3304eb07f4a2fff88947086b5e002"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d02b4950535772ebe580311dd8bbae1"><td class="memItemLeft" align="right" valign="top"><a id="a0d02b4950535772ebe580311dd8bbae1"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>operator T</b> () const</td></tr>
+<tr class="memitem:a0d02b4950535772ebe580311dd8bbae1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_avg_var.html#a0d02b4950535772ebe580311dd8bbae1">operator T</a> () const</td></tr>
+<tr class="memdesc:a0d02b4950535772ebe580311dd8bbae1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cast to the internal average to type T.  <a href="class_avg_var.html#a0d02b4950535772ebe580311dd8bbae1">More...</a><br /></td></tr>
 <tr class="separator:a0d02b4950535772ebe580311dd8bbae1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afbd4581d7d4997be692369bab085ddb2"><td class="memItemLeft" align="right" valign="top"><a id="afbd4581d7d4997be692369bab085ddb2"></a>
-T&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (T val)</td></tr>
+<tr class="memitem:afbd4581d7d4997be692369bab085ddb2"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_avg_var.html#afbd4581d7d4997be692369bab085ddb2">operator=</a> (T val)</td></tr>
+<tr class="memdesc:afbd4581d7d4997be692369bab085ddb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the internal average value given the next value.  <a href="class_avg_var.html#afbd4581d7d4997be692369bab085ddb2">More...</a><br /></td></tr>
 <tr class="separator:afbd4581d7d4997be692369bab085ddb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -122,8 +122,119 @@ class AvgVar&lt; T &gt;</h3>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_util_8h_source.html#l00056">56</a> of file <a class="el" href="_util_8h_source.html">Util.h</a>.</p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+<p class="definition">Definition at line <a class="el" href="_util_8h_source.html#l00063">63</a> of file <a class="el" href="_util_8h_source.html">Util.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a9af3304eb07f4a2fff88947086b5e002"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9af3304eb07f4a2fff88947086b5e002">&#9670;&nbsp;</a></span>AvgVar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_avg_var.html">AvgVar</a>&lt; T &gt;::<a class="el" href="class_avg_var.html">AvgVar</a> </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>samples</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construct a new <a class="el" href="class_avg_var.html" title="Variable that automaticaly averages itself out when it is set to a value.">AvgVar</a> given the number of samples to average the value over. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">samples</td><td>The number of samples </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_util_8h_source.html#l00074">74</a> of file <a class="el" href="_util_8h_source.html">Util.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a0d02b4950535772ebe580311dd8bbae1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d02b4950535772ebe580311dd8bbae1">&#9670;&nbsp;</a></span>operator T()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_avg_var.html">AvgVar</a>&lt; T &gt;::operator T </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Cast to the internal average to type T. </p>
+<dl class="section return"><dt>Returns</dt><dd>T The internal average interpreted as type T </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_util_8h_source.html#l00083">83</a> of file <a class="el" href="_util_8h_source.html">Util.h</a>.</p>
+
+</div>
+</div>
+<a id="afbd4581d7d4997be692369bab085ddb2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afbd4581d7d4997be692369bab085ddb2">&#9670;&nbsp;</a></span>operator=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T <a class="el" href="class_avg_var.html">AvgVar</a>&lt; T &gt;::operator= </td>
+          <td>(</td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>val</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Update the internal average value given the next value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">val</td><td>The value to update the average with </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>T The internal average interpreted as type T </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_util_8h_source.html#l00091">91</a> of file <a class="el" href="_util_8h_source.html">Util.h</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="_util_8h_source.html">Util.h</a></li>
 </ul>
 </div><!-- contents -->

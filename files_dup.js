@@ -2,7 +2,7 @@ var files_dup =
 [
     [ "AeroServo.cpp", "_aero_servo_8cpp.html", null ],
     [ "AeroServo.h", "_aero_servo_8h.html", "_aero_servo_8h" ],
-    [ "bin2cc.py", "bin2cc_8py_source.html", null ],
+    [ "bin2cc.py", "bin2cc_8py.html", "bin2cc_8py" ],
     [ "Canbus.cpp", "_canbus_8cpp.html", null ],
     [ "Canbus.h", "_canbus_8h.html", "_canbus_8h" ],
     [ "CanBusAddresses.def", "_can_bus_addresses_8def.html", "_can_bus_addresses_8def" ],
@@ -50,7 +50,7 @@ var files_dup =
     [ "State.h", "_state_8h.html", "_state_8h" ],
     [ "Test.h", "_test_8h.html", "_test_8h" ],
     [ "uploadPaste.py", "upload_paste_8py.html", null ],
-    [ "Util.cpp", "_util_8cpp_source.html", null ],
+    [ "Util.cpp", "_util_8cpp.html", "_util_8cpp" ],
     [ "Util.h", "_util_8h.html", "_util_8h" ],
     [ "vs_conf.py", "vs__conf_8py.html", "vs__conf_8py" ],
     [ "Wire.h", "_wire_8h_source.html", null ]

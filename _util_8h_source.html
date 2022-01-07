@@ -92,64 +92,68 @@ $(document).ready(function(){initNavTree('_util_8h_source.html',''); initResizab
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#ifndef __ECU_UTIL_H__</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#define __ECU_UTIL_H__</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#define Euler exp(1.0)</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#define clamp(v, m, x) min(max(v, m), x)</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keywordtype">double</span> <a class="code" href="_util_8h.html#aae1798680f5232f66c8c5a14b5aa17a7">EMAvg</a>(<span class="keywordtype">double</span> lastVal, <span class="keywordtype">double</span> newVal, <span class="keywordtype">int</span> memCount);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> A, <span class="keyword">class</span> B, <span class="keyword">class</span> C, <span class="keyword">class</span> D&gt;</div>
-<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="_util_8h.html#a4bed8992f080fb6157e663b1d339136f">   39</a></span>&#160;T <a class="code" href="_util_8h.html#a4bed8992f080fb6157e663b1d339136f">cMap</a>(T x, A inMin, B inMax, C outMin, D outMax) {</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    T mapped = map(x, inMin, inMax, outMin, outMax);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordflow">if</span> (mapped &lt; outMin)</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordflow">return</span> outMin;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordflow">if</span> (mapped &gt; outMax)</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keywordflow">return</span> outMax;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">return</span> mapped;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="class_avg_var.html">   56</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_avg_var.html">AvgVar</a> {</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordtype">double</span> avg = 0.0;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">int</span> samples;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <a class="code" href="class_avg_var.html">AvgVar</a>(<span class="keywordtype">int</span> samples) {</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        this-&gt;samples = samples;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    }</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keyword">operator</span> T()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> (T)avg; }</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="_util_8h.html#a6c49ba1c50c86cfbf5661fa23db457b7">   18</a></span>&#160;<span class="preprocessor">#define Euler exp(1.0)</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="_util_8h.html#a0c834e8c33ee4b3eed8802b969723760">   23</a></span>&#160;<span class="preprocessor">#define clamp(v, m, x) min(max(v, m), x)</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keywordtype">double</span> <a class="code" href="_util_8h.html#aae1798680f5232f66c8c5a14b5aa17a7">EMAvg</a>(<span class="keywordtype">double</span> lastVal, <span class="keywordtype">double</span> newVal, <span class="keywordtype">int</span> memCount);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> A, <span class="keyword">class</span> B, <span class="keyword">class</span> C, <span class="keyword">class</span> D&gt;</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="_util_8h.html#a4bed8992f080fb6157e663b1d339136f">   46</a></span>&#160;T <a class="code" href="_util_8h.html#a4bed8992f080fb6157e663b1d339136f">cMap</a>(T x, A inMin, B inMax, C outMin, D outMax) {</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    T mapped = map(x, inMin, inMax, outMin, outMax);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordflow">if</span> (mapped &lt; outMin)</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keywordflow">return</span> outMin;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordflow">if</span> (mapped &gt; outMax)</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordflow">return</span> outMax;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordflow">return</span> mapped;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="class_avg_var.html">   63</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_avg_var.html">AvgVar</a> {</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordtype">double</span> avg = 0.0;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordtype">int</span> samples;</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    T operator=(T val) {</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        avg = <a class="code" href="_util_8h.html#aae1798680f5232f66c8c5a14b5aa17a7">EMAvg</a>(avg, val, samples);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keywordflow">return</span> (T)avg;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    }</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;};</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="class_avg_var_ref.html">   82</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_avg_var_ref.html">AvgVarRef</a> {</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordtype">double</span> avg = 0.0;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    T *pointer;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordtype">int</span> samples;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <a class="code" href="class_avg_var_ref.html">AvgVarRef</a>(T *pointer, <span class="keywordtype">int</span> samples) {</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        this-&gt;pointer = pointer;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        this-&gt;samples = samples;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    }</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keyword">operator</span> T() {</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        avg = <a class="code" href="_util_8h.html#aae1798680f5232f66c8c5a14b5aa17a7">EMAvg</a>(avg, *pointer, samples);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keywordflow">return</span> (T)avg;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    }</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;};</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __ECU_UTIL_H__</span></div>
-<div class="ttc" id="a_util_8h_html_a4bed8992f080fb6157e663b1d339136f"><div class="ttname"><a href="_util_8h.html#a4bed8992f080fb6157e663b1d339136f">cMap</a></div><div class="ttdeci">T cMap(T x, A inMin, B inMax, C outMin, D outMax)</div><div class="ttdoc">Map a value from one range to another while clamping the value to boundaries.</div><div class="ttdef"><b>Definition:</b> <a href="_util_8h_source.html#l00039">Util.h:39</a></div></div>
-<div class="ttc" id="a_util_8h_html_aae1798680f5232f66c8c5a14b5aa17a7"><div class="ttname"><a href="_util_8h.html#aae1798680f5232f66c8c5a14b5aa17a7">EMAvg</a></div><div class="ttdeci">double EMAvg(double lastVal, double newVal, int memCount)</div><div class="ttdoc">Exponential moving average.</div><div class="ttdef"><b>Definition:</b> <a href="_util_8cpp_source.html#l00003">Util.cpp:3</a></div></div>
-<div class="ttc" id="aclass_avg_var_html"><div class="ttname"><a href="class_avg_var.html">AvgVar</a></div><div class="ttdoc">Variable that automaticaly averages itself out when it is set to a value.</div><div class="ttdef"><b>Definition:</b> <a href="_util_8h_source.html#l00056">Util.h:56</a></div></div>
-<div class="ttc" id="aclass_avg_var_ref_html"><div class="ttname"><a href="class_avg_var_ref.html">AvgVarRef</a></div><div class="ttdoc">Variable that automaticaly averages itself out when it is called, that is, it only updates it's avera...</div><div class="ttdef"><b>Definition:</b> <a href="_util_8h_source.html#l00082">Util.h:82</a></div></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="class_avg_var.html#a9af3304eb07f4a2fff88947086b5e002">   74</a></span>&#160;    <a class="code" href="class_avg_var.html#a9af3304eb07f4a2fff88947086b5e002">AvgVar</a>(<span class="keywordtype">int</span> samples) {</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        this-&gt;samples = samples;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    }</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="class_avg_var.html#a0d02b4950535772ebe580311dd8bbae1">   83</a></span>&#160;    <span class="keyword">operator</span> T()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> (T)avg; }</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
+<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="class_avg_var.html#afbd4581d7d4997be692369bab085ddb2">   91</a></span>&#160;    T <a class="code" href="class_avg_var.html#afbd4581d7d4997be692369bab085ddb2">operator=</a>(T val) {</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        avg = <a class="code" href="_util_8h.html#aae1798680f5232f66c8c5a14b5aa17a7">EMAvg</a>(avg, val, samples);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="keywordflow">return</span> (T)avg;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    }</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;};</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="class_avg_var_ref.html">  105</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_avg_var_ref.html">AvgVarRef</a> {</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keywordtype">double</span> avg = 0.0;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    T *pointer;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keywordtype">int</span> samples;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00118"></a><span class="lineno"><a class="line" href="class_avg_var_ref.html#a5d2749e8dc6dadeaf176c5becca2e5c5">  118</a></span>&#160;    <a class="code" href="class_avg_var_ref.html#a5d2749e8dc6dadeaf176c5becca2e5c5">AvgVarRef</a>(T *pointer, <span class="keywordtype">int</span> samples) {</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        this-&gt;pointer = pointer;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        this-&gt;samples = samples;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    }</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
+<div class="line"><a name="l00128"></a><span class="lineno"><a class="line" href="class_avg_var_ref.html#ad23286d2629a93dc46e4b5fa04067956">  128</a></span>&#160;    <span class="keyword">operator</span> T() {</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        avg = <a class="code" href="_util_8h.html#aae1798680f5232f66c8c5a14b5aa17a7">EMAvg</a>(avg, *pointer, samples);</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        <span class="keywordflow">return</span> (T)avg;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    }</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;};</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160; </div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __ECU_UTIL_H__</span></div>
+<div class="ttc" id="a_util_8h_html_a4bed8992f080fb6157e663b1d339136f"><div class="ttname"><a href="_util_8h.html#a4bed8992f080fb6157e663b1d339136f">cMap</a></div><div class="ttdeci">T cMap(T x, A inMin, B inMax, C outMin, D outMax)</div><div class="ttdoc">Map a value from one range to another while clamping the value to boundaries.</div><div class="ttdef"><b>Definition:</b> <a href="_util_8h_source.html#l00046">Util.h:46</a></div></div>
+<div class="ttc" id="a_util_8h_html_aae1798680f5232f66c8c5a14b5aa17a7"><div class="ttname"><a href="_util_8h.html#aae1798680f5232f66c8c5a14b5aa17a7">EMAvg</a></div><div class="ttdeci">double EMAvg(double lastVal, double newVal, int memCount)</div><div class="ttdoc">Exponential moving average.</div><div class="ttdef"><b>Definition:</b> <a href="_util_8cpp_source.html#l00014">Util.cpp:14</a></div></div>
+<div class="ttc" id="aclass_avg_var_html"><div class="ttname"><a href="class_avg_var.html">AvgVar</a></div><div class="ttdoc">Variable that automaticaly averages itself out when it is set to a value.</div><div class="ttdef"><b>Definition:</b> <a href="_util_8h_source.html#l00063">Util.h:63</a></div></div>
+<div class="ttc" id="aclass_avg_var_html_a9af3304eb07f4a2fff88947086b5e002"><div class="ttname"><a href="class_avg_var.html#a9af3304eb07f4a2fff88947086b5e002">AvgVar::AvgVar</a></div><div class="ttdeci">AvgVar(int samples)</div><div class="ttdoc">Construct a new AvgVar given the number of samples to average the value over.</div><div class="ttdef"><b>Definition:</b> <a href="_util_8h_source.html#l00074">Util.h:74</a></div></div>
+<div class="ttc" id="aclass_avg_var_html_afbd4581d7d4997be692369bab085ddb2"><div class="ttname"><a href="class_avg_var.html#afbd4581d7d4997be692369bab085ddb2">AvgVar::operator=</a></div><div class="ttdeci">T operator=(T val)</div><div class="ttdoc">Update the internal average value given the next value.</div><div class="ttdef"><b>Definition:</b> <a href="_util_8h_source.html#l00091">Util.h:91</a></div></div>
+<div class="ttc" id="aclass_avg_var_ref_html"><div class="ttname"><a href="class_avg_var_ref.html">AvgVarRef</a></div><div class="ttdoc">Variable that automaticaly averages itself out when it is called, that is, it only updates it's avera...</div><div class="ttdef"><b>Definition:</b> <a href="_util_8h_source.html#l00105">Util.h:105</a></div></div>
+<div class="ttc" id="aclass_avg_var_ref_html_a5d2749e8dc6dadeaf176c5becca2e5c5"><div class="ttname"><a href="class_avg_var_ref.html#a5d2749e8dc6dadeaf176c5becca2e5c5">AvgVarRef::AvgVarRef</a></div><div class="ttdeci">AvgVarRef(T *pointer, int samples)</div><div class="ttdoc">Construct a new AvgVar Ref given the number of samples to average the value over and the pointer to t...</div><div class="ttdef"><b>Definition:</b> <a href="_util_8h_source.html#l00118">Util.h:118</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

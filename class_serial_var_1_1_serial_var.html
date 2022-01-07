@@ -99,14 +99,14 @@ $(document).ready(function(){initNavTree('class_serial_var_1_1_serial_var.html',
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:abb2574a4d86028b0e751f0c96aa412de"><td class="memItemLeft" align="right" valign="top"><a id="abb2574a4d86028b0e751f0c96aa412de"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>SerialVar</b> (int ID)</td></tr>
+<tr class="memitem:abb2574a4d86028b0e751f0c96aa412de"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_serial_var_1_1_serial_var.html#abb2574a4d86028b0e751f0c96aa412de">SerialVar</a> (int ID)</td></tr>
+<tr class="memdesc:abb2574a4d86028b0e751f0c96aa412de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Serial Var given the predefined ID defined in <a class="el" href="_serial_vars_8def.html" title="Serial Variable definitions.">SerialVars.def</a>.  <a href="class_serial_var_1_1_serial_var.html#abb2574a4d86028b0e751f0c96aa412de">More...</a><br /></td></tr>
 <tr class="separator:abb2574a4d86028b0e751f0c96aa412de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf0f62d84239c90e6b6a07fc0a1911ab"><td class="memItemLeft" align="right" valign="top"><a id="adf0f62d84239c90e6b6a07fc0a1911ab"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>operator T</b> () const</td></tr>
+<tr class="memitem:adf0f62d84239c90e6b6a07fc0a1911ab"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_serial_var_1_1_serial_var.html#adf0f62d84239c90e6b6a07fc0a1911ab">operator T</a> () const</td></tr>
+<tr class="memdesc:adf0f62d84239c90e6b6a07fc0a1911ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cast to the given primitive data type of this variable.  <a href="class_serial_var_1_1_serial_var.html#adf0f62d84239c90e6b6a07fc0a1911ab">More...</a><br /></td></tr>
 <tr class="separator:adf0f62d84239c90e6b6a07fc0a1911ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ad8d8a8bd68397d3cd2eefe37657af1"><td class="memItemLeft" align="right" valign="top"><a id="a6ad8d8a8bd68397d3cd2eefe37657af1"></a>
-<a class="el" href="class_serial_var_1_1_serial_var.html">SerialVar</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (T val)</td></tr>
+<tr class="memitem:a6ad8d8a8bd68397d3cd2eefe37657af1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_serial_var_1_1_serial_var.html">SerialVar</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_serial_var_1_1_serial_var.html#a6ad8d8a8bd68397d3cd2eefe37657af1">operator=</a> (T val)</td></tr>
+<tr class="memdesc:a6ad8d8a8bd68397d3cd2eefe37657af1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set this variable's buffer given the primitive data type T.  <a href="class_serial_var_1_1_serial_var.html#a6ad8d8a8bd68397d3cd2eefe37657af1">More...</a><br /></td></tr>
 <tr class="separator:a6ad8d8a8bd68397d3cd2eefe37657af1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -121,13 +121,125 @@ class SerialVar::SerialVar&lt; T &gt;</h3>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>Each instance of a <a class="el" href="class_serial_var_1_1_serial_var.html" title="Template of a Serial Variable.">SerialVar</a> <b>must</b> be defined in <a class="el" href="_serial_vars_8def.html" title="Serial Variable definitions.">SerialVars.def</a>, where you can then declare in instance of <a class="el" href="class_serial_var_1_1_serial_var.html" title="Template of a Serial Variable.">SerialVar</a> as so. <div class="fragment"><div class="line"><a class="code" href="class_serial_var_1_1_serial_var.html">SerialVar::SerialVar&lt;float&gt;</a> TVAggression = <a class="code" href="namespace_serial_var.html#adbfe0625d096f298b80779ea277eb5f8">SerialVar::getVariable</a>(SERIALVAR_TORQUE_VECTORING_AGGRESSION);</div>
+<dl class="section note"><dt>Note</dt><dd>Each instance of a <a class="el" href="class_serial_var_1_1_serial_var.html" title="Template of a Serial Variable.">SerialVar</a> <b>must</b> be defined in <a class="el" href="_serial_vars_8def.html" title="Serial Variable definitions.">SerialVars.def</a>, where you can then declare in instance of <a class="el" href="class_serial_var_1_1_serial_var.html" title="Template of a Serial Variable.">SerialVar</a> as so. <div class="fragment"><div class="line"><a class="code" href="class_serial_var_1_1_serial_var.html">SerialVar::SerialVar&lt;float&gt;</a> TVAggression = <a class="code" href="namespace_serial_var.html#adbfe0625d096f298b80779ea277eb5f8">SerialVar::getVariable</a>(<a class="code" href="_serial_vars_8def.html#aae1dd855bda1c593c0ac6fface58bd29">SERIALVAR_TORQUE_VECTORING_AGGRESSION</a>);</div>
+<div class="ttc" id="a_serial_vars_8def_html_aae1dd855bda1c593c0ac6fface58bd29"><div class="ttname"><a href="_serial_vars_8def.html#aae1dd855bda1c593c0ac6fface58bd29">SERIALVAR_TORQUE_VECTORING_AGGRESSION</a></div><div class="ttdeci">#define SERIALVAR_TORQUE_VECTORING_AGGRESSION</div><div class="ttdoc">ID for Torque vectoring aggression serial var.</div><div class="ttdef"><b>Definition:</b> <a href="_serial_vars_8def_source.html#l00020">SerialVars.def:20</a></div></div>
 <div class="ttc" id="aclass_serial_var_1_1_serial_var_html"><div class="ttname"><a href="class_serial_var_1_1_serial_var.html">SerialVar::SerialVar</a></div><div class="ttdoc">Template of a Serial Variable.</div><div class="ttdef"><b>Definition:</b> <a href="_serial_var_8h_source.html#l00048">SerialVar.h:48</a></div></div>
 <div class="ttc" id="anamespace_serial_var_html_adbfe0625d096f298b80779ea277eb5f8"><div class="ttname"><a href="namespace_serial_var.html#adbfe0625d096f298b80779ea277eb5f8">SerialVar::getVariable</a></div><div class="ttdeci">uint8_t * getVariable(size_t ID)</div><div class="ttdoc">Get the Serial Variable for a given ID.</div></div>
 </div><!-- fragment --> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_serial_var_8h_source.html#l00048">48</a> of file <a class="el" href="_serial_var_8h_source.html">SerialVar.h</a>.</p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="abb2574a4d86028b0e751f0c96aa412de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb2574a4d86028b0e751f0c96aa412de">&#9670;&nbsp;</a></span>SerialVar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_serial_var_1_1_serial_var.html">SerialVar::SerialVar</a>&lt; T &gt;::<a class="el" href="class_serial_var_1_1_serial_var.html">SerialVar</a> </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ID</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construct a new Serial Var given the predefined ID defined in <a class="el" href="_serial_vars_8def.html" title="Serial Variable definitions.">SerialVars.def</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ID</td><td>the predefined ID </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_serial_var_8h_source.html#l00058">58</a> of file <a class="el" href="_serial_var_8h_source.html">SerialVar.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="adf0f62d84239c90e6b6a07fc0a1911ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf0f62d84239c90e6b6a07fc0a1911ab">&#9670;&nbsp;</a></span>operator T()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_serial_var_1_1_serial_var.html">SerialVar::SerialVar</a>&lt; T &gt;::operator T </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Cast to the given primitive data type of this variable. </p>
+<dl class="section return"><dt>Returns</dt><dd>T The buffer interpreted as the primitive data type of this variable </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_serial_var_8h_source.html#l00067">67</a> of file <a class="el" href="_serial_var_8h_source.html">SerialVar.h</a>.</p>
+
+</div>
+</div>
+<a id="a6ad8d8a8bd68397d3cd2eefe37657af1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ad8d8a8bd68397d3cd2eefe37657af1">&#9670;&nbsp;</a></span>operator=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_serial_var_1_1_serial_var.html">SerialVar</a>&amp; <a class="el" href="class_serial_var_1_1_serial_var.html">SerialVar::SerialVar</a>&lt; T &gt;::operator= </td>
+          <td>(</td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>val</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set this variable's buffer given the primitive data type T. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">val</td><td>Value to interpret </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_serial_var_1_1_serial_var.html" title="Template of a Serial Variable.">SerialVar</a>&amp; pointer to this object </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_serial_var_8h_source.html#l00075">75</a> of file <a class="el" href="_serial_var_8h_source.html">SerialVar.h</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="_serial_var_8h_source.html">SerialVar.h</a></li>
 </ul>
 </div><!-- contents -->

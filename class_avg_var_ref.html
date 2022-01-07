@@ -99,11 +99,11 @@ $(document).ready(function(){initNavTree('class_avg_var_ref.html',''); initResiz
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5d2749e8dc6dadeaf176c5becca2e5c5"><td class="memItemLeft" align="right" valign="top"><a id="a5d2749e8dc6dadeaf176c5becca2e5c5"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>AvgVarRef</b> (T *pointer, int samples)</td></tr>
+<tr class="memitem:a5d2749e8dc6dadeaf176c5becca2e5c5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_avg_var_ref.html#a5d2749e8dc6dadeaf176c5becca2e5c5">AvgVarRef</a> (T *pointer, int samples)</td></tr>
+<tr class="memdesc:a5d2749e8dc6dadeaf176c5becca2e5c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="class_avg_var.html" title="Variable that automaticaly averages itself out when it is set to a value.">AvgVar</a> Ref given the number of samples to average the value over and the pointer to the variable it should reference.  <a href="class_avg_var_ref.html#a5d2749e8dc6dadeaf176c5becca2e5c5">More...</a><br /></td></tr>
 <tr class="separator:a5d2749e8dc6dadeaf176c5becca2e5c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad23286d2629a93dc46e4b5fa04067956"><td class="memItemLeft" align="right" valign="top"><a id="ad23286d2629a93dc46e4b5fa04067956"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>operator T</b> ()</td></tr>
+<tr class="memitem:ad23286d2629a93dc46e4b5fa04067956"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_avg_var_ref.html#ad23286d2629a93dc46e4b5fa04067956">operator T</a> ()</td></tr>
+<tr class="memdesc:ad23286d2629a93dc46e4b5fa04067956"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the internal average.  <a href="class_avg_var_ref.html#ad23286d2629a93dc46e4b5fa04067956">More...</a><br /></td></tr>
 <tr class="separator:ad23286d2629a93dc46e4b5fa04067956"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -119,8 +119,91 @@ class AvgVarRef&lt; T &gt;</h3>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_util_8h_source.html#l00082">82</a> of file <a class="el" href="_util_8h_source.html">Util.h</a>.</p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+<p class="definition">Definition at line <a class="el" href="_util_8h_source.html#l00105">105</a> of file <a class="el" href="_util_8h_source.html">Util.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a5d2749e8dc6dadeaf176c5becca2e5c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d2749e8dc6dadeaf176c5becca2e5c5">&#9670;&nbsp;</a></span>AvgVarRef()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_avg_var_ref.html">AvgVarRef</a>&lt; T &gt;::<a class="el" href="class_avg_var_ref.html">AvgVarRef</a> </td>
+          <td>(</td>
+          <td class="paramtype">T *&#160;</td>
+          <td class="paramname"><em>pointer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>samples</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construct a new <a class="el" href="class_avg_var.html" title="Variable that automaticaly averages itself out when it is set to a value.">AvgVar</a> Ref given the number of samples to average the value over and the pointer to the variable it should reference. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pointer</td><td>The variable to reference </td></tr>
+    <tr><td class="paramname">samples</td><td>The number of samples </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_util_8h_source.html#l00118">118</a> of file <a class="el" href="_util_8h_source.html">Util.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="ad23286d2629a93dc46e4b5fa04067956"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad23286d2629a93dc46e4b5fa04067956">&#9670;&nbsp;</a></span>operator T()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_avg_var_ref.html">AvgVarRef</a>&lt; T &gt;::operator T </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Update the internal average. </p>
+<dl class="section return"><dt>Returns</dt><dd>T The internal average interpreted as type T </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_util_8h_source.html#l00128">128</a> of file <a class="el" href="_util_8h_source.html">Util.h</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="_util_8h_source.html">Util.h</a></li>
 </ul>
 </div><!-- contents -->
