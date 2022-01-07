@@ -91,6 +91,11 @@ $(document).ready(function(){initNavTree('class_avg_var_ref.html',''); initResiz
 <div class="title">AvgVarRef&lt; T &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Variable that automaticaly averages itself out when it is called, that is, it only updates it's average when the variable is used.  
+ <a href="class_avg_var_ref.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_util_8h_source.html">Util.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -105,8 +110,16 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><h3>template&lt;typename T&gt;<br />
 class AvgVarRef&lt; T &gt;</h3>
 
+<p>Variable that automaticaly averages itself out when it is called, that is, it only updates it's average when the variable is used. </p>
+<dl class="section note"><dt>Note</dt><dd>The underlying implementation converts everything to a double to maximize precision when averaging</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>The primitive data type of this variable </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="_util_8h_source.html#l00068">68</a> of file <a class="el" href="_util_8h_source.html">Util.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_util_8h_source.html#l00082">82</a> of file <a class="el" href="_util_8h_source.html">Util.h</a>.</p>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="_util_8h_source.html">Util.h</a></li>
 </ul>
