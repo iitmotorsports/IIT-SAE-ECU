@@ -127,7 +127,7 @@ $(document).ready(function(){initNavTree('_pins_8cpp_source.html',''); initResiz
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keyword">static</span> std::map&lt;uint8_t, int *&gt; CAN_GPIO_MAP_IN;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> CAN_GPIO_IN[analogCanPinCount_IN + digitalCanPinCount_IN] = {0}; <span class="comment">// Store incoming canpin values</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">static</span> std::map&lt;uint8_t, int&gt; CAN_GPIO_MAP_OUT;                   <span class="comment">// Store outgoing canpin values</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">static</span> std::map&lt;uint8_t, int&gt; CAN_GPIO_MAP_OUT;                             <span class="comment">// Store outgoing canpin values</span></div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> maxActiveDigitalPins = 8;                                  <span class="comment">// NOTE: MAX 8 Digital pins per msg for now</span></div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">static</span> IntervalTimer canbusPinUpdate;</div>
