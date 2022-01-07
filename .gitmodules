@@ -16,3 +16,6 @@
 [submodule "libraries/teensy4_i2c"]
 	path = libraries/teensy4_i2c
 	url = https://github.com/Richard-Gemmell/teensy4_i2c
+[submodule "libraries/PWMServo"]
+	path = libraries/PWMServo
+	url = https://github.com/PaulStoffregen/PWMServo
