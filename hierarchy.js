@@ -1,5 +1,7 @@
 var hierarchy =
 [
+    [ "AvgVar< T >", "class_avg_var.html", null ],
+    [ "AvgVarRef< T >", "class_avg_var_ref.html", null ],
     [ "Canbus::Buffer", "struct_canbus_1_1_buffer.html", null ],
     [ "Logging::Log_t", "struct_logging_1_1_log__t.html", null ],
     [ "vs_conf.Settings.Option", "classvs__conf_1_1_settings_1_1_option.html", null ],

@@ -107,9 +107,49 @@ $(document).ready(function(){initNavTree('_util_8h_source.html',''); initResizab
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">return</span> mapped;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __ECU_UTIL_H__</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="class_avg_var.html">   49</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_avg_var.html">AvgVar</a> {</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">double</span> avg = 0.0;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordtype">int</span> samples;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <a class="code" href="class_avg_var.html">AvgVar</a>(<span class="keywordtype">int</span> samples) {</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        this-&gt;samples = samples;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    }</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keyword">operator</span> T()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> (T)avg; }</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    T operator=(T val) {</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        avg = <a class="code" href="_util_8h.html#aae1798680f5232f66c8c5a14b5aa17a7">EMAvg</a>(avg, val, samples);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordflow">return</span> (T)avg;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    }</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;};</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="class_avg_var_ref.html">   68</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_avg_var_ref.html">AvgVarRef</a> {</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordtype">double</span> avg = 0.0;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    T *pointer;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">int</span> samples;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <a class="code" href="class_avg_var_ref.html">AvgVarRef</a>(T *pointer, <span class="keywordtype">int</span> samples) {</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        this-&gt;pointer = pointer;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        this-&gt;samples = samples;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    }</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keyword">operator</span> T() {</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        avg = <a class="code" href="_util_8h.html#aae1798680f5232f66c8c5a14b5aa17a7">EMAvg</a>(avg, *pointer, samples);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="keywordflow">return</span> (T)avg;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    }</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;};</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __ECU_UTIL_H__</span></div>
 <div class="ttc" id="a_util_8h_html_a4bed8992f080fb6157e663b1d339136f"><div class="ttname"><a href="_util_8h.html#a4bed8992f080fb6157e663b1d339136f">cMap</a></div><div class="ttdeci">T cMap(T x, A inMin, B inMax, C outMin, D outMax)</div><div class="ttdoc">Map a value from one range to another while clamping the value to boundaries.</div><div class="ttdef"><b>Definition:</b> <a href="_util_8h_source.html#l00039">Util.h:39</a></div></div>
 <div class="ttc" id="a_util_8h_html_aae1798680f5232f66c8c5a14b5aa17a7"><div class="ttname"><a href="_util_8h.html#aae1798680f5232f66c8c5a14b5aa17a7">EMAvg</a></div><div class="ttdeci">double EMAvg(double lastVal, double newVal, int memCount)</div><div class="ttdoc">Exponential moving average.</div><div class="ttdef"><b>Definition:</b> <a href="_util_8cpp_source.html#l00003">Util.cpp:3</a></div></div>
+<div class="ttc" id="aclass_avg_var_html"><div class="ttname"><a href="class_avg_var.html">AvgVar</a></div><div class="ttdef"><b>Definition:</b> <a href="_util_8h_source.html#l00049">Util.h:49</a></div></div>
+<div class="ttc" id="aclass_avg_var_ref_html"><div class="ttname"><a href="class_avg_var_ref.html">AvgVarRef</a></div><div class="ttdef"><b>Definition:</b> <a href="_util_8h_source.html#l00068">Util.h:68</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['option_218',['Option',['../classvs__conf_1_1_settings_1_1_option.html',1,'vs_conf::Settings']]]
+  ['log_5ft_221',['Log_t',['../struct_logging_1_1_log__t.html',1,'Logging']]]
 ];
