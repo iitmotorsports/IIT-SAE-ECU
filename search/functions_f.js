@@ -2,7 +2,7 @@ var searchData=
 [
   ['senddata_354',['sendData',['../namespace_canbus.html#a003195b12c68a25e85c1249630901f87',1,'Canbus::sendData(const uint32_t address, uint8_t buf[8])'],['../namespace_canbus.html#a685569d6ee66f2c88962d158a5caf22c',1,'Canbus::sendData(const uint32_t address, const uint8_t buf_0=0, const uint8_t buf_1=0, const uint8_t buf_2=0, const uint8_t buf_3=0, const uint8_t buf_4=0, const uint8_t buf_5=0, const uint8_t buf_6=0, const uint8_t buf_7=0)']]],
   ['sendtorque_355',['sendTorque',['../namespace_m_c.html#a043a760e6f9eaefc9d13ab2f7f1b342c',1,'MC']]],
-  ['serial_5fports_356',['serial_ports',['../namespacevs__conf.html#a75e9e112029aad603942e76f725977b6',1,'vs_conf']]],
+  ['serial_5fports_356',['serial_ports',['../vs__conf_8py.html#a75e9e112029aad603942e76f725977b6',1,'vs_conf']]],
   ['set_5fvalue_357',['set_value',['../classvs__conf_1_1_settings_1_1_option.html#aa28cad5a9cd56ea5ba09fc13b63415a1',1,'vs_conf::Settings::Option']]],
   ['setchargesignal_358',['setChargeSignal',['../namespace_front.html#a08cef7e1e54e13a82a0a2aa6e8ce126d',1,'Front']]],
   ['setcommand_359',['setCommand',['../namespace_cmd.html#aedaea62d3d1e614cf34ae87372087846',1,'Cmd']]],

@@ -4,7 +4,7 @@ var searchData=
   ['senddata_177',['sendData',['../namespace_canbus.html#a003195b12c68a25e85c1249630901f87',1,'Canbus::sendData(const uint32_t address, uint8_t buf[8])'],['../namespace_canbus.html#a685569d6ee66f2c88962d158a5caf22c',1,'Canbus::sendData(const uint32_t address, const uint8_t buf_0=0, const uint8_t buf_1=0, const uint8_t buf_2=0, const uint8_t buf_3=0, const uint8_t buf_4=0, const uint8_t buf_5=0, const uint8_t buf_6=0, const uint8_t buf_7=0)']]],
   ['sendtorque_178',['sendTorque',['../namespace_m_c.html#a043a760e6f9eaefc9d13ab2f7f1b342c',1,'MC']]],
   ['serial_5fcommands_179',['SERIAL_COMMANDS',['../_serial_command_8def.html#a9feec64f8f82f23788b95b4db603bbdd',1,'SerialCommand.def']]],
-  ['serial_5fports_180',['serial_ports',['../namespacevs__conf.html#a75e9e112029aad603942e76f725977b6',1,'vs_conf']]],
+  ['serial_5fports_180',['serial_ports',['../vs__conf_8py.html#a75e9e112029aad603942e76f725977b6',1,'vs_conf']]],
   ['serialcommand_2ecpp_181',['SerialCommand.cpp',['../_serial_command_8cpp.html',1,'']]],
   ['serialcommand_2edef_182',['SerialCommand.def',['../_serial_command_8def.html',1,'']]],
   ['serialcommand_2eh_183',['SerialCommand.h',['../_serial_command_8h.html',1,'']]],
