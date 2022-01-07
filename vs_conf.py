@@ -11,28 +11,11 @@
 
 import os
 import sys
-import glob
+import subprocess
 from io import TextIOBase
 import json
 import re
 from typing import Any, Callable, Sequence
-
-OPTIONAL_LOADED = False
-
-try:
-    import serial
-except ImportError:
-    print("Attempting to install optional modules")
-    os.system("python -m pip install pyserial")
-    print()
-
-try:
-    import serial
-
-    OPTIONAL_LOADED = True
-except ImportError:
-    print("Unable to install optional modules")
-    print()
 
 SETTINGS_PATH = ".vscode/settings.json"
 
@@ -97,33 +80,22 @@ def load_json() -> dict[str, str]:
 
 
 def serial_ports() -> list[str]:
-    """Lists serial port names
-
-    Raises:
-        EnvironmentError: On unsupported or unknown platforms
+    """Lists serial port names when on windows
 
     Returns:
-        list[str]: A list of the serial ports available on the system
+        list[str]: A list of the serial ports available on a win system
     """
     if sys.platform.startswith("win"):
-        ports = [f"COM{i + 1}" for i in range(256)]
-    elif sys.platform.startswith("linux") or sys.platform.startswith("cygwin"):
-        # this excludes your current terminal "/dev/tty"
-        ports = glob.glob("/dev/tty[A-Za-z]*")
-    elif sys.platform.startswith("darwin"):
-        ports = glob.glob("/dev/tty.*")
-    else:
-        raise EnvironmentError("Unsupported platform")
-
-    result = []
-    for port in ports:
         try:
-            serial_port = serial.Serial(port)
-            serial_port.close()
-            result.append(port)
-        except (OSError, serial.SerialException):
+            fnl: list[str] = []
+            out = subprocess.check_output(["mode"], shell=True, stderr=subprocess.DEVNULL).decode("utf-8")
+            for line in out.splitlines():
+                if line.startswith("Status for device COM"):
+                    fnl.append(line[18:-1])
+            return fnl
+        except subprocess.CalledProcessError:
             pass
-    return result
+    return []
 
 
 def listify(seq: Sequence) -> str:
@@ -336,8 +308,10 @@ def main():
                 break
             adv_mode = True
         print(option)
-        if OPTIONAL_LOADED and (option is settings.FRONT_TEENSY_PORT or option is settings.BACK_TEENSY_PORT):
-            print("    Open serial ports:", listify(serial_ports()))
+        if option is settings.FRONT_TEENSY_PORT or option is settings.BACK_TEENSY_PORT:
+            ports = serial_ports()
+            if len(ports) != 0:
+                print("    Available ports:", listify(ports))
         if not option.set_value(input("Input option, blank for default: ")):
             while not option.set_value(input("Invalid option: ")):
                 pass
