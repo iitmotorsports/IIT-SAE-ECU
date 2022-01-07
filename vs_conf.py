@@ -1,4 +1,13 @@
-""" Script to easily setup VScode """
+"""
+@file vs_conf.py
+@author IR
+@brief Generate configuration files for compilation, intellisense, and post operations
+@version 0.1
+@date 2022-01-06
+
+@copyright Copyright (c) 2022
+
+"""
 
 import os
 import sys
