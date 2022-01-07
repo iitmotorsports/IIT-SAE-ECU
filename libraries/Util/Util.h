@@ -45,4 +45,42 @@ T cMap(T x, A inMin, B inMax, C outMin, D outMax) {
     return mapped;
 }
 
+template <typename T>
+class AvgVar {
+private:
+    double avg = 0.0;
+    int samples;
+
+public:
+    AvgVar(int samples) {
+        this->samples = samples;
+    }
+
+    operator T() const { return (T)avg; }
+
+    T operator=(T val) {
+        avg = EMAvg(avg, val, samples);
+        return (T)avg;
+    }
+};
+
+template <typename T>
+class AvgVarRef {
+private:
+    double avg = 0.0;
+    T *pointer;
+    int samples;
+
+public:
+    AvgVarRef(T *pointer, int samples) {
+        this->pointer = pointer;
+        this->samples = samples;
+    }
+
+    operator T() {
+        avg = EMAvg(avg, *pointer, samples);
+        return (T)avg;
+    }
+};
+
 #endif // __ECU_UTIL_H__
