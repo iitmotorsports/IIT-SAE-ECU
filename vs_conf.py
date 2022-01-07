@@ -32,6 +32,7 @@ BACKUP_SET = """{
     "BACK_TEENSY_PORT": "COM10",
     "BAUDRATE": "115200",
     "GRAPH_ARG": "",
+    "CORE": "teensy4",
     "CORE_MODEL": "41",
     "CORE_NAME": "MK66FX1M0",
     "CORE_SPEED": "180000000",
@@ -214,6 +215,7 @@ class Settings:
     CORE_MODEL = Option("CORE_MODEL", "Model number of the teensy to compile for", (36, 40, 41), default=41)
     CORE_SPEED = Option("CORE_SPEED", "Speed at which the CPU will run (MHz)", default="AUTOSET VALUE", advanced=True)
     CORE_NAME = Option("CORE_NAME", "Model of the cpu", default="AUTOSET VALUE", advanced=True)
+    CORE = Option("CORE", "Core folder to compile with", default="AUTOSET VALUE", advanced=True)
     BAUDRATE = Option("BAUDRATE", "Baudrate to use with serial", (9600, 19200, 38400, 57600, 115200), default=115200, advanced=True)
     USB_SETTING = Option("USB_SETTING", "USB behavior of the core", default="USB_SERIAL", advanced=True)
     TOOLCHAIN_OFFSET = Option("TOOLCHAIN_OFFSET", "Offset to the toolchain", default="../TeensyToolchain", advanced=True)
@@ -228,6 +230,7 @@ class Settings:
         CORE_MODEL,
         CORE_SPEED,
         CORE_NAME,
+        CORE,
         BAUDRATE,
         USB_SETTING,
         TOOLCHAIN_OFFSET,
@@ -240,6 +243,7 @@ class Settings:
         self.load(settings_dict)
         self.CORE_SPEED.getter = self.__get_core_speed
         self.CORE_NAME.getter = self.__get_core_name
+        self.CORE.getter = self.__get_core
 
     def __get_core_speed(self, _) -> str:
         model = int(self.CORE_MODEL.value)
@@ -255,6 +259,14 @@ class Settings:
             return "MK66FX1M0"
         if model == 40 or model == 41:
             return "IMXRT1062"
+        return "BAD MODEL"
+
+    def __get_core(self, _) -> str:
+        model = int(self.CORE_MODEL.value)
+        if model == 36:
+            return "teensy3"
+        if model == 40 or model == 41:
+            return "teensy4"
         return "BAD MODEL"
 
     def load(self, settings_dict: dict[str, str]) -> None:
