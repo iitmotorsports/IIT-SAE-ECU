@@ -18,6 +18,5 @@ var searchData=
   ['pre_5fbuild_2epy_166',['Pre_Build.py',['../_pre___build_8py.html',1,'']]],
   ['print_5fsettings_167',['print_settings',['../classvs__conf_1_1_settings.html#ab9e578fd9bea90a346bee3089efb518e',1,'vs_conf::Settings']]],
   ['printlookup_168',['printLookup',['../namespace_logging.html#a92c0f46c8be76298719b50a39e9d8dfa',1,'Logging']]],
-  ['pushdata_169',['pushData',['../namespace_canbus.html#a2c59e4ee5bcc1d66fee1c1d91af4731b',1,'Canbus']]],
-  ['pwmservo_170',['PWMServo',['../class_p_w_m_servo.html',1,'']]]
+  ['pushdata_169',['pushData',['../namespace_canbus.html#a2c59e4ee5bcc1d66fee1c1d91af4731b',1,'Canbus']]]
 ];

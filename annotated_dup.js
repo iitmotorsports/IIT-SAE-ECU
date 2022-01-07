@@ -16,6 +16,5 @@ var annotated_dup =
       [ "Settings", "classvs__conf_1_1_settings.html", "classvs__conf_1_1_settings" ]
     ] ],
     [ "AvgVar", "class_avg_var.html", "class_avg_var" ],
-    [ "AvgVarRef", "class_avg_var_ref.html", "class_avg_var_ref" ],
-    [ "PWMServo", "class_p_w_m_servo.html", "class_p_w_m_servo" ]
+    [ "AvgVarRef", "class_avg_var_ref.html", "class_avg_var_ref" ]
 ];

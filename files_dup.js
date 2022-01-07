@@ -39,8 +39,6 @@ var files_dup =
     [ "Pins.h", "_pins_8h.html", "_pins_8h" ],
     [ "PPHelp.h", "_p_p_help_8h.html", null ],
     [ "Pre_Build.py", "_pre___build_8py.html", null ],
-    [ "PWMServo.cpp", "_p_w_m_servo_8cpp_source.html", null ],
-    [ "PWMServo.h", "_p_w_m_servo_8h_source.html", null ],
     [ "qrJSON.py", "qr_j_s_o_n_8py.html", null ],
     [ "SerialCommand.cpp", "_serial_command_8cpp.html", null ],
     [ "SerialCommand.def", "_serial_command_8def.html", "_serial_command_8def" ],
