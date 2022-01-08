@@ -1,6 +1,8 @@
 SAE at IIT ECU Programming
 ===========================
 
+<img src="[figure/jupyterlab.png](https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/41.png)" alt="Teensy 4.1" width="512">
+
 This repository contains the source code that the SAE team at IIT uses for their microcontrollers.
 
 Hardware
