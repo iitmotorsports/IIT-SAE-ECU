@@ -57,6 +57,7 @@ Note, however, if this script is not run the macro should still allow everything
 import pathlib
 import shutil
 import hashlib
+import glob
 import os
 import asyncio
 import threading
@@ -745,8 +746,30 @@ def save_lookup(path):
         json.dump(toSave, f, indent=4, separators=(",", ": "))
 
 
+def checkGitSubmodules():
+    err = False
+    try:
+        response = subprocess.check_output("git config -f .gitmodules -l", stderr=subprocess.STDOUT, shell=True)
+        submodules = tuple(line.split("=")[1] for line in response.decode("utf-8").splitlines() if ".url=" not in line)
+        for module in submodules:
+            if (
+                not os.path.exists(module)
+                or not os.path.isdir(module)
+                or not list(1 for ext in INCLUDED_FILE_TYPES if len(glob.glob(f"**{os.path.sep}*{ext}", root_dir=module, recursive=True)))
+            ):
+                print(Text.warning("Submodule does not exist, or contains no source files : " + module))
+                err = True
+    except subprocess.CalledProcessError:
+        print(Text.error("Failed to check for git submodules"))
+    if err:
+        print(Text.important("\nConsider running " + Text.red("git pull --recurse-submodules")))
+        print(Text.important("or " + Text.red("git submodule update --init")) + Text.important(" if repo has just been cloned\n"))
+
+
 # Start Script
 def main():
+    checkGitSubmodules()
+
     touch(SOURCE_DEST_NAME)
     touch(LIBRARIES_DEST_NAME)
 
