@@ -48,6 +48,7 @@ var files_dup =
     [ "SerialVars.def", "_serial_vars_8def.html", "_serial_vars_8def" ],
     [ "State.cpp", "_state_8cpp.html", null ],
     [ "State.h", "_state_8h.html", "_state_8h" ],
+    [ "Test.cpp", "_test_8cpp.html", null ],
     [ "Test.h", "_test_8h.html", "_test_8h" ],
     [ "uploadPaste.py", "upload_paste_8py.html", null ],
     [ "Util.cpp", "_util_8cpp.html", "_util_8cpp" ],
