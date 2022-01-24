@@ -105,6 +105,7 @@ void run() {
     Serial.flush();
 
 #if ECU_TESTING == FRONT_ECU
+    // serial_spam();
     full_front_test();
 #endif
 
