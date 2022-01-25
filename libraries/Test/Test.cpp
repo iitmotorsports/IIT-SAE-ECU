@@ -14,20 +14,21 @@
 // @cond
 
 void serial_spam() {
-    static elapsedMicros em;
-    static double c = 5;
-    int ramp = 5000;
-    int ramp2 = 10;
+    static elapsedMillis em;
+    long long ramp = 50000;
 
     while (true) {
-        Serial.write((char *)&ramp, 1);
-        for (size_t i = 0; i < ramp; i++) {
+        if (ramp < 0)
+            continue;
+        Serial.write((char *)&ramp, 8);
+        for (int i = 0; i < ramp; i++) {
+            static double c = 5;
             long long a = (long long)c;
             c = a / c;
         }
-        if (--ramp2 <= 0 && ramp != 0) {
-            ramp2 = 100;
-            ramp--;
+        if (em > 500) {
+            em = 0;
+            ramp -= 1000;
         }
     }
 }
