@@ -136,11 +136,12 @@ Using</h1>
 <h2><a class="anchor" id="autotoc_md25"></a>
 VSCode Tasks</h2>
 <ul>
+<li><code>VS setup</code>: Configure things such as what <code>COM</code> ports to use; both for front and back teensy, whether to use the plotter app, and whether to compile for teensy <code>3.6</code>, <code>4.0</code>, or <code>4.1</code>.</li>
 <li><code>Clean</code>: Clean up build files</li>
-<li><code>Reset</code>: Clean up entire CMake project</li>
-<li><code>Build</code>: Compile project</li>
+<li><code>Reset</code>: Clean up entire CMake project and reconfigure CMake</li>
+<li><code>Build</code>: Compile project and generate binaries</li>
 <li><code>Upload</code>: Upload compiled binary to either front or back teensy</li>
-<li><code>Monitor</code>: Monitor teensy over a CLI, select the appropriate options when running, defaults to <code>HEX</code> mode</li>
+<li><code>Monitor</code>: Monitor teensy over a CLI, select the appropriate options when running, defaults to <code>Mapped</code> mode</li>
 </ul>
 <p>By default, <code>Ctrl + Shift + B</code> (Run Build Task) should run <code>Build</code> then <code>Upload</code> for both Teensies and then <code>Monitor</code>.</p>
 <p>Alternatively, install the <a href="https://marketplace.visualstudio.com/items?itemName=actboy168.tasks">Tasks</a> extension so that the main tasks appear on the status bar.</p>
