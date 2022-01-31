@@ -1,4 +1,4 @@
-@page Infographics Infographics
+@page Infographics Infographics Page
 
 # Infographics
 
