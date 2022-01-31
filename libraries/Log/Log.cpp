@@ -87,7 +87,7 @@ namespace Logging {
 struct uMsg {
     uint32_t LAST_NUMBER = 0;
     elapsedMillis last;
-    bool update(uint32_t newNum, int mediate) {
+    bool update(uint32_t newNum, int mediate) { // TODO: Add to infographic mediate functionality
         /**
          * Mediate Value
          * 0 :   Log instantly
