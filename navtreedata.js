@@ -49,7 +49,7 @@ var NAVTREE =
       [ "Further Reading", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md9", null ],
       [ "Moving Forward", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md10", null ]
     ] ],
-    [ "Infographics", "_infographics.html", [
+    [ "Infographics Page", "_infographics.html", [
       [ "Infographics", "_infographics.html#autotoc_md11", [
         [ "Logging", "_infographics.html#autotoc_md12", [
           [ "2022", "_infographics.html#autotoc_md13", null ]
