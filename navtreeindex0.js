@@ -1,5 +1,7 @@
 var NAVTREEINDEX0 =
 {
+"":[4,0,1],
+"":[4,0,15],
 "_aero_servo_8cpp.html":[6,0,0],
 "_aero_servo_8cpp_source.html":[6,0,0],
 "_aero_servo_8h.html":[6,0,1],
@@ -247,7 +249,5 @@ var NAVTREEINDEX0 =
 "bin2cc_8py.html#a41cce3a3bd01b4b00004bb16c6ee26c2":[4,0,1,0],
 "bin2cc_8py.html#a41cce3a3bd01b4b00004bb16c6ee26c2":[6,0,2,0],
 "bin2cc_8py.html#ab58e6eecfb75f7c01f2bba259f2589b1":[4,0,1,2],
-"bin2cc_8py.html#ab58e6eecfb75f7c01f2bba259f2589b1":[6,0,2,2],
-"bin2cc_8py_source.html":[6,0,2],
-"class_avg_var.html":[5,0,5]
+"bin2cc_8py.html#ab58e6eecfb75f7c01f2bba259f2589b1":[6,0,2,2]
 };
