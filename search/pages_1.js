@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['infographics_20page_468',['Infographics Page',['../_infographics.html',1,'']]]
+  ['infographics_468',['Infographics',['../_infographics.html',1,'']]]
 ];

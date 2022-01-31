@@ -49,7 +49,7 @@ var NAVTREE =
       [ "Further Reading", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md9", null ],
       [ "Moving Forward", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md10", null ]
     ] ],
-    [ "Infographics Page", "_infographics.html", [
+    [ "Infographics", "_infographics.html", [
       [ "Infographics", "_infographics.html#autotoc_md11", [
         [ "Logging", "_infographics.html#autotoc_md12", [
           [ "2022", "_infographics.html#autotoc_md13", null ]
@@ -105,8 +105,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"",
-"class_serial_var_1_1_serial_var.html#a6ad8d8a8bd68397d3cd2eefe37657af1"
+"_aero_servo_8cpp.html",
+"class_serial_var_1_1_serial_var.html#adf0f62d84239c90e6b6a07fc0a1911ab"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
