@@ -65,7 +65,7 @@ To thoroughly follow this guide, ensure you have 1-2 Teensies connected to your 
 
 \* By default, pressing the combo `Ctrl + lShift + P` then typing and selecting `Tasks: Run Task` should give you a list of all the tasks listed in the [tasks.json](.vscode/tasks.json) file. Alternatively, installing the [Tasks](https://marketplace.visualstudio.com/items?itemName=actboy168.tasks) extension shows commonly used tasks on the bottom task bar in VSCode, as so.
 
-![How the bottom task bar should look like](https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/Tasks.png)
+![How the bottom task bar should look like](https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/listedTasks.png)
 
 These tasks are used to help automate development.
 
