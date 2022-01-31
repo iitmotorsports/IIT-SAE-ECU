@@ -1,5 +1,7 @@
 var NAVTREEINDEX1 =
 {
+"class_serial_var_1_1_serial_var.html#a6ad8d8a8bd68397d3cd2eefe37657af1":[5,0,2,0,2],
+"class_serial_var_1_1_serial_var.html#abb2574a4d86028b0e751f0c96aa412de":[5,0,2,0,0],
 "class_serial_var_1_1_serial_var.html#adf0f62d84239c90e6b6a07fc0a1911ab":[5,0,2,0,1],
 "classes.html":[5,1],
 "classvs__conf_1_1_settings.html":[5,0,4,0],
@@ -200,21 +202,19 @@ var NAVTREEINDEX1 =
 "upload_paste_8py.html":[6,0,50],
 "upload_paste_8py_source.html":[6,0,50],
 "vs__conf_8py.html":[6,0,53],
-"vs__conf_8py.html#a1f1c6513670f3863a1b019fa8eaba30d":[4,0,15,1],
 "vs__conf_8py.html#a1f1c6513670f3863a1b019fa8eaba30d":[6,0,53,2],
+"vs__conf_8py.html#a1f1c6513670f3863a1b019fa8eaba30d":[4,0,15,1],
 "vs__conf_8py.html#a59bd943f036ed3f2e69be23ea2bd97de":[6,0,53,5],
 "vs__conf_8py.html#a59bd943f036ed3f2e69be23ea2bd97de":[4,0,15,4],
-"vs__conf_8py.html#a6904bc4ea89e8724a9a708d292f99c4f":[4,0,15,7],
 "vs__conf_8py.html#a6904bc4ea89e8724a9a708d292f99c4f":[6,0,53,8],
-"vs__conf_8py.html#a75e9e112029aad603942e76f725977b6":[6,0,53,6],
+"vs__conf_8py.html#a6904bc4ea89e8724a9a708d292f99c4f":[4,0,15,7],
 "vs__conf_8py.html#a75e9e112029aad603942e76f725977b6":[4,0,15,5],
-"vs__conf_8py.html#a9be55bf2bd083f42ee69af1a396dd648":[6,0,53,4],
+"vs__conf_8py.html#a75e9e112029aad603942e76f725977b6":[6,0,53,6],
 "vs__conf_8py.html#a9be55bf2bd083f42ee69af1a396dd648":[4,0,15,3],
-"vs__conf_8py.html#aa369a1c2ab76949023cb9a726487fddf":[4,0,15,6],
+"vs__conf_8py.html#a9be55bf2bd083f42ee69af1a396dd648":[6,0,53,4],
 "vs__conf_8py.html#aa369a1c2ab76949023cb9a726487fddf":[6,0,53,7],
+"vs__conf_8py.html#aa369a1c2ab76949023cb9a726487fddf":[4,0,15,6],
 "vs__conf_8py.html#afc28be17acddac838c2f46460d7fba5c":[6,0,53,3],
 "vs__conf_8py.html#afc28be17acddac838c2f46460d7fba5c":[4,0,15,2],
-"vs__conf_8py_source.html":[6,0,53],
-"":[4,0,15],
-"":[4,0,1]
+"vs__conf_8py_source.html":[6,0,53]
 };
