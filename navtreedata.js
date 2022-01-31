@@ -26,15 +26,15 @@ var NAVTREE =
 [
   [ "SAE Teensy ECU", "index.html", [
     [ "SAE at IIT ECU Programming", "index.html", [
-      [ "Hardware", "index.html#autotoc_md16", null ],
-      [ "Software", "index.html#autotoc_md17", null ],
-      [ "Setup", "index.html#autotoc_md18", null ],
-      [ "Using", "index.html#autotoc_md19", [
-        [ "VSCode Tasks", "index.html#autotoc_md20", null ],
-        [ "CMake", "index.html#autotoc_md21", null ]
+      [ "Hardware", "index.html#autotoc_md21", null ],
+      [ "Software", "index.html#autotoc_md22", null ],
+      [ "Setup", "index.html#autotoc_md23", null ],
+      [ "Using", "index.html#autotoc_md24", [
+        [ "VSCode Tasks", "index.html#autotoc_md25", null ],
+        [ "CMake", "index.html#autotoc_md26", null ]
       ] ],
-      [ "Documentation", "index.html#autotoc_md22", null ],
-      [ "New Members", "index.html#autotoc_md23", null ]
+      [ "Documentation", "index.html#autotoc_md27", null ],
+      [ "New Members", "index.html#autotoc_md28", null ]
     ] ],
     [ "How To Contribute", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html", [
       [ "Before you begin", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md1", null ],
@@ -49,8 +49,18 @@ var NAVTREE =
       [ "Further Reading", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md9", null ],
       [ "Moving Forward", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md10", null ]
     ] ],
+    [ "Infographics", "_infographics.html", [
+      [ "Infographics", "_infographics.html#autotoc_md11", [
+        [ "Logging", "_infographics.html#autotoc_md12", [
+          [ "2022", "_infographics.html#autotoc_md13", null ]
+        ] ],
+        [ "TestRigs", "_infographics.html#autotoc_md14", [
+          [ "2021", "_infographics.html#autotoc_md15", null ]
+        ] ]
+      ] ]
+    ] ],
     [ "X Macros", "_x_macros.html", [
-      [ "X Macros", "_x_macros.html#autotoc_md11", null ],
+      [ "X Macros", "_x_macros.html#autotoc_md16", null ],
       [ "Creating an X Macro", "_x_macros.html#XMacros_Creating_an_X_Macro", [
         [ "Defining", "_x_macros.html#XMacros_Defining", null ],
         [ "Generating", "_x_macros.html#XMacros_Generating", null ]
@@ -95,8 +105,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_aero_servo_8cpp.html",
-"classvs__conf_1_1_settings.html#ab9e578fd9bea90a346bee3089efb518e"
+"",
+"class_serial_var_1_1_serial_var.html#a6ad8d8a8bd68397d3cd2eefe37657af1"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
