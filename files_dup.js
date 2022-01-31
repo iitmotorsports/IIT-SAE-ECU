@@ -32,7 +32,7 @@ var files_dup =
     [ "Mirror.cpp", "_mirror_8cpp.html", null ],
     [ "Mirror.h", "_mirror_8h.html", "_mirror_8h" ],
     [ "MotorControl.cpp", "_motor_control_8cpp.html", null ],
-    [ "MotorControl.def", "_motor_control_8def_source.html", null ],
+    [ "MotorControl.def", "_motor_control_8def.html", "_motor_control_8def" ],
     [ "MotorControl.h", "_motor_control_8h.html", "_motor_control_8h" ],
     [ "PinConfig.def", "_pin_config_8def.html", "_pin_config_8def" ],
     [ "Pins.cpp", "_pins_8cpp.html", null ],
