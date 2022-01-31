@@ -9,8 +9,8 @@
  * 
  */
 
-#ifndef __WIRE_H__
-#define __WIRE_H__
+#ifndef __ECU_WIRE_H__
+#define __ECU_WIRE_H__
 
 #ifdef __MK66FX1M0__
 #include "i2c_t3.h"
@@ -20,4 +20,4 @@ using TwoWire = i2c_t3;
 #ifdef __IMXRT1062__
 #include "i2c_driver_wire.h"
 #endif
-#endif // __WIRE_H__
+#endif // __ECU_WIRE_H__
