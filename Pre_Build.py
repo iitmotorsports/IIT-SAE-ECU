@@ -57,6 +57,7 @@ Note, however, if this script is not run the macro should still allow everything
 import pathlib
 import shutil
 import hashlib
+import glob
 import os
 import asyncio
 import threading
@@ -70,13 +71,17 @@ from pathlib import Path
 import io
 from typing import Optional, IO
 import subprocess
+from os.path import join as join_path
+from vs_conf import load_json
+from vs_conf import Settings
 
 SOURCE_NAME = "src"
 LIBRARIES_NAME = "libraries"
-LIB_PATH = "libraries\\Log"  # Path to the implementation of Log
+LIB_PATH = join_path("libraries", "Log")  # Path to the implementation of Log
 LIB_FILE = "LogConfig.def"
 LIB_DEFINE = ("#define CONF_LOGGING_MAPPED_MODE 0", "#define CONF_LOGGING_MAPPED_MODE 1")
-WORKING_DIRECTORY_OFFSET = "build\\Pre_Build\\"
+BLACKLIST = join_path("libraries", ".blacklist")
+WORKING_DIRECTORY_OFFSET = join_path("build", "Pre_Build", "")
 # FILE_OUTPUT_PATH = "build\\bin"
 FILE_OUTPUT_PATH = ""
 
@@ -99,16 +104,31 @@ BUF_SIZE = 65536
 
 RAM_MEMO = False
 
-INCLUDED_FILE_TYPES = (
-    ".c",
-    ".cpp",
-    ".h",
-    ".hpp",
-    ".t",
-    ".tpp",
-    ".s",
-    ".def"
-)
+INCLUDED_FILE_TYPES = (".c", ".cpp", ".h", ".hpp", ".t", ".tpp", ".s", ".def")
+
+
+def getLibraryBlacklist() -> dict[str, list]:
+    """Get the library folder blacklist based on core model
+
+    Returns:
+        dict[str, list]: folder blacklist dict
+    """
+    blacklist: dict[str, list] = {}
+    with open(BLACKLIST, "r", encoding="utf-8") as file:
+        currentModel = ""
+        for line in file.readlines():
+            if line[0] == ".":
+                currentModel = line.split(" ")[0][1:]
+                if currentModel not in blacklist:
+                    blacklist[currentModel] = []
+            else:
+                for token in line.split(" "):
+                    token = token.strip(" \n")
+                    if not token or token[0] == "#":
+                        break
+                    elif os.path.exists(join_path(os.path.dirname(BLACKLIST), token)):
+                        blacklist[currentModel].append(join_path(os.path.dirname(BLACKLIST), token))
+    return blacklist
 
 
 def available_ram():
@@ -141,35 +161,39 @@ def hashFile(filePath):
 class Text:
     @staticmethod
     def error(text):
-        return "\033[91m\033[1m\033[4m" + text + "\033[0m"
+        return f"\033[91m\033[1m\033[4m{text}\033[0m"
 
     @staticmethod
     def underline(text):
-        return "\033[4m" + text + "\033[0m"
+        return f"\033[4m{text}\033[0m"
 
     @staticmethod
     def header(text):
-        return "\033[1m\033[4m" + text + "\033[0m"
+        return f"\033[1m\033[4m{text}\033[0m"
 
     @staticmethod
     def warning(text):
-        return "\033[93m\033[1m" + text + "\033[0m"
+        return f"\033[93m\033[1m{text}\033[0m"
+
+    @staticmethod
+    def yellow(text):
+        return f"\033[93m{text}\033[0m"
 
     @staticmethod
     def important(text):
-        return "\033[94m\033[1m" + text + "\033[0m"
+        return f"\033[94m\033[1m{text}\033[0m"
 
     @staticmethod
     def reallyImportant(text):
-        return "\033[94m\033[1m\033[4m" + text + "\033[0m"
+        return f"\033[94m\033[1m\033[4m{text}\033[0m"
 
     @staticmethod
     def green(text):
-        return "\033[92m" + text + "\033[0m"
+        return f"\033[92m{text}\033[0m"
 
     @staticmethod
     def red(text):
-        return "\033[91m" + text + "\033[0m"
+        return f"\033[91m{text}\033[0m"
 
 
 def save_data(Object):
@@ -442,6 +466,7 @@ def run_ingest_files(finishFunc, *FilesEntries):
 Files: set[FileEntry] = set()
 FileRefs = set()
 Threads = set()
+Excluded_dirs = set()
 
 FILE_CHANGE = False
 
@@ -464,27 +489,48 @@ def syncFile(filePath, offset, rawpath, workingFilePath=None, suppress=False):
         return False
     return True
 
-def allocate_files(Path, Offset):
+
+def allocate_files(path, offset):
     async def lib_flag(line):
         return line.replace(*LIB_DEFINE)
 
-    for subdir, _, files in os.walk(Path):
+    blacklist = getLibraryBlacklist()
+    model = load_json()[Settings.CORE_NAME.key]
+    if model in blacklist:
+        blacklist = blacklist[model]
+    else:
+        blacklist = []
+
+    for subdir, _, files in os.walk(path):
+        cont = False
+        for dir in blacklist:
+            if str(subdir).startswith(dir):
+                Excluded_dirs.add(dir)
+                cont = True
+                break
+        if cont:
+            continue
         for filename in files:
             if pathlib.Path(filename).suffix.lower() not in INCLUDED_FILE_TYPES:
                 continue
             filepath = subdir + os.sep + filename
             rawpath = subdir + os.sep
             if BYPASS_SCRIPT:
-                syncFile(filepath, Offset, rawpath, suppress=True)
+                syncFile(filepath, offset, rawpath, suppress=True)
                 continue
             if rawpath.startswith(LIB_PATH):
-                libFile = FileEntry(rawpath, filepath, filename, Offset)
+                libFile = FileEntry(rawpath, filepath, filename, offset)
                 if libFile.name == LIB_FILE:
                     asyncio.run(libFile.walkLines(lib_flag))
                     continue
-            File_Ent = FileEntry(rawpath, filepath, filename, Offset)
+            File_Ent = FileEntry(rawpath, filepath, filename, offset)
             Files.add(File_Ent)
             FileRefs.add(File_Ent)
+
+    for dir in blacklist:
+        rmPath = join_path(offset, dir)
+        if os.path.exists(rmPath):
+            shutil.rmtree(rmPath)
 
 
 def dole_files(count, finishFunc):
@@ -628,6 +674,24 @@ def printResults():
 
     extStr: str = ""
 
+    for dir in Excluded_dirs:
+        if c < MAX_RESULT:
+            extStr += f"  {dir}\n"
+            c += 1
+        else:
+            m += 1
+
+    if c > 0:
+        print(Text.header("\nExcluded Folders:"))
+        print(Text.yellow(extStr.strip("\n")))
+        if m > 0:
+            print(Text.underline(Text.yellow("  {} more folder{}".format(m, "s" if m > 1 else ""))))
+
+    c = 0
+    m = 0
+
+    extStr: str = ""
+
     for f in FileRefs:
         if f.modified:
             if c < MAX_RESULT:
@@ -682,8 +746,30 @@ def save_lookup(path):
         json.dump(toSave, f, indent=4, separators=(",", ": "))
 
 
+def checkGitSubmodules():
+    err = False
+    try:
+        response = subprocess.check_output("git config -f .gitmodules -l", stderr=subprocess.STDOUT, shell=True)
+        submodules = tuple(line.split("=")[1] for line in response.decode("utf-8").splitlines() if ".url=" not in line)
+        for module in submodules:
+            if (
+                not os.path.exists(module)
+                or not os.path.isdir(module)
+                or not list(1 for ext in INCLUDED_FILE_TYPES if len(glob.glob(f"**{os.path.sep}*{ext}", root_dir=module, recursive=True)))
+            ):
+                print(Text.warning("Submodule does not exist, or contains no source files : " + module))
+                err = True
+    except subprocess.CalledProcessError:
+        print(Text.error("Failed to check for git submodules"))
+    if err:
+        print(Text.important("\nConsider running " + Text.red("git pull --recurse-submodules")))
+        print(Text.important("or " + Text.red("git submodule update --init")) + Text.important(" if repo has just been cloned\n"))
+
+
 # Start Script
 def main():
+    checkGitSubmodules()
+
     touch(SOURCE_DEST_NAME)
     touch(LIBRARIES_DEST_NAME)
 

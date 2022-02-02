@@ -1,29 +1,21 @@
-""" Script to easily setup VScode """
+"""
+@file vs_conf.py
+@author IR
+@brief Generate configuration files for compilation, intellisense, and post operations
+@version 0.1
+@date 2022-01-06
+
+@copyright Copyright (c) 2022
+
+"""
 
 import os
 import sys
-import glob
+import subprocess
 from io import TextIOBase
 import json
 import re
 from typing import Any, Callable, Sequence
-
-OPTIONAL_LOADED = False
-
-try:
-    import serial
-except ImportError:
-    print("Attempting to install optional modules")
-    os.system("python -m pip install pyserial")
-    print()
-
-try:
-    import serial
-
-    OPTIONAL_LOADED = True
-except ImportError:
-    print("Unable to install optional modules")
-    print()
 
 SETTINGS_PATH = ".vscode/settings.json"
 
@@ -32,6 +24,7 @@ BACKUP_SET = """{
     "BACK_TEENSY_PORT": "COM10",
     "BAUDRATE": "115200",
     "GRAPH_ARG": "",
+    "CORE": "teensy4",
     "CORE_MODEL": "41",
     "CORE_NAME": "MK66FX1M0",
     "CORE_SPEED": "180000000",
@@ -87,33 +80,22 @@ def load_json() -> dict[str, str]:
 
 
 def serial_ports() -> list[str]:
-    """Lists serial port names
-
-    Raises:
-        EnvironmentError: On unsupported or unknown platforms
+    """Lists serial port names when on windows
 
     Returns:
-        list[str]: A list of the serial ports available on the system
+        list[str]: A list of the serial ports available on a win system
     """
     if sys.platform.startswith("win"):
-        ports = [f"COM{i + 1}" for i in range(256)]
-    elif sys.platform.startswith("linux") or sys.platform.startswith("cygwin"):
-        # this excludes your current terminal "/dev/tty"
-        ports = glob.glob("/dev/tty[A-Za-z]*")
-    elif sys.platform.startswith("darwin"):
-        ports = glob.glob("/dev/tty.*")
-    else:
-        raise EnvironmentError("Unsupported platform")
-
-    result = []
-    for port in ports:
         try:
-            serial_port = serial.Serial(port)
-            serial_port.close()
-            result.append(port)
-        except (OSError, serial.SerialException):
+            fnl: list[str] = []
+            out = subprocess.check_output(["mode"], shell=True, stderr=subprocess.DEVNULL).decode("utf-8")
+            for line in out.splitlines():
+                if line.startswith("Status for device COM"):
+                    fnl.append(line[18:-1])
+            return fnl
+        except subprocess.CalledProcessError:
             pass
-    return result
+    return []
 
 
 def listify(seq: Sequence) -> str:
@@ -214,6 +196,7 @@ class Settings:
     CORE_MODEL = Option("CORE_MODEL", "Model number of the teensy to compile for", (36, 40, 41), default=41)
     CORE_SPEED = Option("CORE_SPEED", "Speed at which the CPU will run (MHz)", default="AUTOSET VALUE", advanced=True)
     CORE_NAME = Option("CORE_NAME", "Model of the cpu", default="AUTOSET VALUE", advanced=True)
+    CORE = Option("CORE", "Core folder to compile with", default="AUTOSET VALUE", advanced=True)
     BAUDRATE = Option("BAUDRATE", "Baudrate to use with serial", (9600, 19200, 38400, 57600, 115200), default=115200, advanced=True)
     USB_SETTING = Option("USB_SETTING", "USB behavior of the core", default="USB_SERIAL", advanced=True)
     TOOLCHAIN_OFFSET = Option("TOOLCHAIN_OFFSET", "Offset to the toolchain", default="../TeensyToolchain", advanced=True)
@@ -228,6 +211,7 @@ class Settings:
         CORE_MODEL,
         CORE_SPEED,
         CORE_NAME,
+        CORE,
         BAUDRATE,
         USB_SETTING,
         TOOLCHAIN_OFFSET,
@@ -240,6 +224,7 @@ class Settings:
         self.load(settings_dict)
         self.CORE_SPEED.getter = self.__get_core_speed
         self.CORE_NAME.getter = self.__get_core_name
+        self.CORE.getter = self.__get_core
 
     def __get_core_speed(self, _) -> str:
         model = int(self.CORE_MODEL.value)
@@ -255,6 +240,14 @@ class Settings:
             return "MK66FX1M0"
         if model == 40 or model == 41:
             return "IMXRT1062"
+        return "BAD MODEL"
+
+    def __get_core(self, _) -> str:
+        model = int(self.CORE_MODEL.value)
+        if model == 36:
+            return "teensy3"
+        if model == 40 or model == 41:
+            return "teensy4"
         return "BAD MODEL"
 
     def load(self, settings_dict: dict[str, str]) -> None:
@@ -315,8 +308,10 @@ def main():
                 break
             adv_mode = True
         print(option)
-        if OPTIONAL_LOADED and (option is settings.FRONT_TEENSY_PORT or option is settings.BACK_TEENSY_PORT):
-            print("    Open serial ports:", listify(serial_ports()))
+        if option is settings.FRONT_TEENSY_PORT or option is settings.BACK_TEENSY_PORT:
+            ports = serial_ports()
+            if len(ports) != 0:
+                print("    Available ports:", listify(ports))
         if not option.set_value(input("Input option, blank for default: ")):
             while not option.set_value(input("Invalid option: ")):
                 pass

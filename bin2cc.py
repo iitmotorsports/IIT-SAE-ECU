@@ -1,5 +1,5 @@
 """
-@file bin2c.py
+@file bin2cc.py
 @author LeHuman
 @brief Convert file string to zlib compressed C array
 @version 0.1

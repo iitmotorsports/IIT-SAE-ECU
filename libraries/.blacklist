@@ -1,0 +1,6 @@
+# Library folders that won't be compiled based on the configured model
+.MK66FX1M0 # Teensy 3.6
+teensy4_i2c
+
+.IMXRT1062 # Teensy 4.x
+i2c_t3

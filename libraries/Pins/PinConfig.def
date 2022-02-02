@@ -24,11 +24,11 @@
  * 
  */
 
-#ifndef __ECU_PINCONFIG_H__
+#ifndef __ECU_PINCONFIG_DEF__
 
 // @cond
 
-#define __ECU_PINCONFIG_H__
+#define __ECU_PINCONFIG_DEF__
 
 #include "Canbus.h"
 #include "ECUGlobalConfig.h"
@@ -256,4 +256,4 @@
 
 #endif
 
-#endif // __ECU_PINCONFIG_H__
+#endif // __ECU_PINCONFIG_DEF__

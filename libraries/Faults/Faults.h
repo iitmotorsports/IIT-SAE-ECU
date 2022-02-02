@@ -14,6 +14,11 @@
  * @see FaultConfig.def for defining faults to check for.
  */
 
+#ifndef __ECU_FAULTS_H__
+// @cond
+#define __ECU_FAULTS_H__
+// @endcond
+
 #include <stdint.h>
 #include <stdlib.h>
 
@@ -54,3 +59,4 @@ bool anyFault(void);
 void logFault(void);
 
 } // namespace Fault
+#endif // __ECU_FAULTS_H__

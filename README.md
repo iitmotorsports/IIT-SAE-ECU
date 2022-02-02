@@ -1,6 +1,8 @@
 SAE at IIT ECU Programming
 ===========================
 
+<img src="https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/41.png" alt="Teensy 4.1" width="512">
+
 This repository contains the source code that the SAE team at IIT uses for their microcontrollers.
 
 Hardware
@@ -47,11 +49,12 @@ Put any libraries / modules in the `libraries` folder
 
 ### VSCode Tasks
 
+* `VS setup`: Configure things such as what `COM` ports to use; both for front and back teensy, whether to use the plotter app, and whether to compile for teensy `3.6`, `4.0`, or `4.1`.
 * `Clean`: Clean up build files
-* `Reset`: Clean up entire CMake project
-* `Build`: Compile project
+* `Reset`: Clean up entire CMake project and reconfigure CMake
+* `Build`: Compile project and generate binaries
 * `Upload`: Upload compiled binary to either front or back teensy
-* `Monitor`: Monitor teensy over a CLI, select the appropriate options when running, defaults to `HEX` mode
+* `Monitor`: Monitor teensy over a CLI, select the appropriate options when running, defaults to `Mapped` mode
 
 By default, `Ctrl + Shift + B` (Run Build Task) should run `Build` then `Upload` for both Teensies and then `Monitor`.
 

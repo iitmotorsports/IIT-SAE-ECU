@@ -9,9 +9,9 @@
  * 
  */
 
-#ifndef __ECU_CANBUS_ADDRESSES_H__
+#ifndef __ECU_CANBUS_ADDRESSES_DEF__
 // @cond
-#define __ECU_CANBUS_ADDRESSES_H__
+#define __ECU_CANBUS_ADDRESSES_DEF__
 
 #include "PPhelp.h"
 
@@ -112,4 +112,4 @@
     X(ADD_ECHO_DATA, CANPIN)       \
     X(ADD_ECHO_DELAY, CANPIN)
 
-#endif // __ECU_CANBUS_ADDRESSES_H__
+#endif // __ECU_CANBUS_ADDRESSES_DEF__

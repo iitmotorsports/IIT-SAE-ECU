@@ -1,3 +1,25 @@
+
+/**
+ * @file MotorControl.def
+ * @author IR
+ * @brief 
+ * @version 0.1
+ * @date 2021-12-30
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ * Various defines used for the motorcontrol module
+ * 
+ */
+
+#ifndef __ECU_MOTORCONTROL_DEF__
+
+// @cond
+
+#define __ECU_MOTORCONTROL_DEF__
+
+// @endcond
+
 #include "Pins.h"
 
 /**
@@ -29,3 +51,4 @@
  */
 #define CONF_STEER_MIN 2500.0
 #define CONF_STEER_MAX 3500.0
+#endif // __ECU_MOTORCONTROL_DEF__

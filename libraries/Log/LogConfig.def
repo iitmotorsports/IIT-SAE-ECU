@@ -14,11 +14,11 @@
  * Changing the value of CONF_LOGGING_MAX_LEVEL changes which log levels are actually printed.
  * 
  */
-#ifndef __ECU_LOGCONFIG_H__
+#ifndef __ECU_LOGCONFIG_DEF__
 
 // @cond
 
-#define __ECU_LOGCONFIG_H__
+#define __ECU_LOGCONFIG_DEF__
 
 // @endcond
 
@@ -47,4 +47,4 @@
 #endif
 #endif
 
-#endif // __ECU_LOGCONFIG_H__
+#endif // __ECU_LOGCONFIG_DEF__

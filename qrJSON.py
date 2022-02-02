@@ -92,7 +92,7 @@ fnt = ImageFont.truetype("arial", 30)
 for d in data:
     img = makeChunk(d, i).get_image().convert("RGBA")
     draw = ImageDraw.Draw(img)
-    draw.text((20, 20), str(len(images)).rjust(2, ' '), font=fnt, fill="black")
+    draw.text((20, 20), str(len(images)).rjust(2, " "), font=fnt, fill="black")
     images.append(img)
     i += 1
 

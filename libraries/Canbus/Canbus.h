@@ -70,7 +70,7 @@ struct Buffer { // IMPROVE: more rigorous testing on the get funcs
     /**
      * @brief Dump the current buffer onto an external one
      * 
-     * @param buffer 
+     * @param extBuffer the array to dump to
      */
     void dump(uint8_t *extBuffer);
     /**

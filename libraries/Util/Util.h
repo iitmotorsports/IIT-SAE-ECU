@@ -12,7 +12,14 @@
 #ifndef __ECU_UTIL_H__
 #define __ECU_UTIL_H__
 
+/**
+ * @brief Euler's constant
+ */
 #define Euler exp(1.0)
+
+/**
+ * @brief Clamp function
+ */
 #define clamp(v, m, x) min(max(v, m), x)
 
 /**
@@ -44,5 +51,84 @@ T cMap(T x, A inMin, B inMax, C outMin, D outMax) {
         return outMax;
     return mapped;
 }
+
+/**
+ * @brief Variable that automaticaly averages itself out when it is set to a value
+ * 
+ * @note The underlying implementation converts everything to a double to maximize precision when averaging
+ * 
+ * @tparam T The primitive data type of this variable
+ */
+template <typename T>
+class AvgVar {
+private:
+    double avg = 0.0;
+    int samples;
+
+public:
+    /**
+     * @brief Construct a new AvgVar given the number of samples to average the value over
+     * 
+     * @param samples The number of samples
+     */
+    AvgVar(int samples) {
+        this->samples = samples;
+    }
+
+    /**
+     * @brief Cast to the internal average to type T
+     * 
+     * @return T The internal average interpreted as type T
+     */
+    operator T() const { return (T)avg; }
+
+    /**
+     * @brief Update the internal average value given the next value
+     * 
+     * @param val The value to update the average with
+     * @return T The internal average interpreted as type T
+     */
+    T operator=(T val) {
+        avg = EMAvg(avg, val, samples);
+        return (T)avg;
+    }
+};
+
+/**
+ * @brief Variable that automaticaly averages itself out when it is called, that is, it only updates it's average when the variable is used
+ * 
+ * @note The underlying implementation converts everything to a double to maximize precision when averaging
+ * 
+ * @tparam T The primitive data type of this variable
+ */
+template <typename T>
+class AvgVarRef {
+private:
+    double avg = 0.0;
+    T *pointer;
+    int samples;
+
+public:
+    /**
+     * @brief Construct a new AvgVar Ref given the number of samples to average the value over and the pointer to the variable it should reference
+     * 
+     * @param pointer The variable to reference
+     * @param samples The number of samples
+     */
+    AvgVarRef(T *pointer, int samples) {
+        this->pointer = pointer;
+        this->samples = samples;
+    }
+
+    /**
+     * @brief Update the internal average
+     * 
+     * @return T The internal average interpreted as type T
+     */
+    operator T() {
+        avg = EMAvg(avg, *pointer, samples);
+        return (T)avg;
+    }
+};
 
 #endif // __ECU_UTIL_H__

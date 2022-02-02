@@ -26,6 +26,28 @@
             }
         },
         {
+            "label": "Pull Submodules",
+            "detail": "Setup VScode configuation",
+            "type": "shell",
+            "command": "python3",
+            "windows": {
+                "command": "git",
+            },
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "statusbar": {
+                    "hide": true
+                }
+            },
+            "args": [
+                "pull",
+                "--recurse-submodules"
+            ],
+            "presentation": {
+                "panel": "shared"
+            }
+        },
+        {
             "label": "ZZZZ",
             "detail": "Don't run this, this is run on startup",
             "type": "shell",
@@ -43,6 +65,9 @@
                 "vs_conf.py",
                 "thisisbeingrunonstartup"
             ],
+            // "dependsOn": [
+            //     "Pull Submodules"
+            // ],
             "presentation": {
                 "panel": "shared"
             },

@@ -1,6 +1,7 @@
 log_lookup.json
 /build
 /settings
+/__pycache__
 *.disable
 *.log
 *.xlsx

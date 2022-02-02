@@ -50,20 +50,45 @@ private:
     uint8_t *buffer;
 
 public:
+    /**
+     * @brief Construct a new Serial Var given the predefined ID defined in SerialVars.def
+     * 
+     * @param ID the predefined ID
+     */
     SerialVar(int ID) {
         buffer = getVariable(ID);
     }
 
+    /**
+     * @brief Cast to the given primitive data type of this variable
+     * 
+     * @return T The buffer interpreted as the primitive data type of this variable
+     */
     operator T() const { return *((T *)(buffer)); }
 
+    /**
+     * @brief Set this variable's buffer given the primitive data type T
+     * 
+     * @param val Value to interpret
+     * @return SerialVar& pointer to this object
+     */
     SerialVar &operator=(T val) {
         *((T *)(buffer)) = val;
         return *this;
     }
 };
 
+/**
+ * @brief Convienece type for SerialVar floats
+ */
 typedef SerialVar<float> SerialFloat;
+/**
+ * @brief Convienece type for SerialVar ints
+ */
 typedef SerialVar<int> SerialInt;
+/**
+ * @brief Convienece type for SerialVar uints
+ */
 typedef SerialVar<unsigned int> SerialUInt;
 
 } // namespace SerialVar
