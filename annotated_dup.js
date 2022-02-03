@@ -13,7 +13,8 @@ var annotated_dup =
       [ "State_t", "struct_state_1_1_state__t.html", "struct_state_1_1_state__t" ]
     ] ],
     [ "vs_conf", null, [
-      [ "Settings", "classvs__conf_1_1_settings.html", "classvs__conf_1_1_settings" ]
+      [ "Settings", "classvs__conf_1_1_settings.html", "classvs__conf_1_1_settings" ],
+      [ "PortPrinter", "classvs__conf_1_1_port_printer.html", "classvs__conf_1_1_port_printer" ]
     ] ],
     [ "AvgVar", "class_avg_var.html", "class_avg_var" ],
     [ "AvgVarRef", "class_avg_var_ref.html", "class_avg_var_ref" ]

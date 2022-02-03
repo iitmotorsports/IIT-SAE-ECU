@@ -105,8 +105,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"",
-"bin2cc_8py_source.html"
+"_aero_servo_8cpp.html",
+"class_avg_var.html#a0d02b4950535772ebe580311dd8bbae1"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

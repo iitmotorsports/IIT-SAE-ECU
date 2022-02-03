@@ -2,6 +2,7 @@ var vs__conf_8py =
 [
     [ "Settings", "classvs__conf_1_1_settings.html", "classvs__conf_1_1_settings" ],
     [ "Option", "classvs__conf_1_1_settings_1_1_option.html", "classvs__conf_1_1_settings_1_1_option" ],
+    [ "PortPrinter", "classvs__conf_1_1_port_printer.html", "classvs__conf_1_1_port_printer" ],
     [ "comment_remover", "vs__conf_8py.html#a1f1c6513670f3863a1b019fa8eaba30d", null ],
     [ "listify", "vs__conf_8py.html#afc28be17acddac838c2f46460d7fba5c", null ],
     [ "load_json", "vs__conf_8py.html#a9be55bf2bd083f42ee69af1a396dd648", null ],

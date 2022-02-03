@@ -106,6 +106,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvs__conf_1_1_settings_1_1_option.html">vs_conf.Settings.Option</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Key wrapper class.  <a href="classvs__conf_1_1_settings_1_1_option.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvs__conf_1_1_port_printer.html">vs_conf.PortPrinter</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -166,7 +168,7 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>vs_conf.SETTINGS_PA
 Returns:
     str: text with removed comments
 </pre> 
-<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00049">49</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00053">53</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
 
 </div>
 </div>
@@ -193,7 +195,7 @@ Returns:
 Returns:
     str: the conventional string list
 </pre> 
-<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00101">101</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00105">105</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
 
 </div>
 </div>
@@ -216,7 +218,7 @@ Returns:
 <pre class="fragment">Returns:
     dict[str, str]: the JSON as a dict
 </pre> 
-<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00071">71</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00075">75</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
 
 </div>
 </div>
@@ -239,7 +241,7 @@ Returns:
 <pre class="fragment">Returns:
     list[str]: A list of the serial ports available on a win system
 </pre> 
-<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00082">82</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00086">86</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
 
 </div>
 </div>
@@ -265,23 +267,24 @@ Returns:
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="stringliteral">    &quot;CORE_NAME&quot;: &quot;MK66FX1M0&quot;,</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="stringliteral">    &quot;CORE_SPEED&quot;: &quot;180000000&quot;,</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="stringliteral">    &quot;USB_SETTING&quot;: &quot;USB_SERIAL&quot;,</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="stringliteral">    &quot;TOOLCHAIN_OFFSET&quot;: &quot;../TeensyToolchain&quot;,</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="stringliteral">    &quot;ADDITIONAL_CMAKE_VARS&quot;: &quot;-DCUSTOM_BUILD_PATH_PREFIX:STRING=build/Pre_Build/&quot;,</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="stringliteral">    &quot;CMAKE_FINAL_VARS&quot;: &quot;-DENV_CORE_SPEED:STRING=${config:CORE_SPEED} -DENV_CORE_MODEL:STRING=${config:CORE_MODEL} -DENV_USB_SETTING:STRING=${config:USB_SETTING} ${config:ADDITIONAL_CMAKE_VARS}&quot;,</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="stringliteral">    &quot;doxygen_runner.configuration_file_override&quot;: &quot;${workspaceFolder}/docs/Doxyfile&quot;,</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="stringliteral">    &quot;python.linting.pylintEnabled&quot;: true,</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="stringliteral">    &quot;python.linting.enabled&quot;: true,</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="stringliteral">    &quot;python.linting.flake8Enabled&quot;: false,</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="stringliteral">    &quot;C_Cpp.clang_format_fallbackStyle&quot;: &quot;{ BasedOnStyle: LLVM, UseTab: Never, IndentWidth: 4, TabWidth: 4, BreakBeforeBraces: Attach, AllowShortIfStatementsOnASingleLine: false, IndentCaseLabels: false, ColumnLimit: 0, AccessModifierOffset: -4 }&quot;,</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="stringliteral">    &quot;search.exclude&quot;: {</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="stringliteral">        &quot;**/build&quot;: true</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="stringliteral">    },</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="stringliteral">    &quot;files.watcherExclude&quot;: {</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="stringliteral">        &quot;**/build&quot;: true</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="stringliteral">    }</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="stringliteral">}&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="stringliteral">    &quot;LOGGING_OPTION&quot;: &quot;-l${workspaceFolder}\\logs&quot;,</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="stringliteral">    &quot;TOOLCHAIN_OFFSET&quot;: &quot;../TeensyToolchain&quot;,</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="stringliteral">    &quot;ADDITIONAL_CMAKE_VARS&quot;: &quot;-DCUSTOM_BUILD_PATH_PREFIX:STRING=build/Pre_Build/&quot;,</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="stringliteral">    &quot;CMAKE_FINAL_VARS&quot;: &quot;-DENV_CORE_SPEED:STRING=${config:CORE_SPEED} -DENV_CORE_MODEL:STRING=${config:CORE_MODEL} -DENV_USB_SETTING:STRING=${config:USB_SETTING} ${config:ADDITIONAL_CMAKE_VARS}&quot;,</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="stringliteral">    &quot;doxygen_runner.configuration_file_override&quot;: &quot;${workspaceFolder}/docs/Doxyfile&quot;,</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="stringliteral">    &quot;python.linting.pylintEnabled&quot;: true,</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="stringliteral">    &quot;python.linting.enabled&quot;: true,</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="stringliteral">    &quot;python.linting.flake8Enabled&quot;: false,</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="stringliteral">    &quot;C_Cpp.clang_format_fallbackStyle&quot;: &quot;{ BasedOnStyle: LLVM, UseTab: Never, IndentWidth: 4, TabWidth: 4, BreakBeforeBraces: Attach, AllowShortIfStatementsOnASingleLine: false, IndentCaseLabels: false, ColumnLimit: 0, AccessModifierOffset: -4 }&quot;,</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="stringliteral">    &quot;search.exclude&quot;: {</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="stringliteral">        &quot;**/build&quot;: true</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="stringliteral">    },</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="stringliteral">    &quot;files.watcherExclude&quot;: {</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="stringliteral">        &quot;**/build&quot;: true</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="stringliteral">    }</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="stringliteral">}&quot;&quot;&quot;</span></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00022">22</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00025">25</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
 
 </div>
 </div>

@@ -142,6 +142,8 @@ Static Public Attributes</h2></td></tr>
 <tr class="memitem:a043ce312b7a39fc41d42f6efc1ee24dd"><td class="memItemLeft" align="right" valign="top"><a id="a043ce312b7a39fc41d42f6efc1ee24dd"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>CORE_MODEL</b> = <a class="el" href="classvs__conf_1_1_settings_1_1_option.html">Option</a>(&quot;CORE_MODEL&quot;, &quot;Model number of the teensy to compile for&quot;, (36, 40, 41), default=41)</td></tr>
 <tr class="separator:a043ce312b7a39fc41d42f6efc1ee24dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8aae5527721310029790327d40b5771f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><b>LOGGING_OPTION</b></td></tr>
+<tr class="separator:a8aae5527721310029790327d40b5771f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a099465a363bdfad5c97a57b3a7082ee7"><td class="memItemLeft" align="right" valign="top"><a id="a099465a363bdfad5c97a57b3a7082ee7"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>CORE_SPEED</b> = <a class="el" href="classvs__conf_1_1_settings_1_1_option.html">Option</a>(&quot;CORE_SPEED&quot;, &quot;Speed at which the CPU will run (MHz)&quot;, default=&quot;AUTOSET VALUE&quot;, advanced=True)</td></tr>
 <tr class="separator:a099465a363bdfad5c97a57b3a7082ee7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -168,7 +170,7 @@ Static Public Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Wrapper for settings JSON. </p>
 
-<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00116">116</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00120">120</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a07f67b64630f65659755322237430a8f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a07f67b64630f65659755322237430a8f">&#9670;&nbsp;</a></span>load()</h2>
@@ -203,7 +205,7 @@ Static Public Attributes</h2></td></tr>
     Raises:
         KeyError: Key is not found in the settings JSON
 </pre> 
-<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00253">253</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00266">266</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
 
 </div>
 </div>
@@ -237,7 +239,7 @@ Static Public Attributes</h2></td></tr>
 <pre class="fragment">    Args:
         file (TextIOBase): The file to write to
 </pre> 
-<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00274">274</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00287">287</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
 
 </div>
 </div>
@@ -265,7 +267,7 @@ Static Public Attributes</h2></td></tr>
 <div class="line">        <span class="stringliteral">&quot;ADDITIONAL_CMAKE_VARS&quot;</span>, <span class="stringliteral">&quot;More defines passed to CMake&quot;</span>, default=<span class="stringliteral">&quot;-DCUSTOM_BUILD_PATH_PREFIX:STRING=build/Pre_Build/&quot;</span>, advanced=<span class="keyword">True</span></div>
 <div class="line">    )</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00203">203</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00215">215</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
 
 </div>
 </div>
@@ -297,7 +299,39 @@ Static Public Attributes</h2></td></tr>
 <div class="line">        default=<span class="stringliteral">&quot;no&quot;</span>,</div>
 <div class="line">    )</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00188">188</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00192">192</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
+
+</div>
+</div>
+<a id="a8aae5527721310029790327d40b5771f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8aae5527721310029790327d40b5771f">&#9670;&nbsp;</a></span>LOGGING_OPTION</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">vs_conf.Settings.LOGGING_OPTION</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=  Option(</div>
+<div class="line">        <span class="stringliteral">&quot;LOGGING_OPTION&quot;</span>,</div>
+<div class="line">        <span class="stringliteral">&quot;Enable logging&quot;</span>,</div>
+<div class="line">        (<span class="stringliteral">&quot;yes&quot;</span>, <span class="stringliteral">&quot;no&quot;</span>),</div>
+<div class="line">        <span class="keyword">lambda</span> x: <span class="stringliteral">&quot;yes&quot;</span> <span class="keywordflow">if</span> x <span class="keywordflow">in</span> (<span class="stringliteral">&quot;-l${workspaceFolder}\\logs&quot;</span>, <span class="stringliteral">&quot;yes&quot;</span>) <span class="keywordflow">else</span> <span class="stringliteral">&quot;&quot;</span>,</div>
+<div class="line">        <span class="keyword">lambda</span> x: <span class="stringliteral">&quot;-l${workspaceFolder}\\logs&quot;</span> <span class="keywordflow">if</span> x == <span class="stringliteral">&quot;yes&quot;</span> <span class="keywordflow">else</span> <span class="stringliteral">&quot;&quot;</span>,</div>
+<div class="line">        default=<span class="stringliteral">&quot;yes&quot;</span>,</div>
+<div class="line">    )</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00201">201</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
 
 </div>
 </div>
@@ -321,10 +355,11 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">=  (</div>
+<div class="line">        CORE_MODEL,</div>
 <div class="line">        FRONT_TEENSY_PORT,</div>
 <div class="line">        BACK_TEENSY_PORT,</div>
+<div class="line">        LOGGING_OPTION,</div>
 <div class="line">        GRAPH_ARG,</div>
-<div class="line">        CORE_MODEL,</div>
 <div class="line">        CORE_SPEED,</div>
 <div class="line">        CORE_NAME,</div>
 <div class="line">        CORE,</div>
@@ -334,7 +369,7 @@ Static Public Attributes</h2></td></tr>
 <div class="line">        ADDITIONAL_CMAKE_VARS,</div>
 <div class="line">    )</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00207">207</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00219">219</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
 
 </div>
 </div>
