@@ -21,7 +21,7 @@ This project assumes you installed the following.
 - [VSCode](https://code.visualstudio.com/)
   - This template is based around VSCode
 - [Python](https://www.python.org/downloads/)
-  - At least python 3.9.x
+  - At least python 3.10.x
   - Ensure python files are executed by default when opening them in a CLI
 - [CMake](https://cmake.org/download/)
   - Make sure to select the `add CMake to path` option when installing
