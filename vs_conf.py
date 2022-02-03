@@ -9,12 +9,15 @@
 
 """
 
+from operator import truediv
 import os
 import sys
 import subprocess
 from io import TextIOBase
 import json
 import re
+import threading
+import time
 from typing import Any, Callable, Sequence
 
 SETTINGS_PATH = ".vscode/settings.json"
@@ -29,6 +32,7 @@ BACKUP_SET = """{
     "CORE_NAME": "MK66FX1M0",
     "CORE_SPEED": "180000000",
     "USB_SETTING": "USB_SERIAL",
+    "LOGGING_OPTION": "-l${workspaceFolder}\\logs",
     "TOOLCHAIN_OFFSET": "../TeensyToolchain",
     "ADDITIONAL_CMAKE_VARS": "-DCUSTOM_BUILD_PATH_PREFIX:STRING=build/Pre_Build/",
     "CMAKE_FINAL_VARS": "-DENV_CORE_SPEED:STRING=${config:CORE_SPEED} -DENV_CORE_MODEL:STRING=${config:CORE_MODEL} -DENV_USB_SETTING:STRING=${config:USB_SETTING} ${config:ADDITIONAL_CMAKE_VARS}",
@@ -194,6 +198,14 @@ class Settings:
         default="no",
     )
     CORE_MODEL = Option("CORE_MODEL", "Model number of the teensy to compile for", (36, 40, 41), default=41)
+    LOGGING_OPTION = Option(
+        "LOGGING_OPTION",
+        "Enable logging",
+        ("yes", "no"),
+        lambda x: "yes" if x in ("-l${workspaceFolder}\\logs", "yes") else "",
+        lambda x: "-l${workspaceFolder}\\logs" if x == "yes" else "",
+        default="yes",
+    )
     CORE_SPEED = Option("CORE_SPEED", "Speed at which the CPU will run (MHz)", default="AUTOSET VALUE", advanced=True)
     CORE_NAME = Option("CORE_NAME", "Model of the cpu", default="AUTOSET VALUE", advanced=True)
     CORE = Option("CORE", "Core folder to compile with", default="AUTOSET VALUE", advanced=True)
@@ -205,10 +217,11 @@ class Settings:
     )
 
     options = (
+        CORE_MODEL,
         FRONT_TEENSY_PORT,
         BACK_TEENSY_PORT,
+        LOGGING_OPTION,
         GRAPH_ARG,
-        CORE_MODEL,
         CORE_SPEED,
         CORE_NAME,
         CORE,
@@ -281,6 +294,35 @@ class Settings:
             self.settings[option.key] = option.get_value()
         json.dump(self.settings, file, indent=4)
 
+class PortPrinter():
+    running = False
+    force = False
+    thread : threading.Thread
+    
+    msg = "    Available ports:"
+    
+    def __init__(self) -> None:
+        self.thread = threading.Thread(target=self.run, daemon=True)
+        
+    def start(self):
+        print(self.msg)
+        self.force = True
+        if not self.running:
+            self.running = True
+            self.thread.start()
+    
+    def stop(self):
+        self.running = False
+    
+    def run(self):
+        o_ports = None
+        while self.running:
+            time.sleep(0.5)
+            ports = listify(serial_ports())
+            if self.force or o_ports != ports:
+                self.force = False
+                o_ports = ports
+                print(f"\033[s\r\033[1A\033[K\r{self.msg} {ports}\033[u", end="")
 
 def main():
     """Main function"""
@@ -296,9 +338,13 @@ def main():
         settings = Settings(load_json())
         print(f"Configured for Teensy{settings.CORE_MODEL.get_value()} @ {int(int(settings.CORE_SPEED.get_value())/1000000)} Mhz")
         print(f"Current ports:\n Front:\t{settings.FRONT_TEENSY_PORT.get_value()}\n Back:\t{settings.BACK_TEENSY_PORT.get_value()}")
+        print(f"Data Plotting: {settings.GRAPH_ARG.value}")
+        print(f"Data Logging: {settings.LOGGING_OPTION.value}")
         sys.exit(0)
 
     settings = Settings(load_json())
+    
+    pp = PortPrinter()
 
     for option in settings.options:
         if option.advanced and not adv_mode:
@@ -309,9 +355,10 @@ def main():
             adv_mode = True
         print(option)
         if option is settings.FRONT_TEENSY_PORT or option is settings.BACK_TEENSY_PORT:
-            ports = serial_ports()
-            if len(ports) != 0:
-                print("    Available ports:", listify(ports))
+            pp.start()
+        elif pp.running:
+            pp.stop()
+
         if not option.set_value(input("Input option, blank for default: ")):
             while not option.set_value(input("Invalid option: ")):
                 pass
