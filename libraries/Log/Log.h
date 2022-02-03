@@ -5,7 +5,7 @@
  * @version 0.1
  * @date 2020-11-12
  * 
- * @copyright Copyright (c) 2020
+ * @copyright Copyright (c) 2022
  * 
  * @see Logging::Log_t for info on how logging works
  * @see LogConfig.def for configuration of logging

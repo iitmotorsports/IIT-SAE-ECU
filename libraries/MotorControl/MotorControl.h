@@ -5,7 +5,7 @@
  * @version 0.1
  * @date 2021-05-04
  * 
- * @copyright Copyright (c) 2021
+ * @copyright Copyright (c) 2022
  * 
  * This module is a collection of functions that are used to ease the control of both Motor controllers over canbus.
  * 

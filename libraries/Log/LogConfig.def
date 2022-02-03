@@ -5,7 +5,7 @@
  * @version 0.1
  * @date 2020-11-11
  * 
- * @copyright Copyright (c) 2020
+ * @copyright Copyright (c) 2022
  * 
  * The only two options that should only really be modified are `CONF_LOGGING_ENABLE_TIMESTAMP` and `CONF_LOGGING_MAX_LEVEL`.
  * 
