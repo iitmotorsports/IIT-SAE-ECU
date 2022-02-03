@@ -273,7 +273,7 @@
                 "-r",
                 "${config:GRAPH_ARG}",
                 "-w",
-                "-l${workspaceFolder}\\logs",
+                "${config:LOGGING_OPTION}",
                 "--logTime",
                 "--input",
                 "D"
