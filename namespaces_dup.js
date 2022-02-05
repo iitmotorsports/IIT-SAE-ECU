@@ -7,8 +7,7 @@ var namespaces_dup =
     ] ],
     [ "bin2cc", null, [
       [ "bin2cc", "bin2cc_8py.html#a41cce3a3bd01b4b00004bb16c6ee26c2", null ],
-      [ "main", "bin2cc_8py.html#a41019d674d290ce4138c2c3734166477", null ],
-      [ "LINE_LEN", "bin2cc_8py.html#ab58e6eecfb75f7c01f2bba259f2589b1", null ]
+      [ "main", "bin2cc_8py.html#a41019d674d290ce4138c2c3734166477", null ]
     ] ],
     [ "Canbus", "namespace_canbus.html", "namespace_canbus" ],
     [ "Cmd", "namespace_cmd.html", [
@@ -28,17 +27,12 @@ var namespaces_dup =
       [ "softFault", "namespace_fault.html#a4ffa144bc1e88734c7d7e95bb008aa67", null ]
     ] ],
     [ "Front", "namespace_front.html", [
-      [ "blinkStart", "namespace_front.html#a41fb69497e62973d94d3411344138bbd", null ],
       [ "highPriorityValues", "namespace_front.html#a3c2c1a457a591d9e98d8cb4fd00f2d76", null ],
       [ "loadStateMap", "namespace_front.html#ae7b8a1fc786836542066a007e48e3bc1", null ],
       [ "lowPriorityValues", "namespace_front.html#a395b037caf51687bebe41b2b7f88a64a", null ],
       [ "run", "namespace_front.html#a2deb9201e361171c69d361ce69047a15", null ],
       [ "setChargeSignal", "namespace_front.html#a08cef7e1e54e13a82a0a2aa6e8ce126d", null ],
-      [ "updateCurrentState", "namespace_front.html#af9fc069abc6cef27915cdee9bbe08acb", null ],
-      [ "currentState", "namespace_front.html#a1255b36d3dfbeed606d0c745f00e0849", null ],
-      [ "ID", "namespace_front.html#a08b20fc93a7adcf58df4d7d9b8c61f37", null ],
-      [ "stateMap", "namespace_front.html#aca0445588e2426dc58b046805ec14140", null ],
-      [ "TVAggression", "namespace_front.html#aacd143ed54fd860fba625990f6811aa5", null ]
+      [ "updateCurrentState", "namespace_front.html#af9fc069abc6cef27915cdee9bbe08acb", null ]
     ] ],
     [ "Heartbeat", "namespace_heartbeat.html", [
       [ "beatFunc", "namespace_heartbeat.html#a90dd9f85dfc6bf41682af19b8ecd0c8d", null ],
@@ -82,14 +76,12 @@ var namespaces_dup =
     [ "SerialVar", "namespace_serial_var.html", "namespace_serial_var" ],
     [ "State", "namespace_state.html", "namespace_state" ],
     [ "vs_conf", null, [
+      [ "PortPrinter", "classvs__conf_1_1_port_printer.html", null ],
       [ "Settings", "classvs__conf_1_1_settings.html", "classvs__conf_1_1_settings" ],
-      [ "PortPrinter", "classvs__conf_1_1_port_printer.html", "classvs__conf_1_1_port_printer" ],
       [ "comment_remover", "vs__conf_8py.html#a1f1c6513670f3863a1b019fa8eaba30d", null ],
       [ "listify", "vs__conf_8py.html#afc28be17acddac838c2f46460d7fba5c", null ],
       [ "load_json", "vs__conf_8py.html#a9be55bf2bd083f42ee69af1a396dd648", null ],
       [ "main", "vs__conf_8py.html#a59bd943f036ed3f2e69be23ea2bd97de", null ],
-      [ "serial_ports", "vs__conf_8py.html#a75e9e112029aad603942e76f725977b6", null ],
-      [ "BACKUP_SET", "vs__conf_8py.html#aa369a1c2ab76949023cb9a726487fddf", null ],
-      [ "SETTINGS_PATH", "vs__conf_8py.html#a6904bc4ea89e8724a9a708d292f99c4f", null ]
+      [ "serial_ports", "vs__conf_8py.html#a75e9e112029aad603942e76f725977b6", null ]
     ] ]
 ];

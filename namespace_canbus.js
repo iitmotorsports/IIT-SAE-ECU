@@ -7,7 +7,7 @@ var namespace_canbus =
     [ "copyVolatileCanMsg", "namespace_canbus.html#a77f67ab89d9f23f059f1e41123cc65a5", null ],
     [ "enableCanbusSniffer", "namespace_canbus.html#a6cc917014cdbf17f5f950ae802c03a8e", null ],
     [ "enableInterrupts", "namespace_canbus.html#ae66521cf8ac5e63c2e89d6b2f009b38a", null ],
-    [ "getBuffer", "namespace_canbus.html#a03f8ea340d0e1c730a61936310ea2914", null ],
+    [ "getBuffer", "namespace_canbus.html#a5509e2ea64edb121a9fe13349658ecde", null ],
     [ "getData", "namespace_canbus.html#aed796b6196e7d80b59dd205de7a8edfd", null ],
     [ "pushData", "namespace_canbus.html#a2c59e4ee5bcc1d66fee1c1d91af4731b", null ],
     [ "sendData", "namespace_canbus.html#a685569d6ee66f2c88962d158a5caf22c", null ],

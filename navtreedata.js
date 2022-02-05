@@ -49,25 +49,25 @@ var NAVTREE =
       [ "Further Reading", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md9", null ],
       [ "Moving Forward", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md10", null ]
     ] ],
-    [ "Infographics", "_infographics.html", [
-      [ "Infographics", "_infographics.html#autotoc_md11", [
-        [ "Logging", "_infographics.html#autotoc_md12", [
-          [ "2022", "_infographics.html#autotoc_md13", null ]
+    [ "Infographics", "md_extra__infographics.html", [
+      [ "Infographics", "md_extra__infographics.html#autotoc_md11", [
+        [ "Logging", "md_extra__infographics.html#autotoc_md12", [
+          [ "2022", "md_extra__infographics.html#autotoc_md13", null ]
         ] ],
-        [ "TestRigs", "_infographics.html#autotoc_md14", [
-          [ "2021", "_infographics.html#autotoc_md15", null ]
+        [ "TestRigs", "md_extra__infographics.html#autotoc_md14", [
+          [ "2021", "md_extra__infographics.html#autotoc_md15", null ]
         ] ]
       ] ]
     ] ],
-    [ "X Macros", "_x_macros.html", [
-      [ "X Macros", "_x_macros.html#autotoc_md16", null ],
-      [ "Creating an X Macro", "_x_macros.html#XMacros_Creating_an_X_Macro", [
-        [ "Defining", "_x_macros.html#XMacros_Defining", null ],
-        [ "Generating", "_x_macros.html#XMacros_Generating", null ]
+    [ "X Macros", "md_extra__xmacros.html", [
+      [ "X Macros", "md_extra__xmacros.html#autotoc_md16", null ],
+      [ "Creating an X Macro", "md_extra__xmacros.html#XMacros_Creating_an_X_Macro", [
+        [ "Defining", "md_extra__xmacros.html#XMacros_Defining", null ],
+        [ "Generating", "md_extra__xmacros.html#XMacros_Generating", null ]
       ] ],
-      [ "Caveats", "_x_macros.html#XMacros_Caveats", [
-        [ "X Macro Counter", "_x_macros.html#XMacros_XMacro_Counter", null ],
-        [ "Concatenated Calls", "_x_macros.html#XMacros_Concatenated_Calls", null ]
+      [ "Caveats", "md_extra__xmacros.html#XMacros_Caveats", [
+        [ "X Macro Counter", "md_extra__xmacros.html#XMacros_XMacro_Counter", null ],
+        [ "Concatenated Calls", "md_extra__xmacros.html#XMacros_Concatenated_Calls", null ]
       ] ]
     ] ],
     [ "Namespaces", "namespaces.html", [
@@ -106,7 +106,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_aero_servo_8cpp.html",
-"class_avg_var.html#a0d02b4950535772ebe580311dd8bbae1"
+"classvs__conf_1_1_settings.html#a07f67b64630f65659755322237430a8f",
+"struct_state_1_1_state__t.html#adc8e37384d273e3441fed3bb28d46c82"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
