@@ -5,4 +5,7 @@
         "Isaias.doxygen-pack",
         "Isaias.python-personal-pack",
     ],
+    "unwantedRecommendations": [
+        "ms-vscode.cpptools-extension-pack"
+    ]
 }
