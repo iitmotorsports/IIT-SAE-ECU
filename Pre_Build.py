@@ -5,7 +5,7 @@
 @version 0.1
 @date 2020-11-11
 
-@copyright Copyright (c) 2020
+@copyright Copyright (c) 2022
 
 This script works by first duplicating source files to the build folder. \n
 Then it scans each file for calls to a Log function and modifies them as follows. \n

@@ -5,7 +5,7 @@
 @version 0.1
 @date 2021-03-23
 
-@copyright Copyright (c) 2021
+@copyright Copyright (c) 2022
 
 This script uploads the log_lookup.json file to api.paste.ee (a free text file hosting site).
 

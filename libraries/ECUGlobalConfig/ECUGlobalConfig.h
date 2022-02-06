@@ -5,7 +5,7 @@
  * @version 0.1
  * @date 2021-02-16
  * 
- * @copyright Copyright (c) 2021
+ * @copyright Copyright (c) 2022
  * 
  * This configuration file is used to define values used through out the entire project.
  * 

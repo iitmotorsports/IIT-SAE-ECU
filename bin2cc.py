@@ -5,7 +5,7 @@
 @version 0.1
 @date 2021-10-31
 
-@copyright Copyright (c) 2021
+@copyright Copyright (c) 2022
 
 https://nachtimwald.com/2019/10/09/python-binary-to-c-header/
 """

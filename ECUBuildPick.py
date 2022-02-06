@@ -5,7 +5,7 @@
 @version 0.1
 @date 2021-02-21
 
-@copyright Copyright (c) 2021
+@copyright Copyright (c) 2022
 
 This script is merely used to modify a global define inside a header file to change whether to compile for the front or back ECU.
 

@@ -5,7 +5,7 @@
  * @version 0.1
  * @date 2021-03-16
  * 
- * @copyright Copyright (c) 2021
+ * @copyright Copyright (c) 2022
  * 
  * This module is used to run commands on an ECU by sending specific byte codes over serial.
  * 

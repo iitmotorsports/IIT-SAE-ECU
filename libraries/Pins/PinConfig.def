@@ -5,7 +5,7 @@
  * @version 0.1
  * @date 2020-11-11
  * 
- * @copyright Copyright (c) 2020
+ * @copyright Copyright (c) 2022
  * 
  * This config file is used configure the Pin module.
  * 
@@ -89,7 +89,7 @@
 #define PINS_BACK_FAN4_PWM 20        // PWM fan control
 #define PINS_BACK_IMD_FAULT 19       // Fault pin
 #define PINS_BACK_BMS_FAULT 18       // Fault pin
-#define PINS_BACK_PUMP_DAC 66   // DAC pump control 2-2.5V
+#define PINS_BACK_PUMP_DAC 66        // DAC pump control 2-2.5V
 
 // Front ECU Only - ECU1
 #define PINS_FRONT_BUTTON_INPUT_OFF 2 // Digital Start Button

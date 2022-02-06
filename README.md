@@ -21,7 +21,7 @@ This project assumes you installed the following.
 - [VSCode](https://code.visualstudio.com/)
   - This template is based around VSCode
 - [Python](https://www.python.org/downloads/)
-  - At least python 3.9.x
+  - At least python 3.10.x
   - Ensure python files are executed by default when opening them in a CLI
 - [CMake](https://cmake.org/download/)
   - Make sure to select the `add CMake to path` option when installing
@@ -49,12 +49,12 @@ Put any libraries / modules in the `libraries` folder
 
 ### VSCode Tasks
 
-* `VS setup`: Configure things such as what `COM` ports to use; both for front and back teensy, whether to use the plotter app, and whether to compile for teensy `3.6`, `4.0`, or `4.1`.
-* `Clean`: Clean up build files
-* `Reset`: Clean up entire CMake project and reconfigure CMake
-* `Build`: Compile project and generate binaries
-* `Upload`: Upload compiled binary to either front or back teensy
-* `Monitor`: Monitor teensy over a CLI, select the appropriate options when running, defaults to `Mapped` mode
+- `VS setup`: Configure things such as what `COM` ports to use; both for front and back teensy, whether to use the plotter app, and whether to compile for teensy `3.6`, `4.0`, or `4.1`.
+- `Clean`: Clean up build files
+- `Reset`: Clean up entire CMake project and reconfigure CMake
+- `Build`: Compile project and generate binaries
+- `Upload`: Upload compiled binary to either front or back teensy
+- `Monitor`: Monitor teensy over a CLI, select the appropriate options when running, defaults to `Mapped` mode
 
 By default, `Ctrl + Shift + B` (Run Build Task) should run `Build` then `Upload` for both Teensies and then `Monitor`.
 

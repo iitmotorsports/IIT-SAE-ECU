@@ -5,7 +5,7 @@
 @version 0.1
 @date 2021-05-14
 
-@copyright Copyright (c) 2021
+@copyright Copyright (c) 2022
 
 This script generates a QR code gif where the entire gif of QR codes represent a compressed log_lookup.json.
 

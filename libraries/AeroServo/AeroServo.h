@@ -5,7 +5,7 @@
  * @version 0.1
  * @date 2021-03-03
  * 
- * @copyright Copyright (c) 2021
+ * @copyright Copyright (c) 2022
  * 
  * This Modules is only used on the back ECU to control the Aero subteam's servos.
  * 
