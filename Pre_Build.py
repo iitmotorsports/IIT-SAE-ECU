@@ -495,7 +495,12 @@ def allocate_files(path, offset):
         return line.replace(*LIB_DEFINE)
 
     blacklist = getLibraryBlacklist()
-    model = load_json()[Settings.CORE_NAME.key]
+    model: dict[str, str]
+    try:
+        model = load_json()[Settings.CORE_NAME.key]
+    except json.JSONDecodeError:
+        sys.exit(Text.error("Error loading settings file, consider running the 'VS Setup' task"))
+
     if model in blacklist:
         blacklist = blacklist[model]
     else:
