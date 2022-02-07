@@ -384,89 +384,109 @@ $(document).ready(function(){initNavTree('vs__conf_8py_source.html',''); initRes
 <div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>            self.<a class="code hl_variable" href="classvs__conf_1_1_settings.html#ad7160ce2c31e9dffc82f0cd5d7032442">settings</a>[option.key] = option.get_value()</div>
 <div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>        json.dump(self.<a class="code hl_variable" href="classvs__conf_1_1_settings.html#ad7160ce2c31e9dffc82f0cd5d7032442">settings</a>, file, indent=4)</div>
 <div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span> </div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno"><a class="line" href="classvs__conf_1_1_port_printer.html">  297</a></span><span class="keyword">class </span><a class="code hl_class" href="classvs__conf_1_1_port_printer.html">PortPrinter</a>():</div>
-<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>    running = <span class="keyword">False</span></div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>    force = <span class="keyword">False</span></div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>    thread : threading.Thread</div>
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>    </div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>    msg = <span class="stringliteral">&quot;    Available ports:&quot;</span></div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>    </div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>    <span class="keyword">def </span>__init__(self) -&gt; None:</div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>        self.<a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#a5a1c17f4acaa4f264ae27dcadd02f128">thread</a> = threading.Thread(target=self.<a class="code hl_function" href="classvs__conf_1_1_port_printer.html#aea82c6151d82ab35445e5871d95ce369">run</a>, daemon=<span class="keyword">True</span>)</div>
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>        </div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>    <span class="keyword">def </span>start(self):</div>
-<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>        print(self.<a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#a5caea54d69c48db9ced1cbacb61293ff">msg</a>)</div>
-<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>        self.<a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#aa35fb7cc3a006ae7a9864b9d284b2495">force</a><a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#a47c4321f32e0963230ead47015bfa25f">force</a> = <span class="keyword">True</span></div>
-<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> self.<a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#a02c8201eef4798cddcc6e8858ae86aad">running</a><a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#ab6bc779f013f791ac84f55bd69cda60c">running</a>:</div>
-<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>            self.<a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#a02c8201eef4798cddcc6e8858ae86aad">running</a><a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#ab6bc779f013f791ac84f55bd69cda60c">running</a> = <span class="keyword">True</span></div>
-<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>            self.<a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#a5a1c17f4acaa4f264ae27dcadd02f128">thread</a>.start()</div>
-<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>    </div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>    <span class="keyword">def </span>stop(self):</div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>        self.<a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#a02c8201eef4798cddcc6e8858ae86aad">running</a><a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#ab6bc779f013f791ac84f55bd69cda60c">running</a> = <span class="keyword">False</span></div>
-<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>    </div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>    <span class="keyword">def </span>run(self):</div>
-<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>        o_ports = <span class="keywordtype">None</span></div>
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>        <span class="keywordflow">while</span> self.<a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#a02c8201eef4798cddcc6e8858ae86aad">running</a><a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#ab6bc779f013f791ac84f55bd69cda60c">running</a>:</div>
-<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>            time.sleep(0.5)</div>
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>            ports = listify(serial_ports())</div>
-<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>            <span class="keywordflow">if</span> self.<a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#aa35fb7cc3a006ae7a9864b9d284b2495">force</a><a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#a47c4321f32e0963230ead47015bfa25f">force</a> <span class="keywordflow">or</span> o_ports != ports:</div>
-<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>                self.<a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#aa35fb7cc3a006ae7a9864b9d284b2495">force</a><a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#a47c4321f32e0963230ead47015bfa25f">force</a> = <span class="keyword">False</span></div>
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>                o_ports = ports</div>
-<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>                print(f<span class="stringliteral">&quot;\033[s\r\033[1A\033[K\r{self.msg} {ports}\033[u&quot;</span>, end=<span class="stringliteral">&quot;&quot;</span>)</div>
-<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span> </div>
-<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span><span class="keyword">def </span>main():</div>
-<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>    <span class="stringliteral">&quot;&quot;&quot;Main function&quot;&quot;&quot;</span></div>
-<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span> </div>
-<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>    vs_code_startup = len(sys.argv) == 2 <span class="keywordflow">and</span> sys.argv[1] == <span class="stringliteral">&quot;thisisbeingrunonstartup&quot;</span></div>
-<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>    adv_mode = <span class="keyword">False</span></div>
-<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>    first_time = <span class="keywordflow">not</span> os.path.exists(SETTINGS_PATH)</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span> </div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno"><a class="line" href="classvs__conf_1_1_port_printer.html">  298</a></span><span class="keyword">class </span><a class="code hl_class" href="classvs__conf_1_1_port_printer.html">PortPrinter</a>:</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>    running = <span class="keyword">False</span></div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>    force = <span class="keyword">False</span></div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>    thread: threading.Thread</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span> </div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>    msg = <span class="stringliteral">&quot;    Available ports:&quot;</span></div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span> </div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>    <span class="keyword">def </span>__init__(self) -&gt; None:</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>        self.<a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#a5a1c17f4acaa4f264ae27dcadd02f128">thread</a> = threading.Thread(target=self.<a class="code hl_function" href="classvs__conf_1_1_port_printer.html#aea82c6151d82ab35445e5871d95ce369">run</a>, daemon=<span class="keyword">True</span>)</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span> </div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>    <span class="keyword">def </span>start(self):</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>        print(self.<a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#a5caea54d69c48db9ced1cbacb61293ff">msg</a>)</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>        self.<a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#aa35fb7cc3a006ae7a9864b9d284b2495">force</a><a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#a47c4321f32e0963230ead47015bfa25f">force</a> = <span class="keyword">True</span></div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> self.<a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#a02c8201eef4798cddcc6e8858ae86aad">running</a><a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#ab6bc779f013f791ac84f55bd69cda60c">running</a>:</div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>            self.<a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#a02c8201eef4798cddcc6e8858ae86aad">running</a><a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#ab6bc779f013f791ac84f55bd69cda60c">running</a> = <span class="keyword">True</span></div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>            self.<a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#a5a1c17f4acaa4f264ae27dcadd02f128">thread</a>.start()</div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span> </div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>    <span class="keyword">def </span>stop(self):</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>        self.<a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#a02c8201eef4798cddcc6e8858ae86aad">running</a><a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#ab6bc779f013f791ac84f55bd69cda60c">running</a> = <span class="keyword">False</span></div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span> </div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>    <span class="keyword">def </span>run(self):</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>        o_ports = <span class="keywordtype">None</span></div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>        <span class="keywordflow">while</span> self.<a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#a02c8201eef4798cddcc6e8858ae86aad">running</a><a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#ab6bc779f013f791ac84f55bd69cda60c">running</a>:</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>            time.sleep(0.5)</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>            ports = listify(serial_ports())</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>            <span class="keywordflow">if</span> self.<a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#aa35fb7cc3a006ae7a9864b9d284b2495">force</a><a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#a47c4321f32e0963230ead47015bfa25f">force</a> <span class="keywordflow">or</span> o_ports != ports:</div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>                self.<a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#aa35fb7cc3a006ae7a9864b9d284b2495">force</a><a class="code hl_variable" href="classvs__conf_1_1_port_printer.html#a47c4321f32e0963230ead47015bfa25f">force</a> = <span class="keyword">False</span></div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>                o_ports = ports</div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>                print(f<span class="stringliteral">&quot;\033[s\r\033[1A\033[K\r{self.msg} {ports}\033[u&quot;</span>, end=<span class="stringliteral">&quot;&quot;</span>)</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span> </div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span> </div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span><span class="keyword">def </span>writeBackup() -&gt; None:</div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>    <span class="stringliteral">&quot;&quot;&quot;Output the backup settings&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>    <span class="keyword">with</span> open(SETTINGS_PATH, <span class="stringliteral">&quot;w&quot;</span>, encoding=<span class="stringliteral">&quot;UTF-8&quot;</span>) <span class="keyword">as</span> sett:</div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>        sett.write(BACKUP_SET)</div>
 <div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span> </div>
-<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>    <span class="keywordflow">if</span> first_time:</div>
-<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>        <span class="keyword">with</span> open(SETTINGS_PATH, <span class="stringliteral">&quot;w&quot;</span>, encoding=<span class="stringliteral">&quot;UTF-8&quot;</span>) <span class="keyword">as</span> sett:</div>
-<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>            sett.write(BACKUP_SET)</div>
-<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>    <span class="keywordflow">elif</span> vs_code_startup:</div>
-<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>        settings = <a class="code hl_class" href="classvs__conf_1_1_settings.html">Settings</a>(load_json())</div>
-<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>        print(f<span class="stringliteral">&quot;Configured for Teensy{settings.CORE_MODEL.get_value()} @ {int(int(settings.CORE_SPEED.get_value())/1000000)} Mhz&quot;</span>)</div>
-<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>        print(f<span class="stringliteral">&quot;Current ports:\n Front:\t{settings.FRONT_TEENSY_PORT.get_value()}\n Back:\t{settings.BACK_TEENSY_PORT.get_value()}&quot;</span>)</div>
-<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>        print(f<span class="stringliteral">&quot;Data Plotting: {settings.GRAPH_ARG.value}&quot;</span>)</div>
-<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>        print(f<span class="stringliteral">&quot;Data Logging: {settings.LOGGING_OPTION.value}&quot;</span>)</div>
-<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>        sys.exit(0)</div>
-<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span> </div>
-<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>    settings = <a class="code hl_class" href="classvs__conf_1_1_settings.html">Settings</a>(load_json())</div>
-<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>    </div>
-<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>    pp = <a class="code hl_class" href="classvs__conf_1_1_port_printer.html">PortPrinter</a>()</div>
-<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span> </div>
-<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>    <span class="keywordflow">for</span> option <span class="keywordflow">in</span> settings.options:</div>
-<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>        <span class="keywordflow">if</span> option.advanced <span class="keywordflow">and</span> <span class="keywordflow">not</span> adv_mode:</div>
-<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>            <span class="keywordflow">if</span> first_time:</div>
-<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>                <span class="keywordflow">break</span></div>
-<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>            <span class="keywordflow">if</span> input(<span class="stringliteral">&quot;Enter &#39;Yes&#39; to edit advanced options: &quot;</span>) != <span class="stringliteral">&quot;Yes&quot;</span>:</div>
-<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>                <span class="keywordflow">break</span></div>
-<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>            adv_mode = <span class="keyword">True</span></div>
-<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>        print(option)</div>
-<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>        <span class="keywordflow">if</span> option <span class="keywordflow">is</span> settings.FRONT_TEENSY_PORT <span class="keywordflow">or</span> option <span class="keywordflow">is</span> settings.BACK_TEENSY_PORT:</div>
-<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>            pp.start()</div>
-<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>        <span class="keywordflow">elif</span> pp.running:</div>
-<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>            pp.stop()</div>
-<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span> </div>
-<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> option.set_value(input(<span class="stringliteral">&quot;Input option, blank for default: &quot;</span>)):</div>
-<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>            <span class="keywordflow">while</span> <span class="keywordflow">not</span> option.set_value(input(<span class="stringliteral">&quot;Invalid option: &quot;</span>)):</div>
-<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>                <span class="keywordflow">pass</span></div>
-<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span> </div>
-<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>    <span class="keyword">with</span> open(SETTINGS_PATH, <span class="stringliteral">&quot;w&quot;</span>, encoding=<span class="stringliteral">&quot;UTF-8&quot;</span>) <span class="keyword">as</span> sett:</div>
-<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>        settings.unload(sett)</div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span> </div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span><span class="keyword">def </span>get_settings() -&gt; Settings:</div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>    <span class="stringliteral">&quot;&quot;&quot;Return the current settings or fallback to the backup</span></div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span><span class="stringliteral">    Returns:</span></div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span><span class="stringliteral">        Settings: The active settings</span></div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span><span class="stringliteral">    </span><span class="keywordflow">try</span>:</div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>        <span class="keywordflow">return</span> <a class="code hl_class" href="classvs__conf_1_1_settings.html">Settings</a>(load_json())</div>
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>    <span class="keywordflow">except</span> json.JSONDecodeError:</div>
+<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span>        writeBackup()</div>
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>        <span class="keywordflow">return</span> <a class="code hl_class" href="classvs__conf_1_1_settings.html">Settings</a>(load_json())</div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span> </div>
+<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span> </div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span><span class="keyword">def </span>main():</div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>    <span class="stringliteral">&quot;&quot;&quot;Main function&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span> </div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>    vs_code_startup = len(sys.argv) == 2 <span class="keywordflow">and</span> sys.argv[1] == <span class="stringliteral">&quot;thisisbeingrunonstartup&quot;</span></div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>    adv_mode = <span class="keyword">False</span></div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>    first_time = <span class="keywordflow">not</span> os.path.exists(SETTINGS_PATH)</div>
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span> </div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>    <span class="keywordflow">if</span> first_time:</div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>        writeBackup()</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>    <span class="keywordflow">elif</span> vs_code_startup:</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>        settings = get_settings()</div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>        print(f<span class="stringliteral">&quot;Configured for Teensy{settings.CORE_MODEL.get_value()} @ {int(int(settings.CORE_SPEED.get_value())/1000000)} Mhz&quot;</span>)</div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>        print(f<span class="stringliteral">&quot;Current ports:\n Front:\t{settings.FRONT_TEENSY_PORT.get_value()}\n Back:\t{settings.BACK_TEENSY_PORT.get_value()}&quot;</span>)</div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>        print(f<span class="stringliteral">&quot;Data Plotting: {settings.GRAPH_ARG.value}&quot;</span>)</div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>        print(f<span class="stringliteral">&quot;Data Logging: {settings.LOGGING_OPTION.value}&quot;</span>)</div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>        sys.exit(0)</div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span> </div>
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>    settings = get_settings()</div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span> </div>
+<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>    pp = <a class="code hl_class" href="classvs__conf_1_1_port_printer.html">PortPrinter</a>()</div>
 <div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span> </div>
-<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span> </div>
-<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span><span class="keywordflow">if</span> __name__ == <span class="stringliteral">&quot;__main__&quot;</span>:</div>
-<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>    main()</div>
-<div class="ttc" id="aclassvs__conf_1_1_port_printer_html"><div class="ttname"><a href="classvs__conf_1_1_port_printer.html">vs_conf.PortPrinter</a></div><div class="ttdef"><b>Definition:</b> <a href="vs__conf_8py_source.html#l00297">vs_conf.py:297</a></div></div>
-<div class="ttc" id="aclassvs__conf_1_1_port_printer_html_a02c8201eef4798cddcc6e8858ae86aad"><div class="ttname"><a href="classvs__conf_1_1_port_printer.html#a02c8201eef4798cddcc6e8858ae86aad">vs_conf.PortPrinter.running</a></div><div class="ttdeci">bool running</div><div class="ttdef"><b>Definition:</b> <a href="vs__conf_8py_source.html#l00298">vs_conf.py:298</a></div></div>
-<div class="ttc" id="aclassvs__conf_1_1_port_printer_html_a47c4321f32e0963230ead47015bfa25f"><div class="ttname"><a href="classvs__conf_1_1_port_printer.html#a47c4321f32e0963230ead47015bfa25f">vs_conf.PortPrinter.force</a></div><div class="ttdeci">force</div><div class="ttdef"><b>Definition:</b> <a href="vs__conf_8py_source.html#l00309">vs_conf.py:309</a></div></div>
-<div class="ttc" id="aclassvs__conf_1_1_port_printer_html_a5a1c17f4acaa4f264ae27dcadd02f128"><div class="ttname"><a href="classvs__conf_1_1_port_printer.html#a5a1c17f4acaa4f264ae27dcadd02f128">vs_conf.PortPrinter.thread</a></div><div class="ttdeci">thread</div><div class="ttdef"><b>Definition:</b> <a href="vs__conf_8py_source.html#l00305">vs_conf.py:305</a></div></div>
-<div class="ttc" id="aclassvs__conf_1_1_port_printer_html_a5caea54d69c48db9ced1cbacb61293ff"><div class="ttname"><a href="classvs__conf_1_1_port_printer.html#a5caea54d69c48db9ced1cbacb61293ff">vs_conf.PortPrinter.msg</a></div><div class="ttdeci">string msg</div><div class="ttdef"><b>Definition:</b> <a href="vs__conf_8py_source.html#l00302">vs_conf.py:302</a></div></div>
-<div class="ttc" id="aclassvs__conf_1_1_port_printer_html_aa35fb7cc3a006ae7a9864b9d284b2495"><div class="ttname"><a href="classvs__conf_1_1_port_printer.html#aa35fb7cc3a006ae7a9864b9d284b2495">vs_conf.PortPrinter.force</a></div><div class="ttdeci">bool force</div><div class="ttdef"><b>Definition:</b> <a href="vs__conf_8py_source.html#l00299">vs_conf.py:299</a></div></div>
-<div class="ttc" id="aclassvs__conf_1_1_port_printer_html_ab6bc779f013f791ac84f55bd69cda60c"><div class="ttname"><a href="classvs__conf_1_1_port_printer.html#ab6bc779f013f791ac84f55bd69cda60c">vs_conf.PortPrinter.running</a></div><div class="ttdeci">running</div><div class="ttdef"><b>Definition:</b> <a href="vs__conf_8py_source.html#l00311">vs_conf.py:311</a></div></div>
-<div class="ttc" id="aclassvs__conf_1_1_port_printer_html_aea82c6151d82ab35445e5871d95ce369"><div class="ttname"><a href="classvs__conf_1_1_port_printer.html#aea82c6151d82ab35445e5871d95ce369">vs_conf.PortPrinter.run</a></div><div class="ttdeci">def run(self)</div><div class="ttdef"><b>Definition:</b> <a href="vs__conf_8py_source.html#l00317">vs_conf.py:317</a></div></div>
+<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>    <span class="keywordflow">for</span> option <span class="keywordflow">in</span> settings.options:</div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>        <span class="keywordflow">if</span> option.advanced <span class="keywordflow">and</span> <span class="keywordflow">not</span> adv_mode:</div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>            <span class="keywordflow">if</span> first_time:</div>
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>                <span class="keywordflow">break</span></div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>            <span class="keywordflow">if</span> input(<span class="stringliteral">&quot;Enter &#39;Yes&#39; to edit advanced options: &quot;</span>) != <span class="stringliteral">&quot;Yes&quot;</span>:</div>
+<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>                <span class="keywordflow">break</span></div>
+<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>            adv_mode = <span class="keyword">True</span></div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>        print(option)</div>
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>        <span class="keywordflow">if</span> option <span class="keywordflow">is</span> settings.FRONT_TEENSY_PORT <span class="keywordflow">or</span> option <span class="keywordflow">is</span> settings.BACK_TEENSY_PORT:</div>
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>            pp.start()</div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>        <span class="keywordflow">elif</span> pp.running:</div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>            pp.stop()</div>
+<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span> </div>
+<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> option.set_value(input(<span class="stringliteral">&quot;Input option, blank for default: &quot;</span>)):</div>
+<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>            <span class="keywordflow">while</span> <span class="keywordflow">not</span> option.set_value(input(<span class="stringliteral">&quot;Invalid option: &quot;</span>)):</div>
+<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>                <span class="keywordflow">pass</span></div>
+<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span> </div>
+<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span>    <span class="keyword">with</span> open(SETTINGS_PATH, <span class="stringliteral">&quot;w&quot;</span>, encoding=<span class="stringliteral">&quot;UTF-8&quot;</span>) <span class="keyword">as</span> sett:</div>
+<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>        settings.unload(sett)</div>
+<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span> </div>
+<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span> </div>
+<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span><span class="keywordflow">if</span> __name__ == <span class="stringliteral">&quot;__main__&quot;</span>:</div>
+<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span>    main()</div>
+<div class="ttc" id="aclassvs__conf_1_1_port_printer_html"><div class="ttname"><a href="classvs__conf_1_1_port_printer.html">vs_conf.PortPrinter</a></div><div class="ttdef"><b>Definition:</b> <a href="vs__conf_8py_source.html#l00298">vs_conf.py:298</a></div></div>
+<div class="ttc" id="aclassvs__conf_1_1_port_printer_html_a02c8201eef4798cddcc6e8858ae86aad"><div class="ttname"><a href="classvs__conf_1_1_port_printer.html#a02c8201eef4798cddcc6e8858ae86aad">vs_conf.PortPrinter.running</a></div><div class="ttdeci">bool running</div><div class="ttdef"><b>Definition:</b> <a href="vs__conf_8py_source.html#l00299">vs_conf.py:299</a></div></div>
+<div class="ttc" id="aclassvs__conf_1_1_port_printer_html_a47c4321f32e0963230ead47015bfa25f"><div class="ttname"><a href="classvs__conf_1_1_port_printer.html#a47c4321f32e0963230ead47015bfa25f">vs_conf.PortPrinter.force</a></div><div class="ttdeci">force</div><div class="ttdef"><b>Definition:</b> <a href="vs__conf_8py_source.html#l00310">vs_conf.py:310</a></div></div>
+<div class="ttc" id="aclassvs__conf_1_1_port_printer_html_a5a1c17f4acaa4f264ae27dcadd02f128"><div class="ttname"><a href="classvs__conf_1_1_port_printer.html#a5a1c17f4acaa4f264ae27dcadd02f128">vs_conf.PortPrinter.thread</a></div><div class="ttdeci">thread</div><div class="ttdef"><b>Definition:</b> <a href="vs__conf_8py_source.html#l00306">vs_conf.py:306</a></div></div>
+<div class="ttc" id="aclassvs__conf_1_1_port_printer_html_a5caea54d69c48db9ced1cbacb61293ff"><div class="ttname"><a href="classvs__conf_1_1_port_printer.html#a5caea54d69c48db9ced1cbacb61293ff">vs_conf.PortPrinter.msg</a></div><div class="ttdeci">string msg</div><div class="ttdef"><b>Definition:</b> <a href="vs__conf_8py_source.html#l00303">vs_conf.py:303</a></div></div>
+<div class="ttc" id="aclassvs__conf_1_1_port_printer_html_aa35fb7cc3a006ae7a9864b9d284b2495"><div class="ttname"><a href="classvs__conf_1_1_port_printer.html#aa35fb7cc3a006ae7a9864b9d284b2495">vs_conf.PortPrinter.force</a></div><div class="ttdeci">bool force</div><div class="ttdef"><b>Definition:</b> <a href="vs__conf_8py_source.html#l00300">vs_conf.py:300</a></div></div>
+<div class="ttc" id="aclassvs__conf_1_1_port_printer_html_ab6bc779f013f791ac84f55bd69cda60c"><div class="ttname"><a href="classvs__conf_1_1_port_printer.html#ab6bc779f013f791ac84f55bd69cda60c">vs_conf.PortPrinter.running</a></div><div class="ttdeci">running</div><div class="ttdef"><b>Definition:</b> <a href="vs__conf_8py_source.html#l00312">vs_conf.py:312</a></div></div>
+<div class="ttc" id="aclassvs__conf_1_1_port_printer_html_aea82c6151d82ab35445e5871d95ce369"><div class="ttname"><a href="classvs__conf_1_1_port_printer.html#aea82c6151d82ab35445e5871d95ce369">vs_conf.PortPrinter.run</a></div><div class="ttdeci">def run(self)</div><div class="ttdef"><b>Definition:</b> <a href="vs__conf_8py_source.html#l00318">vs_conf.py:318</a></div></div>
 <div class="ttc" id="aclassvs__conf_1_1_settings_1_1_option_html"><div class="ttname"><a href="classvs__conf_1_1_settings_1_1_option.html">vs_conf.Settings.Option</a></div><div class="ttdoc">Key wrapper class.</div><div class="ttdef"><b>Definition:</b> <a href="vs__conf_8py_source.html#l00123">vs_conf.py:123</a></div></div>
 <div class="ttc" id="aclassvs__conf_1_1_settings_1_1_option_html_a041912ec2af4751cf87b1f5d16873a7c"><div class="ttname"><a href="classvs__conf_1_1_settings_1_1_option.html#a041912ec2af4751cf87b1f5d16873a7c">vs_conf.Settings.Option.desc</a></div><div class="ttdeci">desc</div><div class="ttdef"><b>Definition:</b> <a href="vs__conf_8py_source.html#l00146">vs_conf.py:146</a></div></div>
 <div class="ttc" id="aclassvs__conf_1_1_settings_1_1_option_html_a1dcc64b37f2a39c9fb0140933ed6d5ac"><div class="ttname"><a href="classvs__conf_1_1_settings_1_1_option.html#a1dcc64b37f2a39c9fb0140933ed6d5ac">vs_conf.Settings.Option.key</a></div><div class="ttdeci">key</div><div class="ttdef"><b>Definition:</b> <a href="vs__conf_8py_source.html#l00145">vs_conf.py:145</a></div></div>

@@ -123,6 +123,12 @@ Functions</h2></td></tr>
 <tr class="memitem:afc28be17acddac838c2f46460d7fba5c"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vs__conf_8py.html#afc28be17acddac838c2f46460d7fba5c">vs_conf.listify</a> (Sequence seq)</td></tr>
 <tr class="memdesc:afc28be17acddac838c2f46460d7fba5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert sequence to a conventional string list.  <a href="vs__conf_8py.html#afc28be17acddac838c2f46460d7fba5c">More...</a><br /></td></tr>
 <tr class="separator:afc28be17acddac838c2f46460d7fba5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c46360ef32fbabe3f52d22c76d28fe0"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vs__conf_8py.html#a7c46360ef32fbabe3f52d22c76d28fe0">vs_conf.writeBackup</a> ()</td></tr>
+<tr class="memdesc:a7c46360ef32fbabe3f52d22c76d28fe0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output the backup settings.  <a href="vs__conf_8py.html#a7c46360ef32fbabe3f52d22c76d28fe0">More...</a><br /></td></tr>
+<tr class="separator:a7c46360ef32fbabe3f52d22c76d28fe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a439f890015bc5451870eddb56a311f04"><td class="memItemLeft" align="right" valign="top">Settings&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vs__conf_8py.html#a439f890015bc5451870eddb56a311f04">vs_conf.get_settings</a> ()</td></tr>
+<tr class="memdesc:a439f890015bc5451870eddb56a311f04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the current settings or fallback to the backup.  <a href="vs__conf_8py.html#a439f890015bc5451870eddb56a311f04">More...</a><br /></td></tr>
+<tr class="separator:a439f890015bc5451870eddb56a311f04"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a59bd943f036ed3f2e69be23ea2bd97de"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vs__conf_8py.html#a59bd943f036ed3f2e69be23ea2bd97de">vs_conf.main</a> ()</td></tr>
 <tr class="memdesc:a59bd943f036ed3f2e69be23ea2bd97de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main function.  <a href="vs__conf_8py.html#a59bd943f036ed3f2e69be23ea2bd97de">More...</a><br /></td></tr>
 <tr class="separator:a59bd943f036ed3f2e69be23ea2bd97de"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -167,6 +173,29 @@ Returns:
     str: text with removed comments
 </pre> 
 <p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00053">53</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
+
+</div>
+</div>
+<a id="a439f890015bc5451870eddb56a311f04" name="a439f890015bc5451870eddb56a311f04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a439f890015bc5451870eddb56a311f04">&#9670;&nbsp;</a></span>get_settings()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> Settings vs_conf.get_settings </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return the current settings or fallback to the backup. </p>
+<pre class="fragment">Returns:
+    Settings: The active settings
+</pre> 
+<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00335">335</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
 
 </div>
 </div>
@@ -238,7 +267,7 @@ Returns:
 
 <p>Main function. </p>
 
-<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00327">327</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00348">348</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
 
 </div>
 </div>
@@ -262,6 +291,27 @@ Returns:
     list[str]: A list of the serial ports available on a win system
 </pre> 
 <p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00086">86</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
+
+</div>
+</div>
+<a id="a7c46360ef32fbabe3f52d22c76d28fe0" name="a7c46360ef32fbabe3f52d22c76d28fe0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c46360ef32fbabe3f52d22c76d28fe0">&#9670;&nbsp;</a></span>writeBackup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> None vs_conf.writeBackup </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Output the backup settings. </p>
+
+<p class="definition">Definition at line <a class="el" href="vs__conf_8py_source.html#l00329">329</a> of file <a class="el" href="vs__conf_8py_source.html">vs_conf.py</a>.</p>
 
 </div>
 </div>
