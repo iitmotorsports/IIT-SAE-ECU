@@ -29,7 +29,7 @@
             "label": "Pull Submodules",
             "detail": "Setup VScode configuation",
             "type": "shell",
-            "command": "python3",
+            "command": "git",
             "windows": {
                 "command": "git",
             },
