@@ -294,26 +294,27 @@ class Settings:
             self.settings[option.key] = option.get_value()
         json.dump(self.settings, file, indent=4)
 
-class PortPrinter():
+
+class PortPrinter:
     running = False
     force = False
-    thread : threading.Thread
-    
+    thread: threading.Thread
+
     msg = "    Available ports:"
-    
+
     def __init__(self) -> None:
         self.thread = threading.Thread(target=self.run, daemon=True)
-        
+
     def start(self):
         print(self.msg)
         self.force = True
         if not self.running:
             self.running = True
             self.thread.start()
-    
+
     def stop(self):
         self.running = False
-    
+
     def run(self):
         o_ports = None
         while self.running:
@@ -324,6 +325,26 @@ class PortPrinter():
                 o_ports = ports
                 print(f"\033[s\r\033[1A\033[K\r{self.msg} {ports}\033[u", end="")
 
+
+def writeBackup() -> None:
+    """Output the backup settings"""
+    with open(SETTINGS_PATH, "w", encoding="UTF-8") as sett:
+        sett.write(BACKUP_SET)
+
+
+def get_settings() -> Settings:
+    """Return the current settings or fallback to the backup
+
+    Returns:
+        Settings: The active settings
+    """
+    try:
+        return Settings(load_json())
+    except json.JSONDecodeError:
+        writeBackup()
+        return Settings(load_json())
+
+
 def main():
     """Main function"""
 
@@ -332,18 +353,17 @@ def main():
     first_time = not os.path.exists(SETTINGS_PATH)
 
     if first_time:
-        with open(SETTINGS_PATH, "w", encoding="UTF-8") as sett:
-            sett.write(BACKUP_SET)
+        writeBackup()
     elif vs_code_startup:
-        settings = Settings(load_json())
+        settings = get_settings()
         print(f"Configured for Teensy{settings.CORE_MODEL.get_value()} @ {int(int(settings.CORE_SPEED.get_value())/1000000)} Mhz")
         print(f"Current ports:\n Front:\t{settings.FRONT_TEENSY_PORT.get_value()}\n Back:\t{settings.BACK_TEENSY_PORT.get_value()}")
         print(f"Data Plotting: {settings.GRAPH_ARG.value}")
         print(f"Data Logging: {settings.LOGGING_OPTION.value}")
         sys.exit(0)
 
-    settings = Settings(load_json())
-    
+    settings = get_settings()
+
     pp = PortPrinter()
 
     for option in settings.options:
