@@ -32,7 +32,7 @@ BACKUP_SET = """{
     "CORE_NAME": "MK66FX1M0",
     "CORE_SPEED": "180000000",
     "USB_SETTING": "USB_SERIAL",
-    "LOGGING_OPTION": "-l${workspaceFolder}\\logs",
+    "LOGGING_OPTION": "-l${workspaceFolder}/logs",
     "TOOLCHAIN_OFFSET": "../TeensyToolchain",
     "ADDITIONAL_CMAKE_VARS": "-DCUSTOM_BUILD_PATH_PREFIX:STRING=build/Pre_Build/",
     "CMAKE_FINAL_VARS": "-DENV_CORE_SPEED:STRING=${config:CORE_SPEED} -DENV_CORE_MODEL:STRING=${config:CORE_MODEL} -DENV_USB_SETTING:STRING=${config:USB_SETTING} ${config:ADDITIONAL_CMAKE_VARS}",
