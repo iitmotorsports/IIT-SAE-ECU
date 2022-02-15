@@ -12,6 +12,8 @@
 
 namespace Front {
 
+LOG_TAG ID = "Front Teensy";
+
 static elapsedMillis timeElapsedHigh;
 static elapsedMillis timeElapsedMidHigh;
 static elapsedMillis timeElapsedMidLow;

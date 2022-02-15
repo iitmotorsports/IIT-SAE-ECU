@@ -1,3 +1,6 @@
+#ifndef __FRONT_H__
+#define __FRONT_H__
+
 #include "ECU.h"
 #include "ECUGlobalConfig.h"
 #include "Faults.h"
@@ -13,8 +16,7 @@
  */
 namespace Front {
 
-LOG_TAG ID = "Front Teensy";
-
+extern LOG_TAG ID;
 extern struct State::State_t *currentState;
 
 /**
@@ -47,3 +49,4 @@ void lowPriorityValues();
  */
 void highPriorityValues();
 }
+#endif // __FRONT_H__
