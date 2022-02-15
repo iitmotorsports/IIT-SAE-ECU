@@ -116,6 +116,90 @@
             }
         },
         {
+            "label": "Build Front ECU",
+            "type": "shell",
+            "detail": "Builds for Front teensy",
+            "presentation": {
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "command": "cmd.exe",
+            "args": [
+                "/d",
+                "/c",
+                "python",
+                {
+                    "quoting": "weak",
+                    "value": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py"
+                },
+                "build",
+                "-s"
+            ],
+            "dependsOn": [
+                "Build Pick Front"
+            ],
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            },
+            "problemMatcher": {
+                "base": "$gcc",
+                "pattern": {
+                    "regexp": "Pre_Build\/(.*?):(\\d+):(\\d*):?\\s+(?:fatal\\s+)?(note|warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        },
+        {
+            "label": "Build Back ECU",
+            "type": "shell",
+            "detail": "Builds for Back teensy",
+            "presentation": {
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "command": "cmd.exe",
+            "args": [
+                "/d",
+                "/c",
+                "python",
+                {
+                    "quoting": "weak",
+                    "value": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py"
+                },
+                "build",
+                "-s"
+            ],
+            "dependsOn": [
+                "Build Pick Back"
+            ],
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            },
+            "problemMatcher": {
+                "base": "$gcc",
+                "pattern": {
+                    "regexp": "Pre_Build\/(.*?):(\\d+):(\\d*):?\\s+(?:fatal\\s+)?(note|warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        },
+        {
             "label": "Configure",
             "type": "process",
             "detail": "Configure the CMake project",
@@ -446,8 +530,8 @@
             "detail": "Run all tasks required to program both teensies",
             "dependsOrder": "sequence",
             "dependsOn": [
-                "Build",
                 "Disable Both",
+                "Build",
                 "Upload Back",
                 "Build Front ECU",
                 "Upload Front",
@@ -463,90 +547,6 @@
             "group": {
                 "kind": "build",
                 "isDefault": true
-            }
-        },
-        {
-            "label": "Build Front ECU",
-            "type": "shell",
-            "detail": "Builds for Front teensy",
-            "presentation": {
-                "focus": true,
-                "panel": "shared",
-                "showReuseMessage": false,
-                "clear": true
-            },
-            "command": "cmd.exe",
-            "args": [
-                "/d",
-                "/c",
-                "python",
-                {
-                    "quoting": "weak",
-                    "value": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py"
-                },
-                "build",
-                "-s"
-            ],
-            "dependsOn": [
-                "Build Pick Front"
-            ],
-            "options": {
-                "statusbar": {
-                    "hide": true
-                }
-            },
-            "problemMatcher": {
-                "base": "$gcc",
-                "pattern": {
-                    "regexp": "Pre_Build\/(.*?):(\\d+):(\\d*):?\\s+(?:fatal\\s+)?(note|warning|error):\\s+(.*)$",
-                    "file": 1,
-                    "line": 2,
-                    "column": 3,
-                    "severity": 4,
-                    "message": 5
-                }
-            }
-        },
-        {
-            "label": "Build Back ECU",
-            "type": "shell",
-            "detail": "Builds for Back teensy",
-            "presentation": {
-                "focus": true,
-                "panel": "shared",
-                "showReuseMessage": false,
-                "clear": true
-            },
-            "command": "cmd.exe",
-            "args": [
-                "/d",
-                "/c",
-                "python",
-                {
-                    "quoting": "weak",
-                    "value": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py"
-                },
-                "build",
-                "-s"
-            ],
-            "dependsOn": [
-                "Build Pick Back"
-            ],
-            "options": {
-                "statusbar": {
-                    "hide": true
-                }
-            },
-            "problemMatcher": {
-                "base": "$gcc",
-                "pattern": {
-                    "regexp": "Pre_Build\/(.*?):(\\d+):(\\d*):?\\s+(?:fatal\\s+)?(note|warning|error):\\s+(.*)$",
-                    "file": 1,
-                    "line": 2,
-                    "column": 3,
-                    "severity": 4,
-                    "message": 5
-                }
             }
         },
         {
