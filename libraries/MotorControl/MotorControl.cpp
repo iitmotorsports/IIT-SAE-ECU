@@ -92,7 +92,7 @@ static void torqueVector(int pedal, int brake, int steer) {
     Log.d(ID, "Aggression Val x1000:", TVAggression * 1000, true);
 
     // TV V1
-    if (_steer <= 0) {
+    if (_steer > 0) {
         motorTorque[0] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
         motorTorque[1] = motorTorque[0] * clamp(pow(cos(TVAggression * _steer), 5), 0, 1);
     } else {
