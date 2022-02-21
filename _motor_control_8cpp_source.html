@@ -172,7 +172,7 @@ $(document).ready(function(){initNavTree('_motor_control_8cpp_source.html',''); 
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    <a class="code hl_variable" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>.<a class="code hl_function" href="struct_logging_1_1_log__t.html#a4b75f2065645b98fef1d6b4edea2b5a2">d</a>(ID, <span class="stringliteral">&quot;Aggression Val x1000:&quot;</span>, TVAggression * 1000, <span class="keyword">true</span>);</div>
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    <span class="comment">// TV V1</span></div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    <span class="keywordflow">if</span> (_steer &lt;= 0) {</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    <span class="keywordflow">if</span> (_steer &gt; 0) {</div>
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        motorTorque[0] = <a class="code hl_function" href="_util_8h.html#a4bed8992f080fb6157e663b1d339136f">cMap</a>(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);</div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        motorTorque[1] = motorTorque[0] * <a class="code hl_define" href="_util_8h.html#a0c834e8c33ee4b3eed8802b969723760">clamp</a>(pow(cos(TVAggression * _steer), 5), 0, 1);</div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    } <span class="keywordflow">else</span> {</div>
