@@ -100,14 +100,24 @@ file(GLOB_RECURSE C_CXX_BUILD_FILES ${CORE_PATH}/*.cpp)
 add_library(core ${C_ASM_BUILD_FILES} ${C_C_BUILD_FILES} ${C_CXX_BUILD_FILES})
 target_include_directories(core PUBLIC ${CORE_PATH} ${CORE_INCLUDE})
 
-add_library(libraries ${L_ASM_BUILD_FILES} ${L_C_BUILD_FILES} ${L_CXX_BUILD_FILES})
-target_include_directories(libraries PUBLIC ${LIBRARY_PATH} ${LIBRARY_INCLUDE})
-target_link_libraries(libraries core)
+# Front Libraries
+
+add_library(libraries_Front ${L_ASM_BUILD_FILES} ${L_C_BUILD_FILES} ${L_CXX_BUILD_FILES})
+target_include_directories(libraries_Front PUBLIC ${LIBRARY_PATH} ${LIBRARY_INCLUDE})
+target_link_libraries(libraries_Front core)
+target_compile_definitions(libraries_Front PRIVATE CONF_ECU_POSITION=FRONT_ECU)
+
+# Back Libraries
+
+add_library(libraries_Back ${L_ASM_BUILD_FILES} ${L_C_BUILD_FILES} ${L_CXX_BUILD_FILES})
+target_include_directories(libraries_Back PUBLIC ${LIBRARY_PATH} ${LIBRARY_INCLUDE})
+target_link_libraries(libraries_Back core)
+target_compile_definitions(libraries_Back PRIVATE CONF_ECU_POSITION=BACK_ECU)
 
 # Front Executable
 
 add_executable(${FRONT_BIN} ${S_ASM_BUILD_FILES} ${S_C_BUILD_FILES} ${S_CXX_BUILD_FILES})
-target_link_libraries(${FRONT_BIN} libraries core)
+target_link_libraries(${FRONT_BIN} libraries_Front core)
 target_compile_definitions(${FRONT_BIN} PRIVATE CONF_ECU_POSITION=FRONT_ECU)
 
 set_target_properties(${FRONT_BIN} PROPERTIES LINK_DEPENDS ${TEENSY_CORE_LD_SCRIPT})
@@ -126,7 +136,7 @@ set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_CLEAN_FILES "${FRONT_OUTPUT_FI
 # Back Executable
 
 add_executable(${BACK_BIN} ${S_ASM_BUILD_FILES} ${S_C_BUILD_FILES} ${S_CXX_BUILD_FILES})
-target_link_libraries(${BACK_BIN} libraries core)
+target_link_libraries(${BACK_BIN} libraries_Back core)
 target_compile_definitions(${BACK_BIN} PRIVATE CONF_ECU_POSITION=BACK_ECU)
 
 set_target_properties(${BACK_BIN} PROPERTIES LINK_DEPENDS ${TEENSY_CORE_LD_SCRIPT})
