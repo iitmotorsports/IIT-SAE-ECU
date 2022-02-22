@@ -26,56 +26,6 @@
             }
         },
         {
-            "label": "Pull Submodules",
-            "detail": "Setup VScode configuation",
-            "type": "shell",
-            "command": "git",
-            "windows": {
-                "command": "git",
-            },
-            "options": {
-                "cwd": "${workspaceFolder}",
-                "statusbar": {
-                    "hide": true
-                }
-            },
-            "args": [
-                "pull",
-                "--recurse-submodules"
-            ],
-            "presentation": {
-                "panel": "shared"
-            }
-        },
-        {
-            "label": "ZZZZ",
-            "detail": "Don't run this, this is run on startup",
-            "type": "shell",
-            "command": "python3",
-            "windows": {
-                "command": "py",
-            },
-            "options": {
-                "cwd": "${workspaceFolder}",
-                "statusbar": {
-                    "hide": true
-                }
-            },
-            "args": [
-                "vs_conf.py",
-                "thisisbeingrunonstartup"
-            ],
-            // "dependsOn": [
-            //     "Pull Submodules"
-            // ],
-            "presentation": {
-                "panel": "shared"
-            },
-            "runOptions": {
-                "runOn": "folderOpen"
-            }
-        },
-        {
             "label": "Build",
             "type": "process",
             "detail": "Compile project",
@@ -101,90 +51,6 @@
                 "statusbar": {
                     "label": "$(file-binary)",
                     "color": "#1ba82e"
-                }
-            },
-            "problemMatcher": {
-                "base": "$gcc",
-                "pattern": {
-                    "regexp": "Pre_Build\/(.*?):(\\d+):(\\d*):?\\s+(?:fatal\\s+)?(note|warning|error):\\s+(.*)$",
-                    "file": 1,
-                    "line": 2,
-                    "column": 3,
-                    "severity": 4,
-                    "message": 5
-                }
-            }
-        },
-        {
-            "label": "Build Front ECU",
-            "type": "shell",
-            "detail": "Builds for Front teensy",
-            "presentation": {
-                "focus": true,
-                "panel": "shared",
-                "showReuseMessage": false,
-                "clear": true
-            },
-            "command": "cmd.exe",
-            "args": [
-                "/d",
-                "/c",
-                "python",
-                {
-                    "quoting": "weak",
-                    "value": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py"
-                },
-                "build",
-                "-s"
-            ],
-            "dependsOn": [
-                "Build Pick Front"
-            ],
-            "options": {
-                "statusbar": {
-                    "hide": true
-                }
-            },
-            "problemMatcher": {
-                "base": "$gcc",
-                "pattern": {
-                    "regexp": "Pre_Build\/(.*?):(\\d+):(\\d*):?\\s+(?:fatal\\s+)?(note|warning|error):\\s+(.*)$",
-                    "file": 1,
-                    "line": 2,
-                    "column": 3,
-                    "severity": 4,
-                    "message": 5
-                }
-            }
-        },
-        {
-            "label": "Build Back ECU",
-            "type": "shell",
-            "detail": "Builds for Back teensy",
-            "presentation": {
-                "focus": true,
-                "panel": "shared",
-                "showReuseMessage": false,
-                "clear": true
-            },
-            "command": "cmd.exe",
-            "args": [
-                "/d",
-                "/c",
-                "python",
-                {
-                    "quoting": "weak",
-                    "value": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py"
-                },
-                "build",
-                "-s"
-            ],
-            "dependsOn": [
-                "Build Pick Back"
-            ],
-            "options": {
-                "statusbar": {
-                    "hide": true
                 }
             },
             "problemMatcher": {
@@ -254,12 +120,13 @@
             "problemMatcher": []
         },
         {
-            "label": "Upload",
+            "label": "Upload Front",
             "type": "process",
-            "detail": "Upload compiled binary to teensy",
+            "detail": "Upload compiled binary to front teensy",
             "presentation": {
                 "panel": "shared",
-                "showReuseMessage": false
+                "showReuseMessage": false,
+                "reveal": "silent"
             },
             "command": "cmd.exe",
             "args": [
@@ -271,12 +138,12 @@
                     "value": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py"
                 },
                 "upload",
-                "${input:TEENSY_USB_PORTNAME}"
+                "${config:FRONT_TEENSY_PORT}",
+                "${workspaceFolder}/build/bin/Teensy${config:CORE_MODEL}_Front.hex"
             ],
             "options": {
                 "statusbar": {
-                    "label": "$(circuit-board)",
-                    "color": "#e6d925"
+                    "hide": true
                 }
             },
             "problemMatcher": []
@@ -287,7 +154,8 @@
             "detail": "Upload compiled binary to back teensy",
             "presentation": {
                 "panel": "shared",
-                "showReuseMessage": false
+                "showReuseMessage": false,
+                "reveal": "silent"
             },
             "command": "cmd.exe",
             "args": [
@@ -299,6 +167,79 @@
                     "value": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py"
                 },
                 "upload",
+                "${config:BACK_TEENSY_PORT}",
+                "${workspaceFolder}/build/bin/Teensy${config:CORE_MODEL}_Back.hex"
+            ],
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Upload Both",
+            "detail": "Upload compiled binary to both teensies",
+            "dependsOrder": "parallel",
+            "dependsOn": [
+                "Upload Front",
+                "Upload Back"
+            ],
+            "options": {
+                "statusbar": {
+                    "label": "$(circuit-board)",
+                    "color": "#e6d925"
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Disable Front",
+            "type": "process",
+            "detail": "Put front teensy in programming mode",
+            "presentation": {
+                "panel": "shared",
+                "showReuseMessage": false,
+                "reveal": "silent"
+            },
+            "command": "cmd.exe",
+            "args": [
+                "/d",
+                "/c",
+                "python",
+                {
+                    "quoting": "weak",
+                    "value": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py"
+                },
+                "disable",
+                "${config:FRONT_TEENSY_PORT}"
+            ],
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Disable Back",
+            "type": "process",
+            "detail": "Put back teensy in programming mode",
+            "presentation": {
+                "panel": "shared",
+                "showReuseMessage": false,
+                "reveal": "silent"
+            },
+            "command": "cmd.exe",
+            "args": [
+                "/d",
+                "/c",
+                "python",
+                {
+                    "quoting": "weak",
+                    "value": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py"
+                },
+                "disable",
                 "${config:BACK_TEENSY_PORT}"
             ],
             "options": {
@@ -309,9 +250,79 @@
             "problemMatcher": []
         },
         {
-            "label": "Upload Front",
+            "label": "Disable Both",
+            "detail": "Put both teensies in programming mode",
+            "dependsOrder": "parallel",
+            "dependsOn": [
+                "Disable Back",
+                "Disable Front"
+            ],
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Shebang Front",
+            "detail": "Run all tasks required to program front teensy",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Build",
+                "Upload Front",
+                "Monitor"
+            ],
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Shebang Back",
+            "detail": "Run all tasks required to program back teensy",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Build",
+                "Upload Back",
+                "Monitor"
+            ],
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Shebang Both",
+            "detail": "Run all tasks required to program both teensies",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Disable Both",
+                "Build",
+                "Upload Back",
+                "Upload Front",
+                "Monitor"
+            ],
+            "options": {
+                "statusbar": {
+                    "label": "$(rocket)",
+                    "color": "#e67c25"
+                }
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Clean",
             "type": "process",
-            "detail": "Upload compiled binary to front teensy",
+            "detail": "Clean up build files",
             "presentation": {
                 "panel": "shared",
                 "showReuseMessage": false
@@ -325,12 +336,12 @@
                     "quoting": "weak",
                     "value": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py"
                 },
-                "upload",
-                "${config:FRONT_TEENSY_PORT}"
+                "clean"
             ],
             "options": {
                 "statusbar": {
-                    "hide": true
+                    "label": "$(refresh)",
+                    "color": "#e62525"
                 }
             },
             "problemMatcher": []
@@ -423,204 +434,26 @@
             "problemMatcher": []
         },
         {
-            "label": "Shebang Back",
-            "detail": "Run all tasks required to program back teensy",
-            "dependsOrder": "sequence",
-            "dependsOn": [
-                "Build",
-                "Upload Back",
-                "Monitor"
-            ],
+            "label": "Pull Submodules",
+            "detail": "Setup VScode configuation",
+            "type": "shell",
+            "command": "git",
+            "windows": {
+                "command": "git",
+            },
             "options": {
+                "cwd": "${workspaceFolder}",
                 "statusbar": {
                     "hide": true
                 }
             },
-            "problemMatcher": []
-        },
-        {
-            "label": "Shebang Front",
-            "detail": "Run all tasks required to program front teensy",
-            "dependsOrder": "sequence",
-            "dependsOn": [
-                "Build",
-                "Build Front ECU",
-                "Upload Front",
-                "Monitor"
-            ],
-            "options": {
-                "statusbar": {
-                    "hide": true
-                }
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "Disable Front",
-            "type": "process",
-            "detail": "Put front teensy in programming mode",
-            "presentation": {
-                "panel": "shared",
-                "showReuseMessage": false,
-                "reveal": "silent"
-            },
-            "command": "cmd.exe",
             "args": [
-                "/d",
-                "/c",
-                "python",
-                {
-                    "quoting": "weak",
-                    "value": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py"
-                },
-                "disable",
-                "${config:FRONT_TEENSY_PORT}"
+                "pull",
+                "--recurse-submodules"
             ],
-            "options": {
-                "statusbar": {
-                    "hide": true
-                }
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "Disable Back",
-            "type": "process",
-            "detail": "Put back teensy in programming mode",
             "presentation": {
-                "panel": "shared",
-                "showReuseMessage": false,
-                "reveal": "silent"
-            },
-            "command": "cmd.exe",
-            "args": [
-                "/d",
-                "/c",
-                "python",
-                {
-                    "quoting": "weak",
-                    "value": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py"
-                },
-                "disable",
-                "${config:BACK_TEENSY_PORT}"
-            ],
-            "options": {
-                "statusbar": {
-                    "hide": true
-                }
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "Disable Both",
-            "detail": "Put both teensies in programming mode",
-            "dependsOn": [
-                "Disable Back",
-                "Disable Front"
-            ],
-            "options": {
-                "statusbar": {
-                    "hide": true
-                }
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "Shebang Both",
-            "detail": "Run all tasks required to program both teensies",
-            "dependsOrder": "sequence",
-            "dependsOn": [
-                "Disable Both",
-                "Build",
-                "Upload Back",
-                "Build Front ECU",
-                "Upload Front",
-                "Monitor"
-            ],
-            "options": {
-                "statusbar": {
-                    "label": "$(rocket)",
-                    "color": "#e67c25"
-                }
-            },
-            "problemMatcher": [],
-            "group": {
-                "kind": "build",
-                "isDefault": true
+                "panel": "shared"
             }
-        },
-        {
-            "label": "Build Pick Back",
-            "type": "shell",
-            "detail": "Select back ecu to be programmed",
-            "presentation": {
-                "panel": "shared",
-                "showReuseMessage": false
-            },
-            "command": "cmd.exe",
-            "args": [
-                "/d",
-                "/c",
-                "python",
-                "ECUBuildPick.py",
-                "0",
-            ],
-            "options": {
-                "statusbar": {
-                    "hide": true
-                }
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "Build Pick Front",
-            "type": "shell",
-            "detail": "Select front ecu to be programmed",
-            "presentation": {
-                "panel": "shared",
-                "showReuseMessage": false
-            },
-            "command": "cmd.exe",
-            "args": [
-                "/d",
-                "/c",
-                "python",
-                "ECUBuildPick.py",
-                "1",
-            ],
-            "options": {
-                "statusbar": {
-                    "hide": true
-                }
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "Clean",
-            "type": "process",
-            "detail": "Clean up build files",
-            "presentation": {
-                "panel": "shared",
-                "showReuseMessage": false
-            },
-            "command": "cmd.exe",
-            "args": [
-                "/d",
-                "/c",
-                "python",
-                {
-                    "quoting": "weak",
-                    "value": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py"
-                },
-                "clean"
-            ],
-            "options": {
-                "statusbar": {
-                    "label": "$(refresh)",
-                    "color": "#e62525"
-                }
-            },
-            "problemMatcher": []
         },
         {
             "label": "Pastebin",
@@ -659,7 +492,35 @@
                 }
             },
             "problemMatcher": []
-        }
+        },
+        {
+            "label": "ZZZZ",
+            "detail": "Don't run this, this is run on startup",
+            "type": "shell",
+            "command": "python3",
+            "windows": {
+                "command": "py",
+            },
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "statusbar": {
+                    "hide": true
+                }
+            },
+            "args": [
+                "vs_conf.py",
+                "thisisbeingrunonstartup"
+            ],
+            // "dependsOn": [
+            //     "Pull Submodules"
+            // ],
+            "presentation": {
+                "panel": "shared"
+            },
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
+        },
     ],
     "inputs": [
         {

@@ -344,6 +344,7 @@ def get_settings() -> Settings:
         writeBackup()
         return Settings(load_json())
 
+# IMPROVE: make it ask if we have two Teensies?
 
 def main():
     """Main function"""

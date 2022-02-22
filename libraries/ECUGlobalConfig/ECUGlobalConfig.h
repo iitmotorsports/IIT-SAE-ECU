@@ -47,12 +47,14 @@
 
 #endif
 
+#ifndef CONF_ECU_POSITION
 /**
  * @brief Defines build is for back ECU
  * @details Used for documentation
  */
 #define CONF_ECU_POSITION BACK_ECU
 // #define CONF_ECU_POSITION FRONT_ECU // Defines build is for front ECU
+#endif
 
 /**
  * @brief Set serial baud rate

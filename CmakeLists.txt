@@ -23,7 +23,7 @@ elseif(TEENSY_MODEL EQUAL 40)
     set(FLOAT_HARDWARE fpv5-d16)
     set(LINKER_MATH arm_cortexM7lfsp_math)
     set(TEENSY_ARDUINO ARDUINO_TEENSY40)
-    
+
     message(STATUS "Configuring for Teensy 4.0")
 elseif(TEENSY_MODEL EQUAL 41)
     set(TEENSY_CORE "teensy4")
@@ -33,13 +33,17 @@ elseif(TEENSY_MODEL EQUAL 41)
     set(LINKER_MATH arm_cortexM7lfsp_math)
     set(LINKER_EXTENSION "_t41")
     set(TEENSY_ARDUINO ARDUINO_TEENSY41)
-    
+
     message(STATUS "Configuring for Teensy 4.1")
 else()
     message(FATAL_ERROR "Unsupported teensy model given: ${TEENSY_MODEL}" )
 endif()
 
-project(Teensy${TEENSY_MODEL}_Bin)
+project(IIT_ECU_Teensy${TEENSY_MODEL})
+
+set(FRONT_BIN Teensy${TEENSY_MODEL}_Front)
+set(BACK_BIN Teensy${TEENSY_MODEL}_Back)
+
 set(CMAKE_BUILD_TYPE "Release")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin")
@@ -49,6 +53,8 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 set(LIBRARY_PATH ${CUSTOM_BUILD_PATH_PREFIX}libraries CACHE INTERNAL "")
 set(SOURCE_PATH ${CUSTOM_BUILD_PATH_PREFIX}src CACHE INTERNAL "")
+
+# Compile flags and definitions
 
 add_compile_definitions(_GNU_SOURCE USING_MAKEFILE LAYOUT_US_ENGLISH F_CPU=${TEENSY_CORE_SPEED} __${TEENSY_CORE_NAME}__)
 add_compile_definitions(ARDUINO=${ARDUINO_VER} TEENSYDUINO=${TEENSYDUINO_VER} ${TEENSY_ARDUINO} ${TEENSY_CORE} ${USB_SETTING} )
@@ -64,6 +70,8 @@ set(CORE_PATH "${TOOLCHAIN_ROOT_PATH}/teensy/avr/cores/${TEENSY_CORE}")
 string(TOLOWER ${TEENSY_CORE_NAME} TEENSY_CORE_NAME_LOWER)
 set(TEENSY_CORE_LD_SCRIPT "${CORE_PATH}/${TEENSY_CORE_NAME_LOWER}${LINKER_EXTENSION}.ld" CACHE INTERNAL "")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${CMAKE_EXE_LINKER_PRINT_FLAGS} ${LINKER_FLAGS} -T${TEENSY_CORE_LD_SCRIPT}")
+
+# Locate and setup libraries and ECU core
 
 MACRO(HEADER_DIRECTORIES return_list path_prefix)
     FILE(GLOB_RECURSE new_list ${path_prefix}/*.h | ${path_prefix}/*.hpp)
@@ -96,21 +104,40 @@ add_library(libraries ${L_ASM_BUILD_FILES} ${L_C_BUILD_FILES} ${L_CXX_BUILD_FILE
 target_include_directories(libraries PUBLIC ${LIBRARY_PATH} ${LIBRARY_INCLUDE})
 target_link_libraries(libraries core)
 
-add_executable(${PROJECT_NAME} ${S_ASM_BUILD_FILES} ${S_C_BUILD_FILES} ${S_CXX_BUILD_FILES})
-target_link_libraries(${PROJECT_NAME} libraries core)
+# Front Executable
 
-set_target_properties(${PROJECT_NAME} PROPERTIES LINK_DEPENDS ${TEENSY_CORE_LD_SCRIPT})
-set_target_properties(${PROJECT_NAME} PROPERTIES
-	OUTPUT_NAME ${PROJECT_NAME}
-	SUFFIX ".elf"
-)
-set(FINAL_OUTPUT_FILE "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${PROJECT_NAME}.hex" CACHE INTERNAL "")
-set(TARGET_ELF "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${PROJECT_NAME}.elf")
-add_custom_command(TARGET ${PROJECT_NAME}
+add_executable(${FRONT_BIN} ${S_ASM_BUILD_FILES} ${S_C_BUILD_FILES} ${S_CXX_BUILD_FILES})
+target_link_libraries(${FRONT_BIN} libraries core)
+target_compile_definitions(${FRONT_BIN} PRIVATE CONF_ECU_POSITION=FRONT_ECU)
+
+set_target_properties(${FRONT_BIN} PROPERTIES LINK_DEPENDS ${TEENSY_CORE_LD_SCRIPT})
+set_target_properties(${FRONT_BIN} PROPERTIES OUTPUT_NAME ${FRONT_BIN} SUFFIX ".elf")
+
+set(FRONT_OUTPUT_FILE "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${FRONT_BIN}.hex" CACHE INTERNAL "")
+set(FRONT_TARGET_ELF "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${FRONT_BIN}.elf")
+add_custom_command(TARGET ${FRONT_BIN}
     POST_BUILD
     COMMAND echo.
-    COMMAND cd ${CMAKE_RUNTIME_OUTPUT_DIRECTORY} && ${CMAKE_SIZE_UTIL} "${PROJECT_NAME}.elf"
-    COMMAND ${CMAKE_OBJCOPY} -O ihex -R .eeprom ${TARGET_ELF} ${FINAL_OUTPUT_FILE})
-set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_CLEAN_FILES
-    "${FINAL_OUTPUT_FILE}"
-)
+    COMMAND cd ${CMAKE_RUNTIME_OUTPUT_DIRECTORY} && ${CMAKE_SIZE_UTIL} "${FRONT_BIN}.elf"
+    COMMAND ${CMAKE_OBJCOPY} -O ihex -R .eeprom ${FRONT_TARGET_ELF} ${FRONT_OUTPUT_FILE}
+    COMMAND echo.)
+set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_CLEAN_FILES "${FRONT_OUTPUT_FILE}")
+
+# Back Executable
+
+add_executable(${BACK_BIN} ${S_ASM_BUILD_FILES} ${S_C_BUILD_FILES} ${S_CXX_BUILD_FILES})
+target_link_libraries(${BACK_BIN} libraries core)
+target_compile_definitions(${BACK_BIN} PRIVATE CONF_ECU_POSITION=BACK_ECU)
+
+set_target_properties(${BACK_BIN} PROPERTIES LINK_DEPENDS ${TEENSY_CORE_LD_SCRIPT})
+set_target_properties(${BACK_BIN} PROPERTIES OUTPUT_NAME ${BACK_BIN} SUFFIX ".elf")
+
+set(BACK_OUTPUT_FILE "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${BACK_BIN}.hex" CACHE INTERNAL "")
+set(BACK_TARGET_ELF "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${BACK_BIN}.elf")
+add_custom_command(TARGET ${BACK_BIN}
+    POST_BUILD
+    COMMAND echo.
+    COMMAND cd ${CMAKE_RUNTIME_OUTPUT_DIRECTORY} && ${CMAKE_SIZE_UTIL} "${BACK_BIN}.elf"
+    COMMAND ${CMAKE_OBJCOPY} -O ihex -R .eeprom ${BACK_TARGET_ELF} ${BACK_OUTPUT_FILE}
+    COMMAND echo.)
+set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_CLEAN_FILES "${BACK_OUTPUT_FILE}")
