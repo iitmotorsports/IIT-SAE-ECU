@@ -352,6 +352,9 @@ def get_settings() -> Settings:  # TODO: don't output file until actually config
 
 def main():
     """Main function"""
+    
+    if sys.version_info.major < 3 or sys.version_info.minor < 10:
+        sys.exit("This project requires at least python 3.10")
 
     vs_code_startup = len(sys.argv) == 2 and sys.argv[1] == "thisisbeingrunonstartup"
     adv_mode = False
