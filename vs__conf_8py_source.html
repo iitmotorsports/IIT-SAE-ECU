@@ -442,58 +442,61 @@ $(document).ready(function(){initNavTree('vs__conf_8py_source.html',''); initRes
 <div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span> </div>
 <div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span><span class="keyword">def </span>main():</div>
 <div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>    <span class="stringliteral">&quot;&quot;&quot;Main function&quot;&quot;&quot;</span></div>
-<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span> </div>
-<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>    vs_code_startup = len(sys.argv) == 2 <span class="keywordflow">and</span> sys.argv[1] == <span class="stringliteral">&quot;thisisbeingrunonstartup&quot;</span></div>
-<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>    adv_mode = <span class="keyword">False</span></div>
-<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>    first_time = <span class="keywordflow">not</span> os.path.exists(SETTINGS_PATH)</div>
-<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span> </div>
-<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>    settings = get_settings()</div>
-<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span> </div>
-<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>    toolchain_missing = <span class="keywordflow">not</span> os.path.exists(settings.TOOLCHAIN_OFFSET.get_value())</div>
-<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span> </div>
-<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>    <span class="keywordflow">if</span> toolchain_missing:</div>
-<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>        path = settings.TOOLCHAIN_OFFSET.get_value()</div>
-<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>        print(f<span class="stringliteral">&quot;Toolchain is missing. Cloning to relative directory {path}&quot;</span>)</div>
-<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>        subprocess.call(f<span class="stringliteral">&quot;git clone --recurse-submodules -j8 {TOOLCHAIN_REPO}&quot;</span>, cwd=os.path.abspath(<span class="stringliteral">&quot;../&quot;</span>))</div>
-<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span> </div>
-<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>    <span class="keywordflow">if</span> first_time:</div>
-<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>        subprocess.call(<span class="stringliteral">&quot;git submodule update --init&quot;</span>)</div>
-<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>    <span class="keywordflow">elif</span> vs_code_startup:</div>
-<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>        print(f<span class="stringliteral">&quot;Configured for Teensy{settings.CORE_MODEL.get_value()} @ {int(int(settings.CORE_SPEED.get_value())/1000000)} Mhz&quot;</span>)</div>
-<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>        print(f<span class="stringliteral">&quot;Current ports:\n Front:\t{settings.FRONT_TEENSY_PORT.get_value()}\n Back:\t{settings.BACK_TEENSY_PORT.get_value()}&quot;</span>)</div>
-<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>        print(f<span class="stringliteral">&quot;Data Plotting: {settings.GRAPH_ARG.value}&quot;</span>)</div>
-<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>        print(f<span class="stringliteral">&quot;Data Logging: {settings.LOGGING_OPTION.value}&quot;</span>)</div>
-<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>        print(f<span class="stringliteral">&quot;\nRead Documentation Online at: {DOCUMENTATION_URL}&quot;</span>)</div>
-<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>        sys.exit(0)</div>
-<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span> </div>
-<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>    pp = <a class="code hl_class" href="classvs__conf_1_1_port_printer.html">PortPrinter</a>()</div>
-<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span> </div>
-<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>    <span class="keywordflow">for</span> option <span class="keywordflow">in</span> settings.options:</div>
-<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>        <span class="keywordflow">if</span> option.advanced <span class="keywordflow">and</span> <span class="keywordflow">not</span> adv_mode:</div>
-<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>            <span class="keywordflow">if</span> first_time:</div>
-<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>                <span class="keywordflow">break</span></div>
-<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>            <span class="keywordflow">if</span> input(<span class="stringliteral">&quot;Enter &#39;Yes&#39; to edit advanced options: &quot;</span>) != <span class="stringliteral">&quot;Yes&quot;</span>:</div>
-<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span>                <span class="keywordflow">break</span></div>
-<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>            adv_mode = <span class="keyword">True</span></div>
-<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span>        print(option)</div>
-<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span>        <span class="keywordflow">if</span> option <span class="keywordflow">is</span> settings.FRONT_TEENSY_PORT <span class="keywordflow">or</span> option <span class="keywordflow">is</span> settings.BACK_TEENSY_PORT:</div>
-<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span>            pp.start()</div>
-<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span>        <span class="keywordflow">elif</span> pp.running:</div>
-<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>            pp.stop()</div>
-<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span> </div>
-<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> option.set_value(input(<span class="stringliteral">&quot;Input option, blank for default: &quot;</span>)):</div>
-<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>            <span class="keywordflow">while</span> <span class="keywordflow">not</span> option.set_value(input(<span class="stringliteral">&quot;Invalid option: &quot;</span>)):</div>
-<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>                <span class="keywordflow">pass</span></div>
-<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span> </div>
-<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>    <span class="keyword">with</span> open(SETTINGS_PATH, <span class="stringliteral">&quot;w&quot;</span>, encoding=<span class="stringliteral">&quot;UTF-8&quot;</span>) <span class="keyword">as</span> sett:</div>
-<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span>        settings.unload(sett)</div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>    </div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>    <span class="keywordflow">if</span> sys.version_info.major &lt; 3 <span class="keywordflow">or</span> sys.version_info.minor &lt; 10:</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>        sys.exit(<span class="stringliteral">&quot;This project requires at least python 3.10&quot;</span>)</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span> </div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>    vs_code_startup = len(sys.argv) == 2 <span class="keywordflow">and</span> sys.argv[1] == <span class="stringliteral">&quot;thisisbeingrunonstartup&quot;</span></div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>    adv_mode = <span class="keyword">False</span></div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>    first_time = <span class="keywordflow">not</span> os.path.exists(SETTINGS_PATH)</div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span> </div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>    settings = get_settings()</div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span> </div>
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>    toolchain_missing = <span class="keywordflow">not</span> os.path.exists(settings.TOOLCHAIN_OFFSET.get_value())</div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span> </div>
+<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>    <span class="keywordflow">if</span> toolchain_missing:</div>
+<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>        path = settings.TOOLCHAIN_OFFSET.get_value()</div>
+<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>        print(f<span class="stringliteral">&quot;Toolchain is missing. Cloning to relative directory {path}&quot;</span>)</div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>        subprocess.call(f<span class="stringliteral">&quot;git clone --recurse-submodules -j8 {TOOLCHAIN_REPO}&quot;</span>, cwd=os.path.abspath(<span class="stringliteral">&quot;../&quot;</span>))</div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span> </div>
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>    <span class="keywordflow">if</span> first_time:</div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>        subprocess.call(<span class="stringliteral">&quot;git submodule update --init&quot;</span>)</div>
+<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>    <span class="keywordflow">elif</span> vs_code_startup:</div>
+<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>        print(f<span class="stringliteral">&quot;Configured for Teensy{settings.CORE_MODEL.get_value()} @ {int(int(settings.CORE_SPEED.get_value())/1000000)} Mhz&quot;</span>)</div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>        print(f<span class="stringliteral">&quot;Current ports:\n Front:\t{settings.FRONT_TEENSY_PORT.get_value()}\n Back:\t{settings.BACK_TEENSY_PORT.get_value()}&quot;</span>)</div>
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>        print(f<span class="stringliteral">&quot;Data Plotting: {settings.GRAPH_ARG.value}&quot;</span>)</div>
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>        print(f<span class="stringliteral">&quot;Data Logging: {settings.LOGGING_OPTION.value}&quot;</span>)</div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>        print(f<span class="stringliteral">&quot;\nRead Documentation Online at: {DOCUMENTATION_URL}&quot;</span>)</div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>        sys.exit(0)</div>
+<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span> </div>
+<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>    pp = <a class="code hl_class" href="classvs__conf_1_1_port_printer.html">PortPrinter</a>()</div>
+<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span> </div>
+<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>    <span class="keywordflow">for</span> option <span class="keywordflow">in</span> settings.options:</div>
+<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>        <span class="keywordflow">if</span> option.advanced <span class="keywordflow">and</span> <span class="keywordflow">not</span> adv_mode:</div>
+<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span>            <span class="keywordflow">if</span> first_time:</div>
+<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>                <span class="keywordflow">break</span></div>
+<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span>            <span class="keywordflow">if</span> input(<span class="stringliteral">&quot;Enter &#39;Yes&#39; to edit advanced options: &quot;</span>) != <span class="stringliteral">&quot;Yes&quot;</span>:</div>
+<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span>                <span class="keywordflow">break</span></div>
+<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span>            adv_mode = <span class="keyword">True</span></div>
+<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span>        print(option)</div>
+<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>        <span class="keywordflow">if</span> option <span class="keywordflow">is</span> settings.FRONT_TEENSY_PORT <span class="keywordflow">or</span> option <span class="keywordflow">is</span> settings.BACK_TEENSY_PORT:</div>
+<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>            pp.start()</div>
+<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>        <span class="keywordflow">elif</span> pp.running:</div>
+<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>            pp.stop()</div>
+<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span> </div>
+<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> option.set_value(input(<span class="stringliteral">&quot;Input option, blank for default: &quot;</span>)):</div>
+<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>            <span class="keywordflow">while</span> <span class="keywordflow">not</span> option.set_value(input(<span class="stringliteral">&quot;Invalid option: &quot;</span>)):</div>
+<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span>                <span class="keywordflow">pass</span></div>
 <div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span> </div>
-<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>    <span class="keywordflow">if</span> <span class="keywordflow">not</span> vs_code_startup:</div>
-<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>        subprocess.call(<span class="stringliteral">&quot;git pull --recurse-submodules&quot;</span>)</div>
+<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>    <span class="keyword">with</span> open(SETTINGS_PATH, <span class="stringliteral">&quot;w&quot;</span>, encoding=<span class="stringliteral">&quot;UTF-8&quot;</span>) <span class="keyword">as</span> sett:</div>
+<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>        settings.unload(sett)</div>
 <div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span> </div>
-<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span> </div>
-<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span><span class="keywordflow">if</span> __name__ == <span class="stringliteral">&quot;__main__&quot;</span>:</div>
-<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>    main()</div>
+<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>    <span class="keywordflow">if</span> <span class="keywordflow">not</span> vs_code_startup:</div>
+<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>        subprocess.call(<span class="stringliteral">&quot;git pull --recurse-submodules&quot;</span>)</div>
+<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span> </div>
+<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span> </div>
+<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span><span class="keywordflow">if</span> __name__ == <span class="stringliteral">&quot;__main__&quot;</span>:</div>
+<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>    main()</div>
 <div class="ttc" id="aclassvs__conf_1_1_port_printer_html"><div class="ttname"><a href="classvs__conf_1_1_port_printer.html">vs_conf.PortPrinter</a></div><div class="ttdef"><b>Definition:</b> <a href="vs__conf_8py_source.html#l00300">vs_conf.py:300</a></div></div>
 <div class="ttc" id="aclassvs__conf_1_1_port_printer_html_a02c8201eef4798cddcc6e8858ae86aad"><div class="ttname"><a href="classvs__conf_1_1_port_printer.html#a02c8201eef4798cddcc6e8858ae86aad">vs_conf.PortPrinter.running</a></div><div class="ttdeci">bool running</div><div class="ttdef"><b>Definition:</b> <a href="vs__conf_8py_source.html#l00301">vs_conf.py:301</a></div></div>
 <div class="ttc" id="aclassvs__conf_1_1_port_printer_html_a47c4321f32e0963230ead47015bfa25f"><div class="ttname"><a href="classvs__conf_1_1_port_printer.html#a47c4321f32e0963230ead47015bfa25f">vs_conf.PortPrinter.force</a></div><div class="ttdeci">force</div><div class="ttdef"><b>Definition:</b> <a href="vs__conf_8py_source.html#l00312">vs_conf.py:312</a></div></div>
