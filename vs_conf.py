@@ -403,6 +403,7 @@ def main():
 
     if not vs_code_startup:
         subprocess.call("git pull --recurse-submodules")
+        subprocess.call("git pull --recurse-submodules", cwd=settings.TOOLCHAIN_OFFSET.get_value())
 
 
 if __name__ == "__main__":
