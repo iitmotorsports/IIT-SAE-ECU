@@ -1,6 +1,9 @@
 {
     "recommendations": [
-        "Isaias.aio-personal-pack",
+        "Isaias.ui-additions-personal-pack",
+        "Isaias.git-personal-pack",
+        "Isaias.text-help-personal-pack",
+        "Isaias.markdown-personal-pack",
         "Isaias.c-cpp-personal-pack",
         "Isaias.doxygen-pack",
         "Isaias.python-personal-pack",
