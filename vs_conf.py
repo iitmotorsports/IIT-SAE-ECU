@@ -21,6 +21,7 @@ import time
 from typing import Any, Callable, Sequence
 
 SETTINGS_PATH = ".vscode/settings.json"
+DOCUMENTATION_URL = "https://illinois-tech-motorsports.github.io/IIT-SAE-ECU/md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html"
 TOOLCHAIN_REPO = "https://github.com/LeHuman/TeensyToolchain"
 
 BACKUP_SET = """{
@@ -372,6 +373,7 @@ def main():
         print(f"Current ports:\n Front:\t{settings.FRONT_TEENSY_PORT.get_value()}\n Back:\t{settings.BACK_TEENSY_PORT.get_value()}")
         print(f"Data Plotting: {settings.GRAPH_ARG.value}")
         print(f"Data Logging: {settings.LOGGING_OPTION.value}")
+        print(f"\nRead Documentation Online at: {DOCUMENTATION_URL}")
         sys.exit(0)
 
     pp = PortPrinter()
