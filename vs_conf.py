@@ -21,6 +21,7 @@ import time
 from typing import Any, Callable, Sequence
 
 SETTINGS_PATH = ".vscode/settings.json"
+TOOLCHAIN_REPO = "https://github.com/LeHuman/TeensyToolchain"
 
 BACKUP_SET = """{
     "FRONT_TEENSY_PORT": "COM3",
@@ -332,7 +333,7 @@ def writeBackup() -> None:
         sett.write(BACKUP_SET)
 
 
-def get_settings() -> Settings:
+def get_settings() -> Settings:  # TODO: don't output file until actually configured
     """Return the current settings or fallback to the backup
 
     Returns:
@@ -340,11 +341,13 @@ def get_settings() -> Settings:
     """
     try:
         return Settings(load_json())
-    except json.JSONDecodeError:
+    except (json.JSONDecodeError, FileNotFoundError):
         writeBackup()
-        return Settings(load_json())
+        return get_settings()
+
 
 # IMPROVE: make it ask if we have two Teensies?
+
 
 def main():
     """Main function"""
@@ -353,17 +356,23 @@ def main():
     adv_mode = False
     first_time = not os.path.exists(SETTINGS_PATH)
 
+    settings = get_settings()
+
+    toolchain_missing = not os.path.exists(settings.TOOLCHAIN_OFFSET.get_value())
+
+    if toolchain_missing:
+        path = settings.TOOLCHAIN_OFFSET.get_value()
+        print(f"Toolchain is missing. Cloning to relative directory {path}")
+        subprocess.call(f"git clone --recurse-submodules -j8 {TOOLCHAIN_REPO}", cwd=os.path.abspath("../"))
+
     if first_time:
-        writeBackup()
+        subprocess.call("git submodule update --init")
     elif vs_code_startup:
-        settings = get_settings()
         print(f"Configured for Teensy{settings.CORE_MODEL.get_value()} @ {int(int(settings.CORE_SPEED.get_value())/1000000)} Mhz")
         print(f"Current ports:\n Front:\t{settings.FRONT_TEENSY_PORT.get_value()}\n Back:\t{settings.BACK_TEENSY_PORT.get_value()}")
         print(f"Data Plotting: {settings.GRAPH_ARG.value}")
         print(f"Data Logging: {settings.LOGGING_OPTION.value}")
         sys.exit(0)
-
-    settings = get_settings()
 
     pp = PortPrinter()
 
@@ -386,6 +395,9 @@ def main():
 
     with open(SETTINGS_PATH, "w", encoding="UTF-8") as sett:
         settings.unload(sett)
+
+    if not vs_code_startup:
+        subprocess.call("git pull --recurse-submodules")
 
 
 if __name__ == "__main__":
