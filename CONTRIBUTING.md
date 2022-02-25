@@ -1,36 +1,41 @@
 # How To Contribute
 
+If you are unfamiliar with Git, CMake, or VSCode, please read through this guide thoroughly.
+
 ## Before you begin
 
 This repository is for students that are part of the SAE club at Illinois Tech.
 
-If you are here then that probably means you have joined the club and are interested in programming the microcontrollers that the car will use.
+If you are here then that probably means you have joined the club and are interested in programming the microcontrollers that our car uses.
 
-This side of the software sub-team works closely with different electrical sub systems of the car. This includes things like the Motor controllers, Battery Management System (BMS), and sensors such as the steering wheel and pedals.
+This side of the software sub-team works closely with different electrical sub systems of the car. This includes things like the Motor controllers, Accumulator Management System (AMS), and sensors such as the steering wheel, pedals, and brake pressure.
 
 Another major part of this project communicates with an Android phone app, which is currently being used as a dashboard for the car.
 If you would like to take a look at the Android app instead, look for the appropriate repository on the [Illinois Tech Motorsports](https://github.com/Illinois-Tech-Motorsports) organization page on github.
+The project should be named *Dashboard* followed by the most recent year.
 
-The main part of this project is written in C++ and is setup to only compile on Windows.
-Various scripts used by the compilation process are written in python 3.
+The main part of this project is written in C++17 and is currently setup to only compile on Windows.
+Various scripts used by the compilation process are written in python 3.10.
 
 This project is meant to be used with [VSCode](https://code.visualstudio.com/) as all the tasks and formatting is taken care of through local settings. The rest of this document assumes you are using VSCode.
 
-Before continuing, be sure to follow the steps for installing and setting up for compilation and running VSCode tasks in the [README](README.md).
+**Before continuing, be sure to follow the [Software](README.md#software) and [Setup](README.md#setup) section of the [README](README.md#software).**
 
 ## Familiarizing Yourself
 
-If you are having trouble with anything here, first double check you read it correctly, and if that doesn't work, ask whoever is leading software, or someone that you think might know, to help you.
+If you are having trouble with anything here, first double check you read it correctly, and if that doesn't work, try looking it up, and if that don't work, ask someone that you think might know, to help you.
 
 ## The Environment
 
 Here are some things that you should do which should help you familiarize yourself with scripts, extensions, and tasks that are often used and to ensure that everything is working.
 
-Although you already should have from the [README](README.md) setup, make sure you have also cloned the [TeensyToolchain](https://github.com/LeHuman/TeensyToolchain) repo using `git clone`, and put it next to this project folder.
+Although you already should have from the [README](README.md#setup) setup section, make sure you have also cloned the [TeensyToolchain](https://github.com/LeHuman/TeensyToolchain) repo using `git clone`, and put it next to this project folder.
 
 To thoroughly follow this guide, ensure you have 1-2 Teensies connected to your pc. They **must** be the same model, either `3.6`, `4.0`, or `4.1`.
 
-1. By default, The top left icon in VSCode shows the open editors and then files in your workspace. The one below that is source control.
+1. When you first open this project in VSCode, it might recommend you to install some extensions, install them. If it does not recommend them look into the `.vscode/extensions.json` file and search for each item under the `recommendations` section using the extensions tab which is on the left side bar in VSCode.
+
+    By default, The top left icon in VSCode shows the open editors and files in your workspace. The one below that is source control.
 
     ![The source control tab](https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/VSIcons.png)
 
@@ -40,20 +45,25 @@ To thoroughly follow this guide, ensure you have 1-2 Teensies connected to your 
 
     ![nogit](https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/nogit.png)
 
-    This means you either did not use `git clone` to download this repository or you don't actually have the folder open in VSCode. Just in case, to open a folder, look at the top bar and do `File > Open Folder` and open the root folder of the repository.
+    This means you either did not use `git clone` to download this repository or you don't actually have the folder open in VSCode. Just in case, to open a folder, look at the top bar and do `File > Open Folder` and open the root folder of this project.
 
     On the bottom taskbar in VSCode, towards the far left, there is a similar smaller icon that which should look like ![master](https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/master.png) , this is your current branch.
 
-    If you understand [git](https://git-scm.com/), it may be best that you work on a separate branch and create merge requests as you work on the repository. You can click on ![master](https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/master.png) which will show a popup to create a branch.
+    If you understand [git](https://git-scm.com/), it may be best that you work on a separate fork and create pull requests as you work on the repository.
 
-    If nothing about branches, commits, or whatever does not make sense, that is okay. Just know that, for now, you cannot upload any changes and everything you do will only be saved locally.
+    If nothing about branches, commits, forks, or whatever does not make sense, that is okay. Just know that, for now, you cannot upload any changes and everything you do will only be saved locally.
 
     One caveat to this, however, is if there is an update to the online repository you need to undo all changes and then run `git pull` in the repository folder. Alternatively, click on ![reload](https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/Reload.png) which is at the bottom left corner.
+
+    One additional note, you can click on ![master](https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/master.png) to switch to a testing branch, that is, you can switch to the testing version of this repository which should be used for testing. It is most likely the case that you should do this. Click on the icon and then click on `testing` when the popup shows up.
 
 2. Run these [tasks](https://code.visualstudio.com/Docs/editor/tasks)* in VSCode
     * `VS setup`: Setup VSCode configuration files
       * There is a similar task that should run on startup called `ZZZZ`, VSCode might prompt you to allow running tasks on startup, allow it if that happens. **If your terminal did not open up and begin prompting you when you initally opened this repository folder, run this task.**
+      * When the prompt is asking for the `CORE_MODEL` choose what model teensy you have.
       * When the prompt is asking for a `COM` port, if you have your Teensies connected, it should show which ones are available**. Choose which teensy to be the front one and which teensy to be the back one\***.
+      * When the prompt is asking for the `LOGGING_OPTION` simply press `Enter` to choose the default option
+      * When the prompt is asking for `GRAPH_ARG` set to `yes` or `no` depending if you want a plotter to show up when connecting to the teensy.
     * `Build`: Compile project
       * A Terminal should open up running various commands and ending with the statement `Task Succeeded ✔`
     * `Clean`: Clean up build files
@@ -74,6 +84,8 @@ These tasks are used to help automate development.
 In windows, these `COM` ports show up in the [Device Manager](https://support.microsoft.com/en-us/windows/open-device-manager-a7f2db46-faaf-24f0-8b7b-9e4a6032fc8c). There should only be one port per Teensy. These ports should look like `COMx` where `x` is a number.
 
 ![What the COM PORTs might look like](https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/COMPORTS.png)
+
+If there are no extra ports showing up, i.e. connecting or disconnecting a teensy doesn't change the number of ports, attempt to first program the teensy using `teensy.exe` or with the `Arduino` suite. Or ask someone for help.
 
 \*** If you only have one teensy, make it the front one and put whatever for the second.
 
@@ -114,7 +126,8 @@ Both languages can be auto formatted by running the default combo of `lShift + l
   ```
 
 * [X Macros](docs/html/_x_macros.html) should be defined in a `.def` file within the same library folder.
-* [Header guards](https://www.learncpp.com/cpp-tutorial/header-guards/) should follow the format `__ECU_X_Y__` where `X` is the file name and `Y` is the file extension ( as this can be used with `.h`, `.hpp`, and `.def` files), the entire string should also be capitalized.
+* [Header guards](https://www.learncpp.com/cpp-tutorial/header-guards/) should follow the format `__ECU_X_Y__` where `X` is the file name and `Y` is the file extension ( as this can be used with `.h`, `.hpp`, and `.def` files), the entire string should also be capitalized.  
+  e.g. `__ECU_LOGGING_H__`
 
 Before committing changes, be sure you have at least auto formatted your file. You should, however, follow these guidelines as you are working on files.
 
@@ -125,7 +138,7 @@ A big idea behind this project is modularity. This means that if we want to prog
 Each library should only focus on doing one thing and doing it well. They should not be hardcoded to fit our specific case, and should be as general as they can be. These libraries/modules are stored in the `libraries` folder.
 This library folder also stores third party libraries, those that we have taken from other repositories. Regardless, they work in the same way.
 
-One caveat, however, is that some of the libraries do break this rule somewhat. For example, some libraries have it hardcoded to behave one way if they are on the front teensy and different otherwise. The file [ECUGlobalConfig.h](libraries/ECUGlobalConfig/ECUGlobalConfig.h) denotes these *hardcoded* values, in the sense that the libraries are directly dependent on our situation. That situation being that we are currently using two Teensies which behave differently. This issue will, *hopefully*, be soon dealt with.
+One caveat, however, is that some of the libraries do break this rule somewhat. For example, some libraries have it hardcoded to behave one way if they are on the front teensy and different otherwise. The file [ECUGlobalConfig.h](libraries/ECUGlobalConfig/ECUGlobalConfig.h) denotes these *hardcoded* values, in the sense that the libraries are directly dependent on our situation. That situation being that we are currently using two Teensies which behave differently. Solving this issue is possible but has not been done.
 
 ### Python Scripting
 
@@ -176,14 +189,14 @@ Looking at the `notify` and `getLastState` function...
     State_t *getLastState();
 ```
 
-`@brief` gives a brief description of the function
-`@note` gives us the option is give an optional extra note
-`@param` Tells us what the first parameter of the function should be
+`@brief` gives a brief description of the function  
+`@note` gives us the option is give an optional extra note  
+`@param` Tells us what the first parameter of the function should be  
 `@return` Tells us what this function should return
 
 The extension should help with auto generating these symbols, just begin creating a multiline comment above a function and it should generate it for you.
 
-If you wish to remove a part of code from documentation surround the code with the following comments. This is mostly used to omit the actual source files from documentation, as currently only header files are used with Doxygen.
+If you wish to remove a part of code from documentation surround the code with the following comments. This is mostly used to omit the actual source files from documentation, as currently only header files are documented with Doxygen.
 
 ``` C++
     // @cond

@@ -5,6 +5,11 @@ SAE at IIT ECU Programming
 
 This repository contains the source code that the SAE team at IIT uses for their microcontrollers.
 
+New Members
+-----------
+
+For new members that are just joining, please refer to the [CONTRIBUTING](CONTRIBUTING.md) file.
+
 Hardware
 -------
 
@@ -16,7 +21,7 @@ Hardware
 Software
 -----
 
-This project assumes you installed the following.
+This project assumes you installed the latest version of the following.
 
 - [VSCode](https://code.visualstudio.com/)
   - This template is based around VSCode
@@ -31,15 +36,12 @@ This project assumes you installed the following.
 Setup
 -----
 
-Download [TeensyToolchain](https://github.com/LeHuman/TeensyToolchain), unzip, and put it next to this template folder.
+Clone [TeensyToolchain](https://github.com/LeHuman/TeensyToolchain) alongside this folder.
 
-If it is not named already, rename the downloaded folder from to `TeensyToolchain`  
+If it is not named already, rename the cloned/downloaded folder to `TeensyToolchain`  
 e.g. `TeensyToolchain-master` -> `TeensyToolchain`
 
-Alternatively, you can modify the `TOOLCHAIN_OFFSET` option inside `.vscode/settings.json` in order to tell the project where the toolchain is. This path is relative to this template folder.
-
-Inside `.vscode/settings.json`, modify the options for `FRONT_TEENSY_PORT` and `BACK_TEENSY_PORT` for the ports that the project should use to connect to your Teensies.  
-You can also modify the default values for other tasks in this file.
+Alternatively, you can modify the `TOOLCHAIN_OFFSET` option inside `.vscode/settings.json` in order to tell the project where the toolchain is. This path is relative to this folder.
 
 Using
 -----
@@ -75,8 +77,3 @@ This project uses [Doxygen](https://www.doxygen.nl/index.html) to auto generate 
 [Doxygen Extensions](https://marketplace.visualstudio.com/items?itemName=Isaias.doxygen-pack) exist for VSCode, to easily compile and view inside VSCode.
 
 The documentation can be generated locally or you can view the auto generated [Github Page](https://illinois-tech-motorsports.github.io/IIT-SAE-ECU/) for this repo.
-
-New Members
------------
-
-For new members that are just joining, please refer to the [CONTRIBUTING](CONTRIBUTING.md) file.

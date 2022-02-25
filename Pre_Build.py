@@ -772,7 +772,7 @@ def checkGitSubmodules():
 
 
 # Start Script
-def main():
+def main():  # TODO: remove libraries from prebuild folder that are no longer in the actual folder
     checkGitSubmodules()
 
     touch(SOURCE_DEST_NAME)
