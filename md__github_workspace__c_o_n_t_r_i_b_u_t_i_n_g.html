@@ -88,39 +88,45 @@ $(document).ready(function(){initNavTree('md__github_workspace__c_o_n_t_r_i_b_u_
   <div class="headertitle"><div class="title">How To Contribute </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="autotoc_md1"></a>
+<div class="textblock"><p >If you are unfamiliar with Git, CMake, or VSCode, please read through this guide thoroughly.</p>
+<h1><a class="anchor" id="autotoc_md1"></a>
 Before you begin</h1>
 <p >This repository is for students that are part of the SAE club at Illinois Tech.</p>
-<p >If you are here then that probably means you have joined the club and are interested in programming the microcontrollers that the car will use.</p>
-<p >This side of the software sub-team works closely with different electrical sub systems of the car. This includes things like the Motor controllers, Battery Management System (BMS), and sensors such as the steering wheel and pedals.</p>
-<p >Another major part of this project communicates with an Android phone app, which is currently being used as a dashboard for the car. If you would like to take a look at the Android app instead, look for the appropriate repository on the <a href="https://github.com/Illinois-Tech-Motorsports">Illinois Tech Motorsports</a> organization page on github.</p>
-<p >The main part of this project is written in C++ and is setup to only compile on Windows. Various scripts used by the compilation process are written in python 3.</p>
+<p >If you are here then that probably means you have joined the club and are interested in programming the microcontrollers that our car uses.</p>
+<p >This side of the software sub-team works closely with different electrical sub systems of the car. This includes things like the Motor controllers, Accumulator Management System (AMS), and sensors such as the steering wheel, pedals, and brake pressure.</p>
+<p >Another major part of this project communicates with an Android phone app, which is currently being used as a dashboard for the car. If you would like to take a look at the Android app instead, look for the appropriate repository on the <a href="https://github.com/Illinois-Tech-Motorsports">Illinois Tech Motorsports</a> organization page on github. The project should be named <em>Dashboard</em> followed by the most recent year.</p>
+<p >The main part of this project is written in C++17 and is currently setup to only compile on Windows. Various scripts used by the compilation process are written in python 3.10.</p>
 <p >This project is meant to be used with <a href="https://code.visualstudio.com/">VSCode</a> as all the tasks and formatting is taken care of through local settings. The rest of this document assumes you are using VSCode.</p>
-<p >Before continuing, be sure to follow the steps for installing and setting up for compilation and running VSCode tasks in the <a class="el" href="index.html#md__github_workspace_README">README</a>.</p>
+<p ><b>Before continuing, be sure to follow the <a href="README.md#software">Software</a> and <a href="README.md#setup">Setup</a> section of the <a href="README.md#software">README</a>.</b></p>
 <h1><a class="anchor" id="autotoc_md2"></a>
 Familiarizing Yourself</h1>
-<p >If you are having trouble with anything here, first double check you read it correctly, and if that doesn't work, ask whoever is leading software, or someone that you think might know, to help you.</p>
+<p >If you are having trouble with anything here, first double check you read it correctly, and if that doesn't work, try looking it up, and if that don't work, ask someone that you think might know, to help you.</p>
 <h1><a class="anchor" id="autotoc_md3"></a>
 The Environment</h1>
 <p >Here are some things that you should do which should help you familiarize yourself with scripts, extensions, and tasks that are often used and to ensure that everything is working.</p>
-<p >Although you already should have from the <a class="el" href="index.html#md__github_workspace_README">README</a> setup, make sure you have also cloned the <a href="https://github.com/LeHuman/TeensyToolchain">TeensyToolchain</a> repo using <code>git clone</code>, and put it next to this project folder.</p>
+<p >Although you already should have from the <a href="README.md#setup">README</a> setup section, make sure you have also cloned the <a href="https://github.com/LeHuman/TeensyToolchain">TeensyToolchain</a> repo using <code>git clone</code>, and put it next to this project folder.</p>
 <p >To thoroughly follow this guide, ensure you have 1-2 Teensies connected to your pc. They <b>must</b> be the same model, either <code>3.6</code>, <code>4.0</code>, or <code>4.1</code>.</p>
 <ol type="1">
-<li><p class="startli">By default, The top left icon in VSCode shows the open editors and then files in your workspace. The one below that is source control.</p>
+<li><p class="startli">When you first open this project in VSCode, it might recommend you to install some extensions, install them. If it does not recommend them look into the <code>.vscode/extensions.json</code> file and search for each item under the <code>recommendations</code> section using the extensions tab which is on the left side bar in VSCode.</p>
+<p class="startli">By default, The top left icon in VSCode shows the open editors and files in your workspace. The one below that is source control.</p>
 <p class="startli"><img src="https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/VSIcons.png" alt="The source control tab" class="inline"/></p>
 <p class="startli">We will not get into how <a href="https://git-scm.com/">git</a> works, you should learn about that elsewhere. In any case, know that this is where you can commit changes to the repository without using a terminal, meaning, you can upload changes to the online repository or just see what changes you have made in general.</p>
 <p class="startli">If something like this shows up instead...</p>
 <p class="startli"><img src="https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/nogit.png" alt="nogit" class="inline"/></p>
-<p class="startli">This means you either did not use <code>git clone</code> to download this repository or you don't actually have the folder open in VSCode. Just in case, to open a folder, look at the top bar and do <code>File &gt; Open Folder</code> and open the root folder of the repository.</p>
+<p class="startli">This means you either did not use <code>git clone</code> to download this repository or you don't actually have the folder open in VSCode. Just in case, to open a folder, look at the top bar and do <code>File &gt; Open Folder</code> and open the root folder of this project.</p>
 <p class="startli">On the bottom taskbar in VSCode, towards the far left, there is a similar smaller icon that which should look like <img src="https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/master.png" alt="master" class="inline"/> , this is your current branch.</p>
-<p class="startli">If you understand <a href="https://git-scm.com/">git</a>, it may be best that you work on a separate branch and create merge requests as you work on the repository. You can click on <img src="https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/master.png" alt="master" class="inline"/> which will show a popup to create a branch.</p>
-<p class="startli">If nothing about branches, commits, or whatever does not make sense, that is okay. Just know that, for now, you cannot upload any changes and everything you do will only be saved locally.</p>
+<p class="startli">If you understand <a href="https://git-scm.com/">git</a>, it may be best that you work on a separate fork and create pull requests as you work on the repository.</p>
+<p class="startli">If nothing about branches, commits, forks, or whatever does not make sense, that is okay. Just know that, for now, you cannot upload any changes and everything you do will only be saved locally.</p>
 <p class="startli">One caveat to this, however, is if there is an update to the online repository you need to undo all changes and then run <code>git pull</code> in the repository folder. Alternatively, click on <img src="https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/Reload.png" alt="reload" class="inline"/> which is at the bottom left corner.</p>
+<p class="startli">One additional note, you can click on <img src="https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/master.png" alt="master" class="inline"/> to switch to a testing branch, that is, you can switch to the testing version of this repository which should be used for testing. It is most likely the case that you should do this. Click on the icon and then click on <code>testing</code> when the popup shows up.</p>
 </li>
 <li>Run these <a href="https://code.visualstudio.com/Docs/editor/tasks">tasks</a>* in VSCode<ul>
 <li><code>VS setup</code>: Setup VSCode configuration files<ul>
 <li>There is a similar task that should run on startup called <code>ZZZZ</code>, VSCode might prompt you to allow running tasks on startup, allow it if that happens. <b>If your terminal did not open up and begin prompting you when you initally opened this repository folder, run this task.</b></li>
+<li>When the prompt is asking for the <code>CORE_MODEL</code> choose what model teensy you have.</li>
 <li>When the prompt is asking for a <code>COM</code> port, if you have your Teensies connected, it should show which ones are available**. Choose which teensy to be the front one and which teensy to be the back one***.</li>
+<li>When the prompt is asking for the <code>LOGGING_OPTION</code> simply press <code>Enter</code> to choose the default option</li>
+<li>When the prompt is asking for <code>GRAPH_ARG</code> set to <code>yes</code> or <code>no</code> depending if you want a plotter to show up when connecting to the teensy.</li>
 </ul>
 </li>
 <li><code>Build</code>: Compile project<ul>
@@ -150,6 +156,7 @@ The Environment</h1>
 <p >** If <code>COM</code> ports are not showing up as available, find what <code>COM</code> port to use by doing the following.</p>
 <p >In windows, these <code>COM</code> ports show up in the <a href="https://support.microsoft.com/en-us/windows/open-device-manager-a7f2db46-faaf-24f0-8b7b-9e4a6032fc8c">Device Manager</a>. There should only be one port per Teensy. These ports should look like <code>COMx</code> where <code>x</code> is a number.</p>
 <p ><img src="https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/Contributing/COMPORTS.png" alt="What the COM PORTs might look like" class="inline"/></p>
+<p >If there are no extra ports showing up, i.e. connecting or disconnecting a teensy doesn't change the number of ports, attempt to first program the teensy using <code>teensy.exe</code> or with the <code>Arduino</code> suite. Or ask someone for help.</p>
 <p >*** If you only have one teensy, make it the front one and put whatever for the second.</p>
 <p >**** If you only have one Teensy, only setup the front one and instead run <code>Shebang <a class="el" href="namespace_front.html" title="Name space used solely for front ECU logic.">Front</a></code>.</p>
 <h1><a class="anchor" id="autotoc_md4"></a>
@@ -181,14 +188,15 @@ Coding Conventions</h2>
 <div class="line">   return object.command(fnlEval * 255);</div>
 </div><!-- fragment --></li>
 <li><a href="docs/html/_x_macros.html">X Macros</a> should be defined in a <code>.def</code> file within the same library folder.</li>
-<li><a href="https://www.learncpp.com/cpp-tutorial/header-guards/">Header guards</a> should follow the format <code>__ECU_X_Y__</code> where <code>X</code> is the file name and <code>Y</code> is the file extension ( as this can be used with <code>.h</code>, <code>.hpp</code>, and <code>.def</code> files), the entire string should also be capitalized.</li>
+<li><a href="https://www.learncpp.com/cpp-tutorial/header-guards/">Header guards</a> should follow the format <code>__ECU_X_Y__</code> where <code>X</code> is the file name and <code>Y</code> is the file extension ( as this can be used with <code>.h</code>, <code>.hpp</code>, and <code>.def</code> files), the entire string should also be capitalized. <br  />
+ e.g. <code>__ECU_LOGGING_H__</code></li>
 </ul>
 <p >Before committing changes, be sure you have at least auto formatted your file. You should, however, follow these guidelines as you are working on files.</p>
 <h2><a class="anchor" id="autotoc_md6"></a>
 Modularity</h2>
 <p >A big idea behind this project is modularity. This means that if we want to program some new functionality it should be in the form of a library/module.</p>
 <p >Each library should only focus on doing one thing and doing it well. They should not be hardcoded to fit our specific case, and should be as general as they can be. These libraries/modules are stored in the <code>libraries</code> folder. This library folder also stores third party libraries, those that we have taken from other repositories. Regardless, they work in the same way.</p>
-<p >One caveat, however, is that some of the libraries do break this rule somewhat. For example, some libraries have it hardcoded to behave one way if they are on the front teensy and different otherwise. The file <a href="libraries/ECUGlobalConfig/ECUGlobalConfig.h">ECUGlobalConfig.h</a> denotes these <em>hardcoded</em> values, in the sense that the libraries are directly dependent on our situation. That situation being that we are currently using two Teensies which behave differently. This issue will, <em>hopefully</em>, be soon dealt with.</p>
+<p >One caveat, however, is that some of the libraries do break this rule somewhat. For example, some libraries have it hardcoded to behave one way if they are on the front teensy and different otherwise. The file <a href="libraries/ECUGlobalConfig/ECUGlobalConfig.h">ECUGlobalConfig.h</a> denotes these <em>hardcoded</em> values, in the sense that the libraries are directly dependent on our situation. That situation being that we are currently using two Teensies which behave differently. Solving this issue is possible but has not been done.</p>
 <h2><a class="anchor" id="autotoc_md7"></a>
 Python Scripting</h2>
 <p >The python portion of this project is somewhat neglected. As long as it seemed to work we just left it alone. This is especially true for the <a href="Pre_Build.py">Pre_Build.py</a> script. Not much is to be said beyond this, feel free to look into the scripts and improve upon them as you see fit.</p>
@@ -224,9 +232,12 @@ Documentation</h2>
 <div class="line"> * @return State_t* pointer of last state</div>
 <div class="line"> */</div>
 <div class="line">State_t *getLastState();</div>
-</div><!-- fragment --><p ><code>@brief</code> gives a brief description of the function <code>@note</code> gives us the option is give an optional extra note <code>@param</code> Tells us what the first parameter of the function should be <code>@return</code> Tells us what this function should return</p>
+</div><!-- fragment --><p ><code>@brief</code> gives a brief description of the function <br  />
+ <code>@note</code> gives us the option is give an optional extra note <br  />
+ <code>@param</code> Tells us what the first parameter of the function should be <br  />
+ <code>@return</code> Tells us what this function should return</p>
 <p >The extension should help with auto generating these symbols, just begin creating a multiline comment above a function and it should generate it for you.</p>
-<p >If you wish to remove a part of code from documentation surround the code with the following comments. This is mostly used to omit the actual source files from documentation, as currently only header files are used with Doxygen.</p>
+<p >If you wish to remove a part of code from documentation surround the code with the following comments. This is mostly used to omit the actual source files from documentation, as currently only header files are documented with Doxygen.</p>
 <div class="fragment"><div class="line">// @cond</div>
 <div class="line">int dontDocumentMe[4];</div>
 <div class="line"> </div>

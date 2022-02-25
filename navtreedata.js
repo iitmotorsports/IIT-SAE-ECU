@@ -26,15 +26,15 @@ var NAVTREE =
 [
   [ "SAE Teensy ECU", "index.html", [
     [ "SAE at IIT ECU Programming", "index.html", [
-      [ "Hardware", "index.html#autotoc_md21", null ],
-      [ "Software", "index.html#autotoc_md22", null ],
-      [ "Setup", "index.html#autotoc_md23", null ],
-      [ "Using", "index.html#autotoc_md24", [
-        [ "VSCode Tasks", "index.html#autotoc_md25", null ],
-        [ "CMake", "index.html#autotoc_md26", null ]
+      [ "New Members", "index.html#autotoc_md21", null ],
+      [ "Hardware", "index.html#autotoc_md22", null ],
+      [ "Software", "index.html#autotoc_md23", null ],
+      [ "Setup", "index.html#autotoc_md24", null ],
+      [ "Using", "index.html#autotoc_md25", [
+        [ "VSCode Tasks", "index.html#autotoc_md26", null ],
+        [ "CMake", "index.html#autotoc_md27", null ]
       ] ],
-      [ "Documentation", "index.html#autotoc_md27", null ],
-      [ "New Members", "index.html#autotoc_md28", null ]
+      [ "Documentation", "index.html#autotoc_md28", null ]
     ] ],
     [ "How To Contribute", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html", [
       [ "Before you begin", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md1", null ],
