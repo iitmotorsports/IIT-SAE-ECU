@@ -56,416 +56,40 @@ Note, however, if this script is not run the macro should still allow everything
 
 import pathlib
 import shutil
-import hashlib
 import glob
 import os
 import asyncio
 import threading
 import time
-import errno
 import re
 import sys
 import json
-import pickle
-from pathlib import Path
-import io
-from typing import Optional, IO
 import subprocess
+
 from os.path import join as join_path
 from vs_conf import load_json
 from vs_conf import Settings
 
+import script.util as Util
+import script.text as Text
+import script.id_matcher as IDMatch
+from script.file_entry import FileEntry, LIB_PATH, LIB_FILE
+from script.progress_bar import ProgressBar
+
 SOURCE_NAME = "src"
 LIBRARIES_NAME = "libraries"
-LIB_PATH = join_path("libraries", "Log")  # Path to the implementation of Log
-LIB_FILE = "LogConfig.def"
 LIB_DEFINE = ("#define CONF_LOGGING_MAPPED_MODE 0", "#define CONF_LOGGING_MAPPED_MODE 1")
-BLACKLIST = join_path("libraries", ".blacklist")
 WORKING_DIRECTORY_OFFSET = join_path("build", "Pre_Build", "")
-# FILE_OUTPUT_PATH = "build\\bin"
 FILE_OUTPUT_PATH = ""
-
-IGNORE_KEYWORD = "PRE_BUILD_IGNORE"  # Keyword that makes this script ignore a line
 
 BYPASS_SCRIPT = os.path.exists("script.disable")  # bypass script if this file is found
 
 MAX_RESULT = 8  # The maximum number of results to print out for errors and modified files
 
-LIMIT_TAG = 65535
-LIMIT_ID = 65535
-TAG_MAP: dict[str, tuple[int, int]] = {
-    "STATE": (2, 256),
-    "VALUE": (256, 4096),
-    "ELSE": (4096, LIMIT_TAG),
-}
-BLACKLIST_IDS = (0, 1)
-
 SOURCE_DEST_NAME = f"{WORKING_DIRECTORY_OFFSET}{SOURCE_NAME}"
 LIBRARIES_DEST_NAME = f"{WORKING_DIRECTORY_OFFSET}{LIBRARIES_NAME}"
-DATA_FILE = f"{WORKING_DIRECTORY_OFFSET}.LogInfo"
-
-LOW_RAM = 4
-BUF_SIZE = 65536
-
-RAM_MEMO = False
 
 INCLUDED_FILE_TYPES = (".c", ".cpp", ".h", ".hpp", ".t", ".tpp", ".s", ".def")
-
-
-def getLibraryBlacklist() -> dict[str, list]:
-    """Get the library folder blacklist based on core model
-
-    Returns:
-        dict[str, list]: folder blacklist dict
-    """
-    blacklist: dict[str, list] = {}
-    with open(BLACKLIST, "r", encoding="utf-8") as file:
-        currentModel = ""
-        for line in file.readlines():
-            if line[0] == ".":
-                currentModel = line.split(" ")[0][1:]
-                if currentModel not in blacklist:
-                    blacklist[currentModel] = []
-            else:
-                for token in line.split(" "):
-                    token = token.strip(" \n")
-                    if not token or token[0] == "#":
-                        break
-                    elif os.path.exists(join_path(os.path.dirname(BLACKLIST), token)):
-                        blacklist[currentModel].append(join_path(os.path.dirname(BLACKLIST), token))
-    return blacklist
-
-
-def available_ram():
-    global RAM_MEMO
-    if not RAM_MEMO:
-        out = subprocess.check_output("wmic OS get FreePhysicalMemory /Value", stderr=subprocess.STDOUT, shell=True)
-        RAM_MEMO = round(
-            int(str(out).strip("b").strip("'").replace("\\r", "").replace("\\n", "").replace("FreePhysicalMemory=", "")) / 1048576, 2
-        )
-    return RAM_MEMO
-
-
-def hashFile(filePath):
-    if os.path.exists(filePath):
-        if available_ram() <= LOW_RAM:
-            sha256 = hashlib.sha256()
-            with open(filePath, "rb") as f:
-                while True:
-                    data = f.read(BUF_SIZE)
-                    if not data:
-                        break
-                    sha256.update(data)
-            return sha256.digest()
-        else:
-            with open(filePath, "rb") as f:
-                return hashlib.sha256(f.read()).hexdigest()
-    return ""
-
-
-class Text:
-    @staticmethod
-    def error(text):
-        return f"\033[91m\033[1m\033[4m{text}\033[0m"
-
-    @staticmethod
-    def underline(text):
-        return f"\033[4m{text}\033[0m"
-
-    @staticmethod
-    def header(text):
-        return f"\033[1m\033[4m{text}\033[0m"
-
-    @staticmethod
-    def warning(text):
-        return f"\033[93m\033[1m{text}\033[0m"
-
-    @staticmethod
-    def yellow(text):
-        return f"\033[93m{text}\033[0m"
-
-    @staticmethod
-    def important(text):
-        return f"\033[94m\033[1m{text}\033[0m"
-
-    @staticmethod
-    def reallyImportant(text):
-        return f"\033[94m\033[1m\033[4m{text}\033[0m"
-
-    @staticmethod
-    def green(text):
-        return f"\033[92m{text}\033[0m"
-
-    @staticmethod
-    def red(text):
-        return f"\033[91m{text}\033[0m"
-
-
-def save_data(Object):
-    with open(DATA_FILE, "wb") as f:
-        pickle.dump(Object, f)
-
-
-def load_data():
-    # if os.path.exists(DATA_FILE):
-    #     with open(DATA_FILE, "rb") as f:
-    #         return pickle.load(f)
-    # print("No {} found".format(DATA_FILE))
-    return ({}, {}, {})
-
-
-def touch(rawpath):
-    try:
-        Path(rawpath).mkdir(parents=True, exist_ok=True)
-    except OSError as exc:
-        if exc.errno != errno.EEXIST:
-            raise
-
-
-class ScriptException(Exception):
-    pass
-
-
-class OutOfIDsException(ScriptException):
-    def __init__(self, message):
-        super().__init__(message.strip(), "Script has ran out of allocatable IDs")
-
-
-class OutOfTAGsException(ScriptException):
-    def __init__(self, message):
-        super().__init__(message.strip(), "Script has ran out of allocatable TAG IDs")
-
-
-class MalformedTAGDefinitionException(ScriptException):
-    def __init__(self, message):
-        super().__init__(message.strip(), "Implicit, single char or number definition of a LOG_TAG type")
-
-
-class MalformedLogCallException(ScriptException):
-    def __init__(self, message):
-        super().__init__(message.strip(), "Implicit string or number inside a call to Log")
-
-
-def splitErrorString(error):
-    if issubclass(type(error), ScriptException):
-        return error.args[1] + "\n\t" + error.args[0]
-    else:
-        return error
-
-
-OLD_DATA = load_data()  # TBI
-
-O_TAGs = OLD_DATA[0]
-O_IDs = OLD_DATA[1]
-O_Files = OLD_DATA[2]
-
-TAGs = {}
-IDs = {}
-Files = {}
-
-TAG_SEM = threading.BoundedSemaphore(1)
-ID_SEM = threading.BoundedSemaphore(1)
-FILE_SEM = threading.BoundedSemaphore(1)
-
-
-# IMPROVE: Find a better way to get unique numbers
-
-
-async def getUniqueID(findDuplicate=None):
-    if IDs.get(findDuplicate):
-        return IDs[findDuplicate]
-
-    ID_SEM.acquire()
-    old_vals = set(O_IDs.values())
-    vals = set(IDs.values())
-
-    for i in range(1, LIMIT_ID):
-        if i not in BLACKLIST_IDS and i not in old_vals and i not in vals:
-            IDs[""] = i  # Claim before returning
-            ID_SEM.release()
-            return i
-
-    # Attempt to clear up some IDs
-    raise OutOfIDsException
-
-
-async def getUniqueTAG(findDuplicate=None):
-    if TAGs.get(findDuplicate):
-        return TAGs[findDuplicate]
-
-    TAG_SEM.acquire()
-    old_vals = set(O_TAGs.values())
-    vals = set(TAGs.values())
-
-    for i in range(1, LIMIT_TAG):
-        if i not in BLACKLIST_IDS and i not in old_vals and i not in vals:
-            TAGs[""] = i  # Claim before returning
-            TAG_SEM.release()
-            return i
-
-    # Attempt to clear up some IDs
-    raise OutOfIDsException
-
-
-REGEX_STATE_PASS = r"\" *(\S+.*?) +(?i:state)\s*\"" # TODO: check for state in TAG or SXX check
-
-REGEX_SPECIAL_PASS = (
-    r"_LogPrebuildString\s*\(\s*(\".*?\")\s*\)"  # _LogPrebuildString("Str") # Special case where we can indirectly allocate a string
-)
-REGEX_SPECIAL_FAIL = r"_LogPrebuildString\s*\(\s*([^\"]*?)\s*\)"  # TODO: finish coverage on fail regex
-
-REGEX_TAG_PASS = r"LOG_TAG(?= )\s*[^\"=]+?=\s*(\"\s*\S.*\")\s*;"  # LOG_TAG idVar = "ID"; # Where ID cannot be blank
-REGEX_TAG_FAIL = (
-    r"(?:LOG_TAG(?= )\s*[^\"=]+?=\s*)(?:[^\"=]+?|\"\s*\")\s*;"  # Implicit, single char, or empty string definition of a tag type
-)
-
-REGEX_CALL_SS = r"(?:Log\s*\.*\s*([diwefp])?\s*\(\s*(\"\s*\S(?:\\.|[^\"])+\")\s*,\s*(\"(\\.|[^\"])*\")\s*\)\s*;)"  # -> Log("Str", "Str");
-REGEX_CALL_VS = r"(?:Log\s*\.*\s*([diwefp])?\s*\(\s*([^\"]+?)\s*,\s*(\"(?:\\.|[^\"])*\")\s*\)\s*;)"  # -> Log(Var, "Str");
-REGEX_CALL_SSV = (
-    r"(?:Log\s*\.*\s*([diwefp])?\s*\(\s*(\"\s*\S(?:\\.|[^\"])+\")\s*,\s*(\".*?\")\s*,\s*(.+?)\s*\)\s*;)"  # -> Log("Str", "Str", Var);
-)
-REGEX_CALL_VSV = r"(?:Log\s*\.*\s*([diwefp])?\s*\(\s*([^\"]+?)\s*,\s*(\".*?\")\s*,\s*(.+?)\s*\)\s*;)"  # -> Log(Var, "Str", Var);
-REGEX_CALL_ERR_LITERAL = r"(?:Log\s*\.*\s*(?:[diwefp])?\s*\(\s*(?:[^\"]+?|\"(?:[^\"]|\\\")*?\")\s*,\s*[^\";]+?\s*(?:,\s*(?:.+?))?\s*\)\s*;)"  # Message string is not a literal string | IDE will warn about numbers but will still compile
-REGEX_CALL_ERR_BLANK = r"(?:Log\s*\.*\s*(?:[diwefp])?\s*\(\s*\"\s*\"\s*,.*?\)\s*;)"  # Blank string ID
-
-REGEX_CALL_PASS = f"{REGEX_CALL_SS}|{REGEX_CALL_VS}|{REGEX_CALL_SSV}|{REGEX_CALL_VSV}"
-REGEX_CALL_FAIL = f"{REGEX_CALL_ERR_LITERAL}|{REGEX_CALL_ERR_BLANK}"
-
-Log_Levels = {
-    "": "[ LOG ] ",
-    "d": "[DEBUG] ",
-    "p": "[POST]  ",
-    "i": "[INFO]  ",
-    "w": "[WARN]  ",
-    "e": "[ERROR] ",
-    "f": "[FATAL] ",
-}
-
-
-class FileEntry:  # IMPROVE: Make IDs persistent
-    name = ""
-    path = ""
-    rawpath = ""
-    workingPath = ""
-    offset = ""
-    modified = False
-    errors: list[str]
-
-    def __init__(self, RawPath, FilePath, FileName, Offset):
-        if not os.path.exists(FilePath):
-            raise FileNotFoundError(FilePath)
-
-        self.name = FileName
-        self.path = FilePath
-        self.rawpath = RawPath
-        self.workingPath = f"{Offset}{FilePath}"
-        self.offset = Offset
-        self.errors = list()
-
-        # if O_Files.get(self.workingPath):
-        # print("Records show {} exists".format(FileName))
-
-        touch(f"{Offset}{RawPath}")
-
-    def newError(self, exception: Exception, name: str, tag: str):
-        self.errors.append(f"  {name}:{tag}\n   {Text.red(type(exception).__name__)}\n    > {splitErrorString(exception)}\n")
-
-    async def addNewTag(self, raw_str):
-        string = "[{}]".format(raw_str.strip('"'))
-        numberID = await getUniqueTAG(string)
-        TAG_SEM.acquire()
-        TAGs[string] = numberID
-        TAG_SEM.release()
-        return numberID
-
-    async def addNewID(self, raw_log_level, raw_str):
-        string = Log_Levels[raw_log_level] + raw_str.strip('"')
-        numberID = await getUniqueID(string)
-        ID_SEM.acquire()
-        IDs[string] = numberID
-        ID_SEM.release()
-        return numberID
-
-    async def SPECIAL_STR(self, line, reMatch):
-        ID = await self.addNewID("", reMatch)  # Special strings are always LOG for simplicity
-        return line.replace(reMatch, str(ID))
-
-    async def VSX(self, line, reMatch):
-        ID = await self.addNewID(reMatch[0], reMatch[2])
-        return line.replace(reMatch[2], str(ID))
-
-    async def SSX(self, line, reMatch):
-        TAG = await self.addNewTag(reMatch[1])
-        ID = await self.addNewID(reMatch[0], reMatch[2])
-        return line.replace(reMatch[1], str(TAG)).replace(reMatch[2], str(ID))
-
-    async def NEW_TAG(self, line, reMatch):
-        TAG = await self.addNewTag(reMatch)
-        return line.replace(reMatch, str(TAG))
-
-    async def walkLines(self, function):
-        temp_path = self.workingPath + ".__Lock"
-        line_no = 1
-        newline = ""
-        with open(self.path, "r", encoding="utf-8") as f1, open(temp_path, "w", encoding="utf-8") as f2:
-            if self.rawpath.startswith(LIB_PATH) and self.name != LIB_FILE:  # Ignore log library source files
-                f2.writelines(f1.readlines())
-            else:
-                for line in f1:
-                    try:
-                        newline = await function(line)
-                        f2.buffer.write(newline.encode("utf-8"))
-                    except Exception as e:  # If prev exception was about IO then oh well
-                        self.newError(e, self.path, line_no)
-                        f2.buffer.write(line.encode("utf-8"))
-                    finally:
-                        line_no += 1
-        self.modified = not syncFile(temp_path, self.offset, self.rawpath, self.workingPath)
-        os.remove(temp_path)
-
-    async def findLogMatch(self, line: str):
-        newline: str = line
-
-        if IGNORE_KEYWORD in newline:  # Return if this line has the ignore keyword
-            return newline
-
-        SPECIAL = re.findall(REGEX_SPECIAL_PASS, line)
-        if SPECIAL:
-            newline = await self.SPECIAL_STR(line, SPECIAL[0])
-        else:
-            VS = re.findall(REGEX_CALL_VS, line)
-            if len(VS) != 0:  # ¯\_(ツ)_/¯
-                newline = await self.VSX(line, VS[0])
-            else:
-                TAG_GOOD = re.findall(REGEX_TAG_PASS, line)
-                if TAG_GOOD:
-                    newline = await self.NEW_TAG(line, TAG_GOOD[0])
-                else:
-                    VSV = re.findall(REGEX_CALL_VSV, line)
-                    if len(VSV) != 0:
-                        newline = await self.VSX(line, VSV[0])
-                    else:
-                        TAG_BAD = re.findall(REGEX_TAG_FAIL, line)
-                        if TAG_BAD:
-                            TAG_BAD = TAG_BAD[0]
-                            raise MalformedTAGDefinitionException(TAG_BAD[0] + Text.error(TAG_BAD[1]) + TAG_BAD[2])
-                        else:
-                            BAD = re.findall(REGEX_CALL_ERR_LITERAL, line)
-                            if BAD:
-                                BAD = BAD[0]
-                                raise MalformedLogCallException(BAD[0] + Text.error(BAD[1]) + BAD[2])
-                            else:
-                                SS = re.findall(REGEX_CALL_SS, line)
-                                if len(SS) != 0:
-                                    newline = await self.SSX(line, SS[0])
-                                else:
-                                    SSV = re.findall(REGEX_CALL_SSV, line)
-                                    if len(SSV) != 0:
-                                        newline = await self.SSX(line, SSV[0])
-        return newline
-
-    async def scan(self):
-        await self.walkLines(self.findLogMatch)
 
 
 async def ingest_files(finishFunc, FilesEntries):
@@ -486,33 +110,12 @@ FileRefs = set()
 Threads = set()
 Excluded_dirs = set()
 
-FILE_CHANGE = False
-
-
-def syncFile(filePath, offset, rawpath, workingFilePath=None, suppress=False):
-    workingFilePath = workingFilePath or f"{offset}{filePath}"
-    global FILE_CHANGE
-
-    new = hashFile(filePath)
-    old = hashFile(workingFilePath)
-    if old == "":
-        old = 0
-    FILE_CHANGE = FILE_CHANGE and (new == old)
-
-    if not os.path.exists(workingFilePath) or new != old:
-        touch(f"{offset}{rawpath}")
-        shutil.copyfile(filePath, workingFilePath)
-        if not suppress:
-            print(f"Sync File: {os.path.basename(workingFilePath)}")
-        return False
-    return True
-
 
 def allocate_files(path, offset):
     async def lib_flag(line):
         return line.replace(*LIB_DEFINE)
 
-    blacklist = getLibraryBlacklist()
+    blacklist = Util.getLibraryBlacklist()
     model: dict[str, str]
     try:
         model = load_json()[Settings.CORE_NAME.key]
@@ -526,9 +129,9 @@ def allocate_files(path, offset):
 
     for subdir, _, files in os.walk(path):
         cont = False
-        for dir in blacklist:
-            if str(subdir).startswith(dir):
-                Excluded_dirs.add(dir)
+        for directory in blacklist:
+            if str(subdir).startswith(directory):
+                Excluded_dirs.add(directory)
                 cont = True
                 break
         if cont:
@@ -539,7 +142,7 @@ def allocate_files(path, offset):
             filepath = subdir + os.sep + filename
             rawpath = subdir + os.sep
             if BYPASS_SCRIPT:
-                syncFile(filepath, offset, rawpath, suppress=True)
+                Util.syncFile(filepath, offset, rawpath, suppress=True)
                 continue
             if rawpath.startswith(LIB_PATH):
                 libFile = FileEntry(rawpath, filepath, filename, offset)
@@ -550,8 +153,8 @@ def allocate_files(path, offset):
             Files.add(File_Ent)
             FileRefs.add(File_Ent)
 
-    for dir in blacklist:
-        rmPath = join_path(offset, dir)
+    for directory in blacklist:
+        rmPath = join_path(offset, directory)
         if os.path.exists(rmPath):
             shutil.rmtree(rmPath)
 
@@ -574,105 +177,6 @@ def dole_files(count, finishFunc):
             break
 
 
-class ThreadedProgressBar:
-    bar_len = 10
-    maxcount = 0
-    counter = 0
-    Lines = set()
-    run = True
-    prefix = ""
-    formatStr = "{} │{}│ {}{}\r"
-
-    class TextIO(io.TextIOWrapper):
-        def __init__(
-            self,
-            func,
-            buffer: IO[bytes],
-            encoding: str = ...,
-            errors: Optional[str] = ...,
-            newline: Optional[str] = ...,
-            line_buffering: bool = ...,
-            write_through: bool = ...,
-        ):
-            super(ThreadedProgressBar.TextIO, self).__init__(buffer, encoding, errors, newline, line_buffering, write_through)
-            self.func = func
-
-        def write(self, s):
-            self.func(s.strip("\n "))
-
-        def getOriginal(self):
-            return super()
-
-    def __init__(self, maxcount, prefix):
-        self.maxcount = maxcount
-        self.stdout = sys.stdout
-        self.rename(prefix)
-
-    def rename(self, prefix):
-        mx_sz = len(self.formatStr.format(prefix, " " * self.bar_len, 100.0, "%"))
-        self.bar_len = min(int(os.get_terminal_size().columns - 1 - (mx_sz / 1.25)), mx_sz)
-        self.bar_len = self.bar_len if self.bar_len > 0 else 0
-        self.prefix = prefix
-
-    def reset(self, maxcount, prefix):
-        self.maxcount = maxcount
-        self.rename(prefix)
-        self.counter = 0
-
-    def _newLine(self, String):
-        self.Lines.add(String)
-
-    def _progress(self, count, total, prefix="", printString: str = ""):
-        if total > 0:
-            filled_len = int(round(self.bar_len * count / float(total)))
-
-            percents = round(100.0 * count / float(total), 1)
-            bar = "█" * filled_len + "░" * (self.bar_len - filled_len)
-
-            proStr = self.formatStr.format(prefix, bar, percents, "%")
-            if len(printString) > 0:
-                self.stdout.write(" " * (os.get_terminal_size().columns - 1))
-                self.stdout.write("\033[F")
-                printString = printString.strip(" \n")
-                spacer = " " * (os.get_terminal_size().columns - 1 - len(printString))
-                self.stdout.write(f"{printString}{spacer}"[: os.get_terminal_size().columns - 1])
-                self.stdout.write("\n")
-            self.stdout.write(proStr)
-            self.stdout.flush()
-
-    def _printThread(self):
-        while self.run or len(self.Lines) > 0:
-            if len(self.Lines) > 0:
-                self._progress(self.counter, self.maxcount, self.prefix, self.Lines.pop())
-            else:
-                self._progress(self.counter, self.maxcount, self.prefix)
-
-    def start(self):
-        self.wrapper = ThreadedProgressBar.TextIO(
-            self._newLine,
-            sys.stdout.buffer,
-            sys.stdout.encoding,
-            sys.stdout.errors,
-            sys.stdout.newlines,
-            sys.stdout.line_buffering,
-            sys.stdout.write_through,
-        )
-        sys.stdout = self.wrapper
-        self.printer = threading.Thread(target=self._printThread)
-        self.printer.start()
-
-    def progress(self):
-        self.counter += 1
-
-    def finish(self):
-        self.run = False
-        self.printer.join()
-        self._progress(self.counter, self.maxcount, self.prefix)
-        self.wrapper.flush()
-        sys.stdout = self.wrapper.getOriginal()
-        print()
-
-
 def begin_scan():
     for t in Threads:
         t.start()
@@ -680,15 +184,7 @@ def begin_scan():
     for t in Threads:
         t.join()
 
-    try:
-        del IDs[""]
-    except KeyError:
-        pass
-
-    try:
-        del TAGs[""]
-    except KeyError:
-        pass
+    IDMatch.clear_blanks()
 
 
 def printResults():
@@ -754,47 +250,12 @@ def printResults():
             print(Text.underline(Text.red("  {} more error{}".format(m, "s" if m > 1 else ""))))
 
 
-def getOutputFile(path):
-    output_name = "log_lookup.json"
-    savePath = f"{path}\\{output_name}"
-    if savePath.startswith("\\"):
-        savePath = output_name
-    return savePath
-
-
-def save_lookup(path):
-    toSave = (TAGs, IDs)
-    touch(path)
-    with open(getOutputFile(path), "w") as f:
-        json.dump(toSave, f, indent=4, separators=(",", ": "))
-
-
-def checkGitSubmodules():
-    err = False
-    try:
-        response = subprocess.check_output("git config -f .gitmodules -l", stderr=subprocess.STDOUT, shell=True)
-        submodules = tuple(line.split("=")[1] for line in response.decode("utf-8").splitlines() if ".url=" not in line)
-        for module in submodules:
-            if (
-                not os.path.exists(module)
-                or not os.path.isdir(module)
-                or not list(1 for ext in INCLUDED_FILE_TYPES if len(glob.glob(f"**{os.path.sep}*{ext}", root_dir=module, recursive=True)))
-            ):
-                print(Text.warning("Submodule does not exist, or contains no source files : " + module))
-                err = True
-    except subprocess.CalledProcessError:
-        print(Text.error("Failed to check for git submodules"))
-    if err:
-        print(Text.important("\nConsider running " + Text.red("git pull --recurse-submodules")))
-        print(Text.important("or " + Text.red("git submodule update --init")) + Text.important(" if repo has just been cloned\n"))
-
-
 # Start Script
 def main():  # TODO: remove libraries from prebuild folder that are no longer in the actual folder
-    checkGitSubmodules()
+    Util.checkGitSubmodules(INCLUDED_FILE_TYPES)
 
-    touch(SOURCE_DEST_NAME)
-    touch(LIBRARIES_DEST_NAME)
+    Util.touch(SOURCE_DEST_NAME)
+    Util.touch(LIBRARIES_DEST_NAME)
 
     allocate_files(SOURCE_NAME, WORKING_DIRECTORY_OFFSET)
     allocate_files(LIBRARIES_NAME, WORKING_DIRECTORY_OFFSET)
@@ -802,13 +263,13 @@ def main():  # TODO: remove libraries from prebuild folder that are no longer in
     if not BYPASS_SCRIPT:
         time.sleep(0.5)  # Let terminal settle
 
-        print(Text.warning(f"Available Ram: {available_ram()} GBs\n"))
+        print(Text.warning(f"Available Ram: {Util.available_ram()} GBs\n"))
 
-        prehash = hashFile(getOutputFile(FILE_OUTPUT_PATH))
+        prehash = Util.hashFile(Util.getOutputFile(FILE_OUTPUT_PATH))
 
         print(f"Files to search: {len(FileRefs)}")
 
-        tb = ThreadedProgressBar(len(Files), Text.important("Completed Files:"))
+        tb = ProgressBar(len(Files), Text.important("Completed Files:"))
 
         dole_files(8, tb.progress)
 
@@ -819,9 +280,9 @@ def main():  # TODO: remove libraries from prebuild folder that are no longer in
         tb.finish()
 
         printResults()
-        save_lookup(FILE_OUTPUT_PATH)
-        newhash = hashFile(getOutputFile(FILE_OUTPUT_PATH))
-        if FILE_CHANGE:
+        IDMatch.save_lookup(FILE_OUTPUT_PATH)
+        newhash = Util.hashFile(Util.getOutputFile(FILE_OUTPUT_PATH))
+        if Util.FILES_CHANGED:
             print(Text.important("\nNote: Files have changed, rebuild inbound"))
         if newhash != prehash:
             print(Text.reallyImportant("\nNote: Output file values have changed"))
@@ -842,11 +303,14 @@ def main():  # TODO: remove libraries from prebuild folder that are no longer in
         ]
     ).wait()
 
-    # try:
-    #     shutil.rmtree(SOURCE_DEST_NAME)
-    #     shutil.rmtree(LIBRARIES_DEST_NAME)
-    # except FileNotFoundError:
-    #     pass
+
+# TODO: only remove files/modules that no longer exist in actual directories
+
+try:
+    shutil.rmtree(SOURCE_DEST_NAME)
+    shutil.rmtree(LIBRARIES_DEST_NAME)
+except FileNotFoundError:
+    pass
 
 
 if __name__ == "__main__":
