@@ -29,10 +29,16 @@ ID_SEM = threading.BoundedSemaphore(1)
 FILE_SEM = threading.BoundedSemaphore(1)
 
 
-def set_tag(string: str, numberID: int):
+def new_tag(string: str, numberID: int):
     TAG_SEM.acquire()
     TAGs[string] = numberID
     TAG_SEM.release()
+
+
+def new_id(string: str, numberID: int):
+    ID_SEM.acquire()
+    IDs[string] = numberID
+    ID_SEM.release()
 
 
 async def getUniqueID(findDuplicate=None):
@@ -49,6 +55,7 @@ async def getUniqueID(findDuplicate=None):
             ID_SEM.release()
             return i
 
+    ID_SEM.release()
     # Attempt to clear up some IDs
     raise Error.OutOfIDsException
 
@@ -67,6 +74,7 @@ async def getUniqueTAG(findDuplicate=None):
             TAG_SEM.release()
             return i
 
+    TAG_SEM.release()
     # Attempt to clear up some IDs
     raise Error.OutOfIDsException
 

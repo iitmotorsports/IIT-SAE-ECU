@@ -1,6 +1,6 @@
-from msilib import sequence
 import os
 import re
+from typing import Callable
 
 import script.regex as REGEX
 import script.error as Error
@@ -11,9 +11,9 @@ import script.id_matcher as IDMatch
 IGNORE_KEYWORD = "PRE_BUILD_IGNORE"  # Keyword that makes this script ignore a line
 
 FILE_LOG_LEVELS = {
+    "p": "",
     "": "[ LOG ] ",
     "d": "[DEBUG] ",
-    "p": "[POST]  ",
     "i": "[INFO]  ",
     "w": "[WARN]  ",
     "e": "[ERROR] ",
@@ -22,10 +22,12 @@ FILE_LOG_LEVELS = {
 
 
 class FileEntry:  # IMPROVE: Make IDs persistent
+    """Represents a source file to map log calls with"""
+
     name = ""
     path = ""
     rawpath = ""
-    workingPath = ""
+    working_path = ""
     offset = ""
     modified = False
     errors: list[str]
@@ -37,49 +39,112 @@ class FileEntry:  # IMPROVE: Make IDs persistent
         self.name = FileName
         self.path = FilePath
         self.rawpath = RawPath
-        self.workingPath = f"{Offset}{FilePath}"
+        self.working_path = f"{Offset}{FilePath}"
         self.offset = Offset
         self.errors = list()
 
-        # if O_Files.get(self.workingPath):
-        # print("Records show {} exists".format(FileName))
-
         Util.touch(f"{Offset}{RawPath}")
 
-    def newError(self, exception: Exception, name: str, tag: str):
+    def new_error(self, exception: Exception, name: str, tag: str) -> None:
+        """Store an error to display later
+
+        Args:
+            exception (Exception): Exception to store
+            name (str): Name of this error
+            tag (str): Additional tag for this error
+        """
         self.errors.append(f"  {name}:{tag}\n   {Text.red(type(exception).__name__)}\n    > {Error.error_to_string(exception)}\n")
 
-    async def addNewTag(self, raw_str):
-        string = "[{}]".format(raw_str.strip('"'))
-        numberID = await IDMatch.getUniqueTAG(string)
-        IDMatch.set_tag(string, numberID)
-        return numberID
+    async def get_new_tag(self, raw_str: str) -> int:
+        """get a new unique tag
 
-    async def addNewID(self, raw_log_level, raw_str):
+        Args:
+            raw_str (str): raw string to store
+
+        Returns:
+            int: uid to replace this string with
+        """
+        raw_str = raw_str.strip('"')
+        string = f"[{raw_str}]"
+        number_id = await IDMatch.getUniqueTAG(string)
+        IDMatch.new_tag(string, number_id)
+        return number_id
+
+    async def get_new_id(self, raw_log_level: str, raw_str: str) -> int:
+        """Get a new unique ID
+
+        Args:
+            raw_log_level (str): Logging level of this tag
+            raw_str (str): raw string to store
+
+        Returns:
+            int: uid to replace this string with
+        """
         string = FILE_LOG_LEVELS[raw_log_level] + raw_str.strip('"')
-        numberID = await IDMatch.getUniqueID(string)
-        IDMatch.set_tag(string, numberID)
-        return numberID
+        number_id = await IDMatch.getUniqueID(string)
+        IDMatch.new_id(string, number_id)
+        return number_id
 
-    async def SPECIAL_STR(self, line, reMatch):
-        ID = await self.addNewID("", reMatch)  # Special strings are always LOG for simplicity
-        return line.replace(reMatch, str(ID))
+    async def line_special(self, line: str, matches: list[str]) -> str:
+        """Format special string msg calls
 
-    async def VSX(self, line, reMatch):
-        ID = await self.addNewID(reMatch[0], reMatch[2])
-        return line.replace(reMatch[2], str(ID))
+        Args:
+            line (str): The line that matched this type
+            reMatch (list[str]): The resulting regex list
 
-    async def SSX(self, line, reMatch):
-        TAG = await self.addNewTag(reMatch[1])
-        ID = await self.addNewID(reMatch[0], reMatch[2])
-        return line.replace(reMatch[1], str(TAG)).replace(reMatch[2], str(ID))
+        Returns:
+            str: Reformatted line
+        """
+        uid = await self.get_new_id("", matches)  # Special strings are always LOG for simplicity
+        return line.replace(matches, str(uid))
 
-    async def NEW_TAG(self, line, reMatch):
-        TAG = await self.addNewTag(reMatch)
-        return line.replace(reMatch, str(TAG))
+    async def line_tag(self, line: str, matches: list[str]) -> str:
+        """Format defined log tags
 
-    async def map_lines(self, function):
-        temp_path = self.workingPath + ".__Lock"
+        Args:
+            line (str): The line that matched this type
+            reMatch (list[str]): The resulting regex list
+
+        Returns:
+            str: Reformatted line
+        """
+        tag = await self.get_new_tag(matches)
+        return line.replace(matches, str(tag))
+
+    async def line_vsx(self, line: str, matches: list[str]) -> str:
+        """Format 'variable string' type log calls
+
+        Args:
+            line (str): The line that matched this type
+            reMatch (list[str]): The resulting regex list
+
+        Returns:
+            str: Reformatted line
+        """
+        uid = await self.get_new_id(matches[0], matches[2])
+        return line.replace(matches[2], str(uid))
+
+    async def line_ssx(self, line: str, matches: list[str]) -> str:
+        """Format 'string string' type log calls
+
+        Args:
+            line (str): The line that matched this type
+            reMatch (list[str]): The resulting regex list
+
+        Returns:
+            str: Reformatted line
+        """
+        tag = await self.get_new_tag(matches[1])
+        uid = await self.get_new_id(matches[0], matches[2])
+        return line.replace(matches[1], str(tag)).replace(matches[2], str(uid))
+
+    async def map_lines(self, function: Callable[[str], str]) -> None:
+        """Map a function to each line of this file
+
+        Args:
+            function (Callable[[str], None]): Function that takes in a str and returns a str
+        """
+        temp_path = self.working_path + ".__Lock"
         line_no = 1
         newline = ""
 
@@ -89,26 +154,37 @@ class FileEntry:  # IMPROVE: Make IDs persistent
                     newline = await function(line)
                     new_file.buffer.write(newline.encode("utf-8"))
                 except Exception as err:  # If prev exception was about IO then oh well
-                    self.newError(err, self.path, line_no)
+                    self.new_error(err, self.path, line_no)
                     new_file.buffer.write(line.encode("utf-8"))
                 finally:
                     line_no += 1
-        self.modified = not Util.syncFile(temp_path, self.offset, self.rawpath, self.workingPath)
+        self.modified = not Util.syncFile(temp_path, self.offset, self.rawpath, self.working_path)
         os.remove(temp_path)
 
-    async def match_log_mapping(self, line: str):
+    async def match_log_mapping(self, line: str) -> str:
+        """Maps a source file line to Log related syntax
+
+        Args:
+            line (str): The line to scan
+
+        Raises:
+            ScriptException: On invalid Log related syntax
+
+        Returns:
+            str: Reformatted line
+        """
         newline: str = line
 
         if IGNORE_KEYWORD in newline:  # Return if this line has the ignore keyword
             return newline
 
         scan_sequence = [
-            (REGEX.CALL_VS, self.VSX),
-            (REGEX.CALL_VSV, self.VSX),
-            (REGEX.CALL_SS, self.SSX),
-            (REGEX.CALL_SSV, self.SSX),
-            (REGEX.SPECIAL_PASS, self.SPECIAL_STR),
-            (REGEX.TAG_PASS, self.NEW_TAG),
+            (REGEX.CALL_VS, self.line_vsx),
+            (REGEX.CALL_VSV, self.line_vsx),
+            (REGEX.CALL_SS, self.line_ssx),
+            (REGEX.CALL_SSV, self.line_ssx),
+            (REGEX.SPECIAL_PASS, self.line_special),
+            (REGEX.TAG_PASS, self.line_tag),
         ]
 
         for reg, func in scan_sequence:
@@ -130,5 +206,6 @@ class FileEntry:  # IMPROVE: Make IDs persistent
 
         return newline
 
-    async def scan(self):
+    async def scan(self) -> None:
+        """Begin replacing lines for mapping log calls"""
         await self.map_lines(self.match_log_mapping)
