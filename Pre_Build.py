@@ -56,15 +56,12 @@ Note, however, if this script is not run the macro should still allow everything
 
 import pathlib
 import shutil
-import glob
 import os
 import asyncio
 import threading
 import time
-import re
 import sys
 import json
-import subprocess
 
 from os.path import join as join_path
 from vs_conf import load_json
@@ -73,12 +70,12 @@ from vs_conf import Settings
 import script.util as Util
 import script.text as Text
 import script.id_matcher as IDMatch
-from script.file_entry import FileEntry, LIB_PATH, LIB_FILE
+from script.file_entry import FileEntry
 from script.progress_bar import ProgressBar
 
 SOURCE_NAME = "src"
+LIB_PATH = join_path("libraries", "Log")  # Path to the implementation of Log
 LIBRARIES_NAME = "libraries"
-LIB_DEFINE = ("#define CONF_LOGGING_MAPPED_MODE 0", "#define CONF_LOGGING_MAPPED_MODE 1")
 WORKING_DIRECTORY_OFFSET = join_path("build", "Pre_Build", "")
 FILE_OUTPUT_PATH = ""
 
@@ -112,11 +109,9 @@ Excluded_dirs = set()
 
 
 def allocate_files(path, offset):
-    async def lib_flag(line):
-        return line.replace(*LIB_DEFINE)
-
     blacklist = Util.getLibraryBlacklist()
     model: dict[str, str]
+
     try:
         model = load_json()[Settings.CORE_NAME.key]
     except json.JSONDecodeError:
@@ -141,14 +136,9 @@ def allocate_files(path, offset):
                 continue
             filepath = subdir + os.sep + filename
             rawpath = subdir + os.sep
-            if BYPASS_SCRIPT:
+            if BYPASS_SCRIPT or rawpath.startswith(LIB_PATH):  # Skip log module related files
                 Util.syncFile(filepath, offset, rawpath, suppress=True)
                 continue
-            if rawpath.startswith(LIB_PATH):
-                libFile = FileEntry(rawpath, filepath, filename, offset)
-                if libFile.name == LIB_FILE:
-                    asyncio.run(libFile.walkLines(lib_flag))
-                    continue
             File_Ent = FileEntry(rawpath, filepath, filename, offset)
             Files.add(File_Ent)
             FileRefs.add(File_Ent)

@@ -71,6 +71,14 @@ string(TOLOWER ${TEENSY_CORE_NAME} TEENSY_CORE_NAME_LOWER)
 set(TEENSY_CORE_LD_SCRIPT "${CORE_PATH}/${TEENSY_CORE_NAME_LOWER}${LINKER_EXTENSION}.ld" CACHE INTERNAL "")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${CMAKE_EXE_LINKER_PRINT_FLAGS} ${LINKER_FLAGS} -T${TEENSY_CORE_LD_SCRIPT}")
 
+if(EXISTS "../script.disable") # TODO: Ensure this file is always caught
+    message(STATUS "Mapped logging disabled")
+    add_compile_definitions(CONF_LOGGING_MAPPED_MODE=0)
+else()
+    message(STATUS "Mapped logging enabled")
+    add_compile_definitions(CONF_LOGGING_MAPPED_MODE=1)
+endif()
+
 # Locate and setup libraries and ECU core
 
 MACRO(HEADER_DIRECTORIES return_list path_prefix)

@@ -9,9 +9,6 @@ import script.text as Text
 import script.util as Util
 import script.id_matcher as IDMatch
 
-LIB_PATH = join_path("libraries", "Log")  # Path to the implementation of Log
-LIB_FILE = "LogConfig.def"
-
 IGNORE_KEYWORD = "PRE_BUILD_IGNORE"  # Keyword that makes this script ignore a line
 
 FILE_LOG_LEVELS = {
@@ -87,18 +84,15 @@ class FileEntry:  # IMPROVE: Make IDs persistent
         line_no = 1
         newline = ""
         with open(self.path, "r", encoding="utf-8") as f1, open(temp_path, "w", encoding="utf-8") as f2:
-            if self.rawpath.startswith(LIB_PATH) and self.name != LIB_FILE:  # Ignore log library source files
-                f2.writelines(f1.readlines())
-            else:
-                for line in f1:
-                    try:
-                        newline = await function(line)
-                        f2.buffer.write(newline.encode("utf-8"))
-                    except Exception as e:  # If prev exception was about IO then oh well
-                        self.newError(e, self.path, line_no)
-                        f2.buffer.write(line.encode("utf-8"))
-                    finally:
-                        line_no += 1
+            for line in f1:
+                try:
+                    newline = await function(line)
+                    f2.buffer.write(newline.encode("utf-8"))
+                except Exception as e:  # If prev exception was about IO then oh well
+                    self.newError(e, self.path, line_no)
+                    f2.buffer.write(line.encode("utf-8"))
+                finally:
+                    line_no += 1
         self.modified = not Util.syncFile(temp_path, self.offset, self.rawpath, self.workingPath)
         os.remove(temp_path)
 

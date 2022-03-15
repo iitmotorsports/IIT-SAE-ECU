@@ -4,15 +4,15 @@
  * @brief Configuration file for the Log Module
  * @version 0.1
  * @date 2020-11-11
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  * The only two options that should only really be modified are `CONF_LOGGING_ENABLE_TIMESTAMP` and `CONF_LOGGING_MAX_LEVEL`.
- * 
+ *
  * Commenting out `CONF_LOGGING_ENABLE_TIMESTAMP` will disable time stamp printing when in ASCII mode.
- * 
+ *
  * Changing the value of CONF_LOGGING_MAX_LEVEL changes which log levels are actually printed.
- * 
+ *
  */
 #ifndef __ECU_LOGCONFIG_DEF__
 
@@ -37,9 +37,11 @@
 #define CONF_LOGGING_MAX_LEVEL 5
 
 /**
- * @brief Used by the Pre_Build.py
+ * @brief Used to determine how to interpret function calls
  */
+#ifndef CONF_LOGGING_MAPPED_MODE
 #define CONF_LOGGING_MAPPED_MODE 0
+#endif
 
 #ifdef CONF_ECU_DEBUG
 #if CONF_LOGGING_MAPPED_MODE == 0
