@@ -93,5 +93,5 @@ def clear_blanks():
 def save_lookup(path):
     to_save = (TAGs, IDs)
     Util.touch(path)
-    with open(Util.getOutputFile(path), "w", encoding="utf-8") as file:
+    with open(path, "w", encoding="utf-8") as file:
         json.dump(to_save, file, indent=4, separators=(",", ": "))

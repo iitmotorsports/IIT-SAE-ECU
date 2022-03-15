@@ -77,7 +77,7 @@ SOURCE_NAME = "src"
 LIB_PATH = join_path("libraries", "Log")  # Path to the implementation of Log
 LIBRARIES_NAME = "libraries"
 WORKING_DIRECTORY_OFFSET = join_path("build", "Pre_Build", "")
-FILE_OUTPUT_PATH = ""
+FILE_OUTPUT_PATH = "log_lookup.json"
 
 BYPASS_SCRIPT = os.path.exists("script.disable")  # bypass script if this file is found
 
@@ -241,7 +241,7 @@ def printResults():
 
 
 # Start Script
-def main():  # TODO: remove libraries from prebuild folder that are no longer in the actual folder
+def main():
     Util.checkGitSubmodules(INCLUDED_FILE_TYPES)
 
     Util.touch(SOURCE_DEST_NAME)
@@ -255,27 +255,27 @@ def main():  # TODO: remove libraries from prebuild folder that are no longer in
 
         print(Text.warning(f"Available Ram: {Util.available_ram()} GBs\n"))
 
-        prehash = Util.hashFile(Util.getOutputFile(FILE_OUTPUT_PATH))
+        prehash = Util.hashFile(FILE_OUTPUT_PATH)
 
         print(f"Files to search: {len(FileRefs)}")
 
-        tb = ProgressBar(len(Files), Text.important("Completed Files:"))
+        prog = ProgressBar(len(Files), Text.important("Completed Files:"))
 
-        dole_files(8, tb.progress)
+        dole_files(8, prog.progress)
 
         print(f"Threads to run: {len(Threads)}\n\n")
 
-        tb.start()
+        prog.start()
         begin_scan()
-        tb.finish()
+        prog.finish()
 
         printResults()
         IDMatch.save_lookup(FILE_OUTPUT_PATH)
-        newhash = Util.hashFile(Util.getOutputFile(FILE_OUTPUT_PATH))
+        newhash = Util.hashFile(FILE_OUTPUT_PATH)
         if Util.FILES_CHANGED:
             print(Text.important("\nNote: Files have changed, rebuild inbound"))
         if newhash != prehash:
-            print(Text.reallyImportant("\nNote: Output file values have changed"))
+            print(Text.reallyImportant("\nNote: Mapped values have changed"))
 
         print()
 

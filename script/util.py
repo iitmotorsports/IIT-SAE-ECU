@@ -75,14 +75,6 @@ def getLibraryBlacklist() -> dict[str, list]:
     return blacklist
 
 
-def getOutputFile(path):
-    output_name = "log_lookup.json"
-    save_path = f"{path}\\{output_name}"
-    if save_path.startswith("\\"):
-        save_path = output_name
-    return save_path
-
-
 FILES_CHANGED = False
 
 
