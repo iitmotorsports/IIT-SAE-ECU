@@ -61,30 +61,33 @@ class ProgressBar:
         self.Lines.add(String)
 
     def _progress(self, count, total, prefix="", printString: str = ""):
-        with self.lock:
-            if total > 0:
-                filled_len = int(round(self.bar_len * count / float(total)))
+        if total > 0:
+            filled_len = int(round(self.bar_len * count / float(total)))
 
-                percents = round(100.0 * count / float(total), 1)
-                bar = "█" * filled_len + "░" * (self.bar_len - filled_len)
+            percents = round(100.0 * count / float(total), 1)
+            bar = "█" * filled_len + "░" * (self.bar_len - filled_len)
 
-                proStr = self.formatStr.format(prefix, bar, percents, "%")
-                if len(printString) > 0:
-                    self.stdout.write(" " * (os.get_terminal_size().columns - 1))
-                    self.stdout.write("\033[F")
-                    printString = printString.strip(" \n")
-                    spacer = " " * (os.get_terminal_size().columns - 1 - len(printString))
-                    self.stdout.write(f"{printString}{spacer}"[: os.get_terminal_size().columns - 1])
-                    self.stdout.write("\n")
-                self.stdout.write(proStr)
-                self.stdout.flush()
+            proStr = self.formatStr.format(prefix, bar, percents, "%")
+            if len(printString) > 0:
+                self.stdout.write(" " * (os.get_terminal_size().columns - 1))
+                self.stdout.write("\033[F")
+                printString = printString.strip(" \n")
+                spacer = " " * (os.get_terminal_size().columns - 1 - len(printString))
+                self.stdout.write(f"{printString}{spacer}"[: os.get_terminal_size().columns - 1])
+                self.stdout.write("\n")
+            self.stdout.write(proStr)
+            self.stdout.flush()
 
     def _printThread(self):
         while self.run or len(self.Lines) > 0:
+            count = 0
+            with self.lock:
+                count = self.counter
             if len(self.Lines) > 0:
-                self._progress(self.counter, self.maxcount, self.prefix, self.Lines.pop())
+                self._progress(count, self.maxcount, self.prefix, self.Lines.pop())
             else:
-                self._progress(self.counter, self.maxcount, self.prefix)
+                self._progress(count, self.maxcount, self.prefix)
+            self.wrapper.flush()
 
     def start(self):
         self.wrapper = ProgressBar.TextIO(

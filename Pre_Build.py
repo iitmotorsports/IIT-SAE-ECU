@@ -160,7 +160,7 @@ def dole_files(count, finishFunc):
             i += 1
 
         if len(file_set) != 0:  # IMPROVE: Use actual mutlithreading
-            # Threads.add(multiprocessing.Process(target=function, args=(file_set)))
+            # Threads.add(multiprocessing.Process(target=run_ingest_files, args=(finishFunc, file_set)))
             Threads.add(threading.Thread(target=run_ingest_files, args=(finishFunc, file_set)))
 
         if len(Files) == 0:
