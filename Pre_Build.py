@@ -289,19 +289,7 @@ def main():  # TODO: remove libraries from prebuild folder that are no longer in
 
         print()
 
-    print("Converting LogMap 📃\n")
-    subprocess.Popen(
-        [
-            "python",
-            "bin2cc.py",
-            "-i",
-            "log_lookup.json",
-            "-o",
-            f"{WORKING_DIRECTORY_OFFSET}{LIB_PATH}\\log_lookup.cpp",
-            "-v",
-            "log_lookup",
-        ]
-    ).wait()
+    Util.encode_log_map(f"{WORKING_DIRECTORY_OFFSET}{LIB_PATH}")
 
 
 # TODO: only remove files/modules that no longer exist in actual directories

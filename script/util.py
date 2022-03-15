@@ -12,6 +12,22 @@ from os.path import join as join_path
 import script.text as Text
 
 
+def encode_log_map(path: str):
+    print("Encoding LogMap 📃\n")
+    subprocess.Popen(
+        [
+            "python",
+            "bin2cc.py",
+            "-i",
+            "log_lookup.json",
+            "-o",
+            f"{path}\\log_lookup.cpp",
+            "-v",
+            "log_lookup",
+        ]
+    ).wait()
+
+
 def checkGitSubmodules(file_types: str):
     err = False
     try:
@@ -30,6 +46,33 @@ def checkGitSubmodules(file_types: str):
     if err:
         print(Text.important("\nConsider running " + Text.red("git pull --recurse-submodules")))
         print(Text.important("or " + Text.red("git submodule update --init")) + Text.important(" if repo has just been cloned\n"))
+
+
+LIB_BLACKLIST = join_path("libraries", ".blacklist")
+
+
+def getLibraryBlacklist() -> dict[str, list]:
+    """Get the library folder blacklist based on core model
+
+    Returns:
+        dict[str, list]: folder blacklist dict
+    """
+    blacklist: dict[str, list] = {}
+    with open(LIB_BLACKLIST, "r", encoding="utf-8") as file:
+        currentModel = ""
+        for line in file.readlines():
+            if line[0] == ".":
+                currentModel = line.split(" ")[0][1:]
+                if currentModel not in blacklist:
+                    blacklist[currentModel] = []
+            else:
+                for token in line.split(" "):
+                    token = token.strip(" \n")
+                    if not token or token[0] == "#":
+                        break
+                    elif os.path.exists(join_path(os.path.dirname(LIB_BLACKLIST), token)):
+                        blacklist[currentModel].append(join_path(os.path.dirname(LIB_BLACKLIST), token))
+    return blacklist
 
 
 def getOutputFile(path):
@@ -68,33 +111,6 @@ def touch(rawpath):
     except OSError as exc:
         if exc.errno != errno.EEXIST:
             raise
-
-
-LIB_BLACKLIST = join_path("libraries", ".blacklist")
-
-
-def getLibraryBlacklist() -> dict[str, list]:
-    """Get the library folder blacklist based on core model
-
-    Returns:
-        dict[str, list]: folder blacklist dict
-    """
-    blacklist: dict[str, list] = {}
-    with open(LIB_BLACKLIST, "r", encoding="utf-8") as file:
-        currentModel = ""
-        for line in file.readlines():
-            if line[0] == ".":
-                currentModel = line.split(" ")[0][1:]
-                if currentModel not in blacklist:
-                    blacklist[currentModel] = []
-            else:
-                for token in line.split(" "):
-                    token = token.strip(" \n")
-                    if not token or token[0] == "#":
-                        break
-                    elif os.path.exists(join_path(os.path.dirname(LIB_BLACKLIST), token)):
-                        blacklist[currentModel].append(join_path(os.path.dirname(LIB_BLACKLIST), token))
-    return blacklist
 
 
 RAM_MEMO = False
