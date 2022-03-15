@@ -302,25 +302,33 @@ async def getUniqueTAG(findDuplicate=None):
     raise OutOfIDsException
 
 
-FIND_SPECIAL_REGEX = (
-    r"_LogPrebuildString\s*\(\s*(\".*?\")\s*\)"  # -> _LogPrebuildString("Str") # Special case where we can indirectly allocate a string
-)
-FIND_CALL_REGEX_SS = r"Log(\.[diwef])?\s*\(\s*(\".*?\")\s*,\s*(\".*?\")\s*\)\s*;"  # -> Log("Str", "Str");
-FIND_CALL_REGEX_VS = r"Log(\.[diwef])?\s*\(\s*([^\"]+?)\s*,\s*(\".*?\")\s*\)\s*;"  # -> Log(Var, "Str");
-FIND_CALL_REGEX_SSV = r"Log(\.[diwef])?\s*\(\s*(\".*?\")\s*,\s*(\".*?\")\s*,\s*([^\"]+?)\s*\)\s*;"  # -> Log("Str", "Str", Var); # FIXME: SSV does not seem to be working
-FIND_CALL_REGEX_VSV = r"Log(\.[diwef])?\s*\(\s*([^\"]+?)\s*,\s*(\".*?\")\s*,\s*([^\"]+?)\s*\)\s*;"  # -> Log(Var, "Str", Var);
-FIND_CALL_REGEX_BAD = r"(Log(?:\.[diwef])?\s*\(\s*(?:[^\"]+?|\"(?:[^\"]|\\\")*?\")\s*,\s*)([^\";]+?)(\s*(?:,\s*(?:[^\"]+?))?\s*\)\s*;)"  # Implicit string or number where it should not be | IDE will warn about numbers but will still compile
+REGEX_SPECIAL_PASS = r"_LogPrebuildString\s*\(\s*(\".*?\")\s*\)" # -> _LogPrebuildString("Str") # Special case where we can indirectly allocate a string
+REGEX_SPECIAL_FAIL = r"_LogPrebuildString\s*\(\s*([^\"]*?)\s*\)" # TODO: finish coverage on fail regex
 
-FIND_TAG_DEF_REGEX_BAD = r"(LOG_TAG(?= )\s*[^\"=]+?=\s*)([^\"=]+?)(\s*;)"  # Implicit or single char definition of a tag type
-FIND_TAG_DEF_REGEX_GOOD = r"LOG_TAG(?= )\s*[^\"=]+?=\s*(\".*?\")\s*;"
+REGEX_TAG_PASS = r"LOG_TAG(?= )\s*[^\"=]+?=\s*(\"\s*\S.*\")\s*;" # LOG_TAG idVar = "ID"; # Where ID cannot be blank
+REGEX_TAG_FAIL = r"(?:LOG_TAG(?= )\s*[^\"=]+?=\s*)(?:[^\"=]+?|\"\s*\")\s*;"  # Implicit, single char, or empty string definition of a tag type
+
+REGEX_CALL_SS = r"(?:Log\s*\.*\s*([diwefp])?\s*\(\s*(\"\s*\S(?:\\.|[^\"])+\")\s*,\s*(\"(\\.|[^\"])*\")\s*\)\s*;)"  # -> Log("Str", "Str");
+REGEX_CALL_VS = r"(?:Log\s*\.*\s*([diwefp])?\s*\(\s*([^\"]+?)\s*,\s*(\"(?:\\.|[^\"])*\")\s*\)\s*;)"  # -> Log(Var, "Str");
+REGEX_CALL_SSV = r"(?:Log\s*\.*\s*([diwefp])?\s*\(\s*(\"\s*\S(?:\\.|[^\"])+\")\s*,\s*(\".*?\")\s*,\s*(.+?)\s*\)\s*;)"  # -> Log("Str", "Str", Var);
+REGEX_CALL_VSV = r"(?:Log\s*\.*\s*([diwefp])?\s*\(\s*([^\"]+?)\s*,\s*(\".*?\")\s*,\s*(.+?)\s*\)\s*;)"  # -> Log(Var, "Str", Var);
+REGEX_CALL_ERR_LITERAL = r"(?:Log\s*\.*\s*(?:[diwefp])?\s*\(\s*(?:[^\"]+?|\"(?:[^\"]|\\\")*?\")\s*,\s*[^\";]+?\s*(?:,\s*(?:.+?))?\s*\)\s*;)"  # Message string is not a literal string | IDE will warn about numbers but will still compile
+REGEX_CALL_ERR_BLANK = r"(?:Log\s*\.*\s*(?:[diwefp])?\s*\(\s*\"\s*\"\s*,.*?\)\s*;)"  # Blank string ID
+
+REGEX_CALL_PASS = f"{REGEX_CALL_SS}|{REGEX_CALL_VS}|{REGEX_CALL_SSV}|{REGEX_CALL_VSV}"
+REGEX_CALL_FAIL = f"{REGEX_CALL_ERR_LITERAL}|{REGEX_CALL_ERR_BLANK}"
+
+print(REGEX_CALL_PASS)
+print(REGEX_CALL_FAIL)
 
 Log_Levels = {
     "": "[ LOG ] ",
-    ".d": "[DEBUG] ",
-    ".i": "[INFO]  ",
-    ".w": "[WARN]  ",
-    ".e": "[ERROR] ",
-    ".f": "[FATAL] ",
+    "d": "[DEBUG] ",
+    "p": "[POST]  ",
+    "i": "[INFO]  ",
+    "w": "[WARN]  ",
+    "e": "[ERROR] ",
+    "f": "[FATAL] ",
 }
 
 
@@ -411,37 +419,37 @@ class FileEntry:  # IMPROVE: Make IDs persistent
         if IGNORE_KEYWORD in newline:  # Return if this line has the ignore keyword
             return newline
 
-        SPECIAL = re.findall(FIND_SPECIAL_REGEX, line)
+        SPECIAL = re.findall(REGEX_SPECIAL_PASS, line)
         if SPECIAL:
             newline = await self.SPECIAL_STR(line, SPECIAL[0])
         else:
-            VS = re.findall(FIND_CALL_REGEX_VS, line)
+            VS = re.findall(REGEX_CALL_VS, line)
             if len(VS) != 0:  # ¯\_(ツ)_/¯
                 newline = await self.VSX(line, VS[0])
             else:
-                TAG_GOOD = re.findall(FIND_TAG_DEF_REGEX_GOOD, line)
+                TAG_GOOD = re.findall(REGEX_TAG_PASS, line)
                 if TAG_GOOD:
                     newline = await self.NEW_TAG(line, TAG_GOOD[0])
                 else:
-                    VSV = re.findall(FIND_CALL_REGEX_VSV, line)
+                    VSV = re.findall(REGEX_CALL_VSV, line)
                     if len(VSV) != 0:
                         newline = await self.VSX(line, VSV[0])
                     else:
-                        TAG_BAD = re.findall(FIND_TAG_DEF_REGEX_BAD, line)
+                        TAG_BAD = re.findall(REGEX_TAG_FAIL, line)
                         if TAG_BAD:
                             TAG_BAD = TAG_BAD[0]
                             raise MalformedTAGDefinitionException(TAG_BAD[0] + Text.error(TAG_BAD[1]) + TAG_BAD[2])
                         else:
-                            BAD = re.findall(FIND_CALL_REGEX_BAD, line)
+                            BAD = re.findall(REGEX_CALL_ERR_LITERAL, line)
                             if BAD:
                                 BAD = BAD[0]
                                 raise MalformedLogCallException(BAD[0] + Text.error(BAD[1]) + BAD[2])
                             else:
-                                SS = re.findall(FIND_CALL_REGEX_SS, line)
+                                SS = re.findall(REGEX_CALL_SS, line)
                                 if len(SS) != 0:
                                     newline = await self.SSX(line, SS[0])
                                 else:
-                                    SSV = re.findall(FIND_CALL_REGEX_SSV, line)
+                                    SSV = re.findall(REGEX_CALL_SSV, line)
                                     if len(SSV) != 0:
                                         newline = await self.SSX(line, SSV[0])
         return newline
