@@ -2,8 +2,8 @@
 
 // PASS
 
-Log     (    "tagger"   ,   "amogud"  )   ;
-Log(ident, "gooall");
+Log     (    "tagger state  "   ,   "amogud"  )   ; // State
+Log(ident, "gooall STATE "); // State
 Log     (    "tags"   ,   "freesh"  ,  x   )  ;
 Log     (   ident  , "schum"   ,    x   )   ;
 Log(ident, "killa", 0);
@@ -14,37 +14,37 @@ Log.i(ident, "gooall");
 Log   .   i  (    "tags"   ,   "freesh"  ,  x   )  ;
 Log  .   i   (   ident  , "schum"   ,    x   )   ;
 Log.i(ident, "killa", 0);
-Log.i("He yo", "zipbob", 0);
+Log.i("He yo state", "zipbob", 0); // State
 
 Log.e("tag  ger", "amogud");
 Log.e(ident, "goo463 all" );
-Log.e("tags", "freesh", "fd", "", "fs "  );
+Log.e("tags STate", "freesh", "fd", "", "fs "  ); // State
 Log.e(ident, "schum", x,2,4  ,  "hgjg  f");
 Log.e(ident, "killa", 0,  "  g6");
 Log.e("H  eyo", "zipbob", 0 "gfsd" ) ;
 
-Log.w("tagger", "amogud");
+Log.w("  assf\'#%*_)(@#dssetSTATE  ", "amogud");
 Log.w(ident, "gooall");
-Log.w("tags", "freesh", x);
+Log.w("  assf\'#%*_)(@#dss  STATE  ", "freesh", x); // State
 Log.w(ident, "schum", x);
 Log.w(ident, "killa", 0);
 Log.w("Heyo  ", "zipbob", 0);
 
 Log.d("  tagger", "amogud");
 Log.d(ident, "gooall");
-Log.d("tags", "freesh", x);
+Log.d("staet LoggingadgState", "freesh", x);
 Log.d(ident, "schum", x);
 Log.d(ident, "killa", 0);
 Log.d("Heyo","zipbob"   , 0);
 
-Log.f("53454 ", "amogud");
+Log.f("  assfdss state  ", "amogud"); // State
 Log.f(ident, "gooall");
 Log.f("tags", "freesh", x);
 Log.f(ident, "schum", x);
 Log.f(ident, "killa", 0);
 Log.f("Heyo", "zipbob", 0);
 
-Log.p("tag  ger", "amogud");
+Log.p("staet Logging   State  ", "amogud"); // State
 Log.p(ident, "gooall");
 Log.p("   tag  s", "freesh", x);
 Log.p(ident, "schum", x);
@@ -217,3 +217,27 @@ _LogPrebuildString( 't'  )
 _LogPrebuildString( t"56"  )
 _LogPrebuildString( 565.6  )
 
+/*   STATE   */
+
+// PASS ------
+
+"staet Logging   State  "  ;
+"Logging State";
+"  assfdss state  " ;
+"  assf\'#%*_)(@#dss STATE  " 
+
+// FAIL ------
+
+"staet LoggingadgState";
+"Logging xnvState";
+"  assfdss bmstate  " ;
+"  assf\'#%*_)(@#dssetSTATE  " 
+""
+"  assfdss ST\"ATE  " 
+"staet Logging State ma8";
+"  assfdss state  fasdg" ;
+"  assfdss STATE  a" 
+"STATE"
+"  state"
+"lgaos  state afsds"
+"state amog"

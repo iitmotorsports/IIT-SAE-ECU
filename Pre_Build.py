@@ -91,9 +91,14 @@ BYPASS_SCRIPT = os.path.exists("script.disable")  # bypass script if this file i
 
 MAX_RESULT = 8  # The maximum number of results to print out for errors and modified files
 
-LIMIT_TAG = 254
+LIMIT_TAG = 65535
 LIMIT_ID = 65535
-BLACKLIST_ADDRESSESS = (0, 5, 9)
+TAG_MAP: dict[str, tuple[int, int]] = {
+    "STATE": (2, 256),
+    "VALUE": (256, 4096),
+    "ELSE": (4096, LIMIT_TAG),
+}
+BLACKLIST_IDS = (0, 1)
 
 SOURCE_DEST_NAME = f"{WORKING_DIRECTORY_OFFSET}{SOURCE_NAME}"
 LIBRARIES_DEST_NAME = f"{WORKING_DIRECTORY_OFFSET}{LIBRARIES_NAME}"
@@ -275,7 +280,7 @@ async def getUniqueID(findDuplicate=None):
     vals = set(IDs.values())
 
     for i in range(1, LIMIT_ID):
-        if i not in old_vals and i not in vals:
+        if i not in BLACKLIST_IDS and i not in old_vals and i not in vals:
             IDs[""] = i  # Claim before returning
             ID_SEM.release()
             return i
@@ -293,7 +298,7 @@ async def getUniqueTAG(findDuplicate=None):
     vals = set(TAGs.values())
 
     for i in range(1, LIMIT_TAG):
-        if i not in BLACKLIST_ADDRESSESS and i not in old_vals and i not in vals:
+        if i not in BLACKLIST_IDS and i not in old_vals and i not in vals:
             TAGs[""] = i  # Claim before returning
             TAG_SEM.release()
             return i
@@ -302,24 +307,29 @@ async def getUniqueTAG(findDuplicate=None):
     raise OutOfIDsException
 
 
-REGEX_SPECIAL_PASS = r"_LogPrebuildString\s*\(\s*(\".*?\")\s*\)" # -> _LogPrebuildString("Str") # Special case where we can indirectly allocate a string
-REGEX_SPECIAL_FAIL = r"_LogPrebuildString\s*\(\s*([^\"]*?)\s*\)" # TODO: finish coverage on fail regex
+REGEX_STATE_PASS = r"\" *(\S+.*?) +(?i:state)\s*\"" # TODO: check for state in TAG or SXX check
 
-REGEX_TAG_PASS = r"LOG_TAG(?= )\s*[^\"=]+?=\s*(\"\s*\S.*\")\s*;" # LOG_TAG idVar = "ID"; # Where ID cannot be blank
-REGEX_TAG_FAIL = r"(?:LOG_TAG(?= )\s*[^\"=]+?=\s*)(?:[^\"=]+?|\"\s*\")\s*;"  # Implicit, single char, or empty string definition of a tag type
+REGEX_SPECIAL_PASS = (
+    r"_LogPrebuildString\s*\(\s*(\".*?\")\s*\)"  # _LogPrebuildString("Str") # Special case where we can indirectly allocate a string
+)
+REGEX_SPECIAL_FAIL = r"_LogPrebuildString\s*\(\s*([^\"]*?)\s*\)"  # TODO: finish coverage on fail regex
+
+REGEX_TAG_PASS = r"LOG_TAG(?= )\s*[^\"=]+?=\s*(\"\s*\S.*\")\s*;"  # LOG_TAG idVar = "ID"; # Where ID cannot be blank
+REGEX_TAG_FAIL = (
+    r"(?:LOG_TAG(?= )\s*[^\"=]+?=\s*)(?:[^\"=]+?|\"\s*\")\s*;"  # Implicit, single char, or empty string definition of a tag type
+)
 
 REGEX_CALL_SS = r"(?:Log\s*\.*\s*([diwefp])?\s*\(\s*(\"\s*\S(?:\\.|[^\"])+\")\s*,\s*(\"(\\.|[^\"])*\")\s*\)\s*;)"  # -> Log("Str", "Str");
 REGEX_CALL_VS = r"(?:Log\s*\.*\s*([diwefp])?\s*\(\s*([^\"]+?)\s*,\s*(\"(?:\\.|[^\"])*\")\s*\)\s*;)"  # -> Log(Var, "Str");
-REGEX_CALL_SSV = r"(?:Log\s*\.*\s*([diwefp])?\s*\(\s*(\"\s*\S(?:\\.|[^\"])+\")\s*,\s*(\".*?\")\s*,\s*(.+?)\s*\)\s*;)"  # -> Log("Str", "Str", Var);
+REGEX_CALL_SSV = (
+    r"(?:Log\s*\.*\s*([diwefp])?\s*\(\s*(\"\s*\S(?:\\.|[^\"])+\")\s*,\s*(\".*?\")\s*,\s*(.+?)\s*\)\s*;)"  # -> Log("Str", "Str", Var);
+)
 REGEX_CALL_VSV = r"(?:Log\s*\.*\s*([diwefp])?\s*\(\s*([^\"]+?)\s*,\s*(\".*?\")\s*,\s*(.+?)\s*\)\s*;)"  # -> Log(Var, "Str", Var);
 REGEX_CALL_ERR_LITERAL = r"(?:Log\s*\.*\s*(?:[diwefp])?\s*\(\s*(?:[^\"]+?|\"(?:[^\"]|\\\")*?\")\s*,\s*[^\";]+?\s*(?:,\s*(?:.+?))?\s*\)\s*;)"  # Message string is not a literal string | IDE will warn about numbers but will still compile
 REGEX_CALL_ERR_BLANK = r"(?:Log\s*\.*\s*(?:[diwefp])?\s*\(\s*\"\s*\"\s*,.*?\)\s*;)"  # Blank string ID
 
 REGEX_CALL_PASS = f"{REGEX_CALL_SS}|{REGEX_CALL_VS}|{REGEX_CALL_SSV}|{REGEX_CALL_VSV}"
 REGEX_CALL_FAIL = f"{REGEX_CALL_ERR_LITERAL}|{REGEX_CALL_ERR_BLANK}"
-
-print(REGEX_CALL_PASS)
-print(REGEX_CALL_FAIL)
 
 Log_Levels = {
     "": "[ LOG ] ",
