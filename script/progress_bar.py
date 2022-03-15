@@ -4,13 +4,16 @@ import os
 import threading
 import sys
 import io
+import time
 from typing import Optional, IO
 
 
 class ProgressBar:
     """Progress bar that can be updated concurrently"""
+
     bar_len = 10
     maxcount = 0
+    lock = threading.Lock()
     counter = 0
     Lines = set()
     run = True
@@ -51,28 +54,30 @@ class ProgressBar:
     def reset(self, maxcount, prefix):
         self.maxcount = maxcount
         self.rename(prefix)
-        self.counter = 0
+        with self.lock:
+            self.counter = 0
 
     def _newLine(self, String):
         self.Lines.add(String)
 
     def _progress(self, count, total, prefix="", printString: str = ""):
-        if total > 0:
-            filled_len = int(round(self.bar_len * count / float(total)))
+        with self.lock:
+            if total > 0:
+                filled_len = int(round(self.bar_len * count / float(total)))
 
-            percents = round(100.0 * count / float(total), 1)
-            bar = "█" * filled_len + "░" * (self.bar_len - filled_len)
+                percents = round(100.0 * count / float(total), 1)
+                bar = "█" * filled_len + "░" * (self.bar_len - filled_len)
 
-            proStr = self.formatStr.format(prefix, bar, percents, "%")
-            if len(printString) > 0:
-                self.stdout.write(" " * (os.get_terminal_size().columns - 1))
-                self.stdout.write("\033[F")
-                printString = printString.strip(" \n")
-                spacer = " " * (os.get_terminal_size().columns - 1 - len(printString))
-                self.stdout.write(f"{printString}{spacer}"[: os.get_terminal_size().columns - 1])
-                self.stdout.write("\n")
-            self.stdout.write(proStr)
-            self.stdout.flush()
+                proStr = self.formatStr.format(prefix, bar, percents, "%")
+                if len(printString) > 0:
+                    self.stdout.write(" " * (os.get_terminal_size().columns - 1))
+                    self.stdout.write("\033[F")
+                    printString = printString.strip(" \n")
+                    spacer = " " * (os.get_terminal_size().columns - 1 - len(printString))
+                    self.stdout.write(f"{printString}{spacer}"[: os.get_terminal_size().columns - 1])
+                    self.stdout.write("\n")
+                self.stdout.write(proStr)
+                self.stdout.flush()
 
     def _printThread(self):
         while self.run or len(self.Lines) > 0:
@@ -96,7 +101,8 @@ class ProgressBar:
         self.printer.start()
 
     def progress(self):
-        self.counter += 1
+        with self.lock:
+            self.counter += 1
 
     def finish(self):
         self.run = False
