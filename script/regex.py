@@ -16,8 +16,5 @@ CALL_SSV = (
     r"(?:Log\s*\.*\s*([diwefp])?\s*\(\s*(\"\s*\S(?:\\.|[^\"])+\")\s*,\s*(\".*?\")\s*,\s*(.+?)\s*\)\s*;)"  # -> Log("Str", "Str", Var);
 )
 CALL_VSV = r"(?:Log\s*\.*\s*([diwefp])?\s*\(\s*([^\"]+?)\s*,\s*(\".*?\")\s*,\s*(.+?)\s*\)\s*;)"  # -> Log(Var, "Str", Var);
-CALL_ERR_LITERAL = r"(?:Log\s*\.*\s*(?:[diwefp])?\s*\(\s*(?:[^\"]+?|\"(?:[^\"]|\\\")*?\")\s*,\s*[^\";]+?\s*(?:,\s*(?:.+?))?\s*\)\s*;)"  # Message string is not a literal string | IDE will warn about numbers but will still compile
-CALL_ERR_BLANK = r"(?:Log\s*\.*\s*(?:[diwefp])?\s*\(\s*\"\s*\"\s*,.*?\)\s*;)"  # Blank string ID
-
-CALL_PASS = f"{CALL_SS}|{CALL_VS}|{CALL_SSV}|{CALL_VSV}"
-CALL_FAIL = f"{CALL_ERR_LITERAL}|{CALL_ERR_BLANK}"
+CALL_ERR_LITERAL = r"(?:(Log\s*\.*\s*(?:[diwefp])?\s*\(\s*(?:[^\"]+?|\"(?:[^\"]|\\\")*?\")\s*,\s*)([^\";]+?)(\s*(?:,\s*(?:.+?))?\s*\)\s*;))"  # Message string is not a literal string | IDE will warn about numbers but will still compile
+CALL_ERR_BLANK = r"(?:(Log\s*\.*\s*(?:[diwefp])?\s*\(\s*)(\"\s*\")(\s*,.*?\)\s*;))"  # Blank string ID

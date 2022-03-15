@@ -1,7 +1,6 @@
+from msilib import sequence
 import os
 import re
-
-from os.path import join as join_path
 
 import script.regex as REGEX
 import script.error as Error
@@ -79,63 +78,57 @@ class FileEntry:  # IMPROVE: Make IDs persistent
         TAG = await self.addNewTag(reMatch)
         return line.replace(reMatch, str(TAG))
 
-    async def walkLines(self, function):
+    async def map_lines(self, function):
         temp_path = self.workingPath + ".__Lock"
         line_no = 1
         newline = ""
-        with open(self.path, "r", encoding="utf-8") as f1, open(temp_path, "w", encoding="utf-8") as f2:
-            for line in f1:
+
+        with open(self.path, "r", encoding="utf-8") as original, open(temp_path, "w", encoding="utf-8") as new_file:
+            for line in original:
                 try:
                     newline = await function(line)
-                    f2.buffer.write(newline.encode("utf-8"))
-                except Exception as e:  # If prev exception was about IO then oh well
-                    self.newError(e, self.path, line_no)
-                    f2.buffer.write(line.encode("utf-8"))
+                    new_file.buffer.write(newline.encode("utf-8"))
+                except Exception as err:  # If prev exception was about IO then oh well
+                    self.newError(err, self.path, line_no)
+                    new_file.buffer.write(line.encode("utf-8"))
                 finally:
                     line_no += 1
         self.modified = not Util.syncFile(temp_path, self.offset, self.rawpath, self.workingPath)
         os.remove(temp_path)
 
-    async def findLogMatch(self, line: str):
+    async def match_log_mapping(self, line: str):
         newline: str = line
 
         if IGNORE_KEYWORD in newline:  # Return if this line has the ignore keyword
             return newline
 
-        special = re.findall(REGEX.SPECIAL_PASS, line)
-        if special:
-            newline = await self.SPECIAL_STR(line, special[0])
-        else:
-            vs = re.findall(REGEX.CALL_VS, line)
-            if len(vs) != 0:  # ¯\_(ツ)_/¯
-                newline = await self.VSX(line, vs[0])
-            else:
-                tag_good = re.findall(REGEX.TAG_PASS, line)
-                if tag_good:
-                    newline = await self.NEW_TAG(line, tag_good[0])
-                else:
-                    vsv = re.findall(REGEX.CALL_VSV, line)
-                    if len(vsv) != 0:
-                        newline = await self.VSX(line, vsv[0])
-                    else:
-                        tag_bad = re.findall(REGEX.TAG_FAIL, line)
-                        if tag_bad:
-                            tag_bad = tag_bad[0]
-                            raise Error.MalformedTAGDefinitionException(tag_bad[0] + Text.error(tag_bad[1]) + tag_bad[2])
-                        else:
-                            bad = re.findall(REGEX.CALL_ERR_LITERAL, line)
-                            if bad:
-                                bad = bad[0]
-                                raise Error.MalformedLogCallException(bad[0] + Text.error(bad[1]) + bad[2])
-                            else:
-                                ss = re.findall(REGEX.CALL_SS, line)
-                                if len(ss) != 0:
-                                    newline = await self.SSX(line, ss[0])
-                                else:
-                                    ssv = re.findall(REGEX.CALL_SSV, line)
-                                    if len(ssv) != 0:
-                                        newline = await self.SSX(line, ssv[0])
+        scan_sequence = [
+            (REGEX.CALL_VS, self.VSX),
+            (REGEX.CALL_VSV, self.VSX),
+            (REGEX.CALL_SS, self.SSX),
+            (REGEX.CALL_SSV, self.SSX),
+            (REGEX.SPECIAL_PASS, self.SPECIAL_STR),
+            (REGEX.TAG_PASS, self.NEW_TAG),
+        ]
+
+        for reg, func in scan_sequence:
+            matches = re.findall(reg, line)
+            if len(matches) != 0:
+                return await func(line, matches[0])
+
+        fail_sequence = [
+            (REGEX.TAG_FAIL, Error.MalformedTAGDefinitionException),
+            (REGEX.CALL_ERR_LITERAL, Error.MalformedLogCallException),
+            (REGEX.CALL_ERR_BLANK, Error.BlankTAGException),
+        ]
+
+        for reg, exception in fail_sequence:
+            err = re.findall(reg, line)
+            if len(err) != 0:
+                err = err[0]
+                raise exception(err[0] + Text.error(err[1]) + err[2])
+
         return newline
 
     async def scan(self):
-        await self.walkLines(self.findLogMatch)
+        await self.map_lines(self.match_log_mapping)
