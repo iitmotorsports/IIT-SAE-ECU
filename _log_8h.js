@@ -7,5 +7,5 @@ var _log_8h =
     [ "enableCanbusRelay", "_log_8h.html#a3402a2c8efbb932ddbe58e66b9cc550c", null ],
     [ "printLookup", "_log_8h.html#a92c0f46c8be76298719b50a39e9d8dfa", null ],
     [ "TAG2NUM", "_log_8h.html#a0acd70772d752e8468d733cbda6a1b31", null ],
-    [ "Log", "_log_8h.html#aa5fd43862d543e82b7775410573c9142", null ]
+    [ "Log", "_log_8h.html#af31ef15863cb3c9383790dc16c3f2304", null ]
 ];

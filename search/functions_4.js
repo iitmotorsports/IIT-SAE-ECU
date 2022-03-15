@@ -8,5 +8,6 @@ var searchData=
   ['enableinterrupts_5',['enableInterrupts',['../namespace_canbus.html#ae66521cf8ac5e63c2e89d6b2f009b38a',1,'Canbus']]],
   ['enablemotorbeating_6',['enableMotorBeating',['../namespace_m_c.html#ab35b9e9f20dc50d81b40d6d5c298c1ea',1,'MC']]],
   ['entermirrormode_7',['enterMirrorMode',['../namespace_mirror.html#a89a62e4b2e374ef95291177d525dcf8e',1,'Mirror']]],
-  ['exitmirrormode_8',['exitMirrorMode',['../namespace_mirror.html#a9cdbdcb79cef06a3b8b18151c440b262',1,'Mirror']]]
+  ['error_5fto_5fstring_8',['error_to_string',['../namespacescript_1_1error.html#abf9df14f491eb96e3d8ed0a0a0eb33a3',1,'script::error']]],
+  ['exitmirrormode_9',['exitMirrorMode',['../namespace_mirror.html#a9cdbdcb79cef06a3b8b18151c440b262',1,'Mirror']]]
 ];

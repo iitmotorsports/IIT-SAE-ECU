@@ -150,12 +150,12 @@ Default Mode</h3>
 <p >Bytes 2-3 represent a String ID, a unique number that is mapped to a unique string.</p>
 <p >Bytes 4-7 represent a 32 bit value, by default it is zero, every log entry has this number sent.</p>
 <p >Calls to the global <code>Log</code> can be done as follows.</p>
-<div class="fragment"><div class="line"><a class="code hl_variable" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>(TAG, message, number);</div>
-<div class="ttc" id="a_log_8h_html_aa5fd43862d543e82b7775410573c9142"><div class="ttname"><a href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a></div><div class="ttdeci">Logging::Log_t Log</div><div class="ttdoc">The global logging object.</div></div>
+<div class="fragment"><div class="line"><a class="code hl_variable" href="_log_8h.html#af31ef15863cb3c9383790dc16c3f2304">Log</a>(TAG, message, number);</div>
+<div class="ttc" id="a_log_8h_html_af31ef15863cb3c9383790dc16c3f2304"><div class="ttname"><a href="_log_8h.html#af31ef15863cb3c9383790dc16c3f2304">Log</a></div><div class="ttdeci">Logging::Log_t Log</div><div class="ttdoc">The global logging object.</div></div>
 </div><!-- fragment --><p ><code>TAG</code> can be staticly defined using a <code>LOG_TAG</code>.</p>
 <p ><code>message</code> must be a string literal as such.</p>
-<div class="fragment"><div class="line"><a class="code hl_variable" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>(<span class="stringliteral">&quot;String goes here&quot;</span>); ✔️</div>
-<div class="line"><a class="code hl_variable" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142">Log</a>(someStringReference); ❌</div>
+<div class="fragment"><div class="line"><a class="code hl_variable" href="_log_8h.html#af31ef15863cb3c9383790dc16c3f2304">Log</a>(<span class="stringliteral">&quot;String goes here&quot;</span>); ✔️</div>
+<div class="line"><a class="code hl_variable" href="_log_8h.html#af31ef15863cb3c9383790dc16c3f2304">Log</a>(someStringReference); ❌</div>
 </div><!-- fragment --><p >Unless <a class="el" href="_log_8h.html#a0acd70772d752e8468d733cbda6a1b31" title="Return the final numbervalue of a LOG_TAG.">TAG2NUM()</a> is used.</p>
 <p >And <code>number</code> can be any unsigned 32 bit integer.</p>
 <p >The companion app received this messages as an 8 byte integer and decodes them by first splitting them into the structure shown, and then matching those number that <a class="el" href="_pre___build_8py.html" title="This script preprocesses source files for use with Log_t.">Pre_Build.py</a> generates in <code>log_lookup.json</code></p>
@@ -175,7 +175,7 @@ Logging Levels</h3>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Log.i()   </td><td class="markdownTableBodyNone">Info log    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><a class="el" href="_log_8h.html#aa5fd43862d543e82b7775410573c9142" title="The global logging object.">Log()</a>   </td><td class="markdownTableBodyNone">Normal log    </td></tr>
+<td class="markdownTableBodyNone"><a class="el" href="_log_8h.html#af31ef15863cb3c9383790dc16c3f2304" title="The global logging object.">Log()</a>   </td><td class="markdownTableBodyNone">Normal log    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Log.w()   </td><td class="markdownTableBodyNone">Warning log    </td></tr>
 <tr class="markdownTableRowOdd">

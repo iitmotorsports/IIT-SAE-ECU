@@ -19,6 +19,7 @@ var searchData=
   ['enableinterrupts_16',['enableInterrupts',['../namespace_canbus.html#ae66521cf8ac5e63c2e89d6b2f009b38a',1,'Canbus']]],
   ['enablemotorbeating_17',['enableMotorBeating',['../namespace_m_c.html#ab35b9e9f20dc50d81b40d6d5c298c1ea',1,'MC']]],
   ['entermirrormode_18',['enterMirrorMode',['../namespace_mirror.html#a89a62e4b2e374ef95291177d525dcf8e',1,'Mirror']]],
-  ['euler_19',['Euler',['../_util_8h.html#a6c49ba1c50c86cfbf5661fa23db457b7',1,'Util.h']]],
-  ['exitmirrormode_20',['exitMirrorMode',['../namespace_mirror.html#a9cdbdcb79cef06a3b8b18151c440b262',1,'Mirror']]]
+  ['error_5fto_5fstring_19',['error_to_string',['../namespacescript_1_1error.html#abf9df14f491eb96e3d8ed0a0a0eb33a3',1,'script::error']]],
+  ['euler_20',['Euler',['../_util_8h.html#a6c49ba1c50c86cfbf5661fa23db457b7',1,'Util.h']]],
+  ['exitmirrormode_21',['exitMirrorMode',['../namespace_mirror.html#a9cdbdcb79cef06a3b8b18151c440b262',1,'Mirror']]]
 ];

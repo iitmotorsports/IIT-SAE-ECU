@@ -73,6 +73,19 @@ var namespaces_dup =
       [ "stopCanPins", "namespace_pins.html#a12a6f448c7eea1740a38f0fbe73bbace", null ],
       [ "update", "namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35", null ]
     ] ],
+    [ "script", null, [
+      [ "error", "namespacescript_1_1error.html", "namespacescript_1_1error" ],
+      [ "file_entry", null, [
+        [ "FileEntry", "classscript_1_1file__entry_1_1_file_entry.html", "classscript_1_1file__entry_1_1_file_entry" ]
+      ] ],
+      [ "progress_bar", "namespacescript_1_1progress__bar.html", "namespacescript_1_1progress__bar" ],
+      [ "regex", "namespacescript_1_1regex.html", null ],
+      [ "util", "namespacescript_1_1util.html", [
+        [ "available_ram", "namespacescript_1_1util.html#aaae4fff873c6f17f53113256de2de047", null ],
+        [ "getLibraryBlacklist", "namespacescript_1_1util.html#a63224848ba7056023fdd2f43bce7d7f6", null ],
+        [ "hashFile", "namespacescript_1_1util.html#a3b9d1940e77274308f3d947498e4d6a8", null ]
+      ] ]
+    ] ],
     [ "SerialVar", "namespace_serial_var.html", "namespace_serial_var" ],
     [ "State", "namespace_state.html", "namespace_state" ],
     [ "vs_conf", null, [
