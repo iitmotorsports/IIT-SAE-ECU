@@ -11,9 +11,9 @@ var annotated_dup =
         [ "BlankTAGException", "classscript_1_1error_1_1_blank_t_a_g_exception.html", null ],
         [ "MalformedLogCallException", "classscript_1_1error_1_1_malformed_log_call_exception.html", null ],
         [ "MalformedTAGDefinitionException", "classscript_1_1error_1_1_malformed_t_a_g_definition_exception.html", null ],
-        [ "OutOfIDsException", "classscript_1_1error_1_1_out_of_i_ds_exception.html", null ],
-        [ "OutOfTAGsException", "classscript_1_1error_1_1_out_of_t_a_gs_exception.html", null ],
-        [ "ScriptException", "classscript_1_1error_1_1_script_exception.html", null ]
+        [ "OutOfRangeException", "classscript_1_1error_1_1_out_of_range_exception.html", null ],
+        [ "ScriptException", "classscript_1_1error_1_1_script_exception.html", null ],
+        [ "TAGIDMismatchException", "classscript_1_1error_1_1_t_a_g_i_d_mismatch_exception.html", null ]
       ] ],
       [ "file_entry", null, [
         [ "FileEntry", "classscript_1_1file__entry_1_1_file_entry.html", "classscript_1_1file__entry_1_1_file_entry" ]

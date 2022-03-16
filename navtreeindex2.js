@@ -1,5 +1,7 @@
 var NAVTREEINDEX2 =
 {
+"struct_canbus_1_1_buffer.html#a858103df59fa907303585534396f0361":[5,0,0,0,12],
+"struct_canbus_1_1_buffer.html#a858103df59fa907303585534396f0361":[4,0,2,0,12],
 "struct_canbus_1_1_buffer.html#aac1531b43d12ac915008717beff3d997":[4,0,2,0,7],
 "struct_canbus_1_1_buffer.html#aac1531b43d12ac915008717beff3d997":[5,0,0,0,7],
 "struct_canbus_1_1_buffer.html#aaf9e2c98af9cdee3e5c12643458a4156":[5,0,0,0,0],

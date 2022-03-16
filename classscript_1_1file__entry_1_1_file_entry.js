@@ -1,7 +1,8 @@
 var classscript_1_1file__entry_1_1_file_entry =
 [
-    [ "get_new_id", "classscript_1_1file__entry_1_1_file_entry.html#a5e1bb167f7896a1255a52192d1acdf0a", null ],
-    [ "get_new_tag", "classscript_1_1file__entry_1_1_file_entry.html#a61e75dade9d10547545420665bb85903", null ],
+    [ "get_new_id", "classscript_1_1file__entry_1_1_file_entry.html#ac64eb221224b62ff6792f69e9bcd4424", null ],
+    [ "get_new_pair_mapping", "classscript_1_1file__entry_1_1_file_entry.html#a03c9d31160f0a15c93b967f551352ae0", null ],
+    [ "get_new_tag", "classscript_1_1file__entry_1_1_file_entry.html#a4e9d90e2cedc9b0df8dbe6c9d915cc90", null ],
     [ "line_special", "classscript_1_1file__entry_1_1_file_entry.html#a3cb731925ecfb00f4722fbd1ae4c3771", null ],
     [ "line_ssx", "classscript_1_1file__entry_1_1_file_entry.html#afdacd2fb8feef25ba1f0646b13e19ce9", null ],
     [ "line_tag", "classscript_1_1file__entry_1_1_file_entry.html#ac6886e19685dc6f7749046da6850e44a", null ],

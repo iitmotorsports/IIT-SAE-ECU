@@ -13,8 +13,8 @@ var hierarchy =
         [ "script.error.BlankTAGException", "classscript_1_1error_1_1_blank_t_a_g_exception.html", null ],
         [ "script.error.MalformedLogCallException", "classscript_1_1error_1_1_malformed_log_call_exception.html", null ],
         [ "script.error.MalformedTAGDefinitionException", "classscript_1_1error_1_1_malformed_t_a_g_definition_exception.html", null ],
-        [ "script.error.OutOfIDsException", "classscript_1_1error_1_1_out_of_i_ds_exception.html", null ],
-        [ "script.error.OutOfTAGsException", "classscript_1_1error_1_1_out_of_t_a_gs_exception.html", null ]
+        [ "script.error.OutOfRangeException", "classscript_1_1error_1_1_out_of_range_exception.html", null ],
+        [ "script.error.TAGIDMismatchException", "classscript_1_1error_1_1_t_a_g_i_d_mismatch_exception.html", null ]
       ] ]
     ] ],
     [ "SerialVar::SerialVar< T >", "class_serial_var_1_1_serial_var.html", null ],
