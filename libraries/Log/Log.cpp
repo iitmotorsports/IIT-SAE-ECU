@@ -4,9 +4,9 @@
  * @brief Log.h source file
  * @version 0.1
  * @date 2020-11-11
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  */
 
 // @cond
@@ -258,6 +258,10 @@ void Log_t::f(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate) 
 #ifdef __LOGGER_FATAL_PRINT
     __logger_print_num(FATAL, TAG, message, number, mediate);
 #endif
+}
+
+void Log_t::p(LOG_TAG name, LOG_MSG prettyName, const uint32_t number, int mediate) {
+    __logger_print_num(FATAL, name, prettyName, number, mediate);
 }
 
 static void _receiveLogBuffer(uint32_t address, volatile uint8_t *buf) {
