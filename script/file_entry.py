@@ -66,8 +66,7 @@ class FileEntry:  # IMPROVE: Make IDs persistent
         """
         raw_str = raw_str.strip('"')
         string = f"[{raw_str}]"
-        number_id = await IDMatch.getUniqueTAG(string)
-        IDMatch.new_tag(string, number_id)
+        number_id = await IDMatch.map_unique_tag(string)
         return number_id
 
     async def get_new_id(self, raw_log_level: str, raw_str: str) -> int:
@@ -81,8 +80,7 @@ class FileEntry:  # IMPROVE: Make IDs persistent
             int: uid to replace this string with
         """
         string = FILE_LOG_LEVELS[raw_log_level] + raw_str.strip('"')
-        number_id = await IDMatch.getUniqueID(string)
-        IDMatch.new_id(string, number_id)
+        number_id = await IDMatch.map_unique_id(string)
         return number_id
 
     async def line_special(self, line: str, matches: list[str]) -> str:

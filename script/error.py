@@ -5,18 +5,18 @@ class ScriptException(RuntimeError):
     """Base Exception for this script"""
 
 
-class OutOfIDsException(ScriptException):
-    """Exception thrown when there are no more IDs that can be allocated"""
+class OutOfRangeException(ScriptException):
+    """Exception thrown when there are no more values that can be allocated to a type"""
 
     def __init__(self, message):
-        super().__init__(message.strip(), "Script has ran out of allocatable IDs")
+        super().__init__(message.strip(), "No more allocatable values to range")
 
 
-class OutOfTAGsException(ScriptException):
-    """Exception thrown when there are no more TAG IDs that can be allocated"""
+class TAGIDMismatchException(ScriptException):
+    """Exception thrown when obtaining a mapped pair results in mismatched values"""
 
     def __init__(self, message):
-        super().__init__(message.strip(), "Script has ran out of allocatable TAG IDs")
+        super().__init__(message.strip(), "Resulting matched pair do not match in value")
 
 
 class BlankTAGException(ScriptException):

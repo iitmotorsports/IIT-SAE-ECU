@@ -7,18 +7,14 @@ import script.util as Util
 
 LIMIT_TAG = 65535
 LIMIT_ID = 65535
-TAG_MAP: dict[str, tuple[int, int]] = {
-    "STATE": (2, 256),
-    "VALUE": (256, 4096),
-    "ELSE": (4096, LIMIT_TAG),
-}
 BLACKLIST_IDS = (0, 1)
 
-NEW_DATA = ({}, {}, {})
+TAG_RANGE_STATE = range(2, 256)
+TAG_RANGE_VALUE = range(256, 4096)
+TAG_RANGE_ELSE = range(4096, LIMIT_TAG)
 
-O_TAGs = NEW_DATA[0]
-O_IDs = NEW_DATA[1]
-O_Files = NEW_DATA[2]
+ID_RANGE_VALUE = range(256, 4096)
+ID_RANGE_ELSE = list(range(2, 256)) + list(range(4096, LIMIT_ID))
 
 TAGs = {}
 IDs = {}
@@ -29,57 +25,58 @@ ID_SEM = threading.BoundedSemaphore(1)
 FILE_SEM = threading.BoundedSemaphore(1)
 
 
-def new_tag(string: str, numberID: int):
-    TAG_SEM.acquire()
-    TAGs[string] = numberID
-    TAG_SEM.release()
+async def map_unique_pair(string_id: str, string_tag: str, map_range: range) -> int:
+    if TAGs.get(string_tag) and IDs.get(string_id):
+        if TAGs[string_tag] != IDs[string_id]:
+            raise Error.TAGIDMismatchException(f"{string_tag} : {string_id}")
+        return TAGs[string_tag]
+
+    with ID_SEM and TAG_SEM:
+        ids = set(IDs.values())
+        tags = set(TAGs.values())
+
+        for i in map_range:
+            if i not in BLACKLIST_IDS and i not in ids and i not in tags:
+                IDs[string_id] = i
+                TAGs[string_tag] = i
+                return i
+
+    raise Error.OutOfRangeException("Either IDs or TAGs are out")
 
 
-def new_id(string: str, numberID: int):
-    ID_SEM.acquire()
-    IDs[string] = numberID
-    ID_SEM.release()
+async def map_unique_id(string_id: str, map_range: range = TAG_RANGE_ELSE) -> int:
+    if IDs.get(string_id):
+        return IDs[string_id]
 
+    with ID_SEM:
+        values = set(IDs.values())
 
-async def getUniqueID(findDuplicate=None):
-    if IDs.get(findDuplicate):
-        return IDs[findDuplicate]
+        for i in map_range:
+            if i not in BLACKLIST_IDS and i not in values:
+                IDs[string_id] = i
+                return i
 
-    ID_SEM.acquire()
-    old_vals = set(O_IDs.values())
-    vals = set(IDs.values())
-
-    for i in range(1, LIMIT_ID):
-        if i not in BLACKLIST_IDS and i not in old_vals and i not in vals:
-            IDs[""] = i  # Claim before returning
-            ID_SEM.release()
-            return i
-
-    ID_SEM.release()
     # Attempt to clear up some IDs
-    raise Error.OutOfIDsException
+    raise Error.OutOfRangeException("IDs")
 
 
-async def getUniqueTAG(findDuplicate=None):
-    if TAGs.get(findDuplicate):
-        return TAGs[findDuplicate]
+async def map_unique_tag(string_tag: str, map_range: range = ID_RANGE_ELSE) -> int:
+    if TAGs.get(string_tag):
+        return TAGs[string_tag]
 
-    TAG_SEM.acquire()
-    old_vals = set(O_TAGs.values())
-    vals = set(TAGs.values())
+    with TAG_SEM:
+        values = set(TAGs.values())
 
-    for i in range(1, LIMIT_TAG):
-        if i not in BLACKLIST_IDS and i not in old_vals and i not in vals:
-            TAGs[""] = i  # Claim before returning
-            TAG_SEM.release()
-            return i
+        for i in map_range:
+            if i not in BLACKLIST_IDS and i not in values:
+                TAGs[string_tag] = i
+                return i
 
-    TAG_SEM.release()
     # Attempt to clear up some IDs
-    raise Error.OutOfIDsException
+    raise Error.OutOfRangeException("TAGs")
 
 
-def clear_blanks():
+def clear_blanks() -> None:
     try:
         del IDs[""]
     except KeyError:
@@ -90,7 +87,7 @@ def clear_blanks():
         pass
 
 
-def save_lookup(path):
+def save_lookup(path) -> None:
     to_save = (TAGs, IDs)
     Util.touch(path)
     with open(path, "w", encoding="utf-8") as file:
