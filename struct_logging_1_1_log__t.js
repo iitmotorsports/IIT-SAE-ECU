@@ -10,6 +10,7 @@ var struct_logging_1_1_log__t =
     [ "i", "struct_logging_1_1_log__t.html#a70c81af0371781ee039b00e0eb71843c", null ],
     [ "operator()", "struct_logging_1_1_log__t.html#a1d83b81ba90246ade2c4fda62d8e5324", null ],
     [ "operator()", "struct_logging_1_1_log__t.html#a2ff5394dadba516b58d848fee1d4cb71", null ],
+    [ "p", "struct_logging_1_1_log__t.html#ab8ab1f7dad0eea7055aff9fa2fe3816e", null ],
     [ "w", "struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46", null ],
     [ "w", "struct_logging_1_1_log__t.html#aa09937111a64919316e4119164af89e3", null ]
 ];

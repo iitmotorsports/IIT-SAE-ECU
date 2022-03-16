@@ -135,6 +135,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a79adadde095b678a565d35c72e979c53"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_logging_1_1_log__t.html#a79adadde095b678a565d35c72e979c53">f</a> (<a class="el" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a> TAG, <a class="el" href="_log_8h.html#a3a232a0a4f2e1e64a6cf1a5b19021dd7">LOG_MSG</a> message, const uint32_t number, int mediate=false)</td></tr>
 <tr class="memdesc:a79adadde095b678a565d35c72e979c53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log a string and a variable number using a fatal tag.  <a href="struct_logging_1_1_log__t.html#a79adadde095b678a565d35c72e979c53">More...</a><br /></td></tr>
 <tr class="separator:a79adadde095b678a565d35c72e979c53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8ab1f7dad0eea7055aff9fa2fe3816e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_logging_1_1_log__t.html#ab8ab1f7dad0eea7055aff9fa2fe3816e">p</a> (<a class="el" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a> name, <a class="el" href="_log_8h.html#a3a232a0a4f2e1e64a6cf1a5b19021dd7">LOG_MSG</a> prettyName, const uint32_t number, int mediate=false)</td></tr>
+<tr class="memdesc:ab8ab1f7dad0eea7055aff9fa2fe3816e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Post a monitored value.  <a href="struct_logging_1_1_log__t.html#ab8ab1f7dad0eea7055aff9fa2fe3816e">More...</a><br /></td></tr>
+<tr class="separator:ab8ab1f7dad0eea7055aff9fa2fe3816e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Base class used to log things over serial. </p>
@@ -629,6 +632,57 @@ Logging over Can</h3>
     <tr><td class="paramname">TAG</td><td>Variable of type <code>LOG_TAG</code> </td></tr>
     <tr><td class="paramname">message</td><td>Inline string that should be printed </td></tr>
     <tr><td class="paramname">number</td><td>Any number that should be printed next to the string </td></tr>
+    <tr><td class="paramname">mediate</td><td>Indicate whether this message should only print when the number changes, only works in non-ASCII mode </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab8ab1f7dad0eea7055aff9fa2fe3816e" name="ab8ab1f7dad0eea7055aff9fa2fe3816e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8ab1f7dad0eea7055aff9fa2fe3816e">&#9670;&nbsp;</a></span>p()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Logging::Log_t::p </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="_log_8h.html#a746b6eae8886ab8bb40046729eed2983">LOG_TAG</a>&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_log_8h.html#a3a232a0a4f2e1e64a6cf1a5b19021dd7">LOG_MSG</a>&#160;</td>
+          <td class="paramname"><em>prettyName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint32_t&#160;</td>
+          <td class="paramname"><em>number</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>mediate</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Post a monitored value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Code safe name of this value </td></tr>
+    <tr><td class="paramname">prettyName</td><td>Pretty, human readable name of this value </td></tr>
+    <tr><td class="paramname">number</td><td>Integer number associated with this value </td></tr>
     <tr><td class="paramname">mediate</td><td>Indicate whether this message should only print when the number changes, only works in non-ASCII mode </td></tr>
   </table>
   </dd>
