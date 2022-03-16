@@ -284,11 +284,11 @@ def main() -> None:
 
 # TODO: remove files/modules that no longer exist in actual directories
 
-try:
-    shutil.rmtree(SOURCE_DEST_NAME)
-    shutil.rmtree(LIBRARIES_DEST_NAME)
-except FileNotFoundError:
-    pass
+# try:
+#     shutil.rmtree(SOURCE_DEST_NAME)
+#     shutil.rmtree(LIBRARIES_DEST_NAME)
+# except FileNotFoundError:
+#     pass
 
 
 if __name__ == "__main__":
