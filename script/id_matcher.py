@@ -25,7 +25,7 @@ ID_SEM = threading.BoundedSemaphore(1)
 FILE_SEM = threading.BoundedSemaphore(1)
 
 
-async def map_unique_pair(string_id: str, string_tag: str, map_range: range) -> int:
+async def map_unique_pair(string_tag: str, string_id: str, map_range: range) -> int:
     if TAGs.get(string_tag) and IDs.get(string_id):
         if TAGs[string_tag] != IDs[string_id]:
             raise Error.TAGIDMismatchException(f"{string_tag} : {string_id}")
@@ -44,7 +44,7 @@ async def map_unique_pair(string_id: str, string_tag: str, map_range: range) -> 
     raise Error.OutOfRangeException("Either IDs or TAGs are out")
 
 
-async def map_unique_id(string_id: str, map_range: range = TAG_RANGE_ELSE) -> int:
+async def map_unique_id(string_id: str, map_range: range = ID_RANGE_ELSE) -> int:
     if IDs.get(string_id):
         return IDs[string_id]
 
@@ -60,7 +60,7 @@ async def map_unique_id(string_id: str, map_range: range = TAG_RANGE_ELSE) -> in
     raise Error.OutOfRangeException("IDs")
 
 
-async def map_unique_tag(string_tag: str, map_range: range = ID_RANGE_ELSE) -> int:
+async def map_unique_tag(string_tag: str, map_range: range = TAG_RANGE_ELSE) -> int:
     if TAGs.get(string_tag):
         return TAGs[string_tag]
 

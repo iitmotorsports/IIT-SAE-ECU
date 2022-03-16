@@ -55,32 +55,53 @@ class FileEntry:  # IMPROVE: Make IDs persistent
         """
         self.errors.append(f"  {name}:{tag}\n   {Text.red(type(exception).__name__)}\n    > {Error.error_to_string(exception)}\n")
 
-    async def get_new_tag(self, raw_str: str) -> int:
-        """get a new unique tag
+    async def get_new_pair_mapping(self, tag_str: str, id_str: str, map_range: range) -> int:
+        """Get a new unique mapping to both a TAG and ID
 
         Args:
-            raw_str (str): raw string to store
+            tag_str (str): raw tag string to store
+            id_str (str): raw id string to store
+
+        Returns:
+            int: uid to replace these strings with
+        """
+
+        tag_str = tag_str.strip('"')
+        tstring = f"[{tag_str}]"
+        istring = id_str.strip('"')
+        number_id = await IDMatch.map_unique_pair(tstring, istring, map_range)
+        return number_id
+
+    async def get_new_tag(self, tag_str: str) -> int:
+        """Get a new unique TAG mapping
+
+        Args:
+            tag_str (str): raw string to store
 
         Returns:
             int: uid to replace this string with
         """
-        raw_str = raw_str.strip('"')
-        string = f"[{raw_str}]"
-        number_id = await IDMatch.map_unique_tag(string)
+
+        state_match = re.findall(REGEX.STATE_PASS, tag_str)
+
+        tag_str = tag_str.strip('"')
+        tstring = f"[{tag_str}]"
+
+        number_id = await IDMatch.map_unique_tag(tstring, IDMatch.TAG_RANGE_STATE if len(state_match) != 0 else IDMatch.TAG_RANGE_ELSE)
         return number_id
 
-    async def get_new_id(self, raw_log_level: str, raw_str: str) -> int:
-        """Get a new unique ID
+    async def get_new_id(self, raw_log_level: str, id_str: str) -> int:
+        """Get a new unique ID mapping
 
         Args:
             raw_log_level (str): Logging level of this tag
-            raw_str (str): raw string to store
+            id_str (str): raw string to store
 
         Returns:
             int: uid to replace this string with
         """
-        string = FILE_LOG_LEVELS[raw_log_level] + raw_str.strip('"')
-        number_id = await IDMatch.map_unique_id(string)
+        istring = FILE_LOG_LEVELS[raw_log_level] + id_str.strip('"')
+        number_id = await IDMatch.map_unique_id(istring)
         return number_id
 
     async def line_special(self, line: str, matches: list[str]) -> str:
@@ -132,8 +153,17 @@ class FileEntry:  # IMPROVE: Make IDs persistent
         Returns:
             str: Reformatted line
         """
-        tag = await self.get_new_tag(matches[1])
-        uid = await self.get_new_id(matches[0], matches[2])
+
+        tag = 0
+        uid = 0
+
+        if matches[0] == "p":
+            tag = await self.get_new_pair_mapping(matches[1], matches[2], IDMatch.TAG_RANGE_VALUE)
+            uid = tag
+        else:
+            tag = await self.get_new_tag(matches[1])
+            uid = await self.get_new_id(matches[0], matches[2])
+
         return line.replace(matches[1], str(tag)).replace(matches[2], str(uid))
 
     async def map_lines(self, function: Callable[[str], str]) -> None:
