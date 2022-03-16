@@ -64,7 +64,8 @@ import sys
 import json
 
 from os.path import join as join_path
-from vs_conf import load_json
+from typing import Callable
+import vs_conf
 from vs_conf import Settings
 
 import script.util as Util
@@ -89,17 +90,17 @@ LIBRARIES_DEST_NAME = f"{WORKING_DIRECTORY_OFFSET}{LIBRARIES_NAME}"
 INCLUDED_FILE_TYPES = (".c", ".cpp", ".h", ".hpp", ".t", ".tpp", ".s", ".def")
 
 
-async def ingest_files(finishFunc, FilesEntries):
-    for File in FilesEntries[0]:
-        finishFunc()
+async def ingest_files(progress_func: Callable[[None], None], entries: tuple[FileEntry]) -> None:
+    for file in entries[0]:
+        progress_func()
         try:
-            await File.scan()
+            await file.scan()
         except Exception as e:
-            File.newError(e, "Thread Error", File.name)
+            file.newError(e, "Thread Error", file.name)
 
 
-def run_ingest_files(finishFunc, *FilesEntries):
-    asyncio.run(ingest_files(finishFunc, FilesEntries))
+def run_ingest_files(progress_func: Callable[[None], None], *entries: FileEntry) -> None:
+    asyncio.run(ingest_files(progress_func, entries))
 
 
 Files: set[FileEntry] = set()
@@ -108,12 +109,12 @@ Threads = set()
 Excluded_dirs = set()
 
 
-def allocate_files(path, offset):
+def allocate_files(path: str, offset: str) -> None:
     blacklist = Util.getLibraryBlacklist()
     model: dict[str, str]
 
     try:
-        model = load_json()[Settings.CORE_NAME.key]
+        model = vs_conf.load_json()[Settings.CORE_NAME.key]
     except json.JSONDecodeError:
         sys.exit(Text.error("Error loading settings file, consider running the 'VS Setup' task"))
 
@@ -134,22 +135,22 @@ def allocate_files(path, offset):
         for filename in files:
             if pathlib.Path(filename).suffix.lower() not in INCLUDED_FILE_TYPES:
                 continue
-            filepath = subdir + os.sep + filename
+            filepath = join_path(subdir, filename)
             rawpath = subdir + os.sep
             if BYPASS_SCRIPT or rawpath.startswith(LIB_PATH):  # Skip log module related files
                 Util.syncFile(filepath, offset, rawpath, suppress=True)
                 continue
-            File_Ent = FileEntry(rawpath, filepath, filename, offset)
-            Files.add(File_Ent)
-            FileRefs.add(File_Ent)
+            file_entry = FileEntry(rawpath, filepath, filename, offset)
+            Files.add(file_entry)
+            FileRefs.add(file_entry)
 
     for directory in blacklist:
-        rmPath = join_path(offset, directory)
-        if os.path.exists(rmPath):
-            shutil.rmtree(rmPath)
+        rm_path = join_path(offset, directory)
+        if os.path.exists(rm_path):
+            shutil.rmtree(rm_path)
 
 
-def dole_files(count, finishFunc):
+def dole_files(count: int, progress_func: Callable[[None], None]) -> None:
     while True:
         file_set: set[FileEntry] = set()
 
@@ -160,14 +161,13 @@ def dole_files(count, finishFunc):
             i += 1
 
         if len(file_set) != 0:  # IMPROVE: Use actual mutlithreading
-            # Threads.add(multiprocessing.Process(target=run_ingest_files, args=(finishFunc, file_set)))
-            Threads.add(threading.Thread(target=run_ingest_files, args=(finishFunc, file_set)))
+            Threads.add(threading.Thread(target=run_ingest_files, args=(progress_func, file_set)))
 
         if len(Files) == 0:
             break
 
 
-def begin_scan():
+def begin_scan() -> None:
     for t in Threads:
         t.start()
 
@@ -177,7 +177,7 @@ def begin_scan():
     IDMatch.clear_blanks()
 
 
-def printResults():
+def printResults() -> None:
     c = 0
     m = 0
 
@@ -241,7 +241,7 @@ def printResults():
 
 
 # Start Script
-def main():
+def main() -> None:
     Util.checkGitSubmodules(INCLUDED_FILE_TYPES)
 
     Util.touch(SOURCE_DEST_NAME)
@@ -282,7 +282,7 @@ def main():
     Util.encode_log_map(f"{WORKING_DIRECTORY_OFFSET}{LIB_PATH}")
 
 
-# TODO: only remove files/modules that no longer exist in actual directories
+# TODO: remove files/modules that no longer exist in actual directories
 
 try:
     shutil.rmtree(SOURCE_DEST_NAME)
