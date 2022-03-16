@@ -18,7 +18,7 @@ namespace ECUStates {
  * State which initializes everything
  */
 static struct Initialize_State : State::State_t {
-    LOG_TAG ID = "Teensy Initialize";
+    LOG_TAG ID = "Teensy Initializing State";
     State::State_t *run(void);
     LOG_TAG getID(void) { return ID; }
 } Initialize_State;
@@ -44,7 +44,7 @@ public:
 /**
  * @brief Idle state
  * @details State that waits for input to go to Button or Charging state
- * 
+ *
  */
 static struct Idle_State : State::State_t {
     LOG_TAG ID = "Idle State";
@@ -68,7 +68,7 @@ static struct Charging_State : State::State_t {
 } Charging_State;
 
 /**
- * @brief Button state 
+ * @brief Button state
  * @details State where the speaker is played and enables driving mode
  */
 static struct Button_State : State::State_t {
@@ -79,9 +79,9 @@ static struct Button_State : State::State_t {
 } Button_State;
 
 /**
- * @brief Driving mode state 
+ * @brief Driving mode state
  * @details Main state that will run the car
- * 
+ *
  */
 static struct Driving_Mode_State : State::State_t {
 private:
@@ -117,7 +117,7 @@ static struct FaultState : State::State_t {
  * This state demonstrates the different ways we can log things to serial
  */
 static struct Logger_t : State::State_t {
-    LOG_TAG ID = "Logger";
+    LOG_TAG ID = "Logger State";
     State::State_t *run(void);
     LOG_TAG getID(void) { return ID; }
 } Logger;
@@ -126,7 +126,7 @@ static struct Logger_t : State::State_t {
  * @brief Demonstrate how to go back to a previous state
  */
 static struct Bounce_t : State::State_t {
-    LOG_TAG ID = "Bouncer";
+    LOG_TAG ID = "Bouncer State";
     State::State_t *run(void);
     LOG_TAG getID(void) { return ID; }
 } Bounce;
