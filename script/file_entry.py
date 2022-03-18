@@ -186,7 +186,7 @@ class FileEntry:  # IMPROVE: Make IDs persistent
                     new_file.buffer.write(line.encode("utf-8"))
                 finally:
                     line_no += 1
-        self.modified = not Util.syncFile(temp_path, self.offset, self.rawpath, self.working_path)
+        self.modified = Util.sync_file(temp_path, self.offset, self.rawpath, self.working_path)
         os.remove(temp_path)
 
     async def match_log_mapping(self, line: str) -> str:

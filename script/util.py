@@ -12,7 +12,12 @@ from os.path import join as join_path
 import script.text as Text
 
 
-def encode_log_map(path: str):
+def encode_log_map(path: str) -> None:
+    """Encodes the last generated log map into a z-lib compressed C binary array
+
+    Args:
+        path (str): Path to store the C file containing the array
+    """
     print("Encoding LogMap 📃\n")
     subprocess.Popen(
         [
@@ -28,7 +33,12 @@ def encode_log_map(path: str):
     ).wait()
 
 
-def checkGitSubmodules(file_types: str):
+def check_git_submodules(file_types: str) -> None:
+    """Checks for missing or uninitalized submodules within project
+
+    Args:
+        file_types (str): File types to expect in submodules
+    """
     err = False
     try:
         response = subprocess.check_output("git config -f .gitmodules -l", stderr=subprocess.STDOUT, shell=True)
@@ -51,11 +61,11 @@ def checkGitSubmodules(file_types: str):
 LIB_BLACKLIST = join_path("libraries", ".blacklist")
 
 
-def getLibraryBlacklist() -> dict[str, list]:
+def get_library_blacklist() -> dict[str, list]:
     """Get the library folder blacklist based on core model
 
     Returns:
-        dict[str, list]: folder blacklist dict
+        dict[str, list]: folder blacklist as a dict
     """
     blacklist: dict[str, list] = {}
     with open(LIB_BLACKLIST, "r", encoding="utf-8") as file:
@@ -78,26 +88,43 @@ def getLibraryBlacklist() -> dict[str, list]:
 FILES_CHANGED = False
 
 
-def syncFile(filePath, offset, rawpath, workingFilePath=None, suppress=False):
+def sync_file(filePath: str, offset: str, rawpath: str, workingFilePath: str = None, suppress: bool = False) -> bool:
+    """Syncs a file between directories
+
+    Args:
+        filePath (str): Path to the original file
+        offset (str): Path offset to prepend to the rawpath to get the filepath
+        rawpath (str): Path to the directory the original file is in
+        workingFilePath (str, optional): Path to the file to sync to. Defaults to offset + filepath.
+        suppress (bool, optional): Suppress log messages. Defaults to False.
+
+    Returns:
+        bool: Whether the file was synced
+    """
     workingFilePath = workingFilePath or f"{offset}{filePath}"
-    global FILES_CHANGED
 
     new = hashFile(filePath)
     old = hashFile(workingFilePath)
     if old == "":
         old = 0
-    FILES_CHANGED = FILES_CHANGED and (new == old)
 
     if not os.path.exists(workingFilePath) or new != old:
+        global FILES_CHANGED
+        FILES_CHANGED = True
         touch(f"{offset}{rawpath}")
         shutil.copyfile(filePath, workingFilePath)
         if not suppress:
             print(f"Sync File: {os.path.basename(workingFilePath)}")
-        return False
-    return True
+        return True
+    return False
 
 
-def touch(rawpath):
+def touch(rawpath: str) -> None:
+    """Creates a directory tree
+
+    Args:
+        rawpath (str): Path to generate
+    """
     try:
         Path(rawpath).mkdir(parents=True, exist_ok=True)
     except OSError as exc:

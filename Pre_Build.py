@@ -110,7 +110,7 @@ Excluded_dirs = set()
 
 
 def allocate_files(path: str, offset: str) -> None:
-    blacklist = Util.getLibraryBlacklist()
+    blacklist = Util.get_library_blacklist()
     model: dict[str, str]
 
     try:
@@ -138,7 +138,7 @@ def allocate_files(path: str, offset: str) -> None:
             filepath = join_path(subdir, filename)
             rawpath = subdir + os.sep
             if BYPASS_SCRIPT or rawpath.startswith(LIB_PATH):  # Skip log module related files
-                Util.syncFile(filepath, offset, rawpath, suppress=True)
+                Util.sync_file(filepath, offset, rawpath, suppress=True)
                 continue
             file_entry = FileEntry(rawpath, filepath, filename, offset)
             Files.add(file_entry)
@@ -242,7 +242,7 @@ def printResults() -> None:
 
 # Start Script
 def main() -> None:
-    Util.checkGitSubmodules(INCLUDED_FILE_TYPES)
+    Util.check_git_submodules(INCLUDED_FILE_TYPES)
 
     Util.touch(SOURCE_DEST_NAME)
     Util.touch(LIBRARIES_DEST_NAME)
@@ -275,7 +275,7 @@ def main() -> None:
         if Util.FILES_CHANGED:
             print(Text.important("\nNote: Files have changed, rebuild inbound"))
         if newhash != prehash:
-            print(Text.reallyImportant("\nNote: Mapped values have changed"))
+            print(Text.really_important("\nNote: Mapped values have changed"))
 
         print()
 
