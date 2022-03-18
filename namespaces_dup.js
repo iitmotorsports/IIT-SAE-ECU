@@ -80,10 +80,25 @@ var namespaces_dup =
       ] ],
       [ "progress_bar", "namespacescript_1_1progress__bar.html", "namespacescript_1_1progress__bar" ],
       [ "regex", "namespacescript_1_1regex.html", null ],
+      [ "text", "namespacescript_1_1text.html", [
+        [ "error", "namespacescript_1_1text.html#a5b3819cff6a134ec237abc46adbc196f", null ],
+        [ "green", "namespacescript_1_1text.html#ad5dc812a2082c3da11d9f70df13f9d5b", null ],
+        [ "header", "namespacescript_1_1text.html#a2e259f6040e743442373c79b80d9f3e0", null ],
+        [ "important", "namespacescript_1_1text.html#a0ae02742b74b6ef1d1ddd3e75693237c", null ],
+        [ "really_important", "namespacescript_1_1text.html#ae9026ac8fd7690f1d6121550086bb833", null ],
+        [ "red", "namespacescript_1_1text.html#a1fc073b3d14a05f9ad68c4209167e211", null ],
+        [ "underline", "namespacescript_1_1text.html#aad5691d562669a392f517e554499a106", null ],
+        [ "warning", "namespacescript_1_1text.html#a5f797ed5b580d53eb6c6b1180b22e039", null ],
+        [ "yellow", "namespacescript_1_1text.html#a7a51524bccbdc4a071ee252dca651895", null ]
+      ] ],
       [ "util", "namespacescript_1_1util.html", [
         [ "available_ram", "namespacescript_1_1util.html#aaae4fff873c6f17f53113256de2de047", null ],
-        [ "getLibraryBlacklist", "namespacescript_1_1util.html#a63224848ba7056023fdd2f43bce7d7f6", null ],
-        [ "hashFile", "namespacescript_1_1util.html#a3b9d1940e77274308f3d947498e4d6a8", null ]
+        [ "check_git_submodules", "namespacescript_1_1util.html#a8d045314b31f46e3d6d08195c6ab60f0", null ],
+        [ "encode_log_map", "namespacescript_1_1util.html#ad537cc91beeaba0530f6bf4eace3980f", null ],
+        [ "get_library_blacklist", "namespacescript_1_1util.html#ad2e80a6afa165262a2359dcc73aa8ef4", null ],
+        [ "hashFile", "namespacescript_1_1util.html#a3b9d1940e77274308f3d947498e4d6a8", null ],
+        [ "sync_file", "namespacescript_1_1util.html#adb96fbf3ed4c2f26740443b119dd48cf", null ],
+        [ "touch", "namespacescript_1_1util.html#aa633930e8d297945be7ce900fad6fe65", null ]
       ] ]
     ] ],
     [ "SerialVar", "namespace_serial_var.html", "namespace_serial_var" ],

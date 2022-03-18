@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['w_0',['w',['../struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46',1,'Logging::Log_t::w(LOG_TAG TAG, LOG_MSG message)'],['../struct_logging_1_1_log__t.html#aa09937111a64919316e4119164af89e3',1,'Logging::Log_t::w(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate=false)']]],
-  ['writebackup_1',['writeBackup',['../vs__conf_8py.html#a7c46360ef32fbabe3f52d22c76d28fe0',1,'vs_conf']]]
+  ['underline_0',['underline',['../namespacescript_1_1text.html#aad5691d562669a392f517e554499a106',1,'script::text']]],
+  ['unload_1',['unload',['../classvs__conf_1_1_settings.html#a8db136c24032859e4772861d568f9b44',1,'vs_conf::Settings']]],
+  ['update_2',['update',['../namespace_canbus.html#a386cdddf9229348b8108640075b5c3e4',1,'Canbus::update()'],['../namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35',1,'Pins::update()']]],
+  ['updatecurrentstate_3',['updateCurrentState',['../namespace_front.html#af9fc069abc6cef27915cdee9bbe08acb',1,'Front']]]
 ];

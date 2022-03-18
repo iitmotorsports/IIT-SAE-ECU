@@ -1,22 +1,11 @@
 var searchData=
 [
-  ['scan_0',['scan',['../classscript_1_1file__entry_1_1_file_entry.html#a66814a7f3d07a9bf57ed80f38fcb2c8d',1,'script::file_entry::FileEntry']]],
-  ['senddata_1',['sendData',['../namespace_canbus.html#a003195b12c68a25e85c1249630901f87',1,'Canbus::sendData(const uint32_t address, uint8_t buf[8])'],['../namespace_canbus.html#a685569d6ee66f2c88962d158a5caf22c',1,'Canbus::sendData(const uint32_t address, const uint8_t buf_0=0, const uint8_t buf_1=0, const uint8_t buf_2=0, const uint8_t buf_3=0, const uint8_t buf_4=0, const uint8_t buf_5=0, const uint8_t buf_6=0, const uint8_t buf_7=0)']]],
-  ['sendtorque_2',['sendTorque',['../namespace_m_c.html#a043a760e6f9eaefc9d13ab2f7f1b342c',1,'MC']]],
-  ['serial_5fports_3',['serial_ports',['../vs__conf_8py.html#a75e9e112029aad603942e76f725977b6',1,'vs_conf']]],
-  ['serial_5fspam_4',['serial_spam',['../_test_8h.html#ab4add27d281bd458ea6d17e6d6af879e',1,'Test.h']]],
-  ['serialvar_5',['SerialVar',['../class_serial_var_1_1_serial_var.html#abb2574a4d86028b0e751f0c96aa412de',1,'SerialVar::SerialVar']]],
-  ['set_5fvalue_6',['set_value',['../classvs__conf_1_1_settings_1_1_option.html#aa28cad5a9cd56ea5ba09fc13b63415a1',1,'vs_conf::Settings::Option']]],
-  ['setchargesignal_7',['setChargeSignal',['../namespace_front.html#a08cef7e1e54e13a82a0a2aa6e8ce126d',1,'Front']]],
-  ['setcommand_8',['setCommand',['../namespace_cmd.html#aedaea62d3d1e614cf34ae87372087846',1,'Cmd']]],
-  ['setdirection_9',['setDirection',['../namespace_m_c.html#a2fb464e85bca01fc06a2b5b59c83d9b3',1,'MC']]],
-  ['setinternalvalue_10',['setInternalValue',['../namespace_pins.html#a9d8cba01aef10c12ca76fe5cb0bc67c6',1,'Pins']]],
-  ['setpinvalue_11',['setPinValue',['../namespace_pins.html#a2d60349cb2aec2c336856187093aea61',1,'Pins']]],
-  ['setsemaphore_12',['setSemaphore',['../namespace_canbus.html#a1be67a2bae5a660f864b41ab2744259f',1,'Canbus']]],
-  ['settorque_13',['setTorque',['../namespace_m_c.html#a27fe6e9fc5d1906069d9e60a24226dd0',1,'MC']]],
-  ['setup_14',['setup',['../namespace_aero.html#aaf24879c16df328a981323313c41f1ba',1,'Aero::setup()'],['../namespace_canbus.html#ac87cf65470012914f1ae29c0eb987b87',1,'Canbus::setup()'],['../namespace_echo.html#a06d3c7f95ead843b9a10c61cb4ee8aee',1,'Echo::setup()'],['../namespace_mirror.html#a1163a1d753f2ea7a3150f06a015fbedb',1,'Mirror::setup()'],['../namespace_m_c.html#aeb2b966841aa0fd6b2ac79478a648c84',1,'MC::setup(void)']]],
-  ['setupbuffers_15',['setupBuffers',['../namespace_m_c.html#a5f9dca43e756b4aa50f914b3f14b1f88',1,'MC']]],
-  ['softfault_16',['softFault',['../namespace_fault.html#a4ffa144bc1e88734c7d7e95bb008aa67',1,'Fault']]],
-  ['startcanpins_17',['startCanPins',['../namespace_pins.html#a968b2daecc25fcad3765ef350df3b887',1,'Pins']]],
-  ['stopcanpins_18',['stopCanPins',['../namespace_pins.html#a12a6f448c7eea1740a38f0fbe73bbace',1,'Pins']]]
+  ['really_5fimportant_0',['really_important',['../namespacescript_1_1text.html#ae9026ac8fd7690f1d6121550086bb833',1,'script::text']]],
+  ['receivecommand_1',['receiveCommand',['../namespace_cmd.html#ae4cdc8f8cdead5a5563c40cf7d1558fa',1,'Cmd']]],
+  ['receiveserialvar_2',['receiveSerialVar',['../namespace_serial_var.html#a99b93dddc7326c4084b3b6ce0c1740a1',1,'SerialVar']]],
+  ['red_3',['red',['../namespacescript_1_1text.html#a1fc073b3d14a05f9ad68c4209167e211',1,'script::text']]],
+  ['rename_4',['rename',['../classscript_1_1progress__bar_1_1_progress_bar.html#a7f113a1d13f6610d597b54604da7203f',1,'script::progress_bar::ProgressBar']]],
+  ['reset_5',['reset',['../classscript_1_1progress__bar_1_1_progress_bar.html#a1efaaa4a4a4e1162e7c0b4a8d24d3156',1,'script::progress_bar::ProgressBar']]],
+  ['resetphysicalpins_6',['resetPhysicalPins',['../namespace_pins.html#aeb44a1100800f7a1984d725a5d1255f2',1,'Pins']]],
+  ['run_7',['run',['../struct_state_1_1_state__t.html#aa18bdb0aecf6af58f6ed52d4486cf7b7',1,'State::State_t::run()'],['../namespace_aero.html#a9a0abe410b4d1e6475bd3349461f68db',1,'Aero::run()'],['../namespace_front.html#a2deb9201e361171c69d361ce69047a15',1,'Front::run()']]]
 ];

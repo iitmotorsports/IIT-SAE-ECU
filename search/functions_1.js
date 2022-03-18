@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['begin_0',['begin',['../namespace_state.html#a1c6e60c84c0fb7c572adaf678fb6a56a',1,'State']]],
-  ['beginbeating_1',['beginBeating',['../namespace_heartbeat.html#aa0261c708b2a2636e941fb6969494556',1,'Heartbeat']]],
-  ['beginreceiving_2',['beginReceiving',['../namespace_heartbeat.html#a79e1c0291678d9bd08a4b418b6774159',1,'Heartbeat']]],
-  ['bin2cc_3',['bin2cc',['../bin2cc_8py.html#a41cce3a3bd01b4b00004bb16c6ee26c2',1,'bin2cc']]],
-  ['buffer_4',['Buffer',['../struct_canbus_1_1_buffer.html#aaf9e2c98af9cdee3e5c12643458a4156',1,'Canbus::Buffer::Buffer()'],['../struct_canbus_1_1_buffer.html#a55b601f63747077e60190568ee364e8d',1,'Canbus::Buffer::Buffer(uint8_t *buffer)'],['../struct_canbus_1_1_buffer.html#ad65cb31e2dd5930d3278241c96e67db5',1,'Canbus::Buffer::Buffer(const uint32_t address)']]]
+  ['addcallback_0',['addCallback',['../namespace_canbus.html#a884781debf9732f3e4676830d294e6bc',1,'Canbus::addCallback()'],['../namespace_heartbeat.html#a243a1a7989df814269de816d2893d35b',1,'Heartbeat::addCallback()']]],
+  ['anyfault_1',['anyFault',['../namespace_fault.html#a8d65de5d2b7a229e0d2c8d84ca9f64bd',1,'Fault']]],
+  ['available_5fram_2',['available_ram',['../namespacescript_1_1util.html#aaae4fff873c6f17f53113256de2de047',1,'script::util']]],
+  ['avgvar_3',['AvgVar',['../class_avg_var.html#a9af3304eb07f4a2fff88947086b5e002',1,'AvgVar']]],
+  ['avgvarref_4',['AvgVarRef',['../class_avg_var_ref.html#a5d2749e8dc6dadeaf176c5becca2e5c5',1,'AvgVarRef']]]
 ];

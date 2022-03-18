@@ -5,5 +5,6 @@ var searchData=
   ['regex_2',['regex',['../namespacescript_1_1regex.html',1,'script']]],
   ['serialvar_3',['SerialVar',['../namespace_serial_var.html',1,'']]],
   ['state_4',['State',['../namespace_state.html',1,'']]],
-  ['util_5',['util',['../namespacescript_1_1util.html',1,'script']]]
+  ['text_5',['text',['../namespacescript_1_1text.html',1,'script']]],
+  ['util_6',['util',['../namespacescript_1_1util.html',1,'script']]]
 ];

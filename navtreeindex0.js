@@ -236,8 +236,8 @@ var NAVTREEINDEX0 =
 "class_avg_var_ref.html":[5,0,7],
 "class_avg_var_ref.html#a5d2749e8dc6dadeaf176c5becca2e5c5":[5,0,7,0],
 "class_avg_var_ref.html#ad23286d2629a93dc46e4b5fa04067956":[5,0,7,1],
-"class_serial_var_1_1_serial_var.html":[4,0,14,0],
 "class_serial_var_1_1_serial_var.html":[5,0,3,0],
+"class_serial_var_1_1_serial_var.html":[4,0,14,0],
 "class_serial_var_1_1_serial_var.html#a5dcfd3c6e93ebc73d9c0997d520ba31a":[5,0,3,0,2],
 "class_serial_var_1_1_serial_var.html#a5dcfd3c6e93ebc73d9c0997d520ba31a":[4,0,14,0,2],
 "class_serial_var_1_1_serial_var.html#abb2574a4d86028b0e751f0c96aa412de":[5,0,3,0,0],
@@ -249,5 +249,5 @@ var NAVTREEINDEX0 =
 "classscript_1_1error_1_1_blank_t_a_g_exception.html":[4,0,13,0,0],
 "classscript_1_1error_1_1_malformed_log_call_exception.html":[5,0,2,0,1],
 "classscript_1_1error_1_1_malformed_log_call_exception.html":[4,0,13,0,1],
-"classscript_1_1error_1_1_malformed_t_a_g_definition_exception.html":[5,0,2,0,2]
+"classscript_1_1error_1_1_malformed_t_a_g_definition_exception.html":[4,0,13,0,2]
 };

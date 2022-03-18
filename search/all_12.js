@@ -4,5 +4,6 @@ var searchData=
   ['tagidmismatchexception_1',['TAGIDMismatchException',['../classscript_1_1error_1_1_t_a_g_i_d_mismatch_exception.html',1,'script::error']]],
   ['test_2ecpp_2',['Test.cpp',['../_test_8cpp.html',1,'']]],
   ['test_2eh_3',['Test.h',['../_test_8h.html',1,'']]],
-  ['textio_4',['TextIO',['../classscript_1_1progress__bar_1_1_progress_bar_1_1_text_i_o.html',1,'script::progress_bar::ProgressBar']]]
+  ['textio_4',['TextIO',['../classscript_1_1progress__bar_1_1_progress_bar_1_1_text_i_o.html',1,'script::progress_bar::ProgressBar']]],
+  ['touch_5',['touch',['../namespacescript_1_1util.html#aa633930e8d297945be7ce900fad6fe65',1,'script::util']]]
 ];

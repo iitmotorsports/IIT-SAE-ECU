@@ -18,8 +18,10 @@ var searchData=
   ['enablecanbussniffer_15',['enableCanbusSniffer',['../namespace_canbus.html#a6cc917014cdbf17f5f950ae802c03a8e',1,'Canbus']]],
   ['enableinterrupts_16',['enableInterrupts',['../namespace_canbus.html#ae66521cf8ac5e63c2e89d6b2f009b38a',1,'Canbus']]],
   ['enablemotorbeating_17',['enableMotorBeating',['../namespace_m_c.html#ab35b9e9f20dc50d81b40d6d5c298c1ea',1,'MC']]],
-  ['entermirrormode_18',['enterMirrorMode',['../namespace_mirror.html#a89a62e4b2e374ef95291177d525dcf8e',1,'Mirror']]],
-  ['error_5fto_5fstring_19',['error_to_string',['../namespacescript_1_1error.html#abf9df14f491eb96e3d8ed0a0a0eb33a3',1,'script::error']]],
-  ['euler_20',['Euler',['../_util_8h.html#a6c49ba1c50c86cfbf5661fa23db457b7',1,'Util.h']]],
-  ['exitmirrormode_21',['exitMirrorMode',['../namespace_mirror.html#a9cdbdcb79cef06a3b8b18151c440b262',1,'Mirror']]]
+  ['encode_5flog_5fmap_18',['encode_log_map',['../namespacescript_1_1util.html#ad537cc91beeaba0530f6bf4eace3980f',1,'script::util']]],
+  ['entermirrormode_19',['enterMirrorMode',['../namespace_mirror.html#a89a62e4b2e374ef95291177d525dcf8e',1,'Mirror']]],
+  ['error_20',['error',['../namespacescript_1_1text.html#a5b3819cff6a134ec237abc46adbc196f',1,'script::text']]],
+  ['error_5fto_5fstring_21',['error_to_string',['../namespacescript_1_1error.html#abf9df14f491eb96e3d8ed0a0a0eb33a3',1,'script::error']]],
+  ['euler_22',['Euler',['../_util_8h.html#a6c49ba1c50c86cfbf5661fa23db457b7',1,'Util.h']]],
+  ['exitmirrormode_23',['exitMirrorMode',['../namespace_mirror.html#a9cdbdcb79cef06a3b8b18151c440b262',1,'Mirror']]]
 ];
