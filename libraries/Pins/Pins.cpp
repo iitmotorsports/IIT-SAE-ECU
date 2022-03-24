@@ -4,9 +4,9 @@
  * @brief Pins source file
  * @version 0.1
  * @date 2020-11-11
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  */
 
 // @cond
@@ -180,25 +180,33 @@ static void _receiveAnalogCanbusPin(uint32_t address, volatile uint8_t *buffer) 
 }
 
 void debugPrint(void) {
-    digitalCanPinMessage_OUT.debugPrint();
-    for (size_t i = 0; i < analogCanMsgCount_OUT; i++) {
-        analogCanPinMessages_OUT[i].debugPrint();
-    }
-    digitalCanPinMessage_IN.debugPrint();
-    for (size_t i = 0; i < analogCanMsgCount_IN; i++) {
-        analogCanPinMessages_IN[i].debugPrint();
-    }
-    Serial.println("Printing CanPin Map");
-    for (auto i : CAN_GPIO_MAP_IN) {
-        Serial.print(i.first);
-        Serial.print(" ");
-        Serial.println(*i.second);
-    }
-    for (auto i : CAN_GPIO_MAP_OUT) {
-        Serial.print(i.first);
-        Serial.print(" ");
-        Serial.println(i.second);
-    }
+    // digitalCanPinMessage_OUT.debugPrint();
+    // for (size_t i = 0; i < analogCanMsgCount_OUT; i++) {
+    //     analogCanPinMessages_OUT[i].debugPrint();
+    // }
+    // digitalCanPinMessage_IN.debugPrint();
+    // for (size_t i = 0; i < analogCanMsgCount_IN; i++) {
+    //     analogCanPinMessages_IN[i].debugPrint();
+    // }
+    // Serial.println("Printing CanPin Map");
+    // for (auto i : CAN_GPIO_MAP_IN) {
+    //     Serial.print(i.first);
+    //     Serial.print(" : ");
+    //     Serial.println(*i.second);
+    // }
+    // for (auto i : CAN_GPIO_MAP_OUT) {
+    //     Serial.print(i.first);
+    //     Serial.print(" : ");
+    //     Serial.println(i.second);
+    // }
+    // Serial.println("Printing Pin Map");
+
+#define X(pin, Type, IO, init) \
+    Serial.print(pin);         \
+    Serial.print(" : ");       \
+    Serial.println(getPinValue(pin));
+    ECU_PINS
+#undef X
 }
 
 static void _pushCanbusPins(void) {
