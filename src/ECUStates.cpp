@@ -240,7 +240,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
 
     Log.d(ID, "Entering drive loop");
     while (true) {
-        if (controlDelay > 5) { // NOTE: Each data frame is 89 bits long thus at 250kbps the MC buses can handle a maximum of 2808 messages per second
+        if (controlDelay > 20) { // NOTE: Each data frame is 89 bits long thus at 250kbps the MC buses can handle a maximum of 2808 messages per second
             controlDelay = 0;
 
             static bool runReverse = false;
