@@ -108,7 +108,7 @@ void loadStateMap() {
 
 void updateCurrentState() {
     uint32_t currState = Pins::getCanPinValue(PINS_INTERNAL_STATE);
-    Log(ID, "Current State", currState, INTERVAL_MED_LOW_PRIORITY);
+    Log.p("state", "Current State", currState, INTERVAL_MED_LOW_PRIORITY);
     currentState = stateMap[currState]; // returns NULL if not found
 }
 

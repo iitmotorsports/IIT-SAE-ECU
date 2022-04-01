@@ -134,7 +134,7 @@ void run() {
             } else {
                 on = Pins::getCanPinValue(PINS_INTERNAL_START);
             }
-            Log(ID, "Start Light", on, true);
+            Log("start_light", "Start Light", on, true);
             Pins::setPinValue(PINS_FRONT_START_LIGHT, on);
 
             if (Fault::anyFault()) {
