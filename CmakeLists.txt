@@ -58,18 +58,23 @@ set(SOURCE_PATH ${CUSTOM_BUILD_PATH_PREFIX}src CACHE INTERNAL "")
 
 add_compile_definitions(_GNU_SOURCE USING_MAKEFILE LAYOUT_US_ENGLISH F_CPU=${TEENSY_CORE_SPEED} __${TEENSY_CORE_NAME}__)
 add_compile_definitions(ARDUINO=${ARDUINO_VER} TEENSYDUINO=${TEENSYDUINO_VER} ${TEENSY_ARDUINO} ${TEENSY_CORE} ${USB_SETTING} )
-add_compile_options(-c -O3 -g -Wall -ffunction-sections -fdata-sections -nostdlib -MMD) # -E
+add_compile_options(-O3 -CC -Wall -Wno-error=narrowing -MMD -nostdlib) # -E
+add_compile_options(-ffunction-sections -fdata-sections -fno-exceptions)
 add_compile_options(-mcpu=${TEENSY_CPU} -mfloat-abi=hard -mfpu=${FLOAT_HARDWARE} -mthumb)
-string(APPEND CMAKE_CXX_FLAGS "-std=gnu++17 -fno-exceptions -fpermissive -fno-rtti -fno-threadsafe-statics -felide-constructors -Wno-error=narrowing")
-string(APPEND CMAKE_C_FLAGS "")
+string(APPEND CMAKE_CXX_FLAGS "-felide-constructors -fpermissive -fno-rtti") # use add_compile_options instead?
 string(APPEND CMAKE_ASM_FLAGS "-x assembler-with-cpp")
-# TODO: Find if __rtc_localtime differs between cores; 1499566176, 1547051415, 1610195861? does it matter?
-string(APPEND LINKER_FLAGS "-O3 -Wl,--gc-sections,--relax,-defsym=__rtc_localtime=0 -lm -lstdc++ -l${LINKER_MATH} -mcpu=${TEENSY_CPU} -mfloat-abi=hard -mfpu=${FLOAT_HARDWARE} -mthumb")
+
+set(CMAKE_C_STANDARD 17)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED on)
 
 set(CORE_PATH "${TOOLCHAIN_ROOT_PATH}/teensy/avr/cores/${TEENSY_CORE}")
 string(TOLOWER ${TEENSY_CORE_NAME} TEENSY_CORE_NAME_LOWER)
 set(TEENSY_CORE_LD_SCRIPT "${CORE_PATH}/${TEENSY_CORE_NAME_LOWER}${LINKER_EXTENSION}.ld" CACHE INTERNAL "")
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${CMAKE_EXE_LINKER_PRINT_FLAGS} ${LINKER_FLAGS} -T${TEENSY_CORE_LD_SCRIPT}")
+
+# TODO: Find if __rtc_localtime differs between cores; 1499566176, 1547051415, 1610195861? does it matter?
+add_link_options(-Wl,--gc-sections,--relax,-defsym=__rtc_localtime=0 -lm -lstdc++ -l${LINKER_MATH} -T${TEENSY_CORE_LD_SCRIPT})
+add_link_options(-mcpu=${TEENSY_CPU} -mfloat-abi=hard -mfpu=${FLOAT_HARDWARE} -mthumb)
 
 if(EXISTS "../script.disable") # TODO: Ensure this file is always caught
     message(STATUS "Mapped logging disabled")
