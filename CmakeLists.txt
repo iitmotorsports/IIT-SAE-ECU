@@ -110,19 +110,19 @@ file(GLOB_RECURSE C_ASM_BUILD_FILES ${CORE_PATH}/*.S)
 file(GLOB_RECURSE C_C_BUILD_FILES ${CORE_PATH}/*.c)
 file(GLOB_RECURSE C_CXX_BUILD_FILES ${CORE_PATH}/*.cpp)
 
-add_library(core ${C_ASM_BUILD_FILES} ${C_C_BUILD_FILES} ${C_CXX_BUILD_FILES})
+add_library(core STATIC ${C_ASM_BUILD_FILES} ${C_C_BUILD_FILES} ${C_CXX_BUILD_FILES})
 target_include_directories(core PUBLIC ${CORE_PATH} ${CORE_INCLUDE})
 
 # Front Libraries
 
-add_library(libraries_Front ${L_ASM_BUILD_FILES} ${L_C_BUILD_FILES} ${L_CXX_BUILD_FILES})
+add_library(libraries_Front STATIC ${L_ASM_BUILD_FILES} ${L_C_BUILD_FILES} ${L_CXX_BUILD_FILES})
 target_include_directories(libraries_Front PUBLIC ${LIBRARY_PATH} ${LIBRARY_INCLUDE})
 target_link_libraries(libraries_Front core)
 target_compile_definitions(libraries_Front PRIVATE CONF_ECU_POSITION=FRONT_ECU)
 
 # Back Libraries
 
-add_library(libraries_Back ${L_ASM_BUILD_FILES} ${L_C_BUILD_FILES} ${L_CXX_BUILD_FILES})
+add_library(libraries_Back STATIC ${L_ASM_BUILD_FILES} ${L_C_BUILD_FILES} ${L_CXX_BUILD_FILES})
 target_include_directories(libraries_Back PUBLIC ${LIBRARY_PATH} ${LIBRARY_INCLUDE})
 target_link_libraries(libraries_Back core)
 target_compile_definitions(libraries_Back PRIVATE CONF_ECU_POSITION=BACK_ECU)
@@ -138,10 +138,8 @@ set_target_properties(${FRONT_BIN} PROPERTIES OUTPUT_NAME ${FRONT_BIN} SUFFIX ".
 
 set(FRONT_OUTPUT_FILE "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${FRONT_BIN}.hex" CACHE INTERNAL "")
 set(FRONT_TARGET_ELF "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${FRONT_BIN}.elf")
-add_custom_command(TARGET ${FRONT_BIN}
-    POST_BUILD
-    COMMAND echo.
-    COMMAND cd ${CMAKE_RUNTIME_OUTPUT_DIRECTORY} && ${CMAKE_SIZE_UTIL} "${FRONT_BIN}.elf"
+add_custom_command(TARGET ${FRONT_BIN} POST_BUILD
+    COMMAND ${CMAKE_SIZE_UTIL} "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${FRONT_BIN}.elf"
     COMMAND ${CMAKE_OBJCOPY} -O ihex -R .eeprom ${FRONT_TARGET_ELF} ${FRONT_OUTPUT_FILE}
     COMMAND echo.)
 set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_CLEAN_FILES "${FRONT_OUTPUT_FILE}")
@@ -157,10 +155,8 @@ set_target_properties(${BACK_BIN} PROPERTIES OUTPUT_NAME ${BACK_BIN} SUFFIX ".el
 
 set(BACK_OUTPUT_FILE "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${BACK_BIN}.hex" CACHE INTERNAL "")
 set(BACK_TARGET_ELF "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${BACK_BIN}.elf")
-add_custom_command(TARGET ${BACK_BIN}
-    POST_BUILD
-    COMMAND echo.
-    COMMAND cd ${CMAKE_RUNTIME_OUTPUT_DIRECTORY} && ${CMAKE_SIZE_UTIL} "${BACK_BIN}.elf"
+add_custom_command(TARGET ${BACK_BIN} POST_BUILD
+    COMMAND ${CMAKE_SIZE_UTIL} "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${BACK_BIN}.elf"
     COMMAND ${CMAKE_OBJCOPY} -O ihex -R .eeprom ${BACK_TARGET_ELF} ${BACK_OUTPUT_FILE}
     COMMAND echo.)
 set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_CLEAN_FILES "${BACK_OUTPUT_FILE}")
