@@ -40,6 +40,13 @@ private:
         m->runner();
     };
 
+    static bool setupModules(Module_t **modules, bitmapVal_t count);
+
+protected:
+    virtual void print();
+    virtual void setup() = 0;
+    virtual void runner(){};
+
 public:
     const bitmapVal_t count = 0;
     const Module_t **dependents = nullptr;
@@ -48,15 +55,10 @@ public:
     Module_t() : id(1 << s_id++){};
     Module_t(const Module_t **dependents, const bitmapVal_t count) : count(count), dependents(dependents), id(1 << s_id++){};
 
-    virtual void print();
-    virtual void setup() = 0;
-    virtual void runner(){};
-
     static void startModules(Module_t **modules, bitmapVal_t count);
     static void restartModules(Module_t **modules, bitmapVal_t count);
     static void stopModules(Module_t **modules, bitmapVal_t count);
     static void printModules(Module_t **modules, bitmapVal_t count);
-    static void setupModules(Module_t **modules, bitmapVal_t count);
 };
 
 } // namespace Module

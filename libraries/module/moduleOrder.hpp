@@ -14,10 +14,13 @@
 
 #include "module.hpp"
 
-#include <algorithm>
+#if CONF_LOGGING_ASCII_DEBUG
+#include "core_pins.h"
+#include "usb_serial.h"
+#endif
+
 #include <list>
 #include <map>
-#include <unordered_map>
 #include <vector>
 
 namespace Module {
@@ -59,10 +62,9 @@ bool finder(Node *n, std::map<bitmapVal_t, Node *> &nodesR, std::list<Node *> &e
     return false;
 }
 
-const Module_t **orderModules(Module_t *modules[], size_t totalCount) {
+bool orderModules(Module_t *modules[], size_t totalCount) {
     errC = 0;
     std::list<Node *> nodes;
-    // std::map<const Module_t *, bitmapVal_t> moduleMap;
 
     bitmapVal_t final = 0;
     bitmapVal_t mapped = 0;
@@ -70,20 +72,17 @@ const Module_t **orderModules(Module_t *modules[], size_t totalCount) {
     int c = 0;
     const Module_t *newModules[totalCount];
 
-    Log.d(ID, "mapping modules");
+    Log.d(ID, "Mapping Modules");
 
     // Map modules to nodes
     for (size_t i = 0; i < totalCount; i++) {
         const Module_t *mod = modules[i];
         Node *node = new Node(mod, mod->id);
-        // moduleMap[mod] = mod->id;
 
         size_t j = 0;
         const Module_t **dependents = modules[i]->dependents;
         for (; j < modules[i]->count; j++) {
             const Module_t *dep = dependents[j];
-            // dep->print();
-            // node->depList[j] |= &dep->id;
             Log.d(ID, "dependent", dep->id);
             node->dependencies |= dep->id;
             dep++;
@@ -125,7 +124,7 @@ const Module_t **orderModules(Module_t *modules[], size_t totalCount) {
 
         if (last_c == c) { // Circular dependency
 
-            Log.f(ID, "Circular Dependency");
+            Log.f(ID, "Circular dependency detected");
 
             std::list<Node *> error;
 
@@ -148,8 +147,19 @@ const Module_t **orderModules(Module_t *modules[], size_t totalCount) {
             for (Node *node : error) {
                 errorVec[errC++] = node->module;
             }
-
-            return errorVec;
+#if CONF_LOGGING_ASCII_DEBUG
+            for (bitmapVal_t i = 0; i < errC - 1; i++) {
+                Serial.print(errorVec[i]->id);
+                Serial.print(" <---> ");
+            }
+            Serial.println(errorVec[errC - 1]->id);
+#else
+            for (bitmapVal_t i = 0; i < errC - 1; i++) {
+                Log.e(ID, "Depends on vv", errorVec[i]->id);
+            }
+            Log.e(ID, "Circles back to start ^^", errorVec[errC - 1]->id);
+#endif
+            return false;
         }
 
         last_c = c;
@@ -161,10 +171,10 @@ const Module_t **orderModules(Module_t *modules[], size_t totalCount) {
         delete node;
     }
 
-    Log.d(ID, "module count", c);
+    Log.d(ID, "Modules Ordered", c);
 
     std::copy(newModules, newModules + totalCount, modules);
-    return errorVec;
+    return true;
 }
 
 } // namespace Module
