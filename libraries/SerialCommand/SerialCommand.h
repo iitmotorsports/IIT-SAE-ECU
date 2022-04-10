@@ -21,7 +21,7 @@
 #define __ECU_SERIALCOMMAND_H__
 
 #include "SerialCommand.def"
-#include "usb_serial.h"
+// #include "usb_serial.h"
 #include <stdint.h>
 #include <stdlib.h>
 

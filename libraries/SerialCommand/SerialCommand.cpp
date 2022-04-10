@@ -4,14 +4,16 @@
  * @brief SerialCommand source file
  * @version 0.1
  * @date 2021-03-19
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  */
 
 // @cond
 #include "SerialCommand.h"
 #include "Log.h"
+#include "core_pins.h"
+#include "usb_serial.h"
 
 namespace Cmd {
 
