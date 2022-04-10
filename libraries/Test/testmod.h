@@ -24,11 +24,6 @@ class b : public Module::Module_t {
 
     LOG_TAG ID = "b";
 
-    const Module_t *deps[1] = {&c};
-
-public:
-    b() : Module_t(deps, 1) {}
-
     void setup() {
         Log.i(ID, "Setup", id);
     }
@@ -49,11 +44,10 @@ class a : public Module::Module_t {
 
     LOG_TAG ID = "a";
 
+    volatile  bool state = false;
+
     static const int dCount = 2;
     const Module_t *deps[dCount] = {&b, &c};
-
-public:
-    a() : Module_t(deps, dCount) {}
 
     void setup() {
         Log.i(ID, "Setup", id);
@@ -61,14 +55,22 @@ public:
 
     void runner() {
         while (1) {
-            Log.i(ID, "running");
-            threads.delay(1000);
+            if ((state = !state)) {
+                Log.i(ID, "running");
+                threads.delay(500);
+            } else {
+                Log.i(ID, "running alt");
+                threads.delay(1000);
+            }
         }
     }
 
     void print() {
         Log.i(ID, "ID", id);
     }
+
+public:
+    a() : Module_t(deps, dCount) {}
 } a;
 
 Module::Module_t *modules[] = {&a, &b, &c};
