@@ -9,7 +9,7 @@ void testModules() {
 
     threads.addThread([](void *) {
         while (1) {
-            Log.d("test", "testing");
+            Log.d("test", "test");
             threads.delay(100);
         } }, 0, 2048);
 
