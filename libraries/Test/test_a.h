@@ -9,12 +9,11 @@ class a : public Module::Module_t {
 
     LOG_TAG ID = "a";
 
-    volatile bool state = false;
-
     void setup() {
         Log.i(ID, "Setup", id);
     }
 
+    volatile bool state = false;
     volatile int counter = 0;
     volatile bool led = false;
 
@@ -30,10 +29,6 @@ class a : public Module::Module_t {
                 threads.delay(1000);
             }
         }
-    }
-
-    void print() {
-        Log.i(ID, "ID", id);
     }
 
 } a(&b, &c, &d);

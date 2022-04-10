@@ -70,12 +70,12 @@ class c_t : public Module::Module_t {
 
     volatile int counter = 0;
 
-    void runner() {
-        while (1) {
-            Log.i(ID, "running", counter++);
-            threads.delay(1000);
-        }
-    }
+    // void runner() {
+    //     while (1) {
+    //         Log.i(ID, "running", counter++);
+    //         threads.delay(1000);
+    //     }
+    // }
 
     void print() {
         Log.i(ID, "ID", id);
