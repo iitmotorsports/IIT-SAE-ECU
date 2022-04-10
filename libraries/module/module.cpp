@@ -20,10 +20,18 @@ bitmapVal_t s_id;
 
 Module_t *allModules[maxModules];
 
+void Module_t::_runner(Module_t *m) {
+    Log.i(ID, "Starting thread", m->id);
+    m->runner();
+};
+
 void Module_t::start() {
     std::lock_guard<std::mutex> lock(vMux);
     if (thread == -1) {
         thread = threads.addThread((ThreadFunction)_runner, (void *)this, 4096);
+        if (thread == -1) {
+            Log.f(ID, "Failed to start thread", id);
+        }
     }
 }
 

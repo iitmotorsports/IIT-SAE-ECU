@@ -14,11 +14,6 @@
 
 #include "module.hpp"
 
-#if CONF_LOGGING_ASCII_DEBUG
-#include "core_pins.h"
-#include "usb_serial.h"
-#endif
-
 #include <list>
 #include <map>
 #include <vector>

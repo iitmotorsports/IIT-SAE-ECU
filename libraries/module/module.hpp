@@ -12,6 +12,8 @@
 #ifndef __MODULE_HPP__
 #define __MODULE_HPP__
 
+#include "stdlib.h"
+
 #include "Log.h"
 #include "TeensyThreads.h"
 
@@ -21,11 +23,11 @@ static LOG_TAG ID = "Module";
 
 using bitmapVal_t = unsigned short;
 
-static const size_t maxModules = sizeof(bitmapVal_t) * 8;
-
 class Module_t;
 
 extern bitmapVal_t s_id;
+
+static const size_t maxModules = sizeof(bitmapVal_t) * 8;
 
 extern Module_t *allModules[maxModules];
 
@@ -40,29 +42,38 @@ private:
     void start();
     void stop();
 
-    static void _runner(Module_t *m) {
-        Log.i(ID, "Starting Runner", m->id);
-        m->runner();
-    };
+    static void _runner(Module_t *m);
 
     static bool setupModules();
     static bool orderModules();
+    static void startModules();
+    static void stopModules();
+    static void restartModules();
+    static void printModules();
 
 protected:
     const bitmapVal_t id;
 
     virtual void print();
-    virtual void setup() = 0;
+    virtual void setup(){};
     virtual void runner(){};
 
 public:
     template <typename... T>
     Module_t(T *...mods) : count(sizeof...(mods)), dependents{static_cast<Module_t *>(mods)...}, id(1 << s_id++) { allModules[s_id - 1] = this; };
 
-    static void startModules();
-    static void restartModules();
-    static void stopModules();
-    static void printModules();
+    static void startManager() {
+        static LOG_TAG ID = "Module Manager";
+        Log.i(ID, "Starting");
+        startModules();
+        while (1) {
+#if CONF_LOGGING_ASCII_DEBUG
+            Serial.println(threads.threadsInfo());
+
+#endif
+            threads.delay(500);
+        }
+    }
 };
 
 } // namespace Module
