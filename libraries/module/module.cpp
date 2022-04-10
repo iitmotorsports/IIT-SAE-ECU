@@ -23,9 +23,7 @@ void Module_t::start() {
     //     return;
     // }
     if (thread == -1) {
-        // thread = new std::thread(_runner, this);
-        // thread->detach();
-        thread = threads.addThread((ThreadFunction)_runner, (void *)this, 2048);
+        thread = threads.addThread((ThreadFunction)_runner, (void *)this, 4096);
     }
 }
 
