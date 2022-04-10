@@ -46,7 +46,7 @@ public:
     const bitmapVal_t id;
 
     Module_t() : id(1 << s_id++){};
-    Module_t(const Module_t **dependents, const bitmapVal_t count) : id(1 << s_id++), dependents(dependents), count(count){};
+    Module_t(const Module_t **dependents, const bitmapVal_t count) : count(count), dependents(dependents), id(1 << s_id++){};
 
     virtual void print();
     virtual void setup() = 0;
