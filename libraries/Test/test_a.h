@@ -16,12 +16,15 @@ class a : public Module::Module_t {
     }
 
     volatile int counter = 0;
+    volatile bool led = false;
 
     void runner() {
         while (1) {
             if ((state = !state)) {
                 Log.i(ID, "running", counter++);
                 threads.delay(500);
+                Log.w(ID, "LED!");
+                Pins::setPinValue(PINS_BOTH_LED, (led = !led));
             } else {
                 Log.i(ID, "running alt");
                 threads.delay(1000);

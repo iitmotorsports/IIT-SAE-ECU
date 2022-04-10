@@ -3,12 +3,15 @@
 
 #include "module.hpp"
 
+#include "Pins.h"
+
 class e : public Module::Module_t {
 
     LOG_TAG ID = "e";
 
     void setup() {
         Log.i(ID, "Setup", id);
+        Pins::initialize();
     }
 
     volatile int counter = 0;
@@ -17,6 +20,8 @@ class e : public Module::Module_t {
         while (1) {
             Log.i(ID, "running", counter++);
             threads.delay(350);
+            Log.w(ID, "LED!");
+            Pins::setPinValue(PINS_BOTH_LED, counter % 2);
         }
     }
 
