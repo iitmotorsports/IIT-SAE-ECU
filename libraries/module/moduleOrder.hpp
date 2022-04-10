@@ -62,7 +62,7 @@ bool finder(Node *n, std::map<bitmapVal_t, Node *> &nodesR, std::list<Node *> &e
     return false;
 }
 
-bool orderModules(Module_t *modules[], size_t totalCount) {
+bool Module_t::orderModules() {
     errC = 0;
     std::list<Node *> nodes;
 
@@ -70,32 +70,33 @@ bool orderModules(Module_t *modules[], size_t totalCount) {
     bitmapVal_t mapped = 0;
 
     int c = 0;
-    const Module_t *newModules[totalCount];
+    const Module_t *newModules[s_id];
 
-    Log.d(ID, "Mapping Modules");
+    Log.d(ID, "Mapping module nodes");
 
     // Map modules to nodes
-    for (size_t i = 0; i < totalCount; i++) {
-        const Module_t *mod = modules[i];
+    for (size_t i = 0; i < s_id; i++) {
+        const Module_t *mod = allModules[i];
         Node *node = new Node(mod, mod->id);
 
-        size_t j = 0;
-        const Module_t **dependents = modules[i]->dependents;
-        for (; j < modules[i]->count; j++) {
-            const Module_t *dep = dependents[j];
-            Log.d(ID, "dependent", dep->id);
-            node->dependencies |= dep->id;
-            dep++;
-        }
+        bitmapVal_t dC = allModules[i]->count;
 
-        if (j == 0) { // mapped starts with 'core' nodes (no deps)
-            Log.d(ID, "core node", node->nID);
+        if (dC == 0) { // mapped starts with 'root' nodes (no deps)
+            Log.d(ID, "Root node", node->nID);
             node->marked = true;
             mapped |= node->nID;
             newModules[c++] = node->module;
             delete node;
         } else {
-            Log.d(ID, "final dependents", node->dependencies);
+            Log.d(ID, "Dependent node", node->nID);
+            const Module_t *const *dependents = allModules[i]->dependents;
+            for (size_t j = 0; j < allModules[i]->count; j++) {
+                const Module_t *dep = dependents[j];
+                Log.d(ID, " ├─ Dependency", dep->id);
+                node->dependencies |= dep->id;
+                dep++;
+            }
+            Log.d(ID, " └ Final dependencies", node->dependencies);
             nodes.push_back(node);
         }
         final |= node->nID;
@@ -171,9 +172,9 @@ bool orderModules(Module_t *modules[], size_t totalCount) {
         delete node;
     }
 
-    Log.d(ID, "Modules Ordered", c);
+    Log.d(ID, "Modules ordered", c);
 
-    std::copy(newModules, newModules + totalCount, modules);
+    std::copy(newModules, newModules + s_id, allModules);
     return true;
 }
 

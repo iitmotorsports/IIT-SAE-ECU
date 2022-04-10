@@ -19,18 +19,23 @@ namespace Module {
 
 static LOG_TAG ID = "Module";
 
-using bitmapVal_t = unsigned int;
+using bitmapVal_t = unsigned short;
 
 static const size_t maxModules = sizeof(bitmapVal_t) * 8;
 
 class Module_t;
 
-static bitmapVal_t s_id = 0;
+extern bitmapVal_t s_id;
+
+extern Module_t *allModules[maxModules];
 
 class Module_t {
 private:
     std::mutex vMux;
     int thread = -1;
+
+    const bitmapVal_t count = 0;
+    const Module_t *dependents[maxModules] = {0}; // IMPROVE: make flexible dependency array
 
     void start();
     void stop();
@@ -40,25 +45,24 @@ private:
         m->runner();
     };
 
-    static bool setupModules(Module_t **modules, bitmapVal_t count);
+    static bool setupModules();
+    static bool orderModules();
 
 protected:
+    const bitmapVal_t id;
+
     virtual void print();
     virtual void setup() = 0;
     virtual void runner(){};
 
 public:
-    const bitmapVal_t count = 0;
-    const Module_t **dependents = nullptr;
-    const bitmapVal_t id;
+    template <typename... T>
+    Module_t(T *...mods) : count(sizeof...(mods)), dependents{static_cast<Module_t *>(mods)...}, id(1 << s_id++) { allModules[s_id - 1] = this; };
 
-    Module_t() : id(1 << s_id++){};
-    Module_t(const Module_t **dependents, const bitmapVal_t count) : count(count), dependents(dependents), id(1 << s_id++){};
-
-    static void startModules(Module_t **modules, bitmapVal_t count);
-    static void restartModules(Module_t **modules, bitmapVal_t count);
-    static void stopModules(Module_t **modules, bitmapVal_t count);
-    static void printModules(Module_t **modules, bitmapVal_t count);
+    static void startModules();
+    static void restartModules();
+    static void stopModules();
+    static void printModules();
 };
 
 } // namespace Module
