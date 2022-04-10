@@ -19,7 +19,6 @@
 #include "ECUGlobalConfig.h"
 #include "Log.h"
 #include "LogConfig.def"
-#include "WProgram.h"
 #include "map"
 
 /**

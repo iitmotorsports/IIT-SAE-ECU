@@ -19,9 +19,15 @@
  */
 #define _LogPrebuildString(x) x
 
-#include "LogConfig.def"
 #include <stdint.h>
 #include <stdlib.h>
+
+#include "LogConfig.def"
+
+#if CONF_LOGGING_ASCII_DEBUG
+#include "core_pins.h"
+#include "usb_serial.h"
+#endif
 
 // IMPROVE: Add option to log to an sd card instead/as well
 
