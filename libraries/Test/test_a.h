@@ -5,13 +5,11 @@
 #include "test_b.h"
 
 class a : public Module::Module_t {
+    using Module::Module_t::Module_t;
 
     LOG_TAG ID = "a";
 
     volatile bool state = false;
-
-    static const int dCount = 2;
-    const Module_t *deps[dCount] = {&b, &c};
 
     void setup() {
         Log.i(ID, "Setup", id);
@@ -35,8 +33,6 @@ class a : public Module::Module_t {
         Log.i(ID, "ID", id);
     }
 
-public:
-    a() : Module_t(deps, dCount) {}
-} a;
+} a(&b, &c, &d);
 
 #endif // __TEST_A_H__

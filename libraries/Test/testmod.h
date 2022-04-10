@@ -1,11 +1,12 @@
 #include "module.hpp"
 
-#include "allmods.h"
+#include "test_a.h"
+#include "test_b.h"
 
 void testModules() {
     Log.i("Main", "Starting");
     threads.setSliceMillis(5);
-    Module::Module_t::startModules(modules, sizeof(modules) / sizeof(modules[0]));
+    Module::Module_t::startModules();
 
     threads.addThread([](void *) {
         while (1) {
@@ -16,6 +17,6 @@ void testModules() {
     while (1) {
         Log.i("Main", "Waiting");
         threads.delay(10000);
-        Module::Module_t::restartModules(modules, sizeof(modules) / sizeof(modules[0]));
+        Module::Module_t::restartModules();
     }
 }

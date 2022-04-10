@@ -25,7 +25,9 @@ class e : public Module::Module_t {
     }
 } e;
 
-class d : public Module::Module_t {
+class d_t : public Module::Module_t {
+
+    using Module::Module_t::Module_t;
 
     LOG_TAG ID = "d";
 
@@ -49,14 +51,11 @@ class d : public Module::Module_t {
         Log.i(ID, "ID", id);
     }
 
-    static const int dCount = 1;
-    const Module_t *deps[dCount] = {&e};
+} d(&e);
 
-public:
-    d() : Module_t(deps, dCount) {}
-} d;
+class c_t : public Module::Module_t {
 
-class c : public Module::Module_t {
+    using Module::Module_t::Module_t;
 
     LOG_TAG ID = "c";
 
@@ -77,12 +76,7 @@ class c : public Module::Module_t {
         Log.i(ID, "ID", id);
     }
 
-    static const int dCount = 1;
-    const Module_t *deps[dCount] = {&d};
-
-public:
-    c() : Module_t(deps, dCount) {}
-} c;
+} c(&d);
 
 class b_t : public Module::Module_t {
 
@@ -105,4 +99,6 @@ class b_t : public Module::Module_t {
         Log.i(ID, "ID", id);
     }
 } b;
+
+d_t d0(&b);
 #endif // __TEST_B_H__
