@@ -115,7 +115,7 @@ class FileEntry:  # IMPROVE: Make IDs persistent
             str: Reformatted line
         """
         uid = await self.get_new_id("", matches)  # Special strings are always LOG for simplicity
-        return line.replace(matches, str(uid))
+        return line.replace(matches, str(uid), 1)
 
     async def line_tag(self, line: str, matches: list[str]) -> str:
         """Format defined log tags
@@ -128,7 +128,7 @@ class FileEntry:  # IMPROVE: Make IDs persistent
             str: Reformatted line
         """
         tag = await self.get_new_tag(matches)
-        return line.replace(matches, str(tag))
+        return line.replace(matches, str(tag), 1)
 
     async def line_vsx(self, line: str, matches: list[str]) -> str:
         """Format 'variable string' type log calls
@@ -141,7 +141,7 @@ class FileEntry:  # IMPROVE: Make IDs persistent
             str: Reformatted line
         """
         uid = await self.get_new_id(matches[0], matches[2])
-        return line.replace(matches[2], str(uid))
+        return line.replace(matches[2], str(uid), 1)
 
     async def line_ssx(self, line: str, matches: list[str]) -> str:
         """Format 'string string' type log calls
@@ -164,7 +164,7 @@ class FileEntry:  # IMPROVE: Make IDs persistent
             tag = await self.get_new_tag(matches[1])
             uid = await self.get_new_id(matches[0], matches[2])
 
-        return line.replace(matches[1], str(tag)).replace(matches[2], str(uid))
+        return line.replace(matches[1], str(tag), 1).replace(matches[2], str(uid), 1)
 
     async def map_lines(self, function: Callable[[str], str]) -> None:
         """Map a function to each line of this file
