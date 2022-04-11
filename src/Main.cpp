@@ -1,4 +1,3 @@
-
 #include "ECU.h"
 #include "ECUGlobalConfig.h"
 #if CONF_ECU_POSITION == FRONT_ECU
