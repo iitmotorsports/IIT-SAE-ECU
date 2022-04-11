@@ -19,6 +19,7 @@ namespace Module {
 bitmapVal_t s_id;
 
 Module_t *allModules[maxModules];
+static bool modulesOrdered = false;
 
 void Module_t::_runner(Module_t *m) {
     Log.i(ID, "Starting thread", m->id);
@@ -27,7 +28,7 @@ void Module_t::_runner(Module_t *m) {
 
 void Module_t::start() {
     std::lock_guard<std::mutex> lock(vMux);
-    if (thread == -1) {
+    if (hasRunner && thread == -1) {
         thread = threads.addThread((ThreadFunction)_runner, (void *)this, 4096);
         if (thread == -1) {
             Log.f(ID, "Failed to start thread", id);
@@ -48,10 +49,8 @@ void Module_t::print() {
     Log.i(ID, "ID", id);
 }
 
-static bool modulesOrdered = false;
-
 bool Module_t::setupModules() {
-    if (modulesOrdered) // NOTE: Must be changed if modules are given ability to be created at runtime
+    if (modulesOrdered)
         return modulesOrdered;
     Log.i(ID, "Ordering modules", s_id);
     if (orderModules()) {

@@ -31,10 +31,11 @@ static const size_t maxModules = sizeof(bitmapVal_t) * 8;
 
 extern Module_t *allModules[maxModules];
 
-class Module_t {
+class Module_t { // NOTE: Modules are only meant to be created staticly
 private:
     std::mutex vMux;
     int thread = -1;
+    bool hasRunner = true; // TODO: set to false if no runner is overriden
 
     const bitmapVal_t count = 0;
     const Module_t *dependents[maxModules] = {0}; // IMPROVE: make flexible dependency array
@@ -55,7 +56,7 @@ protected:
     const bitmapVal_t id;
 
     virtual void print();
-    virtual void setup(){};
+    virtual void setup() = 0;
     virtual void runner(){};
 
 public:
@@ -69,7 +70,6 @@ public:
         while (1) {
 #if CONF_LOGGING_ASCII_DEBUG
             Serial.println(threads.threadsInfo());
-
 #endif
             threads.delay(500);
         }
