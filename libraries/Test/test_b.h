@@ -56,7 +56,7 @@ class d_t : public Module::Module_t {
         Log.i(ID, "ID", id);
     }
 
-} d(&e);
+} d("d", &e);
 
 class c_t : public Module::Module_t {
 
@@ -81,9 +81,11 @@ class c_t : public Module::Module_t {
         Log.i(ID, "ID", id);
     }
 
-} c(&d);
+} c("c", &d);
 
 class b_t : public Module::Module_t {
+
+    using Module::Module_t::Module_t;
 
     LOG_TAG ID = "b";
 
@@ -103,7 +105,7 @@ class b_t : public Module::Module_t {
     void print() {
         Log.i(ID, "ID", id);
     }
-} b;
+} b("b");
 
-d_t d0(&b);
+d_t d0("d0", &b);
 #endif // __TEST_B_H__

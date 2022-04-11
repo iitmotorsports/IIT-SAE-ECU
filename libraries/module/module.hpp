@@ -19,7 +19,7 @@
 
 namespace Module {
 
-static LOG_TAG ID = "Module";
+static const LOG_TAG ID = "Module";
 
 using bitmapVal_t = unsigned short;
 
@@ -35,6 +35,7 @@ class Module_t { // NOTE: Modules are only meant to be created staticly
 private:
     std::mutex vMux;
     int thread = -1;
+    int stackSize = 4096;  // Minimum is 2048
     bool hasRunner = true; // TODO: set to false if no runner is overriden
 
     const bitmapVal_t count = 0;
@@ -53,6 +54,7 @@ private:
     static void printModules();
 
 protected:
+    const char *name;
     const bitmapVal_t id;
 
     virtual void print();
@@ -60,12 +62,14 @@ protected:
     virtual void runner(){};
 
 public:
+    Module_t() : name("NIL_NAME"), id(1 << s_id++) { allModules[s_id - 1] = this; };
     template <typename... T>
-    Module_t(T *...mods) : count(sizeof...(mods)), dependents{static_cast<Module_t *>(mods)...}, id(1 << s_id++) { allModules[s_id - 1] = this; };
+    Module_t(const char *name, T *...mods) : count(sizeof...(mods)), dependents{static_cast<Module_t *>(mods)...}, name(name), id(1 << s_id++) { allModules[s_id - 1] = this; };
+    template <typename... T>
+    Module_t(const char *name, int stackSize, T *...mods) : stackSize(stackSize), count(sizeof...(mods)), dependents{static_cast<Module_t *>(mods)...}, name(name), id(1 << s_id++) { allModules[s_id - 1] = this; };
 
     static void startManager() {
-        static LOG_TAG ID = "Module Manager";
-        Log.i(ID, "Starting");
+        Log.i("Module Manager", "Starting");
         startModules();
         while (1) {
 #if CONF_LOGGING_ASCII_DEBUG

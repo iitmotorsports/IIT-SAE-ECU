@@ -5,9 +5,9 @@
 #include "test_b.h"
 
 class a : public Module::Module_t {
-    using Module::Module_t::Module_t;
-
     LOG_TAG ID = "a";
+
+    using Module::Module_t::Module_t;
 
     void setup() {
         Log.i(ID, "Setup", id);
@@ -31,6 +31,6 @@ class a : public Module::Module_t {
         }
     }
 
-} a(&b, &c, &d);
+} a("a", 512, &b, &c, &d);
 
 #endif // __TEST_A_H__
