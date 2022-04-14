@@ -73,9 +73,9 @@ public:
         startModules();
         while (1) {
 #if CONF_LOGGING_ASCII_DEBUG
-            Serial.println(threads.threadsInfo());
+            Serial.println(Thread::threadsInfo());
 #endif
-            threads.delay(500);
+            Thread::delay(500);
         }
     }
 };

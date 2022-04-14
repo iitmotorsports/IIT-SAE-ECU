@@ -29,7 +29,7 @@ void Module_t::_runner(Module_t *m) {
 void Module_t::start() {
     std::lock_guard<std::mutex> lock(vMux);
     if (hasRunner && thread == -1) {
-        thread = threads.addThread((ThreadFunction)_runner, (void *)this, 4096);
+        thread = Thread::addThread((Thread::ThreadFunction)_runner, (void *)this, 4096);
         if (thread == -1) {
             Log.f(ID, "Failed to start thread", id);
         }
@@ -39,8 +39,8 @@ void Module_t::start() {
 void Module_t::stop() {
     std::lock_guard<std::mutex> lock(vMux);
     if (thread != -1) {
-        threads.kill(thread);
-        threads.wait(thread);
+        Thread::kill(thread);
+        Thread::wait(thread);
         thread = -1;
     }
 }

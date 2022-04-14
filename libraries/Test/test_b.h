@@ -19,7 +19,7 @@ class e : public Module::Module_t {
     void runner() {
         while (1) {
             Log.i(ID, "running", counter++);
-            threads.delay(350);
+            Thread::delay(350);
             Log.w(ID, "LED!");
             Pins::setPinValue(PINS_BOTH_LED, counter % 2);
         }
@@ -45,7 +45,7 @@ class d_t : public Module::Module_t {
     void runner() {
         while (1) {
             Log.i(ID, "running", counter++);
-            threads.delay(1000);
+            Thread::delay(1000);
             if (counter == 20) {
                 counter /= 4;
             }
@@ -73,7 +73,7 @@ class c_t : public Module::Module_t {
     // void runner() {
     //     while (1) {
     //         Log.i(ID, "running", counter++);
-    //         threads.delay(1000);
+    //         Thread::delay(1000);
     //     }
     // }
 
@@ -98,7 +98,7 @@ class b_t : public Module::Module_t {
     void runner() {
         while (1) {
             Log.i(ID, "running", counter++);
-            threads.delay(1000);
+            Thread::delay(1000);
         }
     }
 
