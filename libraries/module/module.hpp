@@ -73,7 +73,7 @@ public:
         startModules();
         while (1) {
 #if CONF_LOGGING_ASCII_DEBUG
-            Serial.println(Thread::threadsInfo());
+            Serial.println(Thread::infoString());
 #endif
             Thread::delay(500);
         }
