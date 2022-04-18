@@ -1,12 +1,12 @@
 /**
  * @file PPHelp.h
- * @author IR 
+ * @author IR
  * @brief Compilation of various helpful preprocessor macros
  * @version 0.1
  * @date 2020-11-11
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  */
 // @cond
 #ifndef __ECU_PPHELP_H__
@@ -62,17 +62,105 @@
 
 #define pwrtwo(x) (1 << (x))
 
-// #define DEC(x) DEC_##x
-// #define DEC_1 0
-// #define DEC_2 1
-// #define DEC_3 2
-// #define DEC_4 3
-// #define DEC_5 4
-// #define DEC_6 5
-// #define DEC_7 6
-// #define DEC_8 7
-// #define DEC_9 8
-// #define DEC_10 9
+#define X_UTIL_SEQ_COUNTER_32 \
+    X(0)                      \
+    X(1)                      \
+    X(2)                      \
+    X(3)                      \
+    X(4)                      \
+    X(5)                      \
+    X(6)                      \
+    X(7)                      \
+    X(8)                      \
+    X(9)                      \
+    X(10)                     \
+    X(11)                     \
+    X(12)                     \
+    X(13)                     \
+    X(14)                     \
+    X(15)                     \
+    X(16)                     \
+    X(17)                     \
+    X(18)                     \
+    X(19)                     \
+    X(20)                     \
+    X(21)                     \
+    X(22)                     \
+    X(23)                     \
+    X(24)                     \
+    X(25)                     \
+    X(26)                     \
+    X(27)                     \
+    X(28)                     \
+    X(29)                     \
+    X(30)                     \
+    X(31)
+
+#define X_UTIL_SEQ_COUNTER_64 \
+    X(0)                      \
+    X(1)                      \
+    X(2)                      \
+    X(3)                      \
+    X(4)                      \
+    X(5)                      \
+    X(6)                      \
+    X(7)                      \
+    X(8)                      \
+    X(9)                      \
+    X(10)                     \
+    X(11)                     \
+    X(12)                     \
+    X(13)                     \
+    X(14)                     \
+    X(15)                     \
+    X(16)                     \
+    X(17)                     \
+    X(18)                     \
+    X(19)                     \
+    X(20)                     \
+    X(21)                     \
+    X(22)                     \
+    X(23)                     \
+    X(24)                     \
+    X(25)                     \
+    X(26)                     \
+    X(27)                     \
+    X(28)                     \
+    X(29)                     \
+    X(30)                     \
+    X(31)                     \
+    X(32)                     \
+    X(33)                     \
+    X(34)                     \
+    X(35)                     \
+    X(36)                     \
+    X(37)                     \
+    X(38)                     \
+    X(39)                     \
+    X(40)                     \
+    X(41)                     \
+    X(42)                     \
+    X(43)                     \
+    X(44)                     \
+    X(45)                     \
+    X(46)                     \
+    X(47)                     \
+    X(48)                     \
+    X(49)                     \
+    X(50)                     \
+    X(51)                     \
+    X(52)                     \
+    X(53)                     \
+    X(54)                     \
+    X(55)                     \
+    X(56)                     \
+    X(57)                     \
+    X(58)                     \
+    X(59)                     \
+    X(60)                     \
+    X(61)                     \
+    X(62)                     \
+    X(63)
 
 #endif // __ECU_PPHELP_H__
 

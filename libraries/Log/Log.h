@@ -20,6 +20,8 @@
 #define _LogPrebuildString(x) x
 
 #include "LogConfig.def"
+#include "PPHelp.h"
+#include <algorithm>
 #include <stdint.h>
 #include <stdlib.h>
 
@@ -61,6 +63,21 @@ uint32_t TAG2NUM(LOG_TAG tagValue);
  * @see Log.h for more info.
  */
 namespace Logging {
+
+union Number {
+    struct {
+#define X(n) uint32_t _##n : 1;
+        X_UTIL_SEQ_COUNTER_32
+#undef X
+    } bit;
+    uint8_t b[sizeof(uint32_t)];
+    uint32_t i;
+    float f;
+    Number(uint32_t i) : i{i} {}
+    Number(float i) : f{f} {}
+    Number(uint8_t b[sizeof(uint32_t)]) { std::copy(b, b + sizeof(uint32_t), this->b); }
+    Number(uint8_t b0, uint8_t b1, uint8_t b2, uint8_t b3) : b{b0, b1, b2, b3} {} // b[0] = b0;b[1] = b1;b[2] = b2;b[3] = b3;
+};
 
 /**
  * @brief Base class used to log things over serial
@@ -199,7 +216,7 @@ struct Log_t {
      * @param number Any number that should be printed next to the string
      * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
      */
-    void operator()(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate = false);
+    void operator()(LOG_TAG TAG, LOG_MSG message, const Number number, int mediate = false);
     /**
      * @brief Log a string and a variable number using a debug tag
      *
@@ -208,7 +225,7 @@ struct Log_t {
      * @param number Any number that should be printed next to the string
      * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
      */
-    void d(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate = false);
+    void d(LOG_TAG TAG, LOG_MSG message, const Number number, int mediate = false);
     /**
      * @brief Log a string and a variable number using an info tag
      *
@@ -217,7 +234,7 @@ struct Log_t {
      * @param number Any number that should be printed next to the string
      * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
      */
-    void i(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate = false);
+    void i(LOG_TAG TAG, LOG_MSG message, const Number number, int mediate = false);
     /**
      * @brief Log a string and a variable number using a warning tag
      *
@@ -226,7 +243,7 @@ struct Log_t {
      * @param number Any number that should be printed next to the string
      * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
      */
-    void w(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate = false);
+    void w(LOG_TAG TAG, LOG_MSG message, const Number number, int mediate = false);
     /**
      * @brief Log a string and a variable number using an error tag
      *
@@ -235,7 +252,7 @@ struct Log_t {
      * @param number Any number that should be printed next to the string
      * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
      */
-    void e(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate = false);
+    void e(LOG_TAG TAG, LOG_MSG message, const Number number, int mediate = false);
     /**
      * @brief Log a string and a variable number using a fatal tag
      *
@@ -244,7 +261,7 @@ struct Log_t {
      * @param number Any number that should be printed next to the string
      * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
      */
-    void f(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate = false);
+    void f(LOG_TAG TAG, LOG_MSG message, const Number number, int mediate = false);
     /**
      * @brief Post a monitored value
      *
@@ -253,7 +270,7 @@ struct Log_t {
      * @param number Integer number associated with this value
      * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
      */
-    void p(LOG_TAG name, LOG_MSG prettyName, const uint32_t number, int mediate = false);
+    void p(LOG_TAG name, LOG_MSG prettyName, const Number number, int mediate = false);
 };
 
 /**

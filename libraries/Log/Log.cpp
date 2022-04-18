@@ -224,44 +224,44 @@ void Log_t::f(LOG_TAG TAG, LOG_MSG message) {
 #endif
 }
 
-void Log_t::operator()(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate) {
+void Log_t::operator()(LOG_TAG TAG, LOG_MSG message, const Number number, int mediate) {
 #ifdef __LOGGER_NONE_PRINT
-    __logger_print_num(NONE, TAG, message, number, mediate);
+    __logger_print_num(NONE, TAG, message, number.i, mediate);
 #endif
 }
 
-void Log_t::d(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate) {
+void Log_t::d(LOG_TAG TAG, LOG_MSG message, const Number number, int mediate) {
 #ifdef __LOGGER_DEBUG_PRINT
-    __logger_print_num(DEBUG, TAG, message, number, mediate);
+    __logger_print_num(DEBUG, TAG, message, number.i, mediate);
 #endif
 }
 
-void Log_t::i(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate) {
+void Log_t::i(LOG_TAG TAG, LOG_MSG message, const Number number, int mediate) {
 #ifdef __LOGGER_INFO_PRINT
-    __logger_print_num(INFO, TAG, message, number, mediate);
+    __logger_print_num(INFO, TAG, message, number.i, mediate);
 #endif
 }
 
-void Log_t::w(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate) {
+void Log_t::w(LOG_TAG TAG, LOG_MSG message, const Number number, int mediate) {
 #ifdef __LOGGER_WARN_PRINT
-    __logger_print_num(WARN, TAG, message, number, mediate);
+    __logger_print_num(WARN, TAG, message, number.i, mediate);
 #endif
 }
 
-void Log_t::e(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate) {
+void Log_t::e(LOG_TAG TAG, LOG_MSG message, const Number number, int mediate) {
 #ifdef __LOGGER_ERROR_PRINT
-    __logger_print_num(ERROR, TAG, message, number, mediate);
+    __logger_print_num(ERROR, TAG, message, number.i, mediate);
 #endif
 }
 
-void Log_t::f(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate) {
+void Log_t::f(LOG_TAG TAG, LOG_MSG message, const Number number, int mediate) {
 #ifdef __LOGGER_FATAL_PRINT
-    __logger_print_num(FATAL, TAG, message, number, mediate);
+    __logger_print_num(FATAL, TAG, message, number.i, mediate);
 #endif
 }
 
-void Log_t::p(LOG_TAG name, LOG_MSG prettyName, const uint32_t number, int mediate) {
-    __logger_print_num(FATAL, name, prettyName, number, mediate);
+void Log_t::p(LOG_TAG name, LOG_MSG prettyName, const Number number, int mediate) {
+    __logger_print_num(FATAL, name, prettyName, number.i, mediate);
 }
 
 static void _receiveLogBuffer(uint32_t address, volatile uint8_t *buf) {
