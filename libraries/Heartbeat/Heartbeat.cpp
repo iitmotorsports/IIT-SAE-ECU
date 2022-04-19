@@ -4,9 +4,9 @@
  * @brief Heartbeat source file
  * @version 0.1
  * @date 2021-03-19
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  */
 //@cond
 
@@ -61,8 +61,8 @@ void beginReceiving() {
 
 int checkBeat() {
     if (lastBeat > (CONF_HEARTBEAT_INTERVAL_MILLIS) + CONF_HEARTBEAT_TIMEOUT_MILLI) {
-        Log.w(ID, "Heartbeat is taking too long", lastBeat);
-        Log.p("lag", "Heartbeat is taking too long", lastBeat);
+        Log.w(ID, "Heartbeat is taking too long", (Logging::Number)lastBeat);
+        Log.p("lag", "Heartbeat is taking too long", (Logging::Number)lastBeat);
         return 0;
     }
     return 1;

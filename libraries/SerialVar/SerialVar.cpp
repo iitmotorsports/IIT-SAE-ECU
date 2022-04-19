@@ -43,7 +43,7 @@ void updateVariable(size_t varID, const uint8_t *dataArr) {
         memcpy(variables[ID], dataArr, 8);                                          \
         Log.p("serial_var_response", "Data received for varID:", ID);               \
         Log.i(LOG_ID, "Int value:", *(int *)(variables + ID));                      \
-        Log.i(LOG_ID, "Approximate Float value:", (int)*(float *)(variables + ID)); \
+        Log.i(LOG_ID, "Approximate float value:", (int)*(float *)(variables + ID)); \
         break;
         SERIALVARS
 #undef X

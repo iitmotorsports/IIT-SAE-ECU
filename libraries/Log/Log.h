@@ -74,8 +74,8 @@ union Number {
     uint32_t i;
     float f;
     Number(uint32_t i) : i{i} {}
-    Number(float i) : f{f} {}
-    Number(uint8_t b[sizeof(uint32_t)]) { std::copy(b, b + sizeof(uint32_t), this->b); }
+    explicit Number(float i) : f{f} {}
+    explicit Number(uint8_t b[sizeof(uint32_t)]) { std::copy(b, b + sizeof(uint32_t), this->b); }
     Number(uint8_t b0, uint8_t b1, uint8_t b2, uint8_t b3) : b{b0, b1, b2, b3} {} // b[0] = b0;b[1] = b1;b[2] = b2;b[3] = b3;
 };
 
