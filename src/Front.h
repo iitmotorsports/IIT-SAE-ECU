@@ -35,6 +35,13 @@ void loadStateMap();
 void updateCurrentState();
 
 /**
+ * @brief Update the startlight
+ * 
+ * @param hasBeat Whether the heartbeat is working
+ */
+void updateStartLight(bool hasBeat);
+
+/**
  * @brief Enables the charging signal dependent on the current state
  */
 void setChargeSignal();

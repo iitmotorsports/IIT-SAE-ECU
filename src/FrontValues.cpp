@@ -112,6 +112,17 @@ void updateCurrentState() {
     currentState = stateMap[currState]; // returns NULL if not found
 }
 
+void updateStartLight(bool hasBeat) {
+    static bool on = false;
+    if (hasBeat && (currentState == &ECUStates::Idle_State)) {
+        on = !on;
+    } else {
+        on = Pins::getCanPinValue(PINS_INTERNAL_START);
+    }
+    Log("start_light", "Start Light", on, true);
+    Pins::setPinValue(PINS_FRONT_START_LIGHT, on);
+}
+
 void setChargeSignal() {
     Pins::setInternalValue(PINS_INTERNAL_CHARGE_SIGNAL, currentState == &ECUStates::Idle_State);
 }
