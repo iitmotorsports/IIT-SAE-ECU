@@ -32,7 +32,8 @@ var namespaces_dup =
       [ "lowPriorityValues", "namespace_front.html#a395b037caf51687bebe41b2b7f88a64a", null ],
       [ "run", "namespace_front.html#a2deb9201e361171c69d361ce69047a15", null ],
       [ "setChargeSignal", "namespace_front.html#a08cef7e1e54e13a82a0a2aa6e8ce126d", null ],
-      [ "updateCurrentState", "namespace_front.html#af9fc069abc6cef27915cdee9bbe08acb", null ]
+      [ "updateCurrentState", "namespace_front.html#af9fc069abc6cef27915cdee9bbe08acb", null ],
+      [ "updateStartLight", "namespace_front.html#ad6490ad0ee52b0eb06cca129bab0f022", null ]
     ] ],
     [ "Heartbeat", "namespace_heartbeat.html", [
       [ "beatFunc", "namespace_heartbeat.html#a90dd9f85dfc6bf41682af19b8ecd0c8d", null ],

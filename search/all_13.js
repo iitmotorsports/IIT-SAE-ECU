@@ -4,7 +4,8 @@ var searchData=
   ['unload_1',['unload',['../classvs__conf_1_1_settings.html#a8db136c24032859e4772861d568f9b44',1,'vs_conf::Settings']]],
   ['update_2',['update',['../namespace_canbus.html#a386cdddf9229348b8108640075b5c3e4',1,'Canbus::update()'],['../namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35',1,'Pins::update()']]],
   ['updatecurrentstate_3',['updateCurrentState',['../namespace_front.html#af9fc069abc6cef27915cdee9bbe08acb',1,'Front']]],
-  ['uploadpaste_2epy_4',['uploadPaste.py',['../upload_paste_8py.html',1,'']]],
-  ['util_2ecpp_5',['Util.cpp',['../_util_8cpp.html',1,'']]],
-  ['util_2eh_6',['Util.h',['../_util_8h.html',1,'']]]
+  ['updatestartlight_4',['updateStartLight',['../namespace_front.html#ad6490ad0ee52b0eb06cca129bab0f022',1,'Front']]],
+  ['uploadpaste_2epy_5',['uploadPaste.py',['../upload_paste_8py.html',1,'']]],
+  ['util_2ecpp_6',['Util.cpp',['../_util_8cpp.html',1,'']]],
+  ['util_2eh_7',['Util.h',['../_util_8h.html',1,'']]]
 ];

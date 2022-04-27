@@ -107,7 +107,7 @@ var NAVTREEINDEX =
 [
 "____init_____8py_source.html",
 "classscript_1_1error_1_1_malformed_log_call_exception.html",
-"namespacescript_1_1util.html#a3b9d1940e77274308f3d947498e4d6a8"
+"namespacescript_1_1util.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
