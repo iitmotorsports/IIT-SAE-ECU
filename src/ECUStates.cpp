@@ -6,6 +6,7 @@
 #include "Heartbeat.h"
 #include "Log.h"
 #include "Mirror.h"
+#include "MotorControl.def"
 #include "MotorControl.h"
 #include "Util.h"
 
@@ -94,7 +95,7 @@ bool ECUStates::PreCharge_State::voltageCheck() {
     int16_t MC0Volt = MC0_VOLT_Buffer.getShort(0) / 10; // Bytes 0-1: DC BUS MC Voltage
     int16_t MC1Volt = MC1_VOLT_Buffer.getShort(0) / 10; // Bytes 0-1: DC BUS MC Voltage
 
-    return 0.62 * BMSVolt <= (MC0Volt + MC1Volt) / 2;
+    return 0.65 * BMSVolt <= (MC0Volt + MC1Volt) / 2;
 }
 
 State::State_t *ECUStates::PreCharge_State::run(void) { // NOTE: Low = Closed, High = Open
@@ -218,6 +219,7 @@ void ECUStates::Driving_Mode_State::carCooling(bool enable) { // NOTE: Cooling v
 
 State::State_t *ECUStates::Driving_Mode_State::DrivingModeFault(void) {
     Log.i(ID, "Fault happened in driving state");
+    Pins::setInternalValue(PINS_INTERNAL_START, false);
     carCooling(false);
     Log.i(ID, "Starting MC heartbeat");
     MC::enableMotorBeating(true);
@@ -237,6 +239,8 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
 
     Log.d(ID, "Sending Fault reset to MCs complete");
     MC::clearFaults(); // Clear fault if any
+
+    Pins::setInternalValue(PINS_INTERNAL_START, true);
 
     Log.d(ID, "Entering drive loop");
     while (true) {
@@ -264,7 +268,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             int breakVal = Pins::getCanPinValue(PINS_FRONT_BRAKE);
             int steerVal = Pins::getCanPinValue(PINS_FRONT_STEER);
 
-            Pins::setPinValue(PINS_BACK_BRAKE_LIGHT, PINS_ANALOG_HIGH * ((float)breakVal / PINS_ANALOG_MAX > 0.04f));
+            Pins::setPinValue(PINS_BACK_BRAKE_LIGHT, PINS_ANALOG_HIGH * (breakVal > CONF_BRAKE_MIN));
 
             int pedal0 = Pins::getCanPinValue(PINS_FRONT_PEDAL0);
             int pedal1 = Pins::getCanPinValue(PINS_FRONT_PEDAL1);
@@ -302,6 +306,8 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             break;
         }
     }
+
+    Pins::setInternalValue(PINS_INTERNAL_START, false);
 
     Log.i(ID, "Starting MC heartbeat");
     MC::enableMotorBeating(true);
