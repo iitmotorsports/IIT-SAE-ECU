@@ -4,9 +4,9 @@
  * @brief MotorControl Source File
  * @version 0.1
  * @date 2021-05-04
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  */
 
 // @cond
@@ -72,8 +72,8 @@ int32_t motorSpeed(int motor) {
 }
 
 static void normalizeInput(double *pedal, double *brake, double *steer) { // TODO: GET THIS OUT OF HERE! Does not belong here
-    pAccum = EMAvg(pAccum, cMap(*pedal, PEDAL_MIN, PEDAL_MAX, 0.0, NORM_VAL), 32);
-    bAccum = EMAvg(bAccum, cMap(*brake, BRAKE_MIN, BRAKE_MAX, 0.0, NORM_VAL), 16);
+    pAccum = EMAvg(pAccum, cMap(*pedal, PEDAL_MIN, PEDAL_MAX, 0.0, NORM_VAL), 8);
+    bAccum = EMAvg(bAccum, cMap(*brake, BRAKE_MIN, BRAKE_MAX, 0.0, NORM_VAL), 8);
     sAccum = EMAvg(sAccum, cMap(*steer, STEER_MIN, STEER_MAX, 0.0, NORM_VAL), 8);
 
     *pedal = pAccum;
@@ -91,14 +91,18 @@ static void torqueVector(int pedal, int brake, int steer) {
 
     Log.d(ID, "Aggression Val x1000:", TVAggression * 1000, true);
 
+    // No TV
+    motorTorque[0] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
+    motorTorque[1] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
+
     // TV V1
-    if (_steer > 0) {
-        motorTorque[0] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
-        motorTorque[1] = motorTorque[0] * clamp(pow(cos(TVAggression * _steer), 5), 0, 1);
-    } else {
-        motorTorque[1] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
-        motorTorque[0] = motorTorque[1] * clamp(pow(cos(TVAggression * _steer), 5), 0, 1);
-    }
+    // if (_steer > 0) {
+    //     motorTorque[0] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
+    //     motorTorque[1] = motorTorque[0] * clamp(pow(cos(TVAggression * _steer), 5), 0, 1);
+    // } else {
+    //     motorTorque[1] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
+    //     motorTorque[0] = motorTorque[1] * clamp(pow(cos(TVAggression * _steer), 5), 0, 1);
+    // }
 
     // motorTorque[0] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
     // motorTorque[1] = motorTorque[0];
@@ -167,6 +171,14 @@ int getLastTorqueValue(bool mc0) {
 
 int getLastPedalValue() {
     return pAccum;
+}
+
+int getLastBrakeValue() {
+    return (int)bAccum;
+}
+
+int getLastSteerValue() {
+    return cMap(sAccum, 0.0, NORM_VAL, -PI / 9, PI / 9);
 }
 
 void setTorque(int pedal, int brake, int steer) {

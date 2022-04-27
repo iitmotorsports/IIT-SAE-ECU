@@ -103,6 +103,20 @@ int getLastTorqueValue(bool mc0);
 int getLastPedalValue(void);
 
 /**
+ * @brief Get the last brake value that was internally used
+ * 
+ * @return int the last brake value that was internally used
+ */
+int getLastBrakeValue();
+
+/**
+ * @brief Get the last steer value that was internally used
+ * 
+ * @return int the last steer value that was internally used
+ */
+int getLastSteerValue();
+
+/**
  * @brief Get the avg motorspeed
  * 
  * @param motor 0 or 1 for either motor or nothing for 
