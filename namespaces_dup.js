@@ -45,7 +45,9 @@ var namespaces_dup =
     [ "MC", "namespace_m_c.html", [
       [ "clearFaults", "namespace_m_c.html#add4fdfcad6990dec728c2eeadaca45e1", null ],
       [ "enableMotorBeating", "namespace_m_c.html#ab35b9e9f20dc50d81b40d6d5c298c1ea", null ],
+      [ "getLastBrakeValue", "namespace_m_c.html#a2e68b409b3dd0b8ea533fd86ecaca566", null ],
       [ "getLastPedalValue", "namespace_m_c.html#aa9da69c9779b67257edf09a369b5aa67", null ],
+      [ "getLastSteerValue", "namespace_m_c.html#a28dbe402d94c1bf98773e2793e177746", null ],
       [ "getLastTorqueValue", "namespace_m_c.html#a7eb7ad86c3e3b098534aefc013ae0741", null ],
       [ "isForward", "namespace_m_c.html#a72e26cfa1ee8fde45958f0df9d6e29f7", null ],
       [ "motorSpeed", "namespace_m_c.html#aae42b2e326588775e5a817d7dfc2b55e", null ],
