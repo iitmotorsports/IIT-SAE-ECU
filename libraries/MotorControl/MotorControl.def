@@ -43,12 +43,12 @@
 /**
  * @brief The brake input range to map as doubles
  */
-#define CONF_BRAKE_MIN 0.0
-#define CONF_BRAKE_MAX (double)PINS_ANALOG_HIGH
+#define CONF_BRAKE_MIN 480.0
+#define CONF_BRAKE_MAX 900.0
 
 /**
  * @brief The steering input range to map as doubles
  */
-#define CONF_STEER_MIN 2500.0
-#define CONF_STEER_MAX 3500.0
+#define CONF_STEER_MIN 1725.0
+#define CONF_STEER_MAX 3610.0
 #endif // __ECU_MOTORCONTROL_DEF__
