@@ -4,24 +4,24 @@
  * @brief Pin Configuration
  * @version 0.1
  * @date 2020-11-11
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  * This config file is used configure the Pin module.
- * 
+ *
  * It is mostly used to define pins and CanPins.
- * 
+ *
  * Because, at the moment, there are two ECUs on the car, the pin definitions are split in half by an if statement, one case is for the back ECU, the other for the front.
- * 
+ *
  * Only the back ECU has documentation, as the process for defining pins is the same on both ECUs.
- * 
+ *
  * @see Pins.h for more info on how pins work
  * @see ECU_PINS for defining pins
  * @see PINS_CANBUS_ANALOG_IN for incoming Analog CanPins
  * @see PINS_CANBUS_ANALOG_OUT for outgoing Analog CanPins
  * @see PINS_CANBUS_DIGITAL_IN for incoming Digital CanPins
  * @see PINS_CANBUS_DIGITAL_OUT for outgoing Digital CanPins
- * 
+ *
  */
 
 #ifndef __ECU_PINCONFIG_DEF__
@@ -118,15 +118,15 @@
  * ``` C
  * X(GPIO, ANALOG/DIGITAL, INPUT/OUTPUT, INITAL_STATE) \
  * ```
- * 
+ *
  * `INITAL_STATE` is the value a pin should be set to on startup
- * 
+ *
  * It can be a number or `NIL`, meaning that we do not care what it's starting output value is
- * 
+ *
  * All `INPUT` pins should have this set to `NIL`
- * 
+ *
  * Only the last entry should NOT have a '\'
- * 
+ *
  * @see The warning under @ref XMacros_Defining in X Macros for more info on Defining X Macros
  */
 #define ECU_PINS                                      \
@@ -134,7 +134,7 @@
     X(PINS_BACK_SERVO_OFF, DIGITAL, OUTPUT, 0)        \
     X(PINS_BACK_TSV_SIGNAL, DIGITAL, INPUT, NIL)      \
     X(PINS_BACK_AIR2, ANALOG, OUTPUT, 0)              \
-    X(PINS_BACK_CHARGING_RELAY, ANALOG, OUTPUT, 0)    \
+    X(PINS_BACK_CHARGING_RELAY, DIGITAL, OUTPUT, 0)   \
     X(PINS_BACK_SOUND_DRIVER, ANALOG, OUTPUT, 0)      \
     X(PINS_BACK_BRAKE_LIGHT, ANALOG, OUTPUT, 0)       \
     X(PINS_BACK_SERVO1_PWM, ANALOG, OUTPUT, NIL)      \
@@ -163,9 +163,9 @@
  * ``` C
  * X(Address, Pin) \
  * ```
- * 
+ *
  * Only the last entry should NOT have a '\'
- * 
+ *
  * @see The warning under @ref XMacros_Defining in X Macros for more info on Defining X Macros
  * @see CanBusAddresses.def for more info on defining new addresses
  */
@@ -195,9 +195,9 @@
  * ``` C
  * X(Address, Pin) \
  * ```
- * 
+ *
  * Only the last entry should NOT have a '\'
- * 
+ *
  * @see The warning under @ref XMacros_Defining in X Macros for more info on Defining X Macros
  * @see CanBusAddresses.def for more info on defining new addresses
  */
