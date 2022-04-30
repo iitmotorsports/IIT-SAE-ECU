@@ -19,11 +19,13 @@
  */
 #define _LogPrebuildString(x) x
 
-#include "LogConfig.def"
-#include "PPHelp.h"
 #include <algorithm>
 #include <stdint.h>
 #include <stdlib.h>
+
+#include "LogConfig.def"
+#include "PPHelp.h"
+#include "types.h"
 
 // IMPROVE: Add option to log to an sd card instead/as well
 
@@ -262,15 +264,22 @@ struct Log_t {
      * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
      */
     void f(LOG_TAG TAG, LOG_MSG message, const Number number, int mediate = false);
+
+#if CONF_LOGGING_MAPPED_MODE > 0
+    void p(LOG_TAG TAG, LOG_MSG message, const Number number, int mediate = false);
+#else
     /**
      * @brief Post a monitored value
      *
-     * @param name Code safe name of this value
-     * @param prettyName Pretty, human readable name of this value
+     * @param TAG Variable of type `LOG_TAG`
+     * @param symbol The unique symbol for this posted value
+     * @param message Inline string that should be printed
      * @param number Integer number associated with this value
+     * @param types The list of types that this post contains
      * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
      */
-    void p(LOG_TAG name, LOG_MSG prettyName, const Number number, int mediate = false);
+    void p(LOG_TAG TAG, LOG_TAG symbol, LOG_MSG message, const Number number, std::initializer_list<const char *> types, int mediate = false);
+#endif
 };
 
 /**

@@ -44,12 +44,14 @@ Log.f(ident, "schum", x);
 Log.f(ident, "killa", 0);
 Log.f("Heyo", "zipbob", 0);
 
-Log.p("staet Logging   State  ", "amogud"); // State
-Log.p(ident, "gooall");
-Log.p("   tag  s", "freesh", x);
-Log.p(ident, "schum", x);
-Log.p(ident, "killa", 0);
-Log.p("Heyo   ", "zipbob", 0);
+Log.p(V, "Str", "Str", Var  )  ;
+Log.p(  Var  , "S,,\"tr", "St,,r", Var  )  ;
+Log.p( "V,a\"r State"  , "St,r", "S,tr", Var  )  ; // State
+Log.p( "V,ar " , "St,r", "S", a , {"Str ",g::gd});
+Log.p( "V,a\"r " , "Str", "St\"r", Var , {g::gd, "Str "});
+Log.p( ident , "Str", "St\"r", Var , {g::gd, 46});
+Log.p( "Var " , "S", "Str", Var , {}, 56);
+Log.p("V  State", "Str", "Str", Var, {"Str ", Logging::INT}, Var); // State
 
 // FAIL ------
 
@@ -80,6 +82,11 @@ Log.f("   ", "zipbob", 0);
 Log.p("   ", "amogud");
 Log.p("", "freesh", x);
 Log.p("   ", "zipbob", 0);
+
+Log.p( " " , "St,r", "S", a , {"Str ",g::gd});
+Log.p( "" , "Str", "St\"r", Var , {g::gd, "Str "});
+Log.p( "   " , "S", "Str", Var);
+Log.p("     ", "Str", "Str", Var, {"Str ", Logging::INT}, Var);
 
 Log("tagger", msgID);
 Log(ident, msgID);
@@ -123,12 +130,14 @@ Log.f(ident, msgID, x);
 Log.f(ident, msgID, 0);
 Log.f("Heyo", msgID, 0);
 
-Log.p("tagger", msgID);
-Log.p(ident, msgID);
-Log.p("tags", msgID, x);
-Log.p(ident, msgID, x);
-Log.p(ident, msgID, 0);
-Log.p("Heyo", msgID, 0);
+Log.p(V, "Str", msgID, Var  )  ;
+Log.p(  Var  , "S,,\"tr", msgID, Var  )  ;
+Log.p( "V,a\"r State"  , "St,r", msgID, Var  )  ; // State
+Log.p( "V,ar " , "St,r", msgID, a , {"Str ",g::gd});
+Log.p( "V,a\"r " , "Str", msgID, Var , {g::gd, "Str "});
+Log.p( ident , "Str", msgID, Var , {g::gd, 46});
+Log.p( "Var " , "S", msgID, Var , {}, 56);
+Log.p("V  State", "Str", msgID, Var, {"Str ", Logging::INT}, Var); // State
 
 Log("", msgID);
 Log(ident, msgID);
@@ -172,12 +181,11 @@ Log.f(ident, msgID, x);
 Log.f(ident, msgID, 0);
 Log.f("   ", msgID, 0);
 
-Log.p("", msgID);
-Log.p(ident, msgID);
-Log.p("   ", msgID, x);
-Log.p(ident, msgID, x);
-Log.p(ident, msgID, 0);
-Log.p("", msgID, 0);
+Log.p( "Var " , "S", "Str", Var , gsfd, 56);
+Log.p( Var , "Str", "Str", Var, GFJK);
+Log.p( "Var " , "Str", "Str", Var, GFJK);
+Log.p( "V,a\"r " , "Str", "St\"r", Var , g::gd);
+Log.p( "V,a\"r " , "Str", "St\"r", Var , gd);
 
 /*   TAGS   */
 

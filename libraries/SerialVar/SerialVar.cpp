@@ -4,9 +4,9 @@
  * @brief SerialVar Source File
  * @version 0.1
  * @date 2021-11-06
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  */
 
 // @cond
@@ -41,7 +41,7 @@ void updateVariable(size_t varID, const uint8_t *dataArr) {
 #define X(type, ID)                                                                 \
     case ID:                                                                        \
         memcpy(variables[ID], dataArr, 8);                                          \
-        Log.p("serial_var_response", "Data received for varID:", ID);               \
+        Log.p(LOG_ID, "serial_var_response", "Data received for varID:", ID);       \
         Log.i(LOG_ID, "Int value:", *(int *)(variables + ID));                      \
         Log.i(LOG_ID, "Approximate float value:", (int)*(float *)(variables + ID)); \
         break;

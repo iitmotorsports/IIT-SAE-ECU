@@ -260,8 +260,13 @@ void Log_t::f(LOG_TAG TAG, LOG_MSG message, const Number number, int mediate) {
 #endif
 }
 
-void Log_t::p(LOG_TAG name, LOG_MSG prettyName, const Number number, int mediate) {
-    __logger_print_num(FATAL, name, prettyName, number.i, mediate);
+#if CONF_LOGGING_MAPPED_MODE > 0
+void p(LOG_TAG TAG, LOG_MSG message, const Number number, int mediate = false)
+#else
+void p(LOG_TAG TAG, LOG_TAG symbol, LOG_MSG message, const Number number, std::initializer_list<const char *> types, int mediate = false)
+#endif
+{
+    __logger_print_num(FATAL, TAG, message, number.i, mediate);
 }
 
 static void _receiveLogBuffer(uint32_t address, volatile uint8_t *buf) {
