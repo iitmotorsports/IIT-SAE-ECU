@@ -29,6 +29,8 @@ static void updateFaultLights() {
         bms_l = bms;
         imd_l = imd;
     }
+    int breakVal = Pins::getCanPinValue(PINS_FRONT_BRAKE);
+    Pins::setPinValue(PINS_BACK_BRAKE_LIGHT, PINS_ANALOG_HIGH * (breakVal > (CONF_BRAKE_MIN + 32)));
 }
 
 State::State_t *ECUStates::Initialize_State::run(void) {
@@ -268,19 +270,15 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             int breakVal = Pins::getCanPinValue(PINS_FRONT_BRAKE);
             int steerVal = Pins::getCanPinValue(PINS_FRONT_STEER);
 
-            Pins::setPinValue(PINS_BACK_BRAKE_LIGHT, PINS_ANALOG_HIGH * (breakVal > CONF_BRAKE_MIN));
-
             int pedal0 = Pins::getCanPinValue(PINS_FRONT_PEDAL0);
             int pedal1 = Pins::getCanPinValue(PINS_FRONT_PEDAL1);
 
             int pAVG = (pedal0 + pedal1) / 2;
 
             // NOTE: pedal has a threshold value
-            if (pAVG >= 100 && (float)abs(pedal1 - pedal0) / PINS_ANALOG_HIGH > 0.1f) {
+            if (pAVG >= 100 && (float)abs(pedal1 - pedal0) / PINS_ANALOG_HIGH > 0.2f) {
                 Log.e(ID, "Pedal value offset > 10%");
-#if ECU_TESTING != BACK_ECU
                 return DrivingModeFault();
-#endif
             }
 
             // if (pAVG >= 200) {
