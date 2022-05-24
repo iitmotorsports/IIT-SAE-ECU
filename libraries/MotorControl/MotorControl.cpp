@@ -56,11 +56,14 @@ static void beatFunc(void) {
     }
 }
 
+constexpr float c = 2 * 3.1415926536 * 9;
+
 int32_t motorSpeed(int motor) {
-    int16_t MC_Rpm_Val_0 = -MC0_RPM_Buffer.getShort(2);                                // Bytes 2-3 : Angular Velocity // NOTE: motor is negative?
-    int16_t MC_Rpm_Val_1 = MC1_RPM_Buffer.getShort(2);                                 // Bytes 2-3 : Angular Velocity
-    float MC_Spd_Val_0 = MC_Rpm_Val_0 * 2 * 3.1415926536 / 60 * CONF_CAR_WHEEL_RADIUS; // (RPM -> Rad/s) * Radius
-    float MC_Spd_Val_1 = MC_Rpm_Val_1 * 2 * 3.1415926536 / 60 * CONF_CAR_WHEEL_RADIUS;
+    int16_t MC_Rpm_Val_0 = -MC0_RPM_Buffer.getShort(2); // Bytes 2-3 : Angular Velocity // NOTE: motor is negative?
+    int16_t MC_Rpm_Val_1 = MC1_RPM_Buffer.getShort(2);  // Bytes 2-3 : Angular Velocity
+    float MC_Spd_Val_0 = (float)(((MC_Rpm_Val_0 / CONF_CAR_GEAR_RATIO) * c) * 60) / 63360;
+    float MC_Spd_Val_1 = (float)(((MC_Rpm_Val_1 / CONF_CAR_GEAR_RATIO) * c) * 60) / 63360;
+
     switch (motor) {
     case 0:
         return MC_Spd_Val_0;
@@ -92,17 +95,26 @@ static void torqueVector(int pedal, int brake, int steer) {
     Log.d(ID, "Aggression Val x1000:", TVAggression * 1000, true);
 
     // No TV
-    motorTorque[0] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
-    motorTorque[1] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
 
-    // TV V1
-    // if (_steer > 0) {
-    //     motorTorque[0] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
-    //     motorTorque[1] = motorTorque[0] * clamp(pow(cos(TVAggression * _steer), 5), 0, 1);
-    // } else {
-    //     motorTorque[1] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
-    //     motorTorque[0] = motorTorque[1] * clamp(pow(cos(TVAggression * _steer), 5), 0, 1);
-    // }
+    if (_pedal < 0) {
+        // _pedal = -_pedal;
+        // motorTorque[0] = -cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
+        // motorTorque[1] = -cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
+    } else {
+        motorTorque[0] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
+        motorTorque[1] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
+
+        // Flipped sensor?
+
+        // TV V1
+        // if (_steer > 0) {
+        //     motorTorque[0] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
+        //     motorTorque[1] = motorTorque[0] * clamp(pow(cos(TVAggression * _steer), 5), 0, 1);
+        // } else {
+        //     motorTorque[1] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
+        //     motorTorque[0] = motorTorque[1] * clamp(pow(cos(TVAggression * _steer), 5), 0, 1);
+        // }
+    }
 
     // motorTorque[0] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
     // motorTorque[1] = motorTorque[0];

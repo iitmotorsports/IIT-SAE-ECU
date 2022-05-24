@@ -276,7 +276,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             int pAVG = (pedal0 + pedal1) / 2;
 
             // NOTE: pedal has a threshold value
-            if (pAVG >= 100 && (float)abs(pedal1 - pedal0) / PINS_ANALOG_HIGH > 0.2f) {
+            if (pAVG >= 100 && (float)abs(pedal1 - pedal0) / PINS_ANALOG_HIGH > 0.5f) {
                 Log.e(ID, "Pedal value offset > 10%");
                 return DrivingModeFault();
             }
