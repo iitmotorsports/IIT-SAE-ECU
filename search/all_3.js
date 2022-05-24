@@ -28,7 +28,7 @@ var searchData=
   ['commandcallback_25',['CommandCallback',['../_serial_command_8h.html#a34b197a1c04e814afb9b818f3d1e535a',1,'SerialCommand.h']]],
   ['comment_5fremover_26',['comment_remover',['../vs__conf_8py.html#a1f1c6513670f3863a1b019fa8eaba30d',1,'vs_conf']]],
   ['conf_5fbrake_5fmin_27',['CONF_BRAKE_MIN',['../_motor_control_8def.html#a7fb047df64fed266f63b09cc1900a66e',1,'MotorControl.def']]],
-  ['conf_5fcar_5fwheel_5fradius_28',['CONF_CAR_WHEEL_RADIUS',['../_motor_control_8def.html#a26f1672eba68f921f77225f765c660ca',1,'MotorControl.def']]],
+  ['conf_5fcar_5fgear_5fratio_28',['CONF_CAR_GEAR_RATIO',['../_motor_control_8def.html#a5454b43dde949a0b5b63b196881832c1',1,'MotorControl.def']]],
   ['conf_5fecu_5fbaud_5frate_29',['CONF_ECU_BAUD_RATE',['../_e_c_u_global_config_8h.html#af37608270609cb6e912eac434d78c019',1,'ECUGlobalConfig.h']]],
   ['conf_5fecu_5fdebug_30',['CONF_ECU_DEBUG',['../_e_c_u_global_config_8h.html#a0651c808bd53ef4c66b2b1dc49049cd1',1,'ECUGlobalConfig.h']]],
   ['conf_5fecu_5finital_5fdelay_31',['CONF_ECU_INITAL_DELAY',['../_e_c_u_global_config_8h.html#a060911c2dab5cf6b05212e34aed610cc',1,'ECUGlobalConfig.h']]],
