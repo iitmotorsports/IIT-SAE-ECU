@@ -90,27 +90,28 @@ $(document).ready(function(){initNavTree('_serial_command_8h_source.html',''); i
 <div class="contents">
 <a href="_serial_command_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#ifndef __ECU_SERIALCOMMAND_H__</span></div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#define __ECU_SERIALCOMMAND_H__</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#define __ECU_SERIALCOMMAND_H__l</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#include &quot;<a class="code" href="_serial_command_8def.html">SerialCommand.def</a>&quot;</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#include &quot;usb_serial.h&quot;</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="_serial_command_8h.html#a34b197a1c04e814afb9b818f3d1e535a">   31</a></span><span class="keyword">typedef</span> void (*<a class="code hl_typedef" href="_serial_command_8h.html#a34b197a1c04e814afb9b818f3d1e535a">CommandCallback</a>)(void);</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="namespace_cmd.html">   36</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_cmd.html">Cmd</a> {</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="namespace_cmd.html#aedaea62d3d1e614cf34ae87372087846">   44</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="namespace_cmd.html#aedaea62d3d1e614cf34ae87372087846">setCommand</a>(uint8_t command, <a class="code hl_typedef" href="_serial_command_8h.html#a34b197a1c04e814afb9b818f3d1e535a">CommandCallback</a> callback);</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="namespace_cmd.html#ae4cdc8f8cdead5a5563c40cf7d1558fa">   51</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="namespace_cmd.html#ae4cdc8f8cdead5a5563c40cf7d1558fa">receiveCommand</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>} <span class="comment">// namespace Cmd</span></div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="preprocessor">#endif </span><span class="comment">// __ECU_SERIALCOMMAND_H__</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#include &quot;core_pins.h&quot;</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include &quot;usb_serial.h&quot;</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="_serial_command_8h.html#a34b197a1c04e814afb9b818f3d1e535a">   32</a></span><span class="keyword">typedef</span> void (*<a class="code hl_typedef" href="_serial_command_8h.html#a34b197a1c04e814afb9b818f3d1e535a">CommandCallback</a>)(void);</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="namespace_cmd.html">   37</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_cmd.html">Cmd</a> {</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="namespace_cmd.html#aedaea62d3d1e614cf34ae87372087846">   45</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="namespace_cmd.html#aedaea62d3d1e614cf34ae87372087846">setCommand</a>(uint8_t command, <a class="code hl_typedef" href="_serial_command_8h.html#a34b197a1c04e814afb9b818f3d1e535a">CommandCallback</a> callback);</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="namespace_cmd.html#ae4cdc8f8cdead5a5563c40cf7d1558fa">   52</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="namespace_cmd.html#ae4cdc8f8cdead5a5563c40cf7d1558fa">receiveCommand</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>} <span class="comment">// namespace Cmd</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="preprocessor">#endif </span><span class="comment">// __ECU_SERIALCOMMAND_H__</span></div>
 <div class="ttc" id="a_serial_command_8def_html"><div class="ttname"><a href="_serial_command_8def.html">SerialCommand.def</a></div><div class="ttdoc">SerialCommand config.</div></div>
-<div class="ttc" id="a_serial_command_8h_html_a34b197a1c04e814afb9b818f3d1e535a"><div class="ttname"><a href="_serial_command_8h.html#a34b197a1c04e814afb9b818f3d1e535a">CommandCallback</a></div><div class="ttdeci">void(* CommandCallback)(void)</div><div class="ttdoc">A function that will be called whenever its corresponding command byte is received.</div><div class="ttdef"><b>Definition:</b> <a href="_serial_command_8h_source.html#l00031">SerialCommand.h:31</a></div></div>
-<div class="ttc" id="anamespace_cmd_html"><div class="ttname"><a href="namespace_cmd.html">Cmd</a></div><div class="ttdoc">A simple way to run commands over serial.</div><div class="ttdef"><b>Definition:</b> <a href="_serial_command_8h_source.html#l00036">SerialCommand.h:36</a></div></div>
+<div class="ttc" id="a_serial_command_8h_html_a34b197a1c04e814afb9b818f3d1e535a"><div class="ttname"><a href="_serial_command_8h.html#a34b197a1c04e814afb9b818f3d1e535a">CommandCallback</a></div><div class="ttdeci">void(* CommandCallback)(void)</div><div class="ttdoc">A function that will be called whenever its corresponding command byte is received.</div><div class="ttdef"><b>Definition:</b> <a href="_serial_command_8h_source.html#l00032">SerialCommand.h:32</a></div></div>
+<div class="ttc" id="anamespace_cmd_html"><div class="ttname"><a href="namespace_cmd.html">Cmd</a></div><div class="ttdoc">A simple way to run commands over serial.</div><div class="ttdef"><b>Definition:</b> <a href="_serial_command_8h_source.html#l00037">SerialCommand.h:37</a></div></div>
 <div class="ttc" id="anamespace_cmd_html_ae4cdc8f8cdead5a5563c40cf7d1558fa"><div class="ttname"><a href="namespace_cmd.html#ae4cdc8f8cdead5a5563c40cf7d1558fa">Cmd::receiveCommand</a></div><div class="ttdeci">int receiveCommand(void)</div><div class="ttdoc">receive any command from serial by matching incoming bytes to a callback</div></div>
 <div class="ttc" id="anamespace_cmd_html_aedaea62d3d1e614cf34ae87372087846"><div class="ttname"><a href="namespace_cmd.html#aedaea62d3d1e614cf34ae87372087846">Cmd::setCommand</a></div><div class="ttdeci">void setCommand(uint8_t command, CommandCallback callback)</div><div class="ttdoc">attach a single callback to a byte value that will be received over serial</div></div>
 </div><!-- fragment --></div><!-- contents -->
