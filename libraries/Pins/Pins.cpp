@@ -13,7 +13,6 @@
 
 #include "Pins.h"
 #include "IntervalTimer.h"
-#include "core_pins.h"
 #include "map" // FIXME: Linker error when using unordered_map, something to do with allocation? compilation may not be correct
 
 #include "Canbus.h"
