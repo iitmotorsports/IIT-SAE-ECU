@@ -96,7 +96,9 @@ static void torqueVector(int pedal, int brake, int steer) {
 
     // No TV
 
-    if (_pedal < 0) {
+    // TODO: Test Torque Vectoring and Regenerative braking
+
+    if (_pedal < 0) { // FIXME: Sensor on car flipped?
         // _pedal = -_pedal;
         // motorTorque[0] = -cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
         // motorTorque[1] = -cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
@@ -120,7 +122,7 @@ static void torqueVector(int pedal, int brake, int steer) {
     // motorTorque[1] = motorTorque[0];
 }
 
-void setup(void) {
+void setup(void) { // IMPROVE: receive message from MCs, not just send
     if (!init)
         Heartbeat::addCallback(beatFunc);
     clearFaults();

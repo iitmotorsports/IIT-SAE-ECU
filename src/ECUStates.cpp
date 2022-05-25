@@ -281,6 +281,8 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
                 return DrivingModeFault();
             }
 
+            // TODO: passive regen braking, only for hawkrod
+
             // if (pAVG >= 200) {
             MC::setTorque(pAVG, breakVal, steerVal);
             // } else if (MC::motorSpeed() > 25) { // FIXME: Seems to just disable motors?
