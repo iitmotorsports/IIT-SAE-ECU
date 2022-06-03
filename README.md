@@ -1,7 +1,7 @@
 SAE at IIT ECU Programming
 ===========================
 
-<img src="https://raw.githubusercontent.com/Illinois-Tech-Motorsports/IIT-SAE-ECU/master/Images/41.png" alt="Teensy 4.1" width="512">
+<img src="https://raw.githubusercontent.com/iitmotorsports/IIT-SAE-ECU/master/Images/41.png" alt="Teensy 4.1" width="512">
 
 This repository contains the source code that the SAE team at IIT uses for their microcontrollers.
 
@@ -76,4 +76,4 @@ This project uses [Doxygen](https://www.doxygen.nl/index.html) to auto generate 
 
 [Doxygen Extensions](https://marketplace.visualstudio.com/items?itemName=Isaias.doxygen-pack) exist for VSCode, to easily compile and view inside VSCode.
 
-The documentation can be generated locally or you can view the auto generated [Github Page](https://illinois-tech-motorsports.github.io/IIT-SAE-ECU/) for this repo.
+The documentation can be generated locally or you can view the auto generated [Github Page](https://ecu.docs.iitmotorsports.org/) for this repo.
