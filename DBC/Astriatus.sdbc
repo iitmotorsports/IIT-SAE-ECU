@@ -1,0 +1,30 @@
+VERSION "1.0.0"
+
+# Comment goes here
+
+NODES: Front Back MC0 MC1 AMS
+
+MSG 2 WHEEL_0 : Front
+    SIG WHEEL_SPEED_FRONT_LEFT : "rpm" (0.001,0) [-20,60]
+    SIG WHEEL_SPEED_FRONT_RIGHT : "rpm" (0.001,0) [-20,60]
+
+MSG 3 WHEEL_1 : Back
+    SIG WHEEL_SPEED_BACK_LEFT : "rpm" (-0.001,0) [-20,60] Front
+    SIG WHEEL_SPEED_BACK_RIGHT : "rpm" (0.001,-0) [-20,60] Front
+
+FORMAT "rpm"  + "int"    Rotations per minute
+FORMAT "%"    + "int"    Percentage
+FORMAT "°C"   - "float"  Celsius
+FORMAT "°F"   - "float"  Fahrenheit
+FORMAT "m/s"  - "int"    Meters per second
+FORMAT "°/s"  - "float"  Degrees per second
+FORMAT "°"    - "float"  Angle
+FORMAT "flag" + "bool"   True or False flag
+FORMAT "bin"  + "binary" Binary data
+
+TYPE "int"    32
+TYPE "short"  16
+TYPE "byte"   8
+TYPE "float"  32
+TYPE "bool"   1  Potential to cluster into bit fields?
+TYPE "binary" 32 Special cases, such as with multi message values
