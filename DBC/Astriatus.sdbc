@@ -1,4 +1,4 @@
-VERSION "1.0.0"
+VERSION "Astriatus 1.0.0"
 
 # Comment goes here
 
@@ -11,6 +11,72 @@ MSG 2 WHEEL_0 : Front
 MSG 3 WHEEL_1 : Back
     SIG WHEEL_SPEED_BACK_LEFT : "rpm" (-0.001,0) [-20,60] Front
     SIG WHEEL_SPEED_BACK_RIGHT : "rpm" (0.001,-0) [-20,60] Front
+
+MSG 4567 MC0_FAULTS : MC0
+    SIG FAULT_GEN_0 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_1 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_2 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_3 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_4 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_5 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_6 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_7 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_8 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_9 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_10 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_11 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_12 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_13 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_14 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_15 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_16 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_17 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_18 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_19 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_20 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_21 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_22 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_23 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_24 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_25 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_26 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_27 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_28 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_29 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_30 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_31 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_32 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_33 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_34 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_35 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_36 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_37 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_38 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_39 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_40 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_41 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_42 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_43 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_44 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_45 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_46 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_47 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_48 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_49 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_50 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_51 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_52 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_53 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_54 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_55 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_56 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_57 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_58 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_59 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_60 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_61 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_62 : "flag" (1,0) [0,1]
+    SIG FAULT_GEN_63 : "flag" (1,0) [0,1]
 
 FORMAT "rpm"  + "int"    Rotations per minute
 FORMAT "%"    + "int"    Percentage
