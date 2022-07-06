@@ -88,9 +88,11 @@ FORMAT "°"    - "float"  Angle
 FORMAT "flag" + "bool"   True or False flag
 FORMAT "bin"  + "binary" Binary data
 
+TYPE "long"   64
 TYPE "int"    32
 TYPE "short"  16
 TYPE "byte"   8
 TYPE "float"  32
+TYPE "double" 64
 TYPE "bool"   1  Potential to cluster into bit fields?
 TYPE "binary" 32 Special cases, such as with multi message values

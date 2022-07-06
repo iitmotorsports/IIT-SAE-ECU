@@ -113,6 +113,9 @@ class Signal:
     range: Tuple[float, float] = None
     receiver: str = None
     line: int = None
+    signed: bool = None
+    bits: int = None
+    position: int = 0
 
     def __init__(
         self, line: int, id: int, name: str, format: Format, scale: float, offset: float, range: Tuple[float, float], receiver: str
@@ -128,10 +131,7 @@ class Signal:
 
     def __str__(self) -> str:
         return f"{self.name} {str(self.format)} ({self.scale},{self.offset}) [{self.range[0]},{self.range[1]}] {self.receiver}"
-
-    def __signal_id(self, size : int, shift : int, msg_id : int) -> int:
-        return (size & 0x3F) << 26 | (shift & 0x3F) << 20 | msg_id & 0xFFFFF
-
+    
     def verify(self, formats: Dict[str, Format], nodes: List[str]) -> None:
         """Verifies this Signal, matching it's format and receiver, should only be called once
 
@@ -143,9 +143,11 @@ class Signal:
         assert not self.receiver or self.receiver in nodes, f"Signal uses undefined node : {self.line}| {self.name} -> {self.receiver}"
         assert self.range[0] <= self.range[1], f"Signal range is invalid : {self.line}| {self.name} -> {self.range[0]} <\= {self.range[1]}"
         self.format = formats[self.format]
+        self.bits = self.format.type.bits
+        self.signed = self.format.signed
     
-    def set_id(self, msg_id : int, shift : int):
-        self.id = self.__signal_id(self.format.type.bits, shift, msg_id)
+    def set_pos(self, position : int):
+        self.position = position
 
 
 class Message:
@@ -180,11 +182,11 @@ class Message:
         """
         assert not self.sender or self.sender in nodes, f"Message uses undefined node : {self.line}| {self.name} -> {self.sender}"
 
-        shift = 63
+        shift = 64
         for sig in self.signals:
             sig.verify(formats, nodes)
-            shift -= sig.format.type.bits - 1
-            sig.set_id(self.id, shift)
+            shift -= sig.format.type.bits
+            sig.set_pos(shift)
 
         assert sum([sig.format.type.bits for sig in self.signals]) <= 64, f"Message exceeds 64 bits : {self.line}| {self.name}"
 
@@ -313,7 +315,7 @@ def parse(file: TextIO) -> SDBC:
 
     print("\n", listify(messages, "\n\n"))
 
-    return messages
+    return SDBC(list(types.values()), list(formats.values()), messages, list(signals.values()))
 
 def parse_file(filepath: str) -> SDBC:
     """Opens and parses an SDBC file
