@@ -1,16 +1,14 @@
-VERSION "Astriatus 1.0.0"
-
-# Comment goes here
+VERSION "Astriatus"
 
 NODES: Front Back MC0 MC1 AMS
 
-MSG 2 WHEEL_0 : Front
-    SIG WHEEL_SPEED_FRONT_LEFT : "rpm" (0.001,0) [-20,60]
-    SIG WHEEL_SPEED_FRONT_RIGHT : "rpm" (0.001,0) [-20,60]
+MSG 2 WHEEL_0 : Front | Wheel message block 0
+    SIG WHEEL_SPEED_FRONT_LEFT : "rpm" (0.001,0) [-20,60] | The speed of the front left wheel
+    SIG WHEEL_SPEED_FRONT_RIGHT : "rpm" (0.001,0) [-20,60] | The speed of the front right wheel
 
-MSG 3 WHEEL_1 : Back
-    SIG WHEEL_SPEED_BACK_LEFT : "rpm" (-0.001,0) [-20,60] Front
-    SIG WHEEL_SPEED_BACK_RIGHT : "rpm" (0.001,-0) [-20,60] Front
+MSG 3 WHEEL_1 : Back | Wheel message block 1
+    SIG WHEEL_SPEED_BACK_LEFT : "rpm" (-0.001,0) [-20,60] Front | The speed of the back left wheel
+    SIG WHEEL_SPEED_BACK_RIGHT : "rpm" (0.001,-0) [-20,60] Front | The speed of the back right wheel
 
 MSG 4567 MC0_FAULTS : MC0
     SIG FAULT_GEN_0 : "flag" (1,0) [0,1]
@@ -78,15 +76,15 @@ MSG 4567 MC0_FAULTS : MC0
     SIG FAULT_GEN_62 : "flag" (1,0) [0,1]
     SIG FAULT_GEN_63 : "flag" (1,0) [0,1]
 
-FORMAT "rpm"  + "int"    Rotations per minute
-FORMAT "%"    + "int"    Percentage
-FORMAT "°C"   - "float"  Celsius
-FORMAT "°F"   - "float"  Fahrenheit
-FORMAT "m/s"  - "int"    Meters per second
-FORMAT "°/s"  - "float"  Degrees per second
-FORMAT "°"    - "float"  Angle
-FORMAT "flag" + "bool"   True or False flag
-FORMAT "bin"  + "binary" Binary data
+FORMAT "rpm"  + "int"    | Rotations per minute
+FORMAT "%"    + "int"    | Percentage
+FORMAT "°C"   - "float"  | Celsius
+FORMAT "°F"   - "float"  | Fahrenheit
+FORMAT "m/s"  - "int"    | Meters per second
+FORMAT "°/s"  - "float"  | Degrees per second
+FORMAT "°"    - "float"  | Angle
+FORMAT "flag" + "bool"   | True or False flag
+FORMAT "bin"  + "binary" | Binary data
 
 TYPE "long"   64
 TYPE "int"    32
@@ -94,5 +92,5 @@ TYPE "short"  16
 TYPE "byte"   8
 TYPE "float"  32
 TYPE "double" 64
-TYPE "bool"   1  Potential to cluster into bit fields?
-TYPE "binary" 32 Special cases, such as with multi message values
+TYPE "bool"   1  | Potential to cluster into bit fields?
+TYPE "binary" 32 | Special cases, such as with multi message values
