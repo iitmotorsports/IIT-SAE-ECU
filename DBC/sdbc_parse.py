@@ -131,6 +131,11 @@ class Type(Entry):
         super().__init__(uid, name, description, line)
         self.bits = int(bits)
 
+    def __repr__(self) -> str:
+        desc = f" | {self.description}" if self.description else ''
+        name = f'\"{self.name}\"'
+        return f"TYPE {name:8}{self.bits:4}{desc}\n"
+
     def __str__(self) -> str:
         return f"{self.name}@{self.bits}"
 
@@ -150,6 +155,12 @@ class Format(Entry):
         super().__init__(uid, name, description, line)
         self.signed = bool(signed)
         self.f_type = f_type
+
+    def __repr__(self) -> str:
+        desc = f" | {self.description}" if self.description else ''
+        name = f'\"{self.name}\"'
+        t_name = f'\"{self.f_type.name}\"'
+        return f"FORMAT {name:8}{'-' if self.signed else '+'} {t_name:8}{desc}\n"
 
     def __str__(self) -> str:
         return f"{self.name} {'signed' if self.signed else 'unsigned'} {str(self.f_type)}"
@@ -182,8 +193,13 @@ class Signal(Entry):
         self.form = form
         self.scale = float(scale)
         self.offset = float(offset)
-        self.minmax = minmax
+        self.minmax = (float(minmax[0]), float(minmax[1]))
         self.receiver = str(receiver) if receiver else None
+
+    def __repr__(self) -> str:
+        desc = f" | {self.description}" if self.description else ''
+        f_name = f'\"{self.form.name}\"'
+        return f"    SIG {self.name:24} : {f_name:8}{tuple([self.scale, self.offset])} {list(self.minmax)} {self.receiver if self.receiver else ''}{desc}\n"
 
     def __str__(self) -> str:
         return f"{self.name} {str(self.form)} ({self.scale},{self.offset}) [{self.minmax[0]},{self.minmax[1]}] {self.receiver}"
@@ -220,6 +236,13 @@ class Message(Entry):
         self.sender = str(sender) if sender else None
         self.signals = []
 
+    def __repr__(self) -> str:
+        desc = f" | {self.description}" if self.description else ''
+        fnl = f"MSG {self.can_id} {self.name} : {self.sender if self.sender else ''}{desc}\n"
+        for sig in self.signals:
+            fnl += repr(sig)
+        return fnl + '\n'
+
     def __str__(self) -> str:
         sigs = listify([str(x) for x in self.signals], "\n    ")
         blk = "|".join([str(x.form.f_type.bits) for x in self.signals])
@@ -245,19 +268,43 @@ class Message(Entry):
 
 class SDBC:
     """Represents an SDBC file"""
+    version: str = None
+    nodes: List[str] = None
     types: List[Type] = None
     formats: List[Format] = None
     messages: List[Message] = None
     signals: List[Signal] = None
 
-    def __init__(self, types: List[Type], formats: List[Format], messages: List[Message], signals: List[Signal]) -> None:
+    def __init__(self, version: str, nodes: List[str], types: List[Type], formats: List[Format], messages: List[Message], signals: List[Signal]) -> None:
+        self.version = version
+        self.nodes = nodes
         self.types = types
         self.formats = formats
         self.messages = messages
         self.signals = signals
 
 
-def parse(file: TextIO) -> SDBC:
+class SDBC_m:
+    """Represents an SDBC file"""
+    version: str = None
+    nodes: List[str] = None
+    types: Dict[str, Type] = None
+    formats: Dict[str, Format] = None
+    messages: Dict[int, Message] = None
+    message_names: Dict[str, Message] = None
+    signals: Dict[str, Signal] = None
+
+    def __init__(self, version: str, nodes: List[str], types: Dict[str, Type], formats: Dict[str, Format], messages: Dict[str, Message], message_names: Dict[str, Message], signals: Dict[str, Signal]) -> None:
+        self.version = version
+        self.nodes = nodes
+        self.types = types
+        self.formats = formats
+        self.messages = messages
+        self.message_names = message_names
+        self.signals = signals
+
+
+def parse(file: TextIO, mapped_result: bool = False) -> SDBC | SDBC_m:
     """Parses a SDBC file given an open file
 
     Args:
@@ -265,11 +312,11 @@ def parse(file: TextIO) -> SDBC:
     """
     types: Dict[str, Type] = {}
     formats: Dict[str, Format] = {}
-    messages: Dict[str, Message] = {}
-    message_names: Set[str] = set()
+    messages: Dict[int, Message] = {}
+    message_names: Dict[str, Message] = {}
     signals: Dict[str, Signal] = {}
-    nodes = None
-    version = None
+    nodes: List[str] = None
+    version: str = None
 
     last_msg: Message = None
 
@@ -327,7 +374,7 @@ def parse(file: TextIO) -> SDBC:
                         assert msg.can_id not in messages, f"Message ID already in use : {line_no}| {msg.name}:{msg.can_id}"
                         assert msg.name not in message_names, f"Message name already in use : {line_no}| {msg.can_id}:{msg.name}"
                         last_msg = msg
-                        message_names.add(msg.name)
+                        message_names[msg.name] = msg
                         msg_n += 1
                         messages[msg.can_id] = msg
                     case "SIG":
@@ -376,14 +423,17 @@ def parse(file: TextIO) -> SDBC:
 
     print(f"SDBC : {version}")
 
+    if mapped_result:
+        return SDBC_m(version, nodes, types, formats, messages, message_names, signals)
+
     messages = list(messages.values())
 
     print("\n", listify(messages, "\n\n"))
 
-    return SDBC(list(types.values()), list(formats.values()), messages, list(signals.values()))
+    return SDBC(version, nodes, list(types.values()), list(formats.values()), messages, list(signals.values()))
 
 
-def parse_file(filepath: str) -> SDBC:
+def parse_file(filepath: str, mapped_result: bool = False) -> SDBC | SDBC_m:
     """Opens and parses an SDBC file
 
     Args:
@@ -393,8 +443,8 @@ def parse_file(filepath: str) -> SDBC:
         List[Message]: List of all the messages
     """
     with open(filepath, "r", encoding="utf-8") as sdbc:
-        return parse(sdbc)
+        return parse(sdbc, mapped_result)
 
 
 if __name__ == "__main__":
-    parse_file("DBC/Astriatus.sdbc")
+    parse_file("Astriatus.sdbc")
