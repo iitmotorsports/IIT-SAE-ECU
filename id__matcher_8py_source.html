@@ -89,7 +89,7 @@ $(document).ready(function(){initNavTree('id__matcher_8py_source.html',''); init
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="keyword">import</span> json</div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="keyword">import</span> threading</div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> BoundedSemaphore</div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">import</span> <a class="code hl_namespace" href="namespacescript_1_1error.html">script.error</a> <span class="keyword">as</span> Error</div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="keyword">import</span> <a class="code hl_namespace" href="namespacescript_1_1util.html">script.util</a> <span class="keyword">as</span> Util</div>
@@ -110,9 +110,9 @@ $(document).ready(function(){initNavTree('id__matcher_8py_source.html',''); init
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>IDs = {}</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>Files = {}</div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>TAG_SEM = threading.BoundedSemaphore(1)</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>ID_SEM = threading.BoundedSemaphore(1)</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>FILE_SEM = threading.BoundedSemaphore(1)</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>TAG_SEM = BoundedSemaphore(1)</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>ID_SEM = BoundedSemaphore(1)</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>FILE_SEM = BoundedSemaphore(1)</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">async def </span>map_unique_pair(string_tag: str, string_id: str, map_range: range) -&gt; int:</div>
@@ -207,11 +207,11 @@ $(document).ready(function(){initNavTree('id__matcher_8py_source.html',''); init
 <div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span><span class="keyword">def </span>clear_blanks() -&gt; None:</div>
 <div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    <span class="stringliteral">&quot;&quot;&quot;Remove empty strings mappings, if any&quot;&quot;&quot;</span></div>
 <div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    <span class="keywordflow">try</span>:</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        del IDs[<span class="stringliteral">&quot;&quot;</span>]</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        IDs.pop(<span class="stringliteral">&quot;&quot;</span>)</div>
 <div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    <span class="keywordflow">except</span> KeyError:</div>
 <div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        <span class="keywordflow">pass</span></div>
 <div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    <span class="keywordflow">try</span>:</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        del TAGs[<span class="stringliteral">&quot;&quot;</span>]</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        TAGs.pop(<span class="stringliteral">&quot;&quot;</span>)</div>
 <div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    <span class="keywordflow">except</span> KeyError:</div>
 <div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>        <span class="keywordflow">pass</span></div>
 <div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
