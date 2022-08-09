@@ -1,5 +1,6 @@
 import os
 import re
+import traceback
 from typing import Callable
 
 import script.regex as REGEX
@@ -7,6 +8,10 @@ import script.error as Error
 import script.text as Text
 import script.util as Util
 import script.id_matcher as IDMatch
+
+from script.token_map import sel_dict, get_type
+import tokenize
+from io import BytesIO
 
 IGNORE_KEYWORD = "PRE_BUILD_IGNORE"  # Keyword that makes this script ignore a line
 
@@ -233,6 +238,38 @@ class FileEntry:  # IMPROVE: Make IDs persistent
                 raise exception(err[0] + Text.error(err[1]) + err[2])
 
         return newline
+
+    async def tokenize_line(self, line: str) -> str:
+        sel = sel_dict
+        try:
+            tkns = tokenize.tokenize(BytesIO(line.encode('utf-8')).readline)
+            next(tkns)
+            ext = sel_dict['Log']['.']
+            lid = sel_dict['Log']['(']
+            
+            for tkn in tkns:
+                try:
+                    if tkn.type is tokenize.INDENT:
+                        continue
+                    if sel is lid:
+                        lid = None
+                    if sel is ext:
+                        ext = None
+                    if tkn.string not in sel:
+                        tkn = tkn.type
+                    else:
+                        tkn = tkn.string
+                    sel = sel[tkn]
+                    
+                    if not ext:
+                        ext = tkn
+                    if sel == tokenize.ENDMARKER:
+                        return await self.match_log_mapping(line)
+                except KeyError:
+                    pass
+        except tokenize.TokenError:
+            pass
+        return line
 
     async def scan(self) -> None:
         """Begin replacing lines for mapping log calls"""
