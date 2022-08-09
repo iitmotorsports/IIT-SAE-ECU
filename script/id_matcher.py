@@ -1,5 +1,5 @@
 import json
-import threading
+from multiprocessing import BoundedSemaphore
 
 import script.error as Error
 import script.util as Util
@@ -20,9 +20,9 @@ TAGs = {}
 IDs = {}
 Files = {}
 
-TAG_SEM = threading.BoundedSemaphore(1)
-ID_SEM = threading.BoundedSemaphore(1)
-FILE_SEM = threading.BoundedSemaphore(1)
+TAG_SEM = BoundedSemaphore(1)
+ID_SEM = BoundedSemaphore(1)
+FILE_SEM = BoundedSemaphore(1)
 
 
 async def map_unique_pair(string_tag: str, string_id: str, map_range: range) -> int:
@@ -117,11 +117,11 @@ async def map_unique_tag(string_tag: str, map_range: range = TAG_RANGE_ELSE) -> 
 def clear_blanks() -> None:
     """Remove empty strings mappings, if any"""
     try:
-        del IDs[""]
+        IDs.pop("")
     except KeyError:
         pass
     try:
-        del TAGs[""]
+        TAGs.pop("")
     except KeyError:
         pass
 
