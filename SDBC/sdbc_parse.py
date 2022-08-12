@@ -266,6 +266,44 @@ class Message(Entry):
         assert sum([sig.form.f_type.bits for sig in self.signals]) <= 64, f"Message exceeds 64 bits : {self.line}| {self.name}"
 
 
+class Node(Entry):
+    """Node class for defining nodes"""
+
+    def __init__(self, uid: int, name: str, description: str, line: int, can_id: int, sender: str) -> None:
+        super().__init__(uid, name, description, line)
+        self.can_id = int(can_id)
+        self.sender = str(sender) if sender else None
+        self.signals = []
+
+    def __repr__(self) -> str:
+        desc = f" | {self.description}" if self.description else ''
+        fnl = f"MSG {self.can_id} {self.name} : {self.sender if self.sender else ''}{desc}\n"
+        for sig in self.signals:
+            fnl += repr(sig)
+        return fnl + '\n'
+
+    def __str__(self) -> str:
+        sigs = listify([str(x) for x in self.signals], "\n    ")
+        blk = "|".join([str(x.form.f_type.bits) for x in self.signals])
+        return f"{self.can_id} {self.name} {self.sender} :\n    {sigs}\n  |{blk}|"
+
+    def verify(self, formats: Dict[str, Format], nodes: List[str]) -> None:
+        """Verifies this Message, matching it's sender, should only be called once
+
+        Args:
+            formats (Dict[str, Format]): Defined Formats
+            nodes (List[str]): List of all nodes
+        """
+        assert not self.sender or self.sender in nodes, f"Message uses undefined node : {self.line}| {self.name} -> {self.sender}"
+
+        shift = 64
+        for sig in self.signals:
+            sig.verify(formats, nodes)
+            shift -= sig.form.f_type.bits
+            sig.set_pos(shift)
+
+        assert sum([sig.form.f_type.bits for sig in self.signals]) <= 64, f"Message exceeds 64 bits : {self.line}| {self.name}"
+
 class SDBC:
     """Represents an SDBC file"""
     version: str = None
@@ -447,4 +485,4 @@ def parse_file(filepath: str, mapped_result: bool = False) -> SDBC | SDBC_m:
 
 
 if __name__ == "__main__":
-    parse_file("Astriatus.sdbc")
+    parse_file("Hawkrod.sdbc")
