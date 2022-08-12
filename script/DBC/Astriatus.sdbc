@@ -2,6 +2,18 @@ VERSION "Astriatus"
 
 NODES: Front Back MC0 MC1 AMS
 
+NODE Front : | The front teensy
+    GPIO ONBOARD_LED : 13 DIGITAL "flag" | onboard led
+    GPIO BUTTON_OFF : 2 DIGITAL "flag" | Digital Start Button
+    GPIO WHEEL_1 : 21 ANALOG "rpm" | R wheel speed
+    GPIO WHEEL_0 : 20 ANALOG "rpm" | L wheel speed
+
+NODE Back : | The back teensy
+    GPIO ONBOARD_LED : 13 DIGITAL "flag" | onboard led
+    GPIO BUTTON_OFF : 2 DIGITAL "flag" | Digital Start Button
+    GPIO WHEEL_1 : 21 ANALOG "rpm" | R wheel speed
+    GPIO WHEEL_0 : 20 ANALOG "rpm" | L wheel speed
+
 MSG 2 WHEEL_0 : Front | Wheel message block 0
     SIG WHEEL_SPEED_FRONT_LEFT : "rpm" (0.001,0) [-20,60] | The speed of the front left wheel
     SIG WHEEL_SPEED_FRONT_RIGHT : "rpm" (0.001,0) [-20,60] | The speed of the front right wheel
@@ -76,15 +88,15 @@ MSG 4567 MC0_FAULTS : MC0
     SIG FAULT_GEN_62 : "flag" (1,0) [0,1]
     SIG FAULT_GEN_63 : "flag" (1,0) [0,1]
 
-FORMAT "rpm"  + "int"    | Rotations per minute
-FORMAT "%"    + "int"    | Percentage
-FORMAT "°C"   - "float"  | Celsius
-FORMAT "°F"   - "float"  | Fahrenheit
-FORMAT "m/s"  - "int"    | Meters per second
-FORMAT "°/s"  - "float"  | Degrees per second
-FORMAT "°"    - "float"  | Angle
-FORMAT "flag" + "bool"   | True or False flag
-FORMAT "bin"  + "binary" | Binary data
+FORMAT "rpm"   + "int"    | Rotations per minute
+FORMAT "%"     + "int"    | Percentage
+FORMAT "C"     - "float"  | Celsius
+FORMAT "F"     - "float"  | Fahrenheit
+FORMAT "m/s"   - "int"    | Meters per second
+FORMAT "deg/s" - "float"  | Degrees per second
+FORMAT "deg"   - "float"  | Angle in degrees
+FORMAT "flag"  + "bool"   | True or False flag
+FORMAT "bin"   + "binary" | Binary data
 
 TYPE "long"   64
 TYPE "int"    32
