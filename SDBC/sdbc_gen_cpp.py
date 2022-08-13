@@ -1,9 +1,9 @@
-"""Generate a C header file from an SDBC file"""
+"""Generate C/C++ headers and definition files from an SDBC file"""
 
 import sdbc_parse as sdbc
 
-GEN_LOC = "src/SDBC.def"
-SDBC_LOC = "DBC/Astriatus.sdbc"
+GEN_LOC = "libraries/SDBC/SDBC.def"
+SDBC_LOC = "SDBC/Hawkrod.sdbc"
 
 START_DOC = """/**
  * AUTO GENERATED FILE - DO NOT EDIT
