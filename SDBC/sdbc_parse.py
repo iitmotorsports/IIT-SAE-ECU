@@ -285,6 +285,8 @@ class Message(Entry):
 
         assert sum([sig.form.f_type.bits for sig in self.signals]) <= 64, f"Message exceeds 64 bits : {self.line}| {self.name}"
 
+        self.c_node.add_address(self.can_id)
+
         for node in nodes.values():
             if node is not self.c_node:
                 assert self.can_id not in node.addr_space, f"Can id already in use in another address space {self.can_id} : {node.name}"
@@ -339,6 +341,9 @@ class Node(Entry):
         for k, v in [x for x in self.sources.items()]:
             if isinstance(v, Signal) or isinstance(v, SYNC):
                 del self.sources[k]
+        for n in nodes.values():
+            if n is not self:
+                assert self.addr_space.isdisjoint(n.addr_space), "Overlapping address spaces"
 
     def mark(self):
         """Explicilty mark synced items that this node does not own"""
@@ -511,6 +516,14 @@ def parse(file: TextIO, mapped_result: bool = False) -> SDBC | SDBC_m:
                         node = Node(uid, line_no, name, desc)
                         last_node = node
                         nodes[name] = node
+                    case "ADDR":
+                        last_msg = None
+                        lower = int(tks.tkn(), 0)
+                        assert tks.tkn() == "-", "Invalid signal syntax"
+                        upper = int(tks.tkn(), 0)
+                        assert lower <= upper, "Invalid address range"
+                        assert last_node, "No encapuslating node"
+                        last_node.add_address(range(lower, upper+1))
                     case "GPIO":
                         last_msg = None
                         name = tks.tkn()
@@ -607,7 +620,7 @@ def parse(file: TextIO, mapped_result: bool = False) -> SDBC | SDBC_m:
         assert len(messages) <= 1048575, "Exceeding maximum number of messages"
 
     except AssertionError as err:
-        print(err, line_no)
+        print(err, f'| line {line_no}')
         return
 
     print(f"{file_name} | SDBC : {version}")
