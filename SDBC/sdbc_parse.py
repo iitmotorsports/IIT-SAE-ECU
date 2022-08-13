@@ -212,13 +212,11 @@ class Signal(Entry):
     signed: bool = None
     bits: int = None
     link: Entry | str = None
-    link_outgoing: bool = None
 
-    def __init__(self, uid: int, line: int, name: str, description: str, form: Format, link: str, link_dir: IOType) -> None:
+    def __init__(self, uid: int, line: int, name: str, description: str, form: Format, link: str) -> None:
         super().__init__(uid, line, name, description)
         self.form = form
         self.link = link if link else None
-        self.link_outgoing = True if link_dir is IOType.O else False
 
     def __repr__(self) -> str:
         desc = f" : {self.description}" if self.description else ''
@@ -557,17 +555,11 @@ def parse(file: TextIO, mapped_result: bool = False) -> SDBC | SDBC_m:
                         form = tks.tkn()
                         desc = tks.desc()
                         link = None
-                        link_dir = IOType.O
                         if tks.peek and tks.peek.string == '<':
                             assert tks.tkn() == '<', "Invalid signal syntax"
                             assert tks.tkn() == '-', "Invalid signal syntax"
                             link = tks.tkn()
-                        if tks.peek and tks.peek.string == '-':
-                            assert tks.tkn() == '-', "Invalid signal syntax"
-                            assert tks.tkn() == '>', "Invalid signal syntax"
-                            link = tks.tkn()
-                            link_dir = IOType.I
-                        sig = Signal(uid, line_no, name, desc, form, link, link_dir)
+                        sig = Signal(uid, line_no, name, desc, form, link)
                         assert last_msg, "Orphaned signal definition"
                         assert sig.name not in signals, f"Signal name already in use : {last_msg.name}"
                         last_msg.signals.append(sig)
