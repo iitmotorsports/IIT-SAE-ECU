@@ -27,7 +27,7 @@ NODE BACK_ECU : The back teensy
         SIG WHEEL_SPEED_BACK_RIGHT : "b_rpm" : The speed of the back right wheel
 
 NODE MC0
-    ADDR 0xC0 - 0xA3
+    ADDR 0xA3 - 0xC0
     MSG 0xA0 MC0_FAULTS
         SIG FAULT_GEN_0 : "flag" 
         SIG FAULT_GEN_1 : "flag" 
@@ -97,22 +97,22 @@ NODE MC0
 NODE MC1
 NODE AMS
 
-FORMAT "f_rpm"  + "int" (1,0) [-20,60] : Rotations per minute
-FORMAT "b_rpm"  + "int" (1,0) [-20,60] : Rotations per minute
-FORMAT "%"      + "int" (1,0) [0,0]    : Percentage
-FORMAT "C"      - "float" (1,0) [0,0]  : Celsius
-FORMAT "F"      - "float" (1,0) [0,0]  : Fahrenheit
-FORMAT "m/s"    - "int" (1,0) [0,0]    : Meters per second
-FORMAT "deg/s"  - "float" (1,0) [0,0]  : Degrees per second
-FORMAT "deg"    - "float" (1,0) [0,0]  : Angle in degrees
-FORMAT "flag"   + "bool" (1,0) [0,0]   : True or False flag
-FORMAT "bin"    + "binary" (1,0) [0,0] : Binary data
+FORMAT "f_rpm"  + "int"    (1,0) [-20,60] : Rotations per minute
+FORMAT "b_rpm"  + "int"    (1,0) [-20,60] : Rotations per minute
+FORMAT "%"      + "int"    (1,0) [0,0]    : Percentage
+FORMAT "C"      - "float"  (1,0) [0,0]    : Celsius
+FORMAT "F"      - "float"  (1,0) [0,0]    : Fahrenheit
+FORMAT "m/s"    - "int"    (1,0) [0,0]    : Meters per second
+FORMAT "deg/s"  - "float"  (1,0) [0,0]    : Degrees per second
+FORMAT "deg"    - "float"  (1,0) [0,0]    : Angle in degrees
+FORMAT "flag"   + "bool"   (1,0) [0,0]    : True or False flag
+FORMAT "bin"    + "binary" (1,0) [0,0]    : Binary data
 
-TYPE "long"   64
-TYPE "int"    32
-TYPE "short"  16
-TYPE "byte"   8
-TYPE "float"  32
-TYPE "double" 64
-TYPE "bool"   1  : Potential to cluster into bit fields?
-TYPE "binary" 32 : Special cases, such as with multi message values
+TYPE "long"   64 INTEGER
+TYPE "int"    32 INTEGER
+TYPE "short"  16 INTEGER
+TYPE "byte"   8  INTEGER
+TYPE "float"  32 FLOATING
+TYPE "double" 64 FLOATING
+TYPE "bool"   1  INTEGER  : Potential to cluster into bit fields?
+TYPE "binary" 32 INTEGER  : Special cases, such as with multi message values

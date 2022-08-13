@@ -117,6 +117,11 @@ class PinType(Enum):
     DIGITAL = "DIGITAL"
 
 
+class NumType(Enum):
+    INTEGER = "INTEGER"
+    FLOATING = "FLOATING"
+
+
 class IOType(Enum):
     O = "O"
     I = "I"
@@ -141,10 +146,12 @@ class Type(Entry):
     """Type class for defining and verifying types"""
 
     bits: int = None
+    n_type: NumType = None
 
-    def __init__(self, uid: int, line: int, name: str, description: str, bits: int) -> None:
+    def __init__(self, uid: int, line: int, name: str, description: str, bits: int, n_type: NumType) -> None:
         super().__init__(uid, line, name, description)
         self.bits = int(bits)
+        self.n_type = n_type
 
     def __repr__(self) -> str:
         desc = f" | {self.description}" if self.description else ''
@@ -584,8 +591,9 @@ def parse(file: TextIO, mapped_result: bool = False) -> SDBC | SDBC_m:
                         last_msg = None
                         name = tks.tkn()
                         bits = tks.tkn()
+                        n_type = tks.tkn()
                         desc = tks.desc()
-                        typ = Type(uid, line_no, name, desc, bits)
+                        typ = Type(uid, line_no, name, desc, bits, n_type)
                         assert typ.name not in types, f"Type name already in use : {typ.name}"
                         typ.finalize()
                         types[typ.name] = typ

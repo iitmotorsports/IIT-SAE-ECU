@@ -2,8 +2,9 @@
 
 import sdbc_parse as sdbc
 
-GEN_LOC = "libraries/SDBC/SDBC.def"
 SDBC_LOC = "SDBC/Hawkrod.sdbc"
+GEN_DEF_LOC = "libraries/SDBC/SDBC.def"
+GEN_FORM_LOC = "libraries/SDBC/Format.h"
 
 START_DOC = """/**
  * AUTO GENERATED FILE - DO NOT EDIT
@@ -17,15 +18,33 @@ START_DOC = """/**
 VALUE_LINE = "#define {} {}\n"
 X_MAC = "    X({}) \\\n"
 
-TYPE_CONV = {
-    "long": "int64_t",
-    "int": "int32_t",
-    "short": "int16_t",
-    "byte": "int8_t",
-    "float": "float",
-    "double": "double",
-    "bool": "bool",
-    "binary": "char",
+TYPE_CONV = {  # Appoximate type by bit count
+    True: {  # Signed
+        sdbc.NumType.INTEGER: {
+            1: 'bool',
+            8: 'int8_t',
+            16: 'int16_t',
+            32: 'int32_t',
+            64: 'int64_t',
+        },
+        sdbc.NumType.FLOATING: {
+            32: 'float',
+            64: 'double',
+        },
+    },
+    False: {  # Unsigned
+        sdbc.NumType.INTEGER: {
+            1: 'bool',
+            8: 'uint8_t',
+            16: 'uint16_t',
+            32: 'uint32_t',
+            64: 'uint64_t',
+        },
+        sdbc.NumType.FLOATING: {
+            32: 'float',
+            64: 'double',
+        },
+    }
 }
 
 db = sdbc.parse_file(SDBC_LOC)
@@ -36,7 +55,7 @@ def is_int(num):
 
 
 def main() -> None:
-    with open(GEN_LOC, "w", encoding="utf-8") as f:
+    with open(GEN_DEF_LOC, "w", encoding="utf-8") as f:
         f.write(START_DOC)
         f.write(f"#define CAN_MESSAGE_NO {len(db.messages)}\n")
 
