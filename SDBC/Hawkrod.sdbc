@@ -8,6 +8,8 @@ NODE Front : The front teensy
     GPIO WHEEL_0 : 20 ANALOG I         : L wheel speed
     VIRT CHARGE_SIGNAL : DIGITAL       : Indicates whether charging should be enabled
 
+    SYNC Back MSGBLK_BACK_WHEEL_SPEED : Get back wheel speeds
+
     MSG 2 MSGBLK_FRONT_WHEEL_SPEED : Wheel message block 0
         SIG WHEEL_SPEED_FRONT_LEFT : "f_rpm" <- WHEEL_0 : The speed of the front left wheel
         SIG WHEEL_SPEED_FRONT_RIGHT : "f_rpm" <- WHEEL_1 : The speed of the front right wheel
