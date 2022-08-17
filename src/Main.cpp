@@ -4,8 +4,6 @@
 #include "Front.h"
 #endif
 
-#include "DBC.h"
-
 int main(void) {
     Serial.begin(CONF_ECU_BAUD_RATE);
     delay(CONF_ECU_INITAL_DELAY);
