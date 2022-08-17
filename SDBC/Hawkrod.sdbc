@@ -2,11 +2,11 @@ NAME "Hawkrod"
 VERSION 1.0.0
 
 NODE FRONT_ECU : The front teensy
-    GPIO ONBOARD_LED : 13 DIGITAL O    : onboard led
-    GPIO BUTTON_OFF : 2 DIGITAL I      : Digital Start Button
-    GPIO WHEEL_1 : 21 ANALOG I         : R wheel speed
-    GPIO WHEEL_0 : 20 ANALOG I         : L wheel speed
-    VIRT CHARGE_SIGNAL : DIGITAL       : Indicates whether charging should be enabled
+    GPIO ONBOARD_LED : 13 DIGITAL OUTPUT    : onboard led
+    GPIO BUTTON_OFF : 2 DIGITAL INPUT      : Digital Start Button
+    GPIO WHEEL_1 : 21 ANALOG INPUT         : R wheel speed
+    GPIO WHEEL_0 : 20 ANALOG INPUT         : L wheel speed
+    VIRT CHARGE_SIGNAL : DIGITAL OUTPUT      : Indicates whether charging should be enabled
 
     SYNC BACK_ECU MSGBLK_BACK_WHEEL_SPEED : Get back wheel speeds
 
@@ -15,10 +15,10 @@ NODE FRONT_ECU : The front teensy
         SIG WHEEL_SPEED_FRONT_RIGHT : "f_rpm" <- WHEEL_1 : The speed of the front right wheel
 
 NODE BACK_ECU : The back teensy
-    GPIO SERVO_OFF : 0 DIGITAL O       : Turn the back servos off
-    GPIO TSV_SIGNAL : 3 DIGITAL I      : digital input
-    GPIO AIR2 : 4 DIGITAL O            : Air 2 control
-    VIRT STATE : ANALOG                : Current state of the ECU
+    GPIO SERVO_OFF : 0 DIGITAL OUTPUT       : Turn the back servos off
+    GPIO TSV_SIGNAL : 3 DIGITAL INPUT      : digital input
+    GPIO AIR2 : 4 DIGITAL OUTPUT            : Air 2 control
+    VIRT STATE : ANALOG OUTPUT               : Current state of the ECU
 
     SYNC FRONT_ECU MSGBLK_FRONT_WHEEL_SPEED : Get front wheel speeds
 

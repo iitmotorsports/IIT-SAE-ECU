@@ -123,8 +123,8 @@ class NumType(Enum):
 
 
 class IOType(Enum):
-    O = "O"
-    I = "I"
+    OUTPUT = "OUTPUT"
+    INPUT = "INPUT"
 
 
 class Entry:
@@ -368,11 +368,13 @@ class VIRT(Entry):
 
     pin: int = None
     p_type = None
+    io_type: IOType = None
 
-    def __init__(self, uid: int, line: int, name: str, description: str, c_node: Node, p_type: PinType) -> None:
+    def __init__(self, uid: int, line: int, name: str, description: str, c_node: Node, p_type: PinType, io_type: IOType) -> None:
         super().__init__(uid, line, name, description)
         self.c_node = c_node
         self.p_type = PinType(p_type)
+        self.io_type = IOType(io_type)
 
     def __repr__(self) -> str:
         desc = f" : {self.description}" if self.description else ''
@@ -442,13 +444,13 @@ class SDBC:
     """Represents an SDBC file"""
     name: str = None
     version: str = None
-    nodes: List[Node] = None
-    types: List[Type] = None
-    formats: List[Format] = None
-    messages: List[Message] = None
-    signals: List[Signal] = None
+    nodes: Dict[str, Node] = None
+    types: Dict[str, Type] = None
+    formats: Dict[str, Format] = None
+    messages: Dict[int, Message] = None
+    signals: Dict[str, Signal] = None
 
-    def __init__(self, name: str, version: str, nodes: List[str], types: List[Type], formats: List[Format], messages: List[Message], signals: List[Signal]) -> None:
+    def __init__(self, name: str, version: str, nodes: Dict[str, Node], types: Dict[str, Type], formats: Dict[str, Format], messages: Dict[int, Message], signals: Dict[str, Signal]) -> None:
         self.name = name
         self.version = version
         self.nodes = nodes
@@ -458,27 +460,7 @@ class SDBC:
         self.signals = signals
 
 
-class SDBC_m:
-    """Represents an SDBC file"""
-    version: str = None
-    nodes: List[str] = None
-    types: Dict[str, Type] = None
-    formats: Dict[str, Format] = None
-    messages: Dict[int, Message] = None
-    message_names: Dict[str, Message] = None
-    signals: Dict[str, Signal] = None
-
-    def __init__(self, version: str, nodes: List[str], types: Dict[str, Type], formats: Dict[str, Format], messages: Dict[str, Message], message_names: Dict[str, Message], signals: Dict[str, Signal]) -> None:
-        self.version = version
-        self.nodes = nodes
-        self.types = types
-        self.formats = formats
-        self.messages = messages
-        self.message_names = message_names
-        self.signals = signals
-
-
-def parse(file: TextIO, mapped_result: bool = False) -> SDBC | SDBC_m:
+def parse(file: TextIO) -> SDBC:
     """Parses a SDBC file given an open file
 
     Args:
@@ -547,8 +529,9 @@ def parse(file: TextIO, mapped_result: bool = False) -> SDBC | SDBC_m:
                         name = tks.tkn()
                         assert next(tks).string == ":", "Invalid signal syntax"
                         p_type = tks.tkn()
+                        io_type = tks.tkn()
                         desc = tks.desc()
-                        virt = VIRT(uid, line_no, name, desc, last_node, p_type)
+                        virt = VIRT(uid, line_no, name, desc, last_node, p_type, io_type)
                         assert last_node, "No encapuslating node"
                         last_node.insert(virt)
                     case "SYNC":
@@ -627,19 +610,16 @@ def parse(file: TextIO, mapped_result: bool = False) -> SDBC | SDBC_m:
 
         assert len(messages) <= 1048575, "Exceeding maximum number of messages"
 
-    except AssertionError as err:
+    except Exception as err:
         print(err, f'| line {line_no}')
         return
 
     print(f"{file_name} | SDBC : {version}")
 
-    # if mapped_result:
-    #     return SDBC_m(version, nodes, types, formats, messages, message_names, signals)
-
-    return SDBC(file_name, version, nodes, list(types.values()), list(formats.values()), list(messages.values()), list(signals.values()))
+    return SDBC(file_name, version, nodes, types, formats, messages, signals)
 
 
-def parse_file(filepath: str, mapped_result: bool = False) -> SDBC | SDBC_m:
+def parse_file(filepath: str) -> SDBC:
     """Opens and parses an SDBC file
 
     Args:
@@ -649,7 +629,7 @@ def parse_file(filepath: str, mapped_result: bool = False) -> SDBC | SDBC_m:
         List[Message]: List of all the messages
     """
     with open(filepath, "r", encoding="utf-8") as sdbc:
-        return parse(sdbc, mapped_result)
+        return parse(sdbc)
 
 
 if __name__ == "__main__":
