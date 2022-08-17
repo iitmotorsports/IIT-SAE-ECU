@@ -70,6 +70,57 @@ var NAVTREE =
         [ "Concatenated Calls", "md_extra__xmacros.html#XMacros_Concatenated_Calls", null ]
       ] ]
     ] ],
+    [ "DBC Logging", "md__github_workspace__s_d_b_c__d_b_c__logging.html", [
+      [ "Goals", "md__github_workspace__s_d_b_c__d_b_c__logging.html#autotoc_md30", null ],
+      [ "Distinction", "md__github_workspace__s_d_b_c__d_b_c__logging.html#autotoc_md31", [
+        [ "Telemetry", "md__github_workspace__s_d_b_c__d_b_c__logging.html#autotoc_md32", null ],
+        [ "Logging", "md__github_workspace__s_d_b_c__d_b_c__logging.html#autotoc_md33", null ]
+      ] ],
+      [ "Flow of data", "md__github_workspace__s_d_b_c__d_b_c__logging.html#autotoc_md34", null ],
+      [ "Requirements", "md__github_workspace__s_d_b_c__d_b_c__logging.html#autotoc_md35", [
+        [ "Message size", "md__github_workspace__s_d_b_c__d_b_c__logging.html#autotoc_md36", null ],
+        [ "CAN Nodes", "md__github_workspace__s_d_b_c__d_b_c__logging.html#autotoc_md37", null ]
+      ] ],
+      [ "Solutions", "md__github_workspace__s_d_b_c__d_b_c__logging.html#autotoc_md38", [
+        [ "Spreadsheet mapping", "md__github_workspace__s_d_b_c__d_b_c__logging.html#autotoc_md39", [
+          [ "Pros", "md__github_workspace__s_d_b_c__d_b_c__logging.html#autotoc_md40", null ],
+          [ "Cons", "md__github_workspace__s_d_b_c__d_b_c__logging.html#autotoc_md41", null ]
+        ] ],
+        [ "Custom mapping", "md__github_workspace__s_d_b_c__d_b_c__logging.html#autotoc_md42", [
+          [ "Pros", "md__github_workspace__s_d_b_c__d_b_c__logging.html#autotoc_md43", null ],
+          [ "Cons", "md__github_workspace__s_d_b_c__d_b_c__logging.html#autotoc_md44", null ]
+        ] ],
+        [ "Vector DBC", "md__github_workspace__s_d_b_c__d_b_c__logging.html#autotoc_md45", [
+          [ "Pros", "md__github_workspace__s_d_b_c__d_b_c__logging.html#autotoc_md46", null ],
+          [ "Cons", "md__github_workspace__s_d_b_c__d_b_c__logging.html#autotoc_md47", null ]
+        ] ],
+        [ "Custom DBC", "md__github_workspace__s_d_b_c__d_b_c__logging.html#autotoc_md48", [
+          [ "Pros", "md__github_workspace__s_d_b_c__d_b_c__logging.html#autotoc_md49", null ],
+          [ "Cons", "md__github_workspace__s_d_b_c__d_b_c__logging.html#autotoc_md50", null ]
+        ] ]
+      ] ]
+    ] ],
+    [ "SDBC syntax", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html", [
+      [ "Global syntax", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md52", null ],
+      [ "Top level lines", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md53", null ],
+      [ "Name", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md54", null ],
+      [ "Version", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md55", null ],
+      [ "Nodes", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md56", [
+        [ "<tt>NODE</tt>", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md57", null ],
+        [ "Sources", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md58", [
+          [ "<tt>ADDR</tt>", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md59", null ],
+          [ "<tt>GPIO</tt>", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md60", null ],
+          [ "<tt>VIRT</tt>", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md61", null ],
+          [ "<tt>SYNC</tt>", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md62", null ],
+          [ "<tt>MSG</tt>", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md63", [
+            [ "<tt>SIG</tt>", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md64", null ]
+          ] ]
+        ] ]
+      ] ],
+      [ "Formats", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md65", null ],
+      [ "Types", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md66", null ],
+      [ "Embedded compilation", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md67", null ]
+    ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -106,8 +157,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "____init_____8py_source.html",
-"classscript_1_1error_1_1_t_a_g_i_d_mismatch_exception.html",
-"struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46"
+"classc__t.html",
+"namespace_heartbeat.html#a79e1c0291678d9bd08a4b418b6774159"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

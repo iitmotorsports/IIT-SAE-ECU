@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['sae_20at_20iit_20ecu_20programming_0',['SAE at IIT ECU Programming',['../index.html',1,'']]]
+  ['infographics_0',['Infographics',['../md_extra__infographics.html',1,'']]]
 ];

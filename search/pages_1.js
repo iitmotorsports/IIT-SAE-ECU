@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['infographics_0',['Infographics',['../md_extra__infographics.html',1,'']]]
+  ['how_20to_20contribute_0',['How To Contribute',['../md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html',1,'']]]
 ];

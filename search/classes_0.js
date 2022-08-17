@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['avgvar_0',['AvgVar',['../class_avg_var.html',1,'']]],
-  ['avgvarref_1',['AvgVarRef',['../class_avg_var_ref.html',1,'']]]
+  ['_5f_5fread_0',['__READ',['../struct_i_o_1_1_____r_e_a_d.html',1,'IO']]],
+  ['_5f_5fwrite_1',['__WRITE',['../struct_i_o_1_1_____w_r_i_t_e.html',1,'IO']]]
 ];
