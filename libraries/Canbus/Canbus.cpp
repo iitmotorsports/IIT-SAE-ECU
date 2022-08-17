@@ -4,9 +4,9 @@
  * @brief Canbus source file
  * @version 0.2
  * @date 2020-11-11
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  */
 
 // @cond
@@ -72,7 +72,7 @@ static void _setMailboxes() {
     }
 }
 
-static CanAddress_t *_getAddress(const uint32_t address) {
+static constexpr CanAddress_t *_getAddress(const uint32_t address) {
     int c = 0;
 #define X(addr, direction)    \
     if (addr == address) {    \
@@ -316,8 +316,111 @@ typedef union {
     volatile uint8_t buf[8];
     volatile uint64_t Ulonglong;
     volatile int64_t longlong;
+    volatile double f_double;
 } UBuffer;
 
+/* Setters */
+void Canbus::Buffer::setDouble(double val) {
+#ifdef CONF_ECU_DEBUG
+    checkInit(this, buffer == 0);
+#endif
+    setSemaphore(address);
+    *(double *)buffer = val;
+    clearSemaphore();
+}
+void Canbus::Buffer::setULong(uint64_t val) {
+#ifdef CONF_ECU_DEBUG
+    checkInit(this, buffer == 0);
+#endif
+    setSemaphore(address);
+    *(uint64_t *)buffer = val;
+    clearSemaphore();
+}
+void Canbus::Buffer::setLong(int64_t val) {
+#ifdef CONF_ECU_DEBUG
+    checkInit(this, buffer == 0);
+#endif
+    setSemaphore(address);
+    *(int64_t *)buffer = val;
+    clearSemaphore();
+}
+void Canbus::Buffer::setFloat(float val, size_t pos) {
+#ifdef CONF_ECU_DEBUG
+    checkInit(this, buffer == 0);
+#endif
+    setSemaphore(address);
+    *(float *)(buffer + pos) = val;
+    clearSemaphore();
+}
+void Canbus::Buffer::setUInt(uint32_t val, size_t pos) {
+#ifdef CONF_ECU_DEBUG
+    checkInit(this, buffer == 0);
+#endif
+    setSemaphore(address);
+    *(uint32_t *)(buffer + pos) = val;
+    clearSemaphore();
+}
+void Canbus::Buffer::setInt(int32_t val, size_t pos) {
+#ifdef CONF_ECU_DEBUG
+    checkInit(this, buffer == 0);
+#endif
+    setSemaphore(address);
+    *(int32_t *)(buffer + pos) = val;
+    clearSemaphore();
+}
+void Canbus::Buffer::setUShort(uint16_t val, size_t pos) {
+#ifdef CONF_ECU_DEBUG
+    checkInit(this, buffer == 0);
+#endif
+    setSemaphore(address);
+    *(uint16_t *)(buffer + pos) = val;
+    clearSemaphore();
+}
+void Canbus::Buffer::setShort(int16_t val, size_t pos) {
+#ifdef CONF_ECU_DEBUG
+    checkInit(this, buffer == 0);
+#endif
+    setSemaphore(address);
+    *(int16_t *)(buffer + pos) = val;
+    clearSemaphore();
+}
+void Canbus::Buffer::setUByte(uint8_t val, size_t pos) {
+#ifdef CONF_ECU_DEBUG
+    checkInit(this, buffer == 0);
+#endif
+    buffer[pos] = val;
+}
+void Canbus::Buffer::setByte(int8_t val, size_t pos) {
+#ifdef CONF_ECU_DEBUG
+    checkInit(this, buffer == 0);
+#endif
+    *(int8_t *)(buffer + pos) = val;
+}
+void Canbus::Buffer::setBit(bool val, size_t pos) {
+#ifdef CONF_ECU_DEBUG
+    checkInit(this, buffer == 0);
+#endif
+    ((bool *)buffer)[pos] = val; // FIXME: Does this get individual bits?
+}
+
+/* Getters */
+double Canbus::Buffer::getDouble() {
+#ifdef CONF_ECU_DEBUG
+    checkInit(this, buffer == 0);
+#endif
+    setSemaphore(address);
+    UBuffer buf;
+    buf.buf[0] = buffer[0];
+    buf.buf[1] = buffer[1];
+    buf.buf[2] = buffer[2];
+    buf.buf[3] = buffer[3];
+    buf.buf[4] = buffer[4];
+    buf.buf[5] = buffer[5];
+    buf.buf[6] = buffer[6];
+    buf.buf[7] = buffer[7];
+    clearSemaphore();
+    return buf.f_double;
+}
 uint64_t Canbus::Buffer::getULong() {
 #ifdef CONF_ECU_DEBUG
     checkInit(this, buffer == 0);
@@ -351,6 +454,15 @@ int64_t Canbus::Buffer::getLong() {
     buf.buf[7] = buffer[7];
     clearSemaphore();
     return buf.longlong;
+}
+float Canbus::Buffer::getFloat(size_t pos) {
+#ifdef CONF_ECU_DEBUG
+    checkInit(this, buffer == 0);
+#endif
+    setSemaphore(address);
+    float val = *(float *)(buffer + pos);
+    clearSemaphore();
+    return val;
 }
 uint32_t Canbus::Buffer::getUInt(size_t pos) {
 #ifdef CONF_ECU_DEBUG
@@ -404,7 +516,7 @@ bool Canbus::Buffer::getBit(size_t pos) {
 #ifdef CONF_ECU_DEBUG
     checkInit(this, buffer == 0);
 #endif
-    return ((bool *)buffer)[pos];
+    return ((bool *)buffer)[pos]; // FIXME: Does this get individual bits?
 }
 
 // @endcond
