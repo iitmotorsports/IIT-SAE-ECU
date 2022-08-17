@@ -4,13 +4,13 @@
  * @brief FlexCAN_T4 wrapper
  * @version 0.1
  * @date 2020-11-11
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  * This module is a wrapper for the underlying library FlexCAN_T4.
- * 
+ *
  * This module helps with communication over the [Canbus](https://www.csselectronics.com/screen/page/simple-intro-to-can-bus/language/en) protocal
- * 
+ *
  */
 
 #ifndef __ECU_CANBUS_H__
@@ -32,7 +32,7 @@ namespace Canbus {
 
 /**
  * @brief The function type to pass to addCallback
- * 
+ *
  * uint32_t The address
  * volatile uint8_t * The 8 byte message buffer
  */
@@ -53,13 +53,13 @@ struct Buffer { // IMPROVE: more rigorous testing on the get funcs
     Buffer(){};
     /**
      * @brief Construct a new Buffer as a wrapper
-     * 
+     *
      * @param buffer the array to wrap around
      */
     Buffer(uint8_t *buffer);
     /**
      * @brief Construct a new Buffer
-     * 
+     *
      * @param address the address this buffer should represent
      */
     Buffer(const uint32_t address);
@@ -69,7 +69,7 @@ struct Buffer { // IMPROVE: more rigorous testing on the get funcs
     void init();
     /**
      * @brief Dump the current buffer onto an external one
-     * 
+     *
      * @param extBuffer the array to dump to
      */
     void dump(uint8_t *extBuffer);
@@ -77,65 +77,82 @@ struct Buffer { // IMPROVE: more rigorous testing on the get funcs
      * @brief Clear the buffer
      */
     void clear(void);
+
+    void Canbus::Buffer::setDouble(double val);
+    void Canbus::Buffer::setULong(uint64_t val);
+    void Canbus::Buffer::setLong(int64_t val);
+    void Canbus::Buffer::setFloat(float val, size_t pos);
+    void Canbus::Buffer::setUInt(uint32_t val, size_t pos);
+    void Canbus::Buffer::setInt(int32_t val, size_t pos);
+    void Canbus::Buffer::setUShort(uint16_t val, size_t pos);
+    void Canbus::Buffer::setShort(int16_t val, size_t pos);
+    void Canbus::Buffer::setUByte(uint8_t val, size_t pos);
+    void Canbus::Buffer::setByte(int8_t val, size_t pos);
+    void Canbus::Buffer::setBit(bool val, size_t pos);
+
+    double Canbus::Buffer::getDouble();
+
+    float Canbus::Buffer::getFloat(size_t pos);
+
     /**
      * @brief Interpret the buffer as an unsigned long
-     * 
+     *
      * @param pos the byte to start interpreting at
      * @return uint64_t The interpreted value
      */
     uint64_t getULong();
     /**
      * @brief Interpret the buffer as a long
-     * 
+     *
      * @param pos the byte to start interpreting at
      * @return int64_t The interpreted value
      */
     int64_t getLong();
     /**
      * @brief Interpret the buffer as an unsigned Integer at byte position `pos`
-     * 
+     *
      * @param pos the byte to start interpreting at
      * @return uint32_t The interpreted value
      */
     uint32_t getUInt(size_t pos);
     /**
      * @brief Interpret the buffer as an Integer at byte position `pos`
-     * 
+     *
      * @param pos the byte to start interpreting at
      * @return int32_t The interpreted value
      */
     int32_t getInt(size_t pos);
     /**
      * @brief Interpret the buffer as an unsigned Short at byte position `pos`
-     * 
+     *
      * @param pos the byte to start interpreting at
      * @return uint16_t The interpreted value
      */
     uint16_t getUShort(size_t pos);
     /**
      * @brief Interpret the buffer as an Short at byte position `pos`
-     * 
+     *
      * @param pos the byte to start interpreting at
      * @return int16_t The interpreted value
      */
     int16_t getShort(size_t pos);
     /**
      * @brief Interpret the buffer as an unsigned Byte at byte position `pos`
-     * 
+     *
      * @param pos the byte to start interpreting at
      * @return uint8_t The interpreted value
      */
     uint8_t getUByte(size_t pos);
     /**
      * @brief Interpret the buffer as a Byte at byte position `pos`
-     * 
+     *
      * @param pos the byte to start interpreting at
      * @return int8_t The interpreted value
      */
     int8_t getByte(size_t pos);
     /**
      * @brief Get the bit at position `pos` of this buffer
-     * 
+     *
      * @param pos the bit to check on the buffer
      * @return bit as boolean
      */
@@ -160,16 +177,16 @@ void setup(void);
 /**
  * @brief Enable mailbox interrupts, allowing values to automaticaly update.
  * Enabled by default
- * 
+ *
  * @param enable boolean
  */
 void enableInterrupts(bool enable);
 
 /**
  * @brief Get raw data from a canbus address
- * 
+ *
  * @note Only valid incoming addresses will put data onto the given buffer
- * 
+ *
  * @param address The incoming address
  * @param buf the buffer to copy data to
  */
@@ -190,14 +207,14 @@ volatile uint8_t *getBuffer(const uint32_t address);
  * @brief Sets whether an address buffer is being actively read from, must be set to the appropriate address if reading directly from a buffer.
  * @note Remember to clearSemaphore once done using the buffer to allow the buffer to be used and updated again.
  * @note Subsequent set semaphores overwrite the previous.
- * 
+ *
  * @param address The outgoing address
  */
 void setSemaphore(const uint32_t address);
 
 /**
  * @brief Clears any previously set semaphore.
- * 
+ *
  */
 void clearSemaphore();
 
@@ -216,16 +233,16 @@ void addCallback(const uint32_t address, canCallback callback);
 /**
  * @brief queue and address's buffer to be pushed.
  * Invalid addresses will not do anything.
- * 
+ *
  * @param address The outgoing address
  */
 void pushData(const uint32_t address);
 
 /**
  * @brief Send raw data over a given canbus address using a given array
- * 
+ *
  * @note Function does not verify that address is outgoing, undefined behavior will occur if data is sent thorugh an incoming address
- * 
+ *
  * @param address The outgoing address
  * @param buf The buffer array to be sent
  */
@@ -233,9 +250,9 @@ void sendData(const uint32_t address, uint8_t buf[8]);
 
 /**
  * @brief Send raw data over a given canbus address using given values
- * 
+ *
  * @note Function does not verify that address is outgoing, undefined behavior may occur if data is sent thorugh an incoming address
- * 
+ *
  * @param address The outgoing address
  * @param buf_0 byte 0 of the outgoing buffer
  * @param buf_1 byte 1 of the outgoing buffer
@@ -250,7 +267,7 @@ void sendData(const uint32_t address, const uint8_t buf_0 = 0, const uint8_t buf
 
 /**
  * @brief Copy a volatile canMsg array to a non-volatile array
- * 
+ *
  * @param src the volatile source array
  * @param dest the non-volatile destination array
  */
