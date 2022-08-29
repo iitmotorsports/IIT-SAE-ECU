@@ -1,0 +1,176 @@
+/**
+ * AUTO GENERATED FILE - DO NOT EDIT
+ *
+ * SDBC Values, defined in C as their respective ID
+ */
+
+#include <stdint.h>
+
+#define CAN_MESSAGE_NO 3
+
+#ifdef BACK_ECU
+
+#define PIN_ONBOARD_LED 0
+#define PIN_CHARGE_SIGNAL 0
+
+#define SDBC_SOURCE_NO 3
+#define SDBC_SOURCE_BITS 286 // Treat bools as 8 bit values
+
+#define SDBC_SYNC_NO 3
+
+#else
+
+#define PIN_ONBOARD_LED 0
+#define PIN_CHARGE_SIGNAL 0
+
+#define SDBC_SOURCE_NO 3
+#define SDBC_SOURCE_BITS 286 // Treat bools as 8 bit values
+
+#endif
+
+// WHEEL_0
+#define POST_WHEEL_SPEED_FRONT_LEFT 0, 32, 32 // THE SPEED OF THE FRONT LEFT WHEEL | FRONT >>
+#define POST_WHEEL_SPEED_FRONT_LEFT_META uint32_t, 32, 0.001, 0, float, _s
+#define POST_WHEEL_SPEED_FRONT_RIGHT 0, 32, 0 // THE SPEED OF THE FRONT RIGHT WHEEL | FRONT >>
+#define POST_WHEEL_SPEED_FRONT_RIGHT_META uint32_t, 32, 0.001, 0, float, _s
+
+// WHEEL_1
+#define CAN_WHEEL_SPEED_BACK_LEFT 1 // THE SPEED OF THE BACK LEFT WHEEL | BACK >> FRONT
+#define CAN_WHEEL_SPEED_BACK_LEFT_META uint32_t, 32, -0.001, 0, float, _s
+#define CAN_WHEEL_SPEED_BACK_RIGHT 1, 32, 0 // THE SPEED OF THE BACK RIGHT WHEEL | BACK >> FRONT
+#define CAN_WHEEL_SPEED_BACK_RIGHT_META uint32_t, 32, 0.001, 0, float, _s
+
+// MC0_FAULTS
+#define POST_FAULT_GEN_0 2, 1, 63 // | MC0 >>
+#define POST_FAULT_GEN_0_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_1 2, 1, 62 // | MC0 >>
+#define POST_FAULT_GEN_1_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_2 2, 1, 61 // | MC0 >>
+#define POST_FAULT_GEN_2_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_3 2, 1, 60 // | MC0 >>
+#define POST_FAULT_GEN_3_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_4 2, 1, 59 // | MC0 >>
+#define POST_FAULT_GEN_4_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_5 2, 1, 58 // | MC0 >>
+#define POST_FAULT_GEN_5_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_6 2, 1, 57 // | MC0 >>
+#define POST_FAULT_GEN_6_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_7 2, 1, 56 // | MC0 >>
+#define POST_FAULT_GEN_7_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_8 2, 1, 55 // | MC0 >>
+#define POST_FAULT_GEN_8_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_9 2, 1, 54 // | MC0 >>
+#define POST_FAULT_GEN_9_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_10 2, 1, 53 // | MC0 >>
+#define POST_FAULT_GEN_10_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_11 2, 1, 52 // | MC0 >>
+#define POST_FAULT_GEN_11_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_12 2, 1, 51 // | MC0 >>
+#define POST_FAULT_GEN_12_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_13 2, 1, 50 // | MC0 >>
+#define POST_FAULT_GEN_13_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_14 2, 1, 49 // | MC0 >>
+#define POST_FAULT_GEN_14_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_15 2, 1, 48 // | MC0 >>
+#define POST_FAULT_GEN_15_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_16 2, 1, 47 // | MC0 >>
+#define POST_FAULT_GEN_16_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_17 2, 1, 46 // | MC0 >>
+#define POST_FAULT_GEN_17_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_18 2, 1, 45 // | MC0 >>
+#define POST_FAULT_GEN_18_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_19 2, 1, 44 // | MC0 >>
+#define POST_FAULT_GEN_19_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_20 2, 1, 43 // | MC0 >>
+#define POST_FAULT_GEN_20_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_21 2, 1, 42 // | MC0 >>
+#define POST_FAULT_GEN_21_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_22 2, 1, 41 // | MC0 >>
+#define POST_FAULT_GEN_22_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_23 2, 1, 40 // | MC0 >>
+#define POST_FAULT_GEN_23_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_24 2, 1, 39 // | MC0 >>
+#define POST_FAULT_GEN_24_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_25 2, 1, 38 // | MC0 >>
+#define POST_FAULT_GEN_25_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_26 2, 1, 37 // | MC0 >>
+#define POST_FAULT_GEN_26_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_27 2, 1, 36 // | MC0 >>
+#define POST_FAULT_GEN_27_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_28 2, 1, 35 // | MC0 >>
+#define POST_FAULT_GEN_28_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_29 2, 1, 34 // | MC0 >>
+#define POST_FAULT_GEN_29_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_30 2, 1, 33 // | MC0 >>
+#define POST_FAULT_GEN_30_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_31 2, 1, 32 // | MC0 >>
+#define POST_FAULT_GEN_31_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_32 2, 1, 31 // | MC0 >>
+#define POST_FAULT_GEN_32_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_33 2, 1, 30 // | MC0 >>
+#define POST_FAULT_GEN_33_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_34 2, 1, 29 // | MC0 >>
+#define POST_FAULT_GEN_34_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_35 2, 1, 28 // | MC0 >>
+#define POST_FAULT_GEN_35_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_36 2, 1, 27 // | MC0 >>
+#define POST_FAULT_GEN_36_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_37 2, 1, 26 // | MC0 >>
+#define POST_FAULT_GEN_37_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_38 2, 1, 25 // | MC0 >>
+#define POST_FAULT_GEN_38_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_39 2, 1, 24 // | MC0 >>
+#define POST_FAULT_GEN_39_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_40 2, 1, 23 // | MC0 >>
+#define POST_FAULT_GEN_40_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_41 2, 1, 22 // | MC0 >>
+#define POST_FAULT_GEN_41_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_42 2, 1, 21 // | MC0 >>
+#define POST_FAULT_GEN_42_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_43 2, 1, 20 // | MC0 >>
+#define POST_FAULT_GEN_43_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_44 2, 1, 19 // | MC0 >>
+#define POST_FAULT_GEN_44_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_45 2, 1, 18 // | MC0 >>
+#define POST_FAULT_GEN_45_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_46 2, 1, 17 // | MC0 >>
+#define POST_FAULT_GEN_46_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_47 2, 1, 16 // | MC0 >>
+#define POST_FAULT_GEN_47_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_48 2, 1, 15 // | MC0 >>
+#define POST_FAULT_GEN_48_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_49 2, 1, 14 // | MC0 >>
+#define POST_FAULT_GEN_49_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_50 2, 1, 13 // | MC0 >>
+#define POST_FAULT_GEN_50_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_51 2, 1, 12 // | MC0 >>
+#define POST_FAULT_GEN_51_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_52 2, 1, 11 // | MC0 >>
+#define POST_FAULT_GEN_52_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_53 2, 1, 10 // | MC0 >>
+#define POST_FAULT_GEN_53_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_54 2, 1, 9 // | MC0 >>
+#define POST_FAULT_GEN_54_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_55 2, 1, 8 // | MC0 >>
+#define POST_FAULT_GEN_55_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_56 2, 1, 7 // | MC0 >>
+#define POST_FAULT_GEN_56_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_57 2, 1, 6 // | MC0 >>
+#define POST_FAULT_GEN_57_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_58 2, 1, 5 // | MC0 >>
+#define POST_FAULT_GEN_58_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_59 2, 1, 4 // | MC0 >>
+#define POST_FAULT_GEN_59_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_60 2, 1, 3 // | MC0 >>
+#define POST_FAULT_GEN_60_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_61 2, 1, 2 // | MC0 >>
+#define POST_FAULT_GEN_61_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_62 2, 1, 1 // | MC0 >>
+#define POST_FAULT_GEN_62_META bool, 32, 1, 0, uint32_t,
+#define POST_FAULT_GEN_63 2, 1, 0 // | MC0 >>
+#define POST_FAULT_GEN_63_META bool, 32, 1, 0, uint32_t,
+
+#define CAN_IDS     \
+    X("WHEEL_0", 2) \
+    X("WHEEL_1", 3) \
+    X("MC0_FAULTS", 4567)
