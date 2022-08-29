@@ -190,7 +190,7 @@ $(document).ready(function(){initNavTree('io_8cpp_source.html',''); initResizabl
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="comment">// For synced values</span></div>
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno"><a class="line" href="struct_i_o_1_1_sync_msg.html">  112</a></span><span class="comment"></span><span class="keyword">struct </span><a class="code hl_struct" href="struct_i_o_1_1_sync_msg.html">SyncMsg</a> {</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    <a class="code hl_struct" href="struct_canbus_1_1_buffer.html">Canbus::Buffer</a> buf;</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    Canbus::Buffer buf;</div>
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    <span class="keywordtype">bool</span> update = <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>};</div>
 <div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
@@ -230,7 +230,7 @@ $(document).ready(function(){initNavTree('io_8cpp_source.html',''); initResizabl
 <div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span><span class="preprocessor">        break;</span></div>
 <div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> </div>
 <div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span><span class="keywordtype">void</span> receive_sync() {</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    <span class="keyword">static</span> <span class="keyword">auto</span> buf = <a class="code hl_function" href="namespace_canbus.html#a5509e2ea64edb121a9fe13349658ecde">Canbus::getBuffer</a>(0x42);</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    <span class="keyword">static</span> <span class="keyword">auto</span> buf = Canbus::getBuffer(0x42);</div>
 <div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>}</div>
 <div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> </div>
 <div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span><span class="keywordtype">void</span> run_sync() {</div>
@@ -252,8 +252,6 @@ $(document).ready(function(){initNavTree('io_8cpp_source.html',''); initResizabl
 <div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    <span class="comment">// TODO: set all pins to their corresponding modes.</span></div>
 <div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>}</div>
 <div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>} <span class="comment">// namespace IO</span></div>
-<div class="ttc" id="anamespace_canbus_html_a5509e2ea64edb121a9fe13349658ecde"><div class="ttname"><a href="namespace_canbus.html#a5509e2ea64edb121a9fe13349658ecde">Canbus::getBuffer</a></div><div class="ttdeci">volatile uint8_t * getBuffer(const uint32_t address)</div><div class="ttdoc">Get the buffer of an any address. If it is outgoing, use pushData to push the data after modifying th...</div></div>
-<div class="ttc" id="astruct_canbus_1_1_buffer_html"><div class="ttname"><a href="struct_canbus_1_1_buffer.html">Canbus::Buffer</a></div><div class="ttdoc">An incoming canbus message, allows the message data to be interpreted through a simple wrapper class.</div><div class="ttdef"><b>Definition:</b> <a href="_canbus_8h_source.html#l00045">Canbus.h:45</a></div></div>
 <div class="ttc" id="astruct_i_o_1_1_____r_e_a_d_html"><div class="ttname"><a href="struct_i_o_1_1_____r_e_a_d.html">IO::__READ</a></div><div class="ttdef"><b>Definition:</b> <a href="io_8cpp_source.html#l00091">io.cpp:91</a></div></div>
 <div class="ttc" id="astruct_i_o_1_1_____w_r_i_t_e_html"><div class="ttname"><a href="struct_i_o_1_1_____w_r_i_t_e.html">IO::__WRITE</a></div><div class="ttdef"><b>Definition:</b> <a href="io_8cpp_source.html#l00077">io.cpp:77</a></div></div>
 <div class="ttc" id="astruct_i_o_1_1_sync_msg_html"><div class="ttname"><a href="struct_i_o_1_1_sync_msg.html">IO::SyncMsg</a></div><div class="ttdef"><b>Definition:</b> <a href="io_8cpp_source.html#l00112">io.cpp:112</a></div></div>

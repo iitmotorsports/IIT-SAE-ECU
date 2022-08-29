@@ -190,7 +190,7 @@ Logging Levels</h3>
 Logging over Can</h3>
 <p >The front ECU can easily communicate with the companion app as it is connected directly with USB serial.</p>
 <p >However, the back ECU is only connected to the front ECU through CanBus.</p>
-<p >To enable logging on the back ECU, it has to send messages over <a class="el" href="namespace_canbus.html" title="Canbus functionality. Refer to Canbus.h for more info.">Canbus</a>. This method is only supported when <a class="el" href="namespace_logging.html" title="Namespace to isolate Log_t struct.">Logging</a> is in it's default mode.</p>
+<p >To enable logging on the back ECU, it has to send messages over Canbus. This method is only supported when <a class="el" href="namespace_logging.html" title="Namespace to isolate Log_t struct.">Logging</a> is in it's default mode.</p>
 <p >Running <a class="el" href="namespace_logging.html#a3402a2c8efbb932ddbe58e66b9cc550c" title="If a set address is received through canbus, the data will be pushed to a buffer to be printed.">Logging::enableCanbusRelay()</a> once on the front ECU ensure that it receives and relays messages from the back ECU to the companion app.</p>
 <dl class="section warning"><dt>Warning</dt><dd>Because of the nature of serial and its interaction with interrupts, which is how messages are relayed, it is recommended to instead use CanPins to communicate data from the back ECU to the front ECU.</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="_pins_8h.html" title="Update, set, and get predefined pin values.">Pins.h</a> for more info on CanPins </dd>

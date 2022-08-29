@@ -92,7 +92,7 @@ $(document).ready(function(){initNavTree('namespace_heartbeat.html',''); initRes
 </div><!--header-->
 <div class="contents">
 
-<p>A module used to both ensure a connection to both ECUs using CAN and to periodically run callbacks.  
+<p>A module used to both ensure a connection to both ECUs using <a class="el" href="namespace_c_a_n.html" title="Canbus functionality. Refer to Canbus.h for more info.">CAN</a> and to periodically run callbacks.  
 <a href="namespace_heartbeat.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
@@ -109,7 +109,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>beginBeating</b> ()</
 <tr class="separator:aa0261c708b2a2636e941fb6969494556"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a79e1c0291678d9bd08a4b418b6774159"><td class="memItemLeft" align="right" valign="top"><a id="a79e1c0291678d9bd08a4b418b6774159" name="a79e1c0291678d9bd08a4b418b6774159"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>beginReceiving</b> ()</td></tr>
-<tr class="memdesc:a79e1c0291678d9bd08a4b418b6774159"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set callback to receive beats over CAN. <br /></td></tr>
+<tr class="memdesc:a79e1c0291678d9bd08a4b418b6774159"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set callback to receive beats over <a class="el" href="namespace_c_a_n.html" title="Canbus functionality. Refer to Canbus.h for more info.">CAN</a>. <br /></td></tr>
 <tr class="separator:a79e1c0291678d9bd08a4b418b6774159"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a85f5ba8b7ffd86ea82479c28a846f6ac"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_heartbeat.html#a85f5ba8b7ffd86ea82479c28a846f6ac">checkBeat</a> ()</td></tr>
 <tr class="memdesc:a85f5ba8b7ffd86ea82479c28a846f6ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Poll if a beat has been received.  <a href="namespace_heartbeat.html#a85f5ba8b7ffd86ea82479c28a846f6ac">More...</a><br /></td></tr>
@@ -119,7 +119,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>beginReceiving</b> ()
 <tr class="separator:a243a1a7989df814269de816d2893d35b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p >A module used to both ensure a connection to both ECUs using CAN and to periodically run callbacks. </p>
+<div class="textblock"><p >A module used to both ensure a connection to both ECUs using <a class="el" href="namespace_c_a_n.html" title="Canbus functionality. Refer to Canbus.h for more info.">CAN</a> and to periodically run callbacks. </p>
 <p >Currently, <a class="el" href="namespace_heartbeat.html#aa0261c708b2a2636e941fb6969494556" title="begin sending a beat signal at a set interval">Heartbeat::beginBeating()</a> is run on the back ECU and <a class="el" href="namespace_heartbeat.html#a79e1c0291678d9bd08a4b418b6774159" title="Set callback to receive beats over CAN.">Heartbeat::beginReceiving()</a> is run on the front ECU.</p>
 <p ><a class="el" href="namespace_heartbeat.html#a85f5ba8b7ffd86ea82479c28a846f6ac" title="Poll if a beat has been received.">Heartbeat::checkBeat()</a> must be polled on the front ECU to log whether or not a heart beat is being detected</p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="_heartbeat_8def.html">Heartbeat.def</a> for configuration of this module </dd></dl>

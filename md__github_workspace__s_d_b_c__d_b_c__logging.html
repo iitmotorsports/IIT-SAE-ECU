@@ -117,7 +117,7 @@ Requirements</h1>
 <p >Requirements that should be set, in order to improve functionality</p>
 <h2><a class="anchor" id="autotoc_md36"></a>
 Message size</h2>
-<p >Currently 8 Bytes. However, this does not need to be the case when saving a value to storage, or sending it over USB Serial. Over CAN, however, it must remain at 8 bytes, unless we actually use CAN addresses to differentiate between messages. This would mean more attention to what addresses we are using, but it would allow for more data to be sent at once over CAN. Doing so could free up the 4 bytes used for ID.</p>
+<p >Currently 8 Bytes. However, this does not need to be the case when saving a value to storage, or sending it over USB Serial. Over <a class="el" href="namespace_c_a_n.html" title="Canbus functionality. Refer to Canbus.h for more info.">CAN</a>, however, it must remain at 8 bytes, unless we actually use <a class="el" href="namespace_c_a_n.html" title="Canbus functionality. Refer to Canbus.h for more info.">CAN</a> addresses to differentiate between messages. This would mean more attention to what addresses we are using, but it would allow for more data to be sent at once over <a class="el" href="namespace_c_a_n.html" title="Canbus functionality. Refer to Canbus.h for more info.">CAN</a>. Doing so could free up the 4 bytes used for ID.</p>
 <h2><a class="anchor" id="autotoc_md37"></a>
 CAN Nodes</h2>
 <p >There are other nodes besides the ECUs and, potentially, even more nodes for future builds. Being able to get information directly from these submodules instead of having it pass through an ECU first would be beneficial. Additionally, it would help differentiate where messages are actually coming from, instead of "its from the ecu that takes it from the mc" or whatever other submodule.</p>
@@ -126,7 +126,7 @@ CAN Nodes</h2>
 Solutions</h1>
 <h2><a class="anchor" id="autotoc_md39"></a>
 Spreadsheet mapping</h2>
-<p >Each value is mapped out with their own variable name, type, unit, etc. Each type and unit is also defined within the same book. Data validation enables easier entry of values. How exactly values are "packaged" and passed over CAN is decided by grouping as many values into messages based on their value size (bits). This means another mapping is generated, indicating where and how to decode for any particular value.</p>
+<p >Each value is mapped out with their own variable name, type, unit, etc. Each type and unit is also defined within the same book. Data validation enables easier entry of values. How exactly values are "packaged" and passed over <a class="el" href="namespace_c_a_n.html" title="Canbus functionality. Refer to Canbus.h for more info.">CAN</a> is decided by grouping as many values into messages based on their value size (bits). This means another mapping is generated, indicating where and how to decode for any particular value.</p>
 <h3><a class="anchor" id="autotoc_md40"></a>
 Pros</h3>
 <p >Using a spreadsheet, this enables for easier entry of values, as data validation helps ensure we use the defined types and units.</p>

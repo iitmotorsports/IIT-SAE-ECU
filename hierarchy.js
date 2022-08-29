@@ -4,7 +4,7 @@ var hierarchy =
     [ "IO::__WRITE", "struct_i_o_1_1_____w_r_i_t_e.html", null ],
     [ "AvgVar< T >", "class_avg_var.html", null ],
     [ "AvgVarRef< T >", "class_avg_var_ref.html", null ],
-    [ "Canbus::Buffer", "struct_canbus_1_1_buffer.html", null ],
+    [ "CAN::Buffer", "struct_c_a_n_1_1_buffer.html", null ],
     [ "sdbc_parse.Entry", "classsdbc__parse_1_1_entry.html", [
       [ "sdbc_parse.Format", "classsdbc__parse_1_1_format.html", null ],
       [ "sdbc_parse.GPIO", "classsdbc__parse_1_1_g_p_i_o.html", null ],
@@ -18,6 +18,7 @@ var hierarchy =
     [ "script.file_entry.FileEntry", "classscript_1_1file__entry_1_1_file_entry.html", null ],
     [ "Logging::Log_t", "struct_logging_1_1_log__t.html", null ],
     [ "Module::Module_t", "class_module_1_1_module__t.html", [
+      [ "CAN::Canbus_t", "class_c_a_n_1_1_canbus__t.html", null ],
       [ "a", "classa.html", null ],
       [ "b_t", "classb__t.html", null ],
       [ "c_t", "classc__t.html", null ],

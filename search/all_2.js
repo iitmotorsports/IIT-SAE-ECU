@@ -9,5 +9,7 @@ var searchData=
   ['bin2cc_6',['bin2cc',['../bin2cc_8py.html#a41cce3a3bd01b4b00004bb16c6ee26c2',1,'bin2cc']]],
   ['bin2cc_2epy_7',['bin2cc.py',['../bin2cc_8py.html',1,'']]],
   ['blanktagexception_8',['BlankTAGException',['../classscript_1_1error_1_1_blank_t_a_g_exception.html',1,'script::error']]],
-  ['buffer_9',['Buffer',['../struct_canbus_1_1_buffer.html#aaf9e2c98af9cdee3e5c12643458a4156',1,'Canbus::Buffer::Buffer()'],['../struct_canbus_1_1_buffer.html#a55b601f63747077e60190568ee364e8d',1,'Canbus::Buffer::Buffer(uint8_t *buffer)'],['../struct_canbus_1_1_buffer.html#ad65cb31e2dd5930d3278241c96e67db5',1,'Canbus::Buffer::Buffer(const uint32_t address)'],['../struct_canbus_1_1_buffer.html',1,'Canbus::Buffer']]]
+  ['buffer_9',['Buffer',['../struct_c_a_n_1_1_buffer.html#a26ad165e152c3953ab12bd186d7f0698',1,'CAN::Buffer::Buffer(volatile uint8_t *buffer)'],['../struct_c_a_n_1_1_buffer.html#a70542a3a9ca0fa7dbaaf16bcf901ab48',1,'CAN::Buffer::Buffer(const uint32_t address, volatile uint8_t *buffer)']]],
+  ['buffer_10',['buffer',['../struct_c_a_n_1_1_buffer.html#ae06212fc121ac73104a0c3038980f09b',1,'CAN::Buffer']]],
+  ['buffer_11',['Buffer',['../struct_c_a_n_1_1_buffer.html',1,'CAN']]]
 ];

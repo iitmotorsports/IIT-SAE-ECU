@@ -1,7 +1,8 @@
 var annotated_dup =
 [
-    [ "Canbus", "namespace_canbus.html", [
-      [ "Buffer", "struct_canbus_1_1_buffer.html", "struct_canbus_1_1_buffer" ]
+    [ "CAN", "namespace_c_a_n.html", [
+      [ "Buffer", "struct_c_a_n_1_1_buffer.html", "struct_c_a_n_1_1_buffer" ],
+      [ "Canbus_t", "class_c_a_n_1_1_canbus__t.html", "class_c_a_n_1_1_canbus__t" ]
     ] ],
     [ "IO", null, [
       [ "__READ", "struct_i_o_1_1_____r_e_a_d.html", null ],

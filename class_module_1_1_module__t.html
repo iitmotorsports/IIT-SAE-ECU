@@ -94,17 +94,23 @@ $(document).ready(function(){initNavTree('class_module_1_1_module__t.html',''); 
   <div class="headertitle"><div class="title">Module::Module_t Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p><a class="el" href="class_module_1_1_module__t.html" title="Module_t should be used for major components of a framework, it is used to isolate,...">Module_t</a> should be used for major components of a framework, it is used to isolate, thread, and handle dependencies between these components.  
+ <a href="class_module_1_1_module__t.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="module_8hpp_source.html">module.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for Module::Module_t:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="class_module_1_1_module__t.png" usemap="#Module::Module_5Ft_map" alt=""/>
   <map id="Module::Module_5Ft_map" name="Module::Module_5Ft_map">
-<area href="classa.html" alt="a" shape="rect" coords="0,56,112,80"/>
-<area href="classb__t.html" alt="b_t" shape="rect" coords="122,56,234,80"/>
-<area href="classc__t.html" alt="c_t" shape="rect" coords="244,56,356,80"/>
-<area href="classd__t.html" alt="d_t" shape="rect" coords="366,56,478,80"/>
-<area href="classe.html" alt="e" shape="rect" coords="488,56,600,80"/>
+<area href="class_c_a_n_1_1_canbus__t.html" alt="CAN::Canbus_t" shape="rect" coords="0,56,112,80"/>
+<area href="classa.html" alt="a" shape="rect" coords="122,56,234,80"/>
+<area href="classb__t.html" alt="b_t" shape="rect" coords="244,56,356,80"/>
+<area href="classc__t.html" alt="c_t" shape="rect" coords="366,56,478,80"/>
+<area href="classd__t.html" alt="d_t" shape="rect" coords="488,56,600,80"/>
+<area href="classe.html" alt="e" shape="rect" coords="610,56,722,80"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -126,11 +132,10 @@ Static Public Member Functions</h2></td></tr>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a4fee9d0f9be777c01493285bf3aec8ff"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_module_1_1_module__t.html#a4fee9d0f9be777c01493285bf3aec8ff">print</a> ()</td></tr>
 <tr class="separator:a4fee9d0f9be777c01493285bf3aec8ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad48bcc20918e2498f281a31ca49426b8"><td class="memItemLeft" align="right" valign="top"><a id="ad48bcc20918e2498f281a31ca49426b8" name="ad48bcc20918e2498f281a31ca49426b8"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setup</b> ()=0</td></tr>
+<tr class="memitem:ad48bcc20918e2498f281a31ca49426b8"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_module_1_1_module__t.html#ad48bcc20918e2498f281a31ca49426b8">setup</a> ()=0</td></tr>
 <tr class="separator:ad48bcc20918e2498f281a31ca49426b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a38e609235b4ba56fdc2f6b77b23abcfd"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_module_1_1_module__t.html#a38e609235b4ba56fdc2f6b77b23abcfd">runner</a> ()</td></tr>
-<tr class="separator:a38e609235b4ba56fdc2f6b77b23abcfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7945615dc5f2916da5f5b5ec76f4a90d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_module_1_1_module__t.html#a7945615dc5f2916da5f5b5ec76f4a90d">run</a> ()</td></tr>
+<tr class="separator:a7945615dc5f2916da5f5b5ec76f4a90d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -140,8 +145,22 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a541da540898bb4a546733ebba5cff69c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="module_8hpp_source.html#l00034">34</a> of file <a class="el" href="module_8hpp_source.html">module.hpp</a>.</p>
+<div class="textblock"><p ><a class="el" href="class_module_1_1_module__t.html" title="Module_t should be used for major components of a framework, it is used to isolate,...">Module_t</a> should be used for major components of a framework, it is used to isolate, thread, and handle dependencies between these components. </p>
+<p >Defining a module is not straight forward and needs to be setup in a specific way. Reference the example.</p>
+<p >Example definition:</p>
+<p >&gt;class mod_name : public <a class="el" href="class_module_1_1_module__t.html" title="Module_t should be used for major components of a framework, it is used to isolate,...">Module::Module_t</a> { </p><blockquote class="doxtable">
+<p >&zwj; LOG_TAG ID = "String ID for logging";</p>
+<p >using Module::Module_t::Module_t;</p>
+<p >void <a class="el" href="namespace_aero.html#aaf24879c16df328a981323313c41f1ba" title="Attach analog pins to their servo objects.">setup()</a> { // Setup code goes here, this includes anything that should be reset or initalized // Called on startup and whenever the ecu soft resets }</p>
+<p >// Only runs after all modules run their setup. Loop is managed by user. void <a class="el" href="namespace_aero.html#a9a0abe410b4d1e6475bd3349461f68db" title="Run Aero servo logic, given raw values.">run()</a> { while (1) { // Looping code goes here } }</p>
+<p ></p>
+</blockquote>
+<p>&gt;} a("String ID for logging", 2048, &amp;b, &amp;c, &amp;d); // The EXACT same string as the ID, </p><blockquote class="doxtable">
+<p >&zwj; // optionally, the stacksize this module should allocate, // and pointers to all the modules that this module depends on </p>
+</blockquote>
+<dl class="section warning"><dt>Warning</dt><dd>Modules are only meant to be created staticly as shown above </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="module_8hpp_source.html#l00064">64</a> of file <a class="el" href="module_8hpp_source.html">module.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aea66165777a20f30b9f8ecd2e10814c7" name="aea66165777a20f30b9f8ecd2e10814c7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aea66165777a20f30b9f8ecd2e10814c7">&#9670;&nbsp;</a></span>Module_t() <span class="overload">[1/3]</span></h2>
@@ -166,7 +185,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="module_8hpp_source.html#l00065">65</a> of file <a class="el" href="module_8hpp_source.html">module.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="module_8hpp_source.html#l00095">95</a> of file <a class="el" href="module_8hpp_source.html">module.hpp</a>.</p>
 
 </div>
 </div>
@@ -206,7 +225,7 @@ template&lt;typename... T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="module_8hpp_source.html#l00067">67</a> of file <a class="el" href="module_8hpp_source.html">module.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="module_8hpp_source.html#l00097">97</a> of file <a class="el" href="module_8hpp_source.html">module.hpp</a>.</p>
 
 </div>
 </div>
@@ -252,7 +271,7 @@ template&lt;typename... T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="module_8hpp_source.html#l00069">69</a> of file <a class="el" href="module_8hpp_source.html">module.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="module_8hpp_source.html#l00099">99</a> of file <a class="el" href="module_8hpp_source.html">module.hpp</a>.</p>
 
 </div>
 </div>
@@ -280,12 +299,12 @@ template&lt;typename... T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="module_8cpp_source.html#l00048">48</a> of file <a class="el" href="module_8cpp_source.html">module.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="module_8cpp_source.html#l00049">49</a> of file <a class="el" href="module_8cpp_source.html">module.cpp</a>.</p>
 
 </div>
 </div>
-<a id="a38e609235b4ba56fdc2f6b77b23abcfd" name="a38e609235b4ba56fdc2f6b77b23abcfd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a38e609235b4ba56fdc2f6b77b23abcfd">&#9670;&nbsp;</a></span>runner()</h2>
+<a id="a7945615dc5f2916da5f5b5ec76f4a90d" name="a7945615dc5f2916da5f5b5ec76f4a90d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7945615dc5f2916da5f5b5ec76f4a90d">&#9670;&nbsp;</a></span>run()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -294,8 +313,9 @@ template&lt;typename... T&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void Module::Module_t::runner </td>
+          <td class="memname">virtual void Module::Module_t::run </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -307,7 +327,36 @@ template&lt;typename... T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="module_8hpp_source.html#l00062">62</a> of file <a class="el" href="module_8hpp_source.html">module.hpp</a>.</p>
+<p>Reimplemented in <a class="el" href="class_c_a_n_1_1_canbus__t.html#a9b9b0c48478acb8bbcc43b872841b104">CAN::Canbus_t</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="module_8hpp_source.html#l00092">92</a> of file <a class="el" href="module_8hpp_source.html">module.hpp</a>.</p>
+
+</div>
+</div>
+<a id="ad48bcc20918e2498f281a31ca49426b8" name="ad48bcc20918e2498f281a31ca49426b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad48bcc20918e2498f281a31ca49426b8">&#9670;&nbsp;</a></span>setup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void Module::Module_t::setup </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="class_c_a_n_1_1_canbus__t.html#a82200db780cf240ea4e4f9dc687dc211">CAN::Canbus_t</a>.</p>
 
 </div>
 </div>
@@ -334,7 +383,7 @@ template&lt;typename... T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="module_8hpp_source.html#l00071">71</a> of file <a class="el" href="module_8hpp_source.html">module.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="module_8hpp_source.html#l00101">101</a> of file <a class="el" href="module_8hpp_source.html">module.hpp</a>.</p>
 
 </div>
 </div>
@@ -359,7 +408,7 @@ template&lt;typename... T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="module_8hpp_source.html#l00058">58</a> of file <a class="el" href="module_8hpp_source.html">module.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="module_8hpp_source.html#l00088">88</a> of file <a class="el" href="module_8hpp_source.html">module.hpp</a>.</p>
 
 </div>
 </div>
@@ -383,7 +432,7 @@ template&lt;typename... T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="module_8hpp_source.html#l00057">57</a> of file <a class="el" href="module_8hpp_source.html">module.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="module_8hpp_source.html#l00087">87</a> of file <a class="el" href="module_8hpp_source.html">module.hpp</a>.</p>
 
 </div>
 </div>

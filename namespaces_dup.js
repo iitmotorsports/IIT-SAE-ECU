@@ -5,7 +5,7 @@ var namespaces_dup =
       [ "run", "namespace_aero.html#a9a0abe410b4d1e6475bd3349461f68db", null ],
       [ "setup", "namespace_aero.html#aaf24879c16df328a981323313c41f1ba", null ]
     ] ],
-    [ "Canbus", "namespace_canbus.html", "namespace_canbus" ],
+    [ "CAN", "namespace_c_a_n.html", "namespace_c_a_n" ],
     [ "Cmd", "namespace_cmd.html", [
       [ "receiveCommand", "namespace_cmd.html#ae4cdc8f8cdead5a5563c40cf7d1558fa", null ],
       [ "setCommand", "namespace_cmd.html#aedaea62d3d1e614cf34ae87372087846", null ]

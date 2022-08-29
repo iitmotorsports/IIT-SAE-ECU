@@ -136,7 +136,7 @@ Nodes</h1>
 </blockquote>
 </blockquote>
 <p>Where <code>pin#</code> is an integer.</p>
-<p >Nodes are used to organize where CAN messages originate from and to define pins that are in use. Defining pins is not necessary, such as with a motor controller or AMS, where there is no embedded logic. Nodes must be part of the CAN network. This assumes that there is only one network.</p>
+<p >Nodes are used to organize where <a class="el" href="namespace_c_a_n.html" title="Canbus functionality. Refer to Canbus.h for more info.">CAN</a> messages originate from and to define pins that are in use. Defining pins is not necessary, such as with a motor controller or AMS, where there is no embedded logic. Nodes must be part of the <a class="el" href="namespace_c_a_n.html" title="Canbus functionality. Refer to Canbus.h for more info.">CAN</a> network. This assumes that there is only one network.</p>
 <h2><a class="anchor" id="autotoc_md57"></a>
 &lt;tt&gt;NODE&lt;/tt&gt;</h2>
 <p >The <code>NODE</code> line consists of a unique ID for this node, and the optional description. It is important that the name matches that of the build system's if the node is related to the pins defined i.e. the ECUs.</p>
@@ -144,7 +144,7 @@ Nodes</h1>
 Sources</h2>
 <h3><a class="anchor" id="autotoc_md59"></a>
 &lt;tt&gt;ADDR&lt;/tt&gt;</h3>
-<p >The <code>ADDR</code> line optionally defines a CAN bus address space that should be allocated to this node. This means no other nodes can use any addresses within this space. Any sources within this node that use an address outside of this range should not cause error but should show a warning and be added to the address space, where applicable. It shall not be allowed for any source or address space to overlap in address.</p>
+<p >The <code>ADDR</code> line optionally defines a <a class="el" href="namespace_c_a_n.html" title="Canbus functionality. Refer to Canbus.h for more info.">CAN</a> bus address space that should be allocated to this node. This means no other nodes can use any addresses within this space. Any sources within this node that use an address outside of this range should not cause error but should show a warning and be added to the address space, where applicable. It shall not be allowed for any source or address space to overlap in address.</p>
 <p >The first address is the lower bound while the second is the upper bound.</p>
 <p >If no address space is defined, only the refrenced addresses in the node are used.</p>
 <p >Addresses can either be in hex (begins with <code>0x</code>) or decimal.</p>
@@ -164,7 +164,7 @@ Sources</h2>
 <p >Nodes with logic shall be allowed to query sources and messages of other nodes where applicable. However, the <code>SYNC</code> keyword denotes explicit and constant syncing of the defined value without needed to request for it. This should be used in cases where a value or message will be used often. This also explicitly defines the same id in the receiving node's namespace, to be used as if it where it's own. The line consists of the id of another node and the id of either a <code>GPIO</code>, <code>VIRT</code>, or <code>MSG</code> within that node.</p>
 <h3><a class="anchor" id="autotoc_md63"></a>
 &lt;tt&gt;MSG&lt;/tt&gt;</h3>
-<p >The <code>MSG</code> line defines a CAN bus message, where it contains <code>SIG</code>s or signals, which are the values within that message. It consists of the can bus address for the message, the unique id for this message, and the optional description.</p>
+<p >The <code>MSG</code> line defines a <a class="el" href="namespace_c_a_n.html" title="Canbus functionality. Refer to Canbus.h for more info.">CAN</a> bus message, where it contains <code>SIG</code>s or signals, which are the values within that message. It consists of the can bus address for the message, the unique id for this message, and the optional description.</p>
 <p >Addresses can either be in hex (begins with <code>0x</code>) or decimal.</p>
 <p >There are can be multiple signals per message, however, it shall be verified at processing whether the sigs are able to fit in the message's 64 bit buffer. The order in which sigs are defined in a message dictates the structure of the buffer. i.e. if a message is defined with an <code>int</code>, and two <code>short</code>s, in that order, the actual buffer will be sent where the first 32 bits are an <code>int</code> and the next two 16 bit blocks are <code>short</code>s, where it all totals to 64 bits.</p>
 <h4><a class="anchor" id="autotoc_md64"></a>

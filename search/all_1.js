@@ -1,8 +1,8 @@
 var searchData=
 [
   ['a_0',['a',['../classa.html',1,'']]],
-  ['addcallback_1',['addCallback',['../namespace_canbus.html#a884781debf9732f3e4676830d294e6bc',1,'Canbus::addCallback()'],['../namespace_heartbeat.html#a243a1a7989df814269de816d2893d35b',1,'Heartbeat::addCallback()']]],
-  ['address_2',['address',['../struct_canbus_1_1_buffer.html#a7072a6fcf3ebcd1d434f12ee8f4537c7',1,'Canbus::Buffer']]],
+  ['addcallback_1',['addCallback',['../namespace_heartbeat.html#a243a1a7989df814269de816d2893d35b',1,'Heartbeat']]],
+  ['address_2',['address',['../struct_c_a_n_1_1_buffer.html#a27b4ee8a1c569f2912204cb5da396ad2',1,'CAN::Buffer']]],
   ['aero_3',['Aero',['../namespace_aero.html',1,'']]],
   ['aeroservo_2ecpp_4',['AeroServo.cpp',['../_aero_servo_8cpp.html',1,'']]],
   ['aeroservo_2eh_5',['AeroServo.h',['../_aero_servo_8h.html',1,'']]],

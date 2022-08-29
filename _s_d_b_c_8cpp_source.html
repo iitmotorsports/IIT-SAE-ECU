@@ -104,7 +104,7 @@ $(document).ready(function(){initNavTree('_s_d_b_c_8cpp_source.html',''); initRe
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keywordflow">while</span> (<span class="keyword">true</span>) {</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        clk = (clk + 1) % CAN_MESSAGE_NO;</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <span class="keywordflow">if</span> (msg_up[clk]) {</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>            <a class="code hl_function" href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">Canbus::sendData</a>(msg_id[clk], msg[clk]);</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>            Canbus::sendData(msg_id[clk], msg[clk]);</div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>            msg_up[clk] = <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        }</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    }</div>
@@ -116,7 +116,6 @@ $(document).ready(function(){initNavTree('_s_d_b_c_8cpp_source.html',''); initRe
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    msg_up[message_index] = <span class="keyword">true</span>;</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>}</div>
 <div class="ttc" id="a_canbus_8h_html"><div class="ttname"><a href="_canbus_8h.html">Canbus.h</a></div><div class="ttdoc">FlexCAN_T4 wrapper.</div></div>
-<div class="ttc" id="anamespace_canbus_html_a003195b12c68a25e85c1249630901f87"><div class="ttname"><a href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">Canbus::sendData</a></div><div class="ttdeci">void sendData(const uint32_t address, uint8_t buf[8])</div><div class="ttdoc">Send raw data over a given canbus address using a given array.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

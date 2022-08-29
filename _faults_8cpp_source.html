@@ -113,7 +113,7 @@ $(document).ready(function(){initNavTree('_faults_8cpp_source.html',''); initRes
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keyword">typedef</span> <span class="keyword">struct </span>CanFault {</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    uint32_t address;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <a class="code hl_struct" href="struct_canbus_1_1_buffer.html">Canbus::Buffer</a> buffer;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    Canbus::Buffer buffer;</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    uint64_t faultMask;</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <a class="code hl_typedef" href="_log_8h.html#a3a232a0a4f2e1e64a6cf1a5b19021dd7">LOG_MSG</a> *tags;</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keywordtype">bool</span> faulted = <span class="keyword">false</span>;</div>
@@ -129,9 +129,9 @@ $(document).ready(function(){initNavTree('_faults_8cpp_source.html',''); initRes
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    }</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keywordtype">bool</span> check() {</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        uint64_t curr = buffer.<a class="code hl_function" href="struct_canbus_1_1_buffer.html#a858103df59fa907303585534396f0361">getULong</a>();</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        uint64_t curr = buffer.getULong();</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        <span class="keywordflow">if</span> (curr &amp; faultMask) {</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            buffer.<a class="code hl_function" href="struct_canbus_1_1_buffer.html#a346e76948bb3526504e771dbbc53b2b6">dump</a>(lastValue.arr);</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            buffer.dump(lastValue.arr);</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="preprocessor">#ifdef CONF_ECU_DEBUG</span></div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            <a class="code hl_variable" href="_log_8h.html#af31ef15863cb3c9383790dc16c3f2304">Log</a>.<a class="code hl_function" href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">w</a>(ID, <span class="stringliteral">&quot;Faulted CAN Address:&quot;</span>, address);</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">#endif</span></div>
@@ -141,7 +141,7 @@ $(document).ready(function(){initNavTree('_faults_8cpp_source.html',''); initRes
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    }</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="keywordtype">void</span> clear() {</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        buffer.<a class="code hl_function" href="struct_canbus_1_1_buffer.html#a35ab944e04444e8ad15f087c8b1f0b57">clear</a>();</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        buffer.clear();</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        lastValue.longlong = 0;</div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        faulted = <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    }</div>
@@ -323,10 +323,6 @@ $(document).ready(function(){initNavTree('_faults_8cpp_source.html',''); initRes
 <div class="ttc" id="anamespace_fault_html_a575e9434178c423cac322ff491398e93"><div class="ttname"><a href="namespace_fault.html#a575e9434178c423cac322ff491398e93">Fault::hardFault</a></div><div class="ttdeci">bool hardFault(void)</div><div class="ttdoc">Checks if any serious fault has occurred.</div></div>
 <div class="ttc" id="anamespace_fault_html_a8d65de5d2b7a229e0d2c8d84ca9f64bd"><div class="ttname"><a href="namespace_fault.html#a8d65de5d2b7a229e0d2c8d84ca9f64bd">Fault::anyFault</a></div><div class="ttdeci">bool anyFault(void)</div><div class="ttdoc">Checks both hardFault and softFault.</div></div>
 <div class="ttc" id="anamespace_fault_html_abf369f0092a0b44bb9546b3563417895"><div class="ttname"><a href="namespace_fault.html#abf369f0092a0b44bb9546b3563417895">Fault::logFault</a></div><div class="ttdeci">void logFault(void)</div><div class="ttdoc">Interprets and logs the last fault that was checked using the Log library.</div></div>
-<div class="ttc" id="astruct_canbus_1_1_buffer_html"><div class="ttname"><a href="struct_canbus_1_1_buffer.html">Canbus::Buffer</a></div><div class="ttdoc">An incoming canbus message, allows the message data to be interpreted through a simple wrapper class.</div><div class="ttdef"><b>Definition:</b> <a href="_canbus_8h_source.html#l00045">Canbus.h:45</a></div></div>
-<div class="ttc" id="astruct_canbus_1_1_buffer_html_a346e76948bb3526504e771dbbc53b2b6"><div class="ttname"><a href="struct_canbus_1_1_buffer.html#a346e76948bb3526504e771dbbc53b2b6">Canbus::Buffer::dump</a></div><div class="ttdeci">void dump(uint8_t *extBuffer)</div><div class="ttdoc">Dump the current buffer onto an external one.</div></div>
-<div class="ttc" id="astruct_canbus_1_1_buffer_html_a35ab944e04444e8ad15f087c8b1f0b57"><div class="ttname"><a href="struct_canbus_1_1_buffer.html#a35ab944e04444e8ad15f087c8b1f0b57">Canbus::Buffer::clear</a></div><div class="ttdeci">void clear(void)</div><div class="ttdoc">Clear the buffer.</div></div>
-<div class="ttc" id="astruct_canbus_1_1_buffer_html_a858103df59fa907303585534396f0361"><div class="ttname"><a href="struct_canbus_1_1_buffer.html#a858103df59fa907303585534396f0361">Canbus::Buffer::getULong</a></div><div class="ttdeci">uint64_t getULong()</div><div class="ttdoc">Interpret the buffer as an unsigned long.</div></div>
 <div class="ttc" id="astruct_logging_1_1_log__t_html_a6a07c7449c92c06a608cb8f6463ebd46"><div class="ttname"><a href="struct_logging_1_1_log__t.html#a6a07c7449c92c06a608cb8f6463ebd46">Logging::Log_t::w</a></div><div class="ttdeci">void w(LOG_TAG TAG, LOG_MSG message)</div><div class="ttdoc">Log a string using a warning tag.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
