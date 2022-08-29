@@ -23,12 +23,13 @@ static bool modulesOrdered = false;
 
 void Module_t::_runner(Module_t *m) {
     Log.i(ID, "Starting thread", m->id);
-    m->runner();
+    m->run();
+    Log.i(ID, "Thread stopped", m->id);
 };
 
 void Module_t::start() {
     std::lock_guard<std::mutex> lock(vMux);
-    if (hasRunner && thread == -1) {
+    if (hasRun && thread == -1) {
         thread = Thread::addThread((Thread::ThreadFunction)_runner, (void *)this, stackSize, 0, name);
         if (thread == -1) {
             Log.f(ID, "Failed to start thread", id);

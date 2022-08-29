@@ -17,7 +17,7 @@ class a : public Module::Module_t {
     volatile int counter = 0;
     volatile bool led = false;
 
-    void runner() {
+    void run() {
         while (1) {
             if ((state = !state)) {
                 Log.i(ID, "running", counter++);

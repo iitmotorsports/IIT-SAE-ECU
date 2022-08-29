@@ -16,7 +16,7 @@ class e : public Module::Module_t {
 
     volatile int counter = 0;
 
-    void runner() {
+    void run() {
         while (1) {
             Log.i(ID, "running", counter++);
             Thread::delay(350);
@@ -42,7 +42,7 @@ class d_t : public Module::Module_t {
 
     volatile int counter = 0;
 
-    void runner() {
+    void run() {
         while (1) {
             Log.i(ID, "running", counter++);
             Thread::delay(1000);
@@ -70,7 +70,7 @@ class c_t : public Module::Module_t {
 
     volatile int counter = 0;
 
-    // void runner() {
+    // void run() {
     //     while (1) {
     //         Log.i(ID, "running", counter++);
     //         Thread::delay(1000);
@@ -95,7 +95,7 @@ class b_t : public Module::Module_t {
 
     volatile int counter = 0;
 
-    void runner() {
+    void run() {
         while (1) {
             Log.i(ID, "running", counter++);
             Thread::delay(1000);

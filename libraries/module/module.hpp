@@ -31,12 +31,42 @@ static const size_t maxModules = sizeof(bitmapVal_t) * 8;
 
 extern Module_t *allModules[maxModules];
 
-class Module_t { // NOTE: Modules are only meant to be created staticly
+/**
+ * @brief Module_t should be used for major components of a framework, it is used to isolate, thread, and handle dependencies between these components
+ *
+ * Defining a module is not straight forward and needs to be setup in a specific way. Reference the example.
+ *
+ * Example definition:
+ *
+ * >class mod_name : public Module::Module_t {
+ * >    LOG_TAG ID = "String ID for logging";
+ * >
+ * >    using Module::Module_t::Module_t;
+ * >
+ * >    void setup() {
+ * >        // Setup code goes here, this includes anything that should be reset or initalized
+ * >        // Called on startup and whenever the ecu soft resets
+ * >    }
+ * >
+ * >    // Only runs after all modules run their setup. Loop is managed by user.
+ * >    void run() {
+ * >        while (1) {
+ * >            // Looping code goes here
+ * >        }
+ * >    }
+ * >
+ * >} a("String ID for logging", 2048, &b, &c, &d); // The EXACT same string as the ID,
+ * >                                                // optionally, the stacksize this module should allocate,
+ * >                                                // and pointers to all the modules that this module depends on
+ *
+ * @warning Modules are only meant to be created staticly as shown above
+ */
+class Module_t {
 private:
     std::mutex vMux;
     int thread = -1;
     const int stackSize = 4096;
-    bool hasRunner = true; // TODO: set to false if no runner is overriden
+    bool hasRun = true; // TODO: set to false if no run is overriden
 
     const bitmapVal_t count = 0;
     const Module_t *dependents[maxModules] = {0}; // IMPROVE: make flexible dependency array
@@ -59,7 +89,7 @@ protected:
 
     virtual void print();
     virtual void setup() = 0;
-    virtual void runner(){};
+    virtual void run(){};
 
 public:
     Module_t() : name(Thread::NIL_NAME), id(1 << s_id++) { allModules[s_id - 1] = this; };
