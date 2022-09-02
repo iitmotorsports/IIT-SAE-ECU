@@ -6,37 +6,48 @@ namespace CAN {
 /* Setters */
 void Buffer::setDouble(double val) {
     *(double *)buffer = val;
+    modified = true;
 }
 void Buffer::setULong(uint64_t val) {
     *(uint64_t *)buffer = val;
+    modified = true;
 }
 void Buffer::setLong(int64_t val) {
     *(int64_t *)buffer = val;
+    modified = true;
 }
 void Buffer::setFloat(float val, size_t pos) {
     *(float *)(buffer + pos) = val;
+    modified = true;
 }
 void Buffer::setUInt(uint32_t val, size_t pos) {
     *(uint32_t *)(buffer + pos) = val;
+    modified = true;
 }
 void Buffer::setInt(int32_t val, size_t pos) {
     *(int32_t *)(buffer + pos) = val;
+    modified = true;
 }
 void Buffer::setUShort(uint16_t val, size_t pos) {
     *(uint16_t *)(buffer + pos) = val;
+    modified = true;
 }
 void Buffer::setShort(int16_t val, size_t pos) {
     *(int16_t *)(buffer + pos) = val;
+    modified = true;
 }
 void Buffer::setUByte(uint8_t val, size_t pos) {
     buffer[pos] = val;
+    modified = true;
 }
 void Buffer::setByte(int8_t val, size_t pos) {
     *(int8_t *)(buffer + pos) = val;
+    modified = true;
 }
 void Buffer::setBit(bool val, size_t pos) { // pos is in terms of bit position
     buffer[pos / 8] &= val << (pos % 8);
     buffer[pos / 8] |= val << (pos % 8);
+    modified = true;
 }
 
 /* Getters */
@@ -73,8 +84,26 @@ int8_t Buffer::getByte(size_t pos) {
 bool Buffer::getBit(size_t pos) { // pos is in terms of bit position
     return (buffer[pos / 8] >> (pos % 8)) & 1;
 }
-void Buffer::dump(uint8_t *extBuffer) {
-    Canbus_t::copyVolatileCanMsg(buffer, extBuffer);
+void Buffer::dump(uint8_t *dest) {
+    dest[0] = buffer[0];
+    dest[1] = buffer[1];
+    dest[2] = buffer[2];
+    dest[3] = buffer[3];
+    dest[4] = buffer[4];
+    dest[5] = buffer[5];
+    dest[6] = buffer[6];
+    dest[7] = buffer[7];
+}
+
+void Buffer::set(const uint8_t *src) {
+    buffer[0] = src[0];
+    buffer[1] = src[1];
+    buffer[2] = src[2];
+    buffer[3] = src[3];
+    buffer[4] = src[4];
+    buffer[5] = src[5];
+    buffer[6] = src[6];
+    buffer[7] = src[7];
 }
 
 void Buffer::clear() {
@@ -99,4 +128,5 @@ void Buffer::lock_wait() {
 void Buffer::unlock() {
     mux.unlock();
 }
+
 } // namespace CAN

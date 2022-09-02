@@ -25,6 +25,8 @@ struct Buffer { // IMPROVE: more rigorous testing on the get funcs
 
     /**
      * @brief The buffer
+     *
+     * @warning Not recommended to access directly
      */
     volatile uint8_t *buffer;
 
@@ -36,21 +38,27 @@ struct Buffer { // IMPROVE: more rigorous testing on the get funcs
     /**
      * @brief Whether this buffer is meant to be an outgoing message
      */
-    bool outgoing = false;
+    const bool outgoing;
+
+    /**
+     * @brief Whether this buffer has been set in anyway
+     * @note Must be manually reset
+     */
+    bool modified = false;
 
     /**
      * @brief Construct a new Buffer as a wrapper
      *
      * @param buffer the array to wrap around
      */
-    Buffer(volatile uint8_t *buffer) : uid(0), address(0), buffer(buffer){};
+    Buffer(volatile uint8_t *buffer, bool outgoing = false) : address(0), buffer(buffer), outgoing(outgoing){};
     /**
      * @brief Construct a new internal Buffer
      *
      * @param address the address this buffer should represent
      * @param buffer beginning of the array of 8 byte buffers to select from
      */
-    Buffer(const uint32_t address, volatile uint8_t *buffer) : uid(cid++), address(address), buffer(buffer + (cid * 8 + cid)){};
+    Buffer(const uint32_t address, volatile uint8_t *buffer, bool outgoing = false) : address(address), buffer(buffer), outgoing(outgoing){};
     /**
      * @brief Initialize a buffer if not done so already by constructor
      */
@@ -58,11 +66,23 @@ struct Buffer { // IMPROVE: more rigorous testing on the get funcs
     /**
      * @brief Dump the current buffer onto an external one
      *
-     * @param extBuffer the array to dump to
+     * @warning Must externally lock the buffer to ensure atomic operation
+     *
+     * @param dest the array to dump to
      */
-    void dump(uint8_t *extBuffer);
+    void dump(uint8_t *dest);
+    /**
+     * @brief Replace the current buffer
+     *
+     * @warning Must externally lock the buffer to ensure atomic operation
+     *
+     * @param src the array to be used
+     */
+    void set(const uint8_t *src);
     /**
      * @brief Clear the buffer
+     *
+     * @warning Must externally lock the buffer to ensure atomic operation
      */
     void clear(void);
 
@@ -155,7 +175,7 @@ struct Buffer { // IMPROVE: more rigorous testing on the get funcs
     bool lock();
 
     /**
-     * @brief locks this buffer to be used, waits for it to unlock if it is locked
+     * @brief locks this buffer to be used, waits indefinitely for it to unlock if it is locked
      *
      */
     void lock_wait();
@@ -166,8 +186,6 @@ struct Buffer { // IMPROVE: more rigorous testing on the get funcs
     void unlock();
 
 private:
-    static uint cid;
-    const uint uid;
     Thread::Mutex mux;
 };
 } // namespace CAN
