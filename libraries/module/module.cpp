@@ -22,15 +22,15 @@ Module_t *allModules[maxModules];
 static bool modulesOrdered = false;
 
 void Module_t::_runner(Module_t *m) {
-    Log.i(ID, "Starting thread", m->id);
+    Log.d(ID, "Starting thread", m->id);
     m->run();
-    Log.i(ID, "Thread stopped", m->id);
+    Log.d(ID, "Thread stopped", m->id);
 };
 
 void Module_t::start() {
     std::lock_guard<std::mutex> lock(vMux);
     if (hasRun && thread == -1) {
-        thread = Thread::addThread((Thread::ThreadFunction)_runner, (void *)this, stackSize, 0, name);
+        thread = Thread::addThread((Thread::ThreadFunction)_runner, (void *)this, stackSize, 0);
         if (thread == -1) {
             Log.f(ID, "Failed to start thread", id);
         }
@@ -47,13 +47,13 @@ void Module_t::stop() {
 }
 
 void Module_t::print() {
-    Log.i(ID, "ID", id);
+    Log.d(ID, "ID", id);
 }
 
 bool Module_t::setupModules() {
     if (modulesOrdered)
         return modulesOrdered;
-    Log.i(ID, "Ordering modules", s_id);
+    Log.d(ID, "Ordering modules", s_id);
     if (orderModules()) {
         for (bitmapVal_t i = 0; i < s_id; i++) {
             Module_t *m = allModules[i];
@@ -69,7 +69,7 @@ bool Module_t::setupModules() {
 void Module_t::startModules() {
     std::lock_guard<std::mutex> lock(uMux);
     if (setupModules()) {
-        Log.w(ID, "Starting modules");
+        Log.d(ID, "Starting modules");
         for (bitmapVal_t i = 0; i < s_id; i++) {
             Module_t *m = allModules[i];
             if (m == 0)
@@ -81,7 +81,7 @@ void Module_t::startModules() {
 
 void Module_t::stopModules() {
     std::lock_guard<std::mutex> lock(uMux);
-    Log.w(ID, "Stopping modules");
+    Log.d(ID, "Stopping modules");
     for (bitmapVal_t i = 0; i < s_id; i++) {
         Module_t *m = allModules[i];
         if (m == 0)

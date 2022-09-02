@@ -39,12 +39,12 @@ public:
     using Module::Module_t::Module_t;
 
     /**
-     * @brief Setup the teensy Canbus line
+     * @brief Setup the Canbus line
      */
     void setup(void);
 
     /**
-     * @brief Setup the teensy Canbus line
+     * @brief Run the teensy Canbus line
      */
     void run(void);
 
@@ -75,7 +75,7 @@ public:
      * @param address The address
      * @return volatile uint8_t[8] buffer array of the message, length 8
      */
-    static volatile uint8_t *getBuffer(const uint32_t address);
+    static constexpr Buffer *getBuffer(const uint32_t address);
 
     /**
      * @brief Set a callback to an incoming address.
@@ -96,6 +96,13 @@ public:
      * @param address The outgoing address
      */
     static void pushData(const uint32_t address);
+
+    /**
+     * @brief Send data given a buffer object
+     * 
+     * @param buf The buffer object to use
+     */
+    static void sendData(Buffer &buf);
 
     /**
      * @brief Send raw data over a given canbus address using a given array
@@ -125,14 +132,6 @@ public:
     static void sendData(const uint32_t address, const uint8_t buf_0 = 0, const uint8_t buf_1 = 0, const uint8_t buf_2 = 0, const uint8_t buf_3 = 0, const uint8_t buf_4 = 0, const uint8_t buf_5 = 0, const uint8_t buf_6 = 0, const uint8_t buf_7 = 0);
 
     /**
-     * @brief Copy a volatile canMsg array to a non-volatile array
-     *
-     * @param src the volatile source array
-     * @param dest the non-volatile destination array
-     */
-    static void copyVolatileCanMsg(volatile uint8_t src[8], uint8_t dest[8]);
-
-    /**
      * @brief continuously prints out strings of any message that is received through canbus.
      * As such, this function only works when the ECU is in ascii debug mode.
      */
@@ -141,6 +140,6 @@ public:
 
 } // namespace CAN
 
-extern CAN::Canbus_t Canbus;
+const CAN::Canbus_t Canbus;
 
 #endif // __ECU_CANBUS_H__

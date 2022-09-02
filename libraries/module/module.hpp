@@ -84,7 +84,6 @@ private:
     static void printModules();
 
 protected:
-    const char *name;
     const bitmapVal_t id;
 
     virtual void print();
@@ -92,15 +91,16 @@ protected:
     virtual void run(){};
 
 public:
-    Module_t() : name(Thread::NIL_NAME), id(1 << s_id++) { allModules[s_id - 1] = this; };
+    Module_t() : id(1 << s_id++) { allModules[s_id - 1] = this; };
     template <typename... T>
-    Module_t(const char *name, T *...mods) : count(sizeof...(mods)), dependents{static_cast<Module_t *>(mods)...}, name(name), id(1 << s_id++) { allModules[s_id - 1] = this; };
+    Module_t(T *...mods) : count(sizeof...(mods)), dependents{static_cast<Module_t *>(mods)...}, id(1 << s_id++) { allModules[s_id - 1] = this; };
     template <typename... T>
-    Module_t(const char *name, int stackSize, T *...mods) : stackSize(stackSize), count(sizeof...(mods)), dependents{static_cast<Module_t *>(mods)...}, name(name), id(1 << s_id++) { allModules[s_id - 1] = this; };
+    Module_t(int stackSize, T *...mods) : stackSize(stackSize), count(sizeof...(mods)), dependents{static_cast<Module_t *>(mods)...}, id(1 << s_id++) { allModules[s_id - 1] = this; };
 
     static void startManager() {
-        Log.i("Module Manager", "Starting");
+        Log.d(ID, "Starting");
         startModules();
+        Log.d(ID, "Starting Loop");
         while (1) {
 #if CONF_LOGGING_ASCII_DEBUG
             Serial.println(Thread::infoString());

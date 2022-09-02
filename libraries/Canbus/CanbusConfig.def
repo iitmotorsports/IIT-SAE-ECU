@@ -20,17 +20,17 @@
  * @brief Select the CAN to use on a teensy
  * CAN1 or CAN0 on T3.6 | CAN3 on T4.X
  */
-#define CONF_FLEXCAN_CAN_SELECT CAN1
+#define CONFIG_FLEXCAN_CAN_SELECT CAN1
 
 /**
  * @brief Set the baud rate at which the CAN line should run
  */
-#define CONF_FLEXCAN_BAUD_RATE 500000
+#define CONFIG_FLEXCAN_BAUD_RATE 500000
 
 /**
  * @brief Set the number of outgoing mailboxes
  * @note incoming mailboxes are automaticaly set
  */
-#define CONF_FLEXCAN_TX_MAILBOXES 2
+#define CONFIG_FLEXCAN_TX_MAILBOXES 2
 
 #endif // __ECU_CANBUSCONFIG_DEF__
