@@ -5,6 +5,5 @@ var searchData=
   ['clear_2',['clear',['../struct_c_a_n_1_1_buffer.html#a84367072fa157343a7d6da3d18852faf',1,'CAN::Buffer']]],
   ['clearfaults_3',['clearFaults',['../namespace_m_c.html#add4fdfcad6990dec728c2eeadaca45e1',1,'MC']]],
   ['cmap_4',['cMap',['../_util_8h.html#a4bed8992f080fb6157e663b1d339136f',1,'Util.h']]],
-  ['comment_5fremover_5',['comment_remover',['../vs__conf_8py.html#a1f1c6513670f3863a1b019fa8eaba30d',1,'vs_conf']]],
-  ['copyvolatilecanmsg_6',['copyVolatileCanMsg',['../class_c_a_n_1_1_canbus__t.html#a54cbdbd212917ce0444d5172318a404c',1,'CAN::Canbus_t']]]
+  ['comment_5fremover_5',['comment_remover',['../vs__conf_8py.html#a1f1c6513670f3863a1b019fa8eaba30d',1,'vs_conf']]]
 ];

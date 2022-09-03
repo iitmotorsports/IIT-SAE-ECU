@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['notifycode_0',['notifyCode',['../struct_state_1_1_state__t.html#a447eecb03b56de38b0b002696fdec881',1,'State::State_t']]]
+  ['modified_0',['modified',['../struct_c_a_n_1_1_buffer.html#a3306e326c382232530b0c1590c357e04',1,'CAN::Buffer']]]
 ];

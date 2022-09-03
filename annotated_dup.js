@@ -5,7 +5,7 @@ var annotated_dup =
       [ "Canbus_t", "class_c_a_n_1_1_canbus__t.html", "class_c_a_n_1_1_canbus__t" ]
     ] ],
     [ "IO", null, [
-      [ "__READ", "struct_i_o_1_1_____r_e_a_d.html", null ],
+      [ "__READ", "struct_i_o_1_1_____r_e_a_d.html", "struct_i_o_1_1_____r_e_a_d" ],
       [ "__WRITE", "struct_i_o_1_1_____w_r_i_t_e.html", null ],
       [ "SyncMsg", "struct_i_o_1_1_sync_msg.html", null ]
     ] ],
