@@ -110,7 +110,7 @@ $(document).ready(function(){initNavTree('_canbus_8cpp_source.html',''); initRes
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#define __BUF_INTERNAL true</span></div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">#define __BUF_EXTERNAL false</span></div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keyword">static</span> Buffer buffers[CAN_MESSAGE_COUNT + 1] = {</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#define MSG(count, address, sig_no, sigs, ie_t) Buffer(address, (volatile uint8_t *)buffer[count], CONCAT(__BUF_, ie_t)),</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#define MSG(c, addr, name, sig_c, sig_def, ie_t, contained) Buffer(addr, (volatile uint8_t *)buffer[c], CONCAT(__BUF_, ie_t)),</span></div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    CAN_MESSAGES</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#undef MSG</span></div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        Buffer(0, (<span class="keyword">volatile</span> uint8_t *)buffer[CAN_MESSAGE_COUNT]),</div>
@@ -143,9 +143,9 @@ $(document).ready(function(){initNavTree('_canbus_8cpp_source.html',''); initRes
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="keyword">constexpr</span> Buffer *<a class="code hl_function" href="class_c_a_n_1_1_canbus__t.html#a9e6cd2682a750eaedb43939b8fa0559b">Canbus_t::getBuffer</a>(<span class="keyword">const</span> uint32_t address) {</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <span class="keywordflow">switch</span> (address) {</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="preprocessor">#define MSG(count, address, sig_no, sigs, ie_t) \</span></div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="preprocessor">    case address:                               \</span></div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="preprocessor">        return buffers + count;</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="preprocessor">#define MSG(c, addr, name, sig_c, sig_def, ie_t, contained) \</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="preprocessor">    case addr:                                           \</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="preprocessor">        return buffers + c;</span></div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        CAN_MESSAGES</div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="preprocessor">#undef MSG</span></div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="keywordflow">default</span>:</div>
