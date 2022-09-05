@@ -34,10 +34,19 @@ namespace IO {
 #define __NODE(node_name, logic, ie_t) NODE_##logic##_##ie_t(node_name)
 #define NODE(node_name, logic, ie_t) __NODE(node_name, logic, ie_t)
 
+// MSG signal extractor/container
+#define MSG_true(c, addr, name, sig_c, sig_def, ie_t) \
+    struct name {                                     \
+        sig_def                                       \
+    } name;
+#define MSG_false(c, addr, name, sig_c, sig_def, ie_t) sig_def
+
+#define MSG(c, addr, name, sig_c, sig_def, ie_t, contained) MSG_##contained(c, addr, name, sig_c, sig_def, ie_t)
+
 // NODE WRITE
 struct ACTIVE_NODE_WRITE {
     ACTIVE_NODE_PINS
-    CAN_SIGNALS
+    EXPAND_CONCAT(ACTIVE_NODE, _MSGS)
     NODES
 };
 
@@ -48,6 +57,7 @@ struct ACTIVE_NODE_WRITE {
 #undef SIG_INTERNAL
 #undef SIG_EXTERNAL
 #undef NODE_true_EXTERNAL
+#undef NODE_false_EXTERNAL
 
 #define PIN_ANALOG_INPUT(name) inline uint32_t name();
 #define PIN_DIGITAL_INPUT(name) inline bool name();
@@ -56,12 +66,15 @@ struct ACTIVE_NODE_WRITE {
 #define SIG_INTERNAL(address, node_n, name, bits, pos, conv_t, format) inline conv_t name();
 #define SIG_EXTERNAL(address, node_n, name, bits, pos, conv_t, format) inline conv_t name();
 
-#define MSG(c, addr, sig_c, sig_def, ie_t) sig_def
-
 #define NODE_true_EXTERNAL(node_name)               \
     struct node_name {                              \
         EXPAND_CONCAT(ACTIVE_NODE_SYNC_, node_name) \
         EXPAND_CONCAT(node_name, _MSGS)             \
+    } node_name;
+
+#define NODE_false_EXTERNAL(node_name)  \
+    struct node_name {                  \
+        EXPAND_CONCAT(node_name, _MSGS) \
     } node_name;
 
 // NODE READ
@@ -87,5 +100,6 @@ void test() {
     IO::WRITE.WHEEL_SPEED_BACK_LEFT(25);
     IO::WRITE.ONBOARD_LED(true);
     IO::WRITE.FRONT_ECU.ONBOARD_LED(true);
-    IO::READ.FRONT_ECU.BUTTON_OFF();
+    IO::READ.FRONT_ECU.WHEEL_SPEED_FRONT_LEFT();
+    IO::READ.MC0.FAULTS.FAULT_GEN_5();
 }

@@ -33,17 +33,84 @@
 #define BACK_ECU_MSGBLK_BACK_WHEEL_SPEED_SIGS                                 \
     SIG(1, BACK_ECU, WHEEL_SPEED_BACK_LEFT, 32, 4, BACK_ECU_IE, float, b_rpm) \
     SIG(1, BACK_ECU, WHEEL_SPEED_BACK_RIGHT, 32, 0, BACK_ECU_IE, float, b_rpm)
+#define MC0_FAULTS_SIGS                                          \
+    SIG(0xA5, MC0, FAULT_GEN_0, 1, 0, NO_LOGIC_IE, bool, flag)   \
+    SIG(0xA5, MC0, FAULT_GEN_1, 1, 1, NO_LOGIC_IE, bool, flag)   \
+    SIG(0xA5, MC0, FAULT_GEN_2, 1, 2, NO_LOGIC_IE, bool, flag)   \
+    SIG(0xA5, MC0, FAULT_GEN_3, 1, 3, NO_LOGIC_IE, bool, flag)   \
+    SIG(0xA5, MC0, FAULT_GEN_4, 1, 4, NO_LOGIC_IE, bool, flag)   \
+    SIG(0xA5, MC0, FAULT_GEN_5, 1, 5, NO_LOGIC_IE, bool, flag)   \
+    SIG(0xA5, MC0, FAULT_GEN_6, 1, 6, NO_LOGIC_IE, bool, flag)   \
+    SIG(0xA5, MC0, FAULT_GEN_7, 1, 7, NO_LOGIC_IE, bool, flag)   \
+    SIG(0xA5, MC0, FAULT_GEN_8, 1, 8, NO_LOGIC_IE, bool, flag)   \
+    SIG(0xA5, MC0, FAULT_GEN_9, 1, 9, NO_LOGIC_IE, bool, flag)   \
+    SIG(0xA5, MC0, FAULT_GEN_10, 1, 10, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_11, 1, 11, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_12, 1, 12, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_13, 1, 13, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_14, 1, 14, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_15, 1, 15, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_16, 1, 16, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_17, 1, 17, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_18, 1, 18, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_19, 1, 19, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_20, 1, 20, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_21, 1, 21, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_22, 1, 22, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_23, 1, 23, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_24, 1, 24, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_25, 1, 25, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_26, 1, 26, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_27, 1, 27, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_28, 1, 28, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_29, 1, 29, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_30, 1, 30, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_31, 1, 31, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_32, 1, 32, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_33, 1, 33, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_34, 1, 34, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_35, 1, 35, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_36, 1, 36, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_37, 1, 37, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_38, 1, 38, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_39, 1, 39, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_40, 1, 40, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_41, 1, 41, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_42, 1, 42, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_43, 1, 43, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_44, 1, 44, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_45, 1, 45, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_46, 1, 46, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_47, 1, 47, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_48, 1, 48, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_49, 1, 49, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_50, 1, 50, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_51, 1, 51, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_52, 1, 52, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_53, 1, 53, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_54, 1, 54, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_55, 1, 55, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_56, 1, 56, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_57, 1, 57, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_58, 1, 58, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_59, 1, 59, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_60, 1, 60, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_61, 1, 61, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_62, 1, 62, NO_LOGIC_IE, bool, flag) \
+    SIG(0xA5, MC0, FAULT_GEN_63, 1, 63, NO_LOGIC_IE, bool, flag)
 
 /* CAN MESSAGE META DEFINES */
 
-// count, address, signal count, signals def, INTERNAL|EXTERNAL
-#define FRONT_ECU_MSGBLK_FRONT_WHEEL_SPEED_MSG MSG(0, 0, 2, FRONT_ECU_MSGBLK_FRONT_WHEEL_SPEED_SIGS, FRONT_ECU_IE)
-#define BACK_ECU_MSGBLK_BACK_WHEEL_SPEED_MSG MSG(1, 1, 2, BACK_ECU_MSGBLK_BACK_WHEEL_SPEED_SIGS, BACK_ECU_IE)
+// Messages are auto defined as bit fields if they only contain single-bit sized values, these are set to be contained when generated
+// count, address, name, signal count, signals def, INTERNAL|EXTERNAL, contained? true|false
+#define FRONT_ECU_FRONT_WHEEL_SPEED_MSG MSG(0, 0, FRONT_WHEEL_SPEED, 2, FRONT_ECU_MSGBLK_FRONT_WHEEL_SPEED_SIGS, FRONT_ECU_IE, false)
+#define BACK_ECU_BACK_WHEEL_SPEED_MSG MSG(1, 1, BACK_WHEEL_SPEED, 2, BACK_ECU_MSGBLK_BACK_WHEEL_SPEED_SIGS, BACK_ECU_IE, false)
+#define MC0_FAULTS_MSG MSG(2, 0xA5, FAULTS, 64, MC0_FAULTS_SIGS, NO_LOGIC_IE, true)
 
 /* DEFINE FRONT_ECU */
 
 #define FRONT_ECU_MSGS \
-    FRONT_ECU_MSGBLK_FRONT_WHEEL_SPEED_MSG
+    FRONT_ECU_FRONT_WHEEL_SPEED_MSG
 
 // IMPROVE: include conversion and formats for pins as well?
 // GPIO Pin, Node owner name, name of pin, INPUT|OUTPUT, INTERNAL|EXTERNAL, ANALOG|DIGITAL, is virt? true|false
@@ -58,7 +125,7 @@
 /* DEFINE BACK_ECU */
 
 #define BACK_ECU_MSGS \
-    BACK_ECU_MSGBLK_BACK_WHEEL_SPEED_MSG
+    BACK_ECU_BACK_WHEEL_SPEED_MSG
 
 #define BACK_ECU_PINS \
     PIN(13, BACK_ECU, ONBOARD_LED, OUTPUT, BACK_ECU_IE, DIGITAL, false)
@@ -71,6 +138,16 @@
 #define BACK_ECU_SYNC_FRONT_ECU                                           \
     PIN(13, FRONT_ECU, ONBOARD_LED, OUTPUT, FRONT_ECU_IE, DIGITAL, false) \
     PIN(2, FRONT_ECU, BUTTON_OFF, INPUT, FRONT_ECU_IE, DIGITAL, false)
+
+/* DEFINE MC0 */
+#define MC0_MSGS \
+    MC0_FAULTS_MSG
+
+/* DEFINE MC1 */
+#define MC1_MSGS
+
+/* DEFINE AMS */
+#define AMS_MSGS
 
 /* ACCUMULATIVE DEFINES */
 
