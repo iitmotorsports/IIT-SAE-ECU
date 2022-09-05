@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['front_5fecu_0',['FRONT_ECU',['../_e_c_u_global_config_8h.html#a345c47b0f8469dac0da0d062c49bd336',1,'ECUGlobalConfig.h']]]
+  ['hard_5ffault_5fadd_0',['HARD_FAULT_ADD',['../_fault_config_8def.html#a725d76d669362031fe65a6c678180998',1,'FaultConfig.def']]],
+  ['hard_5fpin_5ffaults_1',['HARD_PIN_FAULTS',['../_fault_config_8def.html#ad16cea3900e240c28be81e1fae70174a',1,'FaultConfig.def']]]
 ];
