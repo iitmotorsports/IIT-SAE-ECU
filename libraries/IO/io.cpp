@@ -110,7 +110,7 @@ struct __READ {
  */
 
 struct SyncMsg {
-    Canbus::Buffer buf;
+    // Canbus::Buffer buf;
     bool update = false;
 };
 
@@ -135,37 +135,37 @@ struct SyncMsg {
 #define SYNC_SELF_ENTRIES \
     X(0x46, bool, CHARGE_SIGNAL, 2)
 
-void send_sync(uint8_t sync_c) {
-#define X(addr) static Canbus::Buffer buf##addr(addr);
-    SYNC_SELF_ADDRESSES
-#undef X
-#define X(addr, c_type, name, pos) buf##addr.__IO_BUF_FUNC_##c_type(READ.##name(), pos);
-    SYNC_SELF_ENTRIES
-#undef X
-}
+// void send_sync(uint8_t sync_c) {
+// #define X(addr) static Canbus::Buffer buf##addr(addr);
+//     SYNC_SELF_ADDRESSES
+// #undef X
+// #define X(addr, c_type, name, pos) buf##addr.__IO_BUF_FUNC_##c_type(READ.##name(), pos);
+//     SYNC_SELF_ENTRIES
+// #undef X
+// }
 
 #define X(name, ID, c_type, index, e_type, owner)  \
     case ID:                                       \
         WRITE.##name(*((c_type *)(data + index))); \
         break;
 
-void receive_sync() {
-    static auto buf = Canbus::getBuffer(0x42);
-}
+// void receive_sync() {
+//     static auto buf = Canbus::getBuffer(0x42);
+// }
 
-void run_sync() {
-    static uint8_t sync_c = 0;
-    while (true) {
-        send_sync(sync_c++);
-        if (sync_c % 2) {
-            static uint c = 0;
-            values[sync_i[c]] = ;
-            c = (c + 1) % SDBC_SOURCE_NO;
-        } else {
-            receive_sync();
-        }
-    }
-}
+// void run_sync() {
+//     static uint8_t sync_c = 0;
+//     while (true) {
+//         send_sync(sync_c++);
+//         if (sync_c % 2) {
+//             static uint c = 0;
+//             values[sync_i[c]] = ;
+//             c = (c + 1) % SDBC_SOURCE_NO;
+//         } else {
+//             receive_sync();
+//         }
+//     }
+// }
 
 void reset() {
     memset(values, 0, sizeof(values));

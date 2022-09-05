@@ -27,8 +27,8 @@ T sdbc__lookup4_s(int message_index, int bit_size, int bit_pos, calc_t scale, ca
 #define _pt(post_id) sdbc_post_type(post_id##_META)
 #define post_type(post_id) sdbc_post_type(post_id##_META)
 
-void test() {
-    _pt(POST_WHEEL_SPEED_FRONT_LEFT) a = lookup(POST_WHEEL_SPEED_FRONT_LEFT);
-    a++;
-    post(POST_WHEEL_SPEED_FRONT_LEFT, a);
-}
+// void test() {
+//     _pt(POST_WHEEL_SPEED_FRONT_LEFT) a = lookup(POST_WHEEL_SPEED_FRONT_LEFT);
+//     a++;
+//     post(POST_WHEEL_SPEED_FRONT_LEFT, a);
+// }

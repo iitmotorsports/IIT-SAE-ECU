@@ -21,21 +21,22 @@
 // IMPROVE: look into filtering only addresses we care about, if it is hardware filtering this should help with bandwidth
 
 namespace CAN {
-static const int MESSAGE_COUNT = CAN_MESSAGE_COUNT;
 static const int TX_MAILBOXES = CONFIG_FLEXCAN_TX_MAILBOXES;
 
 FlexCAN_T4<CONFIG_FLEXCAN_CAN_SELECT, RX_SIZE_256, TX_SIZE_16> F_Can;
 
-volatile uint8_t buffer[MESSAGE_COUNT + 1][8];
+volatile uint8_t buffer[CAN_MESSAGE_COUNT + 1][8];
 
-static Buffer buffers[MESSAGE_COUNT + 1] = {
-#define X(count, address, sig_no, outgoing) Buffer(address, (volatile uint8_t *)buffer[count], outgoing),
+#define __BUF_INTERNAL true
+#define __BUF_EXTERNAL false
+static Buffer buffers[CAN_MESSAGE_COUNT + 1] = {
+#define MSG(count, address, sig_no, sigs, ie_t) Buffer(address, (volatile uint8_t *)buffer[count], CONCAT(__BUF_, ie_t)),
     CAN_MESSAGES
-#undef X
-        Buffer(0, (volatile uint8_t *)buffer[MESSAGE_COUNT]),
+#undef MSG
+        Buffer(0, (volatile uint8_t *)buffer[CAN_MESSAGE_COUNT]),
 };
 
-static Buffer *invalidBuf = buffers + MESSAGE_COUNT;
+static Buffer *invalidBuf = buffers + CAN_MESSAGE_COUNT;
 
 // Reserved msg objs for sending and receiving
 static CAN_message_t receive;
@@ -62,11 +63,11 @@ static void _receiveCan(const CAN_message_t &msg) {
 
 constexpr Buffer *Canbus_t::getBuffer(const uint32_t address) {
     switch (address) {
-#define X(count, address, sig_no, outgoing) \
-    case address:                           \
+#define MSG(count, address, sig_no, sigs, ie_t) \
+    case address:                               \
         return buffers + count;
         CAN_MESSAGES
-#undef X
+#undef MSG
     default:
         return invalidBuf; // Out of range index
     }

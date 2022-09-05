@@ -4,60 +4,109 @@
  * SDBC Values, defined in C as their respective ID
  */
 
+#include "PPHelp.h"
 #include <stdint.h>
 
-#define CAN_MESSAGE_COUNT 3 // Total number of can messages
+/* ACTIVE NODE SELECTOR */
 
-// Message address, node_name, msg_name, name, bit-size, byte/bit pos, storage type, actual type
-#define CAN_MSGBLK_FRONT_WHEEL_SPEED                                                              \
-    X(0, FRONT_ECU, CAN_MSGBLK_FRONT_WHEEL_SPEED, WHEEL_SPEED_FRONT_LEFT, 32, 4, uint32_t, float) \
-    X(0, FRONT_ECU, CAN_MSGBLK_FRONT_WHEEL_SPEED, WHEEL_SPEED_FRONT_RIGHT, 32, 0, uint32_t, float)
-#define CAN_MSGBLK_BACK_WHEEL_SPEED                                                            \
-    X(1, BACK_ECU, CAN_MSGBLK_BACK_WHEEL_SPEED, WHEEL_SPEED_BACK_LEFT, 32, 4, uint32_t, float) \
-    X(1, BACK_ECU, CAN_MSGBLK_BACK_WHEEL_SPEED, WHEEL_SPEED_BACK_RIGHT, 32, 0, uint32_t, float)
-
-#ifdef BACK_ECU
-
-/* CAN */
-
-// count, address, signal count, outgoing
-#define CAN_MSGBLK_FRONT_WHEEL_SPEED_META X(0, 0, 2, false)
-#define CAN_MSGBLK_BACK_WHEEL_SPEED_META X(1, 1, 2, true)
-
-// Incoming can signals
-#define IN_CAN_SIGNALS \
-    CAN_MSGBLK_FRONT_WHEEL_SPEED
-
-// Outgoing can signals
-#define OUT_CAN_SIGNALS \
-    CAN_MSGBLK_BACK_WHEEL_SPEED
-
-/* PINS */
-
-// type, name, pin, digital/analog, input/output
-#define PIN_ONBOARD_LED X(GPIO, ONBOARD_LED, 13, DIGITAL, OUTPUT)
-#define PIN_CHARGE_SIGNAL X(VIRT, CHARGE_SIGNAL, 140, DIGITAL, OUTPUT)
-
-#define PINS        \
-    PIN_ONBOARD_LED \
-    PIN_CHARGE_SIGNAL
-
+// For each node w/ logic, generate internal/external defines, no logic defaults to external
+#ifdef FRONT_ECU
+#define FRONT_ECU_IE INTERNAL
+#define BACK_ECU_IE EXTERNAL
+#define ACTIVE_NODE FRONT_ECU
 #endif
 
-#define CAN_MESSAGES                  \
-    CAN_MSGBLK_FRONT_WHEEL_SPEED_META \
-    CAN_MSGBLK_BACK_WHEEL_SPEED_META
+#ifdef BACK_ECU
+#define FRONT_ECU_IE EXTERNAL
+#define BACK_ECU_IE INTERNAL
+#define ACTIVE_NODE BACK_ECU
+#endif
 
-#define FRONT_ECU_CAN_MESSAGES \
-    CAN_MSGBLK_FRONT_WHEEL_SPEED
+#define NO_LOGIC_IE EXTERNAL
 
-#define BACK_ECU_CAN_MESSAGES \
-    CAN_MSGBLK_BACK_WHEEL_SPEED
+/* CAN MESSAGE DEFINES */
 
-// name
-#define NODES     \
-    _X(FRONT_ECU) \
-    _X(BACK_ECU)  \
-    _X(MC0)       \
-    _X(MC1)       \
-    _X(AMS)
+// Message address, node_name, name, bit-size, byte/bit pos, INTERNAL|EXTERNAL, conversion type, format
+#define FRONT_ECU_MSGBLK_FRONT_WHEEL_SPEED_SIGS                                  \
+    SIG(0, FRONT_ECU, WHEEL_SPEED_FRONT_LEFT, 32, 4, FRONT_ECU_IE, float, f_rpm) \
+    SIG(0, FRONT_ECU, WHEEL_SPEED_FRONT_RIGHT, 32, 0, FRONT_ECU_IE, float, f_rpm)
+#define BACK_ECU_MSGBLK_BACK_WHEEL_SPEED_SIGS                                 \
+    SIG(1, BACK_ECU, WHEEL_SPEED_BACK_LEFT, 32, 4, BACK_ECU_IE, float, b_rpm) \
+    SIG(1, BACK_ECU, WHEEL_SPEED_BACK_RIGHT, 32, 0, BACK_ECU_IE, float, b_rpm)
+
+/* CAN MESSAGE META DEFINES */
+
+// count, address, signal count, signals def, INTERNAL|EXTERNAL
+#define FRONT_ECU_MSGBLK_FRONT_WHEEL_SPEED_MSG MSG(0, 0, 2, FRONT_ECU_MSGBLK_FRONT_WHEEL_SPEED_SIGS, FRONT_ECU_IE)
+#define BACK_ECU_MSGBLK_BACK_WHEEL_SPEED_MSG MSG(1, 1, 2, BACK_ECU_MSGBLK_BACK_WHEEL_SPEED_SIGS, BACK_ECU_IE)
+
+/* DEFINE FRONT_ECU */
+
+#define FRONT_ECU_MSGS \
+    FRONT_ECU_MSGBLK_FRONT_WHEEL_SPEED_MSG
+
+// IMPROVE: include conversion and formats for pins as well?
+// GPIO Pin, Node owner name, name of pin, INPUT|OUTPUT, INTERNAL|EXTERNAL, ANALOG|DIGITAL, is virt? true|false
+#define FRONT_ECU_PINS                                                    \
+    PIN(13, FRONT_ECU, ONBOARD_LED, OUTPUT, FRONT_ECU_IE, DIGITAL, false) \
+    PIN(2, FRONT_ECU, BUTTON_OFF, INPUT, FRONT_ECU_IE, DIGITAL, false)    \
+    PIN(21, FRONT_ECU, WHEEL_1, INPUT, FRONT_ECU_IE, ANALOG, false)       \
+    PIN(21, FRONT_ECU, WHEEL_0, INPUT, FRONT_ECU_IE, ANALOG, false)
+
+#define FRONT_ECU_SYNC_NODES
+
+/* DEFINE BACK_ECU */
+
+#define BACK_ECU_MSGS \
+    BACK_ECU_MSGBLK_BACK_WHEEL_SPEED_MSG
+
+#define BACK_ECU_PINS \
+    PIN(13, BACK_ECU, ONBOARD_LED, OUTPUT, BACK_ECU_IE, DIGITAL, false)
+
+// Name, has logic (compiled to)
+#define BACK_ECU_SYNC_NODES \
+    NODE(FRONT_ECU, true, FRONT_ECU_IE)
+
+// SYNC PINS for each synced NODE, suffixed by that node's name
+#define BACK_ECU_SYNC_FRONT_ECU                                           \
+    PIN(13, FRONT_ECU, ONBOARD_LED, OUTPUT, FRONT_ECU_IE, DIGITAL, false) \
+    PIN(2, FRONT_ECU, BUTTON_OFF, INPUT, FRONT_ECU_IE, DIGITAL, false)
+
+/* ACCUMULATIVE DEFINES */
+
+#define PINS       \
+    FRONT_ECU_PINS \
+    BACK_ECU_PINS
+
+#define CAN_MESSAGES \
+    FRONT_ECU_MSGS   \
+    BACK_ECU_MSGS
+
+#define CAN_SIGNALS                         \
+    FRONT_ECU_MSGBLK_FRONT_WHEEL_SPEED_SIGS \
+    BACK_ECU_MSGBLK_BACK_WHEEL_SPEED_SIGS
+
+#define __PIN_I_INTERNAL_COUNTER ,
+#define __PIN_I_EXTERNAL_COUNTER
+#define __PIN_I_COUNTER(IE) __PIN_I_##IE##_COUNTER
+#define __PIN_E_INTERNAL_COUNTER
+#define __PIN_E_EXTERNAL_COUNTER ,
+#define __PIN_E_COUNTER(IE) __PIN_E_##IE##_COUNTER
+
+#define MSG ,
+const int CAN_MESSAGE_COUNT = PP_NARG_MO(CAN_MESSAGES); // Total number of can messages
+#undef MSG
+#define PIN(p, n, nm, io, IE, ...) __PIN_I_COUNTER(IE)
+const int PIN_INTERNAL_COUNT = PP_NARG_MO(PINS); // Total number of internal pins
+#undef PIN
+#define PIN(p, n, nm, io, IE, ...) __PIN_E_COUNTER(IE)
+const int PIN_EXTERNAL_COUNT = PP_NARG_MO(PINS); // Total number of external pins
+#undef PIN
+
+// Name, has logic (compiled to), active node (INTERNAL|EXTERNAL)
+#define NODES                           \
+    NODE(FRONT_ECU, true, FRONT_ECU_IE) \
+    NODE(BACK_ECU, true, BACK_ECU_IE)   \
+    NODE(MC0, false, NO_LOGIC_IE)       \
+    NODE(MC1, false, NO_LOGIC_IE)       \
+    NODE(AMS, false, NO_LOGIC_IE)
