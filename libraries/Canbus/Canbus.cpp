@@ -30,7 +30,7 @@ volatile uint8_t buffer[CAN_MESSAGE_COUNT + 1][8];
 #define __BUF_INTERNAL true
 #define __BUF_EXTERNAL false
 static Buffer buffers[CAN_MESSAGE_COUNT + 1] = {
-#define MSG(count, address, sig_no, sigs, ie_t) Buffer(address, (volatile uint8_t *)buffer[count], CONCAT(__BUF_, ie_t)),
+#define MSG(c, addr, name, sig_c, sig_def, ie_t, contained) Buffer(addr, (volatile uint8_t *)buffer[c], CONCAT(__BUF_, ie_t)),
     CAN_MESSAGES
 #undef MSG
         Buffer(0, (volatile uint8_t *)buffer[CAN_MESSAGE_COUNT]),
@@ -63,9 +63,9 @@ static void _receiveCan(const CAN_message_t &msg) {
 
 constexpr Buffer *Canbus_t::getBuffer(const uint32_t address) {
     switch (address) {
-#define MSG(count, address, sig_no, sigs, ie_t) \
-    case address:                               \
-        return buffers + count;
+#define MSG(c, addr, name, sig_c, sig_def, ie_t, contained) \
+    case addr:                                           \
+        return buffers + c;
         CAN_MESSAGES
 #undef MSG
     default:

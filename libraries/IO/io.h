@@ -66,12 +66,14 @@ struct ACTIVE_NODE_WRITE {
 #define SIG_INTERNAL(address, node_n, name, bits, pos, conv_t, format) inline conv_t name();
 #define SIG_EXTERNAL(address, node_n, name, bits, pos, conv_t, format) inline conv_t name();
 
+// Expose CAN signals
 #define NODE_true_EXTERNAL(node_name)               \
     struct node_name {                              \
         EXPAND_CONCAT(ACTIVE_NODE_SYNC_, node_name) \
         EXPAND_CONCAT(node_name, _MSGS)             \
     } node_name;
 
+// Expose CAN signals
 #define NODE_false_EXTERNAL(node_name)  \
     struct node_name {                  \
         EXPAND_CONCAT(node_name, _MSGS) \
@@ -84,15 +86,19 @@ struct ACTIVE_NODE_READ {
     EVAL(NODES)
 };
 
-#undef NODE
-#undef MSG
-#undef SIG_INTERNAL
-#undef SIG_EXTERNAL
-
 static ACTIVE_NODE_WRITE WRITE;
 static ACTIVE_NODE_READ READ;
 
 void reset();
+
+#undef __NODE
+#undef NODE
+#undef MSG
+#undef MSG_true
+#undef MSG_false
+#undef __SIG
+#undef SIG_INTERNAL
+#undef SIG_EXTERNAL
 
 } // namespace IO
 
