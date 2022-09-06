@@ -99,6 +99,11 @@ void reset();
 #undef __SIG
 #undef SIG_INTERNAL
 #undef SIG_EXTERNAL
+#undef PIN
+#undef PIN_ANALOG_INPUT
+#undef PIN_DIGITAL_INPUT
+#undef PIN_ANALOG_OUTPUT
+#undef PIN_DIGITAL_OUTPUT
 
 } // namespace IO
 

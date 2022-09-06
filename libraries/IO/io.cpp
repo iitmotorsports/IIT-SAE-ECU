@@ -1,174 +1,137 @@
 #include "io.h"
+#include "stdint.h"
 
 namespace IO {
 
-char *values[8 + SDBC_SOURCE_BITS / 8];
-static uint64_t nil = 0xDEADBEEFDEADBEEF;
+char *pin_buf[PIN_BYTE_ALLOC + 1];
 
 // TODO: mux each value, given id
 
 #define WRITE_DIGITAL digitalWriteFast
 #define WRITE_ANALOG analogWrite
-
 #define READ_DIGITAL digitalReadFast
 #define READ_ANALOG analogRead
+#define WRITE_VIRT_DIGITAL setBit
+#define WRITE_VIRT_ANALOG setUInt
+#define READ_VIRT_DIGITAL getBit
+#define READ_VIRT_ANALOG getUInt
 
-// FIXME: diff between digital and analog
-#define WRITE_GPIO_SELF(name, ID, c_type, index, alt) \
-    inline void name(c_type val) {                    \
-        *((c_type *)(values + index)) = val;          \
-        WRITE_##alt(ID, val);                         \
+#define TYPE_SEL_ANALOG uint32_t
+#define TYPE_SEL_DIGITAL bool
+
+#define __IO_BUF_FUNC_SET_double(x, _) setDouble(x)
+#define __IO_BUF_FUNC_SET_uint64_t(x, _) setULong(x)
+#define __IO_BUF_FUNC_SET_int64_t(x, _) setLong(x)
+#define __IO_BUF_FUNC_SET_float setFloat
+#define __IO_BUF_FUNC_SET_uint32_t setUInt
+#define __IO_BUF_FUNC_SET_int32_t setInt
+#define __IO_BUF_FUNC_SET_uint16_t setUShort
+#define __IO_BUF_FUNC_SET_int16_t setShort
+#define __IO_BUF_FUNC_SET_uint8_t setUByte
+#define __IO_BUF_FUNC_SET_int8_t setByte
+#define __IO_BUF_FUNC_SET_bool setBit
+
+#define __IO_BUF_FUNC_GET_double getDouble
+#define __IO_BUF_FUNC_GET_uint64_t getULong
+#define __IO_BUF_FUNC_GET_int64_t getLong
+#define __IO_BUF_FUNC_GET_float getFloat
+#define __IO_BUF_FUNC_GET_uint32_t getUInt
+#define __IO_BUF_FUNC_GET_int32_t getInt
+#define __IO_BUF_FUNC_GET_uint16_t getUShort
+#define __IO_BUF_FUNC_GET_int16_t getShort
+#define __IO_BUF_FUNC_GET_uint8_t getUByte
+#define __IO_BUF_FUNC_GET_int8_t getByte
+#define __IO_BUF_FUNC_GET_bool getBit
+
+#define WRITE_GPIO_INTERNAL_ANALOG_INPUT(index, pin_no, name)
+#define WRITE_GPIO_INTERNAL_DIGITAL_INPUT(index, pin_no, name)
+#define WRITE_GPIO_INTERNAL_ANALOG_OUTPUT(index, pin_no, name) \
+    inline void ACTIVE_NODE_WRITE::name(uint32_t val) {        \
+        *((uint32_t *)(pin_buf + index)) = val;                \
+        WRITE_##ad_t(pin_no, val);                             \
+    }
+#define WRITE_GPIO_INTERNAL_DIGITAL_OUTPUT(index, pin_no, name) \
+    inline void ACTIVE_NODE_WRITE::name(bool val) {             \
+        *((bool *)(pin_buf + index)) = val;                     \
+        WRITE_##ad_t(pin_no, val);                              \
     }
 
-#define WRITE_VIRT_SELF(name, ID, c_type, index, alt) \
-    inline void name(c_type val) {                    \
-        *((c_type *)(values + index)) = val;          \
+#define WRITE_VIRT_INTERNAL(index, UID, node_name, name, bit_sz, pos, io_t, ie_t, ad_t, conv_t, is_virt, format) \
+    inline void ACTIVE_NODE_WRITE::name(conv_t val) {                                                            \
+        static auto buf = Canbus.getBuffer(UID);                                                                 \
+        buf->WRITE_VIRT_##ad_t(val, pos);                                                                        \
     }
 
-// TODO: Getting static buffer needs to be constexpr
-#define WRITE_SIG_SELF(name, ID, c_type, index, alt) \
-    inline void name(c_type val) {                   \
-        static auto buf = Canbus::getBuffer(ID);     \
-        *((c_type *)(buf + index)) = val;            \
-        Canbus::pushData(ID);                        \
+#define WRITE_SIG_INTERNAL(index, UID, node_name, name, bit_sz, pos, io_t, ie_t, ad_t, conv_t, is_virt, format) \
+    inline void ACTIVE_NODE_WRITE::name(conv_t val) {                                                           \
+        static auto buf = Canbus.getBuffer(UID);                                                                \
+        buf->__IO_BUF_FUNC_SET_##conv_t(val, pos);                                                              \
     }
 
-#define READ_GPIO_SELF(name, ID, c_type, index, alt)           \
-    inline c_type name() {                                     \
-        return *((c_type *)(values + index)) = READ_##alt(ID); \
+#define READ_GPIO_INTERNAL(index, UID, node_name, name, bit_sz, pos, io_t, ie_t, ad_t, conv_t, is_virt, format) \
+    inline conv_t name() {                                                                                      \
+        return *((conv_t *)(values + index)) = READ_##ad_t(ID);                                                 \
     }
 
-#define READ_VIRT_SELF(name, ID, c_type, index, alt) \
-    inline c_type name() {                           \
-        return *((c_type *)(values + index));        \
+#define READ_VIRT_INTERNAL(index, UID, node_name, name, bit_sz, pos, io_t, ie_t, ad_t, conv_t, is_virt, format) \
+    inline conv_t name() {                                                                                      \
+        static auto buf = Canbus.getBuffer(UID);                                                                \
+        return buf->READ_VIRT_##ad_t(pos);                                                                      \
     }
 
-// TODO: Getting static buffer needs to be constexpr
-#define READ_SIG_SELF(name, ID, c_type, index, alt) \
-    inline c_type name() {                          \
-        static auto buf = Canbus::getBuffer(ID);    \
-        *((c_type *)(buf + index)) = val;           \
-        Canbus::pushData(ID);                       \
+#define READ_SIG_INTERNAL(index, UID, node_name, name, bit_sz, pos, io_t, ie_t, ad_t, conv_t, is_virt, format) \
+    inline conv_t name() {                                                                                     \
+        static auto buf = Canbus.getBuffer(UID);                                                               \
+        return buf->__IO_BUF_FUNC_GET_##conv_t(pos);                                                           \
     }
 
 // TODO: External Source control
-#define WRITE_GPIO_EXT(name, ID, c_type, index, alt) \
-    inline void name(c_type val) {                   \
+#define WRITE_GPIO_EXTERNAL(index, UID, node_name, name, bit_sz, pos, io_t, ie_t, ad_t, conv_t, is_virt, format) \
+    inline void name(conv_t val) {                                                                               \
+        static auto buf = Canbus.getBuffer(UID);                                                                 \
+        buf->WRITE_VIRT_##ad_t(val, pos);                                                                        \
     }
 
-#define WRITE_VIRT_EXT(name, ID, c_type, index, alt) \
-    inline void name(c_type val) {                   \
+#define WRITE_VIRT_EXTERNAL(index, UID, node_name, name, bit_sz, pos, io_t, ie_t, ad_t, conv_t, is_virt, format) \
+    inline void name(conv_t val) {                                                                               \
+        static auto buf = Canbus.getBuffer(UID);                                                                 \
+        buf->WRITE_VIRT_##ad_t(val, pos);                                                                        \
     }
 
-#define WRITE_SIG_EXT(name, ID, c_type, index, alt)
+#define WRITE_SIG_EXTERNAL(index, UID, node_name, name, bit_sz, pos, io_t, ie_t, ad_t, conv_t, is_virt, format)
 
-#define READ_GPIO_EXT(name, ID, c_type, index, alt) \
-    inline void name(c_type val) {                  \
+#define READ_GPIO_EXTERNAL(index, UID, node_name, name, bit_sz, pos, io_t, ie_t, ad_t, conv_t, is_virt, format) \
+    inline conv_t name() {                                                                                      \
+        static auto buf = Canbus.getBuffer(UID);                                                                \
+        return buf->READ_VIRT_##ad_t(pos);                                                                      \
     }
 
-#define READ_VIRT_EXT(name, ID, c_type, index, alt) \
-    inline void name(c_type val) {                  \
+#define READ_VIRT_EXTERNAL(index, UID, node_name, name, bit_sz, pos, io_t, ie_t, ad_t, conv_t, is_virt, format) \
+    inline conv_t name() {                                                                                      \
+        static auto buf = Canbus.getBuffer(UID);                                                                \
+        return buf->READ_VIRT_##ad_t(pos);                                                                      \
     }
 
-#define READ_SIG_EXT(name, ID, c_type, index, alt)
+#define READ_SIG_EXTERNAL(index, UID, node_name, name, bit_sz, pos, io_t, ie_t, ad_t, conv_t, is_virt, format) \
+    inline conv_t name() {                                                                                     \
+        static auto buf = Canbus.getBuffer(UID);                                                               \
+        return buf->__IO_BUF_FUNC_GET_##conv_t(pos);                                                           \
+    }
 
-#define X(name, ID, c_type, index, e_type, owner) WRITE_##e_type##_##owner(name, ID, c_type, index, alt)
+// WRITE_GPIO_INTERNAL_OUTPUT(0, 0, ONBOARD_LED, DIGITAL, EXPAND_CONCAT(TYPE_SEL_ad_t))
 
-struct __WRITE {
+#define PIN(pin_no, node_n, name, io_t, ie_t, ad_t, is_virt) WRITE_GPIO_INTERNAL_##ad_t##_##io_t(56, pin_no, name)
+EVAL(ACTIVE_NODE_PINS)
+#undef PIN
 
-    X(ONBOARD_LED, PINS_ONBOARD_LED, bool, 16, VIRT, SELF)
+void receive_sync() {
+}
 
-    inline void ONBOARD_LED(bool val);
-
-    inline void CHARGE_SIGNAL(bool val);
-
-    inline void WHEEL_SPEED_BACK_LEFT(uint32_t data);
-};
-
-#undef X
-#define X(name, ID, c_type, index, e_type, owner) READ_##e_type##_##owner(name, ID, c_type, index, alt)
-
-struct __READ {
-    inline bool ONBOARD_LED();
-
-    inline bool CHARGE_SIGNAL();
-
-    inline uint32_t WHEEL_SPEED_BACK_LEFT();
-};
-
-#undef X
-
-// For synced values
-/**
- * Sync values
- *
- * Only sync values that are outgoing must reference a VIRT that is set for INPUT or GPIO that is set for OUTPUT
- *
- * Enough addresses must be allocated to fit all the values that are outgoing, other nodes must take note of these addresses where there are relevant values to them
- * As with everything else, these addresses should not overlap with other nodes, or addresses that are in use
- *
- */
-
-struct SyncMsg {
-    // Canbus::Buffer buf;
-    bool update = false;
-};
-
-#define __IO_BUF_FUNC_func(func, x) func(x)
-#define __IO_BUF_FUNC_double(x, _) __IO_BUF_FUNC_func(setDouble, x)
-#define __IO_BUF_FUNC_uint64_t(x, _) __IO_BUF_FUNC_func(setULong, x)
-#define __IO_BUF_FUNC_int64_t(x, _) __IO_BUF_FUNC_func(setLong, x)
-#define __IO_BUF_FUNC_float setFloat
-#define __IO_BUF_FUNC_uint32_t setUInt
-#define __IO_BUF_FUNC_int32_t setInt
-#define __IO_BUF_FUNC_uint16_t setUShort
-#define __IO_BUF_FUNC_int16_t setShort
-#define __IO_BUF_FUNC_uint8_t setUByte
-#define __IO_BUF_FUNC_int8_t setByte
-#define __IO_BUF_FUNC_bool setByte
-
-#define SYNC_SELF_ADDRESSES \
-    X(0x46)                 \
-    X(0x45)                 \
-    X(0x48)
-
-#define SYNC_SELF_ENTRIES \
-    X(0x46, bool, CHARGE_SIGNAL, 2)
-
-// void send_sync(uint8_t sync_c) {
-// #define X(addr) static Canbus::Buffer buf##addr(addr);
-//     SYNC_SELF_ADDRESSES
-// #undef X
-// #define X(addr, c_type, name, pos) buf##addr.__IO_BUF_FUNC_##c_type(READ.##name(), pos);
-//     SYNC_SELF_ENTRIES
-// #undef X
-// }
-
-#define X(name, ID, c_type, index, e_type, owner)  \
-    case ID:                                       \
-        WRITE.##name(*((c_type *)(data + index))); \
-        break;
-
-// void receive_sync() {
-//     static auto buf = Canbus::getBuffer(0x42);
-// }
-
-// void run_sync() {
-//     static uint8_t sync_c = 0;
-//     while (true) {
-//         send_sync(sync_c++);
-//         if (sync_c % 2) {
-//             static uint c = 0;
-//             values[sync_i[c]] = ;
-//             c = (c + 1) % SDBC_SOURCE_NO;
-//         } else {
-//             receive_sync();
-//         }
-//     }
-// }
+void run_sync() {
+}
 
 void reset() {
-    memset(values, 0, sizeof(values));
+    memset(pin_buf, 0, sizeof(pin_buf));
     // TODO: set all pins to their corresponding modes.
 }
 } // namespace IO

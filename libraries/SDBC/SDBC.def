@@ -99,6 +99,10 @@
     SIG(0xA5, MC0, FAULT_GEN_62, 1, 62, NO_LOGIC_IE, bool, flag) \
     SIG(0xA5, MC0, FAULT_GEN_63, 1, 63, NO_LOGIC_IE, bool, flag)
 
+#define BACK_ECU_SYNC_FRONT_ECU_0_SIGS                              \
+    SIG(0xA5, BACK_ECU, ONBOARD_LED, 1, 0, BACK_ECU_IE, bool, flag) \
+    SIG(0xA5, BACK_ECU, BUTTON_OFF, 1, 1, BACK_ECU_IE, bool, flag)
+
 /* CAN MESSAGE META DEFINES */
 
 // Messages are auto defined as bit fields if they only contain single-bit sized values, these are set to be contained when generated
@@ -106,6 +110,10 @@
 #define FRONT_ECU_FRONT_WHEEL_SPEED_MSG MSG(0, 0, FRONT_WHEEL_SPEED, 2, FRONT_ECU_MSGBLK_FRONT_WHEEL_SPEED_SIGS, FRONT_ECU_IE, false)
 #define BACK_ECU_BACK_WHEEL_SPEED_MSG MSG(1, 1, BACK_WHEEL_SPEED, 2, BACK_ECU_MSGBLK_BACK_WHEEL_SPEED_SIGS, BACK_ECU_IE, false)
 #define MC0_FAULTS_MSG MSG(2, 0xA5, FAULTS, 64, MC0_FAULTS_SIGS, NO_LOGIC_IE, true)
+
+// Auto generated to fit sync values, similar to MSG
+// count, address, name, signal count, signals def, INTERNAL|EXTERNAL, contained? true|false, sender node, receiving node
+#define BACK_ECU_SYNC_FRONT_ECU_0_MSG SYNC(3, 0xA6, BACK_ECU_SYNC_FRONT_ECU_0_SIGS, 2, BACK_ECU_SDBC_SYNC0_SIGS, BACK_ECU_IE, false, BACK_ECU, FRONT_ECU)
 
 /* DEFINE FRONT_ECU */
 
@@ -139,6 +147,10 @@
     PIN(13, FRONT_ECU, ONBOARD_LED, OUTPUT, FRONT_ECU_IE, DIGITAL, false) \
     PIN(2, FRONT_ECU, BUTTON_OFF, INPUT, FRONT_ECU_IE, DIGITAL, false)
 
+// SYNC MSGs generated per synced NODE
+#define BACK_ECU_SYNC_FRONT_ECU_MSGS \
+    BACK_ECU_SYNC_FRONT_ECU_0_MSG
+
 /* DEFINE MC0 */
 #define MC0_MSGS \
     MC0_FAULTS_MSG
@@ -163,21 +175,35 @@
     FRONT_ECU_MSGBLK_FRONT_WHEEL_SPEED_SIGS \
     BACK_ECU_MSGBLK_BACK_WHEEL_SPEED_SIGS
 
+#define BYTECOUNT_INTERNAL_DIGITAL sizeof(char)
+#define BYTECOUNT_INTERNAL_ANALOG sizeof(int)
+#define BYTECOUNT_EXTERNAL_DIGITAL 0
+#define BYTECOUNT_EXTERNAL_ANALOG 0
+
 #define __PIN_I_INTERNAL_COUNTER ,
 #define __PIN_I_EXTERNAL_COUNTER
 #define __PIN_I_COUNTER(IE) __PIN_I_##IE##_COUNTER
 #define __PIN_E_INTERNAL_COUNTER
 #define __PIN_E_EXTERNAL_COUNTER ,
 #define __PIN_E_COUNTER(IE) __PIN_E_##IE##_COUNTER
+#define __PIN_I_BYTE_COUNTER(IE, ad_t) BYTECOUNT_##IE##_##ad_t +
 
 #define MSG ,
 const int CAN_MESSAGE_COUNT = PP_NARG_MO(CAN_MESSAGES); // Total number of can messages
 #undef MSG
-#define PIN(p, n, nm, io, IE, ...) __PIN_I_COUNTER(IE)
+#define PIN(p, n, nm, io, IE, ad_t, ...) __PIN_I_COUNTER(IE)
 const int PIN_INTERNAL_COUNT = PP_NARG_MO(PINS); // Total number of internal pins
 #undef PIN
-#define PIN(p, n, nm, io, IE, ...) __PIN_E_COUNTER(IE)
+#define PIN(p, n, nm, io, IE, ad_t, ...) __PIN_E_COUNTER(IE)
 const int PIN_EXTERNAL_COUNT = PP_NARG_MO(PINS); // Total number of external pins
+#undef PIN
+
+#define PIN(p, n, nm, io, IE, ad_t, ...) __PIN_I_BYTE_COUNTER(IE, ad_t)
+const int PIN_BYTE_ALLOC = PINS 0; // Number of bytes need to allocate for internal pins
+#undef PIN
+
+#define PIN(p, n, nm, io, IE, ad_t, ...) __PIN_I_BYTE_COUNTER(IE, ad_t)
+const int PIN_SYNC_COUNT = PINS 0; // Number of synced pins (external virt/gpio) that will be used
 #undef PIN
 
 // Name, has logic (compiled to), active node (INTERNAL|EXTERNAL)
