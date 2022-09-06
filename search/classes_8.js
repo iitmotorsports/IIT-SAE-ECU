@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['iotype_0',['IOType',['../classsdbc__parse_1_1_i_o_type.html',1,'sdbc_parse']]]
+  ['log_5ft_0',['Log_t',['../struct_logging_1_1_log__t.html',1,'Logging']]]
 ];

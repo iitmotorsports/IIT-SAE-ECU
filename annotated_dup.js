@@ -5,11 +5,8 @@ var annotated_dup =
       [ "Canbus_t", "class_c_a_n_1_1_canbus__t.html", "class_c_a_n_1_1_canbus__t" ]
     ] ],
     [ "IO", null, [
-      [ "__READ", "struct_i_o_1_1_____r_e_a_d.html", null ],
-      [ "__WRITE", "struct_i_o_1_1_____w_r_i_t_e.html", null ],
       [ "ACTIVE_NODE_READ", "struct_i_o_1_1_a_c_t_i_v_e___n_o_d_e___r_e_a_d.html", null ],
-      [ "ACTIVE_NODE_WRITE", "struct_i_o_1_1_a_c_t_i_v_e___n_o_d_e___w_r_i_t_e.html", null ],
-      [ "SyncMsg", "struct_i_o_1_1_sync_msg.html", null ]
+      [ "ACTIVE_NODE_WRITE", "struct_i_o_1_1_a_c_t_i_v_e___n_o_d_e___w_r_i_t_e.html", null ]
     ] ],
     [ "Logging", "namespace_logging.html", [
       [ "Log_t", "struct_logging_1_1_log__t.html", "struct_logging_1_1_log__t" ]

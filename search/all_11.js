@@ -37,7 +37,7 @@ var searchData=
   ['setpinvalue_34',['setPinValue',['../namespace_pins.html#a2d60349cb2aec2c336856187093aea61',1,'Pins']]],
   ['settings_35',['Settings',['../classvs__conf_1_1_settings.html',1,'vs_conf']]],
   ['settorque_36',['setTorque',['../namespace_m_c.html#a27fe6e9fc5d1906069d9e60a24226dd0',1,'MC']]],
-  ['setup_37',['setup',['../namespace_aero.html#aaf24879c16df328a981323313c41f1ba',1,'Aero::setup()'],['../namespace_echo.html#a06d3c7f95ead843b9a10c61cb4ee8aee',1,'Echo::setup()'],['../namespace_mirror.html#a1163a1d753f2ea7a3150f06a015fbedb',1,'Mirror::setup()'],['../namespace_m_c.html#aeb2b966841aa0fd6b2ac79478a648c84',1,'MC::setup()'],['../class_c_a_n_1_1_canbus__t.html#a82200db780cf240ea4e4f9dc687dc211',1,'CAN::Canbus_t::setup()']]],
+  ['setup_37',['setup',['../class_c_a_n_1_1_canbus__t.html#a82200db780cf240ea4e4f9dc687dc211',1,'CAN::Canbus_t::setup()'],['../namespace_aero.html#aaf24879c16df328a981323313c41f1ba',1,'Aero::setup()'],['../namespace_echo.html#a06d3c7f95ead843b9a10c61cb4ee8aee',1,'Echo::setup()'],['../namespace_mirror.html#a1163a1d753f2ea7a3150f06a015fbedb',1,'Mirror::setup()'],['../namespace_m_c.html#aeb2b966841aa0fd6b2ac79478a648c84',1,'MC::setup(void)']]],
   ['setupbuffers_38',['setupBuffers',['../namespace_m_c.html#a5f9dca43e756b4aa50f914b3f14b1f88',1,'MC']]],
   ['signal_39',['Signal',['../classsdbc__parse_1_1_signal.html',1,'sdbc_parse']]],
   ['soft_5ffault_5fadd_40',['SOFT_FAULT_ADD',['../_fault_config_8def.html#a64da401593bb14ccb3e214d872874078',1,'FaultConfig.def']]],
@@ -52,7 +52,6 @@ var searchData=
   ['stopcanpins_49',['stopCanPins',['../namespace_pins.html#a12a6f448c7eea1740a38f0fbe73bbace',1,'Pins']]],
   ['sync_50',['SYNC',['../classsdbc__parse_1_1_s_y_n_c.html',1,'sdbc_parse']]],
   ['sync_5ffile_51',['sync_file',['../namespacescript_1_1util.html#adb96fbf3ed4c2f26740443b119dd48cf',1,'script::util']]],
-  ['syncmsg_52',['SyncMsg',['../struct_i_o_1_1_sync_msg.html',1,'IO']]],
-  ['text_53',['text',['../namespacescript_1_1text.html',1,'script']]],
-  ['util_54',['util',['../namespacescript_1_1util.html',1,'script']]]
+  ['text_52',['text',['../namespacescript_1_1text.html',1,'script']]],
+  ['util_53',['util',['../namespacescript_1_1util.html',1,'script']]]
 ];

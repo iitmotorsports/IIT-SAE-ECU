@@ -1,7 +1,5 @@
 var hierarchy =
 [
-    [ "IO::__READ", "struct_i_o_1_1_____r_e_a_d.html", null ],
-    [ "IO::__WRITE", "struct_i_o_1_1_____w_r_i_t_e.html", null ],
     [ "IO::ACTIVE_NODE_READ", "struct_i_o_1_1_a_c_t_i_v_e___n_o_d_e___r_e_a_d.html", null ],
     [ "IO::ACTIVE_NODE_WRITE", "struct_i_o_1_1_a_c_t_i_v_e___n_o_d_e___w_r_i_t_e.html", null ],
     [ "AvgVar< T >", "class_avg_var.html", null ],
@@ -45,7 +43,6 @@ var hierarchy =
     [ "SerialVar::SerialVar< T >", "class_serial_var_1_1_serial_var.html", null ],
     [ "vs_conf.Settings", "classvs__conf_1_1_settings.html", null ],
     [ "State::State_t", "struct_state_1_1_state__t.html", null ],
-    [ "IO::SyncMsg", "struct_i_o_1_1_sync_msg.html", null ],
     [ "io.TextIOWrapper", null, [
       [ "script.progress_bar.ProgressBar.TextIO", "classscript_1_1progress__bar_1_1_progress_bar_1_1_text_i_o.html", null ]
     ] ],
