@@ -4,6 +4,7 @@
  * SDBC Values, defined in C as their respective ID
  */
 
+#include "ECUGlobalConfig.h"
 #include "PPHelp.h"
 #include <stdint.h>
 
@@ -121,12 +122,15 @@
     FRONT_ECU_FRONT_WHEEL_SPEED_MSG
 
 // IMPROVE: include conversion and formats for pins as well?
-// GPIO Pin, Node owner name, name of pin, INPUT|OUTPUT, INTERNAL|EXTERNAL, ANALOG|DIGITAL, is virt? true|false
-#define FRONT_ECU_PINS                                                    \
-    PIN(13, FRONT_ECU, ONBOARD_LED, OUTPUT, FRONT_ECU_IE, DIGITAL, false) \
-    PIN(2, FRONT_ECU, BUTTON_OFF, INPUT, FRONT_ECU_IE, DIGITAL, false)    \
-    PIN(21, FRONT_ECU, WHEEL_1, INPUT, FRONT_ECU_IE, ANALOG, false)       \
-    PIN(21, FRONT_ECU, WHEEL_0, INPUT, FRONT_ECU_IE, ANALOG, false)
+// index (per node for internal pins), GPIO Pin, Node owner name, name of pin, INPUT|OUTPUT, INTERNAL|EXTERNAL, ANALOG|DIGITAL
+// For virt: pos, address, then etc...
+#define FRONT_ECU_PINS                                                 \
+    GPIO(0, 13, FRONT_ECU, ONBOARD_LED, OUTPUT, FRONT_ECU_IE, DIGITAL) \
+    GPIO(1, 2, FRONT_ECU, BUTTON_OFF, INPUT, FRONT_ECU_IE, DIGITAL)    \
+    GPIO(2, 21, FRONT_ECU, WHEEL_1, INPUT, FRONT_ECU_IE, ANALOG)       \
+    GPIO(3, 26, FRONT_ECU, WHEEL_0, INPUT, FRONT_ECU_IE, ANALOG)       \
+    GPIO(4, 97, FRONT_ECU, WHEEL_21, OUTPUT, FRONT_ECU_IE, ANALOG)     \
+    VIRT(0, 0x45, FRONT_ECU, CHARGE_SIGNAL, OUTPUT, FRONT_ECU_IE, DIGITAL)
 
 #define FRONT_ECU_SYNC_NODES
 
@@ -136,16 +140,16 @@
     BACK_ECU_BACK_WHEEL_SPEED_MSG
 
 #define BACK_ECU_PINS \
-    PIN(13, BACK_ECU, ONBOARD_LED, OUTPUT, BACK_ECU_IE, DIGITAL, false)
+    GPIO(0, 13, BACK_ECU, ONBOARD_LED, OUTPUT, BACK_ECU_IE, DIGITAL)
 
 // Name, has logic (compiled to)
 #define BACK_ECU_SYNC_NODES \
     NODE(FRONT_ECU, true, FRONT_ECU_IE)
 
 // SYNC PINS for each synced NODE, suffixed by that node's name
-#define BACK_ECU_SYNC_FRONT_ECU                                           \
-    PIN(13, FRONT_ECU, ONBOARD_LED, OUTPUT, FRONT_ECU_IE, DIGITAL, false) \
-    PIN(2, FRONT_ECU, BUTTON_OFF, INPUT, FRONT_ECU_IE, DIGITAL, false)
+#define BACK_ECU_SYNC_FRONT_ECU                                        \
+    GPIO(0, 13, FRONT_ECU, ONBOARD_LED, OUTPUT, FRONT_ECU_IE, DIGITAL) \
+    GPIO(1, 2, FRONT_ECU, BUTTON_OFF, INPUT, FRONT_ECU_IE, DIGITAL)
 
 // SYNC MSGs generated per synced NODE
 #define BACK_ECU_SYNC_FRONT_ECU_MSGS \
@@ -191,20 +195,20 @@
 #define MSG ,
 const int CAN_MESSAGE_COUNT = PP_NARG_MO(CAN_MESSAGES); // Total number of can messages
 #undef MSG
-#define PIN(p, n, nm, io, IE, ad_t, ...) __PIN_I_COUNTER(IE)
+#define GPIO(i, p, n, nm, io, IE, ad_t, ...) __PIN_I_COUNTER(IE)
 const int PIN_INTERNAL_COUNT = PP_NARG_MO(PINS); // Total number of internal pins
-#undef PIN
-#define PIN(p, n, nm, io, IE, ad_t, ...) __PIN_E_COUNTER(IE)
+#undef GPIO
+#define GPIO(i, p, n, nm, io, IE, ad_t, ...) __PIN_E_COUNTER(IE)
 const int PIN_EXTERNAL_COUNT = PP_NARG_MO(PINS); // Total number of external pins
-#undef PIN
+#undef GPIO
 
-#define PIN(p, n, nm, io, IE, ad_t, ...) __PIN_I_BYTE_COUNTER(IE, ad_t)
+#define GPIO(i, p, n, nm, io, IE, ad_t, ...) __PIN_I_BYTE_COUNTER(IE, ad_t)
 const int PIN_BYTE_ALLOC = PINS 0; // Number of bytes need to allocate for internal pins
-#undef PIN
+#undef GPIO
 
-#define PIN(p, n, nm, io, IE, ad_t, ...) __PIN_I_BYTE_COUNTER(IE, ad_t)
+#define GPIO(i, p, n, nm, io, IE, ad_t, ...) __PIN_I_BYTE_COUNTER(IE, ad_t)
 const int PIN_SYNC_COUNT = PINS 0; // Number of synced pins (external virt/gpio) that will be used
-#undef PIN
+#undef GPIO
 
 // Name, has logic (compiled to), active node (INTERNAL|EXTERNAL)
 #define NODES                           \

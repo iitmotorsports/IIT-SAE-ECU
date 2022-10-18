@@ -9,13 +9,15 @@ namespace IO {
 #define ACTIVE_NODE_READ EXPAND_CONCAT(ACTIVE_NODE, _READ)
 #define ACTIVE_NODE_PINS EXPAND_CONCAT(ACTIVE_NODE, _PINS)
 #define ACTIVE_NODE_SYNC_ EXPAND_CONCAT(ACTIVE_NODE, _SYNC_)
+#define ACTIVE_NODE_SYNC_NODES EXPAND_CONCAT(ACTIVE_NODE, _SYNC_NODES)
 
 #define PIN_ANALOG_INPUT(name)
 #define PIN_DIGITAL_INPUT(name)
 #define PIN_ANALOG_OUTPUT(name) inline void name(uint32_t val);
 #define PIN_DIGITAL_OUTPUT(name) inline void name(bool val);
-// GPIO Pin, Node owner name, name of pin, INPUT|OUTPUT, INTERNAL|EXTERNAL, ANALOG|DIGITAL, is virt? true|false
-#define PIN(pin_no, node_n, name, io_t, ie_t, ad_t, is_virt) PIN_##ad_t##_##io_t(name)
+// GPIO Pin, Node owner name, name of pin, INPUT|OUTPUT, INTERNAL|EXTERNAL, ANALOG|DIGITAL
+#define GPIO(pin_i, pin_no, node_n, name, io_t, ie_t, ad_t) PIN_##ad_t##_##io_t(name)
+#define VIRT(pin_i, pin_no, node_n, name, io_t, ie_t, ad_t) PIN_##ad_t##_##io_t(name)
 
 #define SIG_INTERNAL(address, node_n, name, bits, pos, conv_t, format) inline void name(conv_t val);
 #define SIG_EXTERNAL(address, node_n, name, bits, pos, conv_t, format)
@@ -47,7 +49,10 @@ namespace IO {
 struct ACTIVE_NODE_WRITE {
     ACTIVE_NODE_PINS
     EXPAND_CONCAT(ACTIVE_NODE, _MSGS)
-    NODES
+    EVAL(ACTIVE_NODE_SYNC_NODES)
+#undef NODE_true_EXTERNAL
+#define NODE_true_EXTERNAL(name)
+    EVAL(NODES)
 };
 
 #undef PIN_ANALOG_INPUT
@@ -83,6 +88,9 @@ struct ACTIVE_NODE_WRITE {
 struct ACTIVE_NODE_READ {
     ACTIVE_NODE_PINS
     EXPAND_CONCAT(ACTIVE_NODE, _MSGS)
+    EVAL(ACTIVE_NODE_SYNC_NODES)
+#undef NODE_true_EXTERNAL
+#define NODE_true_EXTERNAL(name)
     EVAL(NODES)
 };
 
@@ -99,7 +107,8 @@ void reset();
 #undef __SIG
 #undef SIG_INTERNAL
 #undef SIG_EXTERNAL
-#undef PIN
+#undef VIRT
+#undef GPIO
 #undef PIN_ANALOG_INPUT
 #undef PIN_DIGITAL_INPUT
 #undef PIN_ANALOG_OUTPUT
@@ -108,9 +117,9 @@ void reset();
 } // namespace IO
 
 void test() {
-    IO::WRITE.WHEEL_SPEED_BACK_LEFT(25);
-    IO::WRITE.ONBOARD_LED(true);
-    IO::WRITE.FRONT_ECU.ONBOARD_LED(true);
-    IO::READ.FRONT_ECU.WHEEL_SPEED_FRONT_LEFT();
-    IO::READ.MC0.FAULTS.FAULT_GEN_5();
+    // IO::WRITE.WHEEL_SPEED_BACK_LEFT(25);
+    // IO::WRITE.ONBOARD_LED(true);
+    // IO::WRITE.FRONT_ECU.ONBOARD_LED(true);
+    // IO::READ.FRONT_ECU.WHEEL_SPEED_FRONT_LEFT();
+    // IO::READ.MC0.FAULTS.FAULT_GEN_5();
 }

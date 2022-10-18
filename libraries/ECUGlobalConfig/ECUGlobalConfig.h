@@ -19,11 +19,11 @@
 /**
  * @brief Front ECU value
  */
-// #define FRONT_ECU FRONT_ECU
+#define FRONT_ECU FRONT_ECU
 /**
  * @brief Back ECU value
  */
-#define BACK_ECU BACK_ECU
+// #define BACK_ECU BACK_ECU
 
 /**
  * @brief Define to enable normal logging on back ECU and checks to be run throughout libaries

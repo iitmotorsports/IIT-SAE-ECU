@@ -1,3 +1,6 @@
+#ifndef __ECU_CANBUFFER_H__
+#define __ECU_CANBUFFER_H__
+
 #include <stdint.h>
 #include <stdlib.h>
 
@@ -189,3 +192,4 @@ private:
     Thread::Mutex mux;
 };
 } // namespace CAN
+#endif // __ECU_CANBUFFER_H__

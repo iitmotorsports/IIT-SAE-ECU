@@ -43,29 +43,21 @@ char *pin_buf[PIN_BYTE_ALLOC + 1];
 #define __IO_BUF_FUNC_GET_int8_t getByte
 #define __IO_BUF_FUNC_GET_bool getBit
 
-#define WRITE_GPIO_INTERNAL_ANALOG_INPUT(index, pin_no, name)
-#define WRITE_GPIO_INTERNAL_DIGITAL_INPUT(index, pin_no, name)
-#define WRITE_GPIO_INTERNAL_ANALOG_OUTPUT(index, pin_no, name) \
-    inline void ACTIVE_NODE_WRITE::name(uint32_t val) {        \
-        *((uint32_t *)(pin_buf + index)) = val;                \
+#define WRITE_GPIO_INTERNAL_INPUT(index, pin_no, name, ad_t)
+#define WRITE_GPIO_INTERNAL_OUTPUT(index, pin_no, name, ad_t)  \
+    inline void ACTIVE_NODE_WRITE::name(TYPE_SEL_##ad_t val) { \
+        *((TYPE_SEL_##ad_t *)(pin_buf + index)) = val;         \
         WRITE_##ad_t(pin_no, val);                             \
     }
-#define WRITE_GPIO_INTERNAL_DIGITAL_OUTPUT(index, pin_no, name) \
-    inline void ACTIVE_NODE_WRITE::name(bool val) {             \
-        *((bool *)(pin_buf + index)) = val;                     \
-        WRITE_##ad_t(pin_no, val);                              \
+#define WRITE_VIRT_INTERNAL(pos, addr, name, ad_t)             \
+    inline void ACTIVE_NODE_WRITE::name(TYPE_SEL_##ad_t val) { \
+        static auto buf = Canbus.getBuffer(addr);              \
+        buf->WRITE_VIRT_##ad_t(val, pos);                      \
     }
-
-#define WRITE_VIRT_INTERNAL(index, UID, node_name, name, bit_sz, pos, io_t, ie_t, ad_t, conv_t, is_virt, format) \
-    inline void ACTIVE_NODE_WRITE::name(conv_t val) {                                                            \
-        static auto buf = Canbus.getBuffer(UID);                                                                 \
-        buf->WRITE_VIRT_##ad_t(val, pos);                                                                        \
-    }
-
-#define WRITE_SIG_INTERNAL(index, UID, node_name, name, bit_sz, pos, io_t, ie_t, ad_t, conv_t, is_virt, format) \
-    inline void ACTIVE_NODE_WRITE::name(conv_t val) {                                                           \
-        static auto buf = Canbus.getBuffer(UID);                                                                \
-        buf->__IO_BUF_FUNC_SET_##conv_t(val, pos);                                                              \
+#define WRITE_SIG_INTERNAL(UID, pos, conv_t)          \
+    inline void ACTIVE_NODE_WRITE::name(conv_t val) { \
+        static auto buf = Canbus.getBuffer(UID);      \
+        buf->__IO_BUF_FUNC_SET_##conv_t(val, pos);    \
     }
 
 #define READ_GPIO_INTERNAL(index, UID, node_name, name, bit_sz, pos, io_t, ie_t, ad_t, conv_t, is_virt, format) \
@@ -86,16 +78,17 @@ char *pin_buf[PIN_BYTE_ALLOC + 1];
     }
 
 // TODO: External Source control
-#define WRITE_GPIO_EXTERNAL(index, UID, node_name, name, bit_sz, pos, io_t, ie_t, ad_t, conv_t, is_virt, format) \
-    inline void name(conv_t val) {                                                                               \
-        static auto buf = Canbus.getBuffer(UID);                                                                 \
-        buf->WRITE_VIRT_##ad_t(val, pos);                                                                        \
+#define WRITE_GPIO_EXTERNAL_INPUT(pos, addr, name, ad_t)
+#define WRITE_GPIO_EXTERNAL_OUTPUT(pos, addr, name, ad_t) \
+    inline void name(TYPE_SEL_##ad_t val) {               \
+        static auto buf = Canbus.getBuffer(addr);         \
+        buf->WRITE_VIRT_##ad_t(val, pos);                 \
     }
 
-#define WRITE_VIRT_EXTERNAL(index, UID, node_name, name, bit_sz, pos, io_t, ie_t, ad_t, conv_t, is_virt, format) \
-    inline void name(conv_t val) {                                                                               \
-        static auto buf = Canbus.getBuffer(UID);                                                                 \
-        buf->WRITE_VIRT_##ad_t(val, pos);                                                                        \
+#define WRITE_VIRT_EXTERNAL(pos, addr, name, ad_t) \
+    inline void name(TYPE_SEL_##ad_t val) {        \
+        static auto buf = Canbus.getBuffer(addr);  \
+        buf->WRITE_VIRT_##ad_t(val, pos);          \
     }
 
 #define WRITE_SIG_EXTERNAL(index, UID, node_name, name, bit_sz, pos, io_t, ie_t, ad_t, conv_t, is_virt, format)
@@ -118,11 +111,19 @@ char *pin_buf[PIN_BYTE_ALLOC + 1];
         return buf->__IO_BUF_FUNC_GET_##conv_t(pos);                                                           \
     }
 
-// WRITE_GPIO_INTERNAL_OUTPUT(0, 0, ONBOARD_LED, DIGITAL, EXPAND_CONCAT(TYPE_SEL_ad_t))
+#define _E2C(a, b) a##b
+#define E2C(a, b) _E2C(a, b)
 
-#define PIN(pin_no, node_n, name, io_t, ie_t, ad_t, is_virt) WRITE_GPIO_INTERNAL_##ad_t##_##io_t(56, pin_no, name)
-EVAL(ACTIVE_NODE_PINS)
-#undef PIN
+#define _GPIO(ie_t, io_t) WRITE_GPIO_##ie_t##io_t
+#define _VIRT(ie_t) WRITE_VIRT_##ie_t
+#define GPIO(pin_i, pin_no, node_n, name, io_t, ie_t, ad_t) _GPIO(ie_t, _##io_t)(pin_i, pin_no, name, ad_t)
+#define VIRT(pin_i, pin_no, node_n, name, io_t, ie_t, ad_t) _VIRT(ie_t)(pin_i, pin_no, name, ad_t)
+
+EVAL(FRONT_ECU_PINS)
+EVAL(E2C(ACTIVE_NODE, _PINS))
+
+#undef GPIO
+#undef VIRT
 
 void receive_sync() {
 }
