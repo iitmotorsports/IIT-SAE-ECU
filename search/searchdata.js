@@ -9,7 +9,7 @@ var indexSectionsWithContent =
   6: "bclps",
   7: "n",
   8: "e",
-  9: "_bcehps",
+  9: "_cefhps",
   10: "dhisx"
 };
 
