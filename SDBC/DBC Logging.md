@@ -43,9 +43,9 @@ Doing so could free up the 4 bytes used for ID.
 
 ### CAN Nodes
 
-There are other nodes besides the ECUs and, potentially, even more nodes for future builds. Being able to get information directly from these submodules instead of having it pass through an ECU first would be beneficial. Additionally, it would help differentiate where messages are actually coming from, instead of "its from the ecu that takes it from the mc" or whatever other submodule.
+There are other nodes besides the ECUs and, potentially, even more nodes for future builds. Being able to get information directly from these nodes instead of having it pass through an ECU first would be beneficial. Additionally, it would help differentiate where messages are actually coming from, instead of "its from the ecu that takes it from the mc" or whatever other nodes.
 
-This does mean that messages from other submodules must be mapped.
+This does mean that messages from other nodes must be mapped.
 
 ## Solutions
 

@@ -44,7 +44,7 @@ Semantic versioning shall be used with no extensions.
 
 Where `pin#` is an integer.
 
-Nodes are used to organize where CAN messages originate from and to define pins that are in use. Defining pins is not necessary, such as with a motor controller or AMS, where there is no embedded logic. Nodes must be part of the CAN network. This assumes that there is only one network.
+Nodes are used to organize where CAN messages originate from and to define pins that are in use. Defining pins is not necessary, such as with a motor controller or AMS, where there is no embedded logic. Nodes must be part of the CAN network. SDBC assumes that there is only one network.
 
 ### `NODE`
 
@@ -123,7 +123,7 @@ Nodes that contain logic (defined sources), will generate defines for those sour
 
 Any sources or `MSG` that have a sync refrenced to them, must output to the network whenever they change.
 
-synced values should be packed into messages as needed, i.e. if a node has two values that are being synced, send both in same message versus sending then in separate messages.
+synced values should be packed into messages as needed, i.e. if a node has two values that are being synced, send both in the same message versus sending them in separate messages.
 
 `MSG`s append their signals to a nodes namespace, not the message name itself.
 
