@@ -1,34 +1,45 @@
 NAME "Hawkrod"
 VERSION 1.0.0
 
+CONF
+    ANALOG_RES  : 12
+    VIRT_ID_OFF : 128
+
 NODE FRONT_ECU : The front teensy
-    GPIO ONBOARD_LED : 13 DIGITAL OUTPUT   : onboard led
-    GPIO BUTTON_OFF : 2 DIGITAL INPUT      : Digital Start Button
-    GPIO WHEEL_1 : 21 ANALOG INPUT         : R wheel speed
-    GPIO WHEEL_0 : 20 ANALOG INPUT         : L wheel speed
-    VIRT CHARGE_SIGNAL : DIGITAL OUTPUT    : Indicates whether charging should be enabled
+    GPIO ONBOARD_LED : 13 DIGITAL OUTPUT    : onboard led
+    GPIO ANALOG_TEST : 24 ANALOG OUTPUT     : analog out
+    GPIO BUTTON_OFF : 2 DIGITAL INPUT       : Digital Start Button
+    GPIO WHEEL_1 : 21 ANALOG INPUT          : R wheel speed
+    GPIO WHEEL_0 : 20 ANALOG INPUT          : L wheel speed
+    VIRT CHARGE_SIGNAL : DIGITAL OUTPUT     : Indicates whether charging should be enabled
     VIRT START_LED : DIGITAL OUTPUT         : Whether the front start led should be on
 
-    # All Can messages can be read by other nodes
-    MSG 5 MSGBLK_FRONT_DEBUG : Some Debug block
+    # All Can messages can be read/written to by other nodes
+    MSG 8 >> MSGBLK_FRONT_LED : Control msg for front led
+        SIG ONBOARD_LED : "int" >> ONBOARD_LED : ctrl for the led gpio
+        SIG OTHER_CTRL_SIG : "short" : ctrl int
+    
+    MSG 5 << MSGBLK_FRONT_DEBUG : Some Debug block
         SIG DEBUG_INTEGER : "int" : Debug int
-    MSG 2 MSGBLK_FRONT_WHEEL_SPEED : Wheel message block 0
-        SIG WHEEL_SPEED_FRONT_LEFT : "f_rpm" <- WHEEL_0 : The speed of the front left wheel
-        SIG WHEEL_SPEED_FRONT_RIGHT : "f_rpm" <- WHEEL_1 : The speed of the front right wheel
+    MSG 2 << MSGBLK_FRONT_WHEEL_SPEED : Wheel message block 0
+        SIG WHEEL_SPEED_FRONT_LEFT : "f_rpm" << WHEEL_0 : The speed of the front left wheel
+        SIG WHEEL_SPEED_FRONT_RIGHT : "f_rpm" << WHEEL_1 : The speed of the front right wheel
 
 NODE BACK_ECU : The back teensy
     GPIO ONBOARD_LED : 13 DIGITAL OUTPUT    : onboard led
     GPIO SERVO_OFF : 0 DIGITAL OUTPUT       : Turn the back servos off
     GPIO TSV_SIGNAL : 3 DIGITAL INPUT      : digital input
+    GPIO WHEEL_1 : 21 ANALOG INPUT          : R wheel speed
+    GPIO WHEEL_0 : 20 ANALOG INPUT          : L wheel speed
     GPIO AIR2 : 4 DIGITAL OUTPUT            : Air 2 control
     VIRT STATE : ANALOG OUTPUT               : Current state of the ECU
 
-    # While all external can messages are read-only, external pins must be explicitly synced to be read/written to
-    SYNC FRONT_ECU ONBOARD_LED              : control front onboard led
+    MSG 3 << MSGBLK_BACK_WHEEL_SPEED : Wheel message block 1
+        SIG WHEEL_SPEED_BACK_LEFT : "b_rpm" << WHEEL_0 : The speed of the back left wheel
+        SIG WHEEL_SPEED_BACK_RIGHT : "b_rpm" << WHEEL_1 : The speed of the back right wheel
 
-    MSG 3 MSGBLK_BACK_WHEEL_SPEED : Wheel message block 1
-        SIG WHEEL_SPEED_BACK_LEFT : "b_rpm" : The speed of the back left wheel
-        SIG WHEEL_SPEED_BACK_RIGHT : "b_rpm" : The speed of the back right wheel
+    MSG 10 >> MSGBLK_BACK_LED : Control msg for back led
+            SIG ONBOARD_LED : "int" >> ONBOARD_LED : ctrl for the led gpio
 
 NODE MC0
     ADDR 0xA3 - 0xC0
@@ -101,8 +112,8 @@ NODE MC0
 NODE MC1
 NODE AMS
 
-FORMAT "f_rpm"  "uint"   (1,0) [-20,60] : Rotations per minute
-FORMAT "b_rpm"  "uint"   (1,0) [-20,60] : Rotations per minute
+FORMAT "f_rpm"  "int"   (1,0) [-20,60] : Rotations per minute
+FORMAT "b_rpm"  "int"   (1,0) [-20,60] : Rotations per minute
 FORMAT "%"      "uint"   (1,0) [0,0]    : Percentage
 FORMAT "C"      "float"  (1,0) [0,0]    : Celsius
 FORMAT "F"      "float"  (1,0) [0,0]    : Fahrenheit

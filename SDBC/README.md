@@ -38,9 +38,8 @@ Semantic versioning shall be used with no extensions.
 > > ADDR `can_address_low` - `can_address_high`  
 > > GPIO `gpio_pin_id` : `pin#` `[DIGITAL|ANALOG]` `[I|O]` : `optional description`  
 > > VIRT `virt_pin_id` : `[DIGITAL|ANALOG]` : `optional description`  
-> > SYNC `node_id` : `[virt_pin_id|gpio_pin_id|can_msg_id]` : `optional description`  
-> > MSG `can_msg_address` `can_msg_id` : `optional description`  
-> > > SIG `signal_id` : `"format_name"` <- `[virt_pin_id|gpio_pin_id|can_msg_id]` : `optional description`  
+> > MSG `can_msg_address`  `[<<|>>]` `can_msg_id` : `optional description`  
+> > > SIG `signal_id` : `"format_name"` `[<<|>>]` `[virt_pin_id|gpio_pin_id]` : `optional description`  
 
 Where `pin#` is an integer.
 
@@ -79,13 +78,9 @@ In this context, input means that the value can only be read and output means th
 
 Because there is no pin given, the usage of this pin must verify it has a unique or alternative way to modify the value compared to the set GPIO lines.
 
-#### `SYNC`
-
-Nodes with logic shall be allowed to query sources and messages of other nodes where applicable. However, the `SYNC` keyword denotes explicit and constant syncing of the defined value without needed to request for it. This should be used in cases where a value or message will be used often. This also explicitly defines the same id in the receiving node's namespace, to be used as if it where it's own. The line consists of the id of another node and the id of either a `GPIO`, `VIRT`, or `MSG` within that node.
-
 #### `MSG`
 
-The `MSG` line defines a CAN bus message, where it contains `SIG`s or signals, which are the values within that message. It consists of the can bus address for the message, the unique id for this message, and the optional description.
+The `MSG` line defines a CAN bus message, where it contains `SIG`s or signals, which are the values within that message. It consists of the can bus address for the message, whether this message is outgoing `<<` or incoming `>>`, the unique id for this message, and the optional description.
 
 Addresses can either be in hex (begins with `0x`) or decimal.
 
@@ -93,9 +88,21 @@ There are can be multiple signals per message, however, it shall be verified at 
 
 ##### `SIG`
 
-The `SIG` line consists of the signal id, the format of this signal, optionally, the id of the value that should be linked to this signal using the `<-` symbol; this keeps the signal up to date with the respective id whether it is from a gpio, virt, or sync source, and the optional description.
+The `SIG` line consists of the signal id, the format of this signal, optionally, the id of the value that should be linked to this signal using a value setter `<<` or `>>`, dependent on whether this message is outgoing or incoming, respectively; this keeps the signal up to date with the given source whether it is from a gpio or virt source, and the optional description.
 
-Signals linked with the `<-` symbol are to be updated in the background at runtime. The header for formatting the incoming value will be generated but the actual logic must be then later defined in a separate source file.
+Signals linked with a value setter (`<<` or `>>`) are to be updated in the background at runtime. The header for formatting the incoming values will be generated but the actual logic must be then later defined in a separate source file.
+
+**NOTE:** `GPIO`s can only be set to, at most, an unsigned 32 bit integer value while `VIRT`s are doubles.
+
+**NOTE:** If more than one value setter is used in an incoming message, space **must** be allocated for a bit field, denoting which value setter should actually be updated. The bit field is as large as however many value setters there are and is appended to the end of the message block. This is checked for at parsing.
+
+##### Space optimization
+
+Although not required, effort should be made to optimize the placement of signals within a message.
+
+This can be checked for at parsing.
+
+Values should be optimized to be placed at appropriate integer intervals, where possible. i.e. every 32 bits for 32 bit values, every 16 bits for 16 bit values, or every 8 bits for 8 bit values. This is best achieved by placing values largest to smallest, where applicable.
 
 ## Formats
 

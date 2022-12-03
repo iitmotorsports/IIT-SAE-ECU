@@ -9,38 +9,58 @@
 #include "Canbus.h"
 #include "ECUGlobalConfig.h"
 
+#include "SDBC_class.hpp"
+#include "SDBC_type.hpp"
+
 namespace SDBC {
 
+// All messages, numbers are their addresses
+const MSG Messages[6] = {
+    {8, false},
+    {5, true},
+    {2, true},
+    {3, true},
+    {10, false},
+    {0xA0, true},
+};
 
-class FRONT_ECU {
-public:
-    // void setSig(SIG signal, uint64_t data) {
-    //     MESSAGES[signal.msgIndex].setSig(signal, data);
-    // }
-
-    const SIG DEBUG_INTEGER = {0x00000000FFFFFFFF, 5, 0, 0};
-    const SIG WHEEL_SPEED_FRONT_LEFT = {0x00000000FFFFFFFF, 2, 0, 0};
-    const SIG WHEEL_SPEED_FRONT_RIGHT = {0xFFFFFFFF00000000, 2, 0, 32};
-
-private:
-    const SIG MSGBLK_FRONT_DEBUG[1] = {DEBUG_INTEGER};
-    const SIG MSGBLK_FRONT_WHEEL_SPEED[2] = {WHEEL_SPEED_FRONT_LEFT, WHEEL_SPEED_FRONT_RIGHT};
-
-    const int messageCount = 2;
+struct FRONT_ECU {
     const int nodeID = 0; // ID based on order of appearance in sdbc
-
-    MSG MESSAGES[2] = {
-        {5, MSGBLK_FRONT_DEBUG, 1},
-        {2, MSGBLK_FRONT_WHEEL_SPEED, 2},
-    };
+    const struct PIN {
+        const GPIO ONBOARD_LED = {13, 1, 1};
+        const GPIO ANALOG_TEST = {24, 0, 1};
+        const GPIO BUTTON_OFF = {2, 1, 0};
+        const GPIO WHEEL_1 = {21, 0, 0};
+        const GPIO WHEEL_0 = {20, 0, 0};
+        const VIRT CHARGE_SIGNAL = {128 + 0, 1, 1};
+        const VIRT START_LED = {128 + 1, 1, 1};
+    } PIN;
+    const SIG ONBOARD_LED = {0x00000000FFFFFFFF, Messages + 0, &PIN.ONBOARD_LED, dt::int_t, 0, 0};
+    const SIG OTHER_CTRL_SIG = {0x0000FFFF00000000, Messages + 0, nullptr, dt::short_t, 32, 0};
+    const SIG DEBUG_INTEGER = {0x00000000FFFFFFFF, Messages + 1, nullptr, dt::int_t, 0, 0};
+    const SIG WHEEL_SPEED_FRONT_LEFT = {0x00000000FFFFFFFF, Messages + 2, &PIN.WHEEL_0, dt::int_t, 0, 0};
+    const SIG WHEEL_SPEED_FRONT_RIGHT = {0xFFFFFFFF00000000, Messages + 2, &PIN.WHEEL_1, dt::int_t, 32, 0};
 } FRONT_ECU;
 
 const struct BACK_ECU {
-    const SIG WHEEL_SPEED_BACK_LEFT = {3, 0};
-    const SIG WHEEL_SPEED_BACK_RIGHT = {3, 32};
-} BACK_ECU;
+    const int nodeID = 1;
+    const struct PIN {
+        const GPIO ONBOARD_LED = {13, 1, 1};
+        const GPIO SERVO_OFF = {0, 1, 1};
+        const GPIO TSV_SIGNAL = {3, 1, 0};
+        const GPIO WHEEL_1 = {21, 0, 0};
+        const GPIO WHEEL_0 = {20, 0, 0};
+        const GPIO AIR2 = {4, 1, 1};
+        const VIRT STATE = {128 + 0, 0, 1};
+    } PIN;
+    const SIG WHEEL_SPEED_BACK_LEFT = {0x00000000FFFFFFFF, Messages + 3, &PIN.WHEEL_0, dt::int_t, 0, 1};
+    const SIG WHEEL_SPEED_BACK_RIGHT = {0xFFFFFFFF00000000, Messages + 3, &PIN.WHEEL_1, dt::int_t, 32, 1};
+    const SIG ONBOARD_LED = {0x00000000FFFFFFFF, Messages + 4, &PIN.ONBOARD_LED, dt::int_t, 0, 0};
+} // namespace SDBC
+BACK_ECU;
 
 const struct MC0 {
+    const int nodeID = 2;
     const SIG FAULT_GEN_0 = {0xA0, 0};
     const SIG FAULT_GEN_1 = {0xA0, 1};
     const SIG FAULT_GEN_2 = {0xA0, 2};
@@ -108,9 +128,11 @@ const struct MC0 {
 } MC0;
 
 const struct MC1 {
+    const int nodeID = 3;
 } MC1;
 
 const struct AMS {
+    const int nodeID = 4;
 } AMS;
 
 /* ACTIVE NODE SELECTOR */
