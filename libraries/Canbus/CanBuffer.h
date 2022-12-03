@@ -189,7 +189,7 @@ struct Buffer { // IMPROVE: more rigorous testing on the get funcs
     void unlock();
 
 private:
-    Thread::Mutex mux;
+    Thread::Mutex mux; // TODO: make shared_mutex to allow multiple readers
 };
 } // namespace CAN
 #endif // __ECU_CANBUFFER_H__
