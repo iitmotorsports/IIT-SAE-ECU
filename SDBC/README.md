@@ -99,7 +99,7 @@ Signals linked with the `<-` symbol are to be updated in the background at runti
 
 ## Formats
 
-> FORMAT `"format_name"` + `"data_type"` (`scale`,`shift`) [`min`,`max`] : `optional description`
+> FORMAT `"format_name"` `"data_type"` (`scale`,`shift`) [`min`,`max`] : `optional description`
 
 The `FORMAT` line consists of the name of the format in quotes, the data type of this format, the scale and shift that should be applied to the final value when decoding a can message signal. The min and max of the final value, if applicable and the optional description
 
@@ -107,11 +107,11 @@ scale, shift, min, and max are allowed to be floats and negative. They are also 
 
 ## Types
 
-> TYPE `"data_type_name"` `[0-64]` : `optional description`
+> TYPE `"data_type_name"` `[+|-]` `[0-64]` : `optional description`
 
-The type line consists of the name of a data type and the number of bits that it uses and the optional description.
+The type line consists of the name of a data type, whether this data is signed or unsigned, the number of bits that it uses, and the optional description.
 
-The data type name, if applicable, shall match a defined type or typedef in it's most general sense. i.e. 32 bit values can be either an integer (`int`) or float (`float`), 1 bit values are booleans (`bool`).
+The data type name, if applicable, shall match a defined type or typedef in it's most general sense. i.e. 32 bit values can be either an integer (`int32_t`), unsigned integer (`uint32_t`) or a float (`float`), 1 bit values are booleans (`bool`).
 
 ## Embedded compilation
 

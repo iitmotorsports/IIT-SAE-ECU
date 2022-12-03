@@ -19,7 +19,8 @@
 /**
  * @brief Front ECU value
  */
-#define FRONT_ECU FRONT_ECU
+#define CONFIG_ACTIVE_NODE FRONT_ECU
+// #define FRONT_ECU FRONT_ECU
 /**
  * @brief Back ECU value
  */

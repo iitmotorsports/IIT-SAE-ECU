@@ -4,11 +4,13 @@
             "name": "Windows",
             "includePath": [
                 "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/teensy/avr/cores/${config:CORE}/**",
+                "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/arm-none-eabi/**",
                 "${workspaceFolder}/libraries/**"
             ],
             "browse": {
                 "path": [
                     "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/teensy/avr/cores/${config:CORE}/",
+                    "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/arm-none-eabi/",
                     "${workspaceFolder}/libraries/"
                 ],
                 "limitSymbolsToIncludedHeaders": false

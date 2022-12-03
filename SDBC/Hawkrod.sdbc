@@ -10,6 +10,8 @@ NODE FRONT_ECU : The front teensy
     VIRT START_LED : DIGITAL OUTPUT         : Whether the front start led should be on
 
     # All Can messages can be read by other nodes
+    MSG 5 MSGBLK_FRONT_DEBUG : Some Debug block
+        SIG DEBUG_INTEGER : "int" : Debug int
     MSG 2 MSGBLK_FRONT_WHEEL_SPEED : Wheel message block 0
         SIG WHEEL_SPEED_FRONT_LEFT : "f_rpm" <- WHEEL_0 : The speed of the front left wheel
         SIG WHEEL_SPEED_FRONT_RIGHT : "f_rpm" <- WHEEL_1 : The speed of the front right wheel
@@ -99,22 +101,26 @@ NODE MC0
 NODE MC1
 NODE AMS
 
-FORMAT "f_rpm"  + "int"    (1,0) [-20,60] : Rotations per minute
-FORMAT "b_rpm"  + "int"    (1,0) [-20,60] : Rotations per minute
-FORMAT "%"      + "int"    (1,0) [0,0]    : Percentage
-FORMAT "C"      - "float"  (1,0) [0,0]    : Celsius
-FORMAT "F"      - "float"  (1,0) [0,0]    : Fahrenheit
-FORMAT "m/s"    - "int"    (1,0) [0,0]    : Meters per second
-FORMAT "deg/s"  - "float"  (1,0) [0,0]    : Degrees per second
-FORMAT "deg"    - "float"  (1,0) [0,0]    : Angle in degrees
-FORMAT "flag"   + "bool"   (1,0) [0,0]    : True or False flag
-FORMAT "bin"    + "binary" (1,0) [0,0]    : Binary data
+FORMAT "f_rpm"  "uint"   (1,0) [-20,60] : Rotations per minute
+FORMAT "b_rpm"  "uint"   (1,0) [-20,60] : Rotations per minute
+FORMAT "%"      "uint"   (1,0) [0,0]    : Percentage
+FORMAT "C"      "float"  (1,0) [0,0]    : Celsius
+FORMAT "F"      "float"  (1,0) [0,0]    : Fahrenheit
+FORMAT "m/s"    "int"    (1,0) [0,0]    : Meters per second
+FORMAT "deg/s"  "float"  (1,0) [0,0]    : Degrees per second
+FORMAT "deg"    "float"  (1,0) [0,0]    : Angle in degrees
+FORMAT "flag"   "bool"   (1,0) [0,0]    : True or False flag
+FORMAT "bin"    "binary" (1,0) [0,0]    : Binary data
 
-TYPE "long"   64 INTEGER
-TYPE "int"    32 INTEGER
-TYPE "short"  16 INTEGER
-TYPE "byte"   8  INTEGER
-TYPE "float"  32 FLOATING
-TYPE "double" 64 FLOATING
-TYPE "bool"   1  INTEGER  : Potential to cluster into bit fields?
-TYPE "binary" 32 INTEGER  : Special cases, such as with multi message values
+TYPE "long"   - 64 INTEGER
+TYPE "int"    - 32 INTEGER
+TYPE "short"  - 16 INTEGER
+TYPE "byte"   - 8  INTEGER
+TYPE "ulong"  + 64 INTEGER
+TYPE "uint"   + 32 INTEGER
+TYPE "ushort" + 16 INTEGER
+TYPE "ubyte"  + 8  INTEGER
+TYPE "float"  - 32 FLOATING
+TYPE "double" - 64 FLOATING
+TYPE "bool"   + 1  INTEGER  : Potential to cluster into bit fields?
+TYPE "binary" + 32 INTEGER  : Special cases, such as with multi message values
