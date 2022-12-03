@@ -29,6 +29,6 @@ var searchData=
   ['getulong_26',['getULong',['../struct_c_a_n_1_1_buffer.html#a35c9dce7c586969585533a0169ad631c',1,'CAN::Buffer']]],
   ['getushort_27',['getUShort',['../struct_c_a_n_1_1_buffer.html#aeeb9bea3b6e3806fa7bc4bba04b18caf',1,'CAN::Buffer']]],
   ['getvariable_28',['getVariable',['../namespace_serial_var.html#af2ceb4c66bf58e940714857525410863',1,'SerialVar']]],
-  ['gpio_29',['GPIO',['../classsdbc__parse_1_1_g_p_i_o.html',1,'sdbc_parse']]],
+  ['gpio_29',['GPIO',['../struct_s_d_b_c_1_1_g_p_i_o.html',1,'SDBC::GPIO'],['../classsdbc__parse_1_1_g_p_i_o.html',1,'sdbc_parse.GPIO']]],
   ['green_30',['green',['../namespacescript_1_1text.html#ad5dc812a2082c3da11d9f70df13f9d5b',1,'script::text']]]
 ];

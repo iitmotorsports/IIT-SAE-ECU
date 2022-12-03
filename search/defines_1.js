@@ -29,7 +29,8 @@ var searchData=
   ['conf_5fpins_5fanalog_5fwrite_5fresolution_26',['CONF_PINS_ANALOG_WRITE_RESOLUTION',['../_pin_config_8def.html#a154bf0cb94eefac8b5069c4a282f1dda',1,'PinConfig.def']]],
   ['conf_5fpins_5fcanbus_5fupdate_5finterval_5fmicro_27',['CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO',['../_pin_config_8def.html#a30388a88a1fdecdb193647dc80a97084',1,'PinConfig.def']]],
   ['conf_5fsteer_5fmin_28',['CONF_STEER_MIN',['../_motor_control_8def.html#af4604519f2c5bdf96c69b2db1306024a',1,'MotorControl.def']]],
-  ['config_5fflexcan_5fbaud_5frate_29',['CONFIG_FLEXCAN_BAUD_RATE',['../_canbus_config_8def.html#a62115d07f1e91c038ec41fa6650bedc2',1,'CanbusConfig.def']]],
-  ['config_5fflexcan_5fcan_5fselect_30',['CONFIG_FLEXCAN_CAN_SELECT',['../_canbus_config_8def.html#a819aa9d14cfa8bdbdc4f601bb9855c49',1,'CanbusConfig.def']]],
-  ['config_5fflexcan_5ftx_5fmailboxes_31',['CONFIG_FLEXCAN_TX_MAILBOXES',['../_canbus_config_8def.html#a57a53cabedbe0c155a84596c4cd8d5f0',1,'CanbusConfig.def']]]
+  ['config_5factive_5fnode_29',['CONFIG_ACTIVE_NODE',['../_e_c_u_global_config_8h.html#a7a15d7f2da998fbc4135a1ccaef3d43c',1,'ECUGlobalConfig.h']]],
+  ['config_5fflexcan_5fbaud_5frate_30',['CONFIG_FLEXCAN_BAUD_RATE',['../_canbus_config_8def.html#a62115d07f1e91c038ec41fa6650bedc2',1,'CanbusConfig.def']]],
+  ['config_5fflexcan_5fcan_5fselect_31',['CONFIG_FLEXCAN_CAN_SELECT',['../_canbus_config_8def.html#a819aa9d14cfa8bdbdc4f601bb9855c49',1,'CanbusConfig.def']]],
+  ['config_5fflexcan_5ftx_5fmailboxes_32',['CONFIG_FLEXCAN_TX_MAILBOXES',['../_canbus_config_8def.html#a57a53cabedbe0c155a84596c4cd8d5f0',1,'CanbusConfig.def']]]
 ];

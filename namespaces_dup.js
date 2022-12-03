@@ -72,6 +72,7 @@ var namespaces_dup =
       [ "stopCanPins", "namespace_pins.html#a12a6f448c7eea1740a38f0fbe73bbace", null ],
       [ "update", "namespace_pins.html#a66c4b641f395a60dedbe5271d4acfd35", null ]
     ] ],
+    [ "SDBC", "namespace_s_d_b_c.html", "namespace_s_d_b_c" ],
     [ "sdbc_gen_cpp", "namespacesdbc__gen__cpp.html", null ],
     [ "sdbc_parse", "namespacesdbc__parse.html", "namespacesdbc__parse" ],
     [ "SerialVar", "namespace_serial_var.html", "namespace_serial_var" ],

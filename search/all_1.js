@@ -8,8 +8,9 @@ var searchData=
   ['aero_5',['Aero',['../namespace_aero.html',1,'']]],
   ['aeroservo_2ecpp_6',['AeroServo.cpp',['../_aero_servo_8cpp.html',1,'']]],
   ['aeroservo_2eh_7',['AeroServo.h',['../_aero_servo_8h.html',1,'']]],
-  ['anyfault_8',['anyFault',['../namespace_fault.html#a8d65de5d2b7a229e0d2c8d84ca9f64bd',1,'Fault']]],
-  ['available_5fram_9',['available_ram',['../namespacescript_1_1util.html#aaae4fff873c6f17f53113256de2de047',1,'script::util']]],
-  ['avgvar_10',['AvgVar',['../class_avg_var.html',1,'AvgVar&lt; T &gt;'],['../class_avg_var.html#a9af3304eb07f4a2fff88947086b5e002',1,'AvgVar::AvgVar()']]],
-  ['avgvarref_11',['AvgVarRef',['../class_avg_var_ref.html',1,'AvgVarRef&lt; T &gt;'],['../class_avg_var_ref.html#a5d2749e8dc6dadeaf176c5becca2e5c5',1,'AvgVarRef::AvgVarRef()']]]
+  ['ams_8',['AMS',['../struct_s_d_b_c_1_1_a_m_s.html',1,'SDBC']]],
+  ['anyfault_9',['anyFault',['../namespace_fault.html#a8d65de5d2b7a229e0d2c8d84ca9f64bd',1,'Fault']]],
+  ['available_5fram_10',['available_ram',['../namespacescript_1_1util.html#aaae4fff873c6f17f53113256de2de047',1,'script::util']]],
+  ['avgvar_11',['AvgVar',['../class_avg_var.html',1,'AvgVar&lt; T &gt;'],['../class_avg_var.html#a9af3304eb07f4a2fff88947086b5e002',1,'AvgVar::AvgVar()']]],
+  ['avgvarref_12',['AvgVarRef',['../class_avg_var_ref.html',1,'AvgVarRef&lt; T &gt;'],['../class_avg_var_ref.html#a5d2749e8dc6dadeaf176c5becca2e5c5',1,'AvgVarRef::AvgVarRef()']]]
 ];

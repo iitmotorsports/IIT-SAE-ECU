@@ -9,8 +9,8 @@ var indexSectionsWithContent =
   6: "bclps",
   7: "n",
   8: "e",
-  9: "_cefhps",
-  10: "dhisx"
+  9: "_cehps",
+  10: "dhilsx"
 };
 
 var indexSectionNames =
