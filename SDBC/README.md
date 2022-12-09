@@ -7,14 +7,16 @@ Version 1.0.0
 - First token on a line indicates what syntax to follow
 - Any text after a final `:` in a line is considered the description of that line. If there is no final `:` there is no description
 - IDs must be unique to their namespace
+  - Namespaces are by level, for example, `NODE`s have unique IDs and `MSG`s within a single `NODE` have unique IDs
 - Indents are not necessary but are recommended to format the document appropriately
 - The order in which lines are defined is important
-- IDs must typically be uppercase with no spaces but underscores allowed. However, text case shall be converted to upper regardless.
+- IDs shall only consist of uppercase letters, underscores, and numbers where a number is not the first character
 
 ## Top level lines
 
 - `NAME`
 - `VERSION`
+- `CONF`
 - `NODE`
 - `FORMAT`
 - `TYPE`
@@ -32,6 +34,24 @@ This shall be the first line in the file. It indicates the name of the SDBC file
 This shall be the second line of the file. It indicates what version of the SDBC standard it follows.
 Semantic versioning shall be used with no extensions.
 
+## Configuration
+
+> CONF
+> > ANALOG_RES : `Integer`
+> > VIRT_ID_OFF : `Integer`
+
+The `CONF` line denotes configuration values that the system should abide to. It is up to the device implementation to ensure these configurations are followed or expected.
+
+**All** configuration values must be set per the specification version.
+
+### Configuration values
+
+- `ANALOG_RES`
+  - The analog bit resolution of GPIO pins
+  - e.g. 12 bit resolution results in a max value of 4096 for analog values
+- `VIRT_ID_OFF`
+  - The offset that virtual pins should start from. Because `VIRT`s should not collide with `GPIO` pin numbers, their pseudo pin number must start with an offset such as 100, where the device only has 60 pins. It must be ensured that values will not overlap with `GPIO` pins.
+
 ## Nodes
 
 > NODE `node_id` : `optional description`
@@ -40,6 +60,8 @@ Semantic versioning shall be used with no extensions.
 > > VIRT `virt_pin_id` : `[DIGITAL|ANALOG]` : `optional description`  
 > > MSG `can_msg_address`  `[<<|>>]` `can_msg_id` : `optional description`  
 > > > SIG `signal_id` : `"format_name"` `[<<|>>]` `[virt_pin_id|gpio_pin_id]` : `optional description`  
+> > LINK `[<<|>>]` `node_id` `can_msg_id`: `optional description`  
+> > > SET `signal_id` `[<<|>>]` `[virt_pin_id|gpio_pin_id]` : `optional description`  
 
 Where `pin#` is an integer.
 
@@ -63,10 +85,11 @@ Addresses can either be in hex (begins with `0x`) or decimal.
 
 #### `GPIO`
 
-The `GPIO` line defines a physical GPIO pin that shall be in use. It consists of a unique ID, the pin number, whether this pin should be treated as `DIGITAL` or `ANALOG`; which changes whether it should be treated as a single bit or multiple, whether this pin is exclusively for input (`I`) or output (`O`), and the optional description.  
-NOTE: pin will not be verified if it is necessarily usable as digital or analog, refer to board pin-out to confirm it has digital, analog read and/or write capabilities.
+The `GPIO` line defines a physical GPIO pin that shall be in use. It consists of a unique ID, the pin number, whether this pin should be treated as `DIGITAL` or `ANALOG`; which changes whether it should be treated as a single bit or multiple, whether this pin is exclusively for input (`I`) or output (`O`), and the optional description.
 
-In this context, input means that the physical pin can only be read and output means that the physical pin can only be set.
+In this context, input means that the physical pin can only be read and output means that the physical pin can only be set. However, both input and output pins will store a buffer value that can be read, this allows to keep track of both their states.
+
+**NOTE:** `GPIO`s can only be set to, at most, a 32 bit integer pin will not be verified if it is necessarily usable as digital or analog, refer to board pin-out to confirm it has digital, analog read and/or write capabilities.
 
 #### `VIRT`
 
@@ -77,6 +100,10 @@ Virtual pins shall be defined on the node of the initial value or whichever node
 In this context, input means that the value can only be read and output means that the value can only be set.
 
 Because there is no pin given, the usage of this pin must verify it has a unique or alternative way to modify the value compared to the set GPIO lines.
+
+**NOTE:** `VIRT`s can only be set to, at most, a 64 bit floating point value.
+
+`GPIO`s and `VIRT`s are functionally the same. Unless otherwise noted, `VIRT`s can used where `GPIO` can and vice versa. The rest of this specification will mainly refer to `GPIO`.
 
 #### `MSG`
 
@@ -92,9 +119,7 @@ The `SIG` line consists of the signal id, the format of this signal, optionally,
 
 Signals linked with a value setter (`<<` or `>>`) are to be updated in the background at runtime. The header for formatting the incoming values will be generated but the actual logic must be then later defined in a separate source file.
 
-**NOTE:** `GPIO`s can only be set to, at most, an unsigned 32 bit integer value while `VIRT`s are doubles.
-
-**NOTE:** If more than one value setter is used in an incoming message, space **must** be allocated for a bit field, denoting which value setter should actually be updated. The bit field is as large as however many value setters there are and is appended to the end of the message block. This is checked for at parsing.
+**NOTE:** `GPIO`s can only be set to, at most, a 32 bit integer value while `VIRT`s are doubles.
 
 ##### Space optimization
 
@@ -104,6 +129,75 @@ This can be checked for at parsing.
 
 Values should be optimized to be placed at appropriate integer intervals, where possible. i.e. every 32 bits for 32 bit values, every 16 bits for 16 bit values, or every 8 bits for 8 bit values. This is best achieved by placing values largest to smallest, where applicable.
 
+#### `LINK`
+
+The `LINK` line defines a `GPIO` link between nodes, where it contains `SET`s or setters, which dictate what value gets set to what. It consists of whether this link is outgoing `<<` or incoming `>>`, the unique ID for the linked node, the unique ID for the message on the linked node, and the optional description.
+
+Incoming `>>` `LINK`s set values on the node that defines it. Outgoing `<<` `LINK`s set values on the node that it is linking to.
+
+##### `SET`
+
+The `SET` line consists of a signal ID from the linked node's message, `<<` or `>>`, dependent on whether this `LINK` is outgoing or incoming, respectively; this keeps the signal up to date with the given source whether it is from a `GPIO` or `VIRT`, and the optional description.
+
+**NOTE: ALL** values of a linked `NODE`s `MSG` must be referenced for both incoming and outgoing messages.
+
+#### `MSG` `SIG` Value Setter V.S. `LINK`s
+
+Value setters and `LINK`s work very similarly, however, value setters are general and restricted in the sense that it is attached only to the address, which cannot be explicitly referenced by other nodes. A `MSG` is either outgoing, with a node `GPIO` setting it, or it is incoming where it is set by a `GPIO`. A simple In / Out deceleration of data.
+
+`LINK`s, on the other hand, can reference messages of other nodes, as to what `GPIO`s should be pushed to or pulled from. In this sense, value setters define which signals can be linked to for outgoing links.
+For incoming `LINK`s, they are functionally the same as instead having the linked node having an outgoing `LINK` to this node, where this node has an incoming message with value setters.
+
+**NOTE:** Circular references to `GPIO`s shall be checked for at parsing, as to prevent a case where messages continuously cycle
+
+##### Example
+
+``` py
+
+# Typical Application
+
+NODE FRONT_ECU : The front teensy
+    GPIO ONBOARD_LED : 13 DIGITAL OUTPUT    : onboard led
+    VIRT DEBUG_INT : ANALOG OUTPUT : test val
+
+    MSG 8 >> MSGBLK_FRONT_LED : Control msg for front led
+        SIG ONBOARD_LED : "int" >> ONBOARD_LED : ctrl for the led gpio
+        SIG OTHER_CTRL_SIG : "short" : ctrl int
+    
+    MSG 5 << MSGBLK_FRONT_DEBUG : Some Debug block
+        SIG DEBUG_INTEGER << DEBUG_INT: "int" : Debug int
+
+NODE BACK_ECU : The back teensy
+    GPIO ONBOARD_LED : 13 DIGITAL OUTPUT    : onboard led
+    GPIO TEST : 21 ANALOG INPUT          : test value
+
+    LINK << FRONT_ECU MSGBLK_FRONT_LED : Push to front led
+        SET ONBOARD_LED << STATE
+        SET OTHER_CTRL_SIG << TEST
+    
+    LINK >> FRONT_ECU MSGBLK_FRONT_DEBUG : set led to debug
+        SET DEBUG_INTEGER >> ONBOARD_LED
+
+    MSG 10 >> MSGBLK_BACK_LED : Control msg for back led
+        SIG ONBOARD_LED : "int" >> ONBOARD_LED : ctrl for the led gpio
+
+# Reverse Example for BACK_ECU incoming Link
+
+NODE FRONT_ECU : The front teensy
+    GPIO ONBOARD_LED : 13 DIGITAL OUTPUT    : onboard led
+    VIRT DEBUG_INT : ANALOG OUTPUT : test val
+
+    LINK << BACK_ECU MSGBLK_BACK_LED : set led to debug
+        SET DEBUG_INTEGER << DEBUG_INT
+
+NODE BACK_ECU : The back teensy
+    GPIO ONBOARD_LED : 13 DIGITAL OUTPUT    : onboard led
+
+    MSG 10 >> MSGBLK_BACK_LED : Control msg for back led
+        SIG ONBOARD_LED : "int" >> ONBOARD_LED : ctrl for the led gpio
+
+```
+
 ## Formats
 
 > FORMAT `"format_name"` `"data_type"` (`scale`,`shift`) [`min`,`max`] : `optional description`
@@ -111,6 +205,8 @@ Values should be optimized to be placed at appropriate integer intervals, where 
 The `FORMAT` line consists of the name of the format in quotes, the data type of this format, the scale and shift that should be applied to the final value when decoding a can message signal. The min and max of the final value, if applicable and the optional description
 
 scale, shift, min, and max are allowed to be floats and negative. They are also have defaults that should be used if they are not to be used, as such `(1,0)` or `[0,0]`
+
+When pulling a value from a buffer, that value shall be run through an appropriate formatting function to convert the value to the proper type. In addition to that, it will apply the proper conversions given by the values above.
 
 ## Types
 
@@ -122,7 +218,9 @@ The data type name, if applicable, shall match a defined type or typedef in it's
 
 ## Embedded compilation
 
-For this section, a 'source' is defined as a `GPIO`, `VIRT`, or `SYNC` line
+[TODO]
+
+<s>For this section, a 'source' is defined as a `GPIO`, `VIRT`, or `SYNC` line
 
 For use in the embedded build system, here are things that must happen.
 
@@ -134,4 +232,30 @@ synced values should be packed into messages as needed, i.e. if a node has two v
 
 `MSG`s append their signals to a nodes namespace, not the message name itself.
 
-`MSG`s that are synced must append all of their signals to the receiving node's namespace, as if it were it's own.
+`MSG`s that are synced must append all of their signals to the receiving node's namespace, as if it were it's own.</s>
+
+## Proposals
+
+### `MSG` `SIG` Multiplexing Value Setters
+
+If more than one value setter is used in an incoming message, space **must** be allocated for a bit field, denoting which value setter should actually be updated. The bit field is as large as however many value setters there are and is appended to the end of the message block. This is checked for at parsing. This can be ignored, meaning update all values by default, by using the `SETALL` tag in the parent `MSG` line
+
+## Changelog
+
+### [Unreleased]
+
+#### Added
+
+- Metadata
+  - `NAME`
+  - `VERSION`
+  - `CONF`
+- Concepts
+  - `NODE`
+  - `ADDR`
+  - `GPIO`
+  - `VIRT`
+  - `MSG`
+  - `SIG`
+  - `LINK`
+  - `SET`

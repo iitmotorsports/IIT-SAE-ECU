@@ -34,15 +34,25 @@ NODE BACK_ECU : The back teensy
     GPIO AIR2 : 4 DIGITAL OUTPUT            : Air 2 control
     VIRT STATE : ANALOG OUTPUT               : Current state of the ECU
 
+    LINK << FRONT_ECU MSGBLK_FRONT_LED : Push to front led
+        SET ONBOARD_LED << STATE
+        SET OTHER_CTRL_SIG << WHEEL_1
+    
+    LINK >> FRONT_ECU MSGBLK_FRONT_DEBUG : set led to debug
+        SET DEBUG_INTEGER >> ONBOARD_LED
+
     MSG 3 << MSGBLK_BACK_WHEEL_SPEED : Wheel message block 1
         SIG WHEEL_SPEED_BACK_LEFT : "b_rpm" << WHEEL_0 : The speed of the back left wheel
         SIG WHEEL_SPEED_BACK_RIGHT : "b_rpm" << WHEEL_1 : The speed of the back right wheel
 
     MSG 10 >> MSGBLK_BACK_LED : Control msg for back led
-            SIG ONBOARD_LED : "int" >> ONBOARD_LED : ctrl for the led gpio
+        SIG ONBOARD_LED : "int" >> ONBOARD_LED : ctrl for the led gpio
 
 NODE MC0
     ADDR 0xA3 - 0xC0
+    MSG 0xC0 >> CTRL_BLK : Control msg for MC
+        SIG TORQUE : "int" : torque value
+        SIG ENABLE : "bool" : enable bit
     MSG 0xA0 MC0_FAULTS
         SIG FAULT_GEN_0 : "flag" 
         SIG FAULT_GEN_1 : "flag" 
