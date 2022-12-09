@@ -132,21 +132,38 @@ var NAVTREE =
       [ "Top level lines", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md76", null ],
       [ "Name", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md77", null ],
       [ "Version", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md78", null ],
-      [ "Nodes", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md79", [
-        [ "<tt>NODE</tt>", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md80", null ],
-        [ "Sources", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md81", [
-          [ "<tt>ADDR</tt>", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md82", null ],
-          [ "<tt>GPIO</tt>", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md83", null ],
-          [ "<tt>VIRT</tt>", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md84", null ],
-          [ "<tt>MSG</tt>", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md85", [
-            [ "<tt>SIG</tt>", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md86", null ],
-            [ "Space optimization", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md87", null ]
+      [ "Configuration", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md79", [
+        [ "Configuration values", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md80", null ]
+      ] ],
+      [ "Nodes", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md81", [
+        [ "<tt>NODE</tt>", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md82", null ],
+        [ "Sources", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md83", [
+          [ "<tt>ADDR</tt>", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md84", null ],
+          [ "<tt>GPIO</tt>", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md85", null ],
+          [ "<tt>VIRT</tt>", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md86", null ],
+          [ "<tt>MSG</tt>", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md87", [
+            [ "<tt>SIG</tt>", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md88", null ],
+            [ "Space optimization", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md89", null ]
+          ] ],
+          [ "<tt>LINK</tt>", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md90", [
+            [ "<tt>SET</tt>", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md91", null ]
+          ] ],
+          [ "<tt>MSG</tt> <tt>SIG</tt> Value Setter V.S. <tt>LINK</tt>s", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md92", [
+            [ "Example", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md93", null ]
           ] ]
         ] ]
       ] ],
-      [ "Formats", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md88", null ],
-      [ "Types", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md89", null ],
-      [ "Embedded compilation", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md90", null ]
+      [ "Formats", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md94", null ],
+      [ "Types", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md95", null ],
+      [ "Embedded compilation", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md96", null ],
+      [ "Proposals", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md97", [
+        [ "<tt>MSG</tt> <tt>SIG</tt> Multiplexing Value Setters", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md98", null ]
+      ] ],
+      [ "Changelog", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md99", [
+        [ "[Unreleased]", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md100", [
+          [ "Added", "md__github_workspace__s_d_b_c__r_e_a_d_m_e.html#autotoc_md101", null ]
+        ] ]
+      ] ]
     ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
@@ -185,7 +202,7 @@ var NAVTREEINDEX =
 [
 "____init_____8py_source.html",
 "classe.html",
-"namespace_front.html#a2deb9201e361171c69d361ce69047a15"
+"namespace_echo.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
