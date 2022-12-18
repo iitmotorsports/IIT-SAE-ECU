@@ -100,6 +100,15 @@ $(document).ready(function(){initNavTree('class_s_d_b_c_1_1_m_s_g.html',''); ini
   <div class="headertitle"><div class="title">SDBC::MSG Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+<div class="dynheader">
+Inheritance diagram for SDBC::MSG:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="class_s_d_b_c_1_1_m_s_g.png" usemap="#SDBC::MSG_map" alt=""/>
+  <map id="SDBC::MSG_map" name="SDBC::MSG_map">
+<area href="struct_s_d_b_c_1_1_l_i_n_k.html" alt="SDBC::LINK" shape="rect" coords="0,56,80,80"/>
+  </map>
+</div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
@@ -108,10 +117,14 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a297e2f5d53b6d67af06a69ed148e1cab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_d_b_c_1_1_m_s_g.html#a297e2f5d53b6d67af06a69ed148e1cab">setSig</a> (<a class="el" href="struct_s_d_b_c_1_1_s_i_g.html">SIG</a> signal, uint64_t data)</td></tr>
-<tr class="separator:a297e2f5d53b6d67af06a69ed148e1cab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad18b037776deb6ed0185bc314011faed"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_d_b_c_1_1_m_s_g.html#ad18b037776deb6ed0185bc314011faed">MSG</a> (const uint32_t msgAddr, bool outgoing)</td></tr>
-<tr class="separator:ad18b037776deb6ed0185bc314011faed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7b3df5078f84c0693bb2dfe51b62e44"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ab7b3df5078f84c0693bb2dfe51b62e44"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_s_d_b_c_1_1_m_s_g.html#ab7b3df5078f84c0693bb2dfe51b62e44">setSig</a> (const <a class="el" href="struct_s_d_b_c_1_1_s_i_g.html">SIG</a> *signal, T <a class="el" href="union_s_d_b_c_1_1_m_s_g_1_1value.html">value</a>)</td></tr>
+<tr class="separator:ab7b3df5078f84c0693bb2dfe51b62e44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a656fa1296f57bd839bbf7c1d3828123d"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a656fa1296f57bd839bbf7c1d3828123d"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_s_d_b_c_1_1_m_s_g.html#a656fa1296f57bd839bbf7c1d3828123d">getSig</a> (const <a class="el" href="struct_s_d_b_c_1_1_s_i_g.html">SIG</a> *signal)</td></tr>
+<tr class="separator:a656fa1296f57bd839bbf7c1d3828123d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a875e6e72476e7f2f4a98312d68fc51b2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_d_b_c_1_1_m_s_g.html#a875e6e72476e7f2f4a98312d68fc51b2">MSG</a> (const uint32_t msgAddr, bool outgoing, const <a class="el" href="struct_s_d_b_c_1_1_s_i_g.html">SIG</a> **SIGNALS, const int signalCount, const bool hasValueSetter)</td></tr>
+<tr class="separator:a875e6e72476e7f2f4a98312d68fc51b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -120,13 +133,19 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:ac5076c3bc00bfd12c9cd3bdb2330372a"><td class="memItemLeft" align="right" valign="top"><a id="ac5076c3bc00bfd12c9cd3bdb2330372a" name="ac5076c3bc00bfd12c9cd3bdb2330372a"></a>
 volatile union <a class="el" href="union_s_d_b_c_1_1_m_s_g_1_1value.html">SDBC::MSG::value</a>&#160;</td><td class="memItemRight" valign="bottom"><b>value</b></td></tr>
 <tr class="separator:ac5076c3bc00bfd12c9cd3bdb2330372a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaaafd3146563b8f4627a003734ceecc5"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="struct_s_d_b_c_1_1_s_i_g.html">SIG</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_d_b_c_1_1_m_s_g.html#aaaafd3146563b8f4627a003734ceecc5">SIGNALS</a></td></tr>
+<tr class="separator:aaaafd3146563b8f4627a003734ceecc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac715de207dc2d0ce94027ba2112ecf50"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_d_b_c_1_1_m_s_g.html#ac715de207dc2d0ce94027ba2112ecf50">signalCount</a></td></tr>
+<tr class="separator:ac715de207dc2d0ce94027ba2112ecf50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00297bbf4f5ce927bf9d1a17418c3eeb"><td class="memItemLeft" align="right" valign="top">const bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_d_b_c_1_1_m_s_g.html#a00297bbf4f5ce927bf9d1a17418c3eeb">hasValueSetter</a></td></tr>
+<tr class="separator:a00297bbf4f5ce927bf9d1a17418c3eeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_s_d_b_c__class_8hpp_source.html#l00027">27</a> of file <a class="el" href="_s_d_b_c__class_8hpp_source.html">SDBC_class.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_s_d_b_c__class_8hpp_source.html#l00033">33</a> of file <a class="el" href="_s_d_b_c__class_8hpp_source.html">SDBC_class.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ad18b037776deb6ed0185bc314011faed" name="ad18b037776deb6ed0185bc314011faed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad18b037776deb6ed0185bc314011faed">&#9670;&#160;</a></span>MSG()</h2>
+<a id="a875e6e72476e7f2f4a98312d68fc51b2" name="a875e6e72476e7f2f4a98312d68fc51b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a875e6e72476e7f2f4a98312d68fc51b2">&#9670;&#160;</a></span>MSG()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -144,7 +163,96 @@ volatile union <a class="el" href="union_s_d_b_c_1_1_m_s_g_1_1value.html">SDBC::
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>outgoing</em>&#160;</td>
+          <td class="paramname"><em>outgoing</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_d_b_c_1_1_s_i_g.html">SIG</a> **&#160;</td>
+          <td class="paramname"><em>SIGNALS</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int&#160;</td>
+          <td class="paramname"><em>signalCount</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const bool&#160;</td>
+          <td class="paramname"><em>hasValueSetter</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_s_d_b_c__class_8hpp_source.html#l00066">66</a> of file <a class="el" href="_s_d_b_c__class_8hpp_source.html">SDBC_class.hpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a656fa1296f57bd839bbf7c1d3828123d" name="a656fa1296f57bd839bbf7c1d3828123d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a656fa1296f57bd839bbf7c1d3828123d">&#9670;&#160;</a></span>getSig()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T SDBC::MSG::getSig </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_d_b_c_1_1_s_i_g.html">SIG</a> *&#160;</td>
+          <td class="paramname"><em>signal</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_s_d_b_c__class_8hpp_source.html#l00059">59</a> of file <a class="el" href="_s_d_b_c__class_8hpp_source.html">SDBC_class.hpp</a>.</p>
+
+</div>
+</div>
+<a id="ab7b3df5078f84c0693bb2dfe51b62e44" name="ab7b3df5078f84c0693bb2dfe51b62e44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7b3df5078f84c0693bb2dfe51b62e44">&#9670;&#160;</a></span>setSig()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SDBC::MSG::setSig </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_d_b_c_1_1_s_i_g.html">SIG</a> *&#160;</td>
+          <td class="paramname"><em>signal</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -163,46 +271,23 @@ volatile union <a class="el" href="union_s_d_b_c_1_1_m_s_g_1_1value.html">SDBC::
 
 </div>
 </div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a297e2f5d53b6d67af06a69ed148e1cab" name="a297e2f5d53b6d67af06a69ed148e1cab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a297e2f5d53b6d67af06a69ed148e1cab">&#9670;&#160;</a></span>setSig()</h2>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a00297bbf4f5ce927bf9d1a17418c3eeb" name="a00297bbf4f5ce927bf9d1a17418c3eeb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00297bbf4f5ce927bf9d1a17418c3eeb">&#9670;&#160;</a></span>hasValueSetter</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void SDBC::MSG::setSig </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_s_d_b_c_1_1_s_i_g.html">SIG</a>&#160;</td>
-          <td class="paramname"><em>signal</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint64_t&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">const bool SDBC::MSG::hasValueSetter</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_s_d_b_c__class_8hpp_source.html#l00037">37</a> of file <a class="el" href="_s_d_b_c__class_8hpp_source.html">SDBC_class.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_s_d_b_c__class_8hpp_source.html#l00044">44</a> of file <a class="el" href="_s_d_b_c__class_8hpp_source.html">SDBC_class.hpp</a>.</p>
 
 </div>
 </div>
-<h2 class="groupheader">Member Data Documentation</h2>
 <a id="a81398a42ec3a492858fb1833299bf846" name="a81398a42ec3a492858fb1833299bf846"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a81398a42ec3a492858fb1833299bf846">&#9670;&#160;</a></span>outgoing</h2>
 
@@ -215,7 +300,39 @@ volatile union <a class="el" href="union_s_d_b_c_1_1_m_s_g_1_1value.html">SDBC::
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_s_d_b_c__class_8hpp_source.html#l00031">31</a> of file <a class="el" href="_s_d_b_c__class_8hpp_source.html">SDBC_class.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_s_d_b_c__class_8hpp_source.html#l00037">37</a> of file <a class="el" href="_s_d_b_c__class_8hpp_source.html">SDBC_class.hpp</a>.</p>
+
+</div>
+</div>
+<a id="ac715de207dc2d0ce94027ba2112ecf50" name="ac715de207dc2d0ce94027ba2112ecf50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac715de207dc2d0ce94027ba2112ecf50">&#9670;&#160;</a></span>signalCount</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int SDBC::MSG::signalCount</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_s_d_b_c__class_8hpp_source.html#l00043">43</a> of file <a class="el" href="_s_d_b_c__class_8hpp_source.html">SDBC_class.hpp</a>.</p>
+
+</div>
+</div>
+<a id="aaaafd3146563b8f4627a003734ceecc5" name="aaaafd3146563b8f4627a003734ceecc5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaaafd3146563b8f4627a003734ceecc5">&#9670;&#160;</a></span>SIGNALS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="struct_s_d_b_c_1_1_s_i_g.html">SIG</a>** SDBC::MSG::SIGNALS</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_s_d_b_c__class_8hpp_source.html#l00042">42</a> of file <a class="el" href="_s_d_b_c__class_8hpp_source.html">SDBC_class.hpp</a>.</p>
 
 </div>
 </div>

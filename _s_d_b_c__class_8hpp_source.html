@@ -95,66 +95,90 @@ $(document).ready(function(){initNavTree('_s_d_b_c__class_8hpp_source.html','');
   <div class="headertitle"><div class="title">SDBC_class.hpp</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;<a class="code" href="_canbus_8h.html">Canbus.h</a>&quot;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="_pins_8h.html">Pins.h</a>&quot;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_d_b_c.html">SDBC</a> {</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">class </span>MSG;</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="struct_s_d_b_c_1_1_g_p_i_o.html">   10</a></span><span class="keyword">struct </span><a class="code hl_struct" href="struct_s_d_b_c_1_1_g_p_i_o.html">GPIO</a> {</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <span class="keyword">const</span> uint16_t pin;</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="keyword">const</span> <span class="keywordtype">bool</span> outOrIn;</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keyword">const</span> <span class="keywordtype">bool</span> digOrAnl;</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>};</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">using </span><a class="code hl_struct" href="struct_s_d_b_c_1_1_g_p_i_o.html">VIRT</a> = <a class="code hl_struct" href="struct_s_d_b_c_1_1_g_p_i_o.html">GPIO</a>;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="struct_s_d_b_c_1_1_s_i_g.html">   17</a></span><span class="keyword">const</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_d_b_c_1_1_s_i_g.html">SIG</a> {</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keyword">const</span> uint64_t bitMask;</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keyword">const</span> <a class="code hl_class" href="class_s_d_b_c_1_1_m_s_g.html">MSG</a> *msg;</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keyword">const</span> <a class="code hl_struct" href="struct_s_d_b_c_1_1_g_p_i_o.html">GPIO</a> *setter;</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keyword">const</span> dt dataType;</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keyword">const</span> uint8_t bitPos;</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keyword">const</span> uint8_t nodeID;</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="comment">// TODO: Format function pointer</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>};</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="class_s_d_b_c_1_1_m_s_g.html">   27</a></span><span class="keyword">class </span><a class="code hl_class" href="class_s_d_b_c_1_1_m_s_g.html">MSG</a> {</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <a class="code hl_struct" href="struct_c_a_n_1_1_buffer.html">CAN::Buffer</a> buffer;</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keyword">const</span> <span class="keywordtype">bool</span> outgoing;</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="union_s_d_b_c_1_1_m_s_g_1_1value.html">   32</a></span>    <span class="keyword">volatile</span> <span class="keyword">union </span><a class="code hl_union" href="union_s_d_b_c_1_1_m_s_g_1_1value.html">value</a> {</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <span class="keyword">volatile</span> uint8_t arr[8];</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        <span class="keyword">volatile</span> uint64_t raw;</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    } <a class="code hl_union" href="union_s_d_b_c_1_1_m_s_g_1_1value.html">value</a>;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keywordtype">void</span> setSig(<a class="code hl_struct" href="struct_s_d_b_c_1_1_s_i_g.html">SIG</a> signal, uint64_t data) {</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        data &lt;&lt;= signal.bitPos;</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        data &amp;= signal.bitMask;</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        buffer.<a class="code hl_function" href="struct_c_a_n_1_1_buffer.html#acc21ec68d14d166830ef7f9831d61c35">lock_wait</a>();</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <a class="code hl_union" href="union_s_d_b_c_1_1_m_s_g_1_1value.html">value</a>.raw &amp;= ~signal.bitMask;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <a class="code hl_union" href="union_s_d_b_c_1_1_m_s_g_1_1value.html">value</a>.raw |= data;</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        buffer.<a class="code hl_function" href="struct_c_a_n_1_1_buffer.html#aef8009779b3d74e8e68e0658ead81d43">unlock</a>();</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    }</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <a class="code hl_class" href="class_s_d_b_c_1_1_m_s_g.html">MSG</a>(<span class="keyword">const</span> uint32_t msgAddr, <span class="keywordtype">bool</span> outgoing) : buffer(msgAddr, value.arr, outgoing), outgoing(outgoing) {}</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>};</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>} <span class="comment">// namespace SDBC</span></div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="_canbus_8h.html">Canbus.h</a>&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;<a class="code" href="_pins_8h.html">Pins.h</a>&quot;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_d_b_c.html">SDBC</a> {</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">class </span>MSG;</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">struct </span>SIG;</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="struct_s_d_b_c_1_1_g_p_i_o.html">   12</a></span><span class="keyword">struct </span><a class="code hl_struct" href="struct_s_d_b_c_1_1_g_p_i_o.html">GPIO</a> {</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keyword">const</span> uint16_t pin;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keyword">const</span> <a class="code hl_struct" href="struct_s_d_b_c_1_1_s_i_g.html">SIG</a> *settee;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keyword">const</span> <span class="keywordtype">bool</span> outOrIn;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keyword">const</span> <span class="keywordtype">bool</span> digOrAnl;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keyword">const</span> <span class="keywordtype">bool</span> isVirt = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>};</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="struct_s_d_b_c_1_1_v_i_r_t.html">   20</a></span><span class="keyword">struct </span><a class="code hl_struct" href="struct_s_d_b_c_1_1_v_i_r_t.html">VIRT</a> : <a class="code hl_struct" href="struct_s_d_b_c_1_1_g_p_i_o.html">GPIO</a> {</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>};</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="struct_s_d_b_c_1_1_s_i_g.html">   23</a></span><span class="keyword">const</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_d_b_c_1_1_s_i_g.html">SIG</a> {</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keyword">const</span> uint64_t bitMask;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keyword">const</span> <a class="code hl_class" href="class_s_d_b_c_1_1_m_s_g.html">MSG</a> *msg;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keyword">const</span> <a class="code hl_struct" href="struct_s_d_b_c_1_1_g_p_i_o.html">GPIO</a> *setter;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keyword">const</span> dt dataType;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keyword">const</span> uint8_t bitPos;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keyword">const</span> uint8_t nodeID;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="comment">// TODO: Format function pointer</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>};</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="class_s_d_b_c_1_1_m_s_g.html">   33</a></span><span class="keyword">class </span><a class="code hl_class" href="class_s_d_b_c_1_1_m_s_g.html">MSG</a> {</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <a class="code hl_struct" href="struct_c_a_n_1_1_buffer.html">CAN::Buffer</a> buffer; <span class="comment">// FIXME: get live buffer from CAN lib</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keyword">const</span> <span class="keywordtype">bool</span> outgoing;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="union_s_d_b_c_1_1_m_s_g_1_1value.html">   38</a></span>    <span class="keyword">volatile</span> <span class="keyword">union </span><a class="code hl_union" href="union_s_d_b_c_1_1_m_s_g_1_1value.html">value</a> {</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <span class="keyword">volatile</span> uint8_t arr[8];</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        <span class="keyword">volatile</span> uint64_t raw;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    } <a class="code hl_union" href="union_s_d_b_c_1_1_m_s_g_1_1value.html">value</a>;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keyword">const</span> <a class="code hl_struct" href="struct_s_d_b_c_1_1_s_i_g.html">SIG</a> **SIGNALS;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keyword">const</span> <span class="keywordtype">int</span> signalCount;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="keyword">const</span> <span class="keywordtype">bool</span> hasValueSetter;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keywordtype">void</span> setSig(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_d_b_c_1_1_s_i_g.html">SIG</a> *signal, T <a class="code hl_union" href="union_s_d_b_c_1_1_m_s_g_1_1value.html">value</a>) { <span class="comment">// IMPROVE: add specialization for double and float to ensure value is not mangled</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        uint64_t data = *((uint64_t *)&amp;<a class="code hl_union" href="union_s_d_b_c_1_1_m_s_g_1_1value.html">value</a>) &amp; (~(uint64_t)0 &gt;&gt; (64 - 8 * <span class="keyword">sizeof</span>(T)));</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        data &lt;&lt;= signal-&gt;bitPos;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        data &amp;= signal-&gt;bitMask;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        buffer.<a class="code hl_function" href="struct_c_a_n_1_1_buffer.html#acc21ec68d14d166830ef7f9831d61c35">lock_wait</a>();</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        <a class="code hl_union" href="union_s_d_b_c_1_1_m_s_g_1_1value.html">value</a>.raw &amp;= ~signal-&gt;bitMask;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        <a class="code hl_union" href="union_s_d_b_c_1_1_m_s_g_1_1value.html">value</a>.raw |= data;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        buffer.<a class="code hl_function" href="struct_c_a_n_1_1_buffer.html#aef8009779b3d74e8e68e0658ead81d43">unlock</a>();</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    }</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    T getSig(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_d_b_c_1_1_s_i_g.html">SIG</a> *signal) {</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        uint64_t data = value.raw;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        data &amp;= signal.bitMask;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        data &gt;&gt;= signal.bitPos;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <span class="keywordflow">return</span> *(T *)&amp;data;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    }</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    MSG(<span class="keyword">const</span> uint32_t msgAddr, <span class="keywordtype">bool</span> outgoing, <span class="keyword">const</span> SIG **SIGNALS, <span class="keyword">const</span> <span class="keywordtype">int</span> signalCount, <span class="keyword">const</span> <span class="keywordtype">bool</span> hasValueSetter) : buffer(msgAddr, value.arr, outgoing), outgoing(outgoing), SIGNALS(SIGNALS), signalCount(signalCount), hasValueSetter(hasValueSetter) {}</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>};</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="struct_s_d_b_c_1_1_l_i_n_k.html">   69</a></span><span class="keyword">struct </span><a class="code hl_struct" href="struct_s_d_b_c_1_1_l_i_n_k.html">LINK</a> : <a class="code hl_class" href="class_s_d_b_c_1_1_m_s_g.html">MSG</a> {</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>};</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>} <span class="comment">// namespace SDBC</span></div>
 <div class="ttc" id="a_canbus_8h_html"><div class="ttname"><a href="_canbus_8h.html">Canbus.h</a></div><div class="ttdoc">FlexCAN_T4 wrapper.</div></div>
 <div class="ttc" id="a_pins_8h_html"><div class="ttname"><a href="_pins_8h.html">Pins.h</a></div><div class="ttdoc">Update, set, and get predefined pin values.</div></div>
-<div class="ttc" id="aclass_s_d_b_c_1_1_m_s_g_html"><div class="ttname"><a href="class_s_d_b_c_1_1_m_s_g.html">SDBC::MSG</a></div><div class="ttdef"><b>Definition:</b> <a href="_s_d_b_c__class_8hpp_source.html#l00027">SDBC_class.hpp:27</a></div></div>
-<div class="ttc" id="anamespace_s_d_b_c_html"><div class="ttname"><a href="namespace_s_d_b_c.html">SDBC</a></div><div class="ttdef"><b>Definition:</b> <a href="_s_d_b_c_8h_source.html#l00010">SDBC.h:10</a></div></div>
+<div class="ttc" id="aclass_s_d_b_c_1_1_m_s_g_html"><div class="ttname"><a href="class_s_d_b_c_1_1_m_s_g.html">SDBC::MSG</a></div><div class="ttdef"><b>Definition:</b> <a href="_s_d_b_c__class_8hpp_source.html#l00033">SDBC_class.hpp:33</a></div></div>
+<div class="ttc" id="anamespace_s_d_b_c_html"><div class="ttname"><a href="namespace_s_d_b_c.html">SDBC</a></div><div class="ttdef"><b>Definition:</b> <a href="_s_d_b_c_8h_source.html#l00011">SDBC.h:11</a></div></div>
 <div class="ttc" id="astruct_c_a_n_1_1_buffer_html"><div class="ttname"><a href="struct_c_a_n_1_1_buffer.html">CAN::Buffer</a></div><div class="ttdoc">An incoming canbus message, allows the message data to be interpreted through a simple wrapper class.</div><div class="ttdef"><b>Definition:</b> <a href="_can_buffer_8h_source.html#l00023">CanBuffer.h:23</a></div></div>
 <div class="ttc" id="astruct_c_a_n_1_1_buffer_html_acc21ec68d14d166830ef7f9831d61c35"><div class="ttname"><a href="struct_c_a_n_1_1_buffer.html#acc21ec68d14d166830ef7f9831d61c35">CAN::Buffer::lock_wait</a></div><div class="ttdeci">void lock_wait()</div><div class="ttdoc">locks this buffer to be used, waits indefinitely for it to unlock if it is locked</div><div class="ttdef"><b>Definition:</b> <a href="_can_buffer_8cpp_source.html#l00124">CanBuffer.cpp:124</a></div></div>
 <div class="ttc" id="astruct_c_a_n_1_1_buffer_html_aef8009779b3d74e8e68e0658ead81d43"><div class="ttname"><a href="struct_c_a_n_1_1_buffer.html#aef8009779b3d74e8e68e0658ead81d43">CAN::Buffer::unlock</a></div><div class="ttdeci">void unlock()</div><div class="ttdoc">Unlocks this buffer if it is locked.</div><div class="ttdef"><b>Definition:</b> <a href="_can_buffer_8cpp_source.html#l00128">CanBuffer.cpp:128</a></div></div>
-<div class="ttc" id="astruct_s_d_b_c_1_1_g_p_i_o_html"><div class="ttname"><a href="struct_s_d_b_c_1_1_g_p_i_o.html">SDBC::GPIO</a></div><div class="ttdef"><b>Definition:</b> <a href="_s_d_b_c__class_8hpp_source.html#l00010">SDBC_class.hpp:10</a></div></div>
-<div class="ttc" id="astruct_s_d_b_c_1_1_s_i_g_html"><div class="ttname"><a href="struct_s_d_b_c_1_1_s_i_g.html">SDBC::SIG</a></div><div class="ttdef"><b>Definition:</b> <a href="_s_d_b_c__class_8hpp_source.html#l00017">SDBC_class.hpp:17</a></div></div>
-<div class="ttc" id="aunion_s_d_b_c_1_1_m_s_g_1_1value_html"><div class="ttname"><a href="union_s_d_b_c_1_1_m_s_g_1_1value.html">SDBC::MSG::value</a></div><div class="ttdef"><b>Definition:</b> <a href="_s_d_b_c__class_8hpp_source.html#l00032">SDBC_class.hpp:32</a></div></div>
+<div class="ttc" id="astruct_s_d_b_c_1_1_g_p_i_o_html"><div class="ttname"><a href="struct_s_d_b_c_1_1_g_p_i_o.html">SDBC::GPIO</a></div><div class="ttdef"><b>Definition:</b> <a href="_s_d_b_c__class_8hpp_source.html#l00012">SDBC_class.hpp:12</a></div></div>
+<div class="ttc" id="astruct_s_d_b_c_1_1_l_i_n_k_html"><div class="ttname"><a href="struct_s_d_b_c_1_1_l_i_n_k.html">SDBC::LINK</a></div><div class="ttdef"><b>Definition:</b> <a href="_s_d_b_c__class_8hpp_source.html#l00069">SDBC_class.hpp:69</a></div></div>
+<div class="ttc" id="astruct_s_d_b_c_1_1_s_i_g_html"><div class="ttname"><a href="struct_s_d_b_c_1_1_s_i_g.html">SDBC::SIG</a></div><div class="ttdef"><b>Definition:</b> <a href="_s_d_b_c__class_8hpp_source.html#l00023">SDBC_class.hpp:23</a></div></div>
+<div class="ttc" id="astruct_s_d_b_c_1_1_v_i_r_t_html"><div class="ttname"><a href="struct_s_d_b_c_1_1_v_i_r_t.html">SDBC::VIRT</a></div><div class="ttdef"><b>Definition:</b> <a href="_s_d_b_c__class_8hpp_source.html#l00020">SDBC_class.hpp:20</a></div></div>
+<div class="ttc" id="aunion_s_d_b_c_1_1_m_s_g_1_1value_html"><div class="ttname"><a href="union_s_d_b_c_1_1_m_s_g_1_1value.html">SDBC::MSG::value</a></div><div class="ttdef"><b>Definition:</b> <a href="_s_d_b_c__class_8hpp_source.html#l00038">SDBC_class.hpp:38</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

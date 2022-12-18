@@ -95,6 +95,7 @@ $(document).ready(function(){initNavTree('struct_s_d_b_c_1_1_f_r_o_n_t___e_c_u.h
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="struct_s_d_b_c_1_1_f_r_o_n_t___e_c_u-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">SDBC::FRONT_ECU Struct Reference</div></div>
 </div><!--header-->
@@ -102,44 +103,86 @@ $(document).ready(function(){initNavTree('struct_s_d_b_c_1_1_f_r_o_n_t___e_c_u.h
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_d_b_c_1_1_f_r_o_n_t___e_c_u_1_1_p_i_n.html">PIN</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><b>MESSAGE</b></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><b>PIN</b></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><b>SIGNAL</b></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a451b6529e5cbc886ca99e39dea47ad80"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_d_b_c_1_1_f_r_o_n_t___e_c_u.html#a451b6529e5cbc886ca99e39dea47ad80">nodeID</a> = 0</td></tr>
+<tr class="memitem:aee14e2c713ea0bb2c37a74206b753c04"><td class="memItemLeft" align="right" valign="top">const std::unordered_map&lt; const uint16_t, const <a class="el" href="struct_s_d_b_c_1_1_g_p_i_o.html">GPIO</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_d_b_c_1_1_f_r_o_n_t___e_c_u.html#aee14e2c713ea0bb2c37a74206b753c04">__pinMap</a></td></tr>
+<tr class="separator:aee14e2c713ea0bb2c37a74206b753c04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a451b6529e5cbc886ca99e39dea47ad80"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_d_b_c_1_1_f_r_o_n_t___e_c_u.html#a451b6529e5cbc886ca99e39dea47ad80">nodeID</a> = 0</td></tr>
 <tr class="separator:a451b6529e5cbc886ca99e39dea47ad80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a376fef9d8b49bb53a1a99a011541d939"><td class="memItemLeft" align="right" valign="top"><a id="a376fef9d8b49bb53a1a99a011541d939" name="a376fef9d8b49bb53a1a99a011541d939"></a>
-const struct <a class="el" href="struct_s_d_b_c_1_1_f_r_o_n_t___e_c_u_1_1_p_i_n.html">SDBC::FRONT_ECU::PIN</a>&#160;</td><td class="memItemRight" valign="bottom"><b>PIN</b></td></tr>
+static const struct SDBC::FRONT_ECU::PIN&#160;</td><td class="memItemRight" valign="bottom"><b>PIN</b></td></tr>
 <tr class="separator:a376fef9d8b49bb53a1a99a011541d939"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af9637c63bbf10d96843dea19bf8f14b5"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="struct_s_d_b_c_1_1_s_i_g.html">SIG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_d_b_c_1_1_f_r_o_n_t___e_c_u.html#af9637c63bbf10d96843dea19bf8f14b5">ONBOARD_LED</a> = {0x00000000FFFFFFFF, Messages + 0, &amp;PIN.ONBOARD_LED, dt::int_t, 0, 0}</td></tr>
-<tr class="separator:af9637c63bbf10d96843dea19bf8f14b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1c7209798f15c42e076eb55e3b460f9"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="struct_s_d_b_c_1_1_s_i_g.html">SIG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_d_b_c_1_1_f_r_o_n_t___e_c_u.html#ae1c7209798f15c42e076eb55e3b460f9">OTHER_CTRL_SIG</a> = {0x0000FFFF00000000, Messages + 0, nullptr, dt::short_t, 32, 0}</td></tr>
-<tr class="separator:ae1c7209798f15c42e076eb55e3b460f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00ba51a40cab2716ea6d0af6646e74a8"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="struct_s_d_b_c_1_1_s_i_g.html">SIG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_d_b_c_1_1_f_r_o_n_t___e_c_u.html#a00ba51a40cab2716ea6d0af6646e74a8">DEBUG_INTEGER</a> = {0x00000000FFFFFFFF, Messages + 1, nullptr, dt::int_t, 0, 0}</td></tr>
-<tr class="separator:a00ba51a40cab2716ea6d0af6646e74a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7a98063fa7590dc8e43276f62ca86c3"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="struct_s_d_b_c_1_1_s_i_g.html">SIG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_d_b_c_1_1_f_r_o_n_t___e_c_u.html#ac7a98063fa7590dc8e43276f62ca86c3">WHEEL_SPEED_FRONT_LEFT</a> = {0x00000000FFFFFFFF, Messages + 2, &amp;PIN.WHEEL_0, dt::int_t, 0, 0}</td></tr>
-<tr class="separator:ac7a98063fa7590dc8e43276f62ca86c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aefb637b1e2849ed43dfd10aed3d7af54"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="struct_s_d_b_c_1_1_s_i_g.html">SIG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_d_b_c_1_1_f_r_o_n_t___e_c_u.html#aefb637b1e2849ed43dfd10aed3d7af54">WHEEL_SPEED_FRONT_RIGHT</a> = {0xFFFFFFFF00000000, Messages + 2, &amp;PIN.WHEEL_1, dt::int_t, 32, 0}</td></tr>
-<tr class="separator:aefb637b1e2849ed43dfd10aed3d7af54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae585d15b1a55cbb82ba9f1016c9b6290"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_d_b_c_1_1_f_r_o_n_t___e_c_u.html#ae585d15b1a55cbb82ba9f1016c9b6290">virtCount</a> = 2</td></tr>
+<tr class="separator:ae585d15b1a55cbb82ba9f1016c9b6290"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf23c9d00d83e2072e309e573471beaf"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_d_b_c_1_1_f_r_o_n_t___e_c_u.html#adf23c9d00d83e2072e309e573471beaf">gpioMax</a> = 55</td></tr>
+<tr class="separator:adf23c9d00d83e2072e309e573471beaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af29d75ecd8db386f476eccf73687436c"><td class="memItemLeft" align="right" valign="top"><a id="af29d75ecd8db386f476eccf73687436c" name="af29d75ecd8db386f476eccf73687436c"></a>
+static const struct SDBC::FRONT_ECU::MESSAGE&#160;</td><td class="memItemRight" valign="bottom"><b>MESSAGE</b></td></tr>
+<tr class="separator:af29d75ecd8db386f476eccf73687436c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad85c416f4db1471fe5917fb202e56510"><td class="memItemLeft" align="right" valign="top"><a id="ad85c416f4db1471fe5917fb202e56510" name="ad85c416f4db1471fe5917fb202e56510"></a>
+static const struct SDBC::FRONT_ECU::SIGNAL&#160;</td><td class="memItemRight" valign="bottom"><b>SIGNAL</b></td></tr>
+<tr class="separator:ad85c416f4db1471fe5917fb202e56510"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_s_d_b_c__gen_8hpp_source.html#l00027">27</a> of file <a class="el" href="_s_d_b_c__gen_8hpp_source.html">SDBC_gen.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_s_d_b_c__gen_8hpp_source.html#l00038">38</a> of file <a class="el" href="_s_d_b_c__gen_8hpp_source.html">SDBC_gen.hpp</a>.</p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
-<a id="a00ba51a40cab2716ea6d0af6646e74a8" name="a00ba51a40cab2716ea6d0af6646e74a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a00ba51a40cab2716ea6d0af6646e74a8">&#9670;&#160;</a></span>DEBUG_INTEGER</h2>
+<a id="aee14e2c713ea0bb2c37a74206b753c04" name="aee14e2c713ea0bb2c37a74206b753c04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee14e2c713ea0bb2c37a74206b753c04">&#9670;&#160;</a></span>__pinMap</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="struct_s_d_b_c_1_1_s_i_g.html">SIG</a> SDBC::FRONT_ECU::DEBUG_INTEGER = {0x00000000FFFFFFFF, Messages + 1, nullptr, dt::int_t, 0, 0}</td>
+          <td class="memname">const std::unordered_map&lt;const uint16_t, const <a class="el" href="struct_s_d_b_c_1_1_g_p_i_o.html">GPIO</a> *&gt; SDBC::FRONT_ECU::__pinMap</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">        {13, &amp;PIN.ONBOARD_LED},</div>
+<div class="line">        {24, &amp;PIN.ANALOG_TEST},</div>
+<div class="line">        {2, &amp;PIN.BUTTON_OFF},</div>
+<div class="line">        {21, &amp;PIN.WHEEL_1},</div>
+<div class="line">        {20, &amp;PIN.WHEEL_0},</div>
+<div class="line">        {128 + 0, &amp;PIN.CHARGE_SIGNAL},</div>
+<div class="line">        {128 + 1, &amp;PIN.START_LED},</div>
+<div class="line">    }</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="_s_d_b_c__gen_8hpp_source.html#l00077">77</a> of file <a class="el" href="_s_d_b_c__gen_8hpp_source.html">SDBC_gen.hpp</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_s_d_b_c__gen_8hpp_source.html#l00040">40</a> of file <a class="el" href="_s_d_b_c__gen_8hpp_source.html">SDBC_gen.hpp</a>.</p>
+</div>
+</div>
+<a id="adf23c9d00d83e2072e309e573471beaf" name="adf23c9d00d83e2072e309e573471beaf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf23c9d00d83e2072e309e573471beaf">&#9670;&#160;</a></span>gpioMax</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int SDBC::FRONT_ECU::gpioMax = 55</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_s_d_b_c__gen_8hpp_source.html#l00051">51</a> of file <a class="el" href="_s_d_b_c__gen_8hpp_source.html">SDBC_gen.hpp</a>.</p>
 
 </div>
 </div>
@@ -148,78 +191,46 @@ const struct <a class="el" href="struct_s_d_b_c_1_1_f_r_o_n_t___e_c_u_1_1_p_i_n.
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">const int SDBC::FRONT_ECU::nodeID = 0</td>
         </tr>
       </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_s_d_b_c__gen_8hpp_source.html#l00028">28</a> of file <a class="el" href="_s_d_b_c__gen_8hpp_source.html">SDBC_gen.hpp</a>.</p>
-
-</div>
-</div>
-<a id="af9637c63bbf10d96843dea19bf8f14b5" name="af9637c63bbf10d96843dea19bf8f14b5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af9637c63bbf10d96843dea19bf8f14b5">&#9670;&#160;</a></span>ONBOARD_LED</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="struct_s_d_b_c_1_1_s_i_g.html">SIG</a> SDBC::FRONT_ECU::ONBOARD_LED = {0x00000000FFFFFFFF, Messages + 0, &amp;PIN.ONBOARD_LED, dt::int_t, 0, 0}</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_s_d_b_c__gen_8hpp_source.html#l00038">38</a> of file <a class="el" href="_s_d_b_c__gen_8hpp_source.html">SDBC_gen.hpp</a>.</p>
-
-</div>
-</div>
-<a id="ae1c7209798f15c42e076eb55e3b460f9" name="ae1c7209798f15c42e076eb55e3b460f9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae1c7209798f15c42e076eb55e3b460f9">&#9670;&#160;</a></span>OTHER_CTRL_SIG</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="struct_s_d_b_c_1_1_s_i_g.html">SIG</a> SDBC::FRONT_ECU::OTHER_CTRL_SIG = {0x0000FFFF00000000, Messages + 0, nullptr, dt::short_t, 32, 0}</td>
-        </tr>
-      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_s_d_b_c__gen_8hpp_source.html#l00039">39</a> of file <a class="el" href="_s_d_b_c__gen_8hpp_source.html">SDBC_gen.hpp</a>.</p>
 
 </div>
 </div>
-<a id="ac7a98063fa7590dc8e43276f62ca86c3" name="ac7a98063fa7590dc8e43276f62ca86c3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac7a98063fa7590dc8e43276f62ca86c3">&#9670;&#160;</a></span>WHEEL_SPEED_FRONT_LEFT</h2>
+<a id="ae585d15b1a55cbb82ba9f1016c9b6290" name="ae585d15b1a55cbb82ba9f1016c9b6290"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae585d15b1a55cbb82ba9f1016c9b6290">&#9670;&#160;</a></span>virtCount</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="struct_s_d_b_c_1_1_s_i_g.html">SIG</a> SDBC::FRONT_ECU::WHEEL_SPEED_FRONT_LEFT = {0x00000000FFFFFFFF, Messages + 2, &amp;PIN.WHEEL_0, dt::int_t, 0, 0}</td>
+          <td class="memname">const int SDBC::FRONT_ECU::virtCount = 2</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_s_d_b_c__gen_8hpp_source.html#l00041">41</a> of file <a class="el" href="_s_d_b_c__gen_8hpp_source.html">SDBC_gen.hpp</a>.</p>
-
-</div>
-</div>
-<a id="aefb637b1e2849ed43dfd10aed3d7af54" name="aefb637b1e2849ed43dfd10aed3d7af54"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aefb637b1e2849ed43dfd10aed3d7af54">&#9670;&#160;</a></span>WHEEL_SPEED_FRONT_RIGHT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="struct_s_d_b_c_1_1_s_i_g.html">SIG</a> SDBC::FRONT_ECU::WHEEL_SPEED_FRONT_RIGHT = {0xFFFFFFFF00000000, Messages + 2, &amp;PIN.WHEEL_1, dt::int_t, 32, 0}</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_s_d_b_c__gen_8hpp_source.html#l00042">42</a> of file <a class="el" href="_s_d_b_c__gen_8hpp_source.html">SDBC_gen.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_s_d_b_c__gen_8hpp_source.html#l00050">50</a> of file <a class="el" href="_s_d_b_c__gen_8hpp_source.html">SDBC_gen.hpp</a>.</p>
 
 </div>
 </div>

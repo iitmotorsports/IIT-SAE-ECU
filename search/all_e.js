@@ -4,7 +4,7 @@ var searchData=
   ['parse_1',['parse',['../namespacesdbc__parse.html#a0d86624466e718b4d5e588a891225296',1,'sdbc_parse']]],
   ['parse_5ffile_2',['parse_file',['../namespacesdbc__parse.html#a38b90a36522f47e3608f52eba9f59243',1,'sdbc_parse']]],
   ['peeker_3',['Peeker',['../classsdbc__parse_1_1_peeker.html',1,'sdbc_parse']]],
-  ['pin_4',['PIN',['../struct_s_d_b_c_1_1_b_a_c_k___e_c_u_1_1_p_i_n.html',1,'SDBC::BACK_ECU::PIN'],['../struct_s_d_b_c_1_1_f_r_o_n_t___e_c_u_1_1_p_i_n.html',1,'SDBC::FRONT_ECU::PIN']]],
+  ['pin_4',['PIN',['../struct_s_d_b_c_1_1_b_a_c_k___e_c_u_1_1_p_i_n.html',1,'SDBC::BACK_ECU']]],
   ['pinconfig_2edef_5',['PinConfig.def',['../_pin_config_8def.html',1,'']]],
   ['pinhandler_6',['PinHandler',['../namespace_pins.html#a3e6834ba621655f97e8313f86a97c33b',1,'Pins']]],
   ['pins_7',['Pins',['../namespace_pins.html',1,'']]],
