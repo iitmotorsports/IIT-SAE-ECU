@@ -7,6 +7,7 @@
  * Data types should be filled out by user
  */
 
+#pragma once
 #include <stdint.h>
 
 #define SDBC_TYPE_DEFINITIONS \
@@ -24,6 +25,13 @@
     X(binary_t, uint32_t)
 
 namespace SDBC {
+
+using gpio_val_t = int16_t; // TODO: vary based on the bit resolution config
+using virt_val_t = double;  // TODO: drop to float if <= 32 bits are used for all VIRTs, includes value setters
+
+const int ANALOG_RESOLUTION = 12;
+const int ANALOG_MAX = 1 << ANALOG_RESOLUTION;
+const int VIRT_ID_OFFSET = 128;
 
 enum dt {
 #define X(dt_id, typ) dt_id,

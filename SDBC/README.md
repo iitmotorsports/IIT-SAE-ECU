@@ -37,8 +37,7 @@ Semantic versioning shall be used with no extensions.
 ## Configuration
 
 > CONF
-> > ANALOG_RES : `Integer`
-> > VIRT_ID_OFF : `Integer`
+> > ANALOG_RESOLUTION : `Integer`
 
 The `CONF` line denotes configuration values that the system should abide to. It is up to the device implementation to ensure these configurations are followed or expected.
 
@@ -46,16 +45,16 @@ The `CONF` line denotes configuration values that the system should abide to. It
 
 ### Configuration values
 
-- `ANALOG_RES`
+- `ANALOG_RESOLUTION`
   - The analog bit resolution of GPIO pins
-  - e.g. 12 bit resolution results in a max value of 4096 for analog values
-- `VIRT_ID_OFF`
-  - The offset that virtual pins should start from. Because `VIRT`s should not collide with `GPIO` pin numbers, their pseudo pin number must start with an offset such as 100, where the device only has 60 pins. It must be ensured that values will not overlap with `GPIO` pins.
+  - e.g. 12 bit resolution results in a max value of 4096 for analog values and a datatype of `int16_t`
 
 ## Nodes
 
 > NODE `node_id` : `optional description`
-> > ADDR `can_address_low` - `can_address_high`  
+> > MAX_GPIO : `max_gpio_number` : `optional description`
+> > VIRT_ID_OFF : `virtual_id_offset` : `optional description`
+> > ADDR `can_address_low` - `can_address_high` : `optional description`
 > > GPIO `gpio_pin_id` : `pin#` `[DIGITAL|ANALOG]` `[I|O]` : `optional description`  
 > > VIRT `virt_pin_id` : `[DIGITAL|ANALOG]` : `optional description`  
 > > MSG `can_msg_address`  `[<<|>>]` `can_msg_id` : `optional description`  
@@ -71,7 +70,19 @@ Nodes are used to organize where CAN messages originate from and to define pins 
 
 The `NODE` line consists of a unique ID for this node, and the optional description. It is important that the name matches that of the build system's if the node is related to the pins defined i.e. the ECUs.
 
-### Sources
+### Metadata
+
+#### `MAX_GPIO`
+
+The `MAX_GPIO` line defined the maximum number of GPIO pins that a `NODE` is capable of addressing, regardless of whether it is declared or not. This allows nodes to, for whatever reason, still access gpio pins not defined by SDBC. Limiting this range helps prevent undefined behavior and mistakes when testing. This line **must** be set when any `GPIO` is defined on a `NODE`.
+
+This number can often be found by looking into the appropriate GPIO headers for a particular node's processor.
+
+#### `VIRT_ID_OFF`
+
+The offset that virtual pin numbers should start from. Because `VIRT`s should not collide with `GPIO` pin numbers, their pseudo pin number must start with an offset that clears any `GPIO` pin number.
+
+This line **must** be set when any `VIRT` is defined on a `NODE`.
 
 #### `ADDR`
 
@@ -82,6 +93,10 @@ The first address is the lower bound while the second is the upper bound.
 If no address space is defined, only the refrenced addresses in the node are used.
 
 Addresses can either be in hex (begins with `0x`) or decimal.
+
+Multiple `ADDR` may be defined, however, a warning shall be issued if definitions overlap within the same `NODE`.
+
+### Sources
 
 #### `GPIO`
 
@@ -135,6 +150,8 @@ The `LINK` line defines a `GPIO` link between nodes, where it contains `SET`s or
 
 Incoming `>>` `LINK`s set values on the node that defines it. Outgoing `<<` `LINK`s set values on the node that it is linking to.
 
+**NOTE:** For each node, only one `LINK` can be defined per message.
+
 ##### `SET`
 
 The `SET` line consists of a signal ID from the linked node's message, `<<` or `>>`, dependent on whether this `LINK` is outgoing or incoming, respectively; this keeps the signal up to date with the given source whether it is from a `GPIO` or `VIRT`, and the optional description.
@@ -146,9 +163,9 @@ The `SET` line consists of a signal ID from the linked node's message, `<<` or `
 Value setters and `LINK`s work very similarly, however, value setters are general and restricted in the sense that it is attached only to the address, which cannot be explicitly referenced by other nodes. A `MSG` is either outgoing, with a node `GPIO` setting it, or it is incoming where it is set by a `GPIO`. A simple In / Out deceleration of data.
 
 `LINK`s, on the other hand, can reference messages of other nodes, as to what `GPIO`s should be pushed to or pulled from. In this sense, value setters define which signals can be linked to for outgoing links.
-For incoming `LINK`s, they are functionally the same as instead having the linked node having an outgoing `LINK` to this node, where this node has an incoming message with value setters.
+For incoming `LINK`s, they are functionally the same as instead having the linked node having an outgoing `LINK` to this node, where this node has an incoming message with value setters (refer to example).
 
-**NOTE:** Circular references to `GPIO`s shall be checked for at parsing, as to prevent a case where messages continuously cycle
+**NOTE:** Circular references to `GPIO`s shall be checked for at parsing, as to prevent a case where messages continuously cycle, sending itself
 
 ##### Example
 
@@ -202,17 +219,23 @@ NODE BACK_ECU : The back teensy
 
 > FORMAT `"format_name"` `"data_type"` (`scale`,`shift`) [`min`,`max`] : `optional description`
 
-The `FORMAT` line consists of the name of the format in quotes, the data type of this format, the scale and shift that should be applied to the final value when decoding a can message signal. The min and max of the final value, if applicable and the optional description
+The `FORMAT` line consists of the name of the format in quotes, the data type of this format, also in quotes, the scale and shift that should be applied to the final value when decoding a can message signal, and the min and max of the final value, if applicable. Finally, the optional description
 
-scale, shift, min, and max are allowed to be floats and negative. They are also have defaults that should be used if they are not to be used, as such `(1,0)` or `[0,0]`
+scale, shift, min, and max are allowed to be floats and negative. They are also have defaults that should be used if they are not to be used, as such `(1,0)` and `[0,0]`
 
-When pulling a value from a buffer, that value shall be run through an appropriate formatting function to convert the value to the proper type. In addition to that, it will apply the proper conversions given by the values above.
+When pulling a value from a buffer, that value shall be run through an appropriate formatting function to convert the value to the proper type. In addition to that, it will apply the proper conversions given by the values above. The order this takes place is the same in which `FORMAT`s are defined.
+
+1. Binary data received from CAN line
+2. Get raw value by interpreting value as `"data_type"`
+3. Apply (`scale` * **value**) + `shift` to value
+4. Clamp value to [`min`,`max`] if not [0,0]
+5. Run value through specialized format function if available
 
 ## Types
 
 > TYPE `"data_type_name"` `[+|-]` `[0-64]` : `optional description`
 
-The type line consists of the name of a data type, whether this data is signed or unsigned, the number of bits that it uses, and the optional description.
+The type line consists of the name of a data type in quotes, whether this data is signed or unsigned, the number of bits that it uses, and the optional description.
 
 The data type name, if applicable, shall match a defined type or typedef in it's most general sense. i.e. 32 bit values can be either an integer (`int32_t`), unsigned integer (`uint32_t`) or a float (`float`), 1 bit values are booleans (`bool`).
 
@@ -236,9 +259,29 @@ synced values should be packed into messages as needed, i.e. if a node has two v
 
 ## Proposals
 
-### `MSG` `SIG` Multiplexing Value Setters
+### `MSG` `SIG` & `LINK` Multiplexing Value Setters
 
-If more than one value setter is used in an incoming message, space **must** be allocated for a bit field, denoting which value setter should actually be updated. The bit field is as large as however many value setters there are and is appended to the end of the message block. This is checked for at parsing. This can be ignored, meaning update all values by default, by using the `SETALL` tag in the parent `MSG` line
+If more than one value setter is used in an incoming message, space **must** be allocated for a bit field, denoting which value setter should actually be updated. The bit field is as large as however many value setters there are and is appended to the end of the message block. This is checked for at parsing. This can be ignored, meaning update all values by default, by using the `SETALL` tag in the parent `MSG` line.
+
+Downside is that this would require messages that use all 64 bits to be split up.
+
+### Multiplexing through size variance
+
+Depending on the data length that is sent, this can vary what signals should be updated. Because order matters in SDBC, this means we can decide which signals take priority.
+
+For example, if a message M has two 32 bit signals, ordered as A then B, if a node were to receive M with only 4 bytes (32 bits), it would be assumed that those 32 bits are signal A with no update to B. If only B should be updated, an extra byte would be sent. This means the node would receive 5 bytes but only use the first 32 bits to get B.
+
+Another example w/ 4 16 bit values (2bytes), A, B, C, D
+
+|data|data| : A
+|data|data|null| : B
+|data|data|data|data| : A, B
+|data|data|null|null|null| : C
+|data|data|data|data|data|data| : A, B, C
+|data|data|null|null|null|null|null| : D
+|data|data|data|data|data|data|data|data| : A, B, C, D
+
+This gets complicated quickly beyond the simple example of just 32 bit values. Restrictions should be made / compromises
 
 ## Changelog
 
@@ -250,12 +293,17 @@ If more than one value setter is used in an incoming message, space **must** be 
   - `NAME`
   - `VERSION`
   - `CONF`
+    - `ANALOG_RESOLUTION`
 - Concepts
   - `NODE`
-  - `ADDR`
-  - `GPIO`
-  - `VIRT`
-  - `MSG`
-  - `SIG`
-  - `LINK`
-  - `SET`
+    - `MAX_GPIO`
+    - `VIRT_ID_OFF`
+    - `ADDR`
+    - `GPIO`
+    - `VIRT`
+    - `MSG`
+      - `SIG`
+    - `LINK`
+      - `SET`
+  - `FORMAT`
+  - `TYPE`

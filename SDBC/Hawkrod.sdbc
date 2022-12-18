@@ -2,10 +2,12 @@ NAME "Hawkrod"
 VERSION 1.0.0
 
 CONF
-    ANALOG_RES  : 12
-    VIRT_ID_OFF : 128
+    ANALOG_RESOLUTION  : 12
 
 NODE FRONT_ECU : The front teensy
+    MAX_GPIO : 55 : CORE_NUM_PINS
+    VIRT_ID_OFFSET : 80 : above core num pins
+
     GPIO ONBOARD_LED : 13 DIGITAL OUTPUT    : onboard led
     GPIO ANALOG_TEST : 24 ANALOG OUTPUT     : analog out
     GPIO BUTTON_OFF : 2 DIGITAL INPUT       : Digital Start Button
@@ -117,14 +119,14 @@ NODE MC0
         SIG FAULT_GEN_60 : "flag" 
         SIG FAULT_GEN_61 : "flag" 
         SIG FAULT_GEN_62 : "flag" 
-        SIG FAULT_GEN_63 : "flag" 
+        SIG FAULT_GEN_63 : "flag"
 
 NODE MC1
 NODE AMS
 
-FORMAT "f_rpm"  "int"   (1,0) [-20,60] : Rotations per minute
-FORMAT "b_rpm"  "int"   (1,0) [-20,60] : Rotations per minute
-FORMAT "%"      "uint"   (1,0) [0,0]    : Percentage
+FORMAT "f_rpm"  "int"    (1,0) [-20,60] : Rotations per minute
+FORMAT "b_rpm"  "int"    (1,0) [-20,60] : Rotations per minute
+FORMAT "%"      "float"  (100,0) [0,100]    : Percentage
 FORMAT "C"      "float"  (1,0) [0,0]    : Celsius
 FORMAT "F"      "float"  (1,0) [0,0]    : Fahrenheit
 FORMAT "m/s"    "int"    (1,0) [0,0]    : Meters per second
