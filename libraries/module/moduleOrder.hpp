@@ -12,7 +12,8 @@
 #ifndef __MODULEORDER_HPP__
 #define __MODULEORDER_HPP__
 
-#include "module.hpp"
+#include "mainModule.hpp"
+#include "manager.hpp"
 
 #include <list>
 #include <map>
@@ -57,7 +58,7 @@ bool finder(Node *n, std::map<bitmapVal_t, Node *> &nodesR, std::list<Node *> &e
     return false;
 }
 
-bool Module_t::orderModules() {
+bool Manager_t::orderModules() {
     errC = 0;
     std::list<Node *> nodes;
 
