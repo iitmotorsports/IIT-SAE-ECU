@@ -65,6 +65,8 @@
 /**
  * @brief Set a delay on startup before any ECU does anything
  */
-#define CONF_ECU_INITAL_DELAY 2000
+#define CONF_ECU_INITAL_DELAY 500
+
+#define CONFIG_ECU_BUFFER_TIMEOUT_MICRO 3000
 
 #endif // __ECU_GLOBALCONFIG_H__

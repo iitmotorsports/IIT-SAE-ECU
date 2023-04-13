@@ -1,12 +1,12 @@
 #ifndef __ECU_CANBUFFER_H__
 #define __ECU_CANBUFFER_H__
 
+#include "ECUGlobalConfig.h"
+#include <atomic>
 #include <stdint.h>
 #include <stdlib.h>
 
-#include "TeensyThreads.h"
-
-namespace CAN {
+namespace Canbus {
 
 /**
  * @brief The function type to pass to addCallback
@@ -31,12 +31,12 @@ struct Buffer { // IMPROVE: more rigorous testing on the get funcs
      *
      * @warning Not recommended to access directly
      */
-    volatile uint8_t *buffer;
+    volatile uint8_t buffer[8];
 
     /**
      * @brief Optional callback function associated with this buffer
      */
-    volatile canCallback callback;
+    volatile canCallback callback = nullptr;
 
     /**
      * @brief Whether this buffer is meant to be an outgoing message
@@ -47,21 +47,23 @@ struct Buffer { // IMPROVE: more rigorous testing on the get funcs
      * @brief Whether this buffer has been set in anyway
      * @note Must be manually reset
      */
-    bool modified = false;
+    std::atomic_bool modified = false;
 
     /**
-     * @brief Construct a new Buffer as a wrapper
-     *
-     * @param buffer the array to wrap around
+     * @brief Whether a message has been received from this address
      */
-    Buffer(volatile uint8_t *buffer, bool outgoing = false) : address(0), buffer(buffer), outgoing(outgoing){};
+    std::atomic_bool received = false;
+
+    std::atomic_flag spin_lock = false;
+
     /**
      * @brief Construct a new internal Buffer
      *
      * @param address the address this buffer should represent
      * @param buffer beginning of the array of 8 byte buffers to select from
      */
-    Buffer(const uint32_t address, volatile uint8_t *buffer, bool outgoing = false) : address(address), buffer(buffer), outgoing(outgoing){};
+    Buffer(const uint32_t address, bool outgoing) : address(address), outgoing(outgoing){};
+
     /**
      * @brief Initialize a buffer if not done so already by constructor
      */
@@ -89,21 +91,21 @@ struct Buffer { // IMPROVE: more rigorous testing on the get funcs
      */
     void clear(void);
 
-    void Buffer::setDouble(double val);
-    void Buffer::setULong(uint64_t val);
-    void Buffer::setLong(int64_t val);
-    void Buffer::setFloat(float val, size_t pos);
-    void Buffer::setUInt(uint32_t val, size_t pos);
-    void Buffer::setInt(int32_t val, size_t pos);
-    void Buffer::setUShort(uint16_t val, size_t pos);
-    void Buffer::setShort(int16_t val, size_t pos);
-    void Buffer::setUByte(uint8_t val, size_t pos);
-    void Buffer::setByte(int8_t val, size_t pos);
-    void Buffer::setBit(bool val, size_t pos);
+    void setDouble(double val);
+    void setULong(uint64_t val);
+    void setLong(int64_t val);
+    void setFloat(float val, size_t pos);
+    void setUInt(uint32_t val, size_t pos);
+    void setInt(int32_t val, size_t pos);
+    void setUShort(uint16_t val, size_t pos);
+    void setShort(int16_t val, size_t pos);
+    void setUByte(uint8_t val, size_t pos);
+    void setByte(int8_t val, size_t pos);
+    void setBit(bool val, size_t pos);
 
-    double Buffer::getDouble();
+    double getDouble();
 
-    float Buffer::getFloat(size_t pos);
+    float getFloat(size_t pos);
 
     /**
      * @brief Interpret the buffer as an unsigned long
@@ -180,16 +182,15 @@ struct Buffer { // IMPROVE: more rigorous testing on the get funcs
     /**
      * @brief locks this buffer to be used, waits indefinitely for it to unlock if it is locked
      *
+     * @param wait micros to wait for, 0 for indefinite
+     * @return -1 if timeout, else 0
      */
-    void lock_wait();
+    int lock_wait(unsigned long wait = CONFIG_ECU_BUFFER_TIMEOUT_MICRO);
 
     /**
      * @brief Unlocks this buffer if it is locked
      */
     void unlock();
-
-private:
-    Thread::Mutex mux; // TODO: make shared_mutex to allow multiple readers
 };
-} // namespace CAN
+} // namespace Canbus
 #endif // __ECU_CANBUFFER_H__

@@ -1,7 +1,6 @@
 #include "ECUStates.hpp"
-#include "AeroServo.h"
+#include "Canbus.h"
 #include "ECUGlobalConfig.h"
-#include "Echo.h"
 #include "Faults.h"
 #include "Heartbeat.h"
 #include "Log.h"
@@ -9,13 +8,33 @@
 #include "MotorControl.def"
 #include "MotorControl.h"
 #include "Util.h"
+#include "pump.h"
 
-static bool FaultCheck() { // NOTE: Will only return true if hardfault occurs
-    if (Fault::softFault())
-        Fault::logFault();
-    if (Fault::hardFault())
+static bool FaultCheck() {
+    if (Fault::hardFault() || Fault::softFault())
         return true;
+    // if (!Heartbeat::checkBeat()) // TODO: heartbeat front to back
+    //     return true;
     return false;
+};
+
+// static void wait(long unsigned int millis) {
+//     static elapsedMillis timeElapsed;
+//     timeElapsed = 0;
+//     while (timeElapsed <= millis)
+//         ;
+// }
+
+void LEDBlink() {
+    Pins::setPinValue(LED_BUILTIN, 0);
+    delay(500);
+    Pins::setPinValue(LED_BUILTIN, 1);
+    delay(500);
+    Pins::setPinValue(LED_BUILTIN, 0);
+    delay(500);
+    Pins::setPinValue(LED_BUILTIN, 1);
+    delay(500);
+    Pins::setPinValue(LED_BUILTIN, 0);
 }
 
 static void updateFaultLights() {
@@ -34,25 +53,26 @@ static void updateFaultLights() {
 }
 
 State::State_t *ECUStates::Initialize_State::run(void) {
-    Log.i(ID, "Teensy 3.6 SAE BACK ECU Initalizing");
+    Log.i(ID, "Teensy 4.1 SAE BACK ECU Initalizing");
     Log.i(ID, "Setup canbus");
     Canbus::setup(); // allocate and organize addresses
     Log.i(ID, "Initialize pins");
     Pins::initialize(); // setup predefined pins
+    LEDBlink();
     Log.i(ID, "Waiting for sync");
     while (!Pins::getCanPinValue(PINS_INTERNAL_SYNC)) {
         Canbus::sendData(ADD_MC0_CTRL);
         Canbus::sendData(ADD_MC1_CTRL);
         delay(100);
     }
-    Aero::setup();
     MC::setup();
 #ifdef CONF_ECU_DEBUG
     Mirror::setup();
-    Echo::setup();
 #endif
     Heartbeat::addCallback(updateFaultLights); // IMPROVE: don't just periodically check if leds are on
     Heartbeat::beginBeating();
+    Heartbeat::beginReceiving();
+    Pump::start();
 
     // Front teensy should know when to blink start light
     Log.d(ID, "Checking for Inital fault");
@@ -84,20 +104,32 @@ State::State_t *ECUStates::Initialize_State::run(void) {
 };
 
 State::State_t *ECUStates::PreCharge_State::PreCharFault(void) {
-    Log.w(ID, "Opening Air1, Air2 and Precharge Relay");
-    Pins::setPinValue(PINS_BACK_AIR1, LOW);
+    Log.w(ID, "Opening Air2 and Precharge Relay");
     Pins::setPinValue(PINS_BACK_AIR2, LOW);
     Pins::setPinValue(PINS_BACK_PRECHARGE_RELAY, LOW);
     Log.e(ID, "Precharge Faulted during precharge");
     return &ECUStates::FaultState;
-}
+};
 
-bool ECUStates::PreCharge_State::voltageCheck() {
-    int16_t BMSVolt = BMS_DATA_Buffer.getShort(2) / 10; // Byte 2-3: Pack Instant Voltage
-    int16_t MC0Volt = MC0_VOLT_Buffer.getShort(0) / 10; // Bytes 0-1: DC BUS MC Voltage
-    int16_t MC1Volt = MC1_VOLT_Buffer.getShort(0) / 10; // Bytes 0-1: DC BUS MC Voltage
+bool ECUStates::PreCharge_State::voltageCheck(bool *fault) {
+    int not_locked = BMS_DATA_Buffer->lock_wait();
+    not_locked += MC0_VOLT_Buffer->lock_wait();
+    not_locked += MC1_VOLT_Buffer->lock_wait();
 
-    return 0.65 * BMSVolt <= (MC0Volt + MC1Volt) / 2;
+    if (not_locked) {
+        *fault = true;
+        return false;
+    }
+
+    int16_t BMSVolt = BMS_DATA_Buffer->getShort(2) / 10; // Byte 2-3: Pack Instant Voltage
+    int16_t MC0Volt = MC0_VOLT_Buffer->getShort(0) / 10; // Bytes 0-1: DC BUS MC Voltage
+    int16_t MC1Volt = MC1_VOLT_Buffer->getShort(0) / 10; // Bytes 0-1: DC BUS MC Voltage
+
+    Log.d(ID, "BMS Voltage", BMSVolt, -250);
+    Log.d(ID, "BMS MC0 Voltage", MC0Volt, -250);
+    Log.d(ID, "BMS MC1 Voltage", MC1Volt, -250);
+
+    return 0.91 * BMSVolt <= (MC0Volt + MC1Volt) / 2;
 }
 
 State::State_t *ECUStates::PreCharge_State::run(void) { // NOTE: Low = Closed, High = Open
@@ -108,27 +140,31 @@ State::State_t *ECUStates::PreCharge_State::run(void) { // NOTE: Low = Closed, H
         return &ECUStates::FaultState;
     }
 
-    // NOTE: Assuming Air2 is correct
-    Log.w(ID, "Closing Air2 and Precharge Relay and opening Air1");
-    Pins::setPinValue(PINS_BACK_AIR2, PINS_ANALOG_HIGH);
-    Pins::setPinValue(PINS_BACK_PRECHARGE_RELAY, PINS_ANALOG_HIGH);
-    Pins::setPinValue(PINS_BACK_AIR1, LOW);
+    Log.w(ID, "Opening Air2 and closing precharge");
+    Pins::setPinValue(PINS_BACK_AIR2, LOW);
+    Pins::setPinValue(PINS_BACK_PRECHARGE_RELAY, HIGH);
 
     if (FaultCheck()) {
         return PreCharFault();
     }
-
     elapsedMillis timeElapsed;
 
     Log.d(ID, "Running precharge loop");
 
-    while (timeElapsed <= 10000) {
-        if (timeElapsed >= 1000 && voltageCheck()) { // NOTE: will always pass if submodules are disconnected from CAN net
+    bool fault = false;
+
+    while (timeElapsed <= 12000) {
+        // FIXME: will always pass if submodules are disconnected from CAN net
+        if (voltageCheck(&fault) && !(fault |= FaultCheck()) && timeElapsed >= 2500) {
+            Log.i(ID, "Precharge Finished, closing Air2");
+            Pins::setPinValue(PINS_BACK_AIR2, HIGH);
+            delay(650);
             Log.w(ID, "Opening precharge relay");
             Pins::setPinValue(PINS_BACK_PRECHARGE_RELAY, LOW);
-            Log.i(ID, "Precharge Finished, closing Air1");
-            Pins::setPinValue(PINS_BACK_AIR1, PINS_ANALOG_HIGH);
             return &ECUStates::Idle_State;
+        } else if (fault) {
+            Log.e(ID, "Precharge faulted");
+            return PreCharFault();
         }
     }
 
@@ -211,13 +247,10 @@ State::State_t *ECUStates::Button_State::run(void) {
 
 void ECUStates::Driving_Mode_State::carCooling(bool enable) { // NOTE: Cooling values are all static
     int setOn = enable * PINS_ANALOG_MAX;
-    Pins::setPinValue(PINS_BACK_PUMP_DAC, setOn);
+    Pump::set(enable * 100);
     Pins::setPinValue(PINS_BACK_FAN1_PWM, setOn);
     Pins::setPinValue(PINS_BACK_FAN2_PWM, setOn);
-    Pins::setPinValue(PINS_BACK_FAN3_PWM, setOn);
-    Pins::setPinValue(PINS_BACK_FAN4_PWM, setOn);
-    Pins::setPinValue(PINS_BACK_FANS_ONOFF, enable);
-}
+};
 
 State::State_t *ECUStates::Driving_Mode_State::DrivingModeFault(void) {
     Log.i(ID, "Fault happened in driving state");
@@ -276,7 +309,7 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             int pAVG = (pedal0 + pedal1) / 2;
 
             // NOTE: pedal has a threshold value
-            if (pAVG >= 100 && (float)abs(pedal1 - pedal0) / PINS_ANALOG_HIGH > 0.5f) {
+            if (pAVG >= 100 && (float)abs(pedal1 - pedal0) / PINS_ANALOG_HIGH > 0.2f) {
                 Log.e(ID, "Pedal value offset > 10%");
                 return DrivingModeFault();
             }
@@ -294,11 +327,8 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
                 Fault::logFault();
             }
 
-            Log.i(ID, "Aero servo position:", Aero::getServoValue(), true);
             Log.i(ID, "Last MC0 Torque Value:", MC::getLastTorqueValue(true), true);
             Log.i(ID, "Last MC1 Torque Value:", MC::getLastTorqueValue(false), true);
-
-            Aero::run(breakVal, steerVal);
         }
 
         if (!Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT_OFF)) {
@@ -323,7 +353,6 @@ State::State_t *ECUStates::FaultState::run(void) {
     Canbus::enableInterrupts(false);
 
     Log.w(ID, "Opening Air1, Air2 and Precharge Relay");
-    Pins::setPinValue(PINS_BACK_AIR1, LOW);
     Pins::setPinValue(PINS_BACK_AIR2, LOW);
     Pins::setPinValue(PINS_BACK_PRECHARGE_RELAY, LOW);
 
@@ -345,28 +374,4 @@ State::State_t *ECUStates::FaultState::run(void) {
     }
     Pins::setInternalValue(PINS_INTERNAL_GEN_FAULT, 0);
     return &ECUStates::Initialize_State;
-}
-
-State::State_t *ECUStates::Logger_t::run(void) {
-
-    static elapsedMillis timeElapsed;
-
-    if (timeElapsed >= 2000) {
-        timeElapsed = timeElapsed - 2000;
-        Log(ID, "A7 Pin Value:", Pins::getPinValue(0));
-        Log("FAKE ID", "A7 Pin Value:");
-        Log(ID, "whaAAAT?");
-        Log(ID, "", 0xDEADBEEF);
-        Log(ID, "Notify code: ", getNotify());
-    }
-
-    return &ECUStates::Bounce;
-};
-
-State::State_t *ECUStates::Bounce_t::run(void) {
-    delay(250);
-    Log.i(ID, "Bounce!");
-    notify(random(100));
-    delay(250);
-    return getLastState();
 }

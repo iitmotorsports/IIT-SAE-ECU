@@ -46,8 +46,8 @@ static bool forward = true;
 
 static double pAccum = 0, bAccum = 0, sAccum = 0;
 
-static Canbus::Buffer MC0_RPM_Buffer(ADD_MC0_RPM);
-static Canbus::Buffer MC1_RPM_Buffer(ADD_MC1_RPM);
+static Canbus::Buffer *MC0_RPM_Buffer = Canbus::getBuffer(ADD_MC0_RPM);
+static Canbus::Buffer *MC1_RPM_Buffer = Canbus::getBuffer(ADD_MC1_RPM);
 
 static void beatFunc(void) {
     if (beating) {
@@ -58,19 +58,29 @@ static void beatFunc(void) {
 
 constexpr float c = 2 * 3.1415926536 * 9;
 
+static int32_t lastspeed;
+
 int32_t motorSpeed(int motor) {
-    int16_t MC_Rpm_Val_0 = -MC0_RPM_Buffer.getShort(2); // Bytes 2-3 : Angular Velocity // NOTE: motor is negative?
-    int16_t MC_Rpm_Val_1 = MC1_RPM_Buffer.getShort(2);  // Bytes 2-3 : Angular Velocity
+    int not_locked = MC0_RPM_Buffer->lock_wait();
+    not_locked += MC1_RPM_Buffer->lock_wait();
+    if (not_locked) {
+        Log.w(ID, "Unable to lock buffers for speed", lastspeed);
+        return lastspeed;
+    }
+    int16_t MC_Rpm_Val_0 = -MC0_RPM_Buffer->getShort(2); // Bytes 2-3 : Angular Velocity // NOTE: motor is negative?
+    int16_t MC_Rpm_Val_1 = MC1_RPM_Buffer->getShort(2);  // Bytes 2-3 : Angular Velocity
+    MC1_RPM_Buffer->unlock();
+    MC0_RPM_Buffer->unlock();
     float MC_Spd_Val_0 = (float)(((MC_Rpm_Val_0 / CONF_CAR_GEAR_RATIO) * c) * 60) / 63360;
     float MC_Spd_Val_1 = (float)(((MC_Rpm_Val_1 / CONF_CAR_GEAR_RATIO) * c) * 60) / 63360;
 
     switch (motor) {
     case 0:
-        return MC_Spd_Val_0;
+        return lastspeed = MC_Spd_Val_0;
     case 1:
-        return MC_Spd_Val_1;
+        return lastspeed = MC_Spd_Val_1;
     default:
-        return (MC_Spd_Val_0 + MC_Spd_Val_1) / 2;
+        return lastspeed = (MC_Spd_Val_0 + MC_Spd_Val_1) / 2;
     }
 }
 

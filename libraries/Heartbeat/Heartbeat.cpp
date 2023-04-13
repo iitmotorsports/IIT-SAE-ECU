@@ -4,9 +4,9 @@
  * @brief Heartbeat source file
  * @version 0.1
  * @date 2021-03-19
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  */
 //@cond
 
@@ -36,8 +36,11 @@ static void toggleLED() {
 }
 
 static void beat() {
-    Canbus::sendData(ADD_HEART);
-    toggleLED();
+#ifdef FRONT_ECU
+    Canbus::sendData(ADD_HEART_FRONT);
+#else
+    Canbus::sendData(ADD_HEART_BACK);
+#endif
 
     for (auto f : funcs) {
         f();
@@ -56,7 +59,11 @@ static void receiveBeat(uint32_t, volatile uint8_t *) {
 }
 
 void beginReceiving() {
-    Canbus::addCallback(ADD_HEART, receiveBeat);
+#ifdef FRONT_ECU
+    Canbus::addCallback(ADD_HEART_BACK, receiveBeat);
+#else
+    Canbus::addCallback(ADD_HEART_FRONT, receiveBeat);
+#endif
 }
 
 int checkBeat() {

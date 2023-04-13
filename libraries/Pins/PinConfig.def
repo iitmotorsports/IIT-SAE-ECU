@@ -70,38 +70,44 @@
 #define PINS_BOTH_LED 13
 
 // Back ECU Only - ECU0
-#define PINS_BACK_SERVO_OFF 0        // Turn the back servos off
-#define PINS_BACK_TSV_SIGNAL 3       // digital input
-#define PINS_BACK_AIR2 4             // Air 2 control
-#define PINS_BACK_CHARGING_RELAY 5   // On or Off
-#define PINS_BACK_SOUND_DRIVER 6     // Buzzer
-#define PINS_BACK_BRAKE_LIGHT 7      // Brake light On or Off
-#define PINS_BACK_SERVO1_PWM 8       // 0-3.3V Servo control
-#define PINS_BACK_PRECHARGE_RELAY 9  // Precharge relay control
-#define PINS_BACK_AIR1 10            // Precharge Air control
-#define PINS_BACK_FANS_ONOFF 24      // Turn Cooling Fans on or off
-#define PINS_BACK_SHUTDOWN_SIGNAL 25 // digital input
-#define PINS_BACK_HVD_FAULT 26       // Fault pin
-#define PINS_BACK_SERVO2_PWM 30      // 0-3.3V Servo control
-#define PINS_BACK_FAN1_PWM 23        // PWM fan control
-#define PINS_BACK_FAN2_PWM 22        // PWM fan control
-#define PINS_BACK_FAN3_PWM 21        // PWM fan control
-#define PINS_BACK_FAN4_PWM 20        // PWM fan control
-#define PINS_BACK_IMD_FAULT 19       // Fault pin
-#define PINS_BACK_BMS_FAULT 18       // Fault pin
-#define PINS_BACK_PUMP_DAC 66        // DAC pump control 2-2.5V
+#define PINS_BACK_FAN2_PWM 0         // PWM fan control
+#define PINS_BACK_FAN1_PWM 1         // PWM fan control
+#define PINS_BACK_ICS_SD 8           // Mic SD
+#define PINS_BACK_BMS_FAULT 28       // Fault pin
+#define PINS_BACK_AIR2 29            // Air 2 control
+#define PINS_BACK_088_INT2_ACCEL 34  // accelerometer
+#define PINS_BACK_FAULT_RESET 30     // Reset ECU Fault
+#define PINS_BACK_PRECHARGE_RELAY 31 // Precharge relay control
+#define PINS_BACK_BRAKE_LIGHT 3      // Brake light On or Off
+#define PINS_BACK_088_INT3_GYRO 33   // Gyro
+#define PINS_BACK_IO_14 14           // General IO
+#define PINS_BACK_IO_15 15           // General IO
+#define PINS_BACK_PUMP_SCL 16        // Pump SCL
+#define PINS_BACK_PUMP_SDA 17        // Pump SDA
+#define PINS_BACK_IO_18 18           // General IO
+#define PINS_BACK_IO_19 19           // General IO
+#define PINS_BACK_ICS_WS 20          // Mic WS
+#define PINS_BACK_ICS_SCK 21         // Mic SCK
+#define PINS_BACK_SOUND_DRIVER 2     // Buzzer
+#define PINS_BACK_CHARGING_RELAY 32  // On or Off
+#define PINS_BACK_TSV_SIGNAL 12      // digital input
+#define PINS_BACK_ECU_FAULT 11       // set a fault
+#define PINS_BACK_IMD_FAULT 27       // Fault pin
+#define PINS_BACK_SHUTDOWN_SIGNAL 26 // digital input
+#define PINS_BACK_088_SDA 25         // 088 SDA
+#define PINS_BACK_088_SCL 24         // 088 SCL
 
 // Front ECU Only - ECU1
-#define PINS_FRONT_BUTTON_INPUT_OFF 2 // Digital Start Button
-#define PINS_FRONT_WHEEL1 21          // 0-5v R wheel speed
-#define PINS_FRONT_WHEEL0 20          // 0-5v L wheel speed
-#define PINS_FRONT_PEDAL1 A4          // Pedal 2
-#define PINS_FRONT_PEDAL0 A2          // Pedal 1
-#define PINS_FRONT_STEER 15           // -5-5v steering wheel
-#define PINS_FRONT_BRAKE 14           // 0-3.3v brake
-#define PINS_FRONT_IMD_LIGHT 38       // imd led
-#define PINS_FRONT_BMS_LIGHT 37       // bms led
-#define PINS_FRONT_START_LIGHT 36     // start led
+#define PINS_FRONT_BUTTON_INPUT_OFF 41 // Digital Start Button
+#define PINS_FRONT_WHEEL1 20           // 0-5v R wheel speed
+#define PINS_FRONT_WHEEL0 19           // 0-5v L wheel speed
+#define PINS_FRONT_PEDAL1 17           // Pedal 2
+#define PINS_FRONT_PEDAL0 18           // Pedal 1
+#define PINS_FRONT_STEER 21            // -5-5v steering wheel
+#define PINS_FRONT_BRAKE 16            // 0-3.3v brake
+#define PINS_FRONT_IMD_LIGHT 7         // imd led
+#define PINS_FRONT_BMS_LIGHT 8         // bms led
+#define PINS_FRONT_START_LIGHT 2       // start led
 // @endcond
 
 #if CONF_ECU_POSITION == BACK_ECU
@@ -131,26 +137,36 @@
  */
 #define ECU_PINS                                      \
     X(PINS_BOTH_LED, DIGITAL, OUTPUT, NIL)            \
-    X(PINS_BACK_SERVO_OFF, DIGITAL, OUTPUT, 0)        \
     X(PINS_BACK_TSV_SIGNAL, DIGITAL, INPUT, NIL)      \
-    X(PINS_BACK_AIR2, ANALOG, OUTPUT, 0)              \
+    X(PINS_BACK_AIR2, DIGITAL, OUTPUT, 0)              \
     X(PINS_BACK_CHARGING_RELAY, DIGITAL, OUTPUT, 1)   \
     X(PINS_BACK_SOUND_DRIVER, ANALOG, OUTPUT, 0)      \
     X(PINS_BACK_BRAKE_LIGHT, ANALOG, OUTPUT, 0)       \
-    X(PINS_BACK_SERVO1_PWM, ANALOG, OUTPUT, NIL)      \
-    X(PINS_BACK_PRECHARGE_RELAY, ANALOG, OUTPUT, 0)   \
-    X(PINS_BACK_AIR1, ANALOG, OUTPUT, 0)              \
-    X(PINS_BACK_FANS_ONOFF, DIGITAL, OUTPUT, 0)       \
+    X(PINS_BACK_PRECHARGE_RELAY, DIGITAL, OUTPUT, 0)   \
     X(PINS_BACK_SHUTDOWN_SIGNAL, DIGITAL, INPUT, NIL) \
-    X(PINS_BACK_HVD_FAULT, DIGITAL, INPUT, NIL)       \
-    X(PINS_BACK_SERVO2_PWM, ANALOG, OUTPUT, NIL)      \
     X(PINS_BACK_FAN1_PWM, ANALOG, OUTPUT, 0)          \
     X(PINS_BACK_FAN2_PWM, ANALOG, OUTPUT, 0)          \
-    X(PINS_BACK_FAN3_PWM, ANALOG, OUTPUT, 0)          \
-    X(PINS_BACK_FAN4_PWM, ANALOG, OUTPUT, 0)          \
     X(PINS_BACK_IMD_FAULT, DIGITAL, INPUT, NIL)       \
     X(PINS_BACK_BMS_FAULT, DIGITAL, INPUT, NIL)       \
-    X(PINS_BACK_PUMP_DAC, ANALOG, OUTPUT, 0)
+    X(PINS_BACK_088_INT2_ACCEL, DIGITAL, INPUT, NIL)  \
+    X(PINS_BACK_FAULT_RESET, DIGITAL, INPUT, NIL)     \
+    X(PINS_BACK_088_INT3_GYRO, DIGITAL, INPUT, NIL)   \
+    X(PINS_BACK_IO_14, DIGITAL, OUTPUT, 0)            \
+    X(PINS_BACK_IO_15, DIGITAL, OUTPUT, 0)            \
+    X(PINS_BACK_IO_18, DIGITAL, OUTPUT, 0)            \
+    X(PINS_BACK_IO_19, DIGITAL, OUTPUT, 0)            \
+    X(PINS_BACK_ECU_FAULT, DIGITAL, OUTPUT, 0)
+// PINS_BACK_088_SDA
+// PINS_BACK_088_SCL
+// X(PINS_BACK_ICS_SD, DIGITAL, INPUT, NIL)
+// X(PINS_BACK_ICS_WS, DIGITAL, INPUT, NIL)
+// X(PINS_BACK_ICS_SCK, DIGITAL, INPUT, NIL)
+// X(PINS_BACK_PUMP_SCL, DIGITAL, INPUT, NIL)
+// X(PINS_BACK_PUMP_SDA, DIGITAL, INPUT, NIL)
+
+// X(PINS_BACK_AIR1, ANALOG, OUTPUT, 0)              
+// X(PINS_BACK_FANS_ONOFF, DIGITAL, OUTPUT, 0)       
+// X(PINS_BACK_HVD_FAULT, DIGITAL, INPUT, NIL)       
 
 /**
  * @brief The defintions of every analog pin to be received over canbus

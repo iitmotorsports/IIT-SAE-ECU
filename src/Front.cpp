@@ -1,6 +1,5 @@
 #include "Front.h"
 #include "ECUGlobalConfig.h"
-#include "Echo.h"
 #include "Heartbeat.h"
 #include "Mirror.h"
 #include "SerialCommand.h"
@@ -40,22 +39,6 @@ static void toggleCanbusSniffer() {
     Canbus::enableCanbusSniffer((enabled = !enabled));
 }
 
-static void sendEchoMessage() {
-    uint32_t delay;
-    uint32_t address;
-    char buffer[8];
-    size_t c = 0;
-    c += Serial.readBytes((char *)&delay, 4);
-    c += Serial.readBytes((char *)&address, 4);
-    c += Serial.readBytes(buffer, 8);
-    if (c != 20) {
-        Log.w(ID, "Did not read correct number of Bytes, not pushing message", 20);
-        return;
-    }
-    Log.d(ID, "Pushing Message", address);
-    Echo::echo(delay, address, (uint8_t *)buffer);
-}
-
 static void toggleMotorDirection() {
     static bool reverse = false;
     reverse = !reverse;
@@ -69,27 +52,41 @@ void blinkStart() {
     delay(500);
 }
 
+void LEDBlink() {
+    Pins::setPinValue(LED_BUILTIN, 0);
+    delay(500);
+    Pins::setPinValue(LED_BUILTIN, 1);
+    delay(500);
+    Pins::setPinValue(LED_BUILTIN, 0);
+    delay(500);
+    Pins::setPinValue(LED_BUILTIN, 1);
+    delay(500);
+    Pins::setPinValue(LED_BUILTIN, 0);
+}
+
 void run() {
-    Log.i(ID, "Teensy 3.6 SAE FRONT ECU Initalizing");
+    Log.i(ID, "Teensy 4.1 SAE FRONT ECU Initalizing");
 
     Log.i(ID, "Setting up Canbus");
     Canbus::setup(); // allocate and organize addresses
     Log.i(ID, "Initalizing Pins");
     Pins::initialize(); // setup predefined pins
-#ifndef CONF_LOGGING_ASCII_DEBUG
-    Log.i(ID, "Enabling Logging relay");
-    Logging::enableCanbusRelay(); // Allow logging though canbus
-#endif
+    LEDBlink();
+// #ifndef CONF_LOGGING_ASCII_DEBUG
+//     Log.i(ID, "Enabling Logging relay");
+//     Logging::enableCanbusRelay(); // Allow logging though canbus
+// #endif
     loadStateMap();
 
     Log.i(ID, "Setting commands");
     Cmd::setCommand(COMMAND_ENABLE_CHARGING, setChargeSignal);
     Cmd::setCommand(COMMAND_SEND_CANBUS_MESSAGE, pushCanMessage);
     Cmd::setCommand(COMMAND_TOGGLE_CANBUS_SNIFF, toggleCanbusSniffer);
-    Cmd::setCommand(COMMAND_SEND_ECHO, sendEchoMessage);
+
     Cmd::setCommand(COMMAND_TOGGLE_REVERSE, toggleMotorDirection);
     Cmd::setCommand(COMMAND_PRINT_LOOKUP, Logging::printLookup);
     Cmd::setCommand(COMMAND_UPDATE_SERIALVAR, SerialVar::receiveSerialVar);
+    Heartbeat::beginBeating();
     Heartbeat::beginReceiving();
 
 #ifdef CONF_ECU_DEBUG
