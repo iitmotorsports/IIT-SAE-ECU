@@ -54,9 +54,37 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 set(LIBRARY_PATH ${CUSTOM_BUILD_PATH_PREFIX}libraries CACHE INTERNAL "")
 set(SOURCE_PATH ${CUSTOM_BUILD_PATH_PREFIX}src CACHE INTERNAL "")
 
+if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Windows")
+    message("Cross-compiling for ARM on Windows")
+    execute_process(
+        COMMAND powershell -Command "(Get-Date -UFormat %s)"
+        OUTPUT_VARIABLE UNIX_TIME
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+elseif(CMAKE_HOST_SYSTEM_NAME STREQUAL "Linux")
+    message("Cross-compiling for ARM on Linux")
+    execute_process(
+        COMMAND date "+%s"
+        OUTPUT_VARIABLE UNIX_TIME
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+else()
+    message("Unknown host system")
+    set(UNIX_TIME 1681492585)
+endif()
+
+if ("${UNIX_TIME}" MATCHES "\\.")
+    string(FIND "${UNIX_TIME}" "." dot_position)
+    string(SUBSTRING "${UNIX_TIME}" 0 ${dot_position} UNIX_TIME_INT)
+else()
+    set(UNIX_TIME_INT "${UNIX_TIME}")
+endif()
+
+message("Unix time: ${UNIX_TIME_INT}")
+
 # Compile flags and definitions
 
-add_compile_definitions(_GNU_SOURCE USING_MAKEFILE LAYOUT_US_ENGLISH F_CPU=${TEENSY_CORE_SPEED} __${TEENSY_CORE_NAME}__)
+add_compile_definitions(_GNU_SOURCE USING_MAKEFILE LAYOUT_US_ENGLISH F_CPU=${TEENSY_CORE_SPEED} __${TEENSY_CORE_NAME}__ UNIX_TIME=${UNIX_TIME_INT})
 add_compile_definitions(ARDUINO=${ARDUINO_VER} TEENSYDUINO=${TEENSYDUINO_VER} ${TEENSY_ARDUINO} ${TEENSY_CORE} ${USB_SETTING} )
 add_compile_options(-O3 -CC -Wall -Wno-error=narrowing -MMD -nostdlib) # -E
 add_compile_options(-ffunction-sections -fdata-sections -fno-exceptions)
@@ -72,8 +100,7 @@ set(CORE_PATH "${TOOLCHAIN_ROOT_PATH}/teensy/avr/cores/${TEENSY_CORE}")
 string(TOLOWER ${TEENSY_CORE_NAME} TEENSY_CORE_NAME_LOWER)
 set(TEENSY_CORE_LD_SCRIPT "${CORE_PATH}/${TEENSY_CORE_NAME_LOWER}${LINKER_EXTENSION}.ld" CACHE INTERNAL "")
 
-# TODO: Find if __rtc_localtime differs between cores; 1499566176, 1547051415, 1610195861? does it matter?
-add_link_options(-Wl,--gc-sections,--relax,-defsym=__rtc_localtime=0 -lm -lstdc++ -l${LINKER_MATH} -T${TEENSY_CORE_LD_SCRIPT})
+add_link_options(-Wl,--gc-sections,--relax,-defsym=__rtc_localtime=${UNIX_TIME_INT} -lm -lstdc++ -l${LINKER_MATH} -T${TEENSY_CORE_LD_SCRIPT})
 add_link_options(-mcpu=${TEENSY_CPU} -mfloat-abi=hard -mfpu=${FLOAT_HARDWARE} -mthumb)
 
 if(EXISTS "../script.disable") # TODO: Ensure this file is always caught

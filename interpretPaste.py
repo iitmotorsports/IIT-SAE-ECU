@@ -274,6 +274,7 @@ def main():
         "-g", "--graph", action="store_true", required=False, help="Interpret and graph a log file to an excel file, given paste ID"
     )
     parser.add_argument("-p", "--paste", required=False, help="Paste ID to download and interpret")
+    parser.add_argument("--log", required=False, help="The raw log file")
 
     args = parser.parse_args()
 

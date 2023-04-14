@@ -63,6 +63,26 @@ typedef const char *LOG_MSG;
 uint32_t TAG2NUM(LOG_TAG tagValue);
 
 /**
+ * @brief The ZLib compressed lookup table
+ */
+extern unsigned char log_lookup[];
+
+/**
+ * @brief The length of log_lookup's data
+ */
+extern unsigned int log_lookup_len;
+
+/**
+ * @brief The length of log_lookup's data with padding
+ */
+extern unsigned int log_lookup_pad_len;
+
+/**
+ * @brief The length of log_lookup's data when uncompressed
+ */
+extern unsigned int log_lookup_uncmp_len;
+
+/**
  * @brief Namespace to isolate Log_t struct.
  * @see Log.h for more info.
  */
@@ -260,6 +280,8 @@ struct Log_t {
      * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
      */
     void p(LOG_TAG name, LOG_MSG prettyName, const uint32_t number, int mediate = false);
+
+    bool initalizeSD();
 };
 
 /**
