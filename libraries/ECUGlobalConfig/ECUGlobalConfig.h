@@ -19,12 +19,16 @@
 /**
  * @brief Front ECU value
  */
-#define CONFIG_ACTIVE_NODE FRONT_ECU
+// #define CONFIG_ACTIVE_NODE FRONT_ECU
 // #define FRONT_ECU FRONT_ECU
+/**
+ * @brief Front ECU value
+ */
+#define FRONT_ECU 1
 /**
  * @brief Back ECU value
  */
-// #define BACK_ECU BACK_ECU
+#define BACK_ECU 0
 
 /**
  * @brief Define to enable normal logging on back ECU and checks to be run throughout libaries
@@ -48,14 +52,14 @@
 
 #endif
 
-#ifndef CONF_ECU_POSITION
+// #ifndef CONF_ECU_POSITION
 /**
  * @brief Defines build is for back ECU
  * @details Used for documentation
  */
-#define CONF_ECU_POSITION BACK_ECU
+// #define CONF_ECU_POSITION BACK_ECU
 // #define CONF_ECU_POSITION FRONT_ECU // Defines build is for front ECU
-#endif
+// #endif
 
 /**
  * @brief Set serial baud rate

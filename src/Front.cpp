@@ -71,6 +71,7 @@ void run() {
     Canbus::setup(); // allocate and organize addresses
     Log.i(ID, "Initalizing Pins");
     Pins::initialize(); // setup predefined pins
+    Heartbeat::beginBeating();
     LEDBlink();
 // #ifndef CONF_LOGGING_ASCII_DEBUG
 //     Log.i(ID, "Enabling Logging relay");
@@ -86,7 +87,6 @@ void run() {
     Cmd::setCommand(COMMAND_TOGGLE_REVERSE, toggleMotorDirection);
     Cmd::setCommand(COMMAND_PRINT_LOOKUP, Logging::printLookup);
     Cmd::setCommand(COMMAND_UPDATE_SERIALVAR, SerialVar::receiveSerialVar);
-    Heartbeat::beginBeating();
     Heartbeat::beginReceiving();
 
 #ifdef CONF_ECU_DEBUG

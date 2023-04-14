@@ -224,6 +224,12 @@ struct Log_t {
      * @param message Inline string that should be printed
      * @param number Any number that should be printed next to the string
      * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
+     *
+     * Mediate Value
+     * 0 :   Log instantly
+     * 1 :   Log only when value changes
+     * >1:   Log after set delay or when value changes
+     * <0:   Log only if value has changed after set -delay
      */
     void operator()(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate = false);
     /**
@@ -233,6 +239,12 @@ struct Log_t {
      * @param message Inline string that should be printed
      * @param number Any number that should be printed next to the string
      * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
+     *
+     * Mediate Value
+     * 0 :   Log instantly
+     * 1 :   Log only when value changes
+     * >1:   Log after set delay or when value changes
+     * <0:   Log only if value has changed after set -delay
      */
     void d(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate = false);
     /**
@@ -242,6 +254,12 @@ struct Log_t {
      * @param message Inline string that should be printed
      * @param number Any number that should be printed next to the string
      * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
+     *
+     * Mediate Value
+     * 0 :   Log instantly
+     * 1 :   Log only when value changes
+     * >1:   Log after set delay or when value changes
+     * <0:   Log only if value has changed after set -delay
      */
     void i(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate = false);
     /**
@@ -251,6 +269,12 @@ struct Log_t {
      * @param message Inline string that should be printed
      * @param number Any number that should be printed next to the string
      * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
+     *
+     * Mediate Value
+     * 0 :   Log instantly
+     * 1 :   Log only when value changes
+     * >1:   Log after set delay or when value changes
+     * <0:   Log only if value has changed after set -delay
      */
     void w(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate = false);
     /**
@@ -260,6 +284,12 @@ struct Log_t {
      * @param message Inline string that should be printed
      * @param number Any number that should be printed next to the string
      * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
+     *
+     * Mediate Value
+     * 0 :   Log instantly
+     * 1 :   Log only when value changes
+     * >1:   Log after set delay or when value changes
+     * <0:   Log only if value has changed after set -delay
      */
     void e(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate = false);
     /**
@@ -269,6 +299,12 @@ struct Log_t {
      * @param message Inline string that should be printed
      * @param number Any number that should be printed next to the string
      * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
+     *
+     * Mediate Value
+     * 0 :   Log instantly
+     * 1 :   Log only when value changes
+     * >1:   Log after set delay or when value changes
+     * <0:   Log only if value has changed after set -delay
      */
     void f(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate = false);
     /**
@@ -278,6 +314,12 @@ struct Log_t {
      * @param prettyName Pretty, human readable name of this value
      * @param number Integer number associated with this value
      * @param mediate Indicate whether this message should only print when the number changes, only works in non-ASCII mode
+     *
+     * Mediate Value
+     * 0 :   Log instantly
+     * 1 :   Log only when value changes
+     * >1:   Log after set delay or when value changes
+     * <0:   Log only if value has changed after set -delay
      */
     void p(LOG_TAG name, LOG_MSG prettyName, const uint32_t number, int mediate = false);
 

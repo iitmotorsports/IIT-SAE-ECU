@@ -41,6 +41,7 @@ static void beat() {
 #else
     Canbus::sendData(ADD_HEART_BACK);
 #endif
+    // Log.d(ID, "heartbeat", 0, 10000);
 
     for (auto f : funcs) {
         f();
@@ -48,7 +49,7 @@ static void beat() {
 }
 
 void beginBeating() {
-    canbusPinUpdate.priority(10);
+    canbusPinUpdate.priority(132);
     canbusPinUpdate.begin(beat, CONF_HEARTBEAT_INTERVAL_MILLIS * 1000);
 }
 

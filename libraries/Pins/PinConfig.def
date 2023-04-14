@@ -44,7 +44,7 @@
 /**
  * @brief The interval in micros to update outgoing canPins
  */
-#define CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO 50000
+#define CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO 60000
 
 /**
  * @brief The write resolution for analog pins

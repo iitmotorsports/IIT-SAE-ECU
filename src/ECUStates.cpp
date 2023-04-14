@@ -58,6 +58,7 @@ State::State_t *ECUStates::Initialize_State::run(void) {
     Canbus::setup(); // allocate and organize addresses
     Log.i(ID, "Initialize pins");
     Pins::initialize(); // setup predefined pins
+    Heartbeat::beginBeating();
     LEDBlink();
     Log.i(ID, "Waiting for sync");
     while (!Pins::getCanPinValue(PINS_INTERNAL_SYNC)) {
@@ -70,7 +71,7 @@ State::State_t *ECUStates::Initialize_State::run(void) {
     Mirror::setup();
 #endif
     Heartbeat::addCallback(updateFaultLights); // IMPROVE: don't just periodically check if leds are on
-    Heartbeat::beginBeating();
+    // Heartbeat::beginBeating();
     Heartbeat::beginReceiving();
     Pump::start();
 
