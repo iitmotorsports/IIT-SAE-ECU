@@ -27,13 +27,13 @@ static bool FaultCheck() {
 
 void LEDBlink() {
     Pins::setPinValue(LED_BUILTIN, 0);
-    delay(500);
+    delay(100);
     Pins::setPinValue(LED_BUILTIN, 1);
-    delay(500);
+    delay(100);
     Pins::setPinValue(LED_BUILTIN, 0);
-    delay(500);
+    delay(100);
     Pins::setPinValue(LED_BUILTIN, 1);
-    delay(500);
+    delay(100);
     Pins::setPinValue(LED_BUILTIN, 0);
 }
 
@@ -60,6 +60,9 @@ State::State_t *ECUStates::Initialize_State::run(void) {
     Pins::initialize(); // setup predefined pins
     Heartbeat::beginBeating();
     LEDBlink();
+    while (true) {
+        Log.sdMode();
+    }
     Log.i(ID, "Waiting for sync");
     while (!Pins::getCanPinValue(PINS_INTERNAL_SYNC)) {
         Canbus::sendData(ADD_MC0_CTRL);
@@ -71,17 +74,35 @@ State::State_t *ECUStates::Initialize_State::run(void) {
     Mirror::setup();
 #endif
     Heartbeat::addCallback(updateFaultLights); // IMPROVE: don't just periodically check if leds are on
-    // Heartbeat::beginBeating();
     Heartbeat::beginReceiving();
     Pump::start();
 
+    delay(500);
+
+    if (getLastState() != &ECUStates::FaultState) {
+        Log.d(ID, "Waiting for initial fault reset");
+        Pins::setPinValue(PINS_BACK_ECU_FAULT, LOW);
+        while (Pins::getPinValue(PINS_BACK_FAULT_RESET)) {
+            Log.d(ID, "FAULT BTN VAL", Pins::getPinValue(PINS_BACK_FAULT_RESET), 1);
+            Log.sdMode();
+        }
+        Log.d(ID, "FAULT BTN VAL", Pins::getPinValue(PINS_BACK_FAULT_RESET), 1);
+        Pins::setPinValue(PINS_BACK_ECU_FAULT, HIGH);
+    }
+
     // Front teensy should know when to blink start light
-    Log.d(ID, "Checking for Inital fault");
+    // Log.d(ID, "Checking for Inital fault");
 
     // NOTE: IMD Fault does not matter in initalizing state
-    if (!Pins::getPinValue(PINS_BACK_IMD_FAULT) && FaultCheck()) {
-        Log.e(ID, "Inital fault check tripped");
-        return &ECUStates::FaultState;
+    // if (!Pins::getPinValue(PINS_BACK_IMD_FAULT) && FaultCheck()) {
+    //     Log.e(ID, "Inital fault check tripped");
+    //     return &ECUStates::FaultState;
+    // }
+    Log.i(ID, "Waiting for clear faults");
+    while (true) {
+        if (!FaultCheck())
+            break;
+        delay(500);
     }
 
     // TSV
@@ -90,7 +111,7 @@ State::State_t *ECUStates::Initialize_State::run(void) {
     elapsedMillis shutdownBounce;
 
     while (true) {
-        if (Pins::getPinValue(PINS_BACK_SHUTDOWN_SIGNAL)) {
+        if (!Pins::getPinValue(PINS_BACK_SHUTDOWN_SIGNAL)) {
             if (shutdownBounce > 50)
                 break;
         } else {

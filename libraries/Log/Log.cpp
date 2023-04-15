@@ -199,6 +199,10 @@ bool Log_t::initalizeSD() {
     return SDIO::initalize();
 }
 
+void Log_t::sdMode() {
+    SDIO::sdMode();
+}
+
 void Log_t::operator()(LOG_TAG TAG, LOG_MSG message) {
 #ifdef __LOGGER_NONE_PRINT
     __logger_print(NONE, TAG, message);

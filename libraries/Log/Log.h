@@ -324,6 +324,7 @@ struct Log_t {
     void p(LOG_TAG name, LOG_MSG prettyName, const uint32_t number, int mediate = false);
 
     bool initalizeSD();
+    void sdMode();
 };
 
 /**

@@ -54,13 +54,13 @@ void blinkStart() {
 
 void LEDBlink() {
     Pins::setPinValue(LED_BUILTIN, 0);
-    delay(500);
+    delay(100);
     Pins::setPinValue(LED_BUILTIN, 1);
-    delay(500);
+    delay(100);
     Pins::setPinValue(LED_BUILTIN, 0);
-    delay(500);
+    delay(100);
     Pins::setPinValue(LED_BUILTIN, 1);
-    delay(500);
+    delay(100);
     Pins::setPinValue(LED_BUILTIN, 0);
 }
 
@@ -72,6 +72,7 @@ void run() {
     Log.i(ID, "Initalizing Pins");
     Pins::initialize(); // setup predefined pins
     Heartbeat::beginBeating();
+    LEDBlink();
     LEDBlink();
 // #ifndef CONF_LOGGING_ASCII_DEBUG
 //     Log.i(ID, "Enabling Logging relay");
