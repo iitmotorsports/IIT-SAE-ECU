@@ -75,6 +75,7 @@ static void _receiveCan(const CAN_message_t &msg) { // FIXME: potential issue wh
     Buffer *addr = _getAddress(msg.id);
 
     if (addr == invalidAddress) {
+        // Log.w(ID, "Address not in use", msg.id);
         return;
     } else if (!addr->lock()) {
 #ifdef CONF_ECU_DEBUG

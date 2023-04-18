@@ -17,7 +17,7 @@ static Canbus::Buffer *BMS_DATA_Buffer = Canbus::getBuffer(ADD_BMS_DATA);
 static Canbus::Buffer *BMS_BATT_TEMP_Buffer = Canbus::getBuffer(ADD_BMS_BATT_TEMP);
 static Canbus::Buffer *BMS_CURR_LIMIT_Buffer = Canbus::getBuffer(ADD_BMS_CURR_LIMIT);
 
-static uint8_t BMSSOC() {                   // Percent
+static uint8_t BMSSOC() {                    // Percent
     return BMS_DATA_Buffer->getUByte(4) / 2; // Byte 4: BMS State of charge buffer
 }
 
@@ -128,42 +128,42 @@ void setChargeSignal() {
 
 void lowPriorityValues() {
     // Motor controllers
-    Log.p("mc0_dc_v", "MC0 DC BUS Voltage", MC0Voltage(), INTERVAL_LOW_PRIORITY);
-    Log.p("mc1_dc_v", "MC1 DC BUS Voltage", MC1Voltage(), INTERVAL_LOW_PRIORITY);
-    Log.p("mc0_dc_i", "MC0 DC BUS Current", MC0Current(), INTERVAL_LOW_PRIORITY);
-    Log.p("mc1_dc_i", "MC1 DC BUS Current", MC1Current(), INTERVAL_LOW_PRIORITY);
-    Log.p("mc0_brd_tmp", "MC0 Board Temp", MC0BoardTemp(), INTERVAL_LOW_PRIORITY);
-    Log.p("mc1_brd_tmp", "MC1 Board Temp", MC1BoardTemp(), INTERVAL_LOW_PRIORITY);
-    Log.p("mc0_mtr_tmp", "MC0 Motor Temp", MC0MotorTemp(), INTERVAL_LOW_PRIORITY);
-    Log.p("mc1_mtr_tmp", "MC1 Motor Temp", MC1MotorTemp(), INTERVAL_LOW_PRIORITY);
-    Log.p("mc_curr_pwr", "MC Current Power", MCPowerValue(), INTERVAL_LOW_PRIORITY);
-
+    Logging::USBHostPush(4, MC0Voltage());    // MC0 DC BUS Voltage
+    Logging::USBHostPush(5, MC1Voltage());    // MC1 DC BUS Voltage
+    Logging::USBHostPush(7, MC0Current());    // MC0 DC BUS Current
+    Logging::USBHostPush(6, MC1Current());    // MC1 DC BUS Current
+    Logging::USBHostPush(9, MC0BoardTemp());  // MC0 Board Temp
+    Logging::USBHostPush(8, MC1BoardTemp());  // MC1 Board Temp
+    Logging::USBHostPush(11, MC0MotorTemp()); // MC0 Motor Temp
+    Logging::USBHostPush(10, MC1MotorTemp()); // MC1 Motor Temp
+    Logging::USBHostPush(13, MCPowerValue()); // MC Current Power
     // BMS
-    Log.p("bms_soc", "BMS State Of Charge", BMSSOC(), INTERVAL_LOW_PRIORITY);
-    Log.p("bms_v", "BMS Immediate Voltage", BMSVOLT(), INTERVAL_LOW_PRIORITY);
-    Log.p("bms_avg_i", "BMS Pack Average Current", BMSAMP(), INTERVAL_LOW_PRIORITY);
-    Log.p("bms_h_tmp", "BMS Pack Highest Temp", BMSTempHigh(), INTERVAL_LOW_PRIORITY);
-    Log.p("bms_l_tmp", "BMS Pack Lowest Temp", BMSTempLow(), INTERVAL_LOW_PRIORITY);
-    Log.p("bms_dis_i_lim", "BMS Discharge current limit", BMSDischargeCurrentLimit(), INTERVAL_LOW_PRIORITY);
-    Log.p("bms_chr_i_lim", "BMS Charge current limit", BMSChargeCurrentLimit(), INTERVAL_LOW_PRIORITY);
-
+    Logging::USBHostPush(14, BMSSOC());                   // BMS State Of Charge
+    Logging::USBHostPush(15, BMSVOLT());                  // "BMS Immediate Voltage
+    Logging::USBHostPush(16, BMSAMP());                   // BMS Pack Average Current
+    Logging::USBHostPush(17, BMSTempHigh());              // BMS Pack Highest Temp
+    Logging::USBHostPush(18, BMSTempLow());               // BMS Pack Lowest Temp
+    Logging::USBHostPush(19, BMSDischargeCurrentLimit()); // BMS Discharge current limit
+    Logging::USBHostPush(20, BMSChargeCurrentLimit());    // BMS Charge current limit
     // General
-    Log.p("fault", "Fault State", Pins::getCanPinValue(PINS_INTERNAL_GEN_FAULT), INTERVAL_LOW_PRIORITY);
+    Logging::USBHostPush(21, Pins::getCanPinValue(PINS_INTERNAL_GEN_FAULT)); // Fault State
+    // Logging::USBHostPush(24, on);                                            // Start Light // TODO
+    // Logging::USBHostPush(25, random(5));                                     // Current State // TODO
 }
 
 static double lastBrake = 0.0, lastSteer = 0.0, lastPedal0 = 0.0, lastPedal1 = 0.0;
 
 void highPriorityValues() {
-    Log.p("mtr_spd", "Current Motor Speed", MC::motorSpeed(), true);
-    Log.p("mtr_0_spd", "Motor 0 Speed", MC::motorSpeed(0), true);
-    Log.p("mtr_1_spd", "Motor 1 Speed", MC::motorSpeed(1), true);
+    Logging::USBHostPush(12, MC::motorSpeed()); // Current Motor Speed
+    // pushToPhoneOverUsbSerialButOnHostWhenItIsDone(1, MC::motorSpeed(0)); // Motor 0 Speed
+    // pushToPhoneOverUsbSerialButOnHostWhenItIsDone(1, MC::motorSpeed(1)); // Motor 1 Speed
 
     int pedal0, pedal1;
-    Log.p("brake", "Brake", lastBrake = EMAvg(lastBrake, Pins::getPinValue(PINS_FRONT_BRAKE), 4), true);
-    Log.p("steer", "Steering", lastSteer = EMAvg(lastSteer, Pins::getPinValue(PINS_FRONT_STEER), 4), true);
-    Log.p("pdl_0", "Pedal 0", (pedal0 = (lastPedal0 = EMAvg(lastPedal0, Pins::getPinValue(PINS_FRONT_PEDAL0), 4))), true);
-    Log.p("pdl_1", "Pedal 1", (pedal1 = (lastPedal1 = EMAvg(lastPedal1, Pins::getPinValue(PINS_FRONT_PEDAL1), 4))), true);
-    Log.p("pdl_avg", "Pedal AVG", (pedal0 + pedal1) / 2, true);
+    Logging::USBHostPush(1, (lastBrake = EMAvg(lastBrake, Pins::getPinValue(PINS_FRONT_BRAKE), 4)));               // Brake
+    Logging::USBHostPush(27, (lastSteer = EMAvg(lastSteer, Pins::getPinValue(PINS_FRONT_STEER), 4)));              // Steering
+    Logging::USBHostPush(2, (pedal0 = (lastPedal0 = EMAvg(lastPedal0, Pins::getPinValue(PINS_FRONT_PEDAL0), 4)))); // Pedal 0
+    Logging::USBHostPush(3, (pedal1 = (lastPedal1 = EMAvg(lastPedal1, Pins::getPinValue(PINS_FRONT_PEDAL1), 4)))); // Pedal 1
+    // pushToPhoneOverUsbSerialButOnHostWhenItIsDone(1, (pedal0 + pedal1) / 2);                                                                // Pedal AVG
 }
 
 } // namespace Front

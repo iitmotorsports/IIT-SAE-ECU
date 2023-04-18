@@ -58,10 +58,10 @@
 #define ADD_AUX_LOGGING 0x0123
 // Ping address
 #define ADD_HEART_FRONT 0x0321
-#define ADD_HEART_BACK 0x0322
+#define ADD_HEART_BACK 0x0320
 // echo address
-#define ADD_ECHO_DATA 0x0231
-#define ADD_ECHO_DELAY 0x0232
+// #define ADD_ECHO_DATA 0x0231
+// #define ADD_ECHO_DELAY 0x0232
 // @endcond
 
 /**
@@ -110,8 +110,6 @@
     X(ADD_CANPIN_DIGITAL1, CANPIN) \
     X(ADD_AUX_LOGGING, CANPIN)     \
     X(ADD_HEART_FRONT, CANPIN)     \
-    X(ADD_HEART_BACK, CANPIN)      \
-    X(ADD_ECHO_DATA, CANPIN)       \
-    X(ADD_ECHO_DELAY, CANPIN)
+    X(ADD_HEART_BACK, CANPIN)
 
 #endif // __ECU_CANBUS_ADDRESSES_DEF__

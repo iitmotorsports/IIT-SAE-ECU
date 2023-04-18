@@ -322,9 +322,6 @@ struct Log_t {
      * <0:   Log only if value has changed after set -delay
      */
     void p(LOG_TAG name, LOG_MSG prettyName, const uint32_t number, int mediate = false);
-
-    bool initalizeSD();
-    void sdMode();
 };
 
 /**
@@ -339,6 +336,12 @@ void enableCanbusRelay();
  * @warning **A byte of serial data must be sent back after 8 bytes of the map is received, this is to help mediate the amount of data sent**
  */
 void printLookup();
+
+bool initializeSDCard();
+void enterSDMode();
+void trySDMode();
+
+void USBHostPush(const int id, const int value);
 
 } // namespace Logging
 

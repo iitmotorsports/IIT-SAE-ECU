@@ -36,12 +36,12 @@ static void toggleLED() {
 }
 
 static void beat() {
-#ifdef FRONT_ECU
+#if CONF_ECU_POSITION == FRONT_ECU
     Canbus::sendData(ADD_HEART_FRONT);
 #else
     Canbus::sendData(ADD_HEART_BACK);
 #endif
-    // Log.d(ID, "heartbeat", 0, 10000);
+    Log.d(ID, "heartbeat", 0, 10000);
 
     for (auto f : funcs) {
         f();
@@ -60,7 +60,7 @@ static void receiveBeat(uint32_t, volatile uint8_t *) {
 }
 
 void beginReceiving() {
-#ifdef FRONT_ECU
+#if CONF_ECU_POSITION == FRONT_ECU
     Canbus::addCallback(ADD_HEART_BACK, receiveBeat);
 #else
     Canbus::addCallback(ADD_HEART_FRONT, receiveBeat);

@@ -13,8 +13,8 @@
 static bool FaultCheck() {
     if (Fault::hardFault() || Fault::softFault())
         return true;
-    // if (!Heartbeat::checkBeat()) // TODO: heartbeat front to back
-    //     return true;
+    if (!Heartbeat::checkBeat()) // TODO: heartbeat front to back
+        return true;
     return false;
 };
 
@@ -58,11 +58,7 @@ State::State_t *ECUStates::Initialize_State::run(void) {
     Canbus::setup(); // allocate and organize addresses
     Log.i(ID, "Initialize pins");
     Pins::initialize(); // setup predefined pins
-    Heartbeat::beginBeating();
     LEDBlink();
-    while (true) {
-        Log.sdMode();
-    }
     Log.i(ID, "Waiting for sync");
     while (!Pins::getCanPinValue(PINS_INTERNAL_SYNC)) {
         Canbus::sendData(ADD_MC0_CTRL);
@@ -74,8 +70,10 @@ State::State_t *ECUStates::Initialize_State::run(void) {
     Mirror::setup();
 #endif
     Heartbeat::addCallback(updateFaultLights); // IMPROVE: don't just periodically check if leds are on
+    Heartbeat::beginBeating();
     Heartbeat::beginReceiving();
     Pump::start();
+    // Pump::set(100);
 
     delay(500);
 
@@ -84,7 +82,7 @@ State::State_t *ECUStates::Initialize_State::run(void) {
         Pins::setPinValue(PINS_BACK_ECU_FAULT, LOW);
         while (Pins::getPinValue(PINS_BACK_FAULT_RESET)) {
             Log.d(ID, "FAULT BTN VAL", Pins::getPinValue(PINS_BACK_FAULT_RESET), 1);
-            Log.sdMode();
+            Logging::trySDMode();
         }
         Log.d(ID, "FAULT BTN VAL", Pins::getPinValue(PINS_BACK_FAULT_RESET), 1);
         Pins::setPinValue(PINS_BACK_ECU_FAULT, HIGH);
@@ -134,14 +132,14 @@ State::State_t *ECUStates::PreCharge_State::PreCharFault(void) {
 };
 
 bool ECUStates::PreCharge_State::voltageCheck(bool *fault) {
-    int not_locked = BMS_DATA_Buffer->lock_wait();
-    not_locked += MC0_VOLT_Buffer->lock_wait();
-    not_locked += MC1_VOLT_Buffer->lock_wait();
+    // int not_locked = BMS_DATA_Buffer->lock_wait();
+    // not_locked += MC0_VOLT_Buffer->lock_wait();
+    // not_locked += MC1_VOLT_Buffer->lock_wait();
 
-    if (not_locked) {
-        *fault = true;
-        return false;
-    }
+    // if (not_locked) {
+    //     *fault = true;
+    //     return false;
+    // }
 
     int16_t BMSVolt = BMS_DATA_Buffer->getShort(2) / 10; // Byte 2-3: Pack Instant Voltage
     int16_t MC0Volt = MC0_VOLT_Buffer->getShort(0) / 10; // Bytes 0-1: DC BUS MC Voltage
@@ -151,13 +149,26 @@ bool ECUStates::PreCharge_State::voltageCheck(bool *fault) {
     Log.d(ID, "BMS MC0 Voltage", MC0Volt, -250);
     Log.d(ID, "BMS MC1 Voltage", MC1Volt, -250);
 
+    // BMS_DATA_Buffer->unlock();
+    // MC1_VOLT_Buffer->unlock();
+    // MC0_VOLT_Buffer->unlock();
+
     return 0.91 * BMSVolt <= (MC0Volt + MC1Volt) / 2;
 }
 
 State::State_t *ECUStates::PreCharge_State::run(void) { // NOTE: Low = Closed, High = Open
     Log.i(ID, "Precharge running");
 
-    if (FaultCheck()) {
+    elapsedMillis timeElapsed;
+
+    bool fault = false;
+
+    // Log.i(ID, "Ensuring voltage check");
+    // while (!voltageCheck(&fault)) {
+    //     delay(100);
+    // }
+
+    if (FaultCheck() || fault) {
         Log.e(ID, "Precharge Faulted before precharge");
         return &ECUStates::FaultState;
     }
@@ -169,15 +180,12 @@ State::State_t *ECUStates::PreCharge_State::run(void) { // NOTE: Low = Closed, H
     if (FaultCheck()) {
         return PreCharFault();
     }
-    elapsedMillis timeElapsed;
 
     Log.d(ID, "Running precharge loop");
 
-    bool fault = false;
-
     while (timeElapsed <= 12000) {
         // FIXME: will always pass if submodules are disconnected from CAN net
-        if (voltageCheck(&fault) && !(fault |= FaultCheck()) && timeElapsed >= 2500) {
+        if (voltageCheck(&fault) && !(fault |= FaultCheck()) && timeElapsed >= 5000) {
             Log.i(ID, "Precharge Finished, closing Air2");
             Pins::setPinValue(PINS_BACK_AIR2, HIGH);
             delay(650);
@@ -315,12 +323,12 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
                 return DrivingModeFault();
             }
 
-#if ECU_TESTING != BACK_ECU
-            if (((MC0_VOLT_Buffer.getShort(0) / 10) + (MC1_VOLT_Buffer.getShort(0) / 10)) / 2 < 90) { // 'HVD Fault'
+// #if ECU_TESTING == BACK_ECU
+            if (((MC0_VOLT_Buffer->getShort(0) / 10) + (MC1_VOLT_Buffer->getShort(0) / 10)) / 2 < 90) { // 'HVD Fault'
                 Log.e(ID, "'HVD Fault' MC voltage < 90");
                 return DrivingModeFault();
             }
-#endif
+// #endif
 
             int breakVal = Pins::getCanPinValue(PINS_FRONT_BRAKE);
             int steerVal = Pins::getCanPinValue(PINS_FRONT_STEER);

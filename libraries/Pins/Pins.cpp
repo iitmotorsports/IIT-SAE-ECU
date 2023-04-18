@@ -213,7 +213,7 @@ static void _pushCanbusPins(void) {
     for (size_t i = 0; i < analogCanMsgCount_OUT; i++) {
         analogCanPinMessages_OUT[i].send();
     }
-    // Log.d(ID, "Sending Canbus Pins", 0, 10000);
+    Log.d(ID, "Sending Canbus Pins", 0, 10000);
 }
 
 void setInternalValue(uint8_t Internal_Pin, int value) {

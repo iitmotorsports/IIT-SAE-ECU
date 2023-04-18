@@ -121,7 +121,7 @@ static void __logger_print_num(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const u
         // #endif
         // Canbus::sendData(ADD_AUX_LOGGING, log_buf);
 #else
-        Serial.write(log_buf, 8);
+        // Serial.write(log_buf, 8);
 #endif
         if (SDIO::initalizedSD) {
             SDIO::SDFile.write(log_buf, 8);
@@ -195,12 +195,27 @@ static void __logger_print_num(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, c
 
 #endif
 
-bool Log_t::initalizeSD() {
-    return SDIO::initalize();
+bool initializeSDCard() {
+    return SDIO::initialize();
 }
 
-void Log_t::sdMode() {
-    SDIO::sdMode();
+void enterSDMode() {
+    SDIO::enterSDMode();
+}
+
+void trySDMode() {
+    SDIO::trySDMode();
+}
+
+void USBHostPush(const int id, const int value) {
+    // static std::map<int, int> update;
+    // if (update.find(id) == update.end()) {
+    //     update[id] = value;
+    // }
+    // if (update[id] != value) {
+    Serial.write((uint8_t *)&id, 4);
+    Serial.write((uint8_t *)&value, 4);
+    // }
 }
 
 void Log_t::operator()(LOG_TAG TAG, LOG_MSG message) {

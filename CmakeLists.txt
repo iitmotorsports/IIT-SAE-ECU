@@ -85,7 +85,7 @@ message("Unix time: ${UNIX_TIME_INT}")
 # Compile flags and definitions
 
 add_compile_definitions(_GNU_SOURCE USING_MAKEFILE LAYOUT_US_ENGLISH F_CPU=${TEENSY_CORE_SPEED} __${TEENSY_CORE_NAME}__ UNIX_TIME=${UNIX_TIME_INT})
-add_compile_definitions(ARDUINO=${ARDUINO_VER} TEENSYDUINO=${TEENSYDUINO_VER} ${TEENSY_ARDUINO} ${TEENSY_CORE} ${USB_SETTING} )
+add_compile_definitions(ARDUINO=${ARDUINO_VER} TEENSYDUINO=${TEENSYDUINO_VER} ${TEENSY_ARDUINO} ${TEENSY_CORE} ${USB_SETTING} DEC=10)
 add_compile_options(-O2 -CC -Wall -Wno-error=narrowing -MMD -nostdlib) # -E
 add_compile_options(-ffunction-sections -fdata-sections -fno-exceptions)
 add_compile_options(-mcpu=${TEENSY_CPU} -mfloat-abi=hard -mfpu=${FLOAT_HARDWARE} -mthumb)

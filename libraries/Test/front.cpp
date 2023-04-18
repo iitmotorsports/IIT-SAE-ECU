@@ -23,42 +23,40 @@ void full_front_test() {
             else if (speed > 250)
                 direction = true;
             speed += (direction ? -1 : 1) * random(10);
-            Log(ID, "Current Motor Speed:", speed);
+            Logging::USBHostPush(12, speed); // Current Motor Speed
         }
         if (timeElapsedMidHigh >= 200) { // MedHigh priority updates
             timeElapsedMidHigh = 0;
-            Log(ID, "Current State", 0, 500);
+            Logging::USBHostPush(25, random(5)); // Current State
         }
         if (timeElapsedMidLow >= 500) { // MedLow priority updates
             timeElapsedMidLow = 0;
             static bool on = random(100) > 50;
-            Log(ID, "Start Light", on);
+            Logging::USBHostPush(24, on); // Start Light
         }
         if (timeElapsedLow >= 800) { // Low priority updates
             timeElapsedLow = 0;
 
             // Motor controllers
-            Log(ID, "MC0 DC BUS Voltage:", random(200));
-            Log(ID, "MC1 DC BUS Voltage:", random(200));
-            Log(ID, "MC0 DC BUS Current:", random(200));
-            Log(ID, "MC1 DC BUS Current:", random(200));
-            Log(ID, "MC0 Board Temp:", random(200));
-            Log(ID, "MC1 Board Temp:", random(200));
-            Log(ID, "MC0 Motor Temp:", random(200));
-            Log(ID, "MC1 Motor Temp:", random(200));
-            Log(ID, "MC Current Power:", random(200));
-
+            Logging::USBHostPush(4, random(200));  // MC0 DC BUS Voltage
+            Logging::USBHostPush(5, random(200));  // MC1 DC BUS Voltage
+            Logging::USBHostPush(7, random(200));  // MC0 DC BUS Current
+            Logging::USBHostPush(6, random(200));  // MC1 DC BUS Current
+            Logging::USBHostPush(9, random(200));  // MC0 Board Temp
+            Logging::USBHostPush(8, random(200));  // MC1 Board Temp
+            Logging::USBHostPush(11, random(200)); // MC0 Motor Temp
+            Logging::USBHostPush(10, random(200)); // MC1 Motor Temp
+            Logging::USBHostPush(13, random(200)); // MC Current Power
             // BMS
-            Log(ID, "BMS State Of Charge:", random(100));
-            Log(ID, "BMS Immediate Voltage:", random(200));
-            Log(ID, "BMS Pack Average Current:", random(200));
-            Log(ID, "BMS Pack Highest Temp:", random(200));
-            Log(ID, "BMS Pack Lowest Temp:", random(200));
-            Log(ID, "BMS Discharge current limit:", random(200));
-            Log(ID, "BMS Charge current limit:", random(200));
-
+            Logging::USBHostPush(14, random(200)); // BMS State Of Charge
+            Logging::USBHostPush(15, random(200)); // "BMS Immediate Voltage
+            Logging::USBHostPush(16, random(200)); // BMS Pack Average Current
+            Logging::USBHostPush(17, random(200)); // BMS Pack Highest Temp
+            Logging::USBHostPush(18, random(200)); // BMS Pack Lowest Temp
+            Logging::USBHostPush(19, random(200)); // BMS Discharge current limit
+            Logging::USBHostPush(20, random(200)); // BMS Charge current limit
             // General
-            Log(ID, "Fault State", random(100) > 50);
+            Logging::USBHostPush(21, random(100) > 50); // Fault State
         }
     }
 }

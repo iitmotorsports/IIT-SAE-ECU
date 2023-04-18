@@ -93,7 +93,7 @@ static void normalizeInput(double *pedal, double *brake, double *steer) { // TOD
     *brake = bAccum;
     *steer = cMap(sAccum, 0.0, NORM_VAL, -PI / 9, PI / 9);
 }
-
+    
 static void torqueVector(int pedal, int brake, int steer) {
 
     double _pedal = pedal, _brake = brake, _steer = steer;

@@ -65,13 +65,12 @@ void LEDBlink() {
 }
 
 void run() {
-    Log.i(ID, "Teensy 4.1 SAE FRONT ECU Initalizing");
+    Log.i(ID, "Teensy 4.1 SAE FRONT ECU  alizing");
 
     Log.i(ID, "Setting up Canbus");
     Canbus::setup(); // allocate and organize addresses
     Log.i(ID, "Initalizing Pins");
     Pins::initialize(); // setup predefined pins
-    Heartbeat::beginBeating();
     LEDBlink();
     LEDBlink();
 // #ifndef CONF_LOGGING_ASCII_DEBUG
@@ -88,6 +87,8 @@ void run() {
     Cmd::setCommand(COMMAND_TOGGLE_REVERSE, toggleMotorDirection);
     Cmd::setCommand(COMMAND_PRINT_LOOKUP, Logging::printLookup);
     Cmd::setCommand(COMMAND_UPDATE_SERIALVAR, SerialVar::receiveSerialVar);
+    Cmd::setCommand(COMMAND_SD_MODE, Logging::enterSDMode);
+    Heartbeat::beginBeating();
     Heartbeat::beginReceiving();
 
 #ifdef CONF_ECU_DEBUG

@@ -4,13 +4,13 @@
  * @brief SerialCommand config
  * @version 0.1
  * @date 2021-03-16
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  * This config file denotes unique byte codes to represent commands on each ECU.
- * 
+ *
  * @warning Command numbers must be, at a minimum, be defined within the SERIAL_COMMANDS X macro, else they will not be checked for.
- * 
+ *
  */
 
 #ifndef __ECU_SERIALCOMMAND_DEF__
@@ -58,16 +58,21 @@
 #define COMMAND_UPDATE_SERIALVAR 61
 
 /**
+ * @brief Enter SD mode for file transfer over usb serial
+ */
+#define COMMAND_SD_MODE 88
+
+/**
  * @brief Defines commands that the ECU must react to
- * 
+ *
  * @note the function callback must then be set later using Cmd::setCommand
- * 
+ *
  * Unless it is the last entry, this is how to add a new message
- * 
+ *
  * X(Value) \
- * 
+ *
  * Only the last entry should NOT have a '\'
- * 
+ *
  */
 #define SERIAL_COMMANDS            \
     X(COMMAND_ENABLE_CHARGING)     \
@@ -78,6 +83,7 @@
     X(COMMAND_SEND_ECHO)           \
     X(COMMAND_TOGGLE_REVERSE)      \
     X(COMMAND_PRINT_LOOKUP)        \
-    X(COMMAND_UPDATE_SERIALVAR)
+    X(COMMAND_UPDATE_SERIALVAR)    \
+    X(COMMAND_SD_MODE)
 
 #endif // __ECU_SERIALCOMMAND_DEF__

@@ -13,7 +13,7 @@ File SDFile;
 
 LOG_TAG ID = "SDCard";
 
-bool initalize() {
+bool initialize() {
     if (!initalizedSD) {
         if ((initalizedSD = SD.begin(BUILTIN_SDCARD))) {
             char filename[64], mapname[64], dirname[64];
@@ -131,56 +131,60 @@ void outputFile(String fileName) {
     } while (read > 0);
 }
 
-void sdMode() {
+void enterSDMode() {
+    StringPrint sp;
+    SD.sdfs.ls(&sp);
+    Serial.println("Select Build (0 for exit):");
+    sp.loadOptions();
+    long select;
+    do {
+        while (!Serial.available()) {
+        }
+        select = Serial.readString().toInt();
+        Serial.println(select);
+        if (select == 0)
+            return;
+    } while (sp.options.find(select) == sp.options.end());
+    Serial.println("Selected : " + sp.options[select].second);
+    if (!SD.sdfs.chdir(sp.options[select].first)) {
+        Serial.println("Failed to chdir, exiting...");
+        return;
+    }
+    do {
+        sp.clear();
+        SD.sdfs.ls(&sp);
+        Serial.println("Available Files:");
+        sp.loadOptions(true);
+
+        while (true) {
+            Serial.println("\nSelect File (0 for exit):");
+            while (!Serial.available()) {
+            }
+            select = Serial.readString().toInt();
+
+            if (select == 1) {
+                Serial.println("Selected : map.json");
+                outputFile("map.json");
+                break;
+            } else if (sp.options.find(select) != sp.options.end()) {
+                Serial.println("Selected : " + sp.options[select].second);
+                outputFile(sp.options[select].first + "_SDLog.log");
+                break;
+            } else if (select == 0) {
+                SD.sdfs.chdir('/');
+                return;
+            } else {
+                Serial.println("Invalid option");
+            }
+        }
+
+    } while (true);
+}
+
+void trySDMode() {
     if (Serial.available()) {
         if (Serial.readString().toLowerCase() == "sdcard") {
-            StringPrint sp;
-            SD.sdfs.ls(&sp);
-            Serial.println("Select Build (0 for exit):");
-            sp.loadOptions();
-            long select;
-            do {
-                while (!Serial.available()) {
-                }
-                select = Serial.readString().toInt();
-                Serial.println(select);
-                if (select == 0)
-                    return;
-            } while (sp.options.find(select) == sp.options.end());
-            Serial.println("Selected : " + sp.options[select].second);
-            if (!SD.sdfs.chdir(sp.options[select].first)) {
-                Serial.println("Failed to chdir, exiting...");
-                return;
-            }
-            do {
-                sp.clear();
-                SD.sdfs.ls(&sp);
-                Serial.println("Available Files:");
-                sp.loadOptions(true);
-
-                while (true) {
-                    Serial.println("\nSelect File (0 for exit):");
-                    while (!Serial.available()) {
-                    }
-                    select = Serial.readString().toInt();
-
-                    if (select == 1) {
-                        Serial.println("Selected : map.json");
-                        outputFile("map.json");
-                        break;
-                    } else if (sp.options.find(select) != sp.options.end()) {
-                        Serial.println("Selected : " + sp.options[select].second);
-                        outputFile(sp.options[select].first + "_SDLog.log");
-                        break;
-                    } else if (select == 0) {
-                        SD.sdfs.chdir('/');
-                        return;
-                    } else {
-                        Serial.println("Invalid option");
-                    }
-                }
-
-            } while (true);
+            enterSDMode();
         }
     }
 }
