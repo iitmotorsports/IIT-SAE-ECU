@@ -25,6 +25,6 @@
  * @brief The allowed delay between beats
  */
 
-#define CONF_HEARTBEAT_TIMEOUT_MILLI 50 // Allowable Delay
+#define CONF_HEARTBEAT_TIMEOUT_MILLI 80 // Allowable Delay
 
 #endif // __ECU_HEARTBEAT_DEF__

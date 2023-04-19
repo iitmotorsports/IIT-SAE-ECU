@@ -120,20 +120,20 @@ def get_log(log_id: str) -> str:
     return get_paste(log_id)
 
 
-def interpret(string: str) -> None:
+def interpret(string: str, output: str = None) -> None:
     """Interpret a log file and print the interpretation to a local file
 
     Args:
         string (str): The raw log file
     """
 
-    json_obj = json.loads(string[string.find(BEGIN_JSON) + len(BEGIN_JSON) : string.find(END_JSON)])
-    data_stream = string[string.find(END_JSON) + len(END_JSON) :]
+    json_obj = json.loads(string[string.find(BEGIN_JSON) + len(BEGIN_JSON): string.find(END_JSON)])
+    data_stream = string[string.find(END_JSON) + len(END_JSON):]
     tag_dict = {v: k for k, v in json_obj[0].items()}
     str_dict = {v: k for k, v in json_obj[1].items()}
 
-    with open(f"{SAVE_NAME}.log", "w") as log_file:
-        log_file.writelines(string[string.find(BEGIN_JSON) + len(BEGIN_JSON) : string.find(END_JSON)])
+    with open(f"{output if output else SAVE_NAME}.log", "w", encoding='utf-8') as log_file:
+        log_file.writelines(string[string.find(BEGIN_JSON) + len(BEGIN_JSON): string.find(END_JSON)])
         for line in data_stream.splitlines():
             msg = line.split(" ")
             if len(msg) != 4:
@@ -151,15 +151,15 @@ def interpret(string: str) -> None:
             log_file.write(f"[{epoch}] {tag_str: <16s} {str_str: <35s} {str(int(msg[3]))}\n")
 
 
-def graph(string: str) -> None:
+def graph(string: str, output: str = None) -> None:
     """Interpret and graph a log file to a local excel file
 
     Args:
         string (str): The raw log file
     """
 
-    json_obj = json.loads(string[string.find(BEGIN_JSON) + len(BEGIN_JSON) : string.find(END_JSON)])
-    data_stream = string[string.find(END_JSON) + len(END_JSON) :]
+    json_obj = json.loads(string[string.find(BEGIN_JSON) + len(BEGIN_JSON): string.find(END_JSON)])
+    data_stream = string[string.find(END_JSON) + len(END_JSON):]
     str_dict = {v: k for k, v in json_obj[1].items()}
 
     data = dict()
@@ -262,7 +262,7 @@ def graph(string: str) -> None:
         chart.series.append(series)
 
     ws.add_chart(chart, "A1")
-    wb.save("{}.xlsx".format(SAVE_NAME))
+    wb.save(f"{output if output else SAVE_NAME}.xlsx")
 
 
 def main():
@@ -276,6 +276,8 @@ def main():
     parser.add_argument("-p", "--paste", required=False, help="Paste ID to download and interpret")
     parser.add_argument("--log", required=False, help="The raw log file")
 
+    parser.add_argument("-o", "--output", required=False, help="output path")
+
     args = parser.parse_args()
 
     if args.list:
@@ -284,9 +286,8 @@ def main():
 
     if args.paste:
         if args.graph:
-            graph(get_log(args.paste))
-            return
-        interpret(get_log(args.paste))
+            graph(get_log(args.paste), args.output)
+        interpret(get_log(args.paste), args.output)
     else:
         parser.print_help()
 
