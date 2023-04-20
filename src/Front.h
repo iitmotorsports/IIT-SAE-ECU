@@ -6,10 +6,9 @@
 #include "Faults.h"
 #include "Log.h"
 
-#define INTERVAL_HIGH_PRIORITY 500
-#define INTERVAL_MED_HIGH_PRIORITY 1200
-#define INTERVAL_MED_LOW_PRIORITY 5000
-#define INTERVAL_LOW_PRIORITY 1200
+#define INTERVAL_HIGH_PRIORITY 20
+#define INTERVAL_MED_PRIORITY 100
+#define INTERVAL_LOW_PRIORITY 500
 
 /**
  * @brief Name space used solely for front ECU logic
@@ -55,5 +54,16 @@ void lowPriorityValues();
  * @brief Outputs values that are of higher priority
  */
 void highPriorityValues();
+
+/**
+ * @brief Outputs values that are of higher priority
+ */
+void medPriorityValues();
+
+/**
+ * @brief Toggles start led if in fault state
+ * 
+ */
+void faultBlink();
 }
 #endif // __FRONT_H__

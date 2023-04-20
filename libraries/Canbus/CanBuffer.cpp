@@ -118,31 +118,4 @@ void Buffer::clear() {
     buffer[7] = 0;
 }
 
-bool Buffer::lock() {
-    return !spin_lock.test_and_set(std::memory_order_acquire);
-}
-
-int Buffer::lock_wait(unsigned long wait) {
-    elapsedMicros em = 0;
-    while (spin_lock.test_and_set(std::memory_order_acquire)) { // acquire
-        if (wait != 0 && em > wait) {
-#ifdef CONF_ECU_DEBUG
-            Log.w("Canbus::Buffer", "Lock timed out", address);
-#endif
-            return -1;
-        }
-
-#if defined(__cpp_lib_atomic_flag_test)
-        while (spin_lock.test(std::memory_order_relaxed))
-            ; // test
-#endif
-        // spin
-    }
-    return 0;
-}
-
-void Buffer::unlock() {
-    spin_lock.clear(std::memory_order_release); // release
-}
-
 } // namespace Canbus

@@ -47,9 +47,9 @@ static void toggleMotorDirection() {
 
 void blinkStart() {
     Pins::setPinValue(PINS_FRONT_START_LIGHT, 1);
-    delay(500);
+    delay(100);
     Pins::setPinValue(PINS_FRONT_START_LIGHT, 0);
-    delay(500);
+    delay(100);
 }
 
 void LEDBlink() {
@@ -73,10 +73,10 @@ void run() {
     Pins::initialize(); // setup predefined pins
     LEDBlink();
     LEDBlink();
-// #ifndef CONF_LOGGING_ASCII_DEBUG
-//     Log.i(ID, "Enabling Logging relay");
-//     Logging::enableCanbusRelay(); // Allow logging though canbus
-// #endif
+    // #ifndef CONF_LOGGING_ASCII_DEBUG
+    //     Log.i(ID, "Enabling Logging relay");
+    //     Logging::enableCanbusRelay(); // Allow logging though canbus
+    // #endif
     loadStateMap();
 
     Log.i(ID, "Setting commands");
@@ -98,7 +98,6 @@ void run() {
     TVAggression = 1.8f;
     static bool hasBeat = false;
 
-    Log.d(ID, "Delaying 2 sec");
     Serial.flush();
     blinkStart();
     Pins::setInternalValue(PINS_INTERNAL_SYNC, 1);
@@ -124,7 +123,16 @@ void run() {
             updateCurrentState();
             hasBeat = Heartbeat::checkBeat();
         }
-        if (timeElapsedLow >= INTERVAL_MED_LOW_PRIORITY) { // Low priority updates
+        if (timeElapsedMidHigh >= INTERVAL_MED_PRIORITY) { // Med priority updates
+            timeElapsedMidHigh = 0;
+
+            Pins::setPinValue(PINS_FRONT_BMS_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_BMS_FAULT));
+            Pins::setPinValue(PINS_FRONT_IMD_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_IMD_FAULT));
+
+            medPriorityValues();
+            faultBlink();
+        }
+        if (timeElapsedLow >= INTERVAL_LOW_PRIORITY) { // Low priority updates
             timeElapsedLow = 0;
 
             updateStartLight(hasBeat);
@@ -134,9 +142,6 @@ void run() {
             }
 
             Pins::setInternalValue(PINS_INTERNAL_TVAGG, TVAggression * 10000);
-
-            Pins::setPinValue(PINS_FRONT_BMS_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_BMS_FAULT));
-            Pins::setPinValue(PINS_FRONT_IMD_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_IMD_FAULT));
 
             lowPriorityValues();
         }

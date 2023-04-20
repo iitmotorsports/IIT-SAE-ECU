@@ -4,7 +4,7 @@
  * @brief Faults source file
  * @version 0.1
  * @date 2021-01-27
- * 
+ *
  * @copyright Copyright (c) 2022
  *
  */
@@ -49,26 +49,27 @@ typedef struct CanFault {
     }
 
     bool check() {
-        buffer->lock_wait();
+        Canbus::Buffer::lock l = buffer->get_lock(Canbus::DEFAULT_TIMEOUT);
+        if (!l.locked)
+            return faulted;
         uint64_t curr = buffer->getULong();
         if (curr & faultMask) {
             buffer->dump(lastValue.arr);
-            buffer->unlock();
 #ifdef CONF_ECU_DEBUG
             Log.w(ID, "Faulted CAN Address:", address);
 #endif
             return faulted = true;
         }
-        buffer->unlock();
         return faulted = false;
     }
 
     void clear() {
-        buffer->lock_wait();
-        buffer->clear();
-        buffer->unlock();
-        lastValue.longlong = 0;
-        faulted = false;
+        Canbus::Buffer::lock l = buffer->get_lock(Canbus::DEFAULT_TIMEOUT * 2);
+        if (l.locked) {
+            buffer->clear();
+            lastValue.longlong = 0;
+            faulted = false;
+        }
     }
 
     void log() {

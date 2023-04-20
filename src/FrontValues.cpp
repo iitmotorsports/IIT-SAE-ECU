@@ -107,8 +107,15 @@ void loadStateMap() {
 
 void updateCurrentState() {
     uint32_t currState = Pins::getCanPinValue(PINS_INTERNAL_STATE);
-    Log.p("state", "Current State", currState, INTERVAL_MED_LOW_PRIORITY);
+    Log.p("state", "Current State", currState);
     currentState = stateMap[currState]; // returns NULL if not found
+}
+
+void faultBlink() {
+    static bool on = false;
+    if (currentState == &ECUStates::FaultState) {
+        Pins::setPinValue(PINS_FRONT_START_LIGHT, !on);
+    }
 }
 
 void updateStartLight(bool hasBeat) {
@@ -157,13 +164,15 @@ void highPriorityValues() {
     Logging::USBHostPush(12, MC::motorSpeed()); // Current Motor Speed
     // pushToPhoneOverUsbSerialButOnHostWhenItIsDone(1, MC::motorSpeed(0)); // Motor 0 Speed
     // pushToPhoneOverUsbSerialButOnHostWhenItIsDone(1, MC::motorSpeed(1)); // Motor 1 Speed
+    // pushToPhoneOverUsbSerialButOnHostWhenItIsDone(1, (pedal0 + pedal1) / 2);                                                                // Pedal AVG
+}
 
+void medPriorityValues() {
     int pedal0, pedal1;
     Logging::USBHostPush(1, (lastBrake = EMAvg(lastBrake, Pins::getPinValue(PINS_FRONT_BRAKE), 4)));               // Brake
     Logging::USBHostPush(27, (lastSteer = EMAvg(lastSteer, Pins::getPinValue(PINS_FRONT_STEER), 4)));              // Steering
     Logging::USBHostPush(2, (pedal0 = (lastPedal0 = EMAvg(lastPedal0, Pins::getPinValue(PINS_FRONT_PEDAL0), 4)))); // Pedal 0
     Logging::USBHostPush(3, (pedal1 = (lastPedal1 = EMAvg(lastPedal1, Pins::getPinValue(PINS_FRONT_PEDAL1), 4)))); // Pedal 1
-    // pushToPhoneOverUsbSerialButOnHostWhenItIsDone(1, (pedal0 + pedal1) / 2);                                                                // Pedal AVG
 }
 
 } // namespace Front

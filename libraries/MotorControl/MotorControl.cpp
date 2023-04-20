@@ -61,16 +61,14 @@ constexpr float c = 2 * 3.1415926536 * 9;
 static int32_t lastspeed;
 
 int32_t motorSpeed(int motor) {
-    int not_locked = MC0_RPM_Buffer->lock_wait();
-    not_locked += MC1_RPM_Buffer->lock_wait();
-    if (not_locked) {
+    Canbus::Buffer::lock MC0_lock = MC0_RPM_Buffer->get_lock(Canbus::DEFAULT_TIMEOUT);
+    Canbus::Buffer::lock MC1_lock = MC1_RPM_Buffer->get_lock(Canbus::DEFAULT_TIMEOUT);
+    if (!MC0_lock.locked || !MC1_lock.locked) {
         Log.w(ID, "Unable to lock buffers for speed", lastspeed);
         return lastspeed;
     }
     int16_t MC_Rpm_Val_0 = -MC0_RPM_Buffer->getShort(2); // Bytes 2-3 : Angular Velocity // NOTE: motor is negative?
     int16_t MC_Rpm_Val_1 = MC1_RPM_Buffer->getShort(2);  // Bytes 2-3 : Angular Velocity
-    MC1_RPM_Buffer->unlock();
-    MC0_RPM_Buffer->unlock();
     float MC_Spd_Val_0 = (float)(((MC_Rpm_Val_0 / CONF_CAR_GEAR_RATIO) * c) * 60) / 63360;
     float MC_Spd_Val_1 = (float)(((MC_Rpm_Val_1 / CONF_CAR_GEAR_RATIO) * c) * 60) / 63360;
 
@@ -93,7 +91,7 @@ static void normalizeInput(double *pedal, double *brake, double *steer) { // TOD
     *brake = bAccum;
     *steer = cMap(sAccum, 0.0, NORM_VAL, -PI / 9, PI / 9);
 }
-    
+
 static void torqueVector(int pedal, int brake, int steer) {
 
     double _pedal = pedal, _brake = brake, _steer = steer;

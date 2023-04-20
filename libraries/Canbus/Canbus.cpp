@@ -73,21 +73,19 @@ static Buffer *_getAddress(const uint32_t address) {
 // FlexCan Callback function
 static void _receiveCan(const CAN_message_t &msg) { // FIXME: potential issue where checking semaphore freezes, more testing needed
     Buffer *addr = _getAddress(msg.id);
+    Buffer::lock l = addr->get_lock();
 
-    if (addr == invalidAddress) {
-        // Log.w(ID, "Address not in use", msg.id);
-        return;
-    } else if (!addr->lock()) {
+    if (!l.locked) {
 #ifdef CONF_ECU_DEBUG
         Log.w(ID, "Discarding can msg", msg.id);
 #endif
+        return;
     }
 
     addr->set(msg.buf);
 
     if (addr->callback)
         addr->callback(msg.id, addr->buffer);
-    addr->unlock();
 }
 
 void addCallback(const uint32_t address, canCallback callback) {
@@ -135,10 +133,10 @@ void update(void) {
 int getData(const uint32_t address, uint8_t buf[8]) {
     Buffer *addr = _getAddress(address);
     if (addr != invalidAddress && !addr->outgoing) { // 0 == incoming
-        if (!addr->lock_wait())
+        Buffer::lock l = addr->get_lock(Canbus::DEFAULT_TIMEOUT);
+        if (!l.locked)
             return -1;
         addr->dump(buf);
-        addr->unlock();
         return 0;
     }
     Log.e(ID, "Given address is not incoming or is invalid:", address);

@@ -132,14 +132,14 @@ State::State_t *ECUStates::PreCharge_State::PreCharFault(void) {
 };
 
 bool ECUStates::PreCharge_State::voltageCheck(bool *fault) {
-    // int not_locked = BMS_DATA_Buffer->lock_wait();
-    // not_locked += MC0_VOLT_Buffer->lock_wait();
-    // not_locked += MC1_VOLT_Buffer->lock_wait();
+    Canbus::Buffer::lock BMS_lock = BMS_DATA_Buffer->get_lock(Canbus::DEFAULT_TIMEOUT);
+    Canbus::Buffer::lock MC0_lock = MC0_VOLT_Buffer->get_lock(Canbus::DEFAULT_TIMEOUT);
+    Canbus::Buffer::lock MC1_lock = MC1_VOLT_Buffer->get_lock(Canbus::DEFAULT_TIMEOUT);
 
-    // if (not_locked) {
-    //     *fault = true;
-    //     return false;
-    // }
+    if (!BMS_lock.locked || !MC0_lock.locked || !MC1_lock.locked) {
+        *fault = true;
+        return false;
+    }
 
     int16_t BMSVolt = BMS_DATA_Buffer->getShort(2) / 10; // Byte 2-3: Pack Instant Voltage
     int16_t MC0Volt = MC0_VOLT_Buffer->getShort(0) / 10; // Bytes 0-1: DC BUS MC Voltage
@@ -148,10 +148,6 @@ bool ECUStates::PreCharge_State::voltageCheck(bool *fault) {
     Log.d(ID, "BMS Voltage", BMSVolt, -250);
     Log.d(ID, "BMS MC0 Voltage", MC0Volt, -250);
     Log.d(ID, "BMS MC1 Voltage", MC1Volt, -250);
-
-    // BMS_DATA_Buffer->unlock();
-    // MC1_VOLT_Buffer->unlock();
-    // MC0_VOLT_Buffer->unlock();
 
     return 0.91 * BMSVolt <= (MC0Volt + MC1Volt) / 2;
 }
@@ -323,12 +319,12 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
                 return DrivingModeFault();
             }
 
-// #if ECU_TESTING == BACK_ECU
+            // #if ECU_TESTING == BACK_ECU
             if (((MC0_VOLT_Buffer->getShort(0) / 10) + (MC1_VOLT_Buffer->getShort(0) / 10)) / 2 < 90) { // 'HVD Fault'
                 Log.e(ID, "'HVD Fault' MC voltage < 90");
                 return DrivingModeFault();
             }
-// #endif
+            // #endif
 
             int breakVal = Pins::getCanPinValue(PINS_FRONT_BRAKE);
             int steerVal = Pins::getCanPinValue(PINS_FRONT_STEER);

@@ -2,11 +2,15 @@
 #define __ECU_CANBUFFER_H__
 
 #include "ECUGlobalConfig.h"
+#include "WProgram.h"
+#include "log.h"
 #include <atomic>
 #include <stdint.h>
 #include <stdlib.h>
 
 namespace Canbus {
+
+const unsigned long DEFAULT_TIMEOUT = CONFIG_ECU_BUFFER_TIMEOUT_MICRO;
 
 /**
  * @brief The function type to pass to addCallback
@@ -171,26 +175,45 @@ struct Buffer { // IMPROVE: more rigorous testing on the get funcs
      */
     bool getBit(size_t pos);
 
-    /**
-     * @brief Locks this buffer to be used, returns false if it was unable todo so
-     *
-     * @return true Locked
-     * @return false Unable to lock, in use
-     */
-    bool lock();
+    struct lock {
+        bool locked;
+        Buffer *buf;
 
-    /**
-     * @brief locks this buffer to be used, waits indefinitely for it to unlock if it is locked
-     *
-     * @param wait micros to wait for, 0 for indefinite
-     * @return -1 if timeout, else 0
-     */
-    int lock_wait(unsigned long wait = CONFIG_ECU_BUFFER_TIMEOUT_MICRO);
+        lock(Buffer *buf) : locked(!buf->spin_lock.test_and_set(std::memory_order_acquire)), buf(buf) {}
+        lock(Buffer *buf, unsigned long wait) {
+            elapsedMicros em = 0;
+            while (buf->spin_lock.test_and_set(std::memory_order_acquire)) { // acquire
+                if (wait != 0 && em > wait) {
+#ifdef CONF_ECU_DEBUG
+                    Log.w("Canbus::Buffer", "Lock timed out", buf->address);
+#endif
+                    locked = false;
+                }
 
-    /**
-     * @brief Unlocks this buffer if it is locked
-     */
-    void unlock();
+#if defined(__cpp_lib_atomic_flag_test)
+                while (spin_lock.test(std::memory_order_relaxed))
+                    ; // test
+#endif
+                yield();
+            }
+            locked = true;
+            Log.d("Lock", "Locking buffer", buf->address);
+        }
+        ~lock() {
+            if (locked) {
+                buf->spin_lock.clear(std::memory_order_release); // release
+            }
+            Log.d("Lock", "Unlocking buffer", buf->address);
+        }
+    };
+
+    lock get_lock() {
+        return lock(this);
+    }
+
+    lock get_lock(unsigned long wait) {
+        return lock(this, wait);
+    }
 };
 } // namespace Canbus
 #endif // __ECU_CANBUFFER_H__
