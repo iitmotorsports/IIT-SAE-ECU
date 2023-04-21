@@ -61,8 +61,8 @@ constexpr float c = 2 * 3.1415926536 * 9;
 static int32_t lastspeed;
 
 int32_t motorSpeed(int motor) {
-    Canbus::Buffer::lock MC0_lock = MC0_RPM_Buffer->get_lock(Canbus::DEFAULT_TIMEOUT);
-    Canbus::Buffer::lock MC1_lock = MC1_RPM_Buffer->get_lock(Canbus::DEFAULT_TIMEOUT);
+    Canbus::Buffer::lock MC0_lock = Canbus::Buffer::lock(MC0_RPM_Buffer, Canbus::DEFAULT_TIMEOUT);
+    Canbus::Buffer::lock MC1_lock = Canbus::Buffer::lock(MC1_RPM_Buffer, Canbus::DEFAULT_TIMEOUT);
     if (!MC0_lock.locked || !MC1_lock.locked) {
         Log.w(ID, "Unable to lock buffers for speed", lastspeed);
         return lastspeed;

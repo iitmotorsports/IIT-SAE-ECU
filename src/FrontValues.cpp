@@ -17,64 +17,79 @@ static Canbus::Buffer *BMS_DATA_Buffer = Canbus::getBuffer(ADD_BMS_DATA);
 static Canbus::Buffer *BMS_BATT_TEMP_Buffer = Canbus::getBuffer(ADD_BMS_BATT_TEMP);
 static Canbus::Buffer *BMS_CURR_LIMIT_Buffer = Canbus::getBuffer(ADD_BMS_CURR_LIMIT);
 
-static uint8_t BMSSOC() {                    // Percent
+static uint8_t BMSSOC() { // Percent
+    Canbus::Buffer::lock l = Canbus::Buffer::lock(BMS_DATA_Buffer, Canbus::DEFAULT_TIMEOUT);
     return BMS_DATA_Buffer->getUByte(4) / 2; // Byte 4: BMS State of charge buffer
 }
 
 static uint16_t BMSVOLT() {
+    Canbus::Buffer::lock l = Canbus::Buffer::lock(BMS_DATA_Buffer, Canbus::DEFAULT_TIMEOUT);
     return BMS_DATA_Buffer->getShort(2) / 10; // Byte 2-3: BMS Immediate voltage
 }
 
 static uint16_t BMSAMP() {
+    Canbus::Buffer::lock l = Canbus::Buffer::lock(BMS_DATA_Buffer, Canbus::DEFAULT_TIMEOUT);
     return BMS_DATA_Buffer->getShort(0); // Byte 0-1: BMS Immediate amperage
 }
 
 static uint8_t BMSTempHigh() {
+    Canbus::Buffer::lock l = Canbus::Buffer::lock(BMS_BATT_TEMP_Buffer, Canbus::DEFAULT_TIMEOUT);
     return BMS_BATT_TEMP_Buffer->getByte(4); // Byte 4: BMS Highest Battery Temp
 }
 
 static uint8_t BMSTempLow() {
+    Canbus::Buffer::lock l = Canbus::Buffer::lock(BMS_BATT_TEMP_Buffer, Canbus::DEFAULT_TIMEOUT);
     return BMS_BATT_TEMP_Buffer->getByte(5); // Byte 5: BMS Lowest Battery Temp
 }
 
 static uint16_t BMSDischargeCurrentLimit() {
+    Canbus::Buffer::lock l = Canbus::Buffer::lock(BMS_CURR_LIMIT_Buffer, Canbus::DEFAULT_TIMEOUT);
     return BMS_CURR_LIMIT_Buffer->getShort(0); // Byte 0-1: BMS Discharge Current Limit
 }
 
 static uint16_t BMSChargeCurrentLimit() {
+    Canbus::Buffer::lock l = Canbus::Buffer::lock(BMS_CURR_LIMIT_Buffer, Canbus::DEFAULT_TIMEOUT);
     return BMS_CURR_LIMIT_Buffer->getShort(2); // Byte 2-3: BMS Charge Current Limit
 }
 
 static uint16_t MC0BoardTemp() {
+    Canbus::Buffer::lock l = Canbus::Buffer::lock(MC0_TEMP2_Buffer, Canbus::DEFAULT_TIMEOUT);
     return MC0_TEMP2_Buffer->getShort(0) / 10; // Bytes 0-1: Temperature of Control Board
 }
 
 static uint16_t MC1BoardTemp() {
+    Canbus::Buffer::lock l = Canbus::Buffer::lock(MC1_TEMP2_Buffer, Canbus::DEFAULT_TIMEOUT);
     return MC1_TEMP2_Buffer->getShort(0) / 10; // Bytes 0-1: Temperature of Control Board
 }
 
 static uint16_t MC0MotorTemp() {
+    Canbus::Buffer::lock l = Canbus::Buffer::lock(MC0_TEMP3_Buffer, Canbus::DEFAULT_TIMEOUT);
     return MC0_TEMP3_Buffer->getShort(4) / 10; // Bytes 4-5: Filtered temperature value from the motor temperature sensor
 }
 
 static uint16_t MC1MotorTemp() {
+    Canbus::Buffer::lock l = Canbus::Buffer::lock(MC1_TEMP3_Buffer, Canbus::DEFAULT_TIMEOUT);
     return MC1_TEMP3_Buffer->getShort(4) / 10; // Bytes 4-5: Filtered temperature value from the motor temperature sensor
 }
 
 static uint16_t MC0Voltage() {
+    Canbus::Buffer::lock l = Canbus::Buffer::lock(MC0_VOLT_Buffer, Canbus::DEFAULT_TIMEOUT);
     return MC0_VOLT_Buffer->getShort(0) / 10; // Bytes 0-1: DC BUS MC Voltage
 }
 
 static uint16_t MC1Voltage() {
+    Canbus::Buffer::lock l = Canbus::Buffer::lock(MC1_VOLT_Buffer, Canbus::DEFAULT_TIMEOUT);
     return MC1_VOLT_Buffer->getShort(0) / 10; // Bytes 0-1: DC BUS MC Voltage
 }
 
 static uint16_t MC0Current() {
+    Canbus::Buffer::lock l = Canbus::Buffer::lock(MC0_CURR_Buffer, Canbus::DEFAULT_TIMEOUT);
     return MC0_CURR_Buffer->getShort(6) / 10; // Bytes 6-7: DC BUS MC Current
 }
 
 static uint16_t MC1Current() {
-    return MC0_CURR_Buffer->getShort(6) / 10; // Bytes 6-7: DC BUS MC Current
+    Canbus::Buffer::lock l = Canbus::Buffer::lock(MC1_CURR_Buffer, Canbus::DEFAULT_TIMEOUT);
+    return MC1_CURR_Buffer->getShort(6) / 10; // Bytes 6-7: DC BUS MC Current
 }
 
 static uint32_t MCPowerValue() { // IMPROVE: get power value using three phase values, or find a power value address

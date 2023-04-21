@@ -65,7 +65,7 @@ void LEDBlink() {
 }
 
 void run() {
-    Log.i(ID, "Teensy 4.1 SAE FRONT ECU  alizing");
+    Log.i(ID, "Teensy 4.1 SAE FRONT ECU  initializing");
 
     Log.i(ID, "Setting up Canbus");
     Canbus::setup(); // allocate and organize addresses
@@ -88,26 +88,28 @@ void run() {
     Cmd::setCommand(COMMAND_PRINT_LOOKUP, Logging::printLookup);
     Cmd::setCommand(COMMAND_UPDATE_SERIALVAR, SerialVar::receiveSerialVar);
     Cmd::setCommand(COMMAND_SD_MODE, Logging::enterSDMode);
+
     Heartbeat::beginBeating();
     Heartbeat::beginReceiving();
 
-#ifdef CONF_ECU_DEBUG
-    Mirror::setup();
-#endif
+// #ifdef CONF_ECU_DEBUG
+//     Mirror::setup();
+// #endif
 
     TVAggression = 1.8f;
     static bool hasBeat = false;
 
-    Serial.flush();
+    // Serial.flush();
     blinkStart();
     Pins::setInternalValue(PINS_INTERNAL_SYNC, 1);
     blinkStart();
-    Serial.flush();
+    // Serial.flush();
 
 #if ECU_TESTING == FRONT_ECU
     full_front_test();
 #endif
 
+    Log.i(ID, "Waiting for heartbeat");
     while (!Heartbeat::checkBeat()) {
         delay(500);
         Cmd::receiveCommand();

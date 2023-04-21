@@ -49,7 +49,7 @@ typedef struct CanFault {
     }
 
     bool check() {
-        Canbus::Buffer::lock l = buffer->get_lock(Canbus::DEFAULT_TIMEOUT);
+        Canbus::Buffer::lock l = Canbus::Buffer::lock(buffer, Canbus::DEFAULT_TIMEOUT);
         if (!l.locked)
             return faulted;
         uint64_t curr = buffer->getULong();
@@ -64,7 +64,7 @@ typedef struct CanFault {
     }
 
     void clear() {
-        Canbus::Buffer::lock l = buffer->get_lock(Canbus::DEFAULT_TIMEOUT * 2);
+        Canbus::Buffer::lock l = Canbus::Buffer::lock(buffer, Canbus::DEFAULT_TIMEOUT * 2);
         if (l.locked) {
             buffer->clear();
             lastValue.longlong = 0;

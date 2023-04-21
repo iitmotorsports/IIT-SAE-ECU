@@ -72,9 +72,16 @@ static Buffer *_getAddress(const uint32_t address) {
 
 // FlexCan Callback function
 static void _receiveCan(const CAN_message_t &msg) { // FIXME: potential issue where checking semaphore freezes, more testing needed
+    if (msg.id < 0) {
+        // Log.d(ID, "Invalid Address", msg.id);
+        return;
+    }
     Buffer *addr = _getAddress(msg.id);
-    Buffer::lock l = addr->get_lock();
-
+    if (addr == invalidAddress || addr->address < 0) { // 0 == incoming // addr->outgoing
+        // Log.d(ID, "Invalid Buffer Address", addr->address);
+        return;
+    }
+    Buffer::lock l = Buffer::lock(addr);
     if (!l.locked) {
 #ifdef CONF_ECU_DEBUG
         Log.w(ID, "Discarding can msg", msg.id);
@@ -118,7 +125,7 @@ void setup(void) { // IMPROVE: filter only for addresses we care about
     Log.d(ID, "Setting Callback");
     F_Can.onReceive(_receiveCan);
     Log.d(ID, "Enabling Interrupts");
-    delay(500);                 // Just in case canbus needs to do stuff
+    // delay(500);                 // Just in case canbus needs to do stuff
     F_Can.enableMBInterrupts(); // FIXME: Possible issue where it sometimes freezes here
 #ifdef CONF_LOGGING_ASCII_DEBUG
     F_Can.mailboxStatus();
@@ -132,8 +139,8 @@ void update(void) {
 
 int getData(const uint32_t address, uint8_t buf[8]) {
     Buffer *addr = _getAddress(address);
-    if (addr != invalidAddress && !addr->outgoing) { // 0 == incoming
-        Buffer::lock l = addr->get_lock(Canbus::DEFAULT_TIMEOUT);
+    if (addr != invalidAddress && addr->address >= 0) { // 0 == incoming // !addr->outgoing
+        Buffer::lock l = Buffer::lock(addr, Canbus::DEFAULT_TIMEOUT);
         if (!l.locked)
             return -1;
         addr->dump(buf);

@@ -75,7 +75,9 @@ State::State_t *ECUStates::Initialize_State::run(void) {
     Pump::start();
     // Pump::set(100);
 
-    delay(500);
+    // delay(500);
+
+    // Pins::setPinValue(PINS_BACK_SOUND_DRIVER, PINS_ANALOG_HIGH);
 
     if (getLastState() != &ECUStates::FaultState) {
         Log.d(ID, "Waiting for initial fault reset");
@@ -132,9 +134,9 @@ State::State_t *ECUStates::PreCharge_State::PreCharFault(void) {
 };
 
 bool ECUStates::PreCharge_State::voltageCheck(bool *fault) {
-    Canbus::Buffer::lock BMS_lock = BMS_DATA_Buffer->get_lock(Canbus::DEFAULT_TIMEOUT);
-    Canbus::Buffer::lock MC0_lock = MC0_VOLT_Buffer->get_lock(Canbus::DEFAULT_TIMEOUT);
-    Canbus::Buffer::lock MC1_lock = MC1_VOLT_Buffer->get_lock(Canbus::DEFAULT_TIMEOUT);
+    Canbus::Buffer::lock BMS_lock = Canbus::Buffer::lock(BMS_DATA_Buffer, Canbus::DEFAULT_TIMEOUT);
+    Canbus::Buffer::lock MC0_lock = Canbus::Buffer::lock(MC0_VOLT_Buffer, Canbus::DEFAULT_TIMEOUT);
+    Canbus::Buffer::lock MC1_lock = Canbus::Buffer::lock(MC1_VOLT_Buffer, Canbus::DEFAULT_TIMEOUT);
 
     if (!BMS_lock.locked || !MC0_lock.locked || !MC1_lock.locked) {
         *fault = true;

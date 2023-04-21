@@ -179,41 +179,36 @@ struct Buffer { // IMPROVE: more rigorous testing on the get funcs
         bool locked;
         Buffer *buf;
 
-        lock(Buffer *buf) : locked(true) {} //: locked(!buf->spin_lock.test_and_set(std::memory_order_acquire)), buf(buf) {}
-        lock(Buffer *buf, unsigned long wait) {
-//             elapsedMicros em = 0;
-//             while (buf->spin_lock.test_and_set(std::memory_order_acquire)) { // acquire
-//                 if (wait != 0 && em > wait) {
-// #ifdef CONF_ECU_DEBUG
-//                     Log.w("Canbus::Buffer", "Lock timed out", buf->address);
-// #endif
-//                     locked = false;
-//                 }
+        lock(Buffer *buf) : locked(!buf->spin_lock.test_and_set(std::memory_order_acquire)), buf(buf) {
+        }
+        lock(Buffer *buf, unsigned long wait) : buf(buf) {
+            elapsedMicros em = 0;
+            while (buf->spin_lock.test_and_set(std::memory_order_acquire)) { // acquire
+                if (wait != 0 && em > wait) {
+#ifdef CONF_ECU_DEBUG
+                    Log.w("Canbus::Buffer", "Lock timed out", buf->address);
+#endif
+                    locked = false;
+                    return;
+                }
 
-// #if defined(__cpp_lib_atomic_flag_test)
-//                 while (spin_lock.test(std::memory_order_relaxed))
-//                     ; // test
-// #endif
-//                 yield();
-//             }
-            locked = true;
+#if defined(__cpp_lib_atomic_flag_test)
+                while (spin_lock.test(std::memory_order_relaxed))
+                    ; // test
+#endif
+                yield();
+            }
             // Log.d("Lock", "Locking buffer", buf->address);
+            locked = true;
         }
         ~lock() {
-            // if (locked) {
-            //     buf->spin_lock.clear(std::memory_order_release); // release
-            // }
-            // Log.d("Lock", "Unlocking buffer", buf->address);
+            if (locked) {
+                locked = false;
+                buf->spin_lock.clear(std::memory_order_release); // release
+                // Log.d("Lock", "Unlocking buffer", buf->address);
+            }
         }
     };
-
-    lock get_lock() {
-        return lock(this);
-    }
-
-    lock get_lock(unsigned long wait) {
-        return lock(this, wait);
-    }
 };
 } // namespace Canbus
 #endif // __ECU_CANBUFFER_H__
