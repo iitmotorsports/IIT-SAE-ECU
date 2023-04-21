@@ -179,31 +179,31 @@ struct Buffer { // IMPROVE: more rigorous testing on the get funcs
         bool locked;
         Buffer *buf;
 
-        lock(Buffer *buf) : locked(!buf->spin_lock.test_and_set(std::memory_order_acquire)), buf(buf) {}
+        lock(Buffer *buf) : locked(true) {} //: locked(!buf->spin_lock.test_and_set(std::memory_order_acquire)), buf(buf) {}
         lock(Buffer *buf, unsigned long wait) {
-            elapsedMicros em = 0;
-            while (buf->spin_lock.test_and_set(std::memory_order_acquire)) { // acquire
-                if (wait != 0 && em > wait) {
-#ifdef CONF_ECU_DEBUG
-                    Log.w("Canbus::Buffer", "Lock timed out", buf->address);
-#endif
-                    locked = false;
-                }
+//             elapsedMicros em = 0;
+//             while (buf->spin_lock.test_and_set(std::memory_order_acquire)) { // acquire
+//                 if (wait != 0 && em > wait) {
+// #ifdef CONF_ECU_DEBUG
+//                     Log.w("Canbus::Buffer", "Lock timed out", buf->address);
+// #endif
+//                     locked = false;
+//                 }
 
-#if defined(__cpp_lib_atomic_flag_test)
-                while (spin_lock.test(std::memory_order_relaxed))
-                    ; // test
-#endif
-                yield();
-            }
+// #if defined(__cpp_lib_atomic_flag_test)
+//                 while (spin_lock.test(std::memory_order_relaxed))
+//                     ; // test
+// #endif
+//                 yield();
+//             }
             locked = true;
-            Log.d("Lock", "Locking buffer", buf->address);
+            // Log.d("Lock", "Locking buffer", buf->address);
         }
         ~lock() {
-            if (locked) {
-                buf->spin_lock.clear(std::memory_order_release); // release
-            }
-            Log.d("Lock", "Unlocking buffer", buf->address);
+            // if (locked) {
+            //     buf->spin_lock.clear(std::memory_order_release); // release
+            // }
+            // Log.d("Lock", "Unlocking buffer", buf->address);
         }
     };
 

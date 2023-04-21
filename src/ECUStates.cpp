@@ -308,22 +308,22 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
         if (controlDelay > 20) { // NOTE: Each data frame is 89 bits long thus at 250kbps the MC buses can handle a maximum of 2808 messages per second
             controlDelay = 0;
 
-            static bool runReverse = false;
+            // static bool runReverse = false;
 
-            if (Pins::getCanPinValue(PINS_INTERNAL_REVERSE) != runReverse) {
-                runReverse = Pins::getCanPinValue(PINS_INTERNAL_REVERSE);
-                MC::setDirection(!runReverse);
-            }
+            // if (Pins::getCanPinValue(PINS_INTERNAL_REVERSE) != runReverse) {
+            //     runReverse = Pins::getCanPinValue(PINS_INTERNAL_REVERSE);
+            //     MC::setDirection(!runReverse);
+            // }
 
             if (Fault::anyFault()) { // FIXME: are motor controller faults actually being picked up?
                 return DrivingModeFault();
             }
 
             // #if ECU_TESTING == BACK_ECU
-            if (((MC0_VOLT_Buffer->getShort(0) / 10) + (MC1_VOLT_Buffer->getShort(0) / 10)) / 2 < 90) { // 'HVD Fault'
-                Log.e(ID, "'HVD Fault' MC voltage < 90");
-                return DrivingModeFault();
-            }
+            // if (((MC0_VOLT_Buffer->getShort(0) / 10) + (MC1_VOLT_Buffer->getShort(0) / 10)) / 2 < 90) { // 'HVD Fault'
+            //     Log.e(ID, "'HVD Fault' MC voltage < 90");
+            //     return DrivingModeFault();
+            // }
             // #endif
 
             int breakVal = Pins::getCanPinValue(PINS_FRONT_BRAKE);
@@ -353,8 +353,8 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
                 Fault::logFault();
             }
 
-            Log.i(ID, "Last MC0 Torque Value:", MC::getLastTorqueValue(true), true);
-            Log.i(ID, "Last MC1 Torque Value:", MC::getLastTorqueValue(false), true);
+            Log.i(ID, "Last MC0 Torque Value:", MC::getLastTorqueValue(true), -5000);
+            Log.i(ID, "Last MC1 Torque Value:", MC::getLastTorqueValue(false), -5000);
         }
 
         if (!Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT_OFF)) {

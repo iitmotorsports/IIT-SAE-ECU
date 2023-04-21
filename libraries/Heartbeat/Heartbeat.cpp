@@ -41,7 +41,7 @@ static void beat() {
 #else
     Canbus::sendData(ADD_HEART_BACK);
 #endif
-    Log.d(ID, "heartbeat", 0, 10000);
+    // Log.d(ID, "heartbeat", 0, 10000);
 
     for (auto f : funcs) {
         f();

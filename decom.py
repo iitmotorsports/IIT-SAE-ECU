@@ -11,7 +11,8 @@ for filename in os.listdir(directory):
     if os.path.isfile(os.path.join(directory, filename)):
         # Construct the system command
         command = f'convert.py -f {os.path.join(directory, filename)} -o {os.path.join(new_directory, filename)} -i log_lookup.json'
-        command = f'interpretPaste.py -g -p {os.path.join(new_directory, filename)} -o {os.path.join(out_directory, filename)}'
-
         # Run the system command using subprocess
+        subprocess.run(command, shell=True)
+
+        command = f'interpretPaste.py -g -p {os.path.join(new_directory, filename)} -o {os.path.join(out_directory, filename)}'
         subprocess.run(command, shell=True)
