@@ -144,7 +144,7 @@ Configuration</h1>
 Configuration values</h2>
 <ul>
 <li><code>ANALOG_RESOLUTION</code><ul>
-<li>The analog bit resolution of GPIO pins</li>
+<li>The analog bit resolution of <a class="el" href="class_g_p_i_o.html">GPIO</a> pins</li>
 <li>e.g. 12 bit resolution results in a max value of 4096 for analog values and a datatype of <code>int16_t</code></li>
 </ul>
 </li>
@@ -153,7 +153,7 @@ Configuration values</h2>
 Nodes</h1>
 <blockquote class="doxtable">
 <p >&zwj;NODE <code>node_id</code> : <code>optional description</code> </p><blockquote class="doxtable">
-<p >&zwj;MAX_GPIO : <code>max_gpio_number</code> : <code>optional description</code> VIRT_ID_OFF : <code>virtual_id_offset</code> : <code>optional description</code> ADDR <code>can_address_low</code> - <code>can_address_high</code> : <code>optional description</code> GPIO <code>gpio_pin_id</code> : <code>pin#</code> <code>[DIGITAL|ANALOG]</code> <code>[I|O]</code> : <code>optional description</code> <br  />
+<p >&zwj;MAX_GPIO : <code>max_gpio_number</code> : <code>optional description</code> VIRT_ID_OFF : <code>virtual_id_offset</code> : <code>optional description</code> ADDR <code>can_address_low</code> - <code>can_address_high</code> : <code>optional description</code> <a class="el" href="class_g_p_i_o.html">GPIO</a> <code>gpio_pin_id</code> : <code>pin#</code> <code>[DIGITAL|ANALOG]</code> <code>[I|O]</code> : <code>optional description</code> <br  />
  VIRT <code>virt_pin_id</code> : <code>[DIGITAL|ANALOG]</code> : <code>optional description</code> <br  />
  MSG <code>can_msg_address</code> <code>[&lt;&lt;|&gt;&gt;]</code> <code>can_msg_id</code> : <code>optional description</code> <br  />
  </p><blockquote class="doxtable">
@@ -176,11 +176,11 @@ Nodes</h1>
 Metadata</h2>
 <h3><a class="anchor" id="autotoc_md84"></a>
 &lt;tt&gt;MAX_GPIO&lt;/tt&gt;</h3>
-<p >The <code>MAX_GPIO</code> line defined the maximum number of GPIO pins that a <code>NODE</code> is capable of addressing, regardless of whether it is declared or not. This allows nodes to, for whatever reason, still access gpio pins not defined by <a class="el" href="namespace_s_d_b_c.html">SDBC</a>. Limiting this range helps prevent undefined behavior and mistakes when testing. This line <b>must</b> be set when any <code>GPIO</code> is defined on a <code>NODE</code>.</p>
-<p >This number can often be found by looking into the appropriate GPIO headers for a particular node's processor.</p>
+<p >The <code>MAX_GPIO</code> line defined the maximum number of <a class="el" href="class_g_p_i_o.html">GPIO</a> pins that a <code>NODE</code> is capable of addressing, regardless of whether it is declared or not. This allows nodes to, for whatever reason, still access gpio pins not defined by <a class="el" href="namespace_s_d_b_c.html">SDBC</a>. Limiting this range helps prevent undefined behavior and mistakes when testing. This line <b>must</b> be set when any <code><a class="el" href="class_g_p_i_o.html">GPIO</a></code> is defined on a <code>NODE</code>.</p>
+<p >This number can often be found by looking into the appropriate <a class="el" href="class_g_p_i_o.html">GPIO</a> headers for a particular node's processor.</p>
 <h3><a class="anchor" id="autotoc_md85"></a>
 &lt;tt&gt;VIRT_ID_OFF&lt;/tt&gt;</h3>
-<p >The offset that virtual pin numbers should start from. Because <code>VIRT</code>s should not collide with <code>GPIO</code> pin numbers, their pseudo pin number must start with an offset that clears any <code>GPIO</code> pin number.</p>
+<p >The offset that virtual pin numbers should start from. Because <code>VIRT</code>s should not collide with <code><a class="el" href="class_g_p_i_o.html">GPIO</a></code> pin numbers, their pseudo pin number must start with an offset that clears any <code><a class="el" href="class_g_p_i_o.html">GPIO</a></code> pin number.</p>
 <p >This line <b>must</b> be set when any <code>VIRT</code> is defined on a <code>NODE</code>.</p>
 <h3><a class="anchor" id="autotoc_md86"></a>
 &lt;tt&gt;ADDR&lt;/tt&gt;</h3>
@@ -193,17 +193,17 @@ Metadata</h2>
 Sources</h2>
 <h3><a class="anchor" id="autotoc_md88"></a>
 &lt;tt&gt;GPIO&lt;/tt&gt;</h3>
-<p >The <code>GPIO</code> line defines a physical GPIO pin that shall be in use. It consists of a unique ID, the pin number, whether this pin should be treated as <code>DIGITAL</code> or <code>ANALOG</code>; which changes whether it should be treated as a single bit or multiple, whether this pin is exclusively for input (<code>I</code>) or output (<code>O</code>), and the optional description.</p>
+<p >The <code><a class="el" href="class_g_p_i_o.html">GPIO</a></code> line defines a physical <a class="el" href="class_g_p_i_o.html">GPIO</a> pin that shall be in use. It consists of a unique ID, the pin number, whether this pin should be treated as <code>DIGITAL</code> or <code>ANALOG</code>; which changes whether it should be treated as a single bit or multiple, whether this pin is exclusively for input (<code>I</code>) or output (<code>O</code>), and the optional description.</p>
 <p >In this context, input means that the physical pin can only be read and output means that the physical pin can only be set. However, both input and output pins will store a buffer value that can be read, this allows to keep track of both their states.</p>
-<p ><b>NOTE:</b> <code>GPIO</code>s can only be set to, at most, a 32 bit integer pin will not be verified if it is necessarily usable as digital or analog, refer to board pin-out to confirm it has digital, analog read and/or write capabilities.</p>
+<p ><b>NOTE:</b> <code><a class="el" href="class_g_p_i_o.html">GPIO</a></code>s can only be set to, at most, a 32 bit integer pin will not be verified if it is necessarily usable as digital or analog, refer to board pin-out to confirm it has digital, analog read and/or write capabilities.</p>
 <h3><a class="anchor" id="autotoc_md89"></a>
 &lt;tt&gt;VIRT&lt;/tt&gt;</h3>
 <p >The <code>VIRT</code> line defines a virtual pin that is mainly used to communicate M2M but treated as a pin to simplify the API. It consists of a unique ID, whether this pin should be treated as <code>DIGITAL</code> or <code>ANALOG</code>; which changes whether it should be treated as a single bit or multiple, and the optional description.</p>
 <p >Virtual pins shall be defined on the node of the initial value or whichever node generates the value, as it can technically be defined anywhere in the network.</p>
 <p >In this context, input means that the value can only be read and output means that the value can only be set.</p>
-<p >Because there is no pin given, the usage of this pin must verify it has a unique or alternative way to modify the value compared to the set GPIO lines.</p>
+<p >Because there is no pin given, the usage of this pin must verify it has a unique or alternative way to modify the value compared to the set <a class="el" href="class_g_p_i_o.html">GPIO</a> lines.</p>
 <p ><b>NOTE:</b> <code>VIRT</code>s can only be set to, at most, a 64 bit floating point value.</p>
-<p ><code>GPIO</code>s and <code>VIRT</code>s are functionally the same. Unless otherwise noted, <code>VIRT</code>s can used where <code>GPIO</code> can and vice versa. The rest of this specification will mainly refer to <code>GPIO</code>.</p>
+<p ><code><a class="el" href="class_g_p_i_o.html">GPIO</a></code>s and <code>VIRT</code>s are functionally the same. Unless otherwise noted, <code>VIRT</code>s can used where <code><a class="el" href="class_g_p_i_o.html">GPIO</a></code> can and vice versa. The rest of this specification will mainly refer to <code><a class="el" href="class_g_p_i_o.html">GPIO</a></code>.</p>
 <h3><a class="anchor" id="autotoc_md90"></a>
 &lt;tt&gt;MSG&lt;/tt&gt;</h3>
 <p >The <code>MSG</code> line defines a <a class="el" href="namespace_c_a_n.html" title="Canbus functionality. Refer to Canbus.h for more info.">CAN</a> bus message, where it contains <code>SIG</code>s or signals, which are the values within that message. It consists of the can bus address for the message, whether this message is outgoing <code>&lt;&lt;</code> or incoming <code>&gt;&gt;</code>, the unique id for this message, and the optional description.</p>
@@ -213,7 +213,7 @@ Sources</h2>
 &lt;tt&gt;SIG&lt;/tt&gt;</h4>
 <p >The <code>SIG</code> line consists of the signal id, the format of this signal, optionally, the id of the value that should be linked to this signal using a value setter <code>&lt;&lt;</code> or <code>&gt;&gt;</code>, dependent on whether this message is outgoing or incoming, respectively; this keeps the signal up to date with the given source whether it is from a gpio or virt source, and the optional description.</p>
 <p >Signals linked with a value setter (<code>&lt;&lt;</code> or <code>&gt;&gt;</code>) are to be updated in the background at runtime. The header for formatting the incoming values will be generated but the actual logic must be then later defined in a separate source file.</p>
-<p ><b>NOTE:</b> <code>GPIO</code>s can only be set to, at most, a 32 bit integer value while <code>VIRT</code>s are doubles.</p>
+<p ><b>NOTE:</b> <code><a class="el" href="class_g_p_i_o.html">GPIO</a></code>s can only be set to, at most, a 32 bit integer value while <code>VIRT</code>s are doubles.</p>
 <h4><a class="anchor" id="autotoc_md92"></a>
 Space optimization</h4>
 <p >Although not required, effort should be made to optimize the placement of signals within a message.</p>
@@ -221,18 +221,18 @@ Space optimization</h4>
 <p >Values should be optimized to be placed at appropriate integer intervals, where possible. i.e. every 32 bits for 32 bit values, every 16 bits for 16 bit values, or every 8 bits for 8 bit values. This is best achieved by placing values largest to smallest, where applicable.</p>
 <h3><a class="anchor" id="autotoc_md93"></a>
 &lt;tt&gt;LINK&lt;/tt&gt;</h3>
-<p >The <code>LINK</code> line defines a <code>GPIO</code> link between nodes, where it contains <code>SET</code>s or setters, which dictate what value gets set to what. It consists of whether this link is outgoing <code>&lt;&lt;</code> or incoming <code>&gt;&gt;</code>, the unique ID for the linked node, the unique ID for the message on the linked node, and the optional description.</p>
+<p >The <code>LINK</code> line defines a <code><a class="el" href="class_g_p_i_o.html">GPIO</a></code> link between nodes, where it contains <code>SET</code>s or setters, which dictate what value gets set to what. It consists of whether this link is outgoing <code>&lt;&lt;</code> or incoming <code>&gt;&gt;</code>, the unique ID for the linked node, the unique ID for the message on the linked node, and the optional description.</p>
 <p >Incoming <code>&gt;&gt;</code> <code>LINK</code>s set values on the node that defines it. Outgoing <code>&lt;&lt;</code> <code>LINK</code>s set values on the node that it is linking to.</p>
 <p ><b>NOTE:</b> For each node, only one <code>LINK</code> can be defined per message.</p>
 <h4><a class="anchor" id="autotoc_md94"></a>
 &lt;tt&gt;SET&lt;/tt&gt;</h4>
-<p >The <code>SET</code> line consists of a signal ID from the linked node's message, <code>&lt;&lt;</code> or <code>&gt;&gt;</code>, dependent on whether this <code>LINK</code> is outgoing or incoming, respectively; this keeps the signal up to date with the given source whether it is from a <code>GPIO</code> or <code>VIRT</code>, and the optional description.</p>
+<p >The <code>SET</code> line consists of a signal ID from the linked node's message, <code>&lt;&lt;</code> or <code>&gt;&gt;</code>, dependent on whether this <code>LINK</code> is outgoing or incoming, respectively; this keeps the signal up to date with the given source whether it is from a <code><a class="el" href="class_g_p_i_o.html">GPIO</a></code> or <code>VIRT</code>, and the optional description.</p>
 <p ><b>NOTE: ALL</b> values of a linked <code>NODE</code>s <code>MSG</code> must be referenced for both incoming and outgoing messages.</p>
 <h3><a class="anchor" id="autotoc_md95"></a>
 &lt;tt&gt;MSG&lt;/tt&gt; &lt;tt&gt;SIG&lt;/tt&gt; Value Setter V.S. &lt;tt&gt;LINK&lt;/tt&gt;s</h3>
-<p >Value setters and <code>LINK</code>s work very similarly, however, value setters are general and restricted in the sense that it is attached only to the address, which cannot be explicitly referenced by other nodes. A <code>MSG</code> is either outgoing, with a node <code>GPIO</code> setting it, or it is incoming where it is set by a <code>GPIO</code>. A simple In / Out deceleration of data.</p>
-<p ><code>LINK</code>s, on the other hand, can reference messages of other nodes, as to what <code>GPIO</code>s should be pushed to or pulled from. In this sense, value setters define which signals can be linked to for outgoing links. For incoming <code>LINK</code>s, they are functionally the same as instead having the linked node having an outgoing <code>LINK</code> to this node, where this node has an incoming message with value setters (refer to example).</p>
-<p ><b>NOTE:</b> Circular references to <code>GPIO</code>s shall be checked for at parsing, as to prevent a case where messages continuously cycle, sending itself</p>
+<p >Value setters and <code>LINK</code>s work very similarly, however, value setters are general and restricted in the sense that it is attached only to the address, which cannot be explicitly referenced by other nodes. A <code>MSG</code> is either outgoing, with a node <code><a class="el" href="class_g_p_i_o.html">GPIO</a></code> setting it, or it is incoming where it is set by a <code><a class="el" href="class_g_p_i_o.html">GPIO</a></code>. A simple In / Out deceleration of data.</p>
+<p ><code>LINK</code>s, on the other hand, can reference messages of other nodes, as to what <code><a class="el" href="class_g_p_i_o.html">GPIO</a></code>s should be pushed to or pulled from. In this sense, value setters define which signals can be linked to for outgoing links. For incoming <code>LINK</code>s, they are functionally the same as instead having the linked node having an outgoing <code>LINK</code> to this node, where this node has an incoming message with value setters (refer to example).</p>
+<p ><b>NOTE:</b> Circular references to <code><a class="el" href="class_g_p_i_o.html">GPIO</a></code>s shall be checked for at parsing, as to prevent a case where messages continuously cycle, sending itself</p>
 <h4><a class="anchor" id="autotoc_md96"></a>
 Example</h4>
 <div class="fragment"><div class="line"># Typical Application</div>
@@ -301,7 +301,7 @@ Types</h1>
 <h1><a class="anchor" id="autotoc_md99"></a>
 Embedded compilation</h1>
 <p >[TODO]</p>
-<p ><s>For this section, a 'source' is defined as a <code>GPIO</code>, <code>VIRT</code>, or <code>SYNC</code> line</s></p>
+<p ><s>For this section, a 'source' is defined as a <code><a class="el" href="class_g_p_i_o.html">GPIO</a></code>, <code>VIRT</code>, or <code>SYNC</code> line</s></p>
 <p ><s>For use in the embedded build system, here are things that must happen.</s></p>
 <p ><s>Nodes that contain logic (defined sources), will generate defines for those sources that match their id, they are defined based for what node the build is for. Other id's will have a prefix with the id of it's respective owner.</s></p>
 <p ><s>Any sources or <code>MSG</code> that have a sync refrenced to them, must output to the network whenever they change.</s></p>
@@ -342,7 +342,7 @@ Added</h3>
 <li><code>MAX_GPIO</code></li>
 <li><code>VIRT_ID_OFF</code></li>
 <li><code>ADDR</code></li>
-<li><code>GPIO</code></li>
+<li><code><a class="el" href="class_g_p_i_o.html">GPIO</a></code></li>
 <li><code>VIRT</code></li>
 <li><code>MSG</code><ul>
 <li><code>SIG</code></li>

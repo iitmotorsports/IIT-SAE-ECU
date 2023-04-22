@@ -12,6 +12,9 @@ var annotated_dup =
       [ "Log_t", "struct_logging_1_1_log__t.html", "struct_logging_1_1_log__t" ]
     ] ],
     [ "Module", null, [
+      [ "ActiveModule_t", "class_module_1_1_active_module__t.html", null ],
+      [ "Manager_t", "class_module_1_1_manager__t.html", null ],
+      [ "MessengerModule_t", "class_module_1_1_messenger_module__t.html", "class_module_1_1_messenger_module__t" ],
       [ "Module_t", "class_module_1_1_module__t.html", null ],
       [ "Node", "struct_module_1_1_node.html", null ]
     ] ],
@@ -75,5 +78,6 @@ var annotated_dup =
     [ "b_t", "classb__t.html", null ],
     [ "c_t", "classc__t.html", null ],
     [ "d_t", "classd__t.html", null ],
-    [ "e", "classe.html", null ]
+    [ "e", "classe.html", null ],
+    [ "GPIO", "class_g_p_i_o.html", null ]
 ];

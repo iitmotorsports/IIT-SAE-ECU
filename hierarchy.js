@@ -23,11 +23,17 @@ var hierarchy =
       [ "SDBC::VIRT", "struct_s_d_b_c_1_1_v_i_r_t.html", null ]
     ] ],
     [ "Logging::Log_t", "struct_logging_1_1_log__t.html", null ],
+    [ "Module::Manager_t", "class_module_1_1_manager__t.html", null ],
     [ "SDBC::MC0", "struct_s_d_b_c_1_1_m_c0.html", null ],
     [ "SDBC::MC1", "struct_s_d_b_c_1_1_m_c1.html", null ],
     [ "Module::Module_t", "class_module_1_1_module__t.html", [
       [ "CAN::Canbus_t", "class_c_a_n_1_1_canbus__t.html", null ],
-      [ "a", "classa.html", null ],
+      [ "Module::ActiveModule_t", "class_module_1_1_active_module__t.html", [
+        [ "Module::MessengerModule_t", "class_module_1_1_messenger_module__t.html", [
+          [ "GPIO", "class_g_p_i_o.html", null ],
+          [ "a", "classa.html", null ]
+        ] ]
+      ] ],
       [ "b_t", "classb__t.html", null ],
       [ "c_t", "classc__t.html", null ],
       [ "d_t", "classd__t.html", null ],
@@ -36,6 +42,7 @@ var hierarchy =
     [ "SDBC::MSG", "class_s_d_b_c_1_1_m_s_g.html", [
       [ "SDBC::LINK", "struct_s_d_b_c_1_1_l_i_n_k.html", null ]
     ] ],
+    [ "Module::MessengerModule_t::Msg_t", "struct_module_1_1_messenger_module__t_1_1_msg__t.html", null ],
     [ "Module::Node", "struct_module_1_1_node.html", null ],
     [ "vs_conf.Settings.Option", "classvs__conf_1_1_settings_1_1_option.html", null ],
     [ "sdbc_parse.Peeker", "classsdbc__parse_1_1_peeker.html", null ],

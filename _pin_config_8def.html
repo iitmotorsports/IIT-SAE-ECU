@@ -223,7 +223,8 @@ Macros</h2></td></tr>
 <p>The defintions of every physical pin. </p>
 <p >The pinout setup for the ECU, set the specific pin, whether it is analog or digital, and whether we are taking input or giving an output on the pin</p>
 <p >Unless it is the last entry, this is how to add a new pin</p>
-<div class="fragment"><div class="line">X(GPIO, ANALOG/DIGITAL, INPUT/OUTPUT, INITAL_STATE) \</div>
+<div class="fragment"><div class="line">X(<a class="code hl_class" href="class_g_p_i_o.html">GPIO</a>, ANALOG/DIGITAL, INPUT/OUTPUT, INITAL_STATE) \</div>
+<div class="ttc" id="aclass_g_p_i_o_html"><div class="ttname"><a href="class_g_p_i_o.html">GPIO</a></div><div class="ttdef"><b>Definition:</b> <a href="test__a_8h_source.html#l00007">test_a.h:7</a></div></div>
 </div><!-- fragment --><p ><code>INITAL_STATE</code> is the value a pin should be set to on startup</p>
 <p >It can be a number or <code>NIL</code>, meaning that we do not care what it's starting output value is</p>
 <p >All <code>INPUT</code> pins should have this set to <code>NIL</code></p>
