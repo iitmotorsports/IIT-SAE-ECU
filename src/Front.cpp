@@ -1,6 +1,5 @@
 #include "Front.h"
 #include "ECUGlobalConfig.h"
-#include "Echo.h"
 #include "Heartbeat.h"
 #include "Mirror.h"
 #include "SerialCommand.h"
@@ -53,7 +52,7 @@ static void sendEchoMessage() {
         return;
     }
     Log.d(ID, "Pushing Message", address);
-    Echo::echo(delay, address, (uint8_t *)buffer);
+    // Echo::echo(delay, address, (uint8_t *)buffer);
 }
 
 static void toggleMotorDirection() {
@@ -83,12 +82,12 @@ void run() {
     loadStateMap();
 
     Log.i(ID, "Setting commands");
-    Cmd::setCommand(COMMAND_ENABLE_CHARGING, setChargeSignal);
-    Cmd::setCommand(COMMAND_SEND_CANBUS_MESSAGE, pushCanMessage);
-    Cmd::setCommand(COMMAND_TOGGLE_CANBUS_SNIFF, toggleCanbusSniffer);
-    Cmd::setCommand(COMMAND_SEND_ECHO, sendEchoMessage);
+    Cmd::setCommand(COMMAND_ENABLE_CHARGING, setChargeSignal);         // TODO: RIP
+    Cmd::setCommand(COMMAND_SEND_CANBUS_MESSAGE, pushCanMessage);      // TODO: RIP
+    Cmd::setCommand(COMMAND_TOGGLE_CANBUS_SNIFF, toggleCanbusSniffer); // TODO: RIP
+    Cmd::setCommand(COMMAND_SEND_ECHO, sendEchoMessage);               // TODO: RIP
     Cmd::setCommand(COMMAND_TOGGLE_REVERSE, toggleMotorDirection);
-    Cmd::setCommand(COMMAND_PRINT_LOOKUP, Logging::printLookup);
+    Cmd::setCommand(COMMAND_PRINT_LOOKUP, Logging::printLookup); // TODO: RIP
     Cmd::setCommand(COMMAND_UPDATE_SERIALVAR, SerialVar::receiveSerialVar);
     Heartbeat::beginReceiving();
 
@@ -109,7 +108,7 @@ void run() {
 #if ECU_TESTING == FRONT_ECU
     full_front_test();
 #endif
-
+    Heartbeat::beginBeating();
     while (!Heartbeat::checkBeat()) {
         delay(500);
         Cmd::receiveCommand();
@@ -120,10 +119,22 @@ void run() {
             timeElapsedHigh = 0;
             Cmd::receiveCommand();
 
-            highPriorityValues();
+            // highPriorityValues();
 
             updateCurrentState();
             hasBeat = Heartbeat::checkBeat();
+        }
+        if (timeElapsedMidHigh >= INTERVAL_MED_HIGH_PRIORITY) { // Low priority updates
+            timeElapsedMidHigh = 0;
+
+            Pins::setPinValue(PINS_FRONT_BMS_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_BMS_FAULT));
+            Pins::setPinValue(PINS_FRONT_IMD_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_IMD_FAULT));
+
+            static Canbus::Buffer BMS_DATA_Buffer(ADD_BMS_DATA);
+
+            Log.i(ID, "SOC", BMS_DATA_Buffer.getUByte(4) / 2);
+
+            // medPriorityValues();
         }
         if (timeElapsedLow >= INTERVAL_MED_LOW_PRIORITY) { // Low priority updates
             timeElapsedLow = 0;
@@ -136,10 +147,7 @@ void run() {
 
             Pins::setInternalValue(PINS_INTERNAL_TVAGG, TVAggression * 10000);
 
-            Pins::setPinValue(PINS_FRONT_BMS_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_BMS_FAULT));
-            Pins::setPinValue(PINS_FRONT_IMD_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_IMD_FAULT));
-
-            lowPriorityValues();
+            // lowPriorityValues();
         }
     }
 }

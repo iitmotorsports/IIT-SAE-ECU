@@ -4,9 +4,9 @@
  * @brief Heartbeat source file
  * @version 0.1
  * @date 2021-03-19
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  */
 //@cond
 
@@ -36,8 +36,12 @@ static void toggleLED() {
 }
 
 static void beat() {
-    Canbus::sendData(ADD_HEART);
-    toggleLED();
+#if CONF_ECU_POSITION == FRONT_ECU
+    Canbus::sendData(ADD_HEART_FRONT);
+#else
+    Canbus::sendData(ADD_HEART_BACK);
+#endif
+    Log.d(ID, "heartbeat", 0, 10000);
 
     for (auto f : funcs) {
         f();
@@ -45,7 +49,7 @@ static void beat() {
 }
 
 void beginBeating() {
-    canbusPinUpdate.priority(10);
+    canbusPinUpdate.priority(132);
     canbusPinUpdate.begin(beat, CONF_HEARTBEAT_INTERVAL_MILLIS * 1000);
 }
 
@@ -56,7 +60,11 @@ static void receiveBeat(uint32_t, volatile uint8_t *) {
 }
 
 void beginReceiving() {
-    Canbus::addCallback(ADD_HEART, receiveBeat);
+#if CONF_ECU_POSITION == FRONT_ECU
+    Canbus::addCallback(ADD_HEART_BACK, receiveBeat);
+#else
+    Canbus::addCallback(ADD_HEART_FRONT, receiveBeat);
+#endif
 }
 
 int checkBeat() {

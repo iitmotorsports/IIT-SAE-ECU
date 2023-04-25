@@ -7,6 +7,7 @@
 int main(void) {
     Serial.begin(CONF_ECU_BAUD_RATE);
     delay(CONF_ECU_INITAL_DELAY);
+    Logging::initializeSDCard();
 #if CONF_ECU_POSITION == BACK_ECU
     State::begin(ECUStates::Initialize_State);
 #else

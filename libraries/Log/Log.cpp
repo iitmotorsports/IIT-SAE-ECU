@@ -19,28 +19,9 @@
 #include "ECUGlobalConfig.h"
 #include "Log.h"
 #include "LogConfig.def"
-#include "WProgram.h"
 #include "map"
 
-/**
- * @brief The ZLib compressed lookup table
- */
-extern unsigned char log_lookup[];
-
-/**
- * @brief The length of log_lookup's data
- */
-extern unsigned int log_lookup_len;
-
-/**
- * @brief The length of log_lookup's data with padding
- */
-extern unsigned int log_lookup_pad_len;
-
-/**
- * @brief The length of log_lookup's data when uncompressed
- */
-extern unsigned int log_lookup_uncmp_len;
+#include "SDIO.h"
 
 namespace Logging {
 
@@ -135,13 +116,17 @@ static void __logger_print_num(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const u
         memcpy(log_buf + 2, &MESSAGE, 2);
         memcpy(log_buf + 4, &NUMBER, 4);
 #if CONF_ECU_POSITION == BACK_ECU
-#ifdef CONF_ECU_DEBUG
+        // #ifdef CONF_ECU_DEBUG
         Serial.write(log_buf, 8);
-#endif
-        Canbus::sendData(ADD_AUX_LOGGING, log_buf);
+        // #endif
+        // Canbus::sendData(ADD_AUX_LOGGING, log_buf);
 #else
         Serial.write(log_buf, 8);
 #endif
+        if (SDIO::initalizedSD) {
+            SDIO::SDFile.write(log_buf, 8);
+            SDIO::SDFile.flush();
+        }
     }
 }
 
@@ -176,17 +161,51 @@ static const char *FATAL = "[FATAL]";
 #ifdef CONF_LOGGING_ENABLE_TIMESTAMP
 static const char *FORMAT = "%s @ %u [%s]: %s\n";
 static const char *FORMAT_NUM = "%s @ %u [%s]: %s %u\n";
-static void __logger_print(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE) { Serial.printf(FORMAT, TYPE, millis(), TAG, MESSAGE); }
-static void __logger_print_num(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const uint32_t NUMBER, int mediate = false) { Serial.printf(FORMAT_NUM, TYPE, millis(), TAG, MESSAGE, NUMBER); }
+static void __logger_print(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE) {
+    auto m = millis();
+    Serial.printf(FORMAT, TYPE, m, TAG, MESSAGE);
+    if (SDIO::initalizedSD) {
+        SDIO::SDFile.printf(FORMAT, TYPE, m, TAG, MESSAGE);
+    }
+}
+static void __logger_print_num(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const uint32_t NUMBER, int mediate = false) {
+    auto m = millis();
+    Serial.printf(FORMAT_NUM, TYPE, m, TAG, MESSAGE, NUMBER);
+    if (SDIO::initalizedSD) {
+        SDIO::SDFile.printf(FORMAT_NUM, TYPE, m, TAG, MESSAGE, NUMBER);
+    }
+}
 #else
 static const char *FORMAT = "%s [%s]: %s\n";
 static const char *FORMAT_NUM = "%s [%s]: %s %u\n";
-static void __logger_print(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE) { Serial.printf(FORMAT, TYPE, TAG, MESSAGE); }
-static void __logger_print_num(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const uint32_t NUMBER, int mediate = false) { Serial.printf(FORMAT_NUM, TYPE, TAG, MESSAGE, NUMBER); }
+static void __logger_print(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE) {
+    Serial.printf(FORMAT, TYPE, TAG, MESSAGE);
+    if (SDIO::initalizedSD) {
+        SDIO::SDFile.printf(FORMAT, TYPE, TAG, MESSAGE);
+    }
+}
+static void __logger_print_num(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const uint32_t NUMBER, int mediate = false) {
+    Serial.printf(FORMAT_NUM, TYPE, TAG, MESSAGE, NUMBER);
+    if (SDIO::initalizedSD) {
+        SDIO::SDFile.printf(FORMAT_NUM, TYPE, TAG, MESSAGE, NUMBER);
+    }
+}
 #endif
 #endif
 
 #endif
+
+bool initializeSDCard() {
+    return SDIO::initialize();
+}
+
+void enterSDMode() {
+    SDIO::enterSDMode();
+}
+
+void trySDMode() {
+    SDIO::trySDMode();
+}
 
 void Log_t::operator()(LOG_TAG TAG, LOG_MSG message) {
 #ifdef __LOGGER_NONE_PRINT

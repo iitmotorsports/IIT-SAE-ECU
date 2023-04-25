@@ -112,23 +112,4 @@ static struct FaultState : State::State_t {
     LOG_TAG getID(void) { return ID; }
 } FaultState;
 
-/**
- * @brief Demonstrate Serial logging
- * This state demonstrates the different ways we can log things to serial
- */
-static struct Logger_t : State::State_t {
-    LOG_TAG ID = "Logger State";
-    State::State_t *run(void);
-    LOG_TAG getID(void) { return ID; }
-} Logger;
-
-/**
- * @brief Demonstrate how to go back to a previous state
- */
-static struct Bounce_t : State::State_t {
-    LOG_TAG ID = "Bouncer State";
-    State::State_t *run(void);
-    LOG_TAG getID(void) { return ID; }
-} Bounce;
-
 } // namespace ECUStates

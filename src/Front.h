@@ -7,8 +7,8 @@
 #include "Log.h"
 
 #define INTERVAL_HIGH_PRIORITY 20
-#define INTERVAL_MED_HIGH_PRIORITY 400
-#define INTERVAL_MED_LOW_PRIORITY 800
+#define INTERVAL_MED_HIGH_PRIORITY 80
+#define INTERVAL_MED_LOW_PRIORITY 500
 #define INTERVAL_LOW_PRIORITY 1200
 
 /**
@@ -50,6 +50,11 @@ void setChargeSignal();
  * @brief Outputs values that are of lower priority
  */
 void lowPriorityValues();
+
+/**
+ * @brief Outputs values that are of higher priority
+ */
+void medPriorityValues();
 
 /**
  * @brief Outputs values that are of higher priority

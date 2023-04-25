@@ -57,7 +57,8 @@
 // Logging address
 #define ADD_AUX_LOGGING 0x0123
 // Ping address
-#define ADD_HEART 0x0321
+#define ADD_HEART_FRONT 0x0321
+#define ADD_HEART_BACK 0x0322
 // echo address
 #define ADD_ECHO_DATA 0x0231
 #define ADD_ECHO_DELAY 0x0232
@@ -108,7 +109,8 @@
     X(ADD_CANPIN_DIGITAL0, CANPIN) \
     X(ADD_CANPIN_DIGITAL1, CANPIN) \
     X(ADD_AUX_LOGGING, CANPIN)     \
-    X(ADD_HEART, CANPIN)           \
+    X(ADD_HEART_FRONT, CANPIN)           \
+    X(ADD_HEART_BACK, CANPIN)           \
     X(ADD_ECHO_DATA, CANPIN)       \
     X(ADD_ECHO_DELAY, CANPIN)
 

@@ -11,10 +11,13 @@
 
 // @cond
 
-#include "Pins.h"
+#include <map> // FIXME: Linker error when using unordered_map, something to do with allocation? compilation may not be correct
+#include <cstring>
+#include <stdint.h>
+#include <stdlib.h>
+
 #include "IntervalTimer.h"
-#include "core_pins.h"
-#include "map" // FIXME: Linker error when using unordered_map, something to do with allocation? compilation may not be correct
+#include "Pins.h"
 
 #include "Canbus.h"
 #include "ECUGlobalConfig.h"
@@ -31,12 +34,12 @@ namespace Pins {
 
 #define X ,
 
-static const uint analogCanMsgCount_OUT = PP_NARG_MO(PINS_CANBUS_ANALOG_OUT) / 2 + PP_NARG_MO(PINS_CANBUS_ANALOG_OUT) % 2;
-static const uint analogCanPinCount_OUT = PP_NARG_MO(PINS_CANBUS_ANALOG_OUT);
-static const uint digitalCanPinCount_OUT = PP_NARG_MO(PINS_CANBUS_DIGITAL_OUT);
-static const uint analogCanPinCount_IN = PP_NARG_MO(PINS_CANBUS_ANALOG_IN);
-static const uint analogCanMsgCount_IN = PP_NARG_MO(PINS_CANBUS_ANALOG_IN) / 2 + PP_NARG_MO(PINS_CANBUS_ANALOG_IN) % 2;
-static const uint digitalCanPinCount_IN = PP_NARG_MO(PINS_CANBUS_DIGITAL_IN);
+static const uint32_t analogCanMsgCount_OUT = PP_NARG_MO(PINS_CANBUS_ANALOG_OUT) / 2 + PP_NARG_MO(PINS_CANBUS_ANALOG_OUT) % 2;
+static const uint32_t analogCanPinCount_OUT = PP_NARG_MO(PINS_CANBUS_ANALOG_OUT);
+static const uint32_t digitalCanPinCount_OUT = PP_NARG_MO(PINS_CANBUS_DIGITAL_OUT);
+static const uint32_t analogCanPinCount_IN = PP_NARG_MO(PINS_CANBUS_ANALOG_IN);
+static const uint32_t analogCanMsgCount_IN = PP_NARG_MO(PINS_CANBUS_ANALOG_IN) / 2 + PP_NARG_MO(PINS_CANBUS_ANALOG_IN) % 2;
+static const uint32_t digitalCanPinCount_IN = PP_NARG_MO(PINS_CANBUS_DIGITAL_IN);
 
 #if PP_NARG_MO(PINS_CANBUS_DIGITAL_OUT) > 8
 #error Too many digital out canPins defined
@@ -65,7 +68,7 @@ static int getOutgoingPinValue(uint8_t GPIO_Pin);
 struct digitalCanPinMsg_t : CanPinMsg_t {
     uint32_t activedigitalCanPins = 0;
     uint8_t digitalPins[maxActiveDigitalPins];
-    uint digitalPinPos[maxActiveDigitalPins];
+    uint32_t digitalPinPos[maxActiveDigitalPins];
     void send() {
         memset(buf, 0, 8);
         for (size_t i = 0; i < activedigitalCanPins; i++) {
@@ -97,7 +100,7 @@ struct digitalCanPinMsg_t : CanPinMsg_t {
 
 struct analogCanPinMsg_t : CanPinMsg_t {
     uint8_t analogPins[2] = {255, 255}; // NOTE: If pin 255 exists it cannot be used, mostly likely will not happen?
-    uint analogPinPos[2];
+    uint32_t analogPinPos[2];
     void send() {
         memset(buf, 0, 8);
         for (size_t i = 0; i < 2; i++) {
@@ -288,15 +291,15 @@ void update(void) {
     // #undef X
 }
 
-static void populateCanbusMap(std::multimap<uint32_t, std::tuple<uint, uint8_t, bool>> pinMap, analogCanPinMsg_t *analogCanPinStructArray, uint maxAnalogMsg, digitalCanPinMsg_t *digitalCanPinStruct, uint activeDigitalCanPinCount) {
-    uint amsgc = 0;
-    uint dmsgc = 0;
+static void populateCanbusMap(std::multimap<uint32_t, std::tuple<uint32_t, uint8_t, bool>> pinMap, analogCanPinMsg_t *analogCanPinStructArray, uint32_t maxAnalogMsg, digitalCanPinMsg_t *digitalCanPinStruct, uint32_t activeDigitalCanPinCount) {
+    uint32_t amsgc = 0;
+    uint32_t dmsgc = 0;
     decltype(pinMap.equal_range(0)) range;
     for (auto i = pinMap.begin(); i != pinMap.end(); i = range.second) {
         range = pinMap.equal_range(i->first);
 
-        uint ac = 0;
-        uint dc = 0;
+        uint32_t ac = 0;
+        uint32_t dc = 0;
         uint32_t address = i->first;
 
         for (auto d = range.first; d != range.second; ++d) {
@@ -379,9 +382,9 @@ void initialize(void) {
     resetPhysicalPins();
 
     Log.i(ID, "Setting up outgoing canbus pins");
-    std::multimap<uint32_t, std::tuple<uint, uint8_t, bool>> pinMap;
+    std::multimap<uint32_t, std::tuple<uint32_t, uint8_t, bool>> pinMap;
     bool isAnalog = true;
-    uint i = 0;
+    uint32_t i = 0;
 
 #define X(address, pin)                                                        \
     pinMap.insert(std::make_pair(address, std::make_tuple(i, pin, isAnalog))); \

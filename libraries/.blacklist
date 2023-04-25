@@ -4,3 +4,6 @@ teensy4_i2c
 
 .IMXRT1062 # Teensy 4.x
 i2c_t3
+BNO055
+TeensyThreads
+vl53l0x-arduino

@@ -30,7 +30,7 @@ def bin2cc(data: bytes, var_name: str) -> str:
     # zlib compress data
     ulen = len(data)
     data = bytes(data, "UTF-8")
-    data = zlib.compress(data, 9)
+    # data = zlib.compress(data, 9)
 
     data = data.hex(" ", 1).split(" ")
 

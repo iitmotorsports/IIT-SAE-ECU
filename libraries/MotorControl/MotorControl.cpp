@@ -101,8 +101,8 @@ static void torqueVector(int pedal, int brake, int steer) {
         // motorTorque[0] = -cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
         // motorTorque[1] = -cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
     } else {
-        motorTorque[0] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
-        motorTorque[1] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
+        // motorTorque[0] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
+        // motorTorque[1] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
 
         // Flipped sensor?
 
@@ -116,8 +116,8 @@ static void torqueVector(int pedal, int brake, int steer) {
         // }
     }
 
-    // motorTorque[0] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
-    // motorTorque[1] = motorTorque[0];
+    motorTorque[0] = cMap(_pedal, 0.0, NORM_VAL, 0.0, MAX_TORQUE);
+    motorTorque[1] = motorTorque[0];
 }
 
 void setup(void) {

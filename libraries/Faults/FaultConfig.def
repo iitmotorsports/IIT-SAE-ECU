@@ -25,7 +25,7 @@
  * @brief Defines Pins that should be checked for hard faults
  * 
  * @note The identity calls the function _LogPrebuildString, this is used to notify Pre_Build.py of the string
- * 
+` * 
  * Unless it is the last entry, this is how to add a new address
  * 
  * X(pin, comparator, value, identity) \
@@ -35,8 +35,8 @@
  */
 #if CONF_ECU_POSITION == BACK_ECU
 #define HARD_PIN_FAULTS                                                  \
-    X(PINS_BACK_IMD_FAULT, >, 0, _LogPrebuildString("IMD Fault Signal")) \
-    X(PINS_BACK_BMS_FAULT, >, 0, _LogPrebuildString("BMS Fault Signal"))
+    X(PINS_BACK_IMD_FAULT, !=, 0, _LogPrebuildString("IMD Fault Signal")) \
+    X(PINS_BACK_BMS_FAULT, !=, 0, _LogPrebuildString("BMS Fault Signal"))
 #else
 #define HARD_PIN_FAULTS
 #endif
