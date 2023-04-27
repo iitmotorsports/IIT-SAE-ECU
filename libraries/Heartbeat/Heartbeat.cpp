@@ -19,55 +19,59 @@
 #include "stdint.h"
 #include "stdlib.h"
 #include <set>
+#include <unordered_map>
 
 namespace Heartbeat {
-static IntervalTimer canbusPinUpdate;
-static elapsedMillis lastBeat;
-static volatile int lastTime = 0;
 
-static LOG_TAG ID = "HeartBeat";
+IntervalTimer canbusPinUpdate;
+bool started = false;
 
-static std::set<beatFunc> funcs;
+std::set<beatFunc> auxFuncs;
+std::unordered_map<uint32_t, CANHeart *> hearts;
 
-static void toggleLED() {
-    static bool on = false;
-    on = !on;
-    Pins::setPinValue(PINS_BOTH_LED, on);
+void receiveCAN(uint32_t addr, volatile uint8_t *) {
+    if (hearts.find(addr) != hearts.end())
+        hearts[addr]->receiveBeat();
 }
 
-static void beat() {
-#if CONF_ECU_POSITION == FRONT_ECU
-    Canbus::sendData(ADD_HEART_FRONT);
-#else
-    Canbus::sendData(ADD_HEART_BACK);
-#endif
-    Log.d(ID, "heartbeat", 0, 10000);
+void beat() {
+    Log.d("Heartbeat", "heartbeats", 0, 10000);
 
-    for (auto f : funcs) {
+    for (auto heart : hearts) {
+        if (!(++(heart.second->timeCnt) % heart.second->timeMult))
+            Canbus::sendData(heart.second->sendingAddress);
+    }
+
+    for (auto f : auxFuncs) {
         f();
     }
 }
 
-void beginBeating() {
-    canbusPinUpdate.priority(132);
-    canbusPinUpdate.begin(beat, CONF_HEARTBEAT_INTERVAL_MILLIS * 1000);
+void CANHeart::setCallback(beatFunc func) {
+    onBeatFunc = func;
 }
 
-static void receiveBeat(uint32_t, volatile uint8_t *) {
-    lastTime = lastBeat;
+void CANHeart::receiveBeat() {
     lastBeat = 0;
-    toggleLED();
+    if (onBeatFunc != nullptr)
+        onBeatFunc();
 }
 
-void beginReceiving() {
-#if CONF_ECU_POSITION == FRONT_ECU
-    Canbus::addCallback(ADD_HEART_BACK, receiveBeat);
-#else
-    Canbus::addCallback(ADD_HEART_FRONT, receiveBeat);
-#endif
+CANHeart::CANHeart(uint32_t sendingAddress, uint32_t receivingAddress, uint32_t timeMult) : timeMult(timeMult + !timeMult), sendingAddress(sendingAddress), receivingAddress(receivingAddress) {
+    Canbus::addCallback(receivingAddress, receiveCAN);
+    hearts[receivingAddress] = this;
+    if (!started) {
+        started = true;
+        canbusPinUpdate.priority(132);
+        canbusPinUpdate.begin(beat, CONF_HEARTBEAT_INTERVAL_MILLIS * 1000);
+    }
 }
 
-int checkBeat() {
+CANHeart::~CANHeart() {
+    hearts.erase(receivingAddress); // FIXME: Not thread safe
+}
+
+int CANHeart::last() {
     if (lastBeat > (CONF_HEARTBEAT_INTERVAL_MILLIS) + CONF_HEARTBEAT_TIMEOUT_MILLI) {
         Log.w(ID, "Heartbeat is taking too long", lastBeat);
         return 0;
@@ -76,7 +80,7 @@ int checkBeat() {
 }
 
 void addCallback(beatFunc func) {
-    funcs.insert(func);
+    auxFuncs.insert(func);
 }
 
 } // namespace Heartbeat

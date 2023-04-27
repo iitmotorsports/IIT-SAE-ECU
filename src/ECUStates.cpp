@@ -13,8 +13,8 @@
 static bool FaultCheck() {
     if (Fault::hardFault() || Fault::softFault())
         return true;
-    // if (!Heartbeat::checkBeat()) // TODO: heartbeat front to back
-    //     return true;
+    if (!Heartbeat::checkBeat())
+        return true;
     return false;
 };
 
@@ -286,12 +286,12 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
                 return DrivingModeFault();
             }
 
-// #if ECU_TESTING != BACK_ECU
-//             if (((MC0_VOLT_Buffer.getShort(0) / 10) + (MC1_VOLT_Buffer.getShort(0) / 10)) / 2 < 90) { // 'HVD Fault'
-//                 Log.e(ID, "'HVD Fault' MC voltage < 90");
-//                 return DrivingModeFault();
-//             }
-// #endif
+            // #if ECU_TESTING != BACK_ECU
+            //             if (((MC0_VOLT_Buffer.getShort(0) / 10) + (MC1_VOLT_Buffer.getShort(0) / 10)) / 2 < 90) { // 'HVD Fault'
+            //                 Log.e(ID, "'HVD Fault' MC voltage < 90");
+            //                 return DrivingModeFault();
+            //             }
+            // #endif
 
             int breakVal = Pins::getCanPinValue(PINS_FRONT_BRAKE);
             int steerVal = Pins::getCanPinValue(PINS_FRONT_STEER);
