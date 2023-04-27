@@ -121,7 +121,7 @@ static void __logger_print_num(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const u
         // #endif
         // Canbus::sendData(ADD_AUX_LOGGING, log_buf);
 #else
-        Serial.write(log_buf, 8);
+        // Serial.write(log_buf, 8);
 #endif
         if (SDIO::initalizedSD) {
             SDIO::SDFile.write(log_buf, 8);

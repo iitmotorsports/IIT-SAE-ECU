@@ -127,15 +127,9 @@ void setChargeSignal() {
     Pins::setInternalValue(PINS_INTERNAL_CHARGE_SIGNAL, currentState == &ECUStates::Idle_State);
 }
 
-void USBHostPush(const int id, const int value) {
-    static std::map<int, int> update;
-    if (update.find(id) == update.end()) {
-        update[id] = value;
-    }
-    if (update[id] != value) {
-        Serial.write((uint8_t *)&id, 4);
-        Serial.write((uint8_t *)&value, 4);
-    }
+void USBHostPush(const int32_t id, const int32_t value) {
+    Serial.print(id);
+    Serial.print(value);
 }
 
 void lowPriorityValues() {
@@ -159,17 +153,19 @@ void lowPriorityValues() {
     USBHostPush(20, BMSChargeCurrentLimit());    // BMS Charge current limit
 
     // General
-    Log.p("fault", "Fault State", Pins::getCanPinValue(PINS_INTERNAL_GEN_FAULT), INTERVAL_LOW_PRIORITY);
+    USBHostPush(21, Pins::getCanPinValue(PINS_INTERNAL_GEN_FAULT));
 }
 
 static double lastBrake = 0.0, lastSteer = 0.0, lastPedal0 = 0.0, lastPedal1 = 0.0;
 
-void medPriorityValues() {
+void medPriorityValues(int lastBeat) {
     int pedal0, pedal1;
     USBHostPush(1, (lastBrake = EMAvg(lastBrake, Pins::getPinValue(PINS_FRONT_BRAKE), 4)));               // Brake
     USBHostPush(27, (lastSteer = EMAvg(lastSteer, Pins::getPinValue(PINS_FRONT_STEER), 4)));              // Steering
     USBHostPush(2, (pedal0 = (lastPedal0 = EMAvg(lastPedal0, Pins::getPinValue(PINS_FRONT_PEDAL0), 4)))); // Pedal 0
     USBHostPush(3, (pedal1 = (lastPedal1 = EMAvg(lastPedal1, Pins::getPinValue(PINS_FRONT_PEDAL1), 4)))); // Pedal 1
+    USBHostPush(22, lastBeat);
+    USBHostPush(23, lastBeat);
     // pushToPhoneOverUsbSerialButOnHostWhenItIsDone(1, (pedal0 + pedal1) / 2);                                                                // Pedal AVG
 }
 

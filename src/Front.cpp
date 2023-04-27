@@ -96,7 +96,7 @@ void run() {
 #endif
 
     TVAggression = 1.8f;
-    static bool hasBeat = false;
+    static int lastBeat = 0;
 
     Log.d(ID, "Delaying 2 sec");
     Serial.flush();
@@ -119,10 +119,10 @@ void run() {
             timeElapsedHigh = 0;
             Cmd::receiveCommand();
 
-            // highPriorityValues();
+            highPriorityValues();
 
             updateCurrentState();
-            hasBeat = Heartbeat::checkBeat();
+            lastBeat = Heartbeat::checkBeat();
         }
         if (timeElapsedMidHigh >= INTERVAL_MED_HIGH_PRIORITY) { // Low priority updates
             timeElapsedMidHigh = 0;
@@ -130,16 +130,12 @@ void run() {
             Pins::setPinValue(PINS_FRONT_BMS_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_BMS_FAULT));
             Pins::setPinValue(PINS_FRONT_IMD_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_IMD_FAULT));
 
-            static Canbus::Buffer BMS_DATA_Buffer(ADD_BMS_DATA);
-
-            Log.i(ID, "SOC", BMS_DATA_Buffer.getUByte(4) / 2);
-
-            // medPriorityValues();
+            medPriorityValues(lastBeat);
         }
         if (timeElapsedLow >= INTERVAL_MED_LOW_PRIORITY) { // Low priority updates
             timeElapsedLow = 0;
 
-            updateStartLight(hasBeat);
+            updateStartLight(lastBeat);
 
             if (Fault::anyFault()) {
                 Fault::logFault();
@@ -147,7 +143,7 @@ void run() {
 
             Pins::setInternalValue(PINS_INTERNAL_TVAGG, TVAggression * 10000);
 
-            // lowPriorityValues();
+            lowPriorityValues();
         }
     }
 }

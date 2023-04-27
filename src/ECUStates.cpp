@@ -147,8 +147,9 @@ State::State_t *ECUStates::PreCharge_State::run(void) {
 
     Log.d(ID, "Running precharge loop");
 
-    while (timeElapsed <= 15000) {
-        if (voltageCheck() && timeElapsed >= 2500) { // FIXME: will always pass if submodules are disconnected from CAN net
+    while (timeElapsed <= 15000 && !FaultCheck()) {
+        // FIXME: will always pass if submodules are disconnected from CAN net
+        if (voltageCheck() && timeElapsed >= 4000) {
             Log.i(ID, "Precharge Finished, closing Air2");
             Pins::setPinValue(PINS_BACK_AIR2, HIGH);
             delay(650);

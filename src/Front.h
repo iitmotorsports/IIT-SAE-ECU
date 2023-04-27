@@ -54,7 +54,7 @@ void lowPriorityValues();
 /**
  * @brief Outputs values that are of higher priority
  */
-void medPriorityValues();
+void medPriorityValues(int lastBeat);
 
 /**
  * @brief Outputs values that are of higher priority
