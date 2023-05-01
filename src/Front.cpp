@@ -124,7 +124,7 @@ void run() {
             updateCurrentState();
             lastBeat = Heartbeat::checkBeat();
         }
-        if (timeElapsedMidHigh >= INTERVAL_MED_HIGH_PRIORITY) { // Low priority updates
+        if (timeElapsedMidHigh >= INTERVAL_MED_PRIORITY) { // Low priority updates
             timeElapsedMidHigh = 0;
 
             Pins::setPinValue(PINS_FRONT_BMS_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_BMS_FAULT));
@@ -132,7 +132,7 @@ void run() {
 
             medPriorityValues(lastBeat);
         }
-        if (timeElapsedLow >= INTERVAL_MED_LOW_PRIORITY) { // Low priority updates
+        if (timeElapsedLow >= INTERVAL_LOW_PRIORITY) { // Low priority updates
             timeElapsedLow = 0;
 
             updateStartLight(lastBeat);

@@ -10,9 +10,14 @@
 #include "Util.h"
 #include "pump.h"
 
+// Heartbeat::CANHeart heart(ADD_HEART_BACK, ADD_HEART_FRONT, 3);
+// Heartbeat::CANHeart heart_mc0(ADD_MC0_FAULTS, 0, 4);
+// Heartbeat::CANHeart heart_mc1(ADD_MC1_FAULTS, 0, 4);
+
 static bool FaultCheck() {
     if (Fault::hardFault() || Fault::softFault())
         return true;
+    // if (!heart.last() || !heart_mc0.last() || !heart_mc1.last())
     if (!Heartbeat::checkBeat())
         return true;
     return false;
@@ -49,6 +54,11 @@ State::State_t *ECUStates::Initialize_State::run(void) {
 #ifdef CONF_ECU_DEBUG
     Mirror::setup();
 #endif
+    // Heartbeat::addCallback(updateFaultLights);
+    // heart.start();
+    // heart_mc0.start();
+    // heart_mc1.start();
+    // Heartbeat::start();
     Heartbeat::addCallback(updateFaultLights); // IMPROVE: don't just periodically check if leds are on
     Heartbeat::beginBeating();
     Heartbeat::beginReceiving();
@@ -83,6 +93,8 @@ State::State_t *ECUStates::Initialize_State::run(void) {
     while (true) {
         if (!FaultCheck())
             break;
+        else
+            Fault::logFault();
         delay(100);
     }
 
@@ -169,6 +181,7 @@ State::State_t *ECUStates::Idle_State::run(void) {
     }
 
     Log.i(ID, "Waiting for Button or Charging Press");
+    // delay(2000); // TODO
 
     // Front teensy should already be blinking start light
 
@@ -301,9 +314,14 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
 
             int pAVG = (pedal0 + pedal1) / 2;
 
+            if (pedal0 < 10 || pedal1 < 10) {
+                Log.e(ID, "Pedal below 10, disconnected?");
+                return DrivingModeFault();
+            }
+
             // NOTE: pedal has a threshold value
             if (pAVG >= 100 && (float)abs(pedal1 - pedal0) / PINS_ANALOG_HIGH > 0.5f) {
-                Log.e(ID, "Pedal value offset > 10%");
+                Log.e(ID, "Pedals value offset > 10%");
                 return DrivingModeFault();
             }
 

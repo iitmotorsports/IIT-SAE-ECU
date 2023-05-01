@@ -4,11 +4,11 @@
  * @brief Configure fault checking
  * @version 0.1
  * @date 2021-01-27
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  * This configuration defines all the faults to check for.
- * 
+ *
  */
 
 #ifndef __ECU_FAULTCONFIG_DEF__
@@ -23,18 +23,18 @@
 
 /**
  * @brief Defines Pins that should be checked for hard faults
- * 
+ *
  * @note The identity calls the function _LogPrebuildString, this is used to notify Pre_Build.py of the string
-` * 
+` *
  * Unless it is the last entry, this is how to add a new address
- * 
+ *
  * X(pin, comparator, value, identity) \
- * 
+ *
  * Only the last entry should NOT have a '\'
- * 
+ *
  */
 #if CONF_ECU_POSITION == BACK_ECU
-#define HARD_PIN_FAULTS                                                  \
+#define HARD_PIN_FAULTS                                                   \
     X(PINS_BACK_IMD_FAULT, !=, 0, _LogPrebuildString("IMD Fault Signal")) \
     X(PINS_BACK_BMS_FAULT, !=, 0, _LogPrebuildString("BMS Fault Signal"))
 #else
@@ -43,29 +43,29 @@
 
 /**
  * @brief Defines Pins that should be checked for hard faults
- * 
+ *
  * @note The identity calls the function _LogPrebuildString, this is used to notify Pre_Build.py of the string
- * 
+ *
  * Unless it is the last entry, this is how to add a new address
- * 
+ *
  * X(pin, comparator, value, identity) \
- * 
+ *
  * Only the last entry should NOT have a '\'
- * 
+ *
  */
 #define SOFT_PIN_FAULTS
 
 /**
  * @brief Defines CAN addresses that should be checked for hard faults
- * 
+ *
  * @note For documentation purposes, the last parameter is only used to identify what each message is for
- * 
+ *
  * Unless it is the last entry, this is how to add a new address
- * 
+ *
  * X(CAN address, mask, tag) \
- * 
+ *
  * Only the last entry should NOT have a '\'
- * 
+ *
  */
 // TODO: BMS Fault address
 #define HARD_FAULT_ADD
@@ -73,15 +73,15 @@
 
 /**
  * @brief Defines CAN addresses that should be checked for soft faults
- * 
+ *
  * @note For documentation purposes, the last parameter is only used to identify what each message is for
- * 
+ *
  * Unless it is the last entry, this is how to add a new address
- * 
+ *
  * X(CAN address, mask, tag) \
- * 
+ *
  * Only the last entry should NOT have a '\'
- * 
+ *
  */
 #define SOFT_FAULT_ADD                                                 \
     X(ADD_MC0_FAULTS, 0xffffffffffffffff, "Motor Controller 0 Faults") \
@@ -89,17 +89,17 @@
 
 /**
  * @brief Defines address bit field identifiers
- * 
+ *
  * If a bit on an address has an identifier we will know exactly what fault occurred and can notify it through Log
- * 
+ *
  * @note The identity calls the function _LogPrebuildString, this is used to notify Pre_Build.py of the string
- * 
+ *
  * Unless it is the last entry, this is how to add a new address
- * 
+ *
  * X(CAN address, bitmask, _LogPrebuildString(identity)) \
- * 
+ *
  * Only the last entry should NOT have a '\'
- * 
+ *
  */
 #define CAN_FAULT_IDS                                                                                                                                                 \
     X(ADD_MC0_FAULTS, 0b0000000000000000000000000000000000000000000000000000000000000001, _LogPrebuildString("MC0 Fault: Hardware Gate/Desaturation Fault"))          \
