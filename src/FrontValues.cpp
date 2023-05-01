@@ -106,9 +106,15 @@ void loadStateMap() {
     }
 }
 
+void USBHostPush(const int32_t id, const int32_t value) {
+    Serial.print(id);
+    Serial.print(value);
+}
+
 void updateCurrentState() {
     uint32_t currState = Pins::getCanPinValue(PINS_INTERNAL_STATE);
-    Log.p("state", "Current State", currState, INTERVAL_MED_LOW_PRIORITY);
+    // Log.p("state", "Current State", currState, INTERVAL_MED_PRIORITY);
+    // USBHostPush(); // TODO
     currentState = stateMap[currState]; // returns NULL if not found
 }
 
@@ -119,17 +125,13 @@ void updateStartLight(bool hasBeat) {
     } else {
         on = Pins::getCanPinValue(PINS_INTERNAL_START);
     }
-    Log("start_light", "Start Light", on, true);
+    // Log("start_light", "Start Light", on, true);
+    // USBHostPush(); // TODO
     Pins::setPinValue(PINS_FRONT_START_LIGHT, on);
 }
 
 void setChargeSignal() {
     Pins::setInternalValue(PINS_INTERNAL_CHARGE_SIGNAL, currentState == &ECUStates::Idle_State);
-}
-
-void USBHostPush(const int32_t id, const int32_t value) {
-    Serial.print(id);
-    Serial.print(value);
 }
 
 void lowPriorityValues() {
