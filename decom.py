@@ -10,7 +10,7 @@ for filename in os.listdir(directory):
     # Check if the file is a regular file
     if os.path.isfile(os.path.join(directory, filename)):
         # Construct the system command
-        command = f'convert.py -f {os.path.join(directory, filename)} -o {os.path.join(new_directory, filename)} -i log_lookup.json'
+        command = f'convert.py -f {os.path.join(directory, filename)} -o {os.path.join(new_directory, filename)} -i intake/map.json'
         # Run the system command using subprocess
         subprocess.run(command, shell=True)
 
