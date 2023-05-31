@@ -167,6 +167,8 @@ static analogCanPinMsg_t analogCanPinMessages_OUT[analogCanMsgCount_OUT];
 
 static void _receiveDigitalCanbusPin(uint32_t address, volatile uint8_t *buffer) {
     digitalCanPinMessage_IN.receive((uint8_t *)buffer);
+    // Log.d(ID, "Receive Digital Canbus Pin 0", *buffer, 1);
+    // Log.d(ID, "Receive Digital Canbus Pin 1", *(buffer + 4), 1);
 }
 
 static void _receiveAnalogCanbusPin(uint32_t address, volatile uint8_t *buffer) {

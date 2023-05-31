@@ -371,7 +371,7 @@
                 "${config:LOGGING_OPTION}",
                 "--logTime",
                 "--input",
-                "A" // "D"
+                "A"
             ],
             "options": {
                 "statusbar": {

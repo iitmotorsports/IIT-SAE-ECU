@@ -202,7 +202,7 @@ State::State_t *ECUStates::PreCharge_State::run(void) { // NOTE: Low = Closed, H
 
 State::State_t *ECUStates::Idle_State::run(void) {
     Log.i(ID, "Waiting for Button not to be pressed");
-    while (!Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT_OFF)) {
+    while (Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT_OFF)) {
     }
 
     Log.i(ID, "Waiting for Button or Charging Press");
@@ -212,7 +212,7 @@ State::State_t *ECUStates::Idle_State::run(void) {
     elapsedMillis waiting;
 
     while (true) {
-        if (!Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT_OFF)) {
+        if (Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT_OFF)) {
             Log.i(ID, "Button Pressed");
             // Front teensy will stop blinking start light
             return &ECUStates::Button_State;
@@ -251,7 +251,7 @@ State::State_t *ECUStates::Charging_State::run(void) {
 
 State::State_t *ECUStates::Button_State::run(void) {
     Log.i(ID, "Waiting for Button not to be pressed");
-    while (!Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT_OFF)) {
+    while (Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT_OFF)) {
     }
     Log.i(ID, "Playing sound");
 
@@ -291,6 +291,10 @@ State::State_t *ECUStates::Driving_Mode_State::DrivingModeFault(void) {
 
 // NOTE: MCs weak faults also cause a true fault here
 State::State_t *ECUStates::Driving_Mode_State::run(void) {
+    Log.i(ID, "Waiting for Button not to be pressed");
+    while (Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT_OFF)) {
+    }
+    
     Log.i(ID, "Driving mode on");
     Log.i(ID, "Cooling on");
     carCooling(true);
@@ -359,8 +363,9 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
             Log.i(ID, "Last MC1 Torque Value:", MC::getLastTorqueValue(false), -5000);
         }
 
-        if (!Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT_OFF)) {
+        if (Pins::getCanPinValue(PINS_FRONT_BUTTON_INPUT_OFF)) {
             Log.w(ID, "Going back to Idle state");
+            carCooling(false);
             break;
         }
     }

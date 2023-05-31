@@ -84,7 +84,7 @@ static void _receiveCan(const CAN_message_t &msg) { // FIXME: potential issue wh
     Buffer::lock l = Buffer::lock(addr);
     if (!l.locked) {
 #ifdef CONF_ECU_DEBUG
-        Log.w(ID, "Discarding can msg", msg.id);
+        // Log.w(ID, "Discarding can msg", msg.id);
 #endif
         return;
     }
