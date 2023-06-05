@@ -12,7 +12,7 @@
 static bool FaultCheck() {
     if (Fault::hardFault() || Fault::softFault())
         return true;
-    if (!Heartbeat::checkBeat()) // TODO: heartbeat front to back
+    if (!Heartbeat::checkBeat())
         return true;
     return false;
 };
@@ -46,9 +46,7 @@ static void updateFaultLights() {
 
 State::State_t *ECUStates::Initialize_State::run(void) {
     Log.i(ID, "Teensy 4.1 SAE BACK ECU Initalizing");
-    Log.i(ID, "Setup canbus");
     Canbus::setup(); // allocate and organize addresses
-    Log.i(ID, "Initialize pins");
     Pins::initialize(); // setup predefined pins
     LEDBlink();
     Log.i(ID, "Waiting for sync");

@@ -29,20 +29,12 @@ void loadStateMap() {
 
 void updateCurrentState() {
     uint32_t currState = Pins::getCanPinValue(PINS_INTERNAL_STATE);
-    Log.p("state", "Current State", currState);
     currentState = stateMap[currState]; // returns NULL if not found
 }
 
-void faultBlink() {
+void updateStartLight() {
     static bool on = false;
-    if (currentState == &ECUStates::FaultState) {
-        Pins::setPinValue(PINS_FRONT_START_LIGHT, !on);
-    }
-}
-
-void updateStartLight(bool hasBeat) {
-    static bool on = false;
-    if (hasBeat && (currentState == &ECUStates::Idle_State)) {
+    if (currentState == &ECUStates::Idle_State) {
         on = !on;
     } else {
         on = Pins::getCanPinValue(PINS_INTERNAL_START);

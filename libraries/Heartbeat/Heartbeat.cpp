@@ -23,7 +23,6 @@
 namespace Heartbeat {
 static IntervalTimer canbusPinUpdate;
 static elapsedMillis lastBeat;
-static volatile int lastTime = 0;
 
 static LOG_TAG ID = "HeartBeat";
 
@@ -54,7 +53,6 @@ void beginBeating() {
 }
 
 static void receiveBeat(uint32_t, volatile uint8_t *) {
-    lastTime = lastBeat;
     lastBeat = 0;
     toggleLED();
 }

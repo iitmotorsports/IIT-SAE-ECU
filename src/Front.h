@@ -7,6 +7,7 @@
 #include "Log.h"
 
 #define INTERVAL_HIGH_PRIORITY 20
+#define INTERVAL_LED_BLINK 250
 
 /**
  * @brief Name space used solely for front ECU logic
@@ -20,6 +21,8 @@ extern struct State::State_t *currentState;
  * @brief Runs front ECU code
  */
 void run();
+
+
 
 /**
  * @brief Load values that ID each unique state
@@ -36,7 +39,7 @@ void updateCurrentState();
  * 
  * @param hasBeat Whether the heartbeat is working
  */
-void updateStartLight(bool hasBeat);
+void updateStartLight();
 
 /**
  * @brief Toggles start led if in fault state

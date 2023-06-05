@@ -118,7 +118,7 @@ void enableInterrupts(bool enable) {
 }
 
 void setup(void) { // IMPROVE: filter only for addresses we care about
-    Log.d(ID, "Starting");
+    Log.i(ID, "Setting up CAN bus ...");
     F_Can.begin(); // NOTE: canbus must first be started before it can be configured
     _setMailboxes();
     F_Can.setBaudRate(CONFIG_FLEXCAN_BAUD_RATE);

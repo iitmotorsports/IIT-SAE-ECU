@@ -375,6 +375,7 @@ void startCanPins(void) {
 }
 
 void initialize(void) {
+    Log.i(ID, "Initializing Pins ...");
     Log.i(ID, "Setting up physical pins");
 
     analogWriteResolution(PINS_ANALOG_RES);

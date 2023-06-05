@@ -38,10 +38,11 @@ namespace MC {
 
 static LOG_TAG ID = "MotorControl";
 
+static IntervalTimer inverterHeartbeatInterval;
+
 static int motorTorque[2] = {0, 0};
 
 static bool beating = true;
-static bool init = false;
 static bool forward = true;
 
 static double pAccum = 0, bAccum = 0, sAccum = 0;
@@ -131,10 +132,9 @@ static void torqueVector(int pedal, int brake, int steer) {
 }
 
 void setup(void) { // IMPROVE: receive message from MCs, not just send
-    if (!init)
-        Heartbeat::addCallback(beatFunc);
+    inverterHeartbeatInterval.priority(133);
+    inverterHeartbeatInterval.begin(beatFunc, CONF_BEAT_INTERVAL_MILLIS * 1000);
     clearFaults();
-    init = true;
     beating = true;
 }
 
