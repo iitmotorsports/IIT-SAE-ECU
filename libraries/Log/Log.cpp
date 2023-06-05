@@ -21,8 +21,6 @@
 #include "LogConfig.def"
 #include "map"
 
-#include "SDIO.h"
-
 namespace Logging {
 
 #ifdef SILENT
@@ -123,10 +121,6 @@ static void __logger_print_num(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const u
 #else
         // Serial.write(log_buf, 8);
 #endif
-        if (SDIO::initalizedSD) {
-            SDIO::SDFile.write(log_buf, 8);
-            SDIO::SDFile.flush();
-        }
     }
 }
 
@@ -164,59 +158,24 @@ static const char *FORMAT_NUM = "%s @ %u [%s]: %s %u\n";
 static void __logger_print(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE) {
     auto m = millis();
     Serial.printf(FORMAT, TYPE, m, TAG, MESSAGE);
-    if (SDIO::initalizedSD) {
-        SDIO::SDFile.printf(FORMAT, TYPE, m, TAG, MESSAGE);
-    }
 }
 static void __logger_print_num(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const uint32_t NUMBER, int mediate = false) {
     auto m = millis();
     Serial.printf(FORMAT_NUM, TYPE, m, TAG, MESSAGE, NUMBER);
-    if (SDIO::initalizedSD) {
-        SDIO::SDFile.printf(FORMAT_NUM, TYPE, m, TAG, MESSAGE, NUMBER);
-    }
 }
 #else
 static const char *FORMAT = "%s [%s]: %s\n";
 static const char *FORMAT_NUM = "%s [%s]: %s %u\n";
 static void __logger_print(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE) {
     Serial.printf(FORMAT, TYPE, TAG, MESSAGE);
-    if (SDIO::initalizedSD) {
-        SDIO::SDFile.printf(FORMAT, TYPE, TAG, MESSAGE);
-    }
 }
 static void __logger_print_num(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const uint32_t NUMBER, int mediate = false) {
     Serial.printf(FORMAT_NUM, TYPE, TAG, MESSAGE, NUMBER);
-    if (SDIO::initalizedSD) {
-        SDIO::SDFile.printf(FORMAT_NUM, TYPE, TAG, MESSAGE, NUMBER);
-    }
 }
 #endif
 #endif
 
 #endif
-
-bool initializeSDCard() {
-    return SDIO::initialize();
-}
-
-void enterSDMode() {
-    SDIO::enterSDMode();
-}
-
-void trySDMode() {
-    SDIO::trySDMode();
-}
-
-void USBHostPush(const int id, const int value) {
-    // static std::map<int, int> update;
-    // if (update.find(id) == update.end()) {
-    //     update[id] = value;
-    // }
-    // if (update[id] != value) {
-    Serial.write((uint8_t *)&id, 4);
-    Serial.write((uint8_t *)&value, 4);
-    // }
-}
 
 void Log_t::operator()(LOG_TAG TAG, LOG_MSG message) {
 #ifdef __LOGGER_NONE_PRINT
@@ -290,42 +249,8 @@ void Log_t::f(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate) 
 #endif
 }
 
-void Log_t::p(LOG_TAG name, LOG_MSG prettyName, const uint32_t number, int mediate) {
-    __logger_print_num(FATAL, name, prettyName, number, mediate);
-}
-
 static void _receiveLogBuffer(uint32_t address, volatile uint8_t *buf) {
     Serial.write((uint8_t *)buf, 8); // FIXME: does dropping the volatile cause any issues?
-}
-
-void enableCanbusRelay() {
-    Canbus::addCallback(ADD_AUX_LOGGING, _receiveLogBuffer);
-}
-
-void printLookup() {
-    static elapsedMillis timeElapsed;
-    noInterrupts();
-    Serial.flush();
-    uint64_t ullen = 0;
-    uint8_t *bytes = (uint8_t *)&(ullen);
-    Serial.write(bytes, 8);
-    ullen = log_lookup_len;
-    Serial.write(bytes, 8);
-    ullen = log_lookup_uncmp_len;
-    Serial.write(bytes, 8);
-    timeElapsed = 0;
-    for (size_t i = 0; i < log_lookup_pad_len; i += 8) {
-        Serial.write(log_lookup + i, 8);
-        Serial.flush();
-        while (!Serial.available()) {
-            if (timeElapsed > 31000) { // Entire process should take less than 30s
-                interrupts();
-                return;
-            }
-        }
-        Serial.read();
-    }
-    interrupts();
 }
 
 } // namespace Logging

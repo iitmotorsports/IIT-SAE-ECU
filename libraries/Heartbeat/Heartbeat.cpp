@@ -70,7 +70,6 @@ void beginReceiving() {
 int checkBeat() {
     if (lastBeat > (CONF_HEARTBEAT_INTERVAL_MILLIS) + CONF_HEARTBEAT_TIMEOUT_MILLI) {
         Log.w(ID, "Heartbeat is taking too long", lastBeat);
-        Log.p("lag", "Heartbeat is taking too long", lastBeat);
         return 0;
     }
     return 1;

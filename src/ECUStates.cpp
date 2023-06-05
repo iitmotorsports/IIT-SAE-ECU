@@ -4,7 +4,6 @@
 #include "Faults.h"
 #include "Heartbeat.h"
 #include "Log.h"
-#include "Mirror.h"
 #include "MotorControl.def"
 #include "MotorControl.h"
 #include "Util.h"
@@ -17,13 +16,6 @@ static bool FaultCheck() {
         return true;
     return false;
 };
-
-// static void wait(long unsigned int millis) {
-//     static elapsedMillis timeElapsed;
-//     timeElapsed = 0;
-//     while (timeElapsed <= millis)
-//         ;
-// }
 
 void LEDBlink() {
     Pins::setPinValue(LED_BUILTIN, 0);
@@ -66,32 +58,20 @@ State::State_t *ECUStates::Initialize_State::run(void) {
         delay(100);
     }
     MC::setup();
-#ifdef CONF_ECU_DEBUG
-    Mirror::setup();
-#endif
     Heartbeat::addCallback(updateFaultLights); // IMPROVE: don't just periodically check if leds are on
     Heartbeat::beginBeating();
     Heartbeat::beginReceiving();
     Pump::start();
-    // Pump::set(100);
-
-    // delay(500);
-
-    // Pins::setPinValue(PINS_BACK_SOUND_DRIVER, PINS_ANALOG_HIGH);
 
     if (getLastState() != &ECUStates::FaultState) {
         Log.d(ID, "Waiting for initial fault reset");
         Pins::setPinValue(PINS_BACK_ECU_FAULT, LOW);
         while (Pins::getPinValue(PINS_BACK_FAULT_RESET)) {
             Log.d(ID, "FAULT BTN VAL", Pins::getPinValue(PINS_BACK_FAULT_RESET), 1);
-            Logging::trySDMode();
         }
         Log.d(ID, "FAULT BTN VAL", Pins::getPinValue(PINS_BACK_FAULT_RESET), 1);
         Pins::setPinValue(PINS_BACK_ECU_FAULT, HIGH);
     }
-
-    // Front teensy should know when to blink start light
-    // Log.d(ID, "Checking for Inital fault");
 
     // NOTE: IMD Fault does not matter in initalizing state
     // if (!Pins::getPinValue(PINS_BACK_IMD_FAULT) && FaultCheck()) {

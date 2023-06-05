@@ -1,9 +1,6 @@
 #include "Front.h"
 #include "ECUGlobalConfig.h"
 #include "Heartbeat.h"
-#include "Mirror.h"
-#include "SerialCommand.h"
-#include "SerialVar.h"
 #include "unordered_map"
 #if ECU_TESTING == FRONT_ECU
 #include "Test.h"
@@ -13,12 +10,7 @@ namespace Front {
 
 LOG_TAG ID = "Front Teensy";
 
-static elapsedMillis timeElapsedHigh;
-static elapsedMillis timeElapsedMidHigh;
-static elapsedMillis timeElapsedMidLow;
-static elapsedMillis timeElapsedLow;
-
-SerialVar::SerialFloat TVAggression = SERIALVAR_TORQUE_VECTORING_AGGRESSION;
+static elapsedMillis timeElapsed;
 
 static void pushCanMessage() {
     uint32_t address;
@@ -32,17 +24,6 @@ static void pushCanMessage() {
     }
     Log.d(ID, "Pushing Message", address);
     Canbus::sendData(address, (uint8_t *)buffer);
-}
-
-static void toggleCanbusSniffer() {
-    static bool enabled = false;
-    Canbus::enableCanbusSniffer((enabled = !enabled));
-}
-
-static void toggleMotorDirection() {
-    static bool reverse = false;
-    reverse = !reverse;
-    Pins::setInternalValue(PINS_INTERNAL_REVERSE, reverse);
 }
 
 void blinkStart() {
@@ -73,30 +54,11 @@ void run() {
     Pins::initialize(); // setup predefined pins
     LEDBlink();
     LEDBlink();
-    // #ifndef CONF_LOGGING_ASCII_DEBUG
-    //     Log.i(ID, "Enabling Logging relay");
-    //     Logging::enableCanbusRelay(); // Allow logging though canbus
-    // #endif
     loadStateMap();
-
-    Log.i(ID, "Setting commands");
-    Cmd::setCommand(COMMAND_ENABLE_CHARGING, setChargeSignal);
-    Cmd::setCommand(COMMAND_SEND_CANBUS_MESSAGE, pushCanMessage);
-    Cmd::setCommand(COMMAND_TOGGLE_CANBUS_SNIFF, toggleCanbusSniffer);
-
-    Cmd::setCommand(COMMAND_TOGGLE_REVERSE, toggleMotorDirection);
-    Cmd::setCommand(COMMAND_PRINT_LOOKUP, Logging::printLookup);
-    Cmd::setCommand(COMMAND_UPDATE_SERIALVAR, SerialVar::receiveSerialVar);
-    Cmd::setCommand(COMMAND_SD_MODE, Logging::enterSDMode);
 
     Heartbeat::beginBeating();
     Heartbeat::beginReceiving();
 
-// #ifdef CONF_ECU_DEBUG
-//     Mirror::setup();
-// #endif
-
-    TVAggression = 1.8f;
     static bool hasBeat = false;
 
     // Serial.flush();
@@ -112,40 +74,21 @@ void run() {
     Log.i(ID, "Waiting for heartbeat");
     while (!Heartbeat::checkBeat()) {
         delay(500);
-        Cmd::receiveCommand();
     }
 
     while (true) {
-        if (timeElapsedHigh >= INTERVAL_HIGH_PRIORITY) { // High priority updates
-            timeElapsedHigh = 0;
-            Cmd::receiveCommand();
-
-            highPriorityValues();
+        if (timeElapsed >= INTERVAL_HIGH_PRIORITY) { // High priority updates
+            timeElapsed = 0;
 
             updateCurrentState();
             hasBeat = Heartbeat::checkBeat();
-        }
-        if (timeElapsedMidHigh >= INTERVAL_MED_PRIORITY) { // Med priority updates
-            timeElapsedMidHigh = 0;
-
+            
+            // Set fault LEDs
             Pins::setPinValue(PINS_FRONT_BMS_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_BMS_FAULT));
             Pins::setPinValue(PINS_FRONT_IMD_LIGHT, Pins::getCanPinValue(PINS_INTERNAL_IMD_FAULT));
 
-            medPriorityValues();
             faultBlink();
-        }
-        if (timeElapsedLow >= INTERVAL_LOW_PRIORITY) { // Low priority updates
-            timeElapsedLow = 0;
-
             updateStartLight(hasBeat);
-
-            if (Fault::anyFault()) {
-                Fault::logFault();
-            }
-
-            Pins::setInternalValue(PINS_INTERNAL_TVAGG, TVAggression * 10000);
-
-            lowPriorityValues();
         }
     }
 }

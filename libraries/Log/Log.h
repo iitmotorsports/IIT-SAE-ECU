@@ -337,10 +337,6 @@ void enableCanbusRelay();
  */
 void printLookup();
 
-bool initializeSDCard();
-void enterSDMode();
-void trySDMode();
-
 void USBHostPush(const int id, const int value);
 
 } // namespace Logging
