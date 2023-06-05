@@ -9,7 +9,7 @@
             "type": "shell",
             "command": "python3",
             "windows": {
-                "command": "py",
+                "command": "python3",
             },
             "options": {
                 "cwd": "${workspaceFolder}",
@@ -39,7 +39,7 @@
             "args": [
                 "/d",
                 "/c",
-                "python",
+                "python3",
                 {
                     "quoting": "weak",
                     "value": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py"
@@ -132,7 +132,7 @@
             "args": [
                 "/d",
                 "/c",
-                "python",
+                "python3",
                 {
                     "quoting": "weak",
                     "value": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py"
@@ -161,7 +161,7 @@
             "args": [
                 "/d",
                 "/c",
-                "python",
+                "python3",
                 {
                     "quoting": "weak",
                     "value": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/tools/config.py"

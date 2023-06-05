@@ -29,6 +29,8 @@ void run() {
 
     blinkStart();
 
+    static bool tempBlink = false;
+
     while (true) {
         if(Heartbeat::checkBeat()) {
             if (timeElapsed >= INTERVAL_HIGH_PRIORITY) { // High priority updates
@@ -47,9 +49,9 @@ void run() {
                 blinkTimeElapsed = 0;
 
                 // Blink fault LEDs to identify no connection
-                int ledValue = !Pins::getCanPinValue(PINS_INTERNAL_BMS_FAULT);
-                Pins::setPinValue(PINS_FRONT_BMS_LIGHT, ledValue);
-                Pins::setPinValue(PINS_FRONT_IMD_LIGHT, ledValue);
+                tempBlink = !tempBlink;
+                Pins::setPinValue(PINS_FRONT_BMS_LIGHT, tempBlink);
+                Pins::setPinValue(PINS_FRONT_IMD_LIGHT, tempBlink);
             }
         }
     }

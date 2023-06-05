@@ -17,18 +17,6 @@ static bool FaultCheck() {
     return false;
 };
 
-void LEDBlink() {
-    Pins::setPinValue(LED_BUILTIN, 0);
-    delay(100);
-    Pins::setPinValue(LED_BUILTIN, 1);
-    delay(100);
-    Pins::setPinValue(LED_BUILTIN, 0);
-    delay(100);
-    Pins::setPinValue(LED_BUILTIN, 1);
-    delay(100);
-    Pins::setPinValue(LED_BUILTIN, 0);
-}
-
 static void updateFaultLights() {
     static int bms, imd, bms_l, imd_l = 0;
     if ((bms = Pins::getPinValue(PINS_BACK_BMS_FAULT)) != bms_l || (imd = Pins::getPinValue(PINS_BACK_IMD_FAULT)) != imd_l) {
@@ -48,13 +36,6 @@ State::State_t *ECUStates::Initialize_State::run(void) {
     Log.i(ID, "Teensy 4.1 SAE BACK ECU Initalizing");
     Canbus::setup(); // allocate and organize addresses
     Pins::initialize(); // setup predefined pins
-    LEDBlink();
-    Log.i(ID, "Waiting for sync");
-    while (!Pins::getCanPinValue(PINS_INTERNAL_SYNC)) {
-        Canbus::sendData(ADD_MC0_CTRL);
-        Canbus::sendData(ADD_MC1_CTRL);
-        delay(100);
-    }
     MC::setup();
     Heartbeat::addCallback(updateFaultLights); // IMPROVE: don't just periodically check if leds are on
     Heartbeat::beginBeating();
