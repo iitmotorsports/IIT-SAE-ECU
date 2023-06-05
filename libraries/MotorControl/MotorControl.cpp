@@ -43,7 +43,6 @@ static IntervalTimer inverterHeartbeatInterval;
 static int motorTorque[2] = {0, 0};
 
 static bool beating = true;
-static bool forward = true;
 
 static double pAccum = 0, bAccum = 0, sAccum = 0;
 
@@ -165,26 +164,13 @@ int sendSpeed(uint32_t MC_ADD, int speed, bool direction, bool enableBit) {
     return setSpeed;
 }
 
-void sendTorque(uint32_t MC_ADD, int torque, bool direction, bool enableBit) { // NOTE: 0 (Clockwise = Reverse) 1 (Anticlockwise = Forward)
+void sendTorque(uint32_t MC_ADD, int torque, bool enableBit) { // NOTE: 0 (Clockwise = Reverse) 1 (Anticlockwise = Forward)
     if (beating) {
         Log.w(ID, "Unable to set torque, heartbeat is on");
         return;
     }
     uint8_t *bytes = (uint8_t *)&torque;
-    Canbus::sendData(MC_ADD, bytes[0], bytes[1], 0, 0, direction, enableBit);
-}
-
-bool isForward(void) {
-    return forward;
-}
-
-void setDirection(bool runForward) { // FIXME: Inverter must be switched off before switching direction, else fault must be cleared and inverter started again
-    if (motorSpeed() <= CONF_MAXIMUM_SWITCHING_SPEED) {
-        Log.w(ID, "Switching direction");
-        forward = runForward;
-    } else {
-        Log.e(ID, "Unable to switch direction, car is moving too much");
-    }
+    Canbus::sendData(MC_ADD, bytes[0], bytes[1], 0, 0, true, enableBit);
 }
 
 int getLastTorqueValue(bool mc0) {
@@ -205,8 +191,8 @@ int getLastSteerValue() {
 
 void setTorque(int pedal, int brake, int steer) {
     torqueVector(pedal, brake, steer);
-    sendTorque(ADD_MC1_CTRL, motorTorque[1], forward, 1);
-    sendTorque(ADD_MC0_CTRL, motorTorque[0], forward, 1);
+    sendTorque(ADD_MC1_CTRL, motorTorque[1], 1);
+    sendTorque(ADD_MC0_CTRL, motorTorque[0], 1);
 }
 
 } // namespace MC
