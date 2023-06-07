@@ -101,6 +101,7 @@ $(document).ready(function(){initNavTree('_util_8cpp.html',''); initResizable();
 <p>Util source file.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="_util_8h_source.html">Util.h</a>&quot;</code><br />
+<code>#include &quot;WProgram.h&quot;</code><br />
 </div>
 <p><a href="_util_8cpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -109,6 +110,9 @@ Functions</h2></td></tr>
 <tr class="memitem:aae1798680f5232f66c8c5a14b5aa17a7"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_util_8cpp.html#aae1798680f5232f66c8c5a14b5aa17a7">EMAvg</a> (double lastVal, double newVal, int memCount)</td></tr>
 <tr class="memdesc:aae1798680f5232f66c8c5a14b5aa17a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exponential moving average.  <a href="_util_8cpp.html#aae1798680f5232f66c8c5a14b5aa17a7">More...</a><br /></td></tr>
 <tr class="separator:aae1798680f5232f66c8c5a14b5aa17a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3c941f940b0843b9a3cadf4da86503c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_util_8cpp.html#ad3c941f940b0843b9a3cadf4da86503c">getGlobalBlinkState</a> ()</td></tr>
+<tr class="memdesc:ad3c941f940b0843b9a3cadf4da86503c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get status of global interval blink state.  <a href="_util_8cpp.html#ad3c941f940b0843b9a3cadf4da86503c">More...</a><br /></td></tr>
+<tr class="separator:ad3c941f940b0843b9a3cadf4da86503c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Util source file. </p>
@@ -162,7 +166,29 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>double The EMA of the last memCount values </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_util_8cpp_source.html#l00014">14</a> of file <a class="el" href="_util_8cpp_source.html">Util.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_util_8cpp_source.html#l00017">17</a> of file <a class="el" href="_util_8cpp_source.html">Util.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ad3c941f940b0843b9a3cadf4da86503c" name="ad3c941f940b0843b9a3cadf4da86503c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3c941f940b0843b9a3cadf4da86503c">&#9670;&#160;</a></span>getGlobalBlinkState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool getGlobalBlinkState </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get status of global interval blink state. </p>
+<dl class="section return"><dt>Returns</dt><dd>bool value of current global blink stat </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_util_8cpp_source.html#l00021">21</a> of file <a class="el" href="_util_8cpp_source.html">Util.cpp</a>.</p>
 
 </div>
 </div>

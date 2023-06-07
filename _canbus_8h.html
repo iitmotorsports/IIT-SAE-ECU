@@ -93,9 +93,8 @@ $(document).ready(function(){initNavTree('_canbus_8h.html',''); initResizable();
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">Canbus.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -109,25 +108,53 @@ $(document).ready(function(){initNavTree('_canbus_8h.html',''); initResizable();
 <code>#include &quot;<a class="el" href="_canbus_config_8def_source.html">CanbusConfig.def</a>&quot;</code><br />
 <code>#include &quot;FlexCAN_T4.h&quot;</code><br />
 <code>#include &quot;WProgram.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="module_8hpp_source.html">module.hpp</a>&quot;</code><br />
 </div>
 <p><a href="_canbus_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_a_n_1_1_canbus__t.html">CAN::Canbus_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:namespace_c_a_n"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_c_a_n.html">CAN</a></td></tr>
-<tr class="memdesc:namespace_c_a_n"><td class="mdescLeft">&#160;</td><td class="mdescRight">Canbus functionality. Refer to <a class="el" href="_canbus_8h.html" title="FlexCAN_T4 wrapper.">Canbus.h</a> for more info. <br /></td></tr>
+<tr class="memitem:namespace_canbus"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_canbus.html">Canbus</a></td></tr>
+<tr class="memdesc:namespace_canbus"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="namespace_canbus.html" title="Canbus functionality. Refer to Canbus.h for more info.">Canbus</a> functionality. Refer to <a class="el" href="_canbus_8h.html" title="FlexCAN_T4 wrapper.">Canbus.h</a> for more info. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a99975fdd519e9036f01d1eaef6b6695e"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="class_c_a_n_1_1_canbus__t.html">CAN::Canbus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_canbus_8h.html#a99975fdd519e9036f01d1eaef6b6695e">Canbus</a></td></tr>
-<tr class="separator:a99975fdd519e9036f01d1eaef6b6695e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a386cdddf9229348b8108640075b5c3e4"><td class="memItemLeft" align="right" valign="top"><a id="a386cdddf9229348b8108640075b5c3e4" name="a386cdddf9229348b8108640075b5c3e4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Canbus::update</b> (void)</td></tr>
+<tr class="memdesc:a386cdddf9229348b8108640075b5c3e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the <a class="el" href="namespace_canbus.html" title="Canbus functionality. Refer to Canbus.h for more info.">Canbus</a> line This update function will check the rx buffer for any messages and update values. If this function is never run, canbus messages will automaticaly update as they are received. <br /></td></tr>
+<tr class="separator:a386cdddf9229348b8108640075b5c3e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac87cf65470012914f1ae29c0eb987b87"><td class="memItemLeft" align="right" valign="top"><a id="ac87cf65470012914f1ae29c0eb987b87" name="ac87cf65470012914f1ae29c0eb987b87"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Canbus::setup</b> (void)</td></tr>
+<tr class="memdesc:ac87cf65470012914f1ae29c0eb987b87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup the teensy <a class="el" href="namespace_canbus.html" title="Canbus functionality. Refer to Canbus.h for more info.">Canbus</a> line. <br /></td></tr>
+<tr class="separator:ac87cf65470012914f1ae29c0eb987b87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae66521cf8ac5e63c2e89d6b2f009b38a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_canbus.html#ae66521cf8ac5e63c2e89d6b2f009b38a">Canbus::enableInterrupts</a> (bool enable)</td></tr>
+<tr class="memdesc:ae66521cf8ac5e63c2e89d6b2f009b38a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable mailbox interrupts, allowing values to automaticaly update. Enabled by default.  <a href="namespace_canbus.html#ae66521cf8ac5e63c2e89d6b2f009b38a">More...</a><br /></td></tr>
+<tr class="separator:ae66521cf8ac5e63c2e89d6b2f009b38a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4d3e531a7678b6e1fcd4e4cacebf5f6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_canbus.html#ad4d3e531a7678b6e1fcd4e4cacebf5f6">Canbus::getData</a> (const uint32_t address, uint8_t buf[8])</td></tr>
+<tr class="memdesc:ad4d3e531a7678b6e1fcd4e4cacebf5f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get raw data from a canbus address.  <a href="namespace_canbus.html#ad4d3e531a7678b6e1fcd4e4cacebf5f6">More...</a><br /></td></tr>
+<tr class="separator:ad4d3e531a7678b6e1fcd4e4cacebf5f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69951c6d798d4763a66d3c5734e9fc5a"><td class="memItemLeft" align="right" valign="top">Buffer *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_canbus.html#a69951c6d798d4763a66d3c5734e9fc5a">Canbus::getBuffer</a> (const uint32_t address)</td></tr>
+<tr class="memdesc:a69951c6d798d4763a66d3c5734e9fc5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the buffer of an any address.  <a href="namespace_canbus.html#a69951c6d798d4763a66d3c5734e9fc5a">More...</a><br /></td></tr>
+<tr class="separator:a69951c6d798d4763a66d3c5734e9fc5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a884781debf9732f3e4676830d294e6bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_canbus.html#a884781debf9732f3e4676830d294e6bc">Canbus::addCallback</a> (const uint32_t address, canCallback callback)</td></tr>
+<tr class="memdesc:a884781debf9732f3e4676830d294e6bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a callback to an incoming address. If an incoming address buffer is updated it will call the given function. Keep callbacks quick and simple.  <a href="namespace_canbus.html#a884781debf9732f3e4676830d294e6bc">More...</a><br /></td></tr>
+<tr class="separator:a884781debf9732f3e4676830d294e6bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c59e4ee5bcc1d66fee1c1d91af4731b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_canbus.html#a2c59e4ee5bcc1d66fee1c1d91af4731b">Canbus::pushData</a> (const uint32_t address)</td></tr>
+<tr class="memdesc:a2c59e4ee5bcc1d66fee1c1d91af4731b"><td class="mdescLeft">&#160;</td><td class="mdescRight">queue and address's buffer to be pushed. Invalid addresses will not do anything.  <a href="namespace_canbus.html#a2c59e4ee5bcc1d66fee1c1d91af4731b">More...</a><br /></td></tr>
+<tr class="separator:a2c59e4ee5bcc1d66fee1c1d91af4731b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a003195b12c68a25e85c1249630901f87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">Canbus::sendData</a> (const uint32_t address, uint8_t buf[8])</td></tr>
+<tr class="memdesc:a003195b12c68a25e85c1249630901f87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send raw data over a given canbus address using a given array.  <a href="namespace_canbus.html#a003195b12c68a25e85c1249630901f87">More...</a><br /></td></tr>
+<tr class="separator:a003195b12c68a25e85c1249630901f87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a685569d6ee66f2c88962d158a5caf22c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_canbus.html#a685569d6ee66f2c88962d158a5caf22c">Canbus::sendData</a> (const uint32_t address, const uint8_t buf_0=0, const uint8_t buf_1=0, const uint8_t buf_2=0, const uint8_t buf_3=0, const uint8_t buf_4=0, const uint8_t buf_5=0, const uint8_t buf_6=0, const uint8_t buf_7=0)</td></tr>
+<tr class="memdesc:a685569d6ee66f2c88962d158a5caf22c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send raw data over a given canbus address using given values.  <a href="namespace_canbus.html#a685569d6ee66f2c88962d158a5caf22c">More...</a><br /></td></tr>
+<tr class="separator:a685569d6ee66f2c88962d158a5caf22c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77f67ab89d9f23f059f1e41123cc65a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_canbus.html#a77f67ab89d9f23f059f1e41123cc65a5">Canbus::copyVolatileCanMsg</a> (volatile uint8_t src[8], uint8_t dest[8])</td></tr>
+<tr class="memdesc:a77f67ab89d9f23f059f1e41123cc65a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy a volatile canMsg array to a non-volatile array.  <a href="namespace_canbus.html#a77f67ab89d9f23f059f1e41123cc65a5">More...</a><br /></td></tr>
+<tr class="separator:a77f67ab89d9f23f059f1e41123cc65a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6cc917014cdbf17f5f950ae802c03a8e"><td class="memItemLeft" align="right" valign="top"><a id="a6cc917014cdbf17f5f950ae802c03a8e" name="a6cc917014cdbf17f5f950ae802c03a8e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Canbus::enableCanbusSniffer</b> (bool enable)</td></tr>
+<tr class="memdesc:a6cc917014cdbf17f5f950ae802c03a8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">continuously prints out strings of any message that is received through canbus. As such, this function only works when the ECU is in ascii debug mode. <br /></td></tr>
+<tr class="separator:a6cc917014cdbf17f5f950ae802c03a8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >FlexCAN_T4 wrapper. </p>
@@ -136,27 +163,10 @@ Variables</h2></td></tr>
 <dl class="section date"><dt>Date</dt><dd>2020-11-11</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2022</dd></dl>
 <p>This module is a wrapper for the underlying library FlexCAN_T4.</p>
-<p >This module helps with communication over the <a href="https://www.csselectronics.com/screen/page/simple-intro-to-can-bus/language/en">Canbus</a> protocol </p>
+<p >This module helps with communication over the <a href="https://www.csselectronics.com/screen/page/simple-intro-to-can-bus/language/en">Canbus</a> protocal </p>
 
 <p class="definition">Definition in file <a class="el" href="_canbus_8h_source.html">Canbus.h</a>.</p>
-</div><h2 class="groupheader">Variable Documentation</h2>
-<a id="a99975fdd519e9036f01d1eaef6b6695e" name="a99975fdd519e9036f01d1eaef6b6695e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a99975fdd519e9036f01d1eaef6b6695e">&#9670;&#160;</a></span>Canbus</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="class_c_a_n_1_1_canbus__t.html">CAN::Canbus_t</a> Canbus</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_canbus_8h_source.html#l00143">143</a> of file <a class="el" href="_canbus_8h_source.html">Canbus.h</a>.</p>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

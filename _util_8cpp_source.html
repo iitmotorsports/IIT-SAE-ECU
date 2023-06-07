@@ -97,12 +97,26 @@ $(document).ready(function(){initNavTree('_util_8cpp_source.html',''); initResiz
 <div class="contents">
 <a href="_util_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="_util_8h.html">Util.h</a>&quot;</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="_util_8cpp.html#aae1798680f5232f66c8c5a14b5aa17a7">   14</a></span><span class="keywordtype">double</span> <a class="code hl_function" href="_util_8cpp.html#aae1798680f5232f66c8c5a14b5aa17a7">EMAvg</a>(<span class="keywordtype">double</span> lastVal, <span class="keywordtype">double</span> newVal, <span class="keywordtype">int</span> memCount) {</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keywordflow">return</span> (1.0 - (1.0 / memCount)) * lastVal + (1.0 / memCount) * newVal;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>}</div>
-<div class="ttc" id="a_util_8cpp_html_aae1798680f5232f66c8c5a14b5aa17a7"><div class="ttname"><a href="_util_8cpp.html#aae1798680f5232f66c8c5a14b5aa17a7">EMAvg</a></div><div class="ttdeci">double EMAvg(double lastVal, double newVal, int memCount)</div><div class="ttdoc">Exponential moving average.</div><div class="ttdef"><b>Definition:</b> <a href="_util_8cpp_source.html#l00014">Util.cpp:14</a></div></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;WProgram.h&quot;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">static</span> elapsedMillis stdBlinkElapsed;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="_util_8cpp.html#aae1798680f5232f66c8c5a14b5aa17a7">   17</a></span><span class="keywordtype">double</span> <a class="code hl_function" href="_util_8cpp.html#aae1798680f5232f66c8c5a14b5aa17a7">EMAvg</a>(<span class="keywordtype">double</span> lastVal, <span class="keywordtype">double</span> newVal, <span class="keywordtype">int</span> memCount) {</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keywordflow">return</span> (1.0 - (1.0 / memCount)) * lastVal + (1.0 / memCount) * newVal;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>}</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="_util_8cpp.html#ad3c941f940b0843b9a3cadf4da86503c">   21</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="_util_8cpp.html#ad3c941f940b0843b9a3cadf4da86503c">getGlobalBlinkState</a>() {</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keyword">static</span> <span class="keywordtype">bool</span> blink = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keywordflow">if</span> (stdBlinkElapsed &gt; <a class="code hl_define" href="_util_8h.html#af8499ee0eed171f524ec66752347c80a">INTERVAL_STD_BLINK</a>) {</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        stdBlinkElapsed = 0;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        blink = !blink;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    }</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keywordflow">return</span> blink;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>}</div>
+<div class="ttc" id="a_util_8cpp_html_aae1798680f5232f66c8c5a14b5aa17a7"><div class="ttname"><a href="_util_8cpp.html#aae1798680f5232f66c8c5a14b5aa17a7">EMAvg</a></div><div class="ttdeci">double EMAvg(double lastVal, double newVal, int memCount)</div><div class="ttdoc">Exponential moving average.</div><div class="ttdef"><b>Definition:</b> <a href="_util_8cpp_source.html#l00017">Util.cpp:17</a></div></div>
+<div class="ttc" id="a_util_8cpp_html_ad3c941f940b0843b9a3cadf4da86503c"><div class="ttname"><a href="_util_8cpp.html#ad3c941f940b0843b9a3cadf4da86503c">getGlobalBlinkState</a></div><div class="ttdeci">bool getGlobalBlinkState()</div><div class="ttdoc">Get status of global interval blink state.</div><div class="ttdef"><b>Definition:</b> <a href="_util_8cpp_source.html#l00021">Util.cpp:21</a></div></div>
 <div class="ttc" id="a_util_8h_html"><div class="ttname"><a href="_util_8h.html">Util.h</a></div><div class="ttdoc">Various utility functions.</div></div>
+<div class="ttc" id="a_util_8h_html_af8499ee0eed171f524ec66752347c80a"><div class="ttname"><a href="_util_8h.html#af8499ee0eed171f524ec66752347c80a">INTERVAL_STD_BLINK</a></div><div class="ttdeci">#define INTERVAL_STD_BLINK</div><div class="ttdoc">Interval rate for global blinking.</div><div class="ttdef"><b>Definition:</b> <a href="_util_8h_source.html#l00018">Util.h:18</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

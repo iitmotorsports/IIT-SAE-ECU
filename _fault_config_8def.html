@@ -116,10 +116,10 @@ Macros</h2></td></tr>
 <tr class="memdesc:a390419930292eef5516ad68b3b5e2af6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines <a class="el" href="namespace_pins.html" title="Get and set values to predefined pins.">Pins</a> that should be checked for hard faults.  <a href="_fault_config_8def.html#a390419930292eef5516ad68b3b5e2af6">More...</a><br /></td></tr>
 <tr class="separator:a390419930292eef5516ad68b3b5e2af6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a725d76d669362031fe65a6c678180998"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_fault_config_8def.html#a725d76d669362031fe65a6c678180998">HARD_FAULT_ADD</a></td></tr>
-<tr class="memdesc:a725d76d669362031fe65a6c678180998"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines <a class="el" href="namespace_c_a_n.html" title="Canbus functionality. Refer to Canbus.h for more info.">CAN</a> addresses that should be checked for hard faults.  <a href="_fault_config_8def.html#a725d76d669362031fe65a6c678180998">More...</a><br /></td></tr>
+<tr class="memdesc:a725d76d669362031fe65a6c678180998"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines CAN addresses that should be checked for hard faults.  <a href="_fault_config_8def.html#a725d76d669362031fe65a6c678180998">More...</a><br /></td></tr>
 <tr class="separator:a725d76d669362031fe65a6c678180998"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64da401593bb14ccb3e214d872874078"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_fault_config_8def.html#a64da401593bb14ccb3e214d872874078">SOFT_FAULT_ADD</a></td></tr>
-<tr class="memdesc:a64da401593bb14ccb3e214d872874078"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines <a class="el" href="namespace_c_a_n.html" title="Canbus functionality. Refer to Canbus.h for more info.">CAN</a> addresses that should be checked for soft faults.  <a href="_fault_config_8def.html#a64da401593bb14ccb3e214d872874078">More...</a><br /></td></tr>
+<tr class="memdesc:a64da401593bb14ccb3e214d872874078"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines CAN addresses that should be checked for soft faults.  <a href="_fault_config_8def.html#a64da401593bb14ccb3e214d872874078">More...</a><br /></td></tr>
 <tr class="separator:a64da401593bb14ccb3e214d872874078"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afdc8e6cf3a093f257833370074ec2efe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_fault_config_8def.html#afdc8e6cf3a093f257833370074ec2efe">CAN_FAULT_IDS</a></td></tr>
 <tr class="memdesc:afdc8e6cf3a093f257833370074ec2efe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines address bit field identifiers.  <a href="_fault_config_8def.html#afdc8e6cf3a093f257833370074ec2efe">More...</a><br /></td></tr>
@@ -170,7 +170,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Defines <a class="el" href="namespace_c_a_n.html" title="Canbus functionality. Refer to Canbus.h for more info.">CAN</a> addresses that should be checked for hard faults. </p>
+<p>Defines CAN addresses that should be checked for hard faults. </p>
 <dl class="section note"><dt>Note</dt><dd>For documentation purposes, the last parameter is only used to identify what each message is for</dd></dl>
 <p>Unless it is the last entry, this is how to add a new address</p>
 <p >X(CAN address, mask, tag) \</p>
@@ -191,8 +191,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    X(PINS_BACK_IMD_FAULT, &gt;, 0, <a class="code hl_define" href="_log_8h.html#a9bec0c08edcafb8184fd41d631e708e9">_LogPrebuildString</a>(<span class="stringliteral">&quot;IMD Fault Signal&quot;</span>)) \</div>
-<div class="line">    X(PINS_BACK_BMS_FAULT, &gt;, 0, <a class="code hl_define" href="_log_8h.html#a9bec0c08edcafb8184fd41d631e708e9">_LogPrebuildString</a>(<span class="stringliteral">&quot;BMS Fault Signal&quot;</span>))</div>
+<b>Value:</b><div class="fragment"><div class="line">    X(PINS_BACK_IMD_FAULT, !=, 0, <a class="code hl_define" href="_log_8h.html#a9bec0c08edcafb8184fd41d631e708e9">_LogPrebuildString</a>(<span class="stringliteral">&quot;IMD Fault Signal&quot;</span>)) \</div>
+<div class="line">    X(PINS_BACK_BMS_FAULT, !=, 0, <a class="code hl_define" href="_log_8h.html#a9bec0c08edcafb8184fd41d631e708e9">_LogPrebuildString</a>(<span class="stringliteral">&quot;BMS Fault Signal&quot;</span>))</div>
 <div class="ttc" id="a_log_8h_html_a9bec0c08edcafb8184fd41d631e708e9"><div class="ttname"><a href="_log_8h.html#a9bec0c08edcafb8184fd41d631e708e9">_LogPrebuildString</a></div><div class="ttdeci">#define _LogPrebuildString(x)</div><div class="ttdoc">Refer to Pre_Build.py.</div><div class="ttdef"><b>Definition:</b> <a href="_log_8h_source.html#l00020">Log.h:20</a></div></div>
 </div><!-- fragment -->
 <p>Defines <a class="el" href="namespace_pins.html" title="Get and set values to predefined pins.">Pins</a> that should be checked for hard faults. </p>
@@ -219,7 +219,7 @@ Macros</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">    X(ADD_MC0_FAULTS, 0xffffffffffffffff, <span class="stringliteral">&quot;Motor Controller 0 Faults&quot;</span>) \</div>
 <div class="line">    X(ADD_MC1_FAULTS, 0xffffffffffffffff, <span class="stringliteral">&quot;Motor Controller 1 Faults&quot;</span>)</div>
 </div><!-- fragment -->
-<p>Defines <a class="el" href="namespace_c_a_n.html" title="Canbus functionality. Refer to Canbus.h for more info.">CAN</a> addresses that should be checked for soft faults. </p>
+<p>Defines CAN addresses that should be checked for soft faults. </p>
 <dl class="section note"><dt>Note</dt><dd>For documentation purposes, the last parameter is only used to identify what each message is for</dd></dl>
 <p>Unless it is the last entry, this is how to add a new address</p>
 <p >X(CAN address, mask, tag) \</p>

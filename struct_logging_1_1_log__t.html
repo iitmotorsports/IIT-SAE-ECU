@@ -197,14 +197,14 @@ Logging Levels</h3>
 Logging over Can</h3>
 <p >The front ECU can easily communicate with the companion app as it is connected directly with USB serial.</p>
 <p >However, the back ECU is only connected to the front ECU through CanBus.</p>
-<p >To enable logging on the back ECU, it has to send messages over Canbus. This method is only supported when <a class="el" href="namespace_logging.html" title="Namespace to isolate Log_t struct.">Logging</a> is in it's default mode.</p>
+<p >To enable logging on the back ECU, it has to send messages over <a class="el" href="namespace_canbus.html" title="Canbus functionality. Refer to Canbus.h for more info.">Canbus</a>. This method is only supported when <a class="el" href="namespace_logging.html" title="Namespace to isolate Log_t struct.">Logging</a> is in it's default mode.</p>
 <p >Running <a class="el" href="namespace_logging.html#a3402a2c8efbb932ddbe58e66b9cc550c" title="If a set address is received through canbus, the data will be pushed to a buffer to be printed.">Logging::enableCanbusRelay()</a> once on the front ECU ensure that it receives and relays messages from the back ECU to the companion app.</p>
 <dl class="section warning"><dt>Warning</dt><dd>Because of the nature of serial and its interaction with interrupts, which is how messages are relayed, it is recommended to instead use CanPins to communicate data from the back ECU to the front ECU.</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="_pins_8h.html" title="Update, set, and get predefined pin values.">Pins.h</a> for more info on CanPins </dd>
 <dd>
 <a class="el" href="_pre___build_8py.html" title="This script preprocesses source files for use with Log_t.">Pre_Build.py</a> for more info on how calls to <a class="el" href="namespace_logging.html" title="Namespace to isolate Log_t struct.">Logging</a> related items are modified before compilation </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_log_8h_source.html#l00157">157</a> of file <a class="el" href="_log_8h_source.html">Log.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_log_8h_source.html#l00177">177</a> of file <a class="el" href="_log_8h_source.html">Log.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a4b75f2065645b98fef1d6b4edea2b5a2" name="a4b75f2065645b98fef1d6b4edea2b5a2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4b75f2065645b98fef1d6b4edea2b5a2">&#9670;&#160;</a></span>d() <span class="overload">[1/2]</span></h2>
@@ -287,10 +287,11 @@ Logging over Can</h3>
     <tr><td class="paramname">TAG</td><td>Variable of type <code>LOG_TAG</code> </td></tr>
     <tr><td class="paramname">message</td><td>Inline string that should be printed </td></tr>
     <tr><td class="paramname">number</td><td>Any number that should be printed next to the string </td></tr>
-    <tr><td class="paramname">mediate</td><td>Indicate whether this message should only print when the number changes, only works in non-ASCII mode </td></tr>
+    <tr><td class="paramname">mediate</td><td>Indicate whether this message should only print when the number changes, only works in non-ASCII mode</td></tr>
   </table>
   </dd>
 </dl>
+<p>Mediate Value 0 : Log instantly 1 : Log only when value changes &gt;1: Log after set delay or when value changes &lt;0: Log only if value has changed after set -delay </p>
 
 </div>
 </div>
@@ -375,10 +376,11 @@ Logging over Can</h3>
     <tr><td class="paramname">TAG</td><td>Variable of type <code>LOG_TAG</code> </td></tr>
     <tr><td class="paramname">message</td><td>Inline string that should be printed </td></tr>
     <tr><td class="paramname">number</td><td>Any number that should be printed next to the string </td></tr>
-    <tr><td class="paramname">mediate</td><td>Indicate whether this message should only print when the number changes, only works in non-ASCII mode </td></tr>
+    <tr><td class="paramname">mediate</td><td>Indicate whether this message should only print when the number changes, only works in non-ASCII mode</td></tr>
   </table>
   </dd>
 </dl>
+<p>Mediate Value 0 : Log instantly 1 : Log only when value changes &gt;1: Log after set delay or when value changes &lt;0: Log only if value has changed after set -delay </p>
 
 </div>
 </div>
@@ -463,10 +465,11 @@ Logging over Can</h3>
     <tr><td class="paramname">TAG</td><td>Variable of type <code>LOG_TAG</code> </td></tr>
     <tr><td class="paramname">message</td><td>Inline string that should be printed </td></tr>
     <tr><td class="paramname">number</td><td>Any number that should be printed next to the string </td></tr>
-    <tr><td class="paramname">mediate</td><td>Indicate whether this message should only print when the number changes, only works in non-ASCII mode </td></tr>
+    <tr><td class="paramname">mediate</td><td>Indicate whether this message should only print when the number changes, only works in non-ASCII mode</td></tr>
   </table>
   </dd>
 </dl>
+<p>Mediate Value 0 : Log instantly 1 : Log only when value changes &gt;1: Log after set delay or when value changes &lt;0: Log only if value has changed after set -delay </p>
 
 </div>
 </div>
@@ -551,10 +554,11 @@ Logging over Can</h3>
     <tr><td class="paramname">TAG</td><td>Variable of type <code>LOG_TAG</code> </td></tr>
     <tr><td class="paramname">message</td><td>Inline string that should be printed </td></tr>
     <tr><td class="paramname">number</td><td>Any number that should be printed next to the string </td></tr>
-    <tr><td class="paramname">mediate</td><td>Indicate whether this message should only print when the number changes, only works in non-ASCII mode </td></tr>
+    <tr><td class="paramname">mediate</td><td>Indicate whether this message should only print when the number changes, only works in non-ASCII mode</td></tr>
   </table>
   </dd>
 </dl>
+<p>Mediate Value 0 : Log instantly 1 : Log only when value changes &gt;1: Log after set delay or when value changes &lt;0: Log only if value has changed after set -delay </p>
 
 </div>
 </div>
@@ -639,10 +643,11 @@ Logging over Can</h3>
     <tr><td class="paramname">TAG</td><td>Variable of type <code>LOG_TAG</code> </td></tr>
     <tr><td class="paramname">message</td><td>Inline string that should be printed </td></tr>
     <tr><td class="paramname">number</td><td>Any number that should be printed next to the string </td></tr>
-    <tr><td class="paramname">mediate</td><td>Indicate whether this message should only print when the number changes, only works in non-ASCII mode </td></tr>
+    <tr><td class="paramname">mediate</td><td>Indicate whether this message should only print when the number changes, only works in non-ASCII mode</td></tr>
   </table>
   </dd>
 </dl>
+<p>Mediate Value 0 : Log instantly 1 : Log only when value changes &gt;1: Log after set delay or when value changes &lt;0: Log only if value has changed after set -delay </p>
 
 </div>
 </div>
@@ -690,10 +695,11 @@ Logging over Can</h3>
     <tr><td class="paramname">name</td><td>Code safe name of this value </td></tr>
     <tr><td class="paramname">prettyName</td><td>Pretty, human readable name of this value </td></tr>
     <tr><td class="paramname">number</td><td>Integer number associated with this value </td></tr>
-    <tr><td class="paramname">mediate</td><td>Indicate whether this message should only print when the number changes, only works in non-ASCII mode </td></tr>
+    <tr><td class="paramname">mediate</td><td>Indicate whether this message should only print when the number changes, only works in non-ASCII mode</td></tr>
   </table>
   </dd>
 </dl>
+<p>Mediate Value 0 : Log instantly 1 : Log only when value changes &gt;1: Log after set delay or when value changes &lt;0: Log only if value has changed after set -delay </p>
 
 </div>
 </div>
@@ -778,10 +784,11 @@ Logging over Can</h3>
     <tr><td class="paramname">TAG</td><td>Variable of type <code>LOG_TAG</code> </td></tr>
     <tr><td class="paramname">message</td><td>Inline string that should be printed </td></tr>
     <tr><td class="paramname">number</td><td>Any number that should be printed next to the string </td></tr>
-    <tr><td class="paramname">mediate</td><td>Indicate whether this message should only print when the number changes, only works in non-ASCII mode </td></tr>
+    <tr><td class="paramname">mediate</td><td>Indicate whether this message should only print when the number changes, only works in non-ASCII mode</td></tr>
   </table>
   </dd>
 </dl>
+<p>Mediate Value 0 : Log instantly 1 : Log only when value changes &gt;1: Log after set delay or when value changes &lt;0: Log only if value has changed after set -delay </p>
 
 </div>
 </div>

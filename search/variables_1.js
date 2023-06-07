@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['buffer_0',['buffer',['../struct_c_a_n_1_1_buffer.html#ae06212fc121ac73104a0c3038980f09b',1,'CAN::Buffer']]]
+  ['buffer_0',['buffer',['../struct_canbus_1_1_buffer.html#abbc4106c479dc9594a6901466437433c',1,'Canbus::Buffer']]]
 ];

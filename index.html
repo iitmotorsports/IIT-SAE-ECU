@@ -98,10 +98,10 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="textblock"><p ><a class="anchor" id="md__github_workspace_README"></a></p>
 <p ><img src="https://raw.githubusercontent.com/iitmotorsports/IIT-SAE-ECU/master/Images/41.png" alt="Teensy 4.1" width="512" class="inline"/></p>
 <p >This repository contains the source code that the SAE team at IIT uses for their microcontrollers.</p>
-<h1><a class="anchor" id="autotoc_md44"></a>
+<h1><a class="anchor" id="autotoc_md21"></a>
 New Members</h1>
 <p >For new members that are just joining, please refer to the <a class="el" href="md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html">CONTRIBUTING</a> file.</p>
-<h1><a class="anchor" id="autotoc_md45"></a>
+<h1><a class="anchor" id="autotoc_md22"></a>
 Hardware</h1>
 <ul>
 <li><a href="https://www.pjrc.com/store/teensy36.html">Teensy 3.6</a> x 2</li>
@@ -109,7 +109,7 @@ Hardware</h1>
 <li><a href="https://www.f1authentics.com/f1-racing-cars-for-sale/">A Formula Hybrid Car</a> (Not necessary for testing)</li>
 <li><a href="https://www.amazon.com/SN65HVD230-CAN-Board-Communication-Development/dp/B00KM6XMXO">A Compatible CAN transceiver</a> x 2</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md46"></a>
+<h1><a class="anchor" id="autotoc_md23"></a>
 Software</h1>
 <p >This project assumes you installed the latest version of the following.</p>
 <ul>
@@ -131,17 +131,17 @@ Software</h1>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md47"></a>
+<h1><a class="anchor" id="autotoc_md24"></a>
 Setup</h1>
 <p >Clone <a href="https://github.com/LeHuman/TeensyToolchain">TeensyToolchain</a> alongside this folder.</p>
 <p >If it is not named already, rename the cloned/downloaded folder to <code>TeensyToolchain</code> <br  />
  e.g. <code>TeensyToolchain-master</code> -&gt; <code>TeensyToolchain</code></p>
 <p >Alternatively, you can modify the <code>TOOLCHAIN_OFFSET</code> option inside <code>.vscode/settings.json</code> in order to tell the project where the toolchain is. This path is relative to this folder.</p>
-<h1><a class="anchor" id="autotoc_md48"></a>
+<h1><a class="anchor" id="autotoc_md25"></a>
 Using</h1>
-<p >Main logic is either in <code><a class="el" href="_e_c_u_states_8cpp_source.html">src/ECUStates.cpp</a></code> or <code><a class="el" href="src_2front_8cpp_source.html">src/Front.cpp</a></code> <br  />
+<p >Main logic is either in <code><a class="el" href="_e_c_u_states_8cpp_source.html">src/ECUStates.cpp</a></code> or <code><a class="el" href="_front_8cpp_source.html">src/Front.cpp</a></code> <br  />
  Put any libraries / modules in the <code>libraries</code> folder</p>
-<h2><a class="anchor" id="autotoc_md49"></a>
+<h2><a class="anchor" id="autotoc_md26"></a>
 VSCode Tasks</h2>
 <ul>
 <li><code>VS setup</code>: Configure things such as what <code>COM</code> ports to use; both for front and back teensy, whether to use the plotter app, and whether to compile for teensy <code>3.6</code>, <code>4.0</code>, or <code>4.1</code>.</li>
@@ -154,11 +154,11 @@ VSCode Tasks</h2>
 <p >By default, <code>Ctrl + Shift + B</code> (Run Build Task) should run <code>Build</code> then <code>Upload</code> for both Teensies and then <code>Monitor</code>.</p>
 <p >Alternatively, install the <a href="https://marketplace.visualstudio.com/items?itemName=actboy168.tasks">Tasks</a> extension so that the main tasks appear on the status bar.</p>
 <p >There are more tasks but these are the most important ones.</p>
-<h2><a class="anchor" id="autotoc_md50"></a>
+<h2><a class="anchor" id="autotoc_md27"></a>
 CMake</h2>
 <p >You can modify the set values and compile flags inside <code>CmakeLists.txt</code> if you know what you are doing. <br  />
  They are mostly under the function calls <code>add_compile_definitions</code> and <code>add_compile_options</code> towards the beginning.</p>
-<h1><a class="anchor" id="autotoc_md51"></a>
+<h1><a class="anchor" id="autotoc_md28"></a>
 Documentation</h1>
 <p >This project uses <a href="https://www.doxygen.nl/index.html">Doxygen</a> to auto generate documentation.</p>
 <p ><a href="https://marketplace.visualstudio.com/items?itemName=Isaias.doxygen-pack">Doxygen Extensions</a> exist for VSCode, to easily compile and view inside VSCode.</p>

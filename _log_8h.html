@@ -149,9 +149,28 @@ Functions</h2></td></tr>
 <tr class="memitem:a92c0f46c8be76298719b50a39e9d8dfa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_logging.html#a92c0f46c8be76298719b50a39e9d8dfa">Logging::printLookup</a> ()</td></tr>
 <tr class="memdesc:a92c0f46c8be76298719b50a39e9d8dfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print the ZLib compressed string of the current lookup table to serial.  <a href="namespace_logging.html#a92c0f46c8be76298719b50a39e9d8dfa">More...</a><br /></td></tr>
 <tr class="separator:a92c0f46c8be76298719b50a39e9d8dfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a9bd981fe345c95eacab3affec54fcb"><td class="memItemLeft" align="right" valign="top"><a id="a3a9bd981fe345c95eacab3affec54fcb" name="a3a9bd981fe345c95eacab3affec54fcb"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Logging::USBHostPush</b> (const int id, const int value)</td></tr>
+<tr class="separator:a3a9bd981fe345c95eacab3affec54fcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
+<tr class="memitem:a505fdf210311eb3feccdcb21e1ad0b99"><td class="memItemLeft" align="right" valign="top"><a id="a505fdf210311eb3feccdcb21e1ad0b99" name="a505fdf210311eb3feccdcb21e1ad0b99"></a>
+unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>log_lookup</b> []</td></tr>
+<tr class="memdesc:a505fdf210311eb3feccdcb21e1ad0b99"><td class="mdescLeft">&#160;</td><td class="mdescRight">The ZLib compressed lookup table. <br /></td></tr>
+<tr class="separator:a505fdf210311eb3feccdcb21e1ad0b99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a607347505f713c226fe08306211f6f"><td class="memItemLeft" align="right" valign="top"><a id="a3a607347505f713c226fe08306211f6f" name="a3a607347505f713c226fe08306211f6f"></a>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>log_lookup_len</b></td></tr>
+<tr class="memdesc:a3a607347505f713c226fe08306211f6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The length of log_lookup's data. <br /></td></tr>
+<tr class="separator:a3a607347505f713c226fe08306211f6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6c81eeda4ed05188fae6724a7a7350d"><td class="memItemLeft" align="right" valign="top"><a id="ab6c81eeda4ed05188fae6724a7a7350d" name="ab6c81eeda4ed05188fae6724a7a7350d"></a>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>log_lookup_pad_len</b></td></tr>
+<tr class="memdesc:ab6c81eeda4ed05188fae6724a7a7350d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The length of log_lookup's data with padding. <br /></td></tr>
+<tr class="separator:ab6c81eeda4ed05188fae6724a7a7350d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a927bca26a157c16d3a7b0192e9668f93"><td class="memItemLeft" align="right" valign="top"><a id="a927bca26a157c16d3a7b0192e9668f93" name="a927bca26a157c16d3a7b0192e9668f93"></a>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>log_lookup_uncmp_len</b></td></tr>
+<tr class="memdesc:a927bca26a157c16d3a7b0192e9668f93"><td class="mdescLeft">&#160;</td><td class="mdescRight">The length of log_lookup's data when uncompressed. <br /></td></tr>
+<tr class="separator:a927bca26a157c16d3a7b0192e9668f93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af31ef15863cb3c9383790dc16c3f2304"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_logging_1_1_log__t.html">Logging::Log_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_log_8h.html#af31ef15863cb3c9383790dc16c3f2304">Log</a></td></tr>
 <tr class="memdesc:af31ef15863cb3c9383790dc16c3f2304"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <em>global</em> logging object.  <a href="_log_8h.html#af31ef15863cb3c9383790dc16c3f2304">More...</a><br /></td></tr>
 <tr class="separator:af31ef15863cb3c9383790dc16c3f2304"><td class="memSeparator" colspan="2">&#160;</td></tr>

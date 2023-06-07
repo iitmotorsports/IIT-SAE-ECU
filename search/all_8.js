@@ -9,6 +9,5 @@ var searchData=
   ['heartbeat_2ecpp_6',['Heartbeat.cpp',['../_heartbeat_8cpp.html',1,'']]],
   ['heartbeat_2edef_7',['Heartbeat.def',['../_heartbeat_8def.html',1,'']]],
   ['heartbeat_2eh_8',['Heartbeat.h',['../_heartbeat_8h.html',1,'']]],
-  ['highpriorityvalues_9',['highPriorityValues',['../namespace_front.html#a3c2c1a457a591d9e98d8cb4fd00f2d76',1,'Front']]],
-  ['how_20to_20contribute_10',['How To Contribute',['../md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html',1,'']]]
+  ['how_20to_20contribute_9',['How To Contribute',['../md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html',1,'']]]
 ];
