@@ -98,10 +98,6 @@ static void torqueVector(int pedal, int brake, int steer) {
 
     normalizeInput(&_pedal, &_brake, &_steer);
 
-    float TVAggression = (float)Pins::getCanPinValue(PINS_INTERNAL_TVAGG) / 10000.0f;
-
-    Log.d(ID, "Aggression Val x1000:", TVAggression * 1000, true);
-
     // No TV
 
     // TODO: Test Torque Vectoring and Regenerative braking

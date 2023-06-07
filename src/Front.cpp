@@ -1,6 +1,7 @@
 #include "Front.h"
 #include "ECUGlobalConfig.h"
 #include "Heartbeat.h"
+#include "Util.h"
 #include "unordered_map"
 
 namespace Front {
@@ -8,14 +9,6 @@ namespace Front {
 LOG_TAG ID = "Front Teensy";
 
 static elapsedMillis timeElapsed;
-static elapsedMillis blinkTimeElapsed;
-
-void blinkStart() {
-    Pins::setPinValue(PINS_FRONT_START_LIGHT, 1);
-    delay(100);
-    Pins::setPinValue(PINS_FRONT_START_LIGHT, 0);
-    delay(100);
-}
 
 void run() {
     Log.i(ID, "Hawkrod: Initializing Front ECU ...");
@@ -26,10 +19,6 @@ void run() {
 
     Heartbeat::beginBeating();
     Heartbeat::beginReceiving();
-
-    blinkStart();
-
-    static bool tempBlink = false;
 
     while (true) {
         if(Heartbeat::checkBeat()) {
@@ -45,14 +34,9 @@ void run() {
                 updateStartLight();
             }
         } else {
-            if (blinkTimeElapsed >= INTERVAL_LED_BLINK) { // High priority updates
-                blinkTimeElapsed = 0;
-
-                // Blink fault LEDs to identify no connection
-                tempBlink = !tempBlink;
-                Pins::setPinValue(PINS_FRONT_BMS_LIGHT, tempBlink);
-                Pins::setPinValue(PINS_FRONT_IMD_LIGHT, tempBlink);
-            }
+            Pins::setPinValue(PINS_FRONT_BMS_LIGHT, getGlobalBlinkState());
+            Pins::setPinValue(PINS_FRONT_IMD_LIGHT, getGlobalBlinkState());
+            Pins::setPinValue(PINS_FRONT_START_LIGHT, getGlobalBlinkState());
         }
     }
 }

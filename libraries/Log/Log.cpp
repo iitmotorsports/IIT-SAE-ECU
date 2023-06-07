@@ -117,7 +117,6 @@ static void __logger_print_num(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const u
         // #ifdef CONF_ECU_DEBUG
         Serial.write(log_buf, 8);
         // #endif
-        // Canbus::sendData(ADD_AUX_LOGGING, log_buf);
 #else
         // Serial.write(log_buf, 8);
 #endif

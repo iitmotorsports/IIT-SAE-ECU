@@ -33,12 +33,7 @@ void updateCurrentState() {
 }
 
 void updateStartLight() {
-    static bool on = false;
-    if (currentState == &ECUStates::Idle_State) {
-        on = !on;
-    } else {
-        on = Pins::getCanPinValue(PINS_INTERNAL_START);
-    }
+    bool on = (currentState == &ECUStates::Idle_State) ? getGlobalBlinkState() : Pins::getCanPinValue(PINS_INTERNAL_START);
     Log("start_light", "Start Light", on, true);
     Pins::setPinValue(PINS_FRONT_START_LIGHT, on);
 }

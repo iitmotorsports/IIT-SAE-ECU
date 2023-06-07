@@ -273,13 +273,6 @@ State::State_t *ECUStates::Driving_Mode_State::run(void) {
         if (controlDelay > 20) { // NOTE: Each data frame is 89 bits long thus at 250kbps the MC buses can handle a maximum of 2808 messages per second
             controlDelay = 0;
 
-            // static bool runReverse = false;
-
-            // if (Pins::getCanPinValue(PINS_INTERNAL_REVERSE) != runReverse) {
-            //     runReverse = Pins::getCanPinValue(PINS_INTERNAL_REVERSE);
-            //     MC::setDirection(!runReverse);
-            // }
-
             if (Fault::anyFault()) { // FIXME: are motor controller faults actually being picked up?
                 return DrivingModeFault();
             }

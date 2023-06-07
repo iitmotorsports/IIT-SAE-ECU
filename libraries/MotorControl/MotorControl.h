@@ -121,5 +121,4 @@ void setTorque(int pedal, int brake, int steer);
 
 } // namespace MC
 
-// Add reverse control
 #endif // __ECU_MOTORCONTROL_H__
