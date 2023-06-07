@@ -33,7 +33,7 @@
  * @brief A state machine implementation, refer to State.h for more info.
  * 
  * This library implements a state machine for the Teensy Microcontoller.
- * It was specifically made for the Teensy 3.6.
+ * It was specifically made for Teensy.
  */
 namespace State {
 

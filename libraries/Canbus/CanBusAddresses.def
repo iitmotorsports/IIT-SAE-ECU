@@ -4,9 +4,9 @@
  * @brief Define incoming CAN line addresses
  * @version 0.2
  * @date 2020-11-15
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  */
 
 #ifndef __ECU_CANBUS_ADDRESSES_DEF__
@@ -57,25 +57,26 @@
 // Logging address
 #define ADD_AUX_LOGGING 0x0123
 // Ping address
-#define ADD_HEART 0x0321
+#define ADD_HEART_FRONT 0x0321
+#define ADD_HEART_BACK 0x0320
 // echo address
-#define ADD_ECHO_DATA 0x0231
-#define ADD_ECHO_DELAY 0x0232
+// #define ADD_ECHO_DATA 0x0231
+// #define ADD_ECHO_DELAY 0x0232
 // @endcond
 
 /**
  * @brief Defines the Can bus addresses that will be used to receive and send data
- * 
+ *
  * Every definition is given a direction denoting whether it is incoming(INPUT) or outgoing(OUTPUT)
- * 
+ *
  * CANPIN can also be used for direction, this simply reserves the address and ensures it is used for canpins
- * 
+ *
  * Unless it is the last entry, this is how to add a new message
- * 
+ *
  * X(CAN address, direction) \
- * 
+ *
  * Only the last entry should NOT have a '\'
- * 
+ *
  * @note Currently, address 0xFFFFFFFF cannot be used
  */
 #define CAN_ADDRESS                \
@@ -108,8 +109,7 @@
     X(ADD_CANPIN_DIGITAL0, CANPIN) \
     X(ADD_CANPIN_DIGITAL1, CANPIN) \
     X(ADD_AUX_LOGGING, CANPIN)     \
-    X(ADD_HEART, CANPIN)           \
-    X(ADD_ECHO_DATA, CANPIN)       \
-    X(ADD_ECHO_DELAY, CANPIN)
+    X(ADD_HEART_FRONT, CANPIN)     \
+    X(ADD_HEART_BACK, CANPIN)
 
 #endif // __ECU_CANBUS_ADDRESSES_DEF__

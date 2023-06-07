@@ -167,6 +167,8 @@ static analogCanPinMsg_t analogCanPinMessages_OUT[analogCanMsgCount_OUT];
 
 static void _receiveDigitalCanbusPin(uint32_t address, volatile uint8_t *buffer) {
     digitalCanPinMessage_IN.receive((uint8_t *)buffer);
+    // Log.d(ID, "Receive Digital Canbus Pin 0", *buffer, 1);
+    // Log.d(ID, "Receive Digital Canbus Pin 1", *(buffer + 4), 1);
 }
 
 static void _receiveAnalogCanbusPin(uint32_t address, volatile uint8_t *buffer) {
@@ -213,6 +215,7 @@ static void _pushCanbusPins(void) {
     for (size_t i = 0; i < analogCanMsgCount_OUT; i++) {
         analogCanPinMessages_OUT[i].send();
     }
+    Log.d(ID, "Sending Canbus Pins", 0, 10000);
 }
 
 void setInternalValue(uint8_t Internal_Pin, int value) {
@@ -366,11 +369,13 @@ void stopCanPins(void) {
 void startCanPins(void) {
     if (digitalCanPinCount_OUT + analogCanPinCount_OUT != 0) {
         Log.i(ID, "Starting outgoing canpin update timer");
+        canbusPinUpdate.priority(80);
         canbusPinUpdate.begin(_pushCanbusPins, CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO);
     }
 }
 
 void initialize(void) {
+    Log.i(ID, "Initializing Pins ...");
     Log.i(ID, "Setting up physical pins");
 
     analogWriteResolution(PINS_ANALOG_RES);
@@ -411,11 +416,13 @@ void initialize(void) {
     Log.i(ID, "Populating incoming messages");
     populateCanbusMap(pinMap, analogCanPinMessages_IN, analogCanMsgCount_IN, &digitalCanPinMessage_IN, digitalCanPinCount_IN);
 
-    Log.i(ID, "Adding incoming canpin callbacks");
-    if (digitalCanPinCount_IN != 0)
+    if (digitalCanPinCount_IN != 0) {
         Canbus::addCallback(digitalCanPinMessage_IN.address, _receiveDigitalCanbusPin);
+        Log.i(ID, "Adding incoming digital canpin callback");
+    }
     for (size_t i = 0; i < analogCanMsgCount_IN; i++) {
         Canbus::addCallback(analogCanPinMessages_IN[i].address, _receiveAnalogCanbusPin);
+        Log.i(ID, "Adding incoming analog canpin callback", analogCanPinMessages_IN[i].address);
     }
 
     startCanPins();

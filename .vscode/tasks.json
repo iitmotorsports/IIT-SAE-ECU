@@ -9,7 +9,7 @@
             "type": "shell",
             "command": "python3",
             "windows": {
-                "command": "py",
+                "command": "python",
             },
             "options": {
                 "cwd": "${workspaceFolder}",

@@ -29,11 +29,11 @@ static struct Initialize_State : State::State_t {
  */
 static struct PreCharge_State : State::State_t {
 private: // NOTE: defining as a number runs Buffer constructor to 'convert' it to a Buffer struct
-    Canbus::Buffer BMS_DATA_Buffer = ADD_BMS_DATA;
-    Canbus::Buffer MC0_VOLT_Buffer = ADD_MC0_VOLT;
-    Canbus::Buffer MC1_VOLT_Buffer = ADD_MC1_VOLT;
+    Canbus::Buffer *BMS_DATA_Buffer = Canbus::getBuffer(ADD_BMS_DATA);
+    Canbus::Buffer *MC0_VOLT_Buffer = Canbus::getBuffer(ADD_MC0_VOLT);
+    Canbus::Buffer *MC1_VOLT_Buffer = Canbus::getBuffer(ADD_MC1_VOLT);
     State::State_t *PreCharFault();
-    bool voltageCheck();
+    bool voltageCheck(bool *fault);
 
 public:
     LOG_TAG ID = "PreCharge State";
@@ -85,8 +85,8 @@ static struct Button_State : State::State_t {
  */
 static struct Driving_Mode_State : State::State_t {
 private:
-    Canbus::Buffer MC0_VOLT_Buffer = ADD_MC0_VOLT;
-    Canbus::Buffer MC1_VOLT_Buffer = ADD_MC1_VOLT;
+    Canbus::Buffer *MC0_VOLT_Buffer = Canbus::getBuffer(ADD_MC0_VOLT);
+    Canbus::Buffer *MC1_VOLT_Buffer = Canbus::getBuffer(ADD_MC1_VOLT);
     void carCooling(bool enable);
     State::State_t *DrivingModeFault(void);
 
@@ -111,24 +111,5 @@ static struct FaultState : State::State_t {
     State::State_t *run(void);
     LOG_TAG getID(void) { return ID; }
 } FaultState;
-
-/**
- * @brief Demonstrate Serial logging
- * This state demonstrates the different ways we can log things to serial
- */
-static struct Logger_t : State::State_t {
-    LOG_TAG ID = "Logger State";
-    State::State_t *run(void);
-    LOG_TAG getID(void) { return ID; }
-} Logger;
-
-/**
- * @brief Demonstrate how to go back to a previous state
- */
-static struct Bounce_t : State::State_t {
-    LOG_TAG ID = "Bouncer State";
-    State::State_t *run(void);
-    LOG_TAG getID(void) { return ID; }
-} Bounce;
 
 } // namespace ECUStates

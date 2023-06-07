@@ -21,26 +21,6 @@
 #include "LogConfig.def"
 #include "map"
 
-/**
- * @brief The ZLib compressed lookup table
- */
-extern unsigned char log_lookup[];
-
-/**
- * @brief The length of log_lookup's data
- */
-extern unsigned int log_lookup_len;
-
-/**
- * @brief The length of log_lookup's data with padding
- */
-extern unsigned int log_lookup_pad_len;
-
-/**
- * @brief The length of log_lookup's data when uncompressed
- */
-extern unsigned int log_lookup_uncmp_len;
-
 namespace Logging {
 
 #ifdef SILENT
@@ -134,12 +114,11 @@ static void __logger_print_num(void *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const u
         memcpy(log_buf + 2, &MESSAGE, 2);
         memcpy(log_buf + 4, &NUMBER, 4);
 #if CONF_ECU_POSITION == BACK_ECU
-#ifdef CONF_ECU_DEBUG
+        // #ifdef CONF_ECU_DEBUG
         Serial.write(log_buf, 8);
-#endif
-        Canbus::sendData(ADD_AUX_LOGGING, log_buf);
+        // #endif
 #else
-        Serial.write(log_buf, 8);
+        // Serial.write(log_buf, 8);
 #endif
     }
 }
@@ -175,13 +154,23 @@ static const char *FATAL = "[FATAL]";
 #ifdef CONF_LOGGING_ENABLE_TIMESTAMP
 static const char *FORMAT = "%s @ %u [%s]: %s\n";
 static const char *FORMAT_NUM = "%s @ %u [%s]: %s %u\n";
-static void __logger_print(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE) { Serial.printf(FORMAT, TYPE, millis(), TAG, MESSAGE); }
-static void __logger_print_num(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const uint32_t NUMBER, int mediate = false) { Serial.printf(FORMAT_NUM, TYPE, millis(), TAG, MESSAGE, NUMBER); }
+static void __logger_print(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE) {
+    auto m = millis();
+    Serial.printf(FORMAT, TYPE, m, TAG, MESSAGE);
+}
+static void __logger_print_num(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const uint32_t NUMBER, int mediate = false) {
+    auto m = millis();
+    Serial.printf(FORMAT_NUM, TYPE, m, TAG, MESSAGE, NUMBER);
+}
 #else
 static const char *FORMAT = "%s [%s]: %s\n";
 static const char *FORMAT_NUM = "%s [%s]: %s %u\n";
-static void __logger_print(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE) { Serial.printf(FORMAT, TYPE, TAG, MESSAGE); }
-static void __logger_print_num(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const uint32_t NUMBER, int mediate = false) { Serial.printf(FORMAT_NUM, TYPE, TAG, MESSAGE, NUMBER); }
+static void __logger_print(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE) {
+    Serial.printf(FORMAT, TYPE, TAG, MESSAGE);
+}
+static void __logger_print_num(const char *TYPE, LOG_TAG TAG, LOG_MSG MESSAGE, const uint32_t NUMBER, int mediate = false) {
+    Serial.printf(FORMAT_NUM, TYPE, TAG, MESSAGE, NUMBER);
+}
 #endif
 #endif
 
@@ -259,42 +248,8 @@ void Log_t::f(LOG_TAG TAG, LOG_MSG message, const uint32_t number, int mediate) 
 #endif
 }
 
-void Log_t::p(LOG_TAG name, LOG_MSG prettyName, const uint32_t number, int mediate) {
-    __logger_print_num(FATAL, name, prettyName, number, mediate);
-}
-
 static void _receiveLogBuffer(uint32_t address, volatile uint8_t *buf) {
     Serial.write((uint8_t *)buf, 8); // FIXME: does dropping the volatile cause any issues?
-}
-
-void enableCanbusRelay() {
-    Canbus::addCallback(ADD_AUX_LOGGING, _receiveLogBuffer);
-}
-
-void printLookup() {
-    static elapsedMillis timeElapsed;
-    noInterrupts();
-    Serial.flush();
-    uint64_t ullen = 0;
-    uint8_t *bytes = (uint8_t *)&(ullen);
-    Serial.write(bytes, 8);
-    ullen = log_lookup_len;
-    Serial.write(bytes, 8);
-    ullen = log_lookup_uncmp_len;
-    Serial.write(bytes, 8);
-    timeElapsed = 0;
-    for (size_t i = 0; i < log_lookup_pad_len; i += 8) {
-        Serial.write(log_lookup + i, 8);
-        Serial.flush();
-        while (!Serial.available()) {
-            if (timeElapsed > 31000) { // Entire process should take less than 30s
-                interrupts();
-                return;
-            }
-        }
-        Serial.read();
-    }
-    interrupts();
 }
 
 } // namespace Logging

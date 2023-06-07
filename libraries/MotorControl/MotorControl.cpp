@@ -38,16 +38,16 @@ namespace MC {
 
 static LOG_TAG ID = "MotorControl";
 
+static IntervalTimer inverterHeartbeatInterval;
+
 static int motorTorque[2] = {0, 0};
 
 static bool beating = true;
-static bool init = false;
-static bool forward = true;
 
 static double pAccum = 0, bAccum = 0, sAccum = 0;
 
-static Canbus::Buffer MC0_RPM_Buffer(ADD_MC0_RPM);
-static Canbus::Buffer MC1_RPM_Buffer(ADD_MC1_RPM);
+static Canbus::Buffer *MC0_RPM_Buffer = Canbus::getBuffer(ADD_MC0_RPM);
+static Canbus::Buffer *MC1_RPM_Buffer = Canbus::getBuffer(ADD_MC1_RPM);
 
 static void beatFunc(void) {
     if (beating) {
@@ -58,19 +58,27 @@ static void beatFunc(void) {
 
 constexpr float c = 2 * 3.1415926536 * 9;
 
+static int32_t lastspeed;
+
 int32_t motorSpeed(int motor) {
-    int16_t MC_Rpm_Val_0 = -MC0_RPM_Buffer.getShort(2); // Bytes 2-3 : Angular Velocity // NOTE: motor is negative?
-    int16_t MC_Rpm_Val_1 = MC1_RPM_Buffer.getShort(2);  // Bytes 2-3 : Angular Velocity
+    Canbus::Buffer::lock MC0_lock = Canbus::Buffer::lock(MC0_RPM_Buffer, Canbus::DEFAULT_TIMEOUT);
+    Canbus::Buffer::lock MC1_lock = Canbus::Buffer::lock(MC1_RPM_Buffer, Canbus::DEFAULT_TIMEOUT);
+    if (!MC0_lock.locked || !MC1_lock.locked) {
+        Log.w(ID, "Unable to lock buffers for speed", lastspeed);
+        return lastspeed;
+    }
+    int16_t MC_Rpm_Val_0 = -MC0_RPM_Buffer->getShort(2); // Bytes 2-3 : Angular Velocity // NOTE: motor is negative?
+    int16_t MC_Rpm_Val_1 = MC1_RPM_Buffer->getShort(2);  // Bytes 2-3 : Angular Velocity
     float MC_Spd_Val_0 = (float)(((MC_Rpm_Val_0 / CONF_CAR_GEAR_RATIO) * c) * 60) / 63360;
     float MC_Spd_Val_1 = (float)(((MC_Rpm_Val_1 / CONF_CAR_GEAR_RATIO) * c) * 60) / 63360;
 
     switch (motor) {
     case 0:
-        return MC_Spd_Val_0;
+        return lastspeed = MC_Spd_Val_0;
     case 1:
-        return MC_Spd_Val_1;
+        return lastspeed = MC_Spd_Val_1;
     default:
-        return (MC_Spd_Val_0 + MC_Spd_Val_1) / 2;
+        return lastspeed = (MC_Spd_Val_0 + MC_Spd_Val_1) / 2;
     }
 }
 
@@ -89,10 +97,6 @@ static void torqueVector(int pedal, int brake, int steer) {
     double _pedal = pedal, _brake = brake, _steer = steer;
 
     normalizeInput(&_pedal, &_brake, &_steer);
-
-    float TVAggression = (float)Pins::getCanPinValue(PINS_INTERNAL_TVAGG) / 10000.0f;
-
-    Log.d(ID, "Aggression Val x1000:", TVAggression * 1000, true);
 
     // No TV
 
@@ -123,10 +127,9 @@ static void torqueVector(int pedal, int brake, int steer) {
 }
 
 void setup(void) { // IMPROVE: receive message from MCs, not just send
-    if (!init)
-        Heartbeat::addCallback(beatFunc);
+    inverterHeartbeatInterval.priority(133);
+    inverterHeartbeatInterval.begin(beatFunc, CONF_BEAT_INTERVAL_MILLIS * 1000);
     clearFaults();
-    init = true;
     beating = true;
 }
 
@@ -157,26 +160,13 @@ int sendSpeed(uint32_t MC_ADD, int speed, bool direction, bool enableBit) {
     return setSpeed;
 }
 
-void sendTorque(uint32_t MC_ADD, int torque, bool direction, bool enableBit) { // NOTE: 0 (Clockwise = Reverse) 1 (Anticlockwise = Forward)
+void sendTorque(uint32_t MC_ADD, int torque, bool enableBit) { // NOTE: 0 (Clockwise = Reverse) 1 (Anticlockwise = Forward)
     if (beating) {
         Log.w(ID, "Unable to set torque, heartbeat is on");
         return;
     }
     uint8_t *bytes = (uint8_t *)&torque;
-    Canbus::sendData(MC_ADD, bytes[0], bytes[1], 0, 0, direction, enableBit);
-}
-
-bool isForward(void) {
-    return forward;
-}
-
-void setDirection(bool runForward) { // FIXME: Inverter must be switched off before switching direction, else fault must be cleared and inverter started again
-    if (motorSpeed() <= CONF_MAXIMUM_SWITCHING_SPEED) {
-        Log.w(ID, "Switching direction");
-        forward = runForward;
-    } else {
-        Log.e(ID, "Unable to switch direction, car is moving too much");
-    }
+    Canbus::sendData(MC_ADD, bytes[0], bytes[1], 0, 0, true, enableBit);
 }
 
 int getLastTorqueValue(bool mc0) {
@@ -197,8 +187,8 @@ int getLastSteerValue() {
 
 void setTorque(int pedal, int brake, int steer) {
     torqueVector(pedal, brake, steer);
-    sendTorque(ADD_MC1_CTRL, motorTorque[1], forward, 1);
-    sendTorque(ADD_MC0_CTRL, motorTorque[0], forward, 1);
+    sendTorque(ADD_MC1_CTRL, motorTorque[1], 1);
+    sendTorque(ADD_MC0_CTRL, motorTorque[0], 1);
 }
 
 } // namespace MC
