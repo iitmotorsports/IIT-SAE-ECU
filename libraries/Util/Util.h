@@ -13,11 +13,6 @@
 #define __ECU_UTIL_H__
 
 /**
- * @brief Interval rate for global blinking
- */
-#define INTERVAL_STD_BLINK 250
-
-/**
  * @brief Euler's constant
  */
 #define Euler exp(1.0)
@@ -36,13 +31,6 @@
  * @return double The EMA of the last memCount values
  */
 double EMAvg(double lastVal, double newVal, int memCount);
-
-/**
- * @brief Get status of global interval blink state
- *
- * @return bool value of current global blink stat 
- */
-bool getGlobalBlinkState();
 
 /**
  * @brief Map a value from one range to another while clamping the value to boundaries

@@ -4,7 +4,7 @@
  * @brief Faults source file
  * @version 0.1
  * @date 2021-01-27
- *
+ * 
  * @copyright Copyright (c) 2022
  *
  */
@@ -33,7 +33,7 @@ static const int PIN_COUNT = PP_NARG_MO(HARD_PIN_FAULTS) + PP_NARG_MO(SOFT_PIN_F
 
 typedef struct CanFault {
     uint32_t address;
-    Canbus::Buffer *buffer;
+    Canbus::Buffer buffer;
     uint64_t faultMask;
     LOG_MSG *tags;
     bool faulted = false;
@@ -44,17 +44,14 @@ typedef struct CanFault {
 
     CanFault(const uint32_t address, const uint64_t faultMask) {
         this->address = address;
-        this->buffer = Canbus::getBuffer(address);
+        this->buffer = address;
         this->faultMask = faultMask;
     }
 
     bool check() {
-        Canbus::Buffer::lock l = Canbus::Buffer::lock(buffer, Canbus::DEFAULT_TIMEOUT);
-        if (!l.locked)
-            return faulted;
-        uint64_t curr = buffer->getULong();
+        uint64_t curr = buffer.getULong();
         if (curr & faultMask) {
-            buffer->dump(lastValue.arr);
+            buffer.dump(lastValue.arr);
 #ifdef CONF_ECU_DEBUG
             Log.w(ID, "Faulted CAN Address:", address);
 #endif
@@ -64,12 +61,9 @@ typedef struct CanFault {
     }
 
     void clear() {
-        Canbus::Buffer::lock l = Canbus::Buffer::lock(buffer, Canbus::DEFAULT_TIMEOUT * 2);
-        if (l.locked) {
-            buffer->clear();
-            lastValue.longlong = 0;
-            faulted = false;
-        }
+        buffer.clear();
+        lastValue.longlong = 0;
+        faulted = false;
     }
 
     void log() {

@@ -1,16 +1,12 @@
 #ifndef __ECU_CANBUFFER_H__
 #define __ECU_CANBUFFER_H__
 
-#include "ECUGlobalConfig.h"
-#include "WProgram.h"
-#include "log.h"
-#include <atomic>
 #include <stdint.h>
 #include <stdlib.h>
 
-namespace Canbus {
+#include "TeensyThreads.h"
 
-const unsigned long DEFAULT_TIMEOUT = CONFIG_ECU_BUFFER_TIMEOUT_MICRO;
+namespace CAN {
 
 /**
  * @brief The function type to pass to addCallback
@@ -35,12 +31,12 @@ struct Buffer { // IMPROVE: more rigorous testing on the get funcs
      *
      * @warning Not recommended to access directly
      */
-    volatile uint8_t buffer[8];
+    volatile uint8_t *buffer;
 
     /**
      * @brief Optional callback function associated with this buffer
      */
-    volatile canCallback callback = nullptr;
+    volatile canCallback callback;
 
     /**
      * @brief Whether this buffer is meant to be an outgoing message
@@ -51,23 +47,21 @@ struct Buffer { // IMPROVE: more rigorous testing on the get funcs
      * @brief Whether this buffer has been set in anyway
      * @note Must be manually reset
      */
-    std::atomic_bool modified = false;
+    bool modified = false;
 
     /**
-     * @brief Whether a message has been received from this address
+     * @brief Construct a new Buffer as a wrapper
+     *
+     * @param buffer the array to wrap around
      */
-    std::atomic_bool received = false;
-
-    std::atomic_flag spin_lock = false;
-
+    Buffer(volatile uint8_t *buffer, bool outgoing = false) : address(0), buffer(buffer), outgoing(outgoing){};
     /**
      * @brief Construct a new internal Buffer
      *
      * @param address the address this buffer should represent
      * @param buffer beginning of the array of 8 byte buffers to select from
      */
-    Buffer(const uint32_t address, bool outgoing) : address(address), outgoing(outgoing){};
-
+    Buffer(const uint32_t address, volatile uint8_t *buffer, bool outgoing = false) : address(address), buffer(buffer), outgoing(outgoing){};
     /**
      * @brief Initialize a buffer if not done so already by constructor
      */
@@ -95,21 +89,21 @@ struct Buffer { // IMPROVE: more rigorous testing on the get funcs
      */
     void clear(void);
 
-    void setDouble(double val);
-    void setULong(uint64_t val);
-    void setLong(int64_t val);
-    void setFloat(float val, size_t pos);
-    void setUInt(uint32_t val, size_t pos);
-    void setInt(int32_t val, size_t pos);
-    void setUShort(uint16_t val, size_t pos);
-    void setShort(int16_t val, size_t pos);
-    void setUByte(uint8_t val, size_t pos);
-    void setByte(int8_t val, size_t pos);
-    void setBit(bool val, size_t pos);
+    void Buffer::setDouble(double val);
+    void Buffer::setULong(uint64_t val);
+    void Buffer::setLong(int64_t val);
+    void Buffer::setFloat(float val, size_t pos);
+    void Buffer::setUInt(uint32_t val, size_t pos);
+    void Buffer::setInt(int32_t val, size_t pos);
+    void Buffer::setUShort(uint16_t val, size_t pos);
+    void Buffer::setShort(int16_t val, size_t pos);
+    void Buffer::setUByte(uint8_t val, size_t pos);
+    void Buffer::setByte(int8_t val, size_t pos);
+    void Buffer::setBit(bool val, size_t pos);
 
-    double getDouble();
+    double Buffer::getDouble();
 
-    float getFloat(size_t pos);
+    float Buffer::getFloat(size_t pos);
 
     /**
      * @brief Interpret the buffer as an unsigned long
@@ -175,40 +169,27 @@ struct Buffer { // IMPROVE: more rigorous testing on the get funcs
      */
     bool getBit(size_t pos);
 
-    struct lock {
-        bool locked;
-        Buffer *buf;
+    /**
+     * @brief Locks this buffer to be used, returns false if it was unable todo so
+     *
+     * @return true Locked
+     * @return false Unable to lock, in use
+     */
+    bool lock();
 
-        lock(Buffer *buf) : locked(!buf->spin_lock.test_and_set(std::memory_order_acquire)), buf(buf) {
-        }
-        lock(Buffer *buf, unsigned long wait) : buf(buf) {
-            elapsedMicros em = 0;
-            while (buf->spin_lock.test_and_set(std::memory_order_acquire)) { // acquire
-                if (wait != 0 && em > wait) {
-#ifdef CONF_ECU_DEBUG
-                    Log.w("Canbus::Buffer", "Lock timed out", buf->address);
-#endif
-                    locked = false;
-                    return;
-                }
+    /**
+     * @brief locks this buffer to be used, waits indefinitely for it to unlock if it is locked
+     *
+     */
+    void lock_wait();
 
-#if defined(__cpp_lib_atomic_flag_test)
-                while (spin_lock.test(std::memory_order_relaxed))
-                    ; // test
-#endif
-                yield();
-            }
-            // Log.d("Lock", "Locking buffer", buf->address);
-            locked = true;
-        }
-        ~lock() {
-            if (locked) {
-                locked = false;
-                buf->spin_lock.clear(std::memory_order_release); // release
-                // Log.d("Lock", "Unlocking buffer", buf->address);
-            }
-        }
-    };
+    /**
+     * @brief Unlocks this buffer if it is locked
+     */
+    void unlock();
+
+private:
+    Thread::Mutex mux; // TODO: make shared_mutex to allow multiple readers
 };
-} // namespace Canbus
+} // namespace CAN
 #endif // __ECU_CANBUFFER_H__

@@ -19,12 +19,12 @@
 /**
  * @brief The interval the beat should target
  */
-#define CONF_HEARTBEAT_INTERVAL_MILLIS 400
+#define CONF_HEARTBEAT_INTERVAL_MILLIS 150
 
 /**
  * @brief The allowed delay between beats
  */
 
-#define CONF_HEARTBEAT_TIMEOUT_MILLI 100 // Allowable Delay
+#define CONF_HEARTBEAT_TIMEOUT_MILLI 50 // Allowable Delay
 
 #endif // __ECU_HEARTBEAT_DEF__

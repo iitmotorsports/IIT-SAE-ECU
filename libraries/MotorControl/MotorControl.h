@@ -67,9 +67,25 @@ void enableMotorBeating(bool enable);
  * 
  * @param MC_ADD The specific motor controller address
  * @param torque The torque to set the motor at
+ * @param direction direction of the motor
  * @param enableBit whether the motor should be enabled
  */
-void sendTorque(uint32_t MC_ADD, int torque, bool enableBit);
+void sendTorque(uint32_t MC_ADD, int torque, bool direction, bool enableBit);
+
+/**
+ * @brief Set the direction of the motors
+ * 
+ * @param runForward whether the motors should spin forwards
+ */
+void setDirection(bool runForward);
+
+/**
+ * @brief Get whether the motors will spin forward
+ * 
+ * @return true The motors will spin forward
+ * @return false The motors will spin in reverse
+ */
+bool isForward(void);
 
 /**
  * @brief Get the last torque percent value sent to a MC
@@ -121,4 +137,5 @@ void setTorque(int pedal, int brake, int steer);
 
 } // namespace MC
 
+// Add reverse control
 #endif // __ECU_MOTORCONTROL_H__

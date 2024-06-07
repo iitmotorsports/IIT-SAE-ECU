@@ -30,14 +30,14 @@ def bin2cc(data: bytes, var_name: str) -> str:
     # zlib compress data
     ulen = len(data)
     data = bytes(data, "UTF-8")
-    #data = zlib.compress(data, 9) # NOTE: Disabled compression
+    data = zlib.compress(data, 9)
 
     data = data.hex(" ", 1).split(" ")
 
     out: list[str] = []
     out.append(f"unsigned char {var_name}[] = {{")
 
-    chunks = [data[i: i + LINE_LEN] for i in range(0, len(data), LINE_LEN)]
+    chunks = [data[i : i + LINE_LEN] for i in range(0, len(data), LINE_LEN)]
 
     padding_len = 0
 

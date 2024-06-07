@@ -22,11 +22,8 @@
                 "LAYOUT_US_ENGLISH",
                 "TEENSYDUINO=157",
                 "ARDUINO=10813",
-                "ARDUINO_TEENSY41",
                 "_GNU_SOURCE",
-                "__arm__",
-                "USING_MAKEFILE",
-                "UNIX_TIME=1681492585"
+                "USING_MAKEFILE"
             ],
             "compilerPath": "${workspaceFolder}/${config:TOOLCHAIN_OFFSET}/bin/arm-none-eabi-gcc.exe",
             "cStandard": "gnu11",

@@ -1,9 +1,6 @@
 log_lookup.json
 /build
-/cmake-build-debug
 /settings
-/.idea
-/.pio
 /__pycache__
 *.disable
 *.log

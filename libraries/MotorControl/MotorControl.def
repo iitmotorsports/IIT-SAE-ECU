@@ -56,9 +56,4 @@
  */
 #define CONF_STEER_MIN 1756.0
 #define CONF_STEER_MAX 3750.0
-
-/**
- * @brief The interval of the inverter heartbeat messages
- */
-#define CONF_BEAT_INTERVAL_MILLIS 400
 #endif // __ECU_MOTORCONTROL_DEF__

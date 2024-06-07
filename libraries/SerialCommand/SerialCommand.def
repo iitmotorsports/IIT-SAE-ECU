@@ -1,0 +1,83 @@
+/**
+ * @file SerialCommand.def
+ * @author IR
+ * @brief SerialCommand config
+ * @version 0.1
+ * @date 2021-03-16
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ * This config file denotes unique byte codes to represent commands on each ECU.
+ * 
+ * @warning Command numbers must be, at a minimum, be defined within the SERIAL_COMMANDS X macro, else they will not be checked for.
+ * 
+ */
+
+#ifndef __ECU_SERIALCOMMAND_DEF__
+//@cond
+#define __ECU_SERIALCOMMAND_DEF__
+//@endcond
+
+#include "PPHelp.h"
+
+/**
+ * @brief Command used to enable charging
+ */
+#define COMMAND_ENABLE_CHARGING 123
+/**
+ * @brief Command used to listen for a canbus message to send
+ */
+#define COMMAND_SEND_CANBUS_MESSAGE 111
+/**
+ * @brief Command used to enable the ASCII canbus sniffer
+ */
+#define COMMAND_TOGGLE_CANBUS_SNIFF 127
+/**
+ * @brief Command to enable mirror mode, for Mirror.h
+ */
+#define COMMAND_TOGGLE_MIRROR_MODE 90
+/**
+ * @brief Command to listen for a pin to set, for Mirror.h
+ */
+#define COMMAND_ENTER_MIRROR_SET 255
+/**
+ * @brief Command to listen for a can message to echo, for Echo.h
+ */
+#define COMMAND_SEND_ECHO 84
+/**
+ * @brief Command to enable reverse motors, for MotorControl.h
+ */
+#define COMMAND_TOGGLE_REVERSE 25
+/**
+ * @brief Command to send the compressed lookup table over serial
+ */
+#define COMMAND_PRINT_LOOKUP 101
+/**
+ * @brief Command to update a serial variable
+ */
+#define COMMAND_UPDATE_SERIALVAR 61
+
+/**
+ * @brief Defines commands that the ECU must react to
+ * 
+ * @note the function callback must then be set later using Cmd::setCommand
+ * 
+ * Unless it is the last entry, this is how to add a new message
+ * 
+ * X(Value) \
+ * 
+ * Only the last entry should NOT have a '\'
+ * 
+ */
+#define SERIAL_COMMANDS            \
+    X(COMMAND_ENABLE_CHARGING)     \
+    X(COMMAND_SEND_CANBUS_MESSAGE) \
+    X(COMMAND_TOGGLE_CANBUS_SNIFF) \
+    X(COMMAND_TOGGLE_MIRROR_MODE)  \
+    X(COMMAND_ENTER_MIRROR_SET)    \
+    X(COMMAND_SEND_ECHO)           \
+    X(COMMAND_TOGGLE_REVERSE)      \
+    X(COMMAND_PRINT_LOOKUP)        \
+    X(COMMAND_UPDATE_SERIALVAR)
+
+#endif // __ECU_SERIALCOMMAND_DEF__

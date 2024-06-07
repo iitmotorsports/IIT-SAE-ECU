@@ -1,8 +1,7 @@
 #include "CanBuffer.h"
 #include "Canbus.h"
-#include "Log.h"
 
-namespace Canbus {
+namespace CAN {
 
 /* Setters */
 void Buffer::setDouble(double val) {
@@ -118,4 +117,16 @@ void Buffer::clear() {
     buffer[7] = 0;
 }
 
-} // namespace Canbus
+bool Buffer::lock() {
+    return mux.try_lock();
+}
+
+void Buffer::lock_wait() {
+    mux.lock();
+}
+
+void Buffer::unlock() {
+    mux.unlock();
+}
+
+} // namespace CAN
