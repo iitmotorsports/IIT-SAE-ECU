@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['callback_0',['callback',['../struct_canbus_1_1_buffer.html#a52e5a4a87ae1d425f4ccf4480393a7c7',1,'Canbus::Buffer']]]
+  ['callback_0',['callback',['../struct_c_a_n_1_1_buffer.html#a31f1aee2fdc7aa86f624c062bb55cbfc',1,'CAN::Buffer']]]
 ];

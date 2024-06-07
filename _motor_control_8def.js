@@ -1,6 +1,5 @@
 var _motor_control_8def =
 [
-    [ "CONF_BEAT_INTERVAL_MILLIS", "_motor_control_8def.html#ab10f78ab0c97f41c755c11958e2d8f25", null ],
     [ "CONF_BRAKE_MIN", "_motor_control_8def.html#a7fb047df64fed266f63b09cc1900a66e", null ],
     [ "CONF_CAR_GEAR_RATIO", "_motor_control_8def.html#a5454b43dde949a0b5b63b196881832c1", null ],
     [ "CONF_MAX_TORQUE", "_motor_control_8def.html#ab870172311eca1c794d9e71d3e713647", null ],

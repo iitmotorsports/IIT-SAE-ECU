@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['how_20to_20contribute_0',['How To Contribute',['../md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html',1,'']]]
+  ['at_20iit_20ecu_20programming_0',['SAE at IIT ECU Programming',['../index.html',1,'']]]
 ];

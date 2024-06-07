@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['hard_5ffault_5fadd_0',['HARD_FAULT_ADD',['../_fault_config_8def.html#a725d76d669362031fe65a6c678180998',1,'FaultConfig.def']]],
-  ['hard_5fpin_5ffaults_1',['HARD_PIN_FAULTS',['../_fault_config_8def.html#ad16cea3900e240c28be81e1fae70174a',1,'FaultConfig.def']]]
+  ['serial_5fcommands_0',['SERIAL_COMMANDS',['../_serial_command_8def.html#a9feec64f8f82f23788b95b4db603bbdd',1,'SerialCommand.def']]],
+  ['serialvar_5ftorque_5fvectoring_5faggression_1',['SERIALVAR_TORQUE_VECTORING_AGGRESSION',['../_serial_vars_8def.html#aae1dd855bda1c593c0ac6fface58bd29',1,'SerialVars.def']]],
+  ['serialvars_2',['SERIALVARS',['../_serial_vars_8def.html#a01191bf1c91bc525ea0166eba1a9996d',1,'SerialVars.def']]],
+  ['soft_5ffault_5fadd_3',['SOFT_FAULT_ADD',['../_fault_config_8def.html#a64da401593bb14ccb3e214d872874078',1,'FaultConfig.def']]],
+  ['soft_5fpin_5ffaults_4',['SOFT_PIN_FAULTS',['../_fault_config_8def.html#a390419930292eef5516ad68b3b5e2af6',1,'FaultConfig.def']]]
 ];

@@ -1,26 +1,5 @@
 var searchData=
 [
-  ['can_5faddress_0',['CAN_ADDRESS',['../_can_bus_addresses_8def.html#aa7a98234bac49a35b8868f32f0c98ce4',1,'CanBusAddresses.def']]],
-  ['can_5ffault_5fids_1',['CAN_FAULT_IDS',['../_fault_config_8def.html#afdc8e6cf3a093f257833370074ec2efe',1,'FaultConfig.def']]],
-  ['clamp_2',['clamp',['../_util_8h.html#a0c834e8c33ee4b3eed8802b969723760',1,'Util.h']]],
-  ['conf_5fbeat_5finterval_5fmillis_3',['CONF_BEAT_INTERVAL_MILLIS',['../_motor_control_8def.html#ab10f78ab0c97f41c755c11958e2d8f25',1,'MotorControl.def']]],
-  ['conf_5fbrake_5fmin_4',['CONF_BRAKE_MIN',['../_motor_control_8def.html#a7fb047df64fed266f63b09cc1900a66e',1,'MotorControl.def']]],
-  ['conf_5fcar_5fgear_5fratio_5',['CONF_CAR_GEAR_RATIO',['../_motor_control_8def.html#a5454b43dde949a0b5b63b196881832c1',1,'MotorControl.def']]],
-  ['conf_5fecu_5fbaud_5frate_6',['CONF_ECU_BAUD_RATE',['../_e_c_u_global_config_8h.html#af37608270609cb6e912eac434d78c019',1,'ECUGlobalConfig.h']]],
-  ['conf_5fecu_5fdebug_7',['CONF_ECU_DEBUG',['../_e_c_u_global_config_8h.html#a0651c808bd53ef4c66b2b1dc49049cd1',1,'ECUGlobalConfig.h']]],
-  ['conf_5fecu_5finital_5fdelay_8',['CONF_ECU_INITAL_DELAY',['../_e_c_u_global_config_8h.html#a060911c2dab5cf6b05212e34aed610cc',1,'ECUGlobalConfig.h']]],
-  ['conf_5fheartbeat_5finterval_5fmillis_9',['CONF_HEARTBEAT_INTERVAL_MILLIS',['../_heartbeat_8def.html#a563ac8570f78a50b3628ee7f2a61a67b',1,'Heartbeat.def']]],
-  ['conf_5fheartbeat_5ftimeout_5fmilli_10',['CONF_HEARTBEAT_TIMEOUT_MILLI',['../_heartbeat_8def.html#ae3c7fcd9cab30e87b0fbc35404880137',1,'Heartbeat.def']]],
-  ['conf_5flogging_5fenable_5ftimestamp_11',['CONF_LOGGING_ENABLE_TIMESTAMP',['../_log_config_8def.html#a27a7696c431a0cbee44a09587416cc4b',1,'LogConfig.def']]],
-  ['conf_5flogging_5fmapped_5fmode_12',['CONF_LOGGING_MAPPED_MODE',['../_log_config_8def.html#a87790c77e6db5b826b023cd5e5887246',1,'LogConfig.def']]],
-  ['conf_5flogging_5fmax_5flevel_13',['CONF_LOGGING_MAX_LEVEL',['../_log_config_8def.html#a992fac40fec8bf5817acc0abe912dd83',1,'LogConfig.def']]],
-  ['conf_5fmax_5ftorque_14',['CONF_MAX_TORQUE',['../_motor_control_8def.html#ab870172311eca1c794d9e71d3e713647',1,'MotorControl.def']]],
-  ['conf_5fmaximum_5fswitching_5fspeed_15',['CONF_MAXIMUM_SWITCHING_SPEED',['../_motor_control_8h.html#aabeca44be98eeaf70dd57e707e5ff85d',1,'MotorControl.h']]],
-  ['conf_5fpedal_5fmin_16',['CONF_PEDAL_MIN',['../_motor_control_8def.html#a31dc0f808f131e55baae838034d6dfe3',1,'MotorControl.def']]],
-  ['conf_5fpins_5fanalog_5fwrite_5fresolution_17',['CONF_PINS_ANALOG_WRITE_RESOLUTION',['../_pin_config_8def.html#a154bf0cb94eefac8b5069c4a282f1dda',1,'PinConfig.def']]],
-  ['conf_5fpins_5fcanbus_5fupdate_5finterval_5fmicro_18',['CONF_PINS_CANBUS_UPDATE_INTERVAL_MICRO',['../_pin_config_8def.html#a30388a88a1fdecdb193647dc80a97084',1,'PinConfig.def']]],
-  ['conf_5fsteer_5fmin_19',['CONF_STEER_MIN',['../_motor_control_8def.html#af4604519f2c5bdf96c69b2db1306024a',1,'MotorControl.def']]],
-  ['config_5fflexcan_5fbaud_5frate_20',['CONFIG_FLEXCAN_BAUD_RATE',['../_canbus_config_8def.html#a62115d07f1e91c038ec41fa6650bedc2',1,'CanbusConfig.def']]],
-  ['config_5fflexcan_5fcan_5fselect_21',['CONFIG_FLEXCAN_CAN_SELECT',['../_canbus_config_8def.html#a819aa9d14cfa8bdbdc4f601bb9855c49',1,'CanbusConfig.def']]],
-  ['config_5fflexcan_5ftx_5fmailboxes_22',['CONFIG_FLEXCAN_TX_MAILBOXES',['../_canbus_config_8def.html#a57a53cabedbe0c155a84596c4cd8d5f0',1,'CanbusConfig.def']]]
+  ['ecu_5fpins_0',['ECU_PINS',['../_pin_config_8def.html#a7603185bc328f16ab177087d225c6848',1,'PinConfig.def']]],
+  ['euler_1',['Euler',['../_util_8h.html#a6c49ba1c50c86cfbf5661fa23db457b7',1,'Util.h']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['outgoing_0',['outgoing',['../struct_canbus_1_1_buffer.html#a00533b4231ba37bae4b5a69366ae1891',1,'Canbus::Buffer']]]
+  ['outgoing_0',['outgoing',['../struct_c_a_n_1_1_buffer.html#a8a3b974f9119e9f8e365d3e055a10696',1,'CAN::Buffer']]]
 ];

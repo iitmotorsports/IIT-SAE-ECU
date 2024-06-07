@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['vs_5fconf_2epy_0',['vs_conf.py',['../vs__conf_8py.html',1,'']]]
+  ['qrjson_2epy_0',['qrJSON.py',['../qr_j_s_o_n_8py.html',1,'']]]
 ];

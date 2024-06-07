@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['pinconfig_2edef_0',['PinConfig.def',['../_pin_config_8def.html',1,'']]],
-  ['pins_2ecpp_1',['Pins.cpp',['../_pins_8cpp.html',1,'']]],
-  ['pins_2eh_2',['Pins.h',['../_pins_8h.html',1,'']]],
-  ['pphelp_2eh_3',['PPHelp.h',['../_p_p_help_8h.html',1,'']]],
-  ['pre_5fbuild_2epy_4',['Pre_Build.py',['../_pre___build_8py.html',1,'']]]
+  ['log_2ecpp_0',['Log.cpp',['../_log_8cpp.html',1,'']]],
+  ['log_2eh_1',['Log.h',['../_log_8h.html',1,'']]],
+  ['logconfig_2edef_2',['LogConfig.def',['../_log_config_8def.html',1,'']]]
 ];

@@ -25,49 +25,139 @@
 var NAVTREE =
 [
   [ "SAE Teensy ECU", "index.html", [
-    [ "SAE at IIT ECU Programming", "index.html", [
-      [ "New Members", "index.html#autotoc_md21", null ],
-      [ "Hardware", "index.html#autotoc_md22", null ],
-      [ "Software", "index.html#autotoc_md23", null ],
-      [ "Setup", "index.html#autotoc_md24", null ],
-      [ "Using", "index.html#autotoc_md25", [
-        [ "VSCode Tasks", "index.html#autotoc_md26", null ],
-        [ "CMake", "index.html#autotoc_md27", null ]
+    [ "SAE at IIT ECU Programming", "index.html", "index" ],
+    [ "How To Contribute", "md__2github_2workspace_2_c_o_n_t_r_i_b_u_t_i_n_g.html", [
+      [ "Before you begin", "md__2github_2workspace_2_c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md1", null ],
+      [ "Familiarizing Yourself", "md__2github_2workspace_2_c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md2", null ],
+      [ "The Environment", "md__2github_2workspace_2_c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md3", null ],
+      [ "The Code", "md__2github_2workspace_2_c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md4", [
+        [ "Coding Conventions", "md__2github_2workspace_2_c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md5", null ],
+        [ "Modularity", "md__2github_2workspace_2_c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md6", null ],
+        [ "Python Scripting", "md__2github_2workspace_2_c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md7", null ],
+        [ "Documentation", "md__2github_2workspace_2_c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md8", null ]
       ] ],
-      [ "Documentation", "index.html#autotoc_md28", null ]
+      [ "Further Reading", "md__2github_2workspace_2_c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md9", null ],
+      [ "Moving Forward", "md__2github_2workspace_2_c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md10", null ]
     ] ],
-    [ "How To Contribute", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html", [
-      [ "Before you begin", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md1", null ],
-      [ "Familiarizing Yourself", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md2", null ],
-      [ "The Environment", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md3", null ],
-      [ "The Code", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md4", [
-        [ "Coding Conventions", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md5", null ],
-        [ "Modularity", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md6", null ],
-        [ "Python Scripting", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md7", null ],
-        [ "Documentation", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md8", null ]
-      ] ],
-      [ "Further Reading", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md9", null ],
-      [ "Moving Forward", "md__github_workspace__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md10", null ]
-    ] ],
-    [ "Infographics", "md_extra__infographics.html", [
-      [ "Infographics", "md_extra__infographics.html#autotoc_md11", [
-        [ "Logging", "md_extra__infographics.html#autotoc_md12", [
-          [ "2022", "md_extra__infographics.html#autotoc_md13", null ]
+    [ "Infographics", "_infographics.html", [
+      [ "Infographics", "_infographics.html#autotoc_md11", [
+        [ "Logging", "_infographics.html#autotoc_md12", [
+          [ "2022", "_infographics.html#autotoc_md13", null ]
         ] ],
-        [ "TestRigs", "md_extra__infographics.html#autotoc_md14", [
-          [ "2021", "md_extra__infographics.html#autotoc_md15", null ]
+        [ "TestRigs", "_infographics.html#autotoc_md14", [
+          [ "2021", "_infographics.html#autotoc_md15", null ]
         ] ]
       ] ]
     ] ],
-    [ "X Macros", "md_extra__xmacros.html", [
-      [ "X Macros", "md_extra__xmacros.html#autotoc_md16", null ],
-      [ "Creating an X Macro", "md_extra__xmacros.html#XMacros_Creating_an_X_Macro", [
-        [ "Defining", "md_extra__xmacros.html#XMacros_Defining", null ],
-        [ "Generating", "md_extra__xmacros.html#XMacros_Generating", null ]
+    [ "X Macros", "_x_macros.html", [
+      [ "X Macros", "_x_macros.html#autotoc_md16", null ],
+      [ "Creating an X Macro", "_x_macros.html#XMacros_Creating_an_X_Macro", [
+        [ "Defining", "_x_macros.html#XMacros_Defining", null ],
+        [ "Generating", "_x_macros.html#XMacros_Generating", null ]
       ] ],
-      [ "Caveats", "md_extra__xmacros.html#XMacros_Caveats", [
-        [ "X Macro Counter", "md_extra__xmacros.html#XMacros_XMacro_Counter", null ],
-        [ "Concatenated Calls", "md_extra__xmacros.html#XMacros_Concatenated_Calls", null ]
+      [ "Caveats", "_x_macros.html#XMacros_Caveats", [
+        [ "X Macro Counter", "_x_macros.html#XMacros_XMacro_Counter", null ],
+        [ "Concatenated Calls", "_x_macros.html#XMacros_Concatenated_Calls", null ]
+      ] ]
+    ] ],
+    [ "Log8", "md__2github_2workspace_2_log8.html", [
+      [ "Goals", "md__2github_2workspace_2_log8.html#autotoc_md22", null ],
+      [ "Data streams", "md__2github_2workspace_2_log8.html#autotoc_md23", null ],
+      [ "API", "md__2github_2workspace_2_log8.html#autotoc_md24", null ],
+      [ "Telemetry", "md__2github_2workspace_2_log8.html#autotoc_md25", [
+        [ "Extensions", "md__2github_2workspace_2_log8.html#autotoc_md26", null ],
+        [ "Usage Example", "md__2github_2workspace_2_log8.html#autotoc_md27", null ],
+        [ "Encoding", "md__2github_2workspace_2_log8.html#autotoc_md28", null ],
+        [ "CAN BUS", "md__2github_2workspace_2_log8.html#autotoc_md29", null ],
+        [ "SDBC", "md__2github_2workspace_2_log8.html#autotoc_md30", null ],
+        [ "Flow of data", "md__2github_2workspace_2_log8.html#autotoc_md31", null ]
+      ] ],
+      [ "Log", "md__2github_2workspace_2_log8.html#autotoc_md32", [
+        [ "Extensions", "md__2github_2workspace_2_log8.html#autotoc_md33", null ],
+        [ "Usage Example", "md__2github_2workspace_2_log8.html#autotoc_md34", null ],
+        [ "Encoding", "md__2github_2workspace_2_log8.html#autotoc_md35", null ],
+        [ "CAN BUS", "md__2github_2workspace_2_log8.html#autotoc_md36", null ],
+        [ "Flow of data", "md__2github_2workspace_2_log8.html#autotoc_md37", null ]
+      ] ],
+      [ "Debug I/O", "md__2github_2workspace_2_log8.html#autotoc_md38", [
+        [ "Extensions", "md__2github_2workspace_2_log8.html#autotoc_md39", null ],
+        [ "Usage Example", "md__2github_2workspace_2_log8.html#autotoc_md40", null ],
+        [ "Input", "md__2github_2workspace_2_log8.html#autotoc_md41", null ],
+        [ "Output", "md__2github_2workspace_2_log8.html#autotoc_md42", null ],
+        [ "Flow of data", "md__2github_2workspace_2_log8.html#autotoc_md43", null ]
+      ] ]
+    ] ],
+    [ "DBC Logging", "md__2github_2workspace_2_s_d_b_c_2_d_b_c_01_logging.html", [
+      [ "Goals", "md__2github_2workspace_2_s_d_b_c_2_d_b_c_01_logging.html#autotoc_md53", null ],
+      [ "Distinction", "md__2github_2workspace_2_s_d_b_c_2_d_b_c_01_logging.html#autotoc_md54", [
+        [ "Telemetry", "md__2github_2workspace_2_s_d_b_c_2_d_b_c_01_logging.html#autotoc_md55", null ],
+        [ "Logging", "md__2github_2workspace_2_s_d_b_c_2_d_b_c_01_logging.html#autotoc_md56", null ]
+      ] ],
+      [ "Flow of data", "md__2github_2workspace_2_s_d_b_c_2_d_b_c_01_logging.html#autotoc_md57", null ],
+      [ "Requirements", "md__2github_2workspace_2_s_d_b_c_2_d_b_c_01_logging.html#autotoc_md58", [
+        [ "Message size", "md__2github_2workspace_2_s_d_b_c_2_d_b_c_01_logging.html#autotoc_md59", null ],
+        [ "CAN Nodes", "md__2github_2workspace_2_s_d_b_c_2_d_b_c_01_logging.html#autotoc_md60", null ]
+      ] ],
+      [ "Solutions", "md__2github_2workspace_2_s_d_b_c_2_d_b_c_01_logging.html#autotoc_md61", [
+        [ "Spreadsheet mapping", "md__2github_2workspace_2_s_d_b_c_2_d_b_c_01_logging.html#autotoc_md62", [
+          [ "Pros", "md__2github_2workspace_2_s_d_b_c_2_d_b_c_01_logging.html#autotoc_md63", null ],
+          [ "Cons", "md__2github_2workspace_2_s_d_b_c_2_d_b_c_01_logging.html#autotoc_md64", null ]
+        ] ],
+        [ "Custom mapping", "md__2github_2workspace_2_s_d_b_c_2_d_b_c_01_logging.html#autotoc_md65", [
+          [ "Pros", "md__2github_2workspace_2_s_d_b_c_2_d_b_c_01_logging.html#autotoc_md66", null ],
+          [ "Cons", "md__2github_2workspace_2_s_d_b_c_2_d_b_c_01_logging.html#autotoc_md67", null ]
+        ] ],
+        [ "Vector DBC", "md__2github_2workspace_2_s_d_b_c_2_d_b_c_01_logging.html#autotoc_md68", [
+          [ "Pros", "md__2github_2workspace_2_s_d_b_c_2_d_b_c_01_logging.html#autotoc_md69", null ],
+          [ "Cons", "md__2github_2workspace_2_s_d_b_c_2_d_b_c_01_logging.html#autotoc_md70", null ]
+        ] ],
+        [ "Custom DBC", "md__2github_2workspace_2_s_d_b_c_2_d_b_c_01_logging.html#autotoc_md71", [
+          [ "Pros", "md__2github_2workspace_2_s_d_b_c_2_d_b_c_01_logging.html#autotoc_md72", null ],
+          [ "Cons", "md__2github_2workspace_2_s_d_b_c_2_d_b_c_01_logging.html#autotoc_md73", null ]
+        ] ]
+      ] ]
+    ] ],
+    [ "SDBC syntax", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html", [
+      [ "Global syntax", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md75", null ],
+      [ "Top level lines", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md76", null ],
+      [ "Name", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md77", null ],
+      [ "Version", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md78", null ],
+      [ "Configuration", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md79", [
+        [ "Configuration values", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md80", null ]
+      ] ],
+      [ "Nodes", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md81", [
+        [ "<tt>NODE</tt>", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md82", null ],
+        [ "Metadata", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md83", [
+          [ "<tt>MAX_GPIO</tt>", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md84", null ],
+          [ "<tt>VIRT_ID_OFF</tt>", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md85", null ],
+          [ "<tt>ADDR</tt>", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md86", null ]
+        ] ],
+        [ "Sources", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md87", [
+          [ "<tt>GPIO</tt>", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md88", null ],
+          [ "<tt>VIRT</tt>", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md89", null ],
+          [ "<tt>MSG</tt>", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md90", [
+            [ "<tt>SIG</tt>", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md91", null ],
+            [ "Space optimization", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md92", null ]
+          ] ],
+          [ "<tt>LINK</tt>", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md93", [
+            [ "<tt>SET</tt>", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md94", null ]
+          ] ],
+          [ "<tt>MSG</tt> <tt>SIG</tt> Value Setter V.S. <tt>LINK</tt>s", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md95", [
+            [ "Example", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md96", null ]
+          ] ]
+        ] ]
+      ] ],
+      [ "Formats", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md97", null ],
+      [ "Types", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md98", null ],
+      [ "Embedded compilation", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md99", null ],
+      [ "Proposals", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md100", [
+        [ "<tt>MSG</tt> <tt>SIG</tt> & <tt>LINK</tt> Multiplexing Value Setters", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md101", null ],
+        [ "Multiplexing through size variance", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md102", null ]
+      ] ],
+      [ "Changelog", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md103", [
+        [ "[Unreleased]", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md104", [
+          [ "Added", "md__2github_2workspace_2_s_d_b_c_2_r_e_a_d_m_e.html#autotoc_md105", null ]
+        ] ]
       ] ]
     ] ],
     [ "Namespaces", "namespaces.html", [
@@ -106,7 +196,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "____init_____8py_source.html",
-"index.html#autotoc_md22"
+"class_c_a_n_1_1_canbus__t.html#a9b9b0c48478acb8bbcc43b872841b104",
+"module_8hpp.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
